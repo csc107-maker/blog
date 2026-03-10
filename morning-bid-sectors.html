@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.03.11 Morning Bid — 추천 업종 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080b10;
+    --surface: #0d1117;
+    --surface2: #131920;
+    --border: #1e2a35;
+    --amber: #f5a623;
+    --amber-dim: #c07d10;
+    --green: #00e5a0;
+    --red: #ff4560;
+    --blue: #3b9eff;
+    --purple: #a78bfa;
+    --text: #d0dae8;
+    --text-dim: #6b7f95;
+    --text-bright: #eef3fa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  header {
+    padding: 48px 0 36px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--amber);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-label::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 6vw, 78px);
+    color: var(--text-bright);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .header-title span {
+    color: var(--amber);
+  }
+
+  .header-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .header-meta {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+
+  .header-meta strong {
+    color: var(--text-bright);
+    display: block;
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  /* RISK ALERT BAR */
+  .alert-bar {
+    margin: 28px 0;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, rgba(255,69,96,0.08) 0%, rgba(255,69,96,0.03) 100%);
+    border: 1px solid rgba(255,69,96,0.25);
+    border-left: 3px solid var(--red);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    animation: fadeSlideIn 0.8s ease 0.2s both;
+  }
+
+  .alert-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .alert-bar strong { color: var(--red); }
+
+  /* MARKET SIGNALS */
+  .signals-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 32px 0;
+    animation: fadeSlideIn 0.8s ease 0.3s both;
+  }
+
+  .signal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .signal-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .signal-card.up::after { background: var(--green); }
+  .signal-card.down::after { background: var(--red); }
+  .signal-card.neutral::after { background: var(--amber); }
+  .signal-card.watch::after { background: var(--blue); }
+
+  .signal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .signal-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+  }
+
+  .signal-card.up .signal-value { color: var(--green); }
+  .signal-card.down .signal-value { color: var(--red); }
+  .signal-card.neutral .signal-value { color: var(--amber); }
+  .signal-card.watch .signal-value { color: var(--blue); }
+
+  .signal-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* SECTION TITLE */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SECTOR GRID */
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .sector-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeSlideIn 0.6s ease both;
+  }
+
+  .sector-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--amber-dim);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,166,35,0.15);
+  }
+
+  .sector-card:nth-child(1) { animation-delay: 0.4s; }
+  .sector-card:nth-child(2) { animation-delay: 0.5s; }
+  .sector-card:nth-child(3) { animation-delay: 0.6s; }
+  .sector-card:nth-child(4) { animation-delay: 0.7s; }
+  .sector-card:nth-child(5) { animation-delay: 0.8s; }
+  .sector-card:nth-child(6) { animation-delay: 0.9s; }
+
+  .sector-header {
+    padding: 20px 22px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .sector-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .sector-top-right {
+    text-align: right;
+  }
+
+  .rating-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .rating-strong-buy { background: rgba(0,229,160,0.15); color: var(--green); border: 1px solid rgba(0,229,160,0.3); }
+  .rating-buy { background: rgba(59,158,255,0.15); color: var(--blue); border: 1px solid rgba(59,158,255,0.3); }
+  .rating-watch { background: rgba(245,166,35,0.15); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .rating-caution { background: rgba(255,69,96,0.15); color: var(--red); border: 1px solid rgba(255,69,96,0.3); }
+
+  .expected-return {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  .expected-return.neg { color: var(--red); }
+  .expected-return.neu { color: var(--amber); }
+
+  .return-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .sector-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .sector-eng {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+  }
+
+  .sector-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 22px;
+  }
+
+  .sector-body {
+    padding: 16px 22px;
+  }
+
+  .sector-reason {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .sector-reason strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Catalyst tags */
+  .catalyst-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .catalyst-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    padding: 3px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  /* Risk bar */
+  .risk-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .risk-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    width: 50px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  .risk-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .risk-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s ease;
+  }
+
+  .risk-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    width: 30px;
+    text-align: right;
+  }
+
+  .ticker-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .ticker-chip {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(245,166,35,0.08);
+    border: 1px solid rgba(245,166,35,0.2);
+    color: var(--amber);
+  }
+
+  /* CAUTION SECTOR */
+  .caution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .caution-card {
+    background: rgba(255,69,96,0.04);
+    border: 1px solid rgba(255,69,96,0.15);
+    border-radius: 8px;
+    padding: 20px;
+    animation: fadeSlideIn 0.6s ease both;
+  }
+
+  .caution-card:nth-child(1) { animation-delay: 1.0s; }
+  .caution-card:nth-child(2) { animation-delay: 1.1s; }
+
+  .caution-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .caution-icon {
+    font-size: 24px;
+  }
+
+  .caution-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--red);
+  }
+
+  .caution-eng {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,69,96,0.5);
+    letter-spacing: 2px;
+  }
+
+  .caution-reason {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+
+  /* STRATEGY TABLE */
+  .strategy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 40px;
+    animation: fadeSlideIn 0.6s ease 1.2s both;
+  }
+
+  .strategy-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .strategy-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .strategy-table tr:hover td {
+    background: var(--surface2);
+  }
+
+  .scenario-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .scenario-base { background: rgba(59,158,255,0.12); color: var(--blue); }
+  .scenario-bull { background: rgba(0,229,160,0.12); color: var(--green); }
+  .scenario-bear { background: rgba(255,69,96,0.12); color: var(--red); }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    padding: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 40px;
+    animation: fadeSlideIn 0.6s ease 1.3s both;
+  }
+
+  .disclaimer strong { color: var(--red); }
+
+  /* FOOTER */
+  footer {
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    animation: fadeSlideIn 0.6s ease 1.4s both;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    .sectors-grid { grid-template-columns: 1fr; }
+    .signals-row { grid-template-columns: repeat(2, 1fr); }
+    .caution-grid { grid-template-columns: 1fr; }
+    .header-meta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-label">● LIVE MARKET INTELLIGENCE</div>
+    <h1 class="header-title">MORNING BID<br><span>추천 업종 분석</span></h1>
+    <p class="header-subtitle">미-이란 전쟁 장기화·미국 2월 CPI·독일 물가·일본 PPI 등<br>2026년 3월 11일 핵심 이슈에 기반한 전략 업종 가이드</p>
+    <div class="header-meta">
+      <strong>2026.03.11</strong>
+      KST 09:00 기준<br>
+      데이터 기반 전략
+    </div>
+  </header>
+
+  <!-- ALERT -->
+  <div class="alert-bar">
+    <span class="alert-icon">⚡</span>
+    <div>
+      <strong>[전쟁 리스크 경보]</strong>
+      미-이란 분쟁 11일차 — 호르무즈 해협 봉쇄 위협 지속, WTI 97달러 근접.
+      에너지 공급망 충격이 3~4월 인플레이션에 반영될 전망. 포트폴리오 전면 재점검 필요.
+    </div>
+  </div>
+
+  <!-- MARKET SIGNALS -->
+  <div class="signals-row">
+    <div class="signal-card up">
+      <div class="signal-label">WTI 원유</div>
+      <div class="signal-value">▲ $97</div>
+      <div class="signal-desc">개전 전 $67 → 44.7% 급등</div>
+    </div>
+    <div class="signal-card neutral">
+      <div class="signal-label">미국 CPI 예상</div>
+      <div class="signal-value">+2.5%</div>
+      <div class="signal-desc">2월 전년비 (개전 前 데이터)</div>
+    </div>
+    <div class="signal-card down">
+      <div class="signal-label">미국 재정적자</div>
+      <div class="signal-value">$1T+</div>
+      <div class="signal-desc">26 회계연도 첫 5개월 누적</div>
+    </div>
+    <div class="signal-card watch">
+      <div class="signal-label">독일 CPI 속보</div>
+      <div class="signal-value">1.9%</div>
+      <div class="signal-desc">2월 전년비, ECB 목표 하회</div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDED SECTORS -->
+  <div class="section-label">★ 전략 추천 업종 — OVERWEIGHT</div>
+
+  <div class="sectors-grid">
+
+    <!-- 1. Energy -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(245,166,35,0.12);">🛢️</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">에너지 — 정유·석유</div>
+          <div class="sector-eng">ENERGY / OIL & GAS</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-strong-buy">STRONG BUY</div>
+          <div class="expected-return">+25~40%</div>
+          <div class="return-label">단기 목표 수익률</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          미-이란 전쟁으로 <strong>WTI 유가가 $97까지 급등</strong>, 호르무즈 해협 봉쇄 시
+          $150도 가능. 정유사·E&P 업체 이익이 직접 수혜를 받는 핵심 섹터.
+          전략비축유 방출 시 단기 조정 가능하나 구조적 공급 차질이 지속될 전망.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">호르무즈 봉쇄</span>
+          <span class="catalyst-tag">카타르 LNG 불가항력</span>
+          <span class="catalyst-tag">WTI 급등</span>
+          <span class="catalyst-tag">공급 차질 20%</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:92%;background:var(--green);"></div></div>
+          <span class="risk-value">92</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:75%;background:var(--amber);"></div></div>
+          <span class="risk-value">75</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">XOM</span>
+          <span class="ticker-chip">CVX</span>
+          <span class="ticker-chip">COP</span>
+          <span class="ticker-chip">S-OIL</span>
+          <span class="ticker-chip">GS칼텍스</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Defense -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(255,69,96,0.1);">🛡️</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">방산·항공우주</div>
+          <div class="sector-eng">DEFENSE / AEROSPACE</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-strong-buy">STRONG BUY</div>
+          <div class="expected-return">+20~35%</div>
+          <div class="return-label">단기 목표 수익률</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          미국 재정 지출 증가 항목 중 <strong>국방비가 전년비 60억 달러 급증</strong>.
+          중동 전쟁 장기화로 미사일·드론·전자전 장비 수요 폭발.
+          나토 회원국의 국방비 증액 흐름도 유럽 방산주 동반 수혜.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">국방비 +$6B</span>
+          <span class="catalyst-tag">전쟁 장기화</span>
+          <span class="catalyst-tag">유럽 재무장</span>
+          <span class="catalyst-tag">드론·미사일 수요</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:88%;background:var(--green);"></div></div>
+          <span class="risk-value">88</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:45%;background:var(--blue);"></div></div>
+          <span class="risk-value">45</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">LMT</span>
+          <span class="ticker-chip">RTX</span>
+          <span class="ticker-chip">NOC</span>
+          <span class="ticker-chip">한화에어로</span>
+          <span class="ticker-chip">LIG넥스원</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Gold / Safe Haven -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(245,166,35,0.1);">🥇</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">금·귀금속</div>
+          <div class="sector-eng">GOLD / SAFE HAVEN</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-buy">BUY</div>
+          <div class="expected-return">+12~20%</div>
+          <div class="return-label">단기 목표 수익률</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          지정학적 불확실성 고조 + 인플레이션 재점화 우려 = <strong>금의 이중 호재</strong>.
+          연준 금리 동결 기조 속에서 실질금리 상승이 제한돼 금 가격의 하방이
+          단단함. 전쟁 장기화 시 안전자산 수요 강화.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">지정학 리스크</span>
+          <span class="catalyst-tag">인플레 헤지</span>
+          <span class="catalyst-tag">Fed 동결</span>
+          <span class="catalyst-tag">달러 약세 가능</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:72%;background:var(--green);"></div></div>
+          <span class="risk-value">72</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:30%;background:var(--blue);"></div></div>
+          <span class="risk-value">30</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">GLD</span>
+          <span class="ticker-chip">IAU</span>
+          <span class="ticker-chip">NEM</span>
+          <span class="ticker-chip">GOLD ETF</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. LNG / Natural Gas -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(59,158,255,0.1);">🔥</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">LNG·천연가스</div>
+          <div class="sector-eng">LNG / NATURAL GAS</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-strong-buy">STRONG BUY</div>
+          <div class="expected-return">+30~50%</div>
+          <div class="return-label">단기 목표 수익률</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          <strong>카타르가 LNG 수출에 불가항력 선언</strong> — 전 세계 LNG의 20% 공급
+          차질. 유럽은 러-우 전쟁 이후 카타르 의존도가 높아진 상황으로
+          대체 공급처(미국·호주 LNG)에 프리미엄 수요 급증 예상.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">카타르 불가항력</span>
+          <span class="catalyst-tag">LNG 20% 차질</span>
+          <span class="catalyst-tag">유럽 수요 폭발</span>
+          <span class="catalyst-tag">미국 LNG 수출↑</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:95%;background:var(--green);"></div></div>
+          <span class="risk-value">95</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:68%;background:var(--amber);"></div></div>
+          <span class="risk-value">68</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">LNG</span>
+          <span class="ticker-chip">QatarEnergy</span>
+          <span class="ticker-chip">NEXT LNG</span>
+          <span class="ticker-chip">한국가스공사</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Japanese Equities -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(167,139,250,0.1);">🗾</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">일본 수출주·금융</div>
+          <div class="sector-eng">JAPAN EXPORT / BANKS</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-watch">WATCH</div>
+          <div class="expected-return" style="color:var(--purple);">선별 매수</div>
+          <div class="return-label">BOJ 결정 대기</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          일본 2월 PPI 반등 + 제조업 PMI 52.8 → <strong>BOJ 조기 금리 인상 기대 강화</strong>.
+          금리 인상 시 은행·보험주 이익 확대. 단, 엔화 강세 전환 시
+          수출주 실적 둔화 주의. 선별적 접근 필요.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">BOJ 추가 인상</span>
+          <span class="catalyst-tag">PPI 반등</span>
+          <span class="catalyst-tag">PMI 52.8</span>
+          <span class="catalyst-tag">엔화 강세 주의</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:60%;background:var(--purple);"></div></div>
+          <span class="risk-value">60</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:55%;background:var(--amber);"></div></div>
+          <span class="risk-value">55</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">三菱UFJ</span>
+          <span class="ticker-chip">みずほ</span>
+          <span class="ticker-chip">日本銀行</span>
+          <span class="ticker-chip">EWJ ETF</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Inflation-Linked / TIPS -->
+    <div class="sector-card">
+      <div class="sector-header">
+        <div>
+          <div class="sector-icon-wrap" style="background:rgba(0,229,160,0.1);">📈</div>
+        </div>
+        <div style="flex:1; padding-left:14px;">
+          <div class="sector-name">물가연동채·원자재</div>
+          <div class="sector-eng">TIPS / COMMODITIES</div>
+        </div>
+        <div class="sector-top-right">
+          <div class="rating-badge rating-buy">BUY</div>
+          <div class="expected-return">+8~15%</div>
+          <div class="return-label">단기 목표 수익률</div>
+        </div>
+      </div>
+      <div class="sector-divider"></div>
+      <div class="sector-body">
+        <p class="sector-reason">
+          미국 2월 CPI가 2.5% 예상되나 3~4월 <strong>에너지발 물가 급등이 본격 반영</strong>될
+          전망. TIPS와 농산물·금속 원자재는 전쟁발 공급 충격과 인플레이션
+          구조 동시 수혜. 재정 적자 확대도 실물 자산 선호 요인.
+        </p>
+        <div class="catalyst-list">
+          <span class="catalyst-tag">인플레 재점화</span>
+          <span class="catalyst-tag">공급망 충격</span>
+          <span class="catalyst-tag">재정 적자 $1T</span>
+          <span class="catalyst-tag">실물자산 선호</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">수익 잠재력</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:65%;background:var(--green);"></div></div>
+          <span class="risk-value">65</span>
+        </div>
+        <div class="risk-row">
+          <span class="risk-label">변동 위험</span>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:35%;background:var(--blue);"></div></div>
+          <span class="risk-value">35</span>
+        </div>
+        <div class="ticker-chips">
+          <span class="ticker-chip">TIP</span>
+          <span class="ticker-chip">PDBC</span>
+          <span class="ticker-chip">DJP</span>
+          <span class="ticker-chip">원자재 ETF</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CAUTION SECTORS -->
+  <div class="section-label">⚠ 주의·비중 축소 업종 — UNDERWEIGHT</div>
+  <div class="caution-grid">
+
+    <div class="caution-card">
+      <div class="caution-header">
+        <span class="caution-icon">✈️</span>
+        <div>
+          <div class="caution-name">항공·해운·물류</div>
+          <div class="caution-eng">AIRLINES / SHIPPING</div>
+        </div>
+        <div style="margin-left:auto;">
+          <div class="rating-badge rating-caution">UNDERWEIGHT</div>
+        </div>
+      </div>
+      <p class="caution-reason">
+        항공유·벙커C유 가격 폭등으로 연료비 급증. 중동 노선 운항 제한·취소. 
+        호르무즈 해협 봉쇄 시 선박 항로 우회로 물류비 급등. 
+        여객 수요 감소와 비용 상승이 동시 타격. 실적 악화 불가피.
+      </p>
+    </div>
+
+    <div class="caution-card">
+      <div class="caution-header">
+        <span class="caution-icon">🏗️</span>
+        <div>
+          <div class="caution-name">장기채·성장주(나스닥)</div>
+          <div class="caution-eng">LONG BONDS / GROWTH</div>
+        </div>
+        <div style="margin-left:auto;">
+          <div class="rating-badge rating-caution">CAUTION</div>
+        </div>
+      </div>
+      <p class="caution-reason">
+        전쟁발 인플레이션 재점화 → 연준 금리 인하 지연. 미국 재정 적자 확대로
+        국채 발행 증가 → 금리 상승 압력. 듀레이션 리스크 높은 장기채와
+        밸류에이션 부담 큰 고PER 성장주는 단기 변동성 주의.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- SCENARIO TABLE -->
+  <div class="section-label">📊 시나리오별 전략 매트릭스</div>
+
+  <table class="strategy-table">
+    <thead>
+      <tr>
+        <th>시나리오</th>
+        <th>핵심 가정</th>
+        <th>유가 전망</th>
+        <th>추천 비중</th>
+        <th>회피 업종</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="scenario-badge scenario-bull">🟢 조기 종전</span></td>
+        <td>2~4주 내 휴전·협상</td>
+        <td style="color:var(--green);">$70~80</td>
+        <td>에너지 차익실현, 성장주 재진입</td>
+        <td>없음</td>
+      </tr>
+      <tr>
+        <td><span class="scenario-badge scenario-base">🔵 기본 (장기화)</span></td>
+        <td>3개월+ 전쟁 지속</td>
+        <td style="color:var(--amber);">$90~110</td>
+        <td>에너지·방산·금 Overweight 유지</td>
+        <td>항공·장기채</td>
+      </tr>
+      <tr>
+        <td><span class="scenario-badge scenario-bear">🔴 최악 (해협 봉쇄)</span></td>
+        <td>호르무즈 완전 봉쇄</td>
+        <td style="color:var(--red);">$130~150+</td>
+        <td>현금·금·에너지 극도 집중</td>
+        <td>성장주·항공·해운·소비재 전반</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>⚠ 투자 유의사항:</strong>
+    본 페이지는 2026년 3월 11일 공개된 거시경제 지표 및 뉴스에 근거한 시장 분석 정보이며,
+    특정 종목 또는 자산에 대한 투자 권유가 아닙니다. 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 하며,
+    투자 원금의 손실 가능성이 있습니다. 금융 투자는 투자 전 충분한 검토와 전문가 상담을 권장합니다.
+    시나리오 및 수익률 추정치는 예측이며 실제 결과와 다를 수 있습니다.
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>MORNING BID © 2026.03.11 — MARKET INTELLIGENCE</div>
+    <div>DATA: BLS · BOJ · DESTATIS · EIA · CBO</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
