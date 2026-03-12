@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 사업 5대 정부지원제도</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #F0F7F0;
+  --surface: #FFFFFF;
+  --deep:    #0D2B1A;
+  --mid:     #1A4731;
+  --green1:  #16A34A;
+  --green2:  #22C55E;
+  --green3:  #4ADE80;
+  --gold:    #CA8A04;
+  --gold-l:  #FEF08A;
+  --blue:    #0369A1;
+  --blue-l:  #BAE6FD;
+  --teal:    #0F766E;
+  --teal-l:  #CCFBF1;
+  --emerald: #059669;
+  --sky:     #0284C7;
+  --text:    #1A2E1A;
+  --muted:   #4B6B4B;
+  --border:  rgba(22,163,74,0.15);
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  position: relative;
+  background: var(--deep);
+  padding: 60px 24px 52px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* animated leaf/grid pattern bg */
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34,197,94,0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 0% 100%, rgba(202,138,4,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 100% 100%, rgba(2,132,199,0.12) 0%, transparent 60%);
+}
+
+/* floating dots */
+.dots {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.dot {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(74,222,128,0.3);
+  animation: float-dot linear infinite;
+}
+.dot:nth-child(1)  { left: 8%;  top: 20%; animation-duration: 6s;  animation-delay: 0s; }
+.dot:nth-child(2)  { left: 20%; top: 70%; animation-duration: 8s;  animation-delay: 1s; }
+.dot:nth-child(3)  { left: 35%; top: 40%; animation-duration: 7s;  animation-delay: 2s; }
+.dot:nth-child(4)  { left: 55%; top: 80%; animation-duration: 9s;  animation-delay: 0.5s; }
+.dot:nth-child(5)  { left: 70%; top: 25%; animation-duration: 5s;  animation-delay: 1.5s; }
+.dot:nth-child(6)  { left: 85%; top: 60%; animation-duration: 7s;  animation-delay: 3s; }
+.dot:nth-child(7)  { left: 92%; top: 15%; animation-duration: 6s;  animation-delay: 0.8s; }
+.dot:nth-child(8)  { left: 45%; top: 55%; animation-duration: 8s;  animation-delay: 2.5s; }
+@keyframes float-dot {
+  0%   { transform: translateY(0px) scale(1);   opacity: 0.3; }
+  50%  { transform: translateY(-18px) scale(1.6); opacity: 0.7; }
+  100% { transform: translateY(0px) scale(1);   opacity: 0.3; }
+}
+
+.header-tag {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.35);
+  color: var(--green3);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 20px; border-radius: 100px;
+  margin-bottom: 22px;
+}
+
+.header-icon {
+  position: relative; z-index: 1;
+  font-size: 56px; display: block;
+  margin-bottom: 16px;
+  animation: sway 4s ease-in-out infinite;
+}
+@keyframes sway {
+  0%,100% { transform: rotate(-3deg) scale(1); }
+  50%      { transform: rotate(3deg) scale(1.06); }
+}
+
+.header-title {
+  position: relative; z-index: 1;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 6vw, 52px);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+.header-title span {
+  background: linear-gradient(135deg, #4ADE80, #22C55E, #86EFAC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-sub {
+  position: relative; z-index: 1;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  max-width: 520px; margin: 0 auto 36px;
+  line-height: 1.75;
+}
+
+/* total benefit summary row */
+.summary-row {
+  position: relative; z-index: 1;
+  display: inline-flex; gap: 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.sum-item {
+  padding: 14px 24px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.sum-item:last-child { border-right: none; }
+.sum-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--green3);
+  display: block; line-height: 1;
+  margin-bottom: 4px;
+}
+.sum-label {
+  font-size: 10px; color: rgba(255,255,255,0.4);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+@media (max-width: 500px) {
+  .summary-row { flex-direction: column; }
+  .sum-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .sum-item:last-child { border-bottom: none; }
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── POLICY CARD ── */
+.pcard {
+  background: var(--surface);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(28px);
+  animation: pop-in 0.6s ease forwards;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.pcard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 56px rgba(0,0,0,0.12);
+}
+.pcard:nth-child(1) { animation-delay: 0.05s; }
+.pcard:nth-child(2) { animation-delay: 0.15s; }
+.pcard:nth-child(3) { animation-delay: 0.25s; }
+.pcard:nth-child(4) { animation-delay: 0.35s; }
+.pcard:nth-child(5) { animation-delay: 0.45s; }
+@keyframes pop-in { to { opacity:1; transform: translateY(0); } }
+
+/* left stripe color */
+.stripe-green  { --stripe: #16A34A; }
+.stripe-teal   { --stripe: #0F766E; }
+.stripe-lime   { --stripe: #65A30D; }
+.stripe-blue   { --stripe: #0369A1; }
+.stripe-violet { --stripe: #7C3AED; }
+
+.pcard-inner {
+  display: grid;
+  grid-template-columns: 6px 1fr;
+}
+.pcard-stripe {
+  background: var(--stripe);
+  border-radius: 0;
+}
+
+.pcard-body {
+  padding: 28px 30px;
+}
+
+/* top row */
+.pcard-top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+.pcard-meta { display: flex; flex-direction: column; gap: 8px; }
+
+.pcard-num-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 8px;
+  width: fit-content;
+}
+.stripe-green  .pcard-num-badge { background: rgba(22,163,74,0.1);  color: #15803D; border: 1px solid rgba(22,163,74,0.25); }
+.stripe-teal   .pcard-num-badge { background: rgba(15,118,110,0.1); color: #0F766E; border: 1px solid rgba(15,118,110,0.25); }
+.stripe-lime   .pcard-num-badge { background: rgba(101,163,13,0.1); color: #4D7C0F; border: 1px solid rgba(101,163,13,0.25); }
+.stripe-blue   .pcard-num-badge { background: rgba(3,105,161,0.1);  color: #0369A1; border: 1px solid rgba(3,105,161,0.25); }
+.stripe-violet .pcard-num-badge { background: rgba(124,58,237,0.1); color: #7C3AED; border: 1px solid rgba(124,58,237,0.25); }
+
+.pcard-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 3vw, 22px);
+  font-weight: 700;
+  color: var(--deep);
+  line-height: 1.3;
+}
+
+.pcard-icon-wrap {
+  width: 72px; height: 72px;
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  flex-shrink: 0;
+}
+.stripe-green  .pcard-icon-wrap { background: rgba(22,163,74,0.08); }
+.stripe-teal   .pcard-icon-wrap { background: rgba(15,118,110,0.08); }
+.stripe-lime   .pcard-icon-wrap { background: rgba(101,163,13,0.08); }
+.stripe-blue   .pcard-icon-wrap { background: rgba(3,105,161,0.08); }
+.stripe-violet .pcard-icon-wrap { background: rgba(124,58,237,0.08); }
+
+/* desc */
+.pcard-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.85;
+  margin-bottom: 22px;
+  font-weight: 400;
+}
+
+/* content grid varies per card */
+.pcard-grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pcard-grid-2 { grid-template-columns: 1fr 1fr; }
+.pcard-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+@media (max-width: 540px) {
+  .pcard-grid-2, .pcard-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) {
+  .pcard-grid-2, .pcard-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* info box */
+.info-box {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.info-box-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px; font-weight: 700;
+  line-height: 1; margin-bottom: 5px;
+  display: block;
+}
+.stripe-green  .info-box-val { color: #16A34A; }
+.stripe-teal   .info-box-val { color: #0F766E; }
+.stripe-lime   .info-box-val { color: #65A30D; }
+.stripe-blue   .info-box-val { color: #0369A1; }
+.stripe-violet .info-box-val { color: #7C3AED; }
+.info-box-lbl { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+/* flow / steps */
+.flow {
+  display: flex; align-items: center;
+  flex-wrap: wrap; gap: 0;
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+.flow-step {
+  display: flex; align-items: center;
+  font-size: 12.5px; font-weight: 600;
+  color: var(--deep); padding: 4px 0;
+}
+.flow-arrow {
+  font-size: 14px; color: rgba(0,0,0,0.25);
+  padding: 0 8px; flex-shrink: 0;
+}
+
+/* checklist */
+.chklist { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
+.chklist li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13.5px; color: var(--text); line-height: 1.6;
+}
+.chk-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* highlight strip */
+.hl-strip {
+  border-radius: 14px;
+  padding: 16px 20px;
+  border-left: 4px solid var(--stripe);
+  margin-bottom: 18px;
+}
+.stripe-green  .hl-strip { background: rgba(22,163,74,0.06);  }
+.stripe-teal   .hl-strip { background: rgba(15,118,110,0.06); }
+.stripe-lime   .hl-strip { background: rgba(101,163,13,0.06); }
+.stripe-blue   .hl-strip { background: rgba(3,105,161,0.06);  }
+.stripe-violet .hl-strip { background: rgba(124,58,237,0.06); }
+.hl-strip-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  opacity: 0.5; margin-bottom: 6px;
+}
+.hl-strip-text {
+  font-size: 13.5px; line-height: 1.7;
+  color: var(--text); font-weight: 400;
+}
+
+/* tag row */
+.tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.tag {
+  font-size: 11.5px; font-weight: 600;
+  padding: 5px 13px; border-radius: 100px;
+  border: 1px solid;
+}
+.stripe-green  .tag { background: rgba(22,163,74,0.07);  color: #15803D; border-color: rgba(22,163,74,0.2);  }
+.stripe-teal   .tag { background: rgba(15,118,110,0.07); color: #0F766E; border-color: rgba(15,118,110,0.2); }
+.stripe-lime   .tag { background: rgba(101,163,13,0.07); color: #4D7C0F; border-color: rgba(101,163,13,0.2); }
+.stripe-blue   .tag { background: rgba(3,105,161,0.07);  color: #0369A1; border-color: rgba(3,105,161,0.2);  }
+.stripe-violet .tag { background: rgba(124,58,237,0.07); color: #7C3AED; border-color: rgba(124,58,237,0.2); }
+
+/* divider */
+.div { height: 1px; background: rgba(0,0,0,0.07); margin: 16px 0; }
+
+/* REC gauge visual */
+.rec-gauge {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px;
+}
+.rec-donut {
+  width: 90px; height: 90px; flex-shrink: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    #16A34A 0% 30%,
+    #22C55E 30% 60%,
+    #4ADE80 60% 80%,
+    #BBF7D0 80% 100%
+  );
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.rec-donut::after {
+  content: 'REC';
+  position: absolute;
+  width: 60px; height: 60px;
+  background: white; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #16A34A;
+  letter-spacing: 1px;
+}
+.rec-legend { flex: 1; }
+.rec-legend-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--muted); margin-bottom: 6px;
+}
+.rec-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+
+/* loan visual */
+.loan-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 18px;
+}
+.loan-box {
+  border-radius: 14px; padding: 16px;
+  text-align: center; border: 1px solid;
+}
+.loan-box.before {
+  background: rgba(239,68,68,0.05);
+  border-color: rgba(239,68,68,0.2);
+}
+.loan-box.after {
+  background: rgba(3,105,161,0.05);
+  border-color: rgba(3,105,161,0.2);
+}
+.loan-box-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 8px; opacity: 0.5;
+}
+.loan-rate {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px; font-weight: 700; line-height: 1;
+  margin-bottom: 4px;
+}
+.loan-box.before .loan-rate { color: #EF4444; }
+.loan-box.after  .loan-rate { color: #0369A1; }
+.loan-box-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+.loan-saving {
+  background: rgba(3,105,161,0.06);
+  border: 1px solid rgba(3,105,161,0.15);
+  border-radius: 12px; padding: 12px 16px;
+  text-align: center; font-size: 13px; color: #0369A1;
+  font-weight: 600; margin-bottom: 18px;
+}
+
+/* PPA ecosystem diagram */
+.ecosystem {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 8px;
+  background: var(--bg); border-radius: 14px;
+  padding: 20px 16px; margin-bottom: 18px;
+  border: 1px solid var(--border);
+}
+.eco-node {
+  background: white;
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 12px; padding: 12px 16px;
+  text-align: center; min-width: 90px;
+}
+.eco-node-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+.eco-node-name { font-size: 11px; font-weight: 700; color: var(--deep); }
+.eco-node-sub  { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.eco-arrow {
+  font-size: 18px; color: #7C3AED; opacity: 0.5; flex-shrink: 0;
+}
+.eco-node.highlight {
+  background: rgba(124,58,237,0.06);
+  border-color: rgba(124,58,237,0.35);
+}
+
+/* ── FOOTER ── */
+.footer {
+  max-width: 900px; margin: 0 auto 60px; padding: 0 20px;
+}
+.footer-inner {
+  background: var(--deep);
+  border-radius: 24px;
+  padding: 40px 36px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.footer-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(34,197,94,0.15) 0%, transparent 60%);
+}
+@media (max-width: 560px) {
+  .footer-inner { grid-template-columns: 1fr; text-align: center; }
+}
+.footer-text { position: relative; z-index: 1; }
+.footer-text h3 { font-size: 20px; color: white; font-weight: 700; margin-bottom: 8px; }
+.footer-text p  { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; font-weight: 300; }
+.footer-badges {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.f-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(34,197,94,0.12);
+  border: 1px solid rgba(34,197,94,0.25);
+  border-radius: 10px; padding: 9px 14px;
+  font-size: 12px; font-weight: 600; color: #4ADE80;
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="dots">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div>
+  </div>
+  <span class="header-icon">🌿</span>
+  <div class="header-tag">💰 정부지원 총정리</div>
+  <h1 class="header-title">태양광 사업<br><span>5대 정부지원제도</span></h1>
+  <p class="header-sub">몰라서 못 받는 지원금은 없어야 합니다.<br>RPS부터 그린뉴딜 융자까지 — 퇴직자가 꼭 알아야 할 혜택 5가지</p>
+  <div class="summary-row">
+    <div class="sum-item">
+      <span class="sum-val">5종</span>
+      <span class="sum-label">지원 제도</span>
+    </div>
+    <div class="sum-item">
+      <span class="sum-val">2~3%</span>
+      <span class="sum-label">저금리 융자</span>
+    </div>
+    <div class="sum-item">
+      <span class="sum-val">REC</span>
+      <span class="sum-label">추가 수익원</span>
+    </div>
+    <div class="sum-item">
+      <span class="sum-val">RE100</span>
+      <span class="sum-label">新시장 기회</span>
+    </div>
+  </div>
+</header>
+
+<!-- POLICY CARDS -->
+<div class="main">
+
+  <!-- ① RPS & REC -->
+  <div class="pcard stripe-green">
+    <div class="pcard-inner">
+      <div class="pcard-stripe"></div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num-badge">① RPS 제도</span>
+            <h2 class="pcard-title">신재생에너지 공급의무화 제도<br>— REC 판매로 추가 수익</h2>
+          </div>
+          <div class="pcard-icon-wrap">🌱</div>
+        </div>
+
+        <p class="pcard-desc">일정 규모 이상의 발전사업자는 총 발전량의 일정 비율(2024년 기준 약 25%)을 반드시 재생에너지로 공급해야 합니다. 이를 충족 못하는 사업자는 <strong>REC(신재생에너지 공급인증서)</strong>를 시장에서 구매해야 하므로, 소규모 태양광 발전사업자는 생산한 REC를 판매해 전기요금 수익 외 추가 수익을 올릴 수 있습니다.</p>
+
+        <!-- REC 도넛 + 범례 -->
+        <div class="rec-gauge">
+          <div class="rec-donut"></div>
+          <div class="rec-legend">
+            <div class="rec-legend-row"><div class="rec-dot" style="background:#16A34A"></div> 대형 발전사 직접 공급 (30%)</div>
+            <div class="rec-legend-row"><div class="rec-dot" style="background:#22C55E"></div> REC 현물시장 구매 (30%)</div>
+            <div class="rec-legend-row"><div class="rec-dot" style="background:#4ADE80"></div> 장기계약 구매 (20%)</div>
+            <div class="rec-legend-row"><div class="rec-dot" style="background:#BBF7D0"></div> 녹색프리미엄 등 (20%)</div>
+          </div>
+        </div>
+
+        <!-- 수익 흐름 -->
+        <div class="flow">
+          <span class="flow-step">☀️ 태양광 발전</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">📜 REC 발급</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">🏛️ 의무공급자에 판매</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-step">💰 추가 수익</span>
+        </div>
+
+        <div class="pcard-grid pcard-grid-3">
+          <div class="info-box">
+            <span class="info-box-val">1 REC</span>
+            <div class="info-box-lbl">발전량<br>1MWh = 1REC</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">가중치</span>
+            <div class="info-box-lbl">지붕형 태양광<br>최대 1.5배 우대</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">매월</span>
+            <div class="info-box-lbl">한국전력거래소<br>REC 현물시장</div>
+          </div>
+        </div>
+
+        <div class="hl-strip">
+          <div class="hl-strip-title">💡 핵심 포인트</div>
+          <div class="hl-strip-text">지붕형 태양광(건물 옥상 등)은 REC 가중치가 <strong>1.5배</strong>로, 일반 지상형보다 유리합니다. 100kW 시스템 기준 연간 <strong>130~140 REC</strong> 발급 가능.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">🌿 RPS 의무</span>
+          <span class="tag">📜 REC 판매</span>
+          <span class="tag">⚡ 전력거래소</span>
+          <span class="tag">🏠 지붕형 가중치 1.5배</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 고정가격계약 -->
+  <div class="pcard stripe-teal">
+    <div class="pcard-inner">
+      <div class="pcard-stripe"></div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num-badge">② 소규모 FIT 유사</span>
+            <h2 class="pcard-title">소규모 태양광 고정가격계약<br>— 100kW 미만 안정 수익 보장</h2>
+          </div>
+          <div class="pcard-icon-wrap">🔒</div>
+        </div>
+
+        <p class="pcard-desc">100kW 미만 소규모 태양광 사업자는 SMP 가격 변동에 영향받지 않고, 한국에너지공단의 <strong>소규모 전력중개시장</strong> 또는 <strong>고정가격계약</strong>을 통해 안정적인 판매 단가를 확보할 수 있습니다. 이는 해외의 FIT(발전차액지원제도)와 유사한 구조로, 예측 가능한 수익이 핵심 장점입니다.</p>
+
+        <ul class="chklist">
+          <li><span class="chk-icon">✅</span> <strong>100kW 미만</strong> 소규모 사업자 대상, 별도 신청 필요</li>
+          <li><span class="chk-icon">✅</span> SMP + REC 합산 <strong>고정단가로 20년 계약</strong> 체결 가능</li>
+          <li><span class="chk-icon">✅</span> 한국에너지공단 신재생에너지센터에서 <strong>연 2회 공모</strong></li>
+          <li><span class="chk-icon">✅</span> 가격 변동 없이 <strong>장기 안정 수익</strong> — 퇴직자에게 최적</li>
+        </ul>
+
+        <div class="div"></div>
+
+        <div class="pcard-grid pcard-grid-2">
+          <div class="info-box">
+            <span class="info-box-val">20년</span>
+            <div class="info-box-lbl">고정가격계약<br>최대 기간</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">SMP고정</span>
+            <div class="info-box-lbl">시장가격 변동<br>위험 차단</div>
+          </div>
+        </div>
+
+        <div class="hl-strip">
+          <div class="hl-strip-title">📌 신청 방법</div>
+          <div class="hl-strip-text">한국에너지공단 신재생에너지센터 <strong>(www.knrec.or.kr)</strong> 접속 → 소규모 태양광 고정가격계약 공모 신청. 연 2회 공모이므로 설치 직후 신청 일정을 반드시 확인하세요.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">🔒 고정가격 20년</span>
+          <span class="tag">📊 수익 예측 가능</span>
+          <span class="tag">🏛️ 에너지공단 공모</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 영농형 태양광 -->
+  <div class="pcard stripe-lime">
+    <div class="pcard-inner">
+      <div class="pcard-stripe"></div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num-badge">③ 영농형 태양광</span>
+            <h2 class="pcard-title">농촌융복합산업 · 영농형 태양광<br>— 농사 + 발전 동시에</h2>
+          </div>
+          <div class="pcard-icon-wrap">🌾</div>
+        </div>
+
+        <p class="pcard-desc">영농형 태양광은 농지 위에 태양광 패널을 일정 높이로 설치하고, <strong>그 아래서 작물 재배와 발전을 동시에</strong> 진행하는 방식입니다. 귀농을 준비하는 퇴직자에게 특히 유리하며, 정부는 농촌 활성화 차원에서 보조금과 저금리 융자를 지원 중입니다.</p>
+
+        <!-- 영농형 시각 다이어그램 -->
+        <div style="background:linear-gradient(180deg,#F0FDF4 0%,#DCFCE7 100%);border-radius:16px;padding:20px;margin-bottom:18px;border:1px solid rgba(101,163,13,0.2);text-align:center;">
+          <div style="font-size:13px;font-weight:700;color:#4D7C0F;margin-bottom:14px;letter-spacing:1px;">영농형 태양광 구조도</div>
+          <!-- 패널 row -->
+          <div style="display:flex;justify-content:center;gap:12px;margin-bottom:6px;">
+            <div style="background:#4ADE80;border-radius:6px;width:48px;height:18px;opacity:0.85;box-shadow:0 2px 6px rgba(0,0,0,0.1)"></div>
+            <div style="background:#4ADE80;border-radius:6px;width:48px;height:18px;opacity:0.85;box-shadow:0 2px 6px rgba(0,0,0,0.1)"></div>
+            <div style="background:#4ADE80;border-radius:6px;width:48px;height:18px;opacity:0.85;box-shadow:0 2px 6px rgba(0,0,0,0.1)"></div>
+            <div style="background:#4ADE80;border-radius:6px;width:48px;height:18px;opacity:0.85;box-shadow:0 2px 6px rgba(0,0,0,0.1)"></div>
+          </div>
+          <div style="font-size:10px;color:#4D7C0F;margin-bottom:4px;">☀️ 태양광 패널 (2~3m 높이)</div>
+          <!-- support poles -->
+          <div style="display:flex;justify-content:center;gap:60px;margin-bottom:4px;">
+            <div style="width:3px;height:36px;background:#A3A3A3;margin:0 auto;"></div>
+            <div style="width:3px;height:36px;background:#A3A3A3;margin:0 auto;"></div>
+            <div style="width:3px;height:36px;background:#A3A3A3;margin:0 auto;"></div>
+          </div>
+          <!-- crop row -->
+          <div style="display:flex;justify-content:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:22px;">🌿</span><span style="font-size:22px;">🌾</span>
+            <span style="font-size:22px;">🥬</span><span style="font-size:22px;">🌿</span>
+            <span style="font-size:22px;">🌾</span><span style="font-size:22px;">🥬</span>
+          </div>
+          <div style="font-size:10px;color:#4D7C0F;">작물 재배 (그늘 작물 적합)</div>
+        </div>
+
+        <div class="pcard-grid pcard-grid-3">
+          <div class="info-box">
+            <span class="info-box-val">2중</span>
+            <div class="info-box-lbl">농업소득<br>+ 발전수익</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">보조금</span>
+            <div class="info-box-lbl">농식품부<br>지원 사업</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">저금리</span>
+            <div class="info-box-lbl">농업정책자금<br>융자 활용</div>
+          </div>
+        </div>
+
+        <ul class="chklist">
+          <li><span class="chk-icon">🌾</span> 일반 태양광 대비 <strong>REC 가중치 추가 우대</strong> (정책 확인 필요)</li>
+          <li><span class="chk-icon">🌾</span> 귀농 창업 초기 <strong>농식품부 보조금</strong> 병행 신청 가능</li>
+          <li><span class="chk-icon">🌾</span> 농업경영체 등록 시 <strong>각종 농업 지원 혜택</strong> 동시 활용</li>
+        </ul>
+
+        <div class="hl-strip">
+          <div class="hl-strip-title">💡 퇴직자 추천 이유</div>
+          <div class="hl-strip-text">귀농을 꿈꾸는 퇴직자라면 영농형 태양광이 최적입니다. 농사 수익과 발전 수익 두 가지를 동시에 확보하면서, 건강한 농촌 생활도 누릴 수 있습니다.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">🌾 농사+발전 동시</span>
+          <span class="tag">💰 2중 수익구조</span>
+          <span class="tag">🏡 귀농 최적</span>
+          <span class="tag">📋 농식품부 보조금</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ 그린뉴딜 금융 -->
+  <div class="pcard stripe-blue">
+    <div class="pcard-inner">
+      <div class="pcard-stripe"></div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num-badge">④ 그린뉴딜 금융</span>
+            <h2 class="pcard-title">그린뉴딜 금융 지원<br>— 저금리 2~3%로 초기 부담 절감</h2>
+          </div>
+          <div class="pcard-icon-wrap">🏦</div>
+        </div>
+
+        <p class="pcard-desc">한국산업은행, 중소기업진흥공단, 지역 신용보증재단 등을 통해 태양광 설치 비용의 상당 부분을 <strong>연 2~3% 저금리로 융자</strong>받을 수 있습니다. 자기자본만으로 투자하는 것보다 레버리지 효과로 수익률을 높일 수 있습니다.</p>
+
+        <!-- 금리 비교 -->
+        <div class="loan-compare">
+          <div class="loan-box before">
+            <div class="loan-box-label">일반 대출</div>
+            <div class="loan-rate">5~7%</div>
+            <div class="loan-box-desc">시중은행<br>사업자 대출 금리</div>
+          </div>
+          <div class="loan-box after">
+            <div class="loan-box-label">그린뉴딜 융자</div>
+            <div class="loan-rate">2~3%</div>
+            <div class="loan-box-desc">정책금융기관<br>저금리 지원</div>
+          </div>
+        </div>
+        <div class="loan-saving">
+          💰 1억 원 기준, 연간 이자 부담 <strong>200~500만 원 절감</strong> 효과
+        </div>
+
+        <ul class="chklist">
+          <li><span class="chk-icon">🏦</span> <strong>한국산업은행</strong> — 그린뉴딜 에너지 전환 특별융자</li>
+          <li><span class="chk-icon">🏦</span> <strong>중소기업진흥공단</strong> — 신재생에너지 설비 구입 자금</li>
+          <li><span class="chk-icon">🏦</span> <strong>지역신용보증재단</strong> — 소규모 사업자 보증 지원</li>
+          <li><span class="chk-icon">🏦</span> 융자 한도: 설치비의 <strong>최대 70~80%</strong>까지 가능 (기관별 상이)</li>
+        </ul>
+
+        <div class="hl-strip">
+          <div class="hl-strip-title">📌 신청 팁</div>
+          <div class="hl-strip-text">설치업체 계약 전에 금융기관 사전 승인을 받으면 <strong>설치비 전체를 융자 처리</strong>할 수 있습니다. 초기 자본이 부족한 퇴직자도 <strong>자기자금 20~30%</strong>만으로 시작이 가능합니다.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">🏦 저금리 2~3%</span>
+          <span class="tag">💳 최대 80% 융자</span>
+          <span class="tag">🏛️ KDB산업은행</span>
+          <span class="tag">🤝 중진공</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ RE100 / 녹색프리미엄 / 제3자 PPA -->
+  <div class="pcard stripe-violet">
+    <div class="pcard-inner">
+      <div class="pcard-stripe"></div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-meta">
+            <span class="pcard-num-badge">⑤ RE100 이행 수단</span>
+            <h2 class="pcard-title">녹색프리미엄 · 제3자 PPA<br>— RE100 시대, 수요처가 늘어난다</h2>
+          </div>
+          <div class="pcard-icon-wrap">🌍</div>
+        </div>
+
+        <p class="pcard-desc">RE100을 선언한 기업들이 재생에너지를 조달하는 방법은 여럿입니다. 한국전력을 통한 <strong>녹색프리미엄</strong>부터 중개기관을 통한 <strong>제3자 PPA</strong>까지 — 이 다양한 수요처는 소규모 발전사업자에게 더 많은 판매 채널을 의미합니다.</p>
+
+        <!-- 생태계 다이어그램 -->
+        <div class="ecosystem">
+          <div class="eco-node">
+            <span class="eco-node-icon">☀️</span>
+            <div class="eco-node-name">발전사업자</div>
+            <div class="eco-node-sub">(소규모 태양광)</div>
+          </div>
+          <span class="eco-arrow">→</span>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="eco-node highlight">
+              <span class="eco-node-icon">⚡</span>
+              <div class="eco-node-name">직접 PPA</div>
+              <div class="eco-node-sub">RE100 기업 직접</div>
+            </div>
+            <div class="eco-node">
+              <span class="eco-node-icon">🏛️</span>
+              <div class="eco-node-name">제3자 PPA</div>
+              <div class="eco-node-sub">중개기관 경유</div>
+            </div>
+            <div class="eco-node">
+              <span class="eco-node-icon">🟢</span>
+              <div class="eco-node-name">녹색프리미엄</div>
+              <div class="eco-node-sub">한전 통해 판매</div>
+            </div>
+          </div>
+          <span class="eco-arrow">→</span>
+          <div class="eco-node">
+            <span class="eco-node-icon">🏭</span>
+            <div class="eco-node-name">RE100 기업</div>
+            <div class="eco-node-sub">삼성·SK·LG 등</div>
+          </div>
+        </div>
+
+        <div class="pcard-grid pcard-grid-3">
+          <div class="info-box">
+            <span class="info-box-val">직접PPA</span>
+            <div class="info-box-lbl">최고 단가<br>협상 가능</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">제3자PPA</span>
+            <div class="info-box-lbl">중개 수수료<br>부담, 진입 용이</div>
+          </div>
+          <div class="info-box">
+            <span class="info-box-val">녹색</span>
+            <div class="info-box-lbl">프리미엄<br>한전 경유 안정</div>
+          </div>
+        </div>
+
+        <ul class="chklist">
+          <li><span class="chk-icon">🌍</span> 삼성·SK·LG 등 RE100 기업 <strong>재생에너지 수요 급증 중</strong></li>
+          <li><span class="chk-icon">🌍</span> 직접 PPA: SMP보다 <strong>높은 단가 협상</strong>, 장기 계약 안정성</li>
+          <li><span class="chk-icon">🌍</span> 제3자 PPA: <strong>진입 장벽 낮고</strong> 중개기관이 연결 지원</li>
+          <li><span class="chk-icon">🌍</span> 녹색프리미엄: 한전이 수급 조율, <strong>소규모 사업자도 참여 가능</strong></li>
+        </ul>
+
+        <div class="hl-strip">
+          <div class="hl-strip-title">🚀 미래 전망</div>
+          <div class="hl-strip-text">국내 RE100 참여 기업은 매년 증가하고 있으며, 협력사(중소기업)까지 재생에너지 전환 압력이 확산되는 중입니다. 지금 소규모 발전소를 구축하면 <strong>RE100 공급자로서 장기 수요처</strong>를 선점할 수 있습니다.</div>
+        </div>
+        <div class="tags">
+          <span class="tag">🌍 RE100</span>
+          <span class="tag">🤝 직접 PPA</span>
+          <span class="tag">🔗 제3자 PPA</span>
+          <span class="tag">🟢 녹색프리미엄</span>
+          <span class="tag">📈 수요처 다변화</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-text">
+      <h3>🌿 지원제도를 알면 수익이 2배</h3>
+      <p>5가지 제도를 전략적으로 조합하면<br>초기 투자 부담은 낮추고, 수익은 극대화할 수 있습니다.<br>퇴직 후 인생 2막, 태양광으로 시작하세요.</p>
+    </div>
+    <div class="footer-badges">
+      <div class="f-badge">🌱 REC 판매 추가 수익</div>
+      <div class="f-badge">🔒 고정가격 20년 보장</div>
+      <div class="f-badge">💰 저금리 융자 2~3%</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
