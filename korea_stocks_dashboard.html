@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년 3월 지정학 리스크 — 한국 주식 섹터 분석</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2330;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --up: #00d97e;
+    --up-dim: rgba(0,217,126,0.12);
+    --down: #f45b5b;
+    --down-dim: rgba(244,91,91,0.12);
+    --gold: #f0b429;
+    --gold-dim: rgba(240,180,41,0.12);
+    --blue: #4fc3f7;
+    --accent: #7c6af7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── TOP GRID BG ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,106,247,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,106,247,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid rgba(240,180,41,0.25);
+    border-radius: 4px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  h1 {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: #fff;
+  }
+
+  h1 span { color: var(--gold); }
+
+  .date-info {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  .date-info strong { color: var(--blue); display: block; font-size: 15px; margin-bottom: 4px; }
+
+  /* ── MACRO BANNER ── */
+  .macro-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .macro-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .macro-card .label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .macro-card .value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .macro-card .change {
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .macro-card.up .value { color: var(--up); }
+  .macro-card.down .value { color: var(--down); }
+  .macro-card.up { border-color: rgba(0,217,126,0.2); background: linear-gradient(135deg, var(--surface), rgba(0,217,126,0.04)); }
+  .macro-card.down { border-color: rgba(244,91,91,0.2); background: linear-gradient(135deg, var(--surface), rgba(244,91,91,0.04)); }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .section-label .pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .pill-up { background: var(--up-dim); color: var(--up); border: 1px solid rgba(0,217,126,0.3); }
+  .pill-down { background: var(--down-dim); color: var(--down); border: 1px solid rgba(244,91,91,0.3); }
+
+  .section-label h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .section-label .divider {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── STOCK GRID ── */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .stock-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .stock-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .stock-card.bullish {
+    border-color: rgba(0,217,126,0.25);
+  }
+
+  .stock-card.bullish:hover {
+    border-color: rgba(0,217,126,0.5);
+  }
+
+  .stock-card.bearish {
+    border-color: rgba(244,91,91,0.25);
+  }
+
+  .stock-card.bearish:hover {
+    border-color: rgba(244,91,91,0.5);
+  }
+
+  .stock-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .stock-card.bullish::before { background: linear-gradient(90deg, var(--up), transparent); }
+  .stock-card.bearish::before { background: linear-gradient(90deg, var(--down), transparent); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+
+  .stock-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .stock-code { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .price-block { text-align: right; }
+  .price {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .change-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  .change-badge.up { background: var(--up-dim); color: var(--up); }
+  .change-badge.down { background: var(--down-dim); color: var(--down); }
+
+  /* Chart */
+  .chart-wrap {
+    height: 80px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .stat {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+
+  .stat .s-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; font-family: 'IBM Plex Mono', monospace; }
+  .stat .s-val { font-size: 13px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+
+  /* Description */
+  .desc {
+    font-size: 13px;
+    color: #9aa3b0;
+    line-height: 1.65;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .desc strong { color: var(--text); }
+
+  /* Tags */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(124,106,247,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(124,106,247,0.2);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 40px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .disclaimer strong { color: var(--gold); }
+
+  /* ── ANIMATED PULSE DOT ── */
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--up);
+    margin-right: 6px;
+    position: relative;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Sector divider with title */
+  .sector-intro {
+    font-size: 13px;
+    color: #7a8494;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .stock-grid { grid-template-columns: 1fr; }
+    .macro-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <div>
+        <div class="badge">📊 2026.03.13 · Market Analysis</div>
+        <h1>지정학 리스크 시대<br><span>한국 수혜주 & 주의주 분석</span></h1>
+      </div>
+      <div class="date-info">
+        <strong><span class="live-dot"></span>KOSPI 5,620.44</strong>
+        이란 전쟁 · 베네수엘라 사태<br>
+        원/달러 1,481원 · 브렌트유 $96
+      </div>
+    </div>
+  </header>
+
+  <!-- MACRO STRIP -->
+  <div class="macro-strip">
+    <div class="macro-card up">
+      <div class="label">브렌트유 (Brent)</div>
+      <div class="value">$96.40</div>
+      <div class="change" style="color:var(--up)">▲ +38.5% (1개월)</div>
+    </div>
+    <div class="macro-card up">
+      <div class="label">원/달러 환율</div>
+      <div class="value">1,481</div>
+      <div class="change" style="color:var(--down)">▼ 원화 약세 지속</div>
+    </div>
+    <div class="macro-card">
+      <div class="label">FOMC 금리 (3월)</div>
+      <div class="value" style="color:var(--gold)">3.75%</div>
+      <div class="change" style="color:var(--muted)">동결 확률 92%</div>
+    </div>
+    <div class="macro-card up">
+      <div class="label">코스피</div>
+      <div class="value">5,620</div>
+      <div class="change" style="color:var(--muted)">방산·정유 차별화</div>
+    </div>
+    <div class="macro-card up">
+      <div class="label">K방산 수출 전망</div>
+      <div class="value" style="color:var(--gold)">+↑↑</div>
+      <div class="change" style="color:var(--up)">중동 방공수요 급증</div>
+    </div>
+  </div>
+
+  <!-- ===================== BULLISH SECTION ===================== -->
+  <div class="section-label">
+    <div class="pill pill-up">▲ 수혜 섹터</div>
+    <h2>방산 · 정유 · 반도체 수출주</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="sector-intro">
+    중동 전쟁 장기화 · 유가 급등 · 원화 약세 환경에서 직접 수혜를 받는 섹터입니다.
+    실제 3월 초 이란 공습 뉴스 당일 방산주 20~30% 급등, 정유주 20~28% 급등이 확인됐습니다.
+  </div>
+
+  <div class="stock-grid" id="bullish-grid"></div>
+
+  <!-- ===================== BEARISH SECTION ===================== -->
+  <div class="section-label">
+    <div class="pill pill-down">▼ 주의 섹터</div>
+    <h2>항공 · 내수 소비재 · 에너지 비용 민감주</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="sector-intro">
+    유가 급등과 지정학 불안의 직격탄을 맞는 섹터입니다. 연료비 부담 급증, 내수 소비 위축, 원화 약세에 따른 원가 상승이 실적 하방 압력으로 작용합니다.
+  </div>
+
+  <div class="stock-grid" id="bearish-grid"></div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>⚠ 투자 유의사항</strong><br>
+    본 자료는 공개된 뉴스 및 시장 데이터를 기반으로 작성된 정보 제공용 분석 자료입니다.
+    주가 데이터는 2026년 3월 11~12일 기준 보도 자료를 참고하여 작성되었으며, 실시간 데이터가 아닐 수 있습니다.
+    본 자료는 특정 종목의 매수·매도를 권유하지 않으며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다.
+    작성자는 금융투자전문가가 아닙니다.
+  </div>
+</div>
+
+<script>
+// ─── 주가 데이터 (3월 1~13일 일간 추정 데이터, 뉴스 기사 기반) ───
+// 형식: [종목명, 코드, 섹터, 현재가, 전일비%, 5일고, 5일저, 52주고, 52주저, 데이터포인트[], 설명, 태그[], 타입]
+
+const bullishStocks = [
+  {
+    name: "한화에어로스페이스",
+    code: "012450",
+    price: "1,410,000",
+    chg: "+13.2%",
+    chgDir: "up",
+    high5: "1,496,000",
+    low5: "1,280,000",
+    high52: "1,655,000",
+    low52: "603,000",
+    data: [700000, 730000, 760000, 820000, 900000, 1050000, 1150000, 1250000, 1370000, 1430000, 1410000, 1410000, 1410000],
+    desc: "<strong>K방산의 대표주자.</strong> K9 자주포·천무 다연장 로켓 전문. 2026년 영업이익 4.5조 예상. 폴란드·루마니아·호주 수출 계약 다수 진행 중. 이란 공습 뉴스 당일 <strong style='color:var(--up)'>+19.83% 급등</strong>. 애널리스트 21명 전원 매수 의견, 목표주가 평균 155만원.",
+    tags: ["방산", "K9자주포", "유럽수출", "재무장사이클"],
+    sector: "방산"
+  },
+  {
+    name: "LIG넥스원",
+    code: "079550",
+    price: "742,000",
+    chg: "+28.5%",
+    chgDir: "up",
+    high5: "899,000",
+    low5: "650,000",
+    high52: "899,000",
+    low52: "235,000",
+    data: [300000, 310000, 340000, 380000, 450000, 560000, 630000, 680000, 710000, 760000, 742000, 742000, 742000],
+    desc: "<strong>정밀 유도무기·방공체계 전문.</strong> UAE 수출 천궁-Ⅱ 실전 요격률 90% 이상 기록으로 글로벌 신뢰도 급상승. 중동 국가들의 방공망 긴급 보강 수요 직결. 이란 전쟁 당일 <strong style='color:var(--up)'>+29.86% 폭등</strong>. 사우디·UAE·이집트 등 추가 수출 계약 임박 전망.",
+    tags: ["방공체계", "천궁-II", "UAE수출", "미사일방어"],
+    sector: "방산"
+  },
+  {
+    name: "현대로템",
+    code: "064350",
+    price: "225,750",
+    chg: "+9.1%",
+    chgDir: "up",
+    high5: "265,000",
+    low5: "200,000",
+    high52: "290,000",
+    low52: "90,000",
+    data: [110000, 120000, 130000, 145000, 160000, 175000, 190000, 205000, 215000, 230000, 225750, 225750, 225750],
+    desc: "<strong>K2 전차 제조사.</strong> 폴란드 K2 전차 인도 일정 본격화, 유럽 추가 수주 협상 진행 중. 전쟁 발발 시 지상 전력 필요성 재조명으로 외국인·기관 동반 매수 유입. 2026년 매출 전년 대비 대폭 성장 예상. 철도차량 사업도 병행.",
+    tags: ["K2전차", "폴란드계약", "지상무기", "유럽방산"],
+    sector: "방산"
+  },
+  {
+    name: "S-Oil",
+    code: "010950",
+    price: "98,200",
+    chg: "+22.8%",
+    chgDir: "up",
+    high5: "108,000",
+    low5: "78,000",
+    high52: "112,000",
+    low52: "54,000",
+    data: [62000, 64000, 66000, 68000, 70000, 72000, 75000, 80000, 88000, 97000, 98200, 98200, 98200],
+    desc: "<strong>정유·에너지 대형주.</strong> 유가 급등 시 정제 마진 확대 직접 수혜. 이란 긴장 고조 뉴스 당일 <strong style='color:var(--up)'>+28.45% 급등</strong>. 호르무즈 해협 차단 우려로 아시아 정유 마진 프리미엄 발생. 다만 원유 수입 원가 동반 상승 구조이므로 정제 마진 실현 타이밍 모니터링 필수.",
+    tags: ["정유", "정제마진", "유가수혜", "에너지"],
+    sector: "정유"
+  },
+  {
+    name: "삼성전자",
+    code: "005930",
+    price: "190,400",
+    chg: "+9.7%",
+    chgDir: "up",
+    high5: "198,000",
+    low5: "165,000",
+    high52: "210,000",
+    low52: "148,000",
+    data: [172000, 170000, 168000, 165000, 163000, 160000, 162000, 167000, 172000, 178000, 190400, 190400, 190400],
+    desc: "<strong>달러 강세 수혜 수출 대형주.</strong> 원화 약세 시 달러 환산 이익 증가 효과. 전쟁 초기 외국인 대규모 매도(-9.88%) 이후 반등. AI 메모리 수요(HBM) 구조적 성장 유효. 다만 중국 수출 제한 이슈와 AI 데이터센터 에너지 비용 증가는 리스크 요인.",
+    tags: ["반도체", "HBM", "달러강세수혜", "수출주"],
+    sector: "반도체"
+  },
+  {
+    name: "SK하이닉스",
+    code: "000660",
+    price: "942,000",
+    chg: "+12.7%",
+    chgDir: "up",
+    high5: "980,000",
+    low5: "800,000",
+    high52: "1,050,000",
+    low52: "680,000",
+    data: [850000, 840000, 830000, 820000, 810000, 800000, 810000, 830000, 860000, 900000, 942000, 942000, 942000],
+    desc: "<strong>AI 메모리 반도체 1위 HBM 공급사.</strong> 엔비디아향 HBM3E 독점 공급 지위 유지. 달러 강세 구조에서 수출 마진 개선 효과. 이란 전쟁 초기 급락(-11.5%) 이후 AI 수요 재확인 서 빠른 반등. 외국인 재매수 전환으로 기술적 회복세 진입.",
+    tags: ["HBM", "AI메모리", "엔비디아향", "달러수혜"],
+    sector: "반도체"
+  }
+];
+
+const bearishStocks = [
+  {
+    name: "대한항공",
+    code: "003490",
+    price: "22,850",
+    chg: "-6.8%",
+    chgDir: "down",
+    high5: "26,500",
+    low5: "21,500",
+    high52: "32,000",
+    low52: "19,500",
+    data: [28000, 28500, 29000, 28000, 27000, 26000, 25000, 24500, 24000, 23500, 22850, 22850, 22850],
+    desc: "<strong>항공업계 최대 리스크 노출.</strong> 항공유는 유류 비용의 25~30%를 차지. 유가 배럴당 30% 급등 시 연간 연료비 수천억 추가 부담 발생. 중동 노선 운항 제한·우회 항로 증가로 이중 비용 압박. 이란 전쟁 뉴스 당일 <strong style='color:var(--down)'>-6.76% 하락</strong>. 지정학 리스크 해소 전까지 실적 하방 리스크 유효.",
+    tags: ["항공유부담", "중동노선위험", "유가직격", "비용증가"],
+    sector: "항공"
+  },
+  {
+    name: "현대차",
+    code: "005380",
+    price: "198,500",
+    chg: "-4.9%",
+    chgDir: "down",
+    high5: "222,000",
+    low5: "190,000",
+    high52: "280,000",
+    low52: "180,000",
+    data: [240000, 238000, 235000, 228000, 220000, 215000, 210000, 205000, 200000, 195000, 198500, 198500, 198500],
+    desc: "<strong>수출 긍정 vs 내수·원가 부담 교차.</strong> 달러 강세는 수출 이익에 긍정적이나, 철강·부품 원자재 비용 상승이 상쇄 요인. 미국 관세 협상 불확실성 지속. 이란 전쟁 당일 <strong style='color:var(--down)'>-11.72% 급락</strong> 이후 부분 회복. 외국인 순매도 지속 중으로 수급 모니터링 필요.",
+    tags: ["원자재비용", "관세불확실", "수급부담", "이중압박"],
+    sector: "자동차"
+  }
+];
+
+// ─── 차트 생성 함수 ───
+function buildChart(canvasId, dataPoints, direction) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  const color = direction === 'up' ? '#00d97e' : '#f45b5b';
+  const colorFade = direction === 'up'
+    ? 'rgba(0,217,126,0.08)'
+    : 'rgba(244,91,91,0.08)';
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, 80);
+  gradient.addColorStop(0, direction === 'up' ? 'rgba(0,217,126,0.25)' : 'rgba(244,91,91,0.25)');
+  gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['3/1','3/2','3/3','3/4','3/5','3/6','3/7','3/8','3/9','3/10','3/11','3/12','3/13'],
+      datasets: [{
+        data: dataPoints,
+        borderColor: color,
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: gradient,
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        pointHoverBackgroundColor: color,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: {
+          label: ctx => ' ₩' + ctx.raw.toLocaleString()
+        },
+        backgroundColor: '#1e2330',
+        titleColor: '#9aa3b0',
+        bodyColor: '#fff',
+        borderColor: '#2d3444',
+        borderWidth: 1,
+        padding: 8,
+      }},
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      },
+      interaction: { mode: 'index', intersect: false }
+    }
+  });
+}
+
+// ─── 카드 렌더 함수 ───
+function renderCards(stocks, containerId) {
+  const container = document.getElementById(containerId);
+  stocks.forEach((s, i) => {
+    const id = `chart-${containerId}-${i}`;
+    const card = document.createElement('div');
+    card.className = `stock-card ${s.chgDir === 'up' ? 'bullish' : 'bearish'}`;
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <div class="stock-name">${s.name}</div>
+          <div class="stock-code">${s.code} · ${s.sector}</div>
+        </div>
+        <div class="price-block">
+          <div class="price">₩${s.price}</div>
+          <div class="change-badge ${s.chgDir}">${s.chg} <span style="font-size:10px">전일比</span></div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="${id}"></canvas>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="s-label">5일 HIGH</div>
+          <div class="s-val" style="color:var(--up)">₩${s.high5}</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">5일 LOW</div>
+          <div class="s-val" style="color:var(--down)">₩${s.low5}</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">52주 고</div>
+          <div class="s-val" style="color:var(--gold)">₩${s.high52}</div>
+        </div>
+      </div>
+      <div class="desc">
+        ${s.desc}
+        <div class="tags">${s.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+      </div>
+    `;
+    container.appendChild(card);
+
+    // 차트는 DOM 삽입 후 렌더
+    requestAnimationFrame(() => buildChart(id, s.data, s.chgDir));
+  });
+}
+
+renderCards(bullishStocks, 'bullish-grid');
+renderCards(bearishStocks, 'bearish-grid');
+</script>
+</body>
+</html>
