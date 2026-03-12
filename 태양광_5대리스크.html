@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 사업 5대 리스크 경보</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0B0F1A;
+  --surface: #111827;
+  --border: rgba(255,255,255,0.08);
+  --red:    #EF4444;
+  --orange: #F97316;
+  --yellow: #EAB308;
+  --amber:  #F59E0B;
+  --rose:   #F43F5E;
+  --white:  #FFFFFF;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* ── HEADER ── */
+.header {
+  position: relative;
+  padding: 56px 24px 48px;
+  text-align: center;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% -20%, rgba(239,68,68,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 10% 100%, rgba(249,115,22,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 100%, rgba(244,63,94,0.12) 0%, transparent 60%);
+}
+
+/* siren animation */
+.siren {
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 180px;
+  pointer-events: none;
+}
+.siren-ring {
+  position: absolute;
+  left: 50%; top: 50%;
+  border-radius: 50%;
+  border: 2px solid rgba(239,68,68,0.4);
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 2.4s ease-out infinite;
+}
+.siren-ring:nth-child(2) { animation-delay: 0.8s; }
+.siren-ring:nth-child(3) { animation-delay: 1.6s; }
+@keyframes ripple {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 0.8; width: 40px; height: 40px; }
+  100% { transform: translate(-50%,-50%) scale(1); opacity: 0; width: 260px; height: 260px; }
+}
+
+.warning-icon {
+  position: relative; z-index: 1;
+  font-size: 52px;
+  display: block;
+  margin-bottom: 16px;
+  animation: shake 3s ease-in-out infinite;
+}
+@keyframes shake {
+  0%,90%,100% { transform: rotate(0deg); }
+  92%          { transform: rotate(-6deg); }
+  96%          { transform: rotate(6deg); }
+}
+
+.header-eyebrow {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #FCA5A5;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 18px; border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  position: relative; z-index: 1;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 8vw, 72px);
+  letter-spacing: 4px;
+  line-height: 1;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #FCA5A5 0%, #EF4444 40%, #F97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-sub {
+  position: relative; z-index: 1;
+  font-size: 14px; color: rgba(255,255,255,0.5);
+  font-weight: 300; letter-spacing: 0.5px;
+  max-width: 480px; margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ── RISK METER BAR ── */
+.meter-wrap {
+  max-width: 860px; margin: 0 auto 56px;
+  padding: 0 24px;
+}
+.meter-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.meter-track {
+  height: 8px; background: rgba(255,255,255,0.08);
+  border-radius: 100px; overflow: hidden;
+}
+.meter-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #F59E0B 0%, #EF4444 60%, #F43F5E 100%);
+  border-radius: 100px;
+  animation: fill-meter 1.6s cubic-bezier(.4,0,.2,1) 0.3s forwards;
+}
+@keyframes fill-meter { to { width: 92%; } }
+
+/* ── GRID ── */
+.grid {
+  max-width: 860px; margin: 0 auto;
+  padding: 0 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 680px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* risk card spanning full width for #1 hero card */
+.card-hero { grid-column: 1 / -1; }
+
+/* ── CARD ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 28px 28px 24px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fade-up 0.55s ease forwards;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.15s; }
+.card:nth-child(3) { animation-delay: 0.25s; }
+.card:nth-child(4) { animation-delay: 0.35s; }
+.card:nth-child(5) { animation-delay: 0.45s; }
+@keyframes fade-up { to { opacity: 1; transform: translateY(0); } }
+
+/* top accent line */
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 22px 22px 0 0;
+}
+.accent-red    { --ac: #EF4444; }
+.accent-orange { --ac: #F97316; }
+.accent-yellow { --ac: #EAB308; }
+.accent-blue   { --ac: #3B82F6; }
+.accent-teal   { --ac: #14B8A6; }
+.card.accent-red::before    { background: linear-gradient(90deg,#EF4444,#F87171); }
+.card.accent-orange::before { background: linear-gradient(90deg,#F97316,#FB923C); }
+.card.accent-yellow::before { background: linear-gradient(90deg,#EAB308,#FDE047); }
+.card.accent-blue::before   { background: linear-gradient(90deg,#3B82F6,#93C5FD); }
+.card.accent-teal::before   { background: linear-gradient(90deg,#14B8A6,#5EEAD4); }
+
+/* bg glow */
+.card::after {
+  content: '';
+  position: absolute; bottom: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--ac) 0%, transparent 70%);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* card top row */
+.card-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.risk-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 8px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  border: 1px solid;
+}
+.accent-red .risk-badge    { background: rgba(239,68,68,0.12); color: #FCA5A5; border-color: rgba(239,68,68,0.3); }
+.accent-orange .risk-badge { background: rgba(249,115,22,0.12); color: #FDBA74; border-color: rgba(249,115,22,0.3); }
+.accent-yellow .risk-badge { background: rgba(234,179,8,0.12);  color: #FDE047; border-color: rgba(234,179,8,0.3); }
+.accent-blue .risk-badge   { background: rgba(59,130,246,0.12); color: #93C5FD; border-color: rgba(59,130,246,0.3); }
+.accent-teal .risk-badge   { background: rgba(20,184,166,0.12); color: #5EEAD4; border-color: rgba(20,184,166,0.3); }
+
+.card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px; line-height: 1;
+  opacity: 0.12;
+  letter-spacing: 2px;
+}
+
+/* big emoji icon */
+.card-icon {
+  font-size: 48px; line-height: 1;
+  margin-bottom: 12px;
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+}
+
+.card-title {
+  font-size: clamp(15px, 2.5vw, 18px);
+  font-weight: 700; line-height: 1.35;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.95);
+}
+
+.card-desc {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.58);
+  line-height: 1.78;
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+/* severity bar */
+.severity {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.severity-label {
+  font-size: 11px; color: rgba(255,255,255,0.4);
+  letter-spacing: 1px; white-space: nowrap;
+}
+.severity-track {
+  flex: 1; height: 5px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 100px; overflow: hidden;
+}
+.severity-fill {
+  height: 100%; border-radius: 100px;
+  transform-origin: left;
+  animation: grow-bar 1s ease 0.6s both;
+}
+@keyframes grow-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.accent-red .severity-fill    { background: #EF4444; width: 95%; }
+.accent-orange .severity-fill { background: #F97316; width: 82%; }
+.accent-yellow .severity-fill { background: #EAB308; width: 75%; }
+.accent-blue .severity-fill   { background: #3B82F6; width: 68%; }
+.accent-teal .severity-fill   { background: #14B8A6; width: 62%; }
+
+.severity-pct {
+  font-size: 12px; font-weight: 700;
+  min-width: 36px; text-align: right;
+}
+.accent-red .severity-pct    { color: #EF4444; }
+.accent-orange .severity-pct { color: #F97316; }
+.accent-yellow .severity-pct { color: #EAB308; }
+.accent-blue .severity-pct   { color: #93C5FD; }
+.accent-teal .severity-pct   { color: #5EEAD4; }
+
+/* divider */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 14px 0;
+}
+
+/* solution box */
+.solution {
+  background: rgba(255,255,255,0.04);
+  border-radius: 12px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--ac);
+}
+.solution-title {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  opacity: 0.5; margin-bottom: 7px;
+}
+.solution-text {
+  font-size: 13px; line-height: 1.65;
+  color: rgba(255,255,255,0.75);
+  font-weight: 400;
+}
+
+/* tag pills */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.tag {
+  font-size: 11px; font-weight: 600;
+  padding: 4px 11px; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.04);
+}
+
+/* hero card extras */
+.hero-graph {
+  margin: 18px 0 6px;
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  gap: 8px;
+  align-items: flex-end;
+  height: 80px;
+}
+.bar-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.bar {
+  width: 100%;
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  animation: grow-up 0.7s ease both;
+  min-width: 28px;
+}
+@keyframes grow-up { from { transform: scaleY(0); transform-origin: bottom; } }
+.bar:nth-child(1) { animation-delay: 0.1s; }
+.b1 { height: 72px; background: linear-gradient(180deg, #FB923C, #EA580C); animation-delay: 0.15s; }
+.b2 { height: 64px; background: linear-gradient(180deg, #F97316, #C2410C); animation-delay: 0.25s; }
+.b3 { height: 44px; background: linear-gradient(180deg, #EF4444, #991B1B); animation-delay: 0.35s; }
+.b4 { height: 36px; background: linear-gradient(180deg, #EF4444, #991B1B); animation-delay: 0.45s; }
+.b5 { height: 28px; background: linear-gradient(180deg, #DC2626, #7F1D1D); animation-delay: 0.55s; }
+.b6 { height: 24px; background: linear-gradient(180deg, #B91C1C, #450A0A); animation-delay: 0.65s; }
+.bar-year { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0px; }
+.graph-note {
+  font-size: 11px; color: rgba(255,255,255,0.35);
+  text-align: right; margin-top: 4px;
+}
+.hl-row {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px; margin-top: 18px;
+}
+.hl-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+}
+.hl-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px; line-height: 1;
+  color: #F87171;
+  letter-spacing: 1px;
+}
+.hl-desc { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; line-height: 1.4; }
+
+/* checklist */
+.chk-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-top: 14px; }
+.chk-list li {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 13px; color: rgba(255,255,255,0.72); line-height: 1.5;
+}
+.chk-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  margin-top: 6px; flex-shrink: 0;
+}
+.accent-orange .chk-dot { background: #F97316; }
+.accent-yellow .chk-dot { background: #EAB308; }
+.accent-blue   .chk-dot { background: #3B82F6; }
+.accent-teal   .chk-dot { background: #14B8A6; }
+
+/* ── FOOTER ── */
+.footer {
+  max-width: 860px; margin: 0 auto 60px;
+  padding: 0 24px;
+}
+.footer-inner {
+  background: linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(249,115,22,0.08) 100%);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 22px;
+  padding: 34px 36px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; align-items: center;
+}
+@media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; } }
+.footer-text h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.footer-text p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; font-weight: 300; }
+.footer-cta {
+  display: inline-block;
+  background: linear-gradient(135deg, #EF4444, #F97316);
+  color: white; font-size: 13px; font-weight: 700;
+  padding: 12px 24px; border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(239,68,68,0.35);
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="siren">
+    <div class="siren-ring"></div>
+    <div class="siren-ring"></div>
+    <div class="siren-ring"></div>
+  </div>
+  <span class="warning-icon">⚠️</span>
+  <div class="header-eyebrow">🔴 투자 전 반드시 확인</div>
+  <h1 class="header-title">5대 리스크 경보</h1>
+  <p class="header-sub">태양광 사업, 장점만 보고 뛰어들면 큰 손해를 볼 수 있습니다.<br>이 5가지 함정을 먼저 이해하고 대비하세요.</p>
+</header>
+
+<!-- RISK METER -->
+<div class="meter-wrap">
+  <div class="meter-label">
+    <span>낮은 위험</span>
+    <span>현재 시장 위험도</span>
+    <span>높은 위험</span>
+  </div>
+  <div class="meter-track"><div class="meter-fill"></div></div>
+</div>
+
+<!-- CARDS GRID -->
+<div class="grid">
+
+  <!-- ① SMP HERO CARD -->
+  <div class="card accent-red card-hero">
+    <div class="card-top">
+      <span class="risk-badge">① 최고 위험</span>
+      <span class="card-num">01</span>
+    </div>
+    <span class="card-icon">📉</span>
+    <h2 class="card-title">SMP 하락 리스크 — 전력 도매가격 변동</h2>
+    <p class="card-desc">전력 도매가격(SMP)은 에너지 가격과 기저발전 비중에 따라 크게 변동합니다. 2022년 고점 이후 2023~2024년 SMP가 급격히 하락하면서 일부 소규모 발전사업자의 수익이 기대치에 크게 못 미쳤습니다. 태양광 투자를 SMP에만 의존하면 수익 예측이 불가능합니다.</p>
+
+    <!-- mini bar chart -->
+    <div class="hero-graph">
+      <div class="bar-wrap"><div class="bar b1"></div><span class="bar-year">2021</span></div>
+      <div class="bar-wrap"><div class="bar b2"></div><span class="bar-year">2022</span></div>
+      <div class="bar-wrap"><div class="bar b3"></div><span class="bar-year">2023</span></div>
+      <div class="bar-wrap"><div class="bar b4"></div><span class="bar-year">2024</span></div>
+      <div class="bar-wrap"><div class="bar b5"></div><span class="bar-year">2025</span></div>
+      <div class="bar-wrap"><div class="bar b6"></div><span class="bar-year">2026↓</span></div>
+    </div>
+    <p class="graph-note">※ SMP 가격 추이 (개념적 도식)</p>
+
+    <div class="hl-row">
+      <div class="hl-box">
+        <div class="hl-val">-40%</div>
+        <div class="hl-desc">고점 대비 SMP<br>하락 폭 (추정)</div>
+      </div>
+      <div class="hl-box">
+        <div class="hl-val">변동성</div>
+        <div class="hl-desc">계절·연료비에<br>따른 가격 변동</div>
+      </div>
+      <div class="hl-box">
+        <div class="hl-val">장기PPA</div>
+        <div class="hl-desc">고정 단가<br>확보가 핵심 대안</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="solution">
+      <div class="solution-title">✅ 대응 전략</div>
+      <div class="solution-text">SMP 변동에 흔들리지 않으려면 <strong>장기 PPA(전력구매계약)</strong>로 고정 단가를 확보하는 것이 핵심입니다. RE100 선언 기업과의 직접 PPA 계약을 통해 10~20년 고정 단가를 협상하세요. SMP보다 높은 단가에 장기 안정 수익을 동시에 잡을 수 있습니다.</div>
+    </div>
+    <div class="tags">
+      <span class="tag">⚡ SMP 변동</span>
+      <span class="tag">📋 장기 PPA</span>
+      <span class="tag">🌍 RE100 직접계약</span>
+      <span class="tag">🔒 고정단가 확보</span>
+    </div>
+  </div>
+
+  <!-- ② 설치업체 -->
+  <div class="card accent-orange">
+    <div class="card-top">
+      <span class="risk-badge">② 높은 위험</span>
+      <span class="card-num">02</span>
+    </div>
+    <span class="card-icon">🔧</span>
+    <h2 class="card-title">설치업체 선정 리스크</h2>
+    <p class="card-desc">태양광 시장에는 과장 광고와 부실 시공이 적지 않습니다. 설치 후 수년 내 인버터 불량·모듈 출력 저하가 발생해도 업체가 폐업하면 A/S 자체가 불가능해집니다.</p>
+
+    <div class="severity">
+      <span class="severity-label">위험도</span>
+      <div class="severity-track"><div class="severity-fill"></div></div>
+      <span class="severity-pct">82%</span>
+    </div>
+
+    <ul class="chk-list">
+      <li><div class="chk-dot"></div> 한국에너지공단 <strong>공식 등록 업체</strong>인지 반드시 확인</li>
+      <li><div class="chk-dot"></div> 설치 실적 100건 이상, <strong>준공 사진·수익 자료 요청</strong></li>
+      <li><div class="chk-dot"></div> 계약서에 <strong>10년 이상 유지보수(A/S) 조항</strong> 명시</li>
+      <li><div class="chk-dot"></div> 3개 업체 이상 <strong>견적 비교</strong> 필수</li>
+    </ul>
+
+    <div class="divider"></div>
+    <div class="solution">
+      <div class="solution-title">✅ 대응 전략</div>
+      <div class="solution-text">계약서에 <strong>장기 유지보수 조항</strong>을 반드시 포함하고, 모듈·인버터 제조사의 <strong>직접 보증(Manufacturer Warranty)</strong>도 함께 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- ③ 건강보험료 -->
+  <div class="card accent-yellow">
+    <div class="card-top">
+      <span class="risk-badge">③ 주의</span>
+      <span class="card-num">03</span>
+    </div>
+    <span class="card-icon">🏥</span>
+    <h2 class="card-title">건강보험료 피부양자 자격 상실</h2>
+    <p class="card-desc">연간 사업소득이 일정 기준을 초과하면 건강보험 피부양자 자격을 잃고, 지역가입자로 전환되어 보험료가 수십만 원 오를 수 있습니다.</p>
+
+    <div class="severity">
+      <span class="severity-label">위험도</span>
+      <div class="severity-track"><div class="severity-fill"></div></div>
+      <span class="severity-pct">75%</span>
+    </div>
+
+    <ul class="chk-list">
+      <li><div class="chk-dot"></div> 사업·금융소득 합산 연 <strong>2,000만 원 초과 시</strong> 자격 상실</li>
+      <li><div class="chk-dot"></div> 지역가입자 전환 시 <strong>월 수십만 원 추가 부담</strong> 발생</li>
+      <li><div class="chk-dot"></div> <strong>세무사 사전 상담</strong>으로 소득 구조 설계 필수</li>
+      <li><div class="chk-dot"></div> 법인 설립 통한 <strong>개인 소득 분리</strong> 검토</li>
+    </ul>
+
+    <div class="divider"></div>
+    <div class="solution">
+      <div class="solution-title">✅ 대응 전략</div>
+      <div class="solution-text">수익 발생 전에 세무사에게 <strong>소득 구조 시뮬레이션</strong>을 의뢰하고, 필요하다면 <strong>법인 설립</strong>으로 개인 사업소득을 분산하는 전략을 검토하세요.</div>
+    </div>
+  </div>
+
+  <!-- ④ 인허가 -->
+  <div class="card accent-blue">
+    <div class="card-top">
+      <span class="risk-badge">④ 복잡</span>
+      <span class="card-num">04</span>
+    </div>
+    <span class="card-icon">📋</span>
+    <h2 class="card-title">인허가 및 민원 문제</h2>
+    <p class="card-desc">주거지 인근 태양광 설치는 주민 민원이 발생할 수 있고, 토지 용도 변경·농지전용 허가 등 행정 절차가 복잡합니다. 인허가 지연만으로 수개월의 수익 손실이 발생할 수 있습니다.</p>
+
+    <div class="severity">
+      <span class="severity-label">위험도</span>
+      <div class="severity-track"><div class="severity-fill"></div></div>
+      <span class="severity-pct">68%</span>
+    </div>
+
+    <ul class="chk-list">
+      <li><div class="chk-dot"></div> 착공 전 지자체 <strong>건축·도시계획과 사전 협의</strong></li>
+      <li><div class="chk-dot"></div> 농지 사용 시 <strong>농지전용허가</strong> 또는 일시사용 신고 필요</li>
+      <li><div class="chk-dot"></div> 주민 동의·설명회 등 <strong>사전 민원 예방</strong> 활동 권장</li>
+      <li><div class="chk-dot"></div> 인허가 대행 업체 활용 시 <strong>계약서에 일정 명시</strong></li>
+    </ul>
+
+    <div class="divider"></div>
+    <div class="solution">
+      <div class="solution-title">✅ 대응 전략</div>
+      <div class="solution-text">설치 전 반드시 <strong>지자체 담당 부서(건축과·환경과)를 직접 방문</strong>해 사전 적합 여부를 확인하세요. 인허가 전문 대행사를 활용하면 시간 단축에 도움이 됩니다.</div>
+    </div>
+  </div>
+
+  <!-- ⑤ 이격거리 -->
+  <div class="card accent-teal">
+    <div class="card-top">
+      <span class="risk-badge">⑤ 법규 확인</span>
+      <span class="card-num">05</span>
+    </div>
+    <span class="card-icon">📏</span>
+    <h2 class="card-title">이격거리 및 지역별 규제</h2>
+    <p class="card-desc">각 지자체별로 태양광 설치 이격거리 기준이 다르고, 일부 지역은 경관 보호를 이유로 설치 자체를 제한합니다. 부지 매입 후 규제를 발견하면 돌이킬 수 없습니다.</p>
+
+    <div class="severity">
+      <span class="severity-label">위험도</span>
+      <div class="severity-track"><div class="severity-fill"></div></div>
+      <span class="severity-pct">62%</span>
+    </div>
+
+    <ul class="chk-list">
+      <li><div class="chk-dot"></div> 주거지·도로·하천으로부터 <strong>이격거리 조례</strong> 사전 확인</li>
+      <li><div class="chk-dot"></div> 경관·생태 보전지구 등 <strong>설치 금지 구역</strong> 여부 확인</li>
+      <li><div class="chk-dot"></div> 지역별 조례는 <strong>국가법령정보센터(law.go.kr)</strong>에서 검색 가능</li>
+      <li><div class="chk-dot"></div> 부지 계약 전 <strong>행정예고·규제 변경 동향</strong> 모니터링</li>
+    </ul>
+
+    <div class="divider"></div>
+    <div class="solution">
+      <div class="solution-title">✅ 대응 전략</div>
+      <div class="solution-text">부지 계약 전, 해당 지자체 조례와 도시계획 확인은 필수입니다. <strong>국가법령정보센터(law.go.kr)</strong>에서 지역 태양광 조례를 검색하거나, 지자체 담당자에게 직접 문의하세요.</div>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-text">
+      <h3>⚡ 리스크를 알면 수익이 보인다</h3>
+      <p>5가지 리스크를 미리 파악하고 대비책을 갖춘 투자자만이<br>태양광 사업에서 안정적인 노후 수익을 만들 수 있습니다.</p>
+    </div>
+    <div class="footer-cta">5단계 전략 보러가기 →</div>
+  </div>
+</div>
+
+</body>
+</html>
