@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="기름 싸게 넣는 법 6가지 완전 상세판 - 오피넷, 셀프주유소, 카드할인, 포인트앱, 타이밍 전략, 에코드라이빙까지">
+<title>기름 싸게 넣는 법 6가지 완전 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --bg2: #161616;
+    --card: #1c1c1c;
+    --card-hover: #222222;
+    --border: #2a2a2a;
+    --accent: #f59e0b;
+    --accent2: #ef4444;
+    --accent3: #10b981;
+    --text: #e8e8e8;
+    --text-muted: #888;
+    --text-dim: #555;
+    --num-font: 'Bebas Neue', sans-serif;
+    --body-font: 'Noto Sans KR', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 60px 48px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 30%, rgba(245,158,11,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(239,68,68,0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245,158,11,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 40%, black 80%, transparent 100%);
+  }
+
+  .hero-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--num-font);
+    font-size: clamp(64px, 12vw, 160px);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  .hero-title span {
+    -webkit-text-stroke: 2px var(--accent);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.6s forwards;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.8s forwards;
+  }
+
+  .tag {
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .scroll-hint::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--text-dim);
+  }
+
+  /* ── SECTION LAYOUT ── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── CHAPTER CARD ── */
+  .chapter {
+    padding: 80px 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .chapter.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chapter-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 48px;
+  }
+
+  .chapter-num {
+    font-family: var(--num-font);
+    font-size: 100px;
+    line-height: 0.85;
+    color: var(--accent);
+    opacity: 0.2;
+    flex-shrink: 0;
+    width: 80px;
+    transition: opacity 0.3s;
+  }
+
+  .chapter:hover .chapter-num { opacity: 0.5; }
+
+  .chapter-meta { flex: 1; }
+
+  .chapter-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .chapter-title {
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .chapter-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* ── CONTENT BLOCKS ── */
+  .content-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .content-block:hover {
+    background: var(--card-hover);
+    border-color: #333;
+  }
+
+  .block-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .block-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .content-block p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+
+  /* ── APP LIST ── */
+  .app-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .app-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .app-list li::before {
+    content: '→';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .app-list strong { color: var(--text); }
+
+  /* ── TABLE ── */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .styled-table thead tr {
+    background: rgba(245,158,11,0.12);
+  }
+
+  .styled-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .styled-table td {
+    padding: 12px 16px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .styled-table tbody tr:last-child td { border-bottom: none; }
+
+  .styled-table tbody tr {
+    transition: background 0.15s;
+  }
+
+  .styled-table tbody tr:hover {
+    background: rgba(255,255,255,0.03);
+  }
+
+  .styled-table td strong { color: var(--text); }
+
+  .highlight { color: var(--accent); font-weight: 700; }
+  .highlight-green { color: var(--accent3); font-weight: 700; }
+
+  /* ── TIP BOX ── */
+  .tip-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(245,158,11,0.07);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 16px;
+  }
+
+  .tip-box.warning {
+    background: rgba(239,68,68,0.07);
+    border-color: rgba(239,68,68,0.2);
+  }
+
+  .tip-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1.5;
+  }
+
+  .tip-box p {
+    font-size: 13px;
+    color: var(--text-muted) !important;
+    line-height: 1.75;
+  }
+
+  .tip-box strong { color: var(--accent) !important; }
+  .tip-box.warning strong { color: #ef4444 !important; }
+
+  /* ── TIMING BLOCKS ── */
+  .timing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .timing-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .timing-card .timing-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .timing-card.down .timing-label { color: var(--accent3); }
+  .timing-card.up .timing-label { color: var(--accent2); }
+
+  .timing-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── SUMMARY BOX ── */
+  .summary-section {
+    padding: 80px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .summary-card {
+    background: linear-gradient(135deg, rgba(245,158,11,0.1) 0%, rgba(239,68,68,0.05) 100%);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+  }
+
+  .summary-card h2 {
+    font-family: var(--num-font);
+    font-size: 48px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .summary-card p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.8;
+  }
+
+  .savings-num {
+    font-family: var(--num-font);
+    font-size: 80px;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .savings-num span { color: var(--accent); }
+
+  /* ── HASHTAG FOOTER ── */
+  .footer-tags {
+    padding: 48px 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-tags h3 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hashtag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hashtag {
+    font-size: 12px;
+    color: var(--text-dim);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .hashtag:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { padding: 40px 24px 48px; }
+    .chapter-header { flex-direction: column; gap: 12px; }
+    .chapter-num { font-size: 60px; }
+    .timing-grid { grid-template-columns: 1fr; }
+    .content-block { padding: 20px; }
+    .summary-card { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">기름값 상한제 시대의 생존 가이드</div>
+  <h1 class="hero-title">기름<br><span>싸게</span><br>넣는 법</h1>
+  <p class="hero-sub">오피넷부터 에코드라이빙까지 — 6가지 완전 상세 전략으로 연간 30~50만 원을 아끼세요.</p>
+  <div class="hero-tags">
+    <span class="tag">오피넷</span>
+    <span class="tag">알뜰주유소</span>
+    <span class="tag">카드 할인</span>
+    <span class="tag">포인트 적립</span>
+    <span class="tag">타이밍 전략</span>
+    <span class="tag">에코드라이빙</span>
+  </div>
+  <div class="scroll-hint">스크롤하여 읽기</div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 01 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">01</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">앱 활용</div>
+        <h2 class="chapter-title">앱 비교로<br>최저가 주유소 찾기</h2>
+        <p class="chapter-desc">같은 동네 주유소라도 리터당 100~200원 차이가 납니다. 1분 검색이 한 달 기름값을 바꿉니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-title">오피넷 (Opinet) — 가장 기본, 가장 정확</div>
+      <p>한국석유공사가 운영하는 공식 유가 정보 앱. 현재 위치 기준 반경을 설정하면 주유소별 실시간 가격이 지도에 표시됩니다. <strong style="color:#e8e8e8">셀프 주유소 + 알뜰 주유소 필터를 동시에 체크</strong>하면 최저가 후보를 빠르게 추릴 수 있습니다. '주간 유가 동향' 그래프로 2~4주 추이도 파악 가능합니다.</p>
+    </div>
+
+    <div class="content-block">
+      <div class="block-title">추가 앱 — 이동 중 활용</div>
+      <ul class="app-list">
+        <li><strong>카카오맵 / 네이버지도</strong> — 주유소 검색 시 현재 유가가 함께 표시됩니다. 가장 접근하기 쉬운 방법입니다.</li>
+        <li><strong>티맵 주유 기능</strong> — 목적지까지의 경로 위에서 가장 저렴한 주유소를 자동 안내합니다. 장거리 운전 전 필수 확인.</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <p><strong>실전 팁:</strong> 오피넷에서 '셀프 주유소'와 '알뜰 주유소' 필터를 동시에 체크하면 최저가 후보를 가장 빠르게 추릴 수 있습니다.</p>
+    </div>
+  </article>
+</div>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 02 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">02</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">주유소 선택</div>
+        <h2 class="chapter-title">셀프·알뜰 주유소<br>적극 활용</h2>
+        <p class="chapter-desc">브랜드 없이도 품질은 같습니다. 인건비와 브랜드 비용을 아낀 만큼 가격이 내려옵니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>주유소 유형</th>
+            <th>절감 효과</th>
+            <th>특징</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>셀프 주유소</strong></td>
+            <td><span class="highlight">리터당 40~80원</span></td>
+            <td>직접 주유, 인건비 절감분 반영</td>
+          </tr>
+          <tr>
+            <td><strong>알뜰 주유소 (농협·자체 브랜드)</strong></td>
+            <td><span class="highlight">리터당 50~120원</span></td>
+            <td>정유사 브랜드 비용 없음, 동일 품질</td>
+          </tr>
+          <tr>
+            <td><strong>고속도로 셀프 주유소</strong></td>
+            <td><span class="highlight">리터당 80~150원</span></td>
+            <td>대량 유통 구조, 졸음 쉼터 인근 더 저렴</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box warning">
+      <span class="tip-icon">⚠️</span>
+      <p><strong>주의:</strong> 고속도로 주유소는 졸음 쉼터 인근 알뜰 주유소가 일반 고속도로 주유소보다 훨씬 저렴한 경우가 많습니다. 진입 전 오피넷으로 미리 확인하세요.</p>
+    </div>
+  </article>
+</div>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 03 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">03</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">카드 전략</div>
+        <h2 class="chapter-title">신용카드·체크카드<br>할인 극대화</h2>
+        <p class="chapter-desc">연간 절약 효과가 가장 큰 방법 중 하나입니다. 주유 전용 카드 하나면 연 10만 원 이상 절약 가능합니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <table class="styled-table">
+        <thead>
+          <tr><th>카드사</th><th>대표 혜택</th><th>조건</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>현대카드</strong></td><td><span class="highlight">리터당 60~80원 할인</span></td><td>전월 실적 30만 원 이상</td></tr>
+          <tr><td><strong>삼성카드</strong></td><td><span class="highlight">리터당 60원 캐시백</span></td><td>특정 주유소 제휴</td></tr>
+          <tr><td><strong>KB국민카드</strong></td><td><span class="highlight">리터당 100원 할인</span></td><td>전월 실적 조건 있음</td></tr>
+          <tr><td><strong>신한카드</strong></td><td><span class="highlight">리터당 60원 + 포인트</span></td><td>주유 전용 상품 존재</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-block">
+      <div class="block-title">카드 2장 병행 전략</div>
+      <ul class="app-list">
+        <li><strong>주유 전용 카드</strong>를 따로 만드세요. 범용 카드보다 주유 할인율이 훨씬 높습니다.</li>
+        <li><strong>법인카드 사용자</strong>라면 주유 영수증 보관 + 세금계산서 발급으로 부가세 환급도 받을 수 있습니다.</li>
+        <li>주유 할인 카드로 결제 후, <strong>포인트 적립 카드</strong>를 추가 제시하면 이중 혜택을 받을 수 있는 주유소도 있습니다.</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <p><strong>연간 절약 계산:</strong> 월 100리터 주유 × 리터당 80원 할인 = 월 8,000원 → 연간 <strong>96,000원</strong> 절약</p>
+    </div>
+  </article>
+</div>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 04 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">04</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">포인트 적립</div>
+        <h2 class="chapter-title">정유사 앱 포인트<br>적립 & 즉시 할인</h2>
+        <p class="chapter-desc">앱 가입만 해도 웰컴 포인트 5,000~10,000원. 첫 주유부터 즉시 할인 효과를 받을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <ul class="app-list">
+        <li><strong>SK에너지 'OK캐쉬백'</strong> — SK 주유소에서 리터당 포인트 적립, 전국 가맹점에서 사용 가능</li>
+        <li><strong>GS칼텍스 'GS&POINT'</strong> — GS25 편의점, GS더프레시 마트 등과 포인트 공유</li>
+        <li><strong>S-OIL 'S-OIL 앱'</strong> — 주유 시 보너스 카드 적립 + 세차·편의점 제휴 할인</li>
+        <li><strong>현대오일뱅크 'Hi-Pass'</strong> — 고속도로 하이패스 포인트와 연동 가능</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <p><strong>꿀팁:</strong> 앱 첫 가입 시 제공되는 <strong>웰컴 포인트(5,000~10,000포인트)</strong>를 활용하면 첫 주유부터 즉시 할인 효과를 볼 수 있습니다.</p>
+    </div>
+  </article>
+</div>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 05 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">05</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">타이밍</div>
+        <h2 class="chapter-title">주유 타이밍 전략<br>— 언제 넣어야 유리한가?</h2>
+        <p class="chapter-desc">기름값 상한제 시행 이후 더욱 중요해진 전략. 2주 단위 고시 주기를 읽으면 가격 차이가 납니다.</p>
+      </div>
+    </div>
+
+    <div class="timing-grid">
+      <div class="timing-card down">
+        <div class="timing-label">▼ 유가 하락 국면</div>
+        <p>상한가는 2주마다 재조정됩니다. 유가가 내려가는 추세라면 이번 주보다 <strong style="color:#10b981">다음 주가 더 저렴</strong>할 가능성이 높습니다. 여유가 있다면 기다렸다가 고시 가격이 내려간 직후 주유하세요.</p>
+      </div>
+      <div class="timing-card up">
+        <div class="timing-label">▲ 유가 상승 국면</div>
+        <p>반대로 유가가 오르는 추세라면 <strong style="color:#ef4444">지금 가득 채우는 것</strong>이 유리합니다. 2주 후에는 상한가가 올라있을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block" style="margin-top:16px">
+      <div class="block-title">이른 아침 주유의 효과</div>
+      <p>오전 6~8시에 주유하면 기온이 낮아 연료 밀도가 높습니다. 같은 비용으로 실질적으로 더 많은 에너지를 주유할 수 있습니다. 효과는 미미하지만, 장거리 운전자에게는 참고할 만한 팁입니다.</p>
+    </div>
+
+    <div class="tip-box">
+      <span class="tip-icon">💡</span>
+      <p><strong>유가 모니터링:</strong> 오피넷 앱의 '주간 유가 동향' 그래프를 보면 최근 2~4주 추이를 쉽게 파악할 수 있습니다.</p>
+    </div>
+  </article>
+</div>
+
+<hr class="section-divider">
+
+<!-- CHAPTER 06 -->
+<div class="section">
+  <article class="chapter" data-chapter>
+    <div class="chapter-header">
+      <div class="chapter-num">06</div>
+      <div class="chapter-meta">
+        <div class="chapter-label">연비 향상</div>
+        <h2 class="chapter-title">에코 드라이빙으로<br>연비 극대화</h2>
+        <p class="chapter-desc">기름을 아무리 싸게 넣어도, 덜 쓰는 것이 가장 확실한 절약입니다. 습관 하나가 연비 20%를 바꿉니다.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <table class="styled-table">
+        <thead>
+          <tr><th>실천 방법</th><th>연비 개선 효과</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>급가속·급제동 자제</td><td><span class="highlight">15~20%</span> 향상</td></tr>
+          <tr><td>타이어 공기압 적정 유지</td><td><span class="highlight-green">3~5%</span> 향상</td></tr>
+          <tr><td>에어컨 사용 최적화 (창문 vs A/C 전략)</td><td><span class="highlight-green">5~10%</span> 향상</td></tr>
+          <tr><td>불필요한 짐 제거 (10kg 감량 시)</td><td><span class="highlight-green">1~2%</span> 향상</td></tr>
+          <tr><td>엔진 예열 최소화 (30초 내)</td><td><span class="highlight-green">3~4%</span> 향상</td></tr>
+          <tr><td>정속 주행 (크루즈 컨트롤 활용)</td><td><span class="highlight">7~14%</span> 향상</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="content-block">
+      <div class="block-title">에어컨 전략 상세</div>
+      <ul class="app-list">
+        <li><strong>시속 80km 이하</strong> — 창문을 여는 것이 공기 저항이 적어 에어컨보다 연비에 유리합니다.</li>
+        <li><strong>시속 80km 이상 고속 주행</strong> — 창문을 닫고 에어컨을 사용하는 것이 공기 저항 면에서 더 효율적입니다.</li>
+      </ul>
+    </div>
+  </article>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary-section">
+  <div class="summary-card">
+    <h2>6가지 전략 모두 실천 시</h2>
+    <div class="savings-num">30<span>~</span>50<span>만 원</span></div>
+    <p>연간 절약 가능 금액 (동일 주행 거리 기준)<br>카드 할인 + 알뜰 주유 + 에코드라이빙 복합 적용 시</p>
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:8px;">
+      <span class="tag" style="font-size:13px; padding:7px 18px;">오피넷으로 최저가 확인</span>
+      <span class="tag" style="font-size:13px; padding:7px 18px;">주유 전용 카드 발급</span>
+      <span class="tag" style="font-size:13px; padding:7px 18px;">에코드라이빙 습관화</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER HASHTAGS -->
+<div class="footer-tags">
+  <h3>관련 해시태그</h3>
+  <div class="hashtag-cloud">
+    <span class="hashtag">#기름싸게넣는법</span>
+    <span class="hashtag">#주유비절약</span>
+    <span class="hashtag">#오피넷활용</span>
+    <span class="hashtag">#알뜰주유소</span>
+    <span class="hashtag">#주유카드할인</span>
+    <span class="hashtag">#에코드라이빙</span>
+    <span class="hashtag">#연비향상</span>
+    <span class="hashtag">#기름값상한제</span>
+    <span class="hashtag">#셀프주유소</span>
+    <span class="hashtag">#주유포인트적립</span>
+    <span class="hashtag">#유가절약</span>
+    <span class="hashtag">#생활비절약</span>
+  </div>
+  <p style="margin-top:32px; font-size:11px; color:var(--text-dim); line-height:1.8;">
+    본 콘텐츠는 기름값 상한제 관련 소비자 정보 제공을 목적으로 작성되었습니다. 주유소 가격 및 카드 혜택은 수시로 변경될 수 있으니, 최신 정보는 오피넷(www.opinet.co.kr) 및 각 카드사 홈페이지를 통해 확인하시기 바랍니다.
+  </p>
+</div>
+
+<script>
+  // Intersection Observer for chapter reveal
+  const chapters = document.querySelectorAll('[data-chapter]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  chapters.forEach(ch => observer.observe(ch));
+</script>
+</body>
+</html>
