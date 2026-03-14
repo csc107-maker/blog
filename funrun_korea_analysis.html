@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 펀드런, 한국에 미치는 영향 분석 | EcoSolution</title>
+<meta name="description" content="미국 사모대출 펀드런이 한국 금융시장에 미치는 3가지 충격 경로와 업종별 영향 분석. 위험 종목과 반사이익 종목 완전 정리.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080e0a;
+  --bg2: #0d1610;
+  --bg3: #111d14;
+  --bg4: #172318;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8f0e9;
+  --text2: #9ab09c;
+  --text3: #5a7a5c;
+  --green: #3ddc6a;
+  --green2: #1a9e42;
+  --green3: #0d5c24;
+  --red: #ff4d4d;
+  --red2: #c23030;
+  --red3: #5c1a1a;
+  --amber: #f5c842;
+  --amber2: #b8900e;
+  --amber3: #4a380a;
+  --blue: #4da6ff;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Noto Sans KR', sans-serif;
+  --serif: 'Noto Serif KR', serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.8;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ── 상단 경보 배너 ── */
+.alert-bar {
+  background: var(--red2);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 8px 20px;
+  text-transform: uppercase;
+  animation: pulse-bar 3s ease-in-out infinite;
+}
+@keyframes pulse-bar { 0%,100%{opacity:1} 50%{opacity:.75} }
+
+/* ── 헤더 ── */
+.site-header {
+  border-bottom: 1px solid var(--border2);
+  padding: 18px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg2);
+}
+.logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+.header-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+}
+
+/* ── 히어로 ── */
+.hero {
+  position: relative;
+  padding: 72px 48px 60px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,77,77,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: blink 1.2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: 36px;
+  line-height: 1.3;
+  color: #fff;
+  max-width: 700px;
+  margin-bottom: 20px;
+  word-break: keep-all;
+}
+.hero h1 em {
+  color: var(--red);
+  font-style: normal;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--text2);
+  max-width: 580px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+.stat-item {
+  border-left: 2px solid var(--border2);
+  padding-left: 18px;
+}
+.stat-num {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--red);
+  display: block;
+  line-height: 1.1;
+}
+.stat-num.green { color: var(--green); }
+.stat-num.amber { color: var(--amber); }
+.stat-label {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: .5px;
+  margin-top: 4px;
+}
+
+/* ── 본문 래퍼 ── */
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+@media(max-width:640px){ .wrap { padding: 0 20px; } .hero { padding: 48px 20px 40px; } .site-header { padding: 16px 20px; } }
+
+/* ── 섹션 ── */
+.section {
+  padding: 64px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 28px;
+  word-break: keep-all;
+}
+
+p { color: var(--text2); margin-bottom: 16px; word-break: keep-all; line-height: 1.85; }
+
+/* ── 충격 경로 3가지 ── */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+@media(max-width:700px){ .impact-grid { grid-template-columns: 1fr; } }
+
+.impact-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s, transform .25s;
+}
+.impact-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-3px);
+}
+.impact-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+.impact-card.danger::before { background: var(--red2); }
+.impact-card.warning::before { background: var(--amber2); }
+.impact-card.info::before { background: #3a6daa; }
+
+.impact-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.impact-card.danger .impact-num { color: var(--red); }
+.impact-card.warning .impact-num { color: var(--amber); }
+.impact-card.info .impact-num { color: var(--blue); }
+
+.impact-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 12px;
+  word-break: keep-all;
+}
+.impact-body {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.75;
+  word-break: keep-all;
+  margin: 0;
+}
+
+/* ── 충격 수치 강조 ── */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(255,77,77,0.06), rgba(255,77,77,0.02));
+  border: 1px solid rgba(255,77,77,0.2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin: 28px 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.hl-number {
+  font-family: var(--mono);
+  font-size: 42px;
+  color: var(--red);
+  font-weight: 500;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.hl-desc { font-size: 14px; color: var(--text2); word-break: keep-all; }
+.hl-desc strong { color: var(--text); font-weight: 700; }
+
+/* ── 업종 분석 테이블 ── */
+.sector-wrap { margin: 32px 0; }
+
+.sector-group {
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.sector-header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+.sector-group.danger .sector-header { background: var(--red3); color: var(--red); }
+.sector-group.neutral .sector-header { background: var(--amber3); color: var(--amber); }
+.sector-group.gain .sector-header { background: var(--green3); color: var(--green); }
+
+.risk-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.danger .risk-dot { background: var(--red); box-shadow: 0 0 6px var(--red); }
+.neutral .risk-dot { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.gain .risk-dot { background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+.sector-item {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+.sector-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.sector-item-body {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  word-break: keep-all;
+  margin: 0;
+}
+
+/* ── 종목 카드 그리드 ── */
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+@media(max-width:500px){ .stock-grid { grid-template-columns: 1fr; } }
+
+.stock-card {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color .2s;
+}
+.stock-card:hover { border-color: var(--green2); }
+
+.stock-name {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stock-badge {
+  font-size: 9px;
+  background: rgba(61,220,106,0.12);
+  color: var(--green);
+  border: 1px solid rgba(61,220,106,0.25);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: .5px;
+}
+.stock-badge.amber { background: rgba(245,200,66,0.12); color: var(--amber); border-color: rgba(245,200,66,0.25); }
+
+.stock-reason {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin: 0;
+  word-break: keep-all;
+}
+
+/* ── 리스크 종목 카드 ── */
+.risk-stock-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+@media(max-width:500px){ .risk-stock-grid { grid-template-columns: 1fr; } }
+
+.risk-stock-card {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  transition: border-color .2s;
+}
+.risk-stock-card:hover { border-color: var(--red2); }
+
+.risk-stock-name {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--red);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.risk-stock-reason {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin: 0;
+  word-break: keep-all;
+}
+
+/* ── 경보 수준 게이지 ── */
+.gauge-wrap {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  margin: 32px 0;
+}
+.gauge-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text3);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.gauge-label {
+  font-size: 13px;
+  color: var(--text);
+  width: 170px;
+  flex-shrink: 0;
+  word-break: keep-all;
+}
+.gauge-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.gauge-bar {
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  animation: grow .9s cubic-bezier(.4,0,.2,1) both;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes grow { from{width:0} }
+.gauge-bar.red { background: var(--red2); }
+.gauge-bar.amber { background: var(--amber2); }
+.gauge-bar.green { background: var(--green2); }
+.gauge-bar.blue { background: #3a6daa; }
+.gauge-pct {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── 투자자 체크리스트 ── */
+.checklist {
+  list-style: none;
+  margin: 24px 0;
+}
+.checklist li {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: flex-start;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  background: rgba(61,220,106,0.1);
+  border: 1px solid rgba(61,220,106,0.2);
+  border-radius: 4px;
+  padding: 2px 7px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.check-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.75;
+  word-break: keep-all;
+}
+.check-text strong { color: var(--text); font-weight: 700; }
+
+/* ── 면책 고지 ── */
+.disclaimer {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 36px 0 0;
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.7;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  word-break: keep-all;
+}
+
+/* ── 해시태그 ── */
+.hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 36px 0;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  letter-spacing: .3px;
+  transition: color .2s, border-color .2s;
+}
+.tag:hover { color: var(--green); border-color: var(--green2); }
+
+/* ── 푸터 ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-logo { font-family: var(--mono); font-size: 12px; color: var(--green); letter-spacing: 2px; }
+.footer-note { font-size: 12px; color: var(--text3); }
+
+/* ── 입장 애니메이션 ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeup .6s ease forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes fadeup { to { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+<!-- 경보 배너 -->
+<div class="alert-bar">⚠ BREAKING ANALYSIS — 미국 사모대출 펀드런 한국 영향 긴급 분석 &nbsp;|&nbsp; 2026.03.14</div>
+
+<!-- 헤더 -->
+<header class="site-header">
+  <div class="logo">ECO SOLUTION · MARKET ANALYSIS</div>
+  <div class="header-meta">2026.03.14 SAT &nbsp;·&nbsp; SEOUL KST</div>
+</header>
+
+<!-- 히어로 -->
+<section class="hero">
+  <div class="hero-label">긴급 시장 분석 리포트</div>
+  <h1 class="fade-up">미국 <em>펀드런</em> 충격,<br>한국 금융시장에 미치는 영향</h1>
+  <p class="hero-sub fade-up" style="--d:.1s">블랙스톤·블루아울·모건스탠리發 사모대출 펀드런이 국내 17조 원 투자금과 금융시장에 전이되는 3가지 경로 및 업종별 영향을 정밀 분석합니다.</p>
+  <div class="hero-stats fade-up" style="--d:.2s">
+    <div class="stat-item">
+      <span class="stat-num">17조</span>
+      <div class="stat-label">국내 해외 사모대출 판매잔액</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num amber">3배↑</span>
+      <div class="stat-label">개인 판매잔액 증가 (2년간)</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num green">+AI</span>
+      <div class="stat-label">파괴론이 촉발한 구조적 변화</div>
+    </div>
+  </div>
+</section>
+
+<!-- 본문 -->
+<div class="wrap">
+
+  <!-- ── 섹션 1: 충격 3가지 경로 ── -->
+  <section class="section">
+    <div class="section-label">IMPACT ANALYSIS</div>
+    <h2 class="section-title">한국 금융시장 충격 3가지 경로</h2>
+
+    <p>이번 미국 펀드런 사태는 단순한 해외 금융 이슈가 아닙니다. 국내 금융당국이 이미 긴급 점검에 나섰고, 아래 세 가지 경로를 통해 한국 시장에 직접적인 충격파를 전달합니다.</p>
+
+    <div class="impact-grid">
+      <div class="impact-card danger fade-up" style="--d:.05s">
+        <div class="impact-num">
+          <span>CHANNEL 01</span>
+        </div>
+        <div class="impact-title">직접 손실 위험</div>
+        <p class="impact-body">국내 증권사·은행을 통해 해외 사모대출 상품에 투자한 개인·기관투자자들이 <strong>환매 제한 또는 원금 손실</strong>에 직면할 수 있습니다. 고수익을 약속하며 판매된 상품일수록 리스크가 큽니다.</p>
+      </div>
+      <div class="impact-card warning fade-up" style="--d:.1s">
+        <div class="impact-num">
+          <span>CHANNEL 02</span>
+        </div>
+        <div class="impact-title">달러 유동성 압박</div>
+        <p class="impact-body">해외 투자금이 묶이면 국내 금융기관들의 <strong>달러 유동성이 감소</strong>하고, 이는 원/달러 환율 불안정으로 이어져 수입물가 상승 압력을 키울 수 있습니다.</p>
+      </div>
+      <div class="impact-card info fade-up" style="--d:.15s">
+        <div class="impact-num">
+          <span>CHANNEL 03</span>
+        </div>
+        <div class="impact-title">IT·소프트웨어 동반 침체</div>
+        <p class="impact-body">AI 파괴론의 확산은 미국만의 문제가 아닙니다. 국내 <strong>엔터프라이즈 SW·ERP·CRM</strong> 기업들도 동일한 위협에 노출되어 밸류에이션 재평가 압력을 받습니다.</p>
+      </div>
+    </div>
+
+    <!-- 수치 강조 -->
+    <div class="highlight-box fade-up" style="--d:.2s">
+      <div class="hl-number">17조</div>
+      <div class="hl-desc">
+        <strong>국내 금융권 해외 사모대출 판매 잔액 (2025년 말 기준)</strong><br>
+        특히 개인투자자 판매잔액은 2023년 1,154억 원에서 2025년 4,797억 원으로 <strong>3배 이상 급증</strong>했습니다. 금융감독원은 증권사 현황 점검 후 판매 가이드라인 강화를 예고했습니다.
+      </div>
+    </div>
+
+    <!-- 경보 수준 게이지 -->
+    <div class="gauge-wrap fade-up" style="--d:.25s">
+      <div class="gauge-title">충격 경로별 위험 강도 평가</div>
+      <div class="gauge-row">
+        <div class="gauge-label">직접 투자 손실 위험</div>
+        <div class="gauge-bar-wrap"><div class="gauge-bar red" style="width:85%;--delay:.3s"></div></div>
+        <div class="gauge-pct">85%</div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-label">달러 유동성 압박</div>
+        <div class="gauge-bar-wrap"><div class="gauge-bar amber" style="width:62%;--delay:.4s"></div></div>
+        <div class="gauge-pct">62%</div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-label">IT·SW 업종 주가 충격</div>
+        <div class="gauge-bar-wrap"><div class="gauge-bar amber" style="width:70%;--delay:.5s"></div></div>
+        <div class="gauge-pct">70%</div>
+      </div>
+      <div class="gauge-row">
+        <div class="gauge-label">대형 은행권 직접 충격</div>
+        <div class="gauge-bar-wrap"><div class="gauge-bar blue" style="width:30%;--delay:.6s"></div></div>
+        <div class="gauge-pct">30%</div>
+      </div>
+      <div class="gauge-row" style="margin-bottom:0">
+        <div class="gauge-label">AI 인프라 반사이익</div>
+        <div class="gauge-bar-wrap"><div class="gauge-bar green" style="width:78%;--delay:.7s"></div></div>
+        <div class="gauge-pct">78%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 섹션 2: 업종별 영향 분석 ── -->
+  <section class="section">
+    <div class="section-label">SECTOR ANALYSIS</div>
+    <h2 class="section-title">업종별 영향 완전 분석</h2>
+    <p>펀드런 충격은 업종에 따라 극명하게 갈립니다. 위험 업종과 기회 업종을 명확히 구분하고, 지금 어디에 주목해야 하는지 정리했습니다.</p>
+
+    <div class="sector-wrap">
+
+      <!-- 위험 업종 -->
+      <div class="sector-group danger">
+        <div class="sector-header">
+          <div class="risk-dot"></div>
+          🔴 위험 업종 — 단기 주가 약세 경고
+        </div>
+
+        <div class="sector-item">
+          <div class="sector-item-title">국내 소프트웨어 · SaaS 기업</div>
+          <p class="sector-item-body">AI 파괴론의 직격탄을 맞는 분야입니다. 기업용 소프트웨어, ERP, 그룹웨어, HR 솔루션 기업들은 AI 에이전트에 의한 대체 위협이 현실화되고 있어 밸류에이션 재평가 압력과 단기 주가 약세가 예상됩니다.</p>
+          <div class="risk-stock-grid" style="margin-top:12px">
+            <div class="risk-stock-card">
+              <div class="risk-stock-name">⚠ ERP·그룹웨어 업체군</div>
+              <p class="risk-stock-reason">AI 에이전트가 기존 기능을 직접 대체 가능. 기존 구독 모델 락인 효과 약화 우려</p>
+            </div>
+            <div class="risk-stock-card">
+              <div class="risk-stock-name">⚠ HR·CRM 솔루션 기업</div>
+              <p class="risk-stock-reason">인사·고객관리 영역에서 LLM 기반 에이전트가 저비용 대안으로 부상 중</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <div class="sector-item-title">해외 사모대출 비중 높은 증권사 · 저축은행</div>
+          <p class="sector-item-body">환매 제한이 확산되면 관련 상품을 많이 판매한 금융사들은 <strong style="color:#fff">평판 리스크</strong>와 함께 유동성 문제에 직면할 수 있습니다. 판매 잔액 규모와 소프트웨어 업종 편중도가 핵심 확인 포인트입니다.</p>
+        </div>
+      </div>
+
+      <!-- 중립 업종 -->
+      <div class="sector-group neutral" style="margin-top:16px">
+        <div class="sector-header">
+          <div class="risk-dot"></div>
+          🟡 중립 업종 — 제한적 충격, 관망
+        </div>
+        <div class="sector-item">
+          <div class="sector-item-title">국내 대형 은행주</div>
+          <p class="sector-item-body">단기적으로 외화 유동성 불안이 있지만, 한국 대형 은행들은 바젤 III 기준을 충족하는 충분한 자본 완충 능력을 보유하고 있어 직접 충격은 제한적입니다. 다만 해외 익스포저 규모와 달러 조달 비용 상승은 지속 모니터링이 필요합니다.</p>
+        </div>
+      </div>
+
+      <!-- 반사이익 업종 -->
+      <div class="sector-group gain" style="margin-top:16px">
+        <div class="sector-header">
+          <div class="risk-dot"></div>
+          🟢 반사이익 업종 — 지금 주목해야 할 섹터
+        </div>
+
+        <!-- AI 인프라 -->
+        <div class="sector-item">
+          <div class="sector-item-title">AI 인프라 — 데이터센터 · 전력 · 냉각</div>
+          <p class="sector-item-body">소프트웨어가 위협받을수록 AI 전환을 위한 인프라 투자는 오히려 가속됩니다. AI 에이전트를 구동하는 데이터센터의 전력·냉각 수요는 줄어들지 않으며, 이 분야 수혜는 구조적입니다.</p>
+          <div class="stock-grid">
+            <div class="stock-card">
+              <div class="stock-name">
+                HD현대일렉트릭
+                <span class="stock-badge">직접 수혜</span>
+              </div>
+              <p class="stock-reason">데이터센터용 초고압 변압기·전력 기기 수요 직접 수혜. 미국 수출 모멘텀 유효</p>
+            </div>
+            <div class="stock-card">
+              <div class="stock-name">
+                LS일렉트릭
+                <span class="stock-badge">직접 수혜</span>
+              </div>
+              <p class="stock-reason">AI 데이터센터 전력 인프라 국내 핵심 수혜주. 전력 기기·자동화 솔루션 양방향 성장</p>
+            </div>
+            <div class="stock-card">
+              <div class="stock-name">
+                코오롱인더
+                <span class="stock-badge amber">간접 수혜</span>
+              </div>
+              <p class="stock-reason">데이터센터 냉각 시스템용 특수 소재 공급. 액침냉각 채택 확대 시 수혜 본격화</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 금·안전자산 -->
+        <div class="sector-item">
+          <div class="sector-item-title">금(Gold) 및 안전자산 관련</div>
+          <p class="sector-item-body">금융 불안이 커질수록 안전자산 선호도가 높아집니다. 달러 약세 우려와 지정학적 리스크가 겹치는 현 국면에서 금 ETF와 금 관련주가 헤지 수단으로 부각됩니다.</p>
+          <div class="stock-grid">
+            <div class="stock-card">
+              <div class="stock-name">
+                한국금거래소
+                <span class="stock-badge">현물 직접</span>
+              </div>
+              <p class="stock-reason">국내 금 현물 거래 최대 플랫폼. 금융 불안 심화 시 거래량·수익 동반 증가</p>
+            </div>
+            <div class="stock-card">
+              <div class="stock-name">
+                KODEX 골드선물(H)
+                <span class="stock-badge amber">ETF</span>
+              </div>
+              <p class="stock-reason">국내 상장 금 선물 ETF. 환헤지 구조로 원화 기준 금 가격 상승분 안정적 추종</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 방어 배당주 -->
+        <div class="sector-item">
+          <div class="sector-item-title">방어적 배당주</div>
+          <p class="sector-item-body">불확실성이 높을수록 안정적 현금흐름을 가진 배당주가 피난처가 됩니다. 금융 변동성 장세에서 통신·유틸리티·리츠(REITs)는 상대적으로 강한 흐름을 보이는 경향이 있습니다.</p>
+          <div class="stock-grid">
+            <div class="stock-card">
+              <div class="stock-name">
+                KT&amp;G
+                <span class="stock-badge amber">고배당</span>
+              </div>
+              <p class="stock-reason">안정적 현금흐름과 높은 배당수익률. 경기 비연동 방어주 포지션 강점</p>
+            </div>
+            <div class="stock-card">
+              <div class="stock-name">
+                SK텔레콤
+                <span class="stock-badge">이중 수혜</span>
+              </div>
+              <p class="stock-reason">경기 방어주 + AI 인프라 수혜 이중 포지션. 통신망 기반 AI 서비스 확장 모멘텀</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 섹션 3: 투자자 체크리스트 ── -->
+  <section class="section">
+    <div class="section-label">INVESTOR CHECKLIST</div>
+    <h2 class="section-title">지금 당장 해야 할 3가지</h2>
+    <p>위기는 준비된 사람에게 기회가 됩니다. 지금 이 순간 투자자라면 반드시 점검해야 할 항목을 정리했습니다.</p>
+    <ul class="checklist">
+      <li>
+        <span class="check-num">01</span>
+        <span class="check-text"><strong>보유 해외 사모대출 상품 즉시 점검.</strong> 판매사에 현황 확인을 요청하고, 환매 제한 조건과 투자 대상의 소프트웨어 업종 비중을 반드시 파악하세요. 모르고 있다면 지금이 확인할 마지막 타이밍일 수 있습니다.</span>
+      </li>
+      <li>
+        <span class="check-num">02</span>
+        <span class="check-text"><strong>포트폴리오 현금 비중 10~20%로 조정.</strong> 불확실성이 극대화된 시점이 최고의 매수 타이밍인 경우가 많습니다. 지금은 방어가 먼저입니다. 기회가 왔을 때 매수할 실탄을 준비하세요.</span>
+      </li>
+      <li>
+        <span class="check-num">03</span>
+        <span class="check-text"><strong>AI가 대체하지 못하는 실물 인프라·에너지·소재로 관심 전환.</strong> AI가 소프트웨어를 잡아먹을수록, AI를 구동하는 하드웨어·전력·냉각·소재의 가치는 올라갑니다. 구조적 승자를 선점하는 시각이 필요합니다.</span>
+      </li>
+    </ul>
+
+    <div class="disclaimer">
+      <span style="color:var(--amber);font-size:16px;flex-shrink:0">⚠</span>
+      <span>본 포스팅은 투자 참고 정보를 제공할 뿐이며, 특정 종목의 매수·매도를 권유하지 않습니다. 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 하며, 에코솔루션은 투자 결과에 대해 책임을 지지 않습니다.</span>
+    </div>
+  </section>
+
+  <!-- 해시태그 -->
+  <div class="hashtags">
+    <span class="tag">#펀드런</span>
+    <span class="tag">#미국펀드런</span>
+    <span class="tag">#사모대출펀드</span>
+    <span class="tag">#블랙스톤</span>
+    <span class="tag">#블루아울</span>
+    <span class="tag">#AI파괴론</span>
+    <span class="tag">#금융위기2026</span>
+    <span class="tag">#한국주식</span>
+    <span class="tag">#투자전략2026</span>
+    <span class="tag">#사모펀드</span>
+    <span class="tag">#월가</span>
+    <span class="tag">#모건스탠리</span>
+    <span class="tag">#해외투자위험</span>
+    <span class="tag">#재테크</span>
+    <span class="tag">#주식투자</span>
+    <span class="tag">#경제이슈</span>
+    <span class="tag">#에코솔루션</span>
+    <span class="tag">#글로벌경제</span>
+    <span class="tag">#HD현대일렉트릭</span>
+    <span class="tag">#LS일렉트릭</span>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-logo">ECO SOLUTION · 1218</div>
+  <div class="footer-note">blog.naver.com/ecosolution1218 &nbsp;·&nbsp; 2026.03.14</div>
+</footer>
+
+</body>
+</html>
