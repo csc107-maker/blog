@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>매그니피센트 6 — 세계를 움직이는 빅테크 완전 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #06060e;
+  --surface: #0f0f1a;
+  --surface2: #171726;
+  --border: #1e1e32;
+  --border2: #2a2a44;
+
+  --nvidia:  #76b900;
+  --apple:   #a0a0b0;
+  --ms:      #00a4ef;
+  --google:  #fbbc04;
+  --amazon:  #ff9900;
+  --tesla:   #e31937;
+
+  --text:    #ddddf0;
+  --muted:   #6060a0;
+  --dim:     #303050;
+  --white:   #ffffff;
+
+  --serif: 'Noto Serif KR', serif;
+  --sans:  'Noto Sans KR', sans-serif;
+  --mono:  'DM Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  overflow-x: hidden;
+}
+
+/* dot grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 56px 24px 80px; position: relative; z-index: 1; }
+
+/* ───────────── HERO ───────────── */
+.hero {
+  text-align: center;
+  padding: 0 0 64px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 6vw, 72px);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.hero h1 em { font-style: normal; position: relative; display: inline-block; }
+.hero h1 em::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--nvidia), var(--ms), var(--google), var(--amazon), var(--tesla));
+  border-radius: 2px;
+}
+.hero-sub { font-size: 15px; color: var(--muted); font-weight: 300; line-height: 1.7; max-width: 640px; margin: 0 auto; }
+
+/* ───────────── TOTALS STRIP ───────────── */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 64px;
+}
+@media (max-width:640px) { .strip { grid-template-columns: 1fr; } }
+.strip-item {
+  background: var(--surface);
+  padding: 28px 24px;
+  text-align: center;
+  animation: up 0.6s ease both;
+}
+.strip-item:nth-child(1){animation-delay:0.1s}
+.strip-item:nth-child(2){animation-delay:0.2s}
+.strip-item:nth-child(3){animation-delay:0.3s}
+@keyframes up { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.strip-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--muted); text-transform:uppercase; margin-bottom: 10px; }
+.strip-num { font-family: var(--serif); font-size: clamp(28px,4vw,44px); font-weight:900; color:#fff; letter-spacing:-0.03em; }
+.strip-num span { font-size:0.5em; color: var(--muted); }
+.strip-note { font-size: 11px; color: var(--dim); margin-top: 6px; }
+
+/* ───────────── SECTION ───────────── */
+.sec { margin-bottom: 72px; }
+.sec-hd {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 32px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sec-n { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing:0.1em; }
+.sec-title { font-family: var(--serif); font-size: 22px; font-weight:700; color:#fff; }
+
+/* ───────────── COMPANY CARDS ───────────── */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 2px; }
+
+.card {
+  background: var(--surface);
+  padding: 0;
+  overflow: hidden;
+  animation: up 0.7s ease both;
+  transition: transform 0.2s;
+  position: relative;
+}
+.card:hover { transform: translateY(-3px); }
+
+.card-top {
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.card-logo-row {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px;
+}
+.card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.card-name {
+  font-family: var(--serif);
+  font-size: 20px; font-weight:700; color:#fff;
+  line-height: 1.2;
+}
+.card-ticker {
+  font-family: var(--mono);
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.card-accent {
+  position: absolute; top:0; left:0; right:0;
+  height: 3px;
+}
+
+.card-mcap-row {
+  display: flex; align-items: baseline; gap: 8px;
+  margin-bottom: 6px;
+}
+.card-mcap-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform:uppercase; }
+.card-mcap-val { font-family: var(--serif); font-size: 32px; font-weight:900; letter-spacing:-0.03em; color:#fff; }
+.card-mcap-unit { font-size: 14px; color: var(--muted); }
+
+.card-rank-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.card-body { padding: 20px 28px 24px; }
+
+.kv-list { display: flex; flex-direction: column; gap: 10px; }
+.kv { display: flex; justify-content: space-between; align-items: baseline; }
+.kv-key { font-size: 12px; color: var(--muted); font-weight: 300; }
+.kv-val { font-family: var(--mono); font-size: 13px; color: var(--text); font-weight: 500; }
+.kv-val.up { color: #2ecc71; }
+.kv-val.warn { color: var(--amazon); }
+.kv-val.hot { color: var(--tesla); }
+
+.card-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+.card-ai-section { }
+.card-ai-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.card-ai-text { font-size: 12px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+.card-ai-text strong { font-weight: 600; color: var(--text); }
+
+.card-verdict {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  border-left: 2px solid;
+  font-size: 12px; color: var(--text); line-height: 1.6;
+}
+
+/* ───────────── CHART SECTION ───────────── */
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px;
+}
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+@media (max-width:700px) { .chart-grid { grid-template-columns: 1fr; } }
+
+/* ───────────── COMPARISON TABLE ───────────── */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.comp-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 1px solid var(--border);
+}
+.comp-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); font-weight: 300; }
+.comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+.co-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+.rating {
+  display: inline-block;
+  padding: 3px 8px; border-radius: 2px;
+  font-family: var(--mono); font-size: 10px; font-weight: 600;
+}
+.rating.buy { background: rgba(46,204,113,0.15); color: #2ecc71; }
+.rating.hold { background: rgba(255,179,71,0.15); color: var(--amazon); }
+.rating.watch { background: rgba(227,25,55,0.12); color: var(--tesla); }
+
+/* ───────────── AI CAPEX COMPARE ───────────── */
+.capex-list { display: flex; flex-direction: column; gap: 16px; }
+.capex-row { display: grid; grid-template-columns: 110px 1fr 64px; align-items: center; gap: 12px; }
+.capex-co { font-size: 12px; font-weight: 500; color: var(--text); }
+.capex-track { height: 20px; background: rgba(255,255,255,0.04); border-radius: 2px; overflow: hidden; }
+.capex-fill {
+  height: 100%; border-radius: 2px;
+  display: flex; align-items: center; padding-left: 8px;
+  transition: width 1.5s cubic-bezier(0.16,1,0.3,1);
+}
+.capex-fill span { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.6); }
+.capex-amt { font-family: var(--mono); font-size: 13px; font-weight: 500; text-align: right; }
+
+/* ───────────── INSIGHT BOX ───────────── */
+.insight {
+  margin-top: 2px;
+  background: var(--surface);
+  padding: 24px 28px;
+  border-left: 3px solid var(--muted);
+  font-size: 14px; color: var(--muted); line-height: 1.8;
+}
+.insight strong { color: var(--text); font-weight: 600; }
+
+/* ───────────── FOOTER ───────────── */
+.footer {
+  margin-top: 72px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+  font-family: var(--mono); font-size: 10px; color: var(--dim); line-height: 1.9;
+}
+
+.sep { height: 1px; background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px); margin: 48px 0; }
+
+/* star glow */
+@keyframes glow { 0%,100%{opacity:.6} 50%{opacity:1} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Magnificent 6 · 글로벌 빅테크 완전 분석 · 2026. 03. 15 기준</div>
+  <h1>세상을 만든 회사들,<br>지금 <em>어디로 가고 있나</em></h1>
+  <p class="hero-sub">엔비디아·애플·마이크로소프트·구글·아마존·테슬라 — 시가총액 합계 20조 달러를 넘어선 6개의 회사를 기업분석가의 시선으로 쉽게 풀어드립니다.</p>
+</div>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="strip-label">6개사 시가총액 합계</div>
+    <div class="strip-num">약 20<span>조 달러</span></div>
+    <div class="strip-note">대한민국 GDP의 약 13배</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">6개사 연간 매출 합계</div>
+    <div class="strip-num">약 2<span>조 달러</span></div>
+    <div class="strip-note">S&amp;P 500 전체 수익의 약 15%</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-label">2026년 AI 투자 총액(추정)</div>
+    <div class="strip-num">470<span>조+ 달러</span></div>
+    <div class="strip-note">전년 대비 약 34% 증가</div>
+  </div>
+</div>
+
+<!-- COMPANY CARDS -->
+<div class="sec">
+  <div class="sec-hd">
+    <span class="sec-n">01</span>
+    <div class="sec-title">6개 기업 개별 분석 카드</div>
+  </div>
+  <div class="cards">
+
+    <!-- NVIDIA -->
+    <div class="card" style="animation-delay:0.1s">
+      <div class="card-accent" style="background:var(--nvidia)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(118,185,0,0.12)">🟩</div>
+          <div>
+            <div class="card-name">NVIDIA</div>
+            <div class="card-ticker">NVDA · 반도체 / AI 인프라</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--nvidia)">4.5<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(118,185,0,0.12);color:var(--nvidia)">🏆 세계 시총 1위</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">최근 분기 매출 (Q4 FY25)</span><span class="kv-val">$393억</span></div>
+          <div class="kv"><span class="kv-key">전년 동기 대비 매출 성장</span><span class="kv-val up">+78%</span></div>
+          <div class="kv"><span class="kv-key">데이터센터 매출</span><span class="kv-val up">$512억 (+66%)</span></div>
+          <div class="kv"><span class="kv-key">순이익률</span><span class="kv-val up">약 55%</span></div>
+          <div class="kv"><span class="kv-key">직원 1인당 순이익</span><span class="kv-val up">$200만+</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            AI의 <strong>'삽과 곡괭이'</strong>를 파는 회사. ChatGPT든, 클로드든, 제미나이든 — 모든 AI를 훈련시키는 GPU를 만든다. 블랙웰·루빈 차세대 칩 예약 주문이 이미 <strong>$5,000억</strong>을 돌파했다.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--nvidia)">
+          💡 <strong>한 줄 평:</strong> AI 시대의 전기 회사. 누가 이기든 엔비디아는 이긴다.
+        </div>
+      </div>
+    </div>
+
+    <!-- APPLE -->
+    <div class="card" style="animation-delay:0.2s">
+      <div class="card-accent" style="background:var(--apple)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(160,160,176,0.1)">🍎</div>
+          <div>
+            <div class="card-name">Apple</div>
+            <div class="card-ticker">AAPL · 소비자 전자제품 / 서비스</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--apple)">4.0<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(160,160,176,0.1);color:var(--apple)">🥈 세계 시총 2위</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">연간 매출</span><span class="kv-val">$3,910억</span></div>
+          <div class="kv"><span class="kv-key">iPhone 매출 비중</span><span class="kv-val">약 48%</span></div>
+          <div class="kv"><span class="kv-key">서비스 부문 매출</span><span class="kv-val up">$960억 (+13%)</span></div>
+          <div class="kv"><span class="kv-key">글로벌 스마트폰 점유율</span><span class="kv-val">약 18%</span></div>
+          <div class="kv"><span class="kv-key">운영 마진</span><span class="kv-val up">31.5%</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            <strong>'Apple Intelligence'</strong> 출시로 AI 슈퍼사이클 기대. 단, 구글과 협력해 일부 AI 기능을 외주 처리 중. iPhone 17으로 업그레이드 수요 폭발을 기대하지만 중국 경쟁 심화가 변수.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--apple)">
+          💡 <strong>한 줄 평:</strong> 18억 명의 충성 고객을 가진 생태계 제국. AI는 늦었지만 무섭게 따라온다.
+        </div>
+      </div>
+    </div>
+
+    <!-- MICROSOFT -->
+    <div class="card" style="animation-delay:0.3s">
+      <div class="card-accent" style="background:var(--ms)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(0,164,239,0.1)">🪟</div>
+          <div>
+            <div class="card-name">Microsoft</div>
+            <div class="card-ticker">MSFT · 클라우드 / 소프트웨어</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--ms)">3.1<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(0,164,239,0.1);color:var(--ms)">🥉 세계 시총 3위</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">연간 매출</span><span class="kv-val">$2,450억</span></div>
+          <div class="kv"><span class="kv-key">Azure 클라우드 성장률</span><span class="kv-val up">+35% YoY</span></div>
+          <div class="kv"><span class="kv-key">2026년 AI 설비투자</span><span class="kv-val warn">$80~120억</span></div>
+          <div class="kv"><span class="kv-key">OpenAI 지분 투자액</span><span class="kv-val">$130억+</span></div>
+          <div class="kv"><span class="kv-key">Copilot 유료 가입자</span><span class="kv-val up">빠른 증가세</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            <strong>OpenAI에 가장 많이 투자</strong>한 회사. 워드·엑셀·팀즈에 Copilot(AI 비서)을 심어 기업 고객을 록인(Lock-in). Azure는 AWS를 추격 중이며 성장률은 더 빠르다.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--ms)">
+          💡 <strong>한 줄 평:</strong> B2B AI의 최강자. 기업들이 AI를 쓰는 순간, 마이크로소프트가 돈을 번다.
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE -->
+    <div class="card" style="animation-delay:0.4s">
+      <div class="card-accent" style="background:var(--google)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(251,188,4,0.1)">🔍</div>
+          <div>
+            <div class="card-name">Alphabet (Google)</div>
+            <div class="card-ticker">GOOGL · 검색 / 클라우드 / AI</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--google)">2.7<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(251,188,4,0.1);color:var(--google)">📈 2025년 주가 +74%</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">연간 매출</span><span class="kv-val">$3,500억</span></div>
+          <div class="kv"><span class="kv-key">검색·광고 매출 비중</span><span class="kv-val">약 57%</span></div>
+          <div class="kv"><span class="kv-key">Google Cloud 성장률</span><span class="kv-val up">+28% YoY</span></div>
+          <div class="kv"><span class="kv-key">2026년 AI 설비투자</span><span class="kv-val warn">$85~90억</span></div>
+          <div class="kv"><span class="kv-key">유튜브 연간 광고 매출</span><span class="kv-val up">$500억+</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            <strong>제미나이(Gemini)</strong>를 전면에 세우고 검색부터 클라우드까지 AI 전환 중. 딥마인드를 보유한 세계 최고 수준의 AI 연구력. 단, 검색 광고 모델이 AI 챗봇에 잠식될 위험이 있다.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--google)">
+          💡 <strong>한 줄 평:</strong> AI 원조 강자이지만 자기 잠식의 딜레마. 2026년 제미나이의 성패가 핵심.
+        </div>
+      </div>
+    </div>
+
+    <!-- AMAZON -->
+    <div class="card" style="animation-delay:0.5s">
+      <div class="card-accent" style="background:var(--amazon)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(255,153,0,0.1)">📦</div>
+          <div>
+            <div class="card-name">Amazon</div>
+            <div class="card-ticker">AMZN · 전자상거래 / 클라우드</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--amazon)">2.5<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(255,153,0,0.1);color:var(--amazon)">☁️ 클라우드 세계 1위</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">연간 매출</span><span class="kv-val">$6,200억</span></div>
+          <div class="kv"><span class="kv-key">AWS 클라우드 매출</span><span class="kv-val up">$1,070억 (+19%)</span></div>
+          <div class="kv"><span class="kv-key">AWS 영업이익 비중</span><span class="kv-val up">전사 영업익 70%+</span></div>
+          <div class="kv"><span class="kv-key">2026년 AI 설비투자</span><span class="kv-val warn">약 $1,000억</span></div>
+          <div class="kv"><span class="kv-key">Anthropic 투자액</span><span class="kv-val">$40억+</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            <strong>클라우드(AWS) + AI</strong>의 결합으로 최고 투자처. 이 블로그를 만든 클로드의 모회사 앤스로픽에 최대 주주. 물류 자동화에도 AI 로봇을 적극 도입 중.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--amazon)">
+          💡 <strong>한 줄 평:</strong> 전자상거래는 포장지. 진짜 본업은 클라우드와 AI 인프라.
+        </div>
+      </div>
+    </div>
+
+    <!-- TESLA -->
+    <div class="card" style="animation-delay:0.6s">
+      <div class="card-accent" style="background:var(--tesla)"></div>
+      <div class="card-top">
+        <div class="card-logo-row">
+          <div class="card-icon" style="background:rgba(227,25,55,0.1)">⚡</div>
+          <div>
+            <div class="card-name">Tesla</div>
+            <div class="card-ticker">TSLA · 전기차 / 에너지 / AI</div>
+          </div>
+        </div>
+        <div class="card-mcap-row">
+          <div class="card-mcap-label">시가총액</div>
+        </div>
+        <div class="card-mcap-val" style="color:var(--tesla)">1.2<span class="card-mcap-unit">조 달러</span></div>
+        <div class="card-rank-badge" style="background:rgba(227,25,55,0.12);color:var(--tesla)">🎲 PER 약 200배 · 고위험</div>
+      </div>
+      <div class="card-body">
+        <div class="kv-list">
+          <div class="kv"><span class="kv-key">연간 매출 (2025 추정)</span><span class="kv-val">$970억</span></div>
+          <div class="kv"><span class="kv-key">2026년 매출 성장 전망</span><span class="kv-val up">+12% 예상</span></div>
+          <div class="kv"><span class="kv-key">차량 영업마진</span><span class="kv-val warn">압박 지속</span></div>
+          <div class="kv"><span class="kv-key">에너지 저장 사업 성장률</span><span class="kv-val up">+67% YoY</span></div>
+          <div class="kv"><span class="kv-key">로보택시 상용화</span><span class="kv-val hot">2026년 핵심 변수</span></div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-ai-section">
+          <div class="card-ai-label">🤖 AI 포지션</div>
+          <div class="card-ai-text">
+            2026년 1월, 전기차 회사에서 <strong>자율주행·로보틱스 AI 회사</strong>로 전략 전환 선언. 로보택시(사이버캡) 규제 승인이 최대 모멘텀. 실패하면 고평가 논란, 성공하면 게임체인저.
+          </div>
+        </div>
+        <div class="card-verdict" style="border-color:var(--tesla)">
+          💡 <strong>한 줄 평:</strong> 전기차가 아니라 AI 로봇 회사로 베팅 중. 고위험 고수익의 교과서.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cards -->
+</div><!-- /sec -->
+
+<div class="sep"></div>
+
+<!-- AI CAPEX 비교 -->
+<div class="sec">
+  <div class="sec-hd">
+    <span class="sec-n">02</span>
+    <div class="sec-title">2026년 AI 설비 투자 경쟁 — 누가 가장 많이 쏟아붓나</div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:24px;">2026 AI 설비투자 규모 (추정치, 단위: $10억)</div>
+      <div class="capex-list">
+        <div class="capex-row">
+          <div class="capex-co" style="color:var(--amazon)">Amazon</div>
+          <div class="capex-track">
+            <div class="capex-fill" style="width:100%;background:linear-gradient(90deg,rgba(255,153,0,0.6),rgba(255,153,0,0.3))"><span>$1,000억</span></div>
+          </div>
+          <div class="capex-amt" style="color:var(--amazon)">$100B</div>
+        </div>
+        <div class="capex-row">
+          <div class="capex-co" style="color:var(--ms)">Microsoft</div>
+          <div class="capex-track">
+            <div class="capex-fill" style="width:90%;background:linear-gradient(90deg,rgba(0,164,239,0.6),rgba(0,164,239,0.3))"><span>$80~120억</span></div>
+          </div>
+          <div class="capex-amt" style="color:var(--ms)">$90B+</div>
+        </div>
+        <div class="capex-row">
+          <div class="capex-co" style="color:var(--google)">Google</div>
+          <div class="capex-track">
+            <div class="capex-fill" style="width:87%;background:linear-gradient(90deg,rgba(251,188,4,0.6),rgba(251,188,4,0.3))"><span>$85~90억</span></div>
+          </div>
+          <div class="capex-amt" style="color:var(--google)">$87B</div>
+        </div>
+        <div class="capex-row">
+          <div class="capex-co" style="color:var(--apple)">Apple</div>
+          <div class="capex-track">
+            <div class="capex-fill" style="width:20%;background:linear-gradient(90deg,rgba(160,160,176,0.5),rgba(160,160,176,0.2))"><span>$20B</span></div>
+          </div>
+          <div class="capex-amt" style="color:var(--apple)">$20B</div>
+        </div>
+        <div class="capex-row">
+          <div class="capex-co" style="color:var(--tesla)">Tesla</div>
+          <div class="capex-track">
+            <div class="capex-fill" style="width:12%;background:linear-gradient(90deg,rgba(227,25,55,0.5),rgba(227,25,55,0.2))"><span>$12B</span></div>
+          </div>
+          <div class="capex-amt" style="color:var(--tesla)">$12B</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;">시가총액 비교 ($조)</div>
+      <canvas id="mcapChart" height="200"></canvas>
+    </div>
+  </div>
+  <div class="insight">
+    <strong>기업분석가 인사이트 :</strong> 4개 하이퍼스케일러(MS·구글·아마존·메타)의 2026년 합산 AI 투자는 <strong>$4,700억 이상</strong>으로 전년 대비 34% 증가 전망이다. 이는 한국 정부 1년 예산(약 $3,200억)을 훌쩍 넘는다. AI는 더 이상 미래가 아니라, 이 회사들의 오늘 현금흐름을 좌우하는 현재다.
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- 비교 테이블 -->
+<div class="sec">
+  <div class="sec-hd">
+    <span class="sec-n">03</span>
+    <div class="sec-title">핵심 지표 한눈에 비교</div>
+  </div>
+  <div class="chart-box" style="padding:0;overflow:hidden">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>회사</th>
+          <th>핵심 수익원</th>
+          <th>AI 전략</th>
+          <th>2026 리스크</th>
+          <th>전망</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="co-dot" style="background:var(--nvidia)"></span><strong>NVIDIA</strong></td>
+          <td>GPU 칩 판매</td>
+          <td>AI 인프라 공급자</td>
+          <td>중국 수출 규제</td>
+          <td><span class="rating buy">Strong Buy</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-dot" style="background:var(--apple)"></span><strong>Apple</strong></td>
+          <td>iPhone + 서비스</td>
+          <td>기기 내 AI 통합</td>
+          <td>중국 판매 감소</td>
+          <td><span class="rating hold">Hold</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-dot" style="background:var(--ms)"></span><strong>Microsoft</strong></td>
+          <td>Azure + Office</td>
+          <td>Copilot 전사 확산</td>
+          <td>AI 투자비 과다</td>
+          <td><span class="rating buy">Buy</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-dot" style="background:var(--google)"></span><strong>Google</strong></td>
+          <td>검색 광고</td>
+          <td>Gemini + 클라우드</td>
+          <td>검색 점유율 하락</td>
+          <td><span class="rating buy">Buy</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-dot" style="background:var(--amazon)"></span><strong>Amazon</strong></td>
+          <td>AWS 클라우드</td>
+          <td>Anthropic 파트너십</td>
+          <td>소매 마진 압박</td>
+          <td><span class="rating buy">Strong Buy</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-dot" style="background:var(--tesla)"></span><strong>Tesla</strong></td>
+          <td>전기차 + 에너지</td>
+          <td>로보택시·FSD</td>
+          <td>규제 리스크 + 고PER</td>
+          <td><span class="rating watch">Watch</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- 마무리 인사이트 -->
+<div class="sec">
+  <div class="sec-hd">
+    <span class="sec-n">04</span>
+    <div class="sec-title">기업분석가의 시선으로 보는 마무리</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px">
+    <div class="insight" style="border-color:var(--nvidia)">
+      <strong>🏆 가장 확실한 베팅 — NVIDIA</strong><br>
+      누가 AI 경쟁에서 이기든 GPU는 필요하다. 경쟁자가 없고, 수요는 넘쳐난다. 단기 조정이 와도 장기 방향은 위다.
+    </div>
+    <div class="insight" style="border-color:var(--tesla)">
+      <strong>🎲 가장 불확실한 베팅 — Tesla</strong><br>
+      PER 200배는 '전기차 회사'가 아닌 'AI 로봇 회사'로 봐야만 정당화된다. 로보택시가 상용화되면 혁명, 실패하면 고평가 붕괴.
+    </div>
+    <div class="insight" style="border-color:var(--ms);grid-column:span 2">
+      <strong>💡 공통된 메시지 — AI 투자는 이제 선택이 아닌 생존</strong><br>
+      이 6개 회사가 2026년에만 쏟아붓는 AI 투자는 <strong>약 $3,000억</strong>에 달한다. 기업분석을 하다 보면 느끼는 것이 있다. 지금 AI에 투자하지 않는 회사는 3~5년 후 경쟁에서 탈락한다. 너무 빠른 변화가 불안하지만, 그 변화 속에서도 방향은 읽힌다. AI를 통제하는 인프라를 가진 회사가 다음 시대를 만든다.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    출처 · Motley Fool (2026.03.13) · Fortune (2026.01.11) · CEIBS (2026) · Nasdaq (2025.12~2026.01)<br>
+    NVIDIA SEC 공시 (Q4 FY25) · techi.com · BingX Research (2026.01) · Bloomberg Intelligence
+  </div>
+  <div style="text-align:right">
+    ※ 시가총액·주가는 2026.03 기준 추정치<br>
+    ※ 이 자료는 투자 권유가 아닙니다
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// 시가총액 차트
+const ctx = document.getElementById('mcapChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['NVIDIA', 'Apple', 'Microsoft', 'Google', 'Amazon', 'Tesla'],
+    datasets: [{
+      label: '시가총액 ($조)',
+      data: [4.5, 4.0, 3.1, 2.7, 2.5, 1.2],
+      backgroundColor: [
+        'rgba(118,185,0,0.75)',
+        'rgba(160,160,176,0.6)',
+        'rgba(0,164,239,0.7)',
+        'rgba(251,188,4,0.7)',
+        'rgba(255,153,0,0.7)',
+        'rgba(227,25,55,0.7)',
+      ],
+      borderColor: ['#76b900','#a0a0b0','#00a4ef','#fbbc04','#ff9900','#e31937'],
+      borderWidth: 1,
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#12121a',
+        borderColor: '#1e1e32',
+        borderWidth: 1,
+        titleColor: '#ddddf0',
+        bodyColor: '#6060a0',
+        callbacks: { label: c => ` $${c.raw}조 달러` }
+      }
+    },
+    scales: {
+      y: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#6060a0', font: { family: 'DM Mono', size: 10 }, callback: v => '$' + v + '조' },
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#ddddf0', font: { family: 'Noto Sans KR', size: 11 } }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
