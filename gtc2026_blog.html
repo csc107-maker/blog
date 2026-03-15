@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 반도체의 '넥스트 스텝' — GTC 2026 완전 분석</title>
+<meta name="description" content="엔비디아 GTC 2026 핵심 관전포인트 완전 분석 — Vera Rubin, HBM4 공급망, 삼성·SK하이닉스 대결, 에너지 효율, 소부장 투자 전략까지">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080c10;
+  --bg2:      #0d1318;
+  --bg3:      #111820;
+  --panel:    #141d27;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.12);
+  --green:    #00ff88;
+  --green2:   #00d46e;
+  --cyan:     #00cfff;
+  --amber:    #ffb800;
+  --red:      #ff4455;
+  --text:     #e8edf2;
+  --muted:    #7a8fa0;
+  --muted2:   #4a5f70;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.8;
+  overflow-x:hidden;
+}
+
+/* ── SCANLINE OVERLAY ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 2px,
+    rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px
+  );
+  pointer-events:none;z-index:9999;
+}
+
+/* ── PROGRESS BAR ── */
+#pb{
+  position:fixed;top:0;left:0;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--cyan));
+  width:0%;z-index:10000;transition:width .1s linear;
+  box-shadow:0 0 8px var(--green);
+}
+
+/* ── HEADER ── */
+.site-nav{
+  position:sticky;top:0;z-index:500;
+  background:rgba(8,12,16,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:52px;
+}
+.site-nav .logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.1rem;letter-spacing:0.15em;
+  color:var(--green);
+}
+.site-nav .meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;color:var(--muted);
+  display:flex;gap:1.5rem;
+}
+.site-nav .live-dot{
+  display:inline-flex;align-items:center;gap:0.4rem;
+}
+.site-nav .live-dot::before{
+  content:'';width:6px;height:6px;
+  border-radius:50%;background:var(--green);
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,136,.4)}
+  50%{opacity:.7;box-shadow:0 0 0 5px rgba(0,255,136,0)}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:6rem 2rem 4rem;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 40%,rgba(0,207,255,0.06) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(0,255,136,0.05) 0%,transparent 55%),
+    var(--bg);
+}
+/* circuit grid */
+.hero-bg::after{
+  content:'';
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,207,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,207,255,0.04) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+.hero-inner{
+  position:relative;z-index:1;
+  max-width:880px;margin:0 auto;width:100%;
+}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;letter-spacing:.25em;
+  color:var(--green);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-eyebrow::after{
+  content:'';flex:1;max-width:80px;height:1px;
+  background:linear-gradient(90deg,var(--green),transparent);
+}
+
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,10vw,8rem);
+  line-height:.95;letter-spacing:0.02em;
+  color:#fff;margin-bottom:0.3rem;
+}
+.hero h1 span{
+  background:linear-gradient(135deg,var(--green),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-sub-title{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(1rem,2.5vw,1.5rem);
+  color:rgba(255,255,255,.55);
+  font-weight:300;margin-bottom:2.5rem;
+  letter-spacing:.03em;
+}
+
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem;
+}
+.stat-chip{
+  border:1px solid var(--border2);
+  background:rgba(255,255,255,.03);
+  border-radius:4px;
+  padding:.6rem 1.2rem;
+  display:flex;flex-direction:column;
+  gap:.1rem;
+}
+.stat-chip .val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.8rem;line-height:1;
+  color:var(--cyan);letter-spacing:.03em;
+}
+.stat-chip .label{
+  font-size:.65rem;color:var(--muted);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+
+.hero-date-badge{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:rgba(0,255,136,.08);
+  border:1px solid rgba(0,255,136,.2);
+  border-radius:4px;
+  padding:.5rem 1rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.75rem;color:var(--green);
+  margin-bottom:2rem;
+}
+
+/* ── LAYOUT ── */
+.main-wrap{
+  max-width:900px;margin:0 auto;
+  padding:0 2rem 6rem;
+}
+
+/* ── SECTION HEADINGS ── */
+.s-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.25em;
+  color:var(--green);
+  margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.8rem;
+  text-transform:uppercase;
+}
+.s-label::before{
+  content:'//';color:var(--muted2);
+}
+
+.s-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1;letter-spacing:.03em;
+  color:#fff;margin-bottom:1.5rem;
+}
+
+/* section separator */
+.section{margin-top:5rem;}
+.section-rule{
+  height:1px;
+  background:linear-gradient(90deg,var(--green),var(--cyan),transparent);
+  margin-bottom:3rem;
+  opacity:.3;
+}
+
+/* ── INTRO BOX ── */
+.intro-block{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-left:3px solid var(--cyan);
+  border-radius:0 8px 8px 0;
+  padding:2rem;
+  margin-bottom:3rem;
+  font-family:'Noto Serif KR',serif;
+  font-size:1.05rem;
+  color:rgba(255,255,255,.8);
+  line-height:2;
+}
+
+/* ── PROSE ── */
+.prose p{
+  font-size:.95rem;color:rgba(232,237,242,.8);
+  margin-bottom:1.2rem;line-height:2;
+}
+.prose strong{color:#fff;font-weight:600;}
+.prose .highlight{
+  color:var(--green);font-weight:600;
+}
+.prose .hl-cyan{color:var(--cyan);font-weight:600;}
+.prose .hl-amber{color:var(--amber);font-weight:600;}
+.prose .hl-red{color:var(--red);font-weight:600;}
+
+/* ── KEYNOTE TIMELINE ── */
+.keynote-box{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin:2rem 0;
+}
+.keynote-header{
+  background:linear-gradient(135deg,rgba(0,255,136,.08),rgba(0,207,255,.06));
+  border-bottom:1px solid var(--border);
+  padding:1.2rem 1.8rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.keynote-header h3{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.3rem;letter-spacing:.05em;color:#fff;
+}
+.keynote-header .date-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;color:var(--green);
+  border:1px solid rgba(0,255,136,.3);
+  padding:.3rem .7rem;border-radius:3px;
+}
+.keynote-body{padding:1.5rem 1.8rem;}
+.keynote-item{
+  display:flex;align-items:flex-start;gap:1.2rem;
+  padding:.8rem 0;
+  border-bottom:1px solid var(--border);
+}
+.keynote-item:last-child{border-bottom:none;}
+.k-time{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;color:var(--cyan);
+  min-width:80px;padding-top:.15rem;
+}
+.k-text{font-size:.9rem;color:rgba(255,255,255,.75);}
+.k-text strong{color:#fff;}
+
+/* ── FEATURE CARDS (3-column) ── */
+.feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.2rem;margin:2rem 0;
+}
+.f-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.8rem;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s;
+}
+.f-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-2px);
+}
+.f-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+}
+.f-card.green::before{background:linear-gradient(90deg,var(--green),transparent);}
+.f-card.cyan::before{background:linear-gradient(90deg,var(--cyan),transparent);}
+.f-card.amber::before{background:linear-gradient(90deg,var(--amber),transparent);}
+.f-card.red::before{background:linear-gradient(90deg,var(--red),transparent);}
+
+.f-card .num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:3.5rem;line-height:1;
+  opacity:.07;
+  position:absolute;top:1rem;right:1.2rem;
+  color:#fff;
+}
+.f-card .icon{font-size:1.5rem;margin-bottom:.8rem;}
+.f-card h4{
+  font-size:1rem;font-weight:700;
+  color:#fff;margin-bottom:.6rem;
+}
+.f-card p{font-size:.83rem;color:var(--muted);line-height:1.8;}
+.f-card .tag{
+  display:inline-block;margin-top:.8rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;
+  padding:.25rem .6rem;border-radius:3px;
+}
+.f-card.green .tag{background:rgba(0,255,136,.1);color:var(--green);}
+.f-card.cyan .tag{background:rgba(0,207,255,.1);color:var(--cyan);}
+.f-card.amber .tag{background:rgba(255,184,0,.1);color:var(--amber);}
+.f-card.red .tag{background:rgba(255,68,85,.1);color:var(--red);}
+
+/* ── HBM4 BATTLE TABLE ── */
+.battle-table{
+  width:100%;border-collapse:collapse;
+  margin:2rem 0;font-size:.88rem;
+}
+.battle-table thead{
+  background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,207,255,.06));
+}
+.battle-table th{
+  padding:1rem 1.2rem;text-align:left;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.15em;
+  color:var(--muted);
+  border-bottom:1px solid var(--border2);
+  text-transform:uppercase;
+}
+.battle-table td{
+  padding:.9rem 1.2rem;
+  border-bottom:1px solid var(--border);
+  color:rgba(232,237,242,.8);
+  vertical-align:top;
+}
+.battle-table tr:hover td{background:rgba(255,255,255,.02);}
+.badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;font-weight:700;
+  padding:.2rem .6rem;border-radius:3px;
+}
+.badge-green{background:rgba(0,255,136,.12);color:var(--green);}
+.badge-amber{background:rgba(255,184,0,.12);color:var(--amber);}
+.badge-muted{background:rgba(122,143,160,.1);color:var(--muted);}
+.badge-red{background:rgba(255,68,85,.1);color:var(--red);}
+
+/* share bar */
+.share-bar{
+  height:6px;background:rgba(255,255,255,.06);
+  border-radius:3px;margin-top:.4rem;overflow:hidden;
+}
+.share-fill{
+  height:100%;border-radius:3px;
+  transition:width 1s cubic-bezier(.4,0,.2,1);
+}
+.fill-green{background:var(--green);}
+.fill-amber{background:var(--amber);}
+.fill-red{background:var(--red);}
+.fill-muted{background:var(--muted2);}
+
+/* ── ENERGY SECTION ── */
+.energy-stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:1rem;margin:2rem 0;
+}
+.e-stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;padding:1.5rem;
+  text-align:center;
+}
+.e-stat .big{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:2.8rem;line-height:1;
+  margin-bottom:.3rem;
+}
+.e-stat .unit{font-size:1rem;}
+.e-stat .desc{font-size:.78rem;color:var(--muted);margin-top:.4rem;}
+
+/* ── QUOTE ── */
+.quote-block{
+  border-left:3px solid var(--cyan);
+  padding:1.5rem 2rem;
+  background:rgba(0,207,255,.04);
+  border-radius:0 8px 8px 0;
+  margin:2.5rem 0;
+  font-family:'Noto Serif KR',serif;
+  font-size:1.05rem;
+  color:rgba(255,255,255,.8);
+  font-style:italic;line-height:1.9;
+}
+.quote-block .source{
+  display:block;margin-top:.8rem;
+  font-style:normal;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;color:var(--cyan);
+}
+
+/* ── ACTION PLAN ── */
+.action-list{counter-reset:action;display:flex;flex-direction:column;gap:1rem;margin:2rem 0;}
+.action-item{
+  counter-increment:action;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:1.5rem 1.8rem 1.5rem 4rem;
+  position:relative;
+}
+.action-item::before{
+  content:counter(action,decimal-leading-zero);
+  position:absolute;left:1.4rem;top:50%;
+  transform:translateY(-50%);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.6rem;line-height:1;
+  color:var(--green);opacity:.5;
+}
+.action-item h4{
+  font-size:.95rem;font-weight:700;
+  color:#fff;margin-bottom:.4rem;
+}
+.action-item p{font-size:.85rem;color:var(--muted);line-height:1.7;margin:0;}
+.action-item .stock-tags{
+  display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;
+}
+.stag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;
+  background:rgba(0,255,136,.08);
+  border:1px solid rgba(0,255,136,.2);
+  color:var(--green);
+  padding:.2rem .6rem;border-radius:3px;
+}
+.stag.c{background:rgba(0,207,255,.08);border-color:rgba(0,207,255,.2);color:var(--cyan);}
+.stag.a{background:rgba(255,184,0,.08);border-color:rgba(255,184,0,.2);color:var(--amber);}
+
+/* ── SAJU-SEONG-EO BOX ── */
+.idiom-box{
+  background:linear-gradient(135deg,rgba(0,255,136,.05),rgba(0,207,255,.04));
+  border:1px solid rgba(0,255,136,.15);
+  border-radius:12px;
+  padding:2.5rem;
+  margin:3rem 0;
+  text-align:center;
+}
+.idiom-box .hanja{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(2rem,6vw,4rem);
+  font-weight:700;
+  background:linear-gradient(135deg,var(--green),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:.5rem;
+  letter-spacing:.1em;
+}
+.idiom-box .roman{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.8rem;color:var(--muted);
+  margin-bottom:.8rem;letter-spacing:.15em;
+}
+.idiom-box .meaning{
+  font-family:'Noto Serif KR',serif;
+  font-size:1rem;color:rgba(255,255,255,.7);
+  font-style:italic;line-height:1.9;
+}
+
+/* ── TAGS ── */
+.tag-section{
+  margin-top:4rem;padding-top:2rem;
+  border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;gap:.5rem;
+}
+.htag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:3px;
+  color:var(--muted);
+  padding:.3rem .7rem;
+  transition:border-color .15s,color .15s;
+}
+.htag:hover{border-color:var(--green);color:var(--green);cursor:pointer;}
+
+/* ── FOOTER ── */
+.site-footer{
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  padding:2rem;text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;color:var(--muted2);
+  letter-spacing:.08em;
+}
+.site-footer strong{color:var(--green);}
+
+/* ── ANIMATIONS ── */
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.visible{opacity:1;transform:none;}
+
+@media(max-width:640px){
+  .hero h1{font-size:clamp(3rem,15vw,5rem);}
+  .battle-table th,.battle-table td{padding:.6rem .8rem;}
+  .action-item{padding:1.2rem 1.2rem 1.2rem 3.5rem;}
+  .action-item::before{left:1rem;font-size:1.3rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="pb"></div>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="logo">CHIP REPORT</div>
+  <div class="meta">
+    <span class="live-dot">LIVE COVERAGE</span>
+    <span>GTC 2026 · MAR 16–19</span>
+    <span>SAN JOSE, CA</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">NVIDIA GTC 2026 · 완전 분석</div>
+    <h1>AI 반도체의<br><span>넥스트 스텝</span></h1>
+    <p class="hero-sub-title">Vera Rubin · HBM4 전쟁 · 실물경제 AI 통합 · 소부장 투자 전략</p>
+
+    <div class="hero-date-badge">
+      📅 March 16–19, 2026 · SAP Center, San Jose · Jensen Huang Keynote 11AM PT
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-chip">
+        <span class="val">39K</span>
+        <span class="label">글로벌 참석자</span>
+      </div>
+      <div class="stat-chip">
+        <span class="val">190</span>
+        <span class="label">참여 국가</span>
+      </div>
+      <div class="stat-chip">
+        <span class="val">700+</span>
+        <span class="label">세션·워크샵</span>
+      </div>
+      <div class="stat-chip">
+        <span class="val">$62B</span>
+        <span class="label">엔비디아 분기 매출 (데이터센터)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- INTRO -->
+  <div class="section reveal">
+    <div class="section-rule"></div>
+    <div class="intro-block">
+      매년 3월 산호세는 전 세계 AI·반도체 산업의 수도가 됩니다. 엔비디아 GTC(GPU Technology Conference)는 단순한 신제품 발표회가 아닙니다. 이 자리에서 제시되는 로드맵과 공급망 신호가 향후 2~3년의 반도체 산업 판도를 결정합니다. 2026년 GTC는 그 어느 해보다 무게가 다릅니다. <strong>AI가 데이터센터를 넘어 실물경제(제조·에너지·바이오)에 침투하는 첫 번째 분기점</strong>이 될 것으로 시장은 보고 있습니다.
+    </div>
+  </div>
+
+  <!-- SECTION 1: KEYNOTE -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 01</div>
+    <h2 class="s-title">GTC 2026<br>키노트 관전 가이드</h2>
+
+    <div class="prose">
+      <p><span class="highlight">젠슨 황(Jensen Huang)</span> 엔비디아 CEO의 키노트는 3월 16일(월) 오전 11시(PT) 산호세 SAP 센터에서 시작됩니다. 예정 시간은 2시간. 190개국 3만 9,000명의 참석자가 모이는 이 행사를 두고, 업계 일각에서는 <span class="hl-cyan">"AI 산업의 우드스탁(Woodstock)"</span>이라고 부릅니다.</p>
+      <p>올해 GTC의 핵심 키워드는 네 가지입니다. <strong>피지컬 AI(Physical AI), AI 팩토리(AI Factory), 에이전틱 AI(Agentic AI), 그리고 인퍼런스(Inference)</strong>. 칩 하드웨어부터 소프트웨어 스택, 산업 응용 사례까지 전 계층을 한 번에 커버하는 풀스택 발표가 예정되어 있습니다.</p>
+    </div>
+
+    <div class="keynote-box reveal">
+      <div class="keynote-header">
+        <h3>📋 GTC 2026 주요 일정</h3>
+        <span class="date-tag">MAR 16–19, SAN JOSE</span>
+      </div>
+      <div class="keynote-body">
+        <div class="keynote-item">
+          <div class="k-time">MAR 16 / 11AM</div>
+          <div class="k-text"><strong>젠슨 황 키노트</strong> — SAP Center. Vera Rubin 공식 발표, Feynman 로드맵, 피지컬 AI 전략. "세계를 놀라게 할 새 칩" 공개 예고</div>
+        </div>
+        <div class="keynote-item">
+          <div class="k-time">MAR 17 / 9AM</div>
+          <div class="k-text"><strong>재무 애널리스트 Q&A</strong> — investor.nvidia.com 웹캐스트. HBM4 공급 스케줄·마진 가이던스 직접 확인 가능</div>
+        </div>
+        <div class="keynote-item">
+          <div class="k-time">MAR 18 / 12:30PM</div>
+          <div class="k-text"><strong>오픈 프론티어 모델 패널</strong> — 젠슨 황 사회. Mistral, Cursor, Langchain, Ai2 CEO 참석. 오픈소스 AI 생태계 방향성 논의</div>
+        </div>
+        <div class="keynote-item">
+          <div class="k-time">MAR 18 PM</div>
+          <div class="k-text"><strong>삼성전자 DS부문 발표</strong> — "AI를 통한 반도체 제조의 미래". HBM4 양산 현황 및 HBM4E 로드맵 공개 예정</div>
+        </div>
+        <div class="keynote-item">
+          <div class="k-time">MAR 18 PM</div>
+          <div class="k-text"><strong>SK하이닉스 기술 발표</strong> — "HBM4가 LLM 효율에 미치는 영향". SK그룹 최태원 회장 첫 GTC 현장 참석, 젠슨 황과 회동 예정</div>
+        </div>
+        <div class="keynote-item">
+          <div class="k-time">MAR 19</div>
+          <div class="k-text"><strong>학생·커뮤니티 데이</strong> — 할인된 패스로 일반 공개. 로보틱스·자율주행 데모 체험 가능</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: VERA RUBIN -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 02</div>
+    <h2 class="s-title">VERA RUBIN —<br>차세대 AI 가속기의 해부</h2>
+
+    <div class="prose">
+      <p>GTC 2026의 하드웨어 주인공은 단연 <span class="highlight">Vera Rubin</span>입니다. 기존 Blackwell 시리즈의 후계자인 Vera Rubin은 GPU인 'Rubin'과 CPU인 'Vera'를 결합한 슈퍼칩 아키텍처로, 2026년 하반기 양산을 목표로 합니다. 엔비디아는 지난 CES에서 양산 돌입을 공식 확인한 바 있습니다.</p>
+      <p><span class="hl-cyan">Vera Rubin NVL576</span> 기준, 하나의 서버 랙에 576개의 Rubin GPU와 12,672코어 Vera CPU가 탑재됩니다. 메모리만 <strong>HBM4 스택 GPU당 288GB, 슈퍼칩 기준 576GB</strong>에 달하며 이는 Blackwell 대비 약 3배에 해당하는 대역폭입니다.</p>
+      <p>한편 업계 관심은 그 다음 세대인 <span class="hl-amber">Feynman</span>에도 쏠립니다. TSMC의 A16 노드(1nm급) 적용이 유력하며, 빠르면 2027년 하반기~2028년 출시가 거론됩니다. 젠슨 황이 "세계를 놀라게 할 새 칩"을 예고한 만큼, GTC 키노트에서 Feynman의 일부 실루엣이 드러날 가능성이 있습니다.</p>
+    </div>
+
+    <div class="feature-grid reveal">
+      <div class="f-card green">
+        <div class="num">1</div>
+        <div class="icon">🟢</div>
+        <h4>GPU — Rubin</h4>
+        <p>HBM4 8스택(288GB) 탑재. 전 세대 Blackwell 대비 3배 메모리 대역폭. 추론(Inference) 처리에 특화된 새 구조 탑재 예정.</p>
+        <span class="tag">INFERENCE 최적화</span>
+      </div>
+      <div class="f-card cyan">
+        <div class="num">2</div>
+        <div class="icon">🔵</div>
+        <h4>CPU — Vera</h4>
+        <p>에이전틱 AI 워크플로우 처리에 최적화. Meta 데이터센터에 이미 단독 배포 완료. CPU 시장 2025년 $27B → 2030년 $60B 전망(BofA).</p>
+        <span class="tag">AGENTIC AI 전용</span>
+      </div>
+      <div class="f-card amber">
+        <div class="num">3</div>
+        <div class="icon">🟡</div>
+        <h4>차기작 — Feynman</h4>
+        <p>TSMC A16 노드(1nm급) 적용 유력. 2027H2~2028년 출시 예상. GTC에서 일부 아키텍처 힌트 공개 가능성.</p>
+        <span class="tag">TSMC A16 · 1nm급</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: HBM4 -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 03 · 핵심 관전포인트 ①</div>
+    <h2 class="s-title">HBM4 공급망 전쟁 —<br>삼성 vs SK하이닉스</h2>
+
+    <div class="prose">
+      <p>GTC 2026의 진짜 서브텍스트는 <span class="highlight">한국 메모리 반도체 양강의 HBM4 점유율 대결</span>입니다. Vera Rubin 플랫폼의 HBM4 공급사로 삼성전자와 SK하이닉스가 단독 선정되었고(마이크론 플래그십 제외), 두 회사의 GTC 발표는 사실상 대형 고객사에 대한 공개 IR(투자자 관계) 이기도 합니다.</p>
+    </div>
+
+    <div class="quote-block reveal">
+      "마이크론은 Vera Rubin HBM4 공급사에서 제외됐다. 이 자리에 대한 논의 자체가 없다."
+      <span class="source">— 업계 관계자, Korea Economic Daily 인용</span>
+    </div>
+
+    <table class="battle-table reveal">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>삼성전자</th>
+          <th>SK하이닉스</th>
+          <th>마이크론</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">HBM4 공급 지위</span></td>
+          <td><span class="badge badge-amber">Vera Rubin 공급사</span></td>
+          <td><span class="badge badge-green">Vera Rubin 공급사</span></td>
+          <td><span class="badge badge-muted">플래그십 제외</span></td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">2026년 HBM4 점유율</span></td>
+          <td>
+            ~30%
+            <div class="share-bar"><div class="share-fill fill-amber" style="width:30%"></div></div>
+          </td>
+          <td>
+            ~70%
+            <div class="share-bar"><div class="share-fill fill-green" style="width:70%"></div></div>
+          </td>
+          <td>
+            0% (Rubin 기준)
+            <div class="share-bar"><div class="share-fill fill-muted" style="width:5%"></div></div>
+          </td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">HBM4 출하 시작</span></td>
+          <td>2026년 2월 (업계 최초 출하)</td>
+          <td>2026년 양산 중, 배송 발표 예정</td>
+          <td>중간급(Rubin CPX) 공급 검토</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">기술 특징</span></td>
+          <td>4nm 로직 베이스다이 + 1c DRAM, 최고 11Gbps (JEDEC 8Gbps 초과)</td>
+          <td>TSMC 파운드리 협력, LLM 효율 개선 강조</td>
+          <td>LPDDR5X — Vera CPU 공급으로 전략 선회</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">GTC 발표 주제</span></td>
+          <td>"AI를 통한 반도체 제조의 미래" + HBM4E 로드맵 공개</td>
+          <td>"HBM4와 LLM 효율성" + 공급 스케줄 업데이트</td>
+          <td>별도 HBM 발표 없음</td>
+        </tr>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted)">리스크</span></td>
+          <td>4nm 자체 파운드리 수율 불확실성, 평택 4라인 증설 1년 소요</td>
+          <td>공급 집중으로 협상력 강화 — 반면 단일 고객 의존도↑</td>
+          <td>플래그십 시장 조기 배제 시 매출 타격</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="prose">
+      <p>주목할 점은 <span class="highlight">삼성전자가 HBM4를 업계 최초로 출하했음에도 점유율이 낮다</span>는 역설입니다. 엔비디아는 검증 단계에서 꾸준히 높은 성과를 보인 SK하이닉스에 물량의 약 70%를 배정했습니다. 삼성은 초기 열세를 극복하기 위해 <span class="hl-amber">HBM4E(차차세대)</span> 로드맵을 공개하며 반격을 예고하고 있습니다.</p>
+      <p>한편 SK하이닉스 최태원 회장의 첫 GTC 현장 참석도 화제입니다. 지난 2월 젠슨 황과의 '치맥 회동' 이후 한 달 만의 재회가 예정된 만큼, <span class="hl-cyan">HBM4 공급 가격 협상과 장기 계약의 세부 내용이 이번 회동에서 결정될 가능성</span>이 있습니다.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: ENERGY -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 04 · 핵심 관전포인트 ②</div>
+    <h2 class="s-title">에너지 효율 —<br>AI의 아킬레스건을 해결할 수 있나</h2>
+
+    <div class="prose">
+      <p>AI 데이터센터의 전력 소모는 이제 기술 문제를 넘어 <span class="highlight">국가 에너지 안보 문제</span>로 격상됐습니다. 엔비디아는 GTC에서 이 문제를 정면으로 다룰 것으로 예상됩니다. 젠슨 황은 자사의 AI 인프라를 "기가와트 단위로 측정되는 빌드아웃"이라고 표현하며, 에너지 문제를 회피하지 않고 핵심 의제로 삼았습니다.</p>
+    </div>
+
+    <div class="energy-stats reveal">
+      <div class="e-stat">
+        <div class="big" style="color:var(--red)">1GW+</div>
+        <div class="desc">Thinking Machines Lab에 배포 예정인<br>Vera Rubin 시스템 규모</div>
+      </div>
+      <div class="e-stat">
+        <div class="big" style="color:var(--amber)">3~4×</div>
+        <div class="desc">HBM4 생산에 필요한 웨이퍼 용량<br>(표준 DRAM 대비)</div>
+      </div>
+      <div class="e-stat">
+        <div class="big" style="color:var(--green)">75%↑</div>
+        <div class="desc">엔비디아 데이터센터 매출<br>전년 대비 성장률 ($62B)</div>
+      </div>
+      <div class="e-stat">
+        <div class="big" style="color:var(--cyan)">25%</div>
+        <div class="desc">HBM 생산에 투입 중인<br>글로벌 DRAM 웨이퍼 비중</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>GTC 에너지 효율의 핵심 솔루션으로 거론되는 것은 두 가지입니다. 첫째는 <span class="highlight">HBM4의 구조 혁신</span>입니다. 베이스다이를 4nm 로직으로 제작해 메모리 스택 내부에서 데이터 전처리를 수행함으로써, GPU-메모리 간 데이터 이동에 소비되는 전력을 대폭 줄입니다. 이것이 이른바 <span class="hl-cyan">'메모리 월(Memory Wall)' 해결의 첫 걸음</span>입니다.</p>
+      <p>둘째는 <span class="highlight">에이전틱 AI 아키텍처로의 전환</span>입니다. GPU가 수천 개의 코어로 병렬 연산을 처리하는 구조는 훈련에 최적화되어 있지만, 실제 서비스 운영(인퍼런스)에서는 막대한 에너지를 낭비합니다. 반면 Vera CPU는 에이전틱 워크플로우에 최적화된 설계로, 동일한 작업량을 더 적은 전력으로 처리할 수 있다는 것이 엔비디아의 주장입니다.</p>
+      <p>일라이 릴리(Eli Lilly)는 GTC 기간 중 <span class="hl-amber">"제약 분야 최강 AI 팩토리"</span> 가동을 발표했습니다. 이처럼 AI가 제조·바이오·에너지 분야에 실제로 배치되면서, 전력 효율성은 단순한 기술 지표가 아닌 ROI(투자 수익률)의 핵심 변수로 부상하고 있습니다.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 5: ACTION PLAN -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 05 · 핵심 관전포인트 ③</div>
+    <h2 class="s-title">소부장 포트폴리오 —<br>옥석 가리기 ACTION PLAN</h2>
+
+    <div class="prose">
+      <p>GTC 2026에서 나오는 공급망 신호는 단순한 뉴스가 아닙니다. <span class="highlight">반도체 장비·소재·부품(소부장) 종목의 실질적 수주 가시성을 판단하는 나침반</span>입니다. 시장이 주목해야 할 세 가지 체크포인트를 정리합니다.</p>
+      <p><em style="color:var(--muted);font-size:.83rem">※ 아래 내용은 투자 참고용 분석이며, 특정 종목 매수·매도를 권고하지 않습니다. 실제 투자는 반드시 전문 금융 어드바이저와 상담하시기 바랍니다.</em></p>
+    </div>
+
+    <div class="action-list reveal">
+      <div class="action-item">
+        <h4>HBM4 공급 확정 — 삼성·SK하이닉스 관련 소부장 직접 수혜</h4>
+        <p>HBM4 생산은 표준 DRAM 대비 3~4배의 웨이퍼 용량과 고난도 패키징 공정을 요구합니다. 삼성의 평택 4라인 증설(2026~2027년), SK하이닉스의 청주 P&T7 패키징 공장(19조 원 투자, 2027년 완공 예정) 수혜를 받는 장비·소재주를 우선적으로 체크하세요. 핵심 공정은 <strong>어드밴스드 패키징(CoWoS 계열), TSV(Through-Silicon Via), MR-MUF 공정</strong>입니다.</p>
+        <div class="stock-tags">
+          <span class="stag">어드밴스드 패키징</span>
+          <span class="stag">TSV 장비</span>
+          <span class="stag c">MR-MUF 소재</span>
+          <span class="stag a">HBM 테스트 장비</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <h4>인퍼런스 칩 급부상 — 새로운 밸류체인 점검</h4>
+        <p>엔비디아가 훈련(Training) 시장에서 이미 약 80%의 점유율을 확보한 반면, 인퍼런스 시장은 구글(TPU), 아마존(Trainium) 등 커스텀 칩의 도전이 거세집니다. GTC에서 인퍼런스 전용 칩이 발표될 경우, 이를 제조할 TSMC와 테스트·패키징 밸류체인이 직접 수혜를 받습니다. 단, <span style="color:var(--amber)">그루크(Groq) 기술 라이선스($200억) 통합 여부</span>에 따라 밸류체인 구조가 크게 달라질 수 있어 주목이 필요합니다.</p>
+        <div class="stock-tags">
+          <span class="stag">TSMC 공정 장비</span>
+          <span class="stag c">인퍼런스 테스트</span>
+          <span class="stag a">CoWoS 패키징</span>
+        </div>
+      </div>
+      <div class="action-item">
+        <h4>AI 팩토리·피지컬 AI — 실물 경제 연결 수혜 종목</h4>
+        <p>GTC 2026의 가장 큰 테마 변화는 AI가 <strong>데이터센터 밖으로 나온다</strong>는 것입니다. 로보틱스, 자율주행, 제조 자동화, 바이오 R&D에 AI 가속기가 실제 배치되면 전력·냉각 인프라, 에지 컴퓨팅 장비, 산업용 네트워크 수요가 함께 폭발합니다. 릴리(Lilly)의 AI 팩토리 가동, Thinking Machines Lab의 1GW 시스템 계약은 이 트렌드의 첫 사례입니다. 데이터센터 냉각·전력 인프라 종목에 대한 별도 모니터링이 필요합니다.</p>
+        <div class="stock-tags">
+          <span class="stag">데이터센터 냉각</span>
+          <span class="stag c">에지 AI 하드웨어</span>
+          <span class="stag a">전력 인프라</span>
+          <span class="stag">산업용 네트워크</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="idiom-box reveal">
+      <div class="hanja">居安思危</div>
+      <div class="roman">거안사위 (jū ān sī wēi)</div>
+      <div class="meaning">
+        "편안할 때 위기를 생각하라"<br><br>
+        지금 AI 반도체 붐에서 수혜를 누리고 있는 삼성·SK하이닉스의 상황은 역설적으로 가장 위험한 국면이기도 합니다. 글로벌 DRAM 웨이퍼의 25%가 이미 HBM에 투입된 상태. AI 수요가 조금이라도 꺾이면, 고비용 HBM 전용 라인은 즉각적인 재고 과잉으로 이어질 수 있습니다. <strong>강세장일수록 출구 전략과 포트폴리오 분산을 미리 준비해야 합니다.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: CONCLUSION -->
+  <div class="section reveal">
+    <div class="s-label">SECTION 06</div>
+    <h2 class="s-title">결론 — GTC 2026이<br>남기는 시그널</h2>
+
+    <div class="prose">
+      <p>엔비디아 GTC 2026은 단순한 신제품 쇼가 아닙니다. 이것은 <span class="highlight">AI가 인프라에서 실물경제로 전환되는 역사적 전환점</span>에 대한 공개 선언입니다. 젠슨 황의 말처럼 "AI는 더 이상 앱이나 모델 하나가 아닌 전기처럼 필수 인프라"가 된 시대, 반도체 산업의 무게중심도 이동하고 있습니다.</p>
+      <p><strong>HBM4 전쟁</strong>에서 삼성과 SK하이닉스가 마이크론을 제치고 플래그십 공급사 지위를 확보한 것은 한국 반도체 산업의 전략적 승리이지만, <span class="hl-red">공급 집중에 따른 취약성도 동전의 양면</span>입니다. 인퍼런스 시장을 둘러싼 경쟁(구글, 아마존, 그루크)은 엔비디아의 80% 훈련 시장 독점에 처음으로 실질적 도전을 제기하고 있습니다.</p>
+      <p>투자자라면 GTC 키노트 이후 <span class="hl-cyan">세 가지 숫자</span>를 반드시 확인하세요. ① HBM4 양산 스케줄 확정 여부, ② 인퍼런스 전용 칩의 공식 발표 여부, ③ Vera Rubin의 에너지 효율 수치(FLOPS/Watt). 이 세 가지가 향후 2년의 반도체 소부장 포트폴리오 방향을 결정할 것입니다.</p>
+    </div>
+
+    <div class="quote-block reveal">
+      "GTC는 AI 인더스트리얼 에라의 진원지(epicenter)다. AI는 이제 모든 기업이 사용하고, 모든 국가가 구축할 필수 인프라다. 에너지에서 칩까지, 인프라에서 앱까지, 스택의 모든 계층이 동시에 진화하고 있다."
+      <span class="source">— Jensen Huang, NVIDIA CEO · GTC 2026 공식 발표문</span>
+    </div>
+  </div>
+
+  <!-- TAGS -->
+  <div class="tag-section reveal">
+    <span class="htag">#GTC2026</span>
+    <span class="htag">#엔비디아</span>
+    <span class="htag">#NVIDIA</span>
+    <span class="htag">#AI반도체</span>
+    <span class="htag">#VelaRubin</span>
+    <span class="htag">#HBM4</span>
+    <span class="htag">#삼성전자</span>
+    <span class="htag">#SK하이닉스</span>
+    <span class="htag">#젠슨황</span>
+    <span class="htag">#반도체투자</span>
+    <span class="htag">#소부장</span>
+    <span class="htag">#인퍼런스칩</span>
+    <span class="htag">#에이전틱AI</span>
+    <span class="htag">#피지컬AI</span>
+    <span class="htag">#AI팩토리</span>
+    <span class="htag">#Feynman</span>
+    <span class="htag">#반도체뉴스</span>
+    <span class="htag">#테크블로그</span>
+    <span class="htag">#거안사위</span>
+    <span class="htag">#반도체주식</span>
+    <span class="htag">#AI투자전략</span>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <strong>CHIP REPORT</strong> · AI 반도체 심층 분석 블로그<br>
+  <span style="margin-top:.3rem;display:block">
+    居安思危 (거안사위) — 편안할 때 위기를 생각하라 ⚡
+  </span>
+  <span style="margin-top:.2rem;display:block;font-size:.6rem">
+    본 글은 정보 제공 목적이며 투자 권유가 아닙니다. 투자 판단은 본인 책임입니다.
+  </span>
+</footer>
+
+<script>
+// progress bar
+window.addEventListener('scroll',()=>{
+  const h=document.body.scrollHeight-window.innerHeight;
+  document.getElementById('pb').style.width=(h>0?window.scrollY/h*100:0)+'%';
+});
+
+// scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// animate share bars on visibility
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.share-fill').forEach(b=>{
+        b.style.width=b.getAttribute('data-w')||b.style.width;
+      });
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.battle-table').forEach(t=>{
+  t.querySelectorAll('.share-fill').forEach(b=>b.setAttribute('data-w',b.style.width));
+  barObs.observe(t);
+});
+</script>
+</body>
+</html>
