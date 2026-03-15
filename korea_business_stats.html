@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대한민국 사업자 현황 — 국세청 통계 인포그래픽</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3e;
+    --red: #ff3b3b;
+    --red-soft: rgba(255,59,59,0.12);
+    --amber: #ffb347;
+    --amber-soft: rgba(255,179,71,0.12);
+    --green: #2ecc71;
+    --green-soft: rgba(46,204,113,0.12);
+    --blue: #4e9eff;
+    --blue-soft: rgba(78,158,255,0.12);
+    --text: #e8e8f0;
+    --text-muted: #7070a0;
+    --text-dim: #404060;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+    margin-bottom: 60px;
+  }
+
+  .header-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .header h1 span {
+    color: var(--red);
+  }
+
+  .header-sub {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .source-badge::before {
+    content: '●';
+    color: var(--green);
+    font-size: 8px;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── BIG NUMBER CARDS ── */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .hero-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-card:nth-child(1) { animation-delay: 0.1s; }
+  .hero-card:nth-child(2) { animation-delay: 0.2s; }
+  .hero-card:nth-child(3) { animation-delay: 0.3s; }
+  .hero-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .hero-card.red::before { background: var(--red); }
+  .hero-card.amber::before { background: var(--amber); }
+  .hero-card.green::before { background: var(--green); }
+  .hero-card.blue::before { background: var(--blue); }
+
+  .hero-card-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .hero-card-number {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-card.red .hero-card-number { color: var(--red); }
+  .hero-card.amber .hero-card-number { color: var(--amber); }
+  .hero-card.green .hero-card-number { color: var(--green); }
+  .hero-card.blue .hero-card-number { color: var(--blue); }
+
+  .hero-card-unit {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .hero-card-desc {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .hero-card-tag {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .hero-card.red .hero-card-tag { background: var(--red-soft); color: var(--red); }
+  .hero-card.amber .hero-card-tag { background: var(--amber-soft); color: var(--amber); }
+  .hero-card.green .hero-card-tag { background: var(--green-soft); color: var(--green); }
+  .hero-card.blue .hero-card-tag { background: var(--blue-soft); color: var(--blue); }
+
+  /* ── SECTION LAYOUT ── */
+  .section {
+    margin-bottom: 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .chart-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    animation: fadeUp 0.7s ease both;
+    animation-delay: 0.5s;
+  }
+
+  /* ── DUAL GRID ── */
+  .dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  @media (max-width: 700px) {
+    .dual-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── SURVIVAL BARS ── */
+  .survival-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+  }
+
+  .survival-title {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    font-family: var(--mono);
+  }
+
+  .survival-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .survival-year {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .survival-bar-track {
+    height: 24px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .survival-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .survival-bar-fill span {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+    white-space: nowrap;
+  }
+
+  .survival-pct {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  /* ── REGION TABLE ── */
+  .region-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .region-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .region-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-weight: 300;
+  }
+
+  .region-table tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .region-table .rank {
+    font-family: var(--mono);
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  .rank-badge {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: var(--surface2);
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+  }
+
+  .rank-1 { background: rgba(255,59,59,0.2); color: var(--red); }
+  .rank-2 { background: rgba(255,179,71,0.2); color: var(--amber); }
+  .rank-3 { background: rgba(78,158,255,0.2); color: var(--blue); }
+
+  .region-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .region-mini-bar {
+    height: 6px;
+    background: var(--red);
+    opacity: 0.6;
+    border-radius: 1px;
+  }
+
+  /* ── CAUSE DONUT SECTION ── */
+  .cause-layout {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 32px;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .cause-layout { grid-template-columns: 1fr; }
+  }
+
+  .cause-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .cause-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cause-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cause-name {
+    font-size: 13px;
+    font-weight: 400;
+    flex: 1;
+  }
+
+  .cause-pct {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* ── INDUSTRY TABLE ── */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2px;
+  }
+
+  .industry-card {
+    background: var(--surface);
+    padding: 20px;
+    border-left: 3px solid transparent;
+    transition: background 0.2s;
+  }
+
+  .industry-card:hover {
+    background: var(--surface2);
+  }
+
+  .industry-card.danger { border-left-color: var(--red); }
+  .industry-card.warn { border-left-color: var(--amber); }
+  .industry-card.ok { border-left-color: var(--green); }
+
+  .industry-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+
+  .industry-pct {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .industry-card.danger .industry-pct { color: var(--red); }
+  .industry-card.warn .industry-pct { color: var(--amber); }
+  .industry-card.ok .industry-pct { color: var(--green); }
+
+  .industry-count {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── TIMELINE QUOTE ── */
+  .timeline-note {
+    background: var(--surface);
+    border-left: 3px solid var(--red);
+    padding: 20px 24px;
+    margin-top: 2px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .timeline-note strong {
+    color: var(--red);
+    font-weight: 600;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-sources {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .footer-sources a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .footer-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .separator {
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--border) 0, var(--border) 4px, transparent 4px, transparent 8px);
+    margin: 40px 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">국세청 국세통계포털 · 중소벤처기업부 · 2024–2025 기준</div>
+    <h1>오늘도 누군가의 회사가<br><span>태어나고, 사라졌다</span></h1>
+    <div class="header-sub">대한민국 사업자 등록·폐업 현황 통계 인포그래픽 — 2024년 기준</div>
+    <div class="source-badge">실제 통계 기반 데이터 시각화 · LIVE</div>
+  </div>
+
+  <!-- HERO STATS -->
+  <div class="hero-stats">
+    <div class="hero-card red">
+      <div class="hero-card-label">2024년 연간 폐업자 수</div>
+      <div class="hero-card-number">100<span class="hero-card-unit">만 8,282명</span></div>
+      <div class="hero-card-desc">1995년 통계 집계 이래 최초로 100만명 돌파.<br>하루 평균 약 2,762명이 문을 닫았다.</div>
+      <div class="hero-card-tag">▲ 사상 최초 100만명 초과</div>
+    </div>
+    <div class="hero-card amber">
+      <div class="hero-card-label">2024년 폐업률</div>
+      <div class="hero-card-number">9.04<span class="hero-card-unit">%</span></div>
+      <div class="hero-card-desc">운영 중인 사업자 10곳 중 약 1곳이 폐업.<br>2년 연속 상승 중.</div>
+      <div class="hero-card-tag">▲ 2년 연속 상승</div>
+    </div>
+    <div class="hero-card green">
+      <div class="hero-card-label">2023년 말 총 가동 사업자</div>
+      <div class="hero-card-number">995<span class="hero-card-unit">만명</span></div>
+      <div class="hero-card-desc">2004년(394만명) 대비 약 2.5배 증가.<br>법인 +4.0%, 개인 +2.6% (전년비)</div>
+      <div class="hero-card-tag">꾸준한 증가 추세</div>
+    </div>
+    <div class="hero-card blue">
+      <div class="hero-card-label">자영업자 대출 총액 (2025 Q1)</div>
+      <div class="hero-card-number">1,112<span class="hero-card-unit">조원</span></div>
+      <div class="hero-card-desc">2019년말(738조) 대비 50% 이상 증가.<br>자영업자 3명 중 2명은 대출 보유.</div>
+      <div class="hero-card-tag">▲ 연체율 1.88% (2012년 이후 최고)</div>
+    </div>
+  </div>
+
+  <div class="timeline-note">
+    소상공인연합회: <strong>"IMF 외환위기 때보다 힘들다"</strong> — 내수침체·고금리·고물가 3중고 속에서 가게 문을 닫는 사업자가 100만명을 넘어섰다. 전체 자영업자(570만명) 중 75.7%는 월 수입 100만원 미만이다.
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- CHART 1: 연도별 폐업자 추이 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div class="section-title">연도별 폐업 사업자 추이</div>
+    </div>
+    <div class="chart-card">
+      <canvas id="trendChart" height="90"></canvas>
+    </div>
+  </div>
+
+  <!-- CHART 2: 업종별 폐업률 + 생존율 -->
+  <div class="dual-grid">
+    <!-- 업종별 폐업률 -->
+    <div>
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <div class="section-title">업종별 폐업률 (2024)</div>
+      </div>
+      <div class="chart-card" style="padding: 28px;">
+        <canvas id="industryChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <!-- 생존율 -->
+    <div>
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <div class="section-title">창업 후 생존율 (2024)</div>
+      </div>
+      <div class="survival-section">
+        <div class="survival-title">창업 기간별 생존율</div>
+
+        <div class="survival-row">
+          <div class="survival-year">1년 후</div>
+          <div class="survival-bar-track">
+            <div class="survival-bar-fill" style="width: 78%; background: linear-gradient(90deg, #2ecc71, #27ae60);">
+              <span>10곳 중 7.8곳 생존</span>
+            </div>
+          </div>
+          <div class="survival-pct" style="color: var(--green);">78%</div>
+        </div>
+
+        <div class="survival-row">
+          <div class="survival-year">3년 후</div>
+          <div class="survival-bar-track">
+            <div class="survival-bar-fill" style="width: 52.3%; background: linear-gradient(90deg, #ffb347, #f39c12);">
+              <span>10곳 중 5.2곳 생존</span>
+            </div>
+          </div>
+          <div class="survival-pct" style="color: var(--amber);">52.3%</div>
+        </div>
+
+        <div class="survival-row">
+          <div class="survival-year">5년 후</div>
+          <div class="survival-bar-track">
+            <div class="survival-bar-fill" style="width: 40.2%; background: linear-gradient(90deg, #ff3b3b, #c0392b);">
+              <span>10곳 중 4곳만 생존</span>
+            </div>
+          </div>
+          <div class="survival-pct" style="color: var(--red);">40.2%</div>
+        </div>
+
+        <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);">
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px; font-family: var(--mono); letter-spacing: 0.08em;">생존율 높은 업종 TOP 3</div>
+          <div style="font-size: 13px; color: var(--text); line-height: 2.2; font-weight: 300;">
+            🏆 LPG충전소 &nbsp;<span style="font-family:var(--mono);color:var(--green);">93.8%</span><br>
+            ✂️ 미용실 &nbsp;<span style="font-family:var(--mono);color:var(--green);">91.6%</span><br>
+            🏡 펜션·게스트하우스 &nbsp;<span style="font-family:var(--mono);color:var(--green);">91.0%</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-top: 14px; font-family: var(--mono); letter-spacing: 0.08em;">생존율 낮은 업종 BOTTOM 3</div>
+          <div style="font-size: 13px; color: var(--text); line-height: 2.2; font-weight: 300;">
+            💻 PC방 &nbsp;<span style="font-family:var(--mono);color:var(--red);">65.8%</span><br>
+            📦 통신판매업 &nbsp;<span style="font-family:var(--mono);color:var(--red);">67.7%</span><br>
+            💄 화장품가게 &nbsp;<span style="font-family:var(--mono);color:var(--amber);">73.6%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- 폐업 사유 + 지역별 -->
+  <div class="dual-grid" style="margin-top:0;">
+    <!-- 폐업 사유 -->
+    <div>
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <div class="section-title">폐업 사유 분석</div>
+      </div>
+      <div class="chart-card">
+        <div class="cause-layout">
+          <div class="cause-legend">
+            <div class="cause-item">
+              <div class="cause-dot" style="background:#ff3b3b;"></div>
+              <div class="cause-name">사업 부진</div>
+              <div class="cause-pct" style="color:var(--red);">50.2%</div>
+            </div>
+            <div class="cause-item">
+              <div class="cause-dot" style="background:#ffb347;"></div>
+              <div class="cause-name">양도·인수</div>
+              <div class="cause-pct" style="color:var(--amber);">16.8%</div>
+            </div>
+            <div class="cause-item">
+              <div class="cause-dot" style="background:#4e9eff;"></div>
+              <div class="cause-name">법인 전환</div>
+              <div class="cause-pct" style="color:var(--blue);">9.4%</div>
+            </div>
+            <div class="cause-item">
+              <div class="cause-dot" style="background:#2ecc71;"></div>
+              <div class="cause-name">해산·합병</div>
+              <div class="cause-pct" style="color:var(--green);">7.1%</div>
+            </div>
+            <div class="cause-item">
+              <div class="cause-dot" style="background:#8070e0;"></div>
+              <div class="cause-name">기타</div>
+              <div class="cause-pct" style="color:#8070e0;">16.5%</div>
+            </div>
+          </div>
+          <div style="position:relative; width:200px; height:200px;">
+            <canvas id="causeChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 지역별 폐업 -->
+    <div>
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <div class="section-title">지역별 폐업 현황</div>
+      </div>
+      <div class="chart-card" style="padding: 0;">
+        <table class="region-table">
+          <thead>
+            <tr>
+              <th>순위</th>
+              <th>지역</th>
+              <th>폐업자 수</th>
+              <th>비율</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="rank-badge rank-1">1</span></td>
+              <td>경기도</td>
+              <td>
+                <div class="region-bar">
+                  <div class="region-mini-bar" style="width:80px;"></div>
+                  <span>29만 8,430명</span>
+                </div>
+              </td>
+              <td style="font-family:var(--mono); color:var(--red);">29.6%</td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-2">2</span></td>
+              <td>서울</td>
+              <td>
+                <div class="region-bar">
+                  <div class="region-mini-bar" style="width:52px;"></div>
+                  <span>19만 6,211명</span>
+                </div>
+              </td>
+              <td style="font-family:var(--mono); color:var(--amber);">19.5%</td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge rank-3">3</span></td>
+              <td>인천</td>
+              <td>
+                <div class="region-bar">
+                  <div class="region-mini-bar" style="width:17px;"></div>
+                  <span>6만 4,188명</span>
+                </div>
+              </td>
+              <td style="font-family:var(--mono); color:var(--blue);">6.4%</td>
+            </tr>
+            <tr>
+              <td><span class="rank-badge">4</span></td>
+              <td>부산</td>
+              <td>
+                <div class="region-bar">
+                  <div class="region-mini-bar" style="width:15px; opacity:0.4;"></div>
+                  <span>5만 9,164명</span>
+                </div>
+              </td>
+              <td style="font-family:var(--mono); color:var(--text-muted);">5.9%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding: 20px 14px; border-top: 1px solid var(--border);">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--text-dim); margin-bottom: 10px; letter-spacing: 0.08em;">폐업률 높은 지역 TOP 3</div>
+          <div style="font-size: 12px; color: var(--text-muted); line-height: 2;">
+            인천 <span style="font-family:var(--mono); color:var(--red);">9.92%</span> &nbsp;·&nbsp;
+            울산 <span style="font-family:var(--mono); color:var(--red);">9.91%</span> &nbsp;·&nbsp;
+            대전 <span style="font-family:var(--mono); color:var(--amber);">9.85%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <!-- 업종 카드 그리드 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div class="section-title">업종별 폐업자 수 상위 5개 (2024)</div>
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card danger">
+        <div class="industry-name">소매업</div>
+        <div class="industry-pct">16.78<span style="font-size:14px;color:var(--text-muted);">%</span></div>
+        <div class="industry-count">29만 9,642명 · 전체의 29.7%</div>
+      </div>
+      <div class="industry-card danger">
+        <div class="industry-name">음식점업</div>
+        <div class="industry-pct">15.82<span style="font-size:14px;color:var(--text-muted);">%</span></div>
+        <div class="industry-count">15만 3,017명 · 전체의 15.2%</div>
+      </div>
+      <div class="industry-card warn">
+        <div class="industry-name">부동산업</div>
+        <div class="industry-pct">—</div>
+        <div class="industry-count">11만 1,576명 · 전체의 11.1%</div>
+      </div>
+      <div class="industry-card warn">
+        <div class="industry-name">도매·상품중개업</div>
+        <div class="industry-pct">—</div>
+        <div class="industry-count">7만 1,175명 · 전체의 7.1%</div>
+      </div>
+      <div class="industry-card ok">
+        <div class="industry-name">건설업</div>
+        <div class="industry-pct">—</div>
+        <div class="industry-count">4만 9,584명 · 전체의 4.9%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-sources">
+      출처 · 국세청 국세통계포털 (tasis.nts.go.kr)<br>
+      중소벤처기업부 소상공인 생존율 통계<br>
+      세계일보 2025.07.06 · 한국경제 2025.11.02 · 머니투데이 2025.06.16 보도 기반
+    </div>
+    <div class="footer-date">
+      데이터 기준 : 2024년 연간<br>
+      작성 : 2026. 03. 15
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Chart 1: 연도별 폐업 추이 ──
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+new Chart(trendCtx, {
+  type: 'bar',
+  data: {
+    labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+    datasets: [{
+      label: '폐업 사업자 수 (만명)',
+      data: [92.2, 89.1, 87.4, 86.7, 98.6, 100.8],
+      backgroundColor: (ctx) => {
+        const val = ctx.raw;
+        if (val >= 100) return 'rgba(255, 59, 59, 0.85)';
+        if (val >= 95) return 'rgba(255, 179, 71, 0.7)';
+        return 'rgba(78, 158, 255, 0.5)';
+      },
+      borderColor: (ctx) => {
+        const val = ctx.raw;
+        if (val >= 100) return '#ff3b3b';
+        if (val >= 95) return '#ffb347';
+        return '#4e9eff';
+      },
+      borderWidth: 1,
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a26',
+        borderColor: '#2a2a3e',
+        borderWidth: 1,
+        titleColor: '#e8e8f0',
+        bodyColor: '#7070a0',
+        callbacks: {
+          label: (ctx) => ` ${ctx.raw}만명`
+        }
+      },
+      annotation: {}
+    },
+    scales: {
+      y: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#7070a0', font: { family: 'DM Mono', size: 11 }, callback: v => v + '만' },
+        min: 80,
+      },
+      x: {
+        grid: { display: false },
+        ticks: { color: '#7070a0', font: { family: 'DM Mono', size: 11 } }
+      }
+    }
+  }
+});
+
+// ── Chart 2: 업종별 폐업률 ──
+const industryCtx = document.getElementById('industryChart').getContext('2d');
+new Chart(industryCtx, {
+  type: 'bar',
+  data: {
+    labels: ['소매업', '음식점업', '인적용역', '기타도급\n제조업', '가사서비스업'],
+    datasets: [{
+      data: [16.78, 15.82, 14.11, 13.54, 12.75],
+      backgroundColor: ['rgba(255,59,59,0.8)', 'rgba(255,59,59,0.65)', 'rgba(255,179,71,0.7)', 'rgba(255,179,71,0.55)', 'rgba(255,179,71,0.4)'],
+      borderColor: ['#ff3b3b', '#ff3b3b', '#ffb347', '#ffb347', '#ffb347'],
+      borderWidth: 1,
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a26',
+        borderColor: '#2a2a3e',
+        borderWidth: 1,
+        titleColor: '#e8e8f0',
+        bodyColor: '#7070a0',
+        callbacks: { label: (ctx) => ` 폐업률 ${ctx.raw}%` }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        ticks: { color: '#7070a0', font: { family: 'DM Mono', size: 11 }, callback: v => v + '%' },
+        max: 20,
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#e8e8f0', font: { family: 'Noto Sans KR', size: 12 } }
+      }
+    }
+  }
+});
+
+// ── Chart 3: 폐업 사유 도넛 ──
+const causeCtx = document.getElementById('causeChart').getContext('2d');
+new Chart(causeCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['사업 부진', '양도·인수', '법인 전환', '해산·합병', '기타'],
+    datasets: [{
+      data: [50.2, 16.8, 9.4, 7.1, 16.5],
+      backgroundColor: ['rgba(255,59,59,0.85)', 'rgba(255,179,71,0.8)', 'rgba(78,158,255,0.8)', 'rgba(46,204,113,0.8)', 'rgba(128,112,224,0.6)'],
+      borderColor: '#0a0a0f',
+      borderWidth: 3,
+      hoverOffset: 6,
+    }]
+  },
+  options: {
+    cutout: '68%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1a1a26',
+        borderColor: '#2a2a3e',
+        borderWidth: 1,
+        titleColor: '#e8e8f0',
+        bodyColor: '#7070a0',
+        callbacks: { label: (ctx) => ` ${ctx.raw}%` }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
