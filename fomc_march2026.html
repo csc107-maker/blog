@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOMC 3월 18일 예측 분석 리포트 — 점도표 변화 & 시장 영향</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08090d;--bg2:#0e1018;--bg3:#14161f;--bg4:#1c1f2b;--bg5:#232736;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--border3:rgba(255,255,255,0.18);
+  --text:#dde1f0;--muted:#7a8099;--dim:#4a5068;
+  --fed:#4f8ef7;--green:#3ecf82;--red:#f05252;--amber:#f5a623;--purple:#a78bfa;--teal:#2dd4bf;
+  --hold-col:#4f8ef7;--dove-col:#3ecf82;--hawk-col:#f05252;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* ─── TICKER BAR ─── */
+.ticker-bar{
+  width:100%;background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:6px 0;overflow:hidden;white-space:nowrap;
+}
+.ticker-inner{
+  display:inline-flex;gap:40px;
+  animation:ticker 30s linear infinite;
+}
+.ticker-inner:hover{animation-play-state:paused}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.t-item{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);display:flex;gap:8px}
+.t-item .t-name{color:var(--text)}
+.t-item .t-up{color:var(--green)}
+.t-item .t-dn{color:var(--red)}
+.t-item .t-neu{color:var(--amber)}
+
+/* ─── HEADER ─── */
+.site-header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(8,9,13,0.94);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 40px;height:54px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;color:#fff}
+.brand span{color:var(--fed)}
+.nav{display:flex;gap:2px}
+.nav a{
+  font-size:11px;padding:5px 13px;border-radius:6px;
+  color:var(--muted);text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.04em;
+  transition:all .18s;
+}
+.nav a:hover{color:var(--text);background:var(--bg4)}
+.live-badge{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(240,82,82,0.1);border:1px solid rgba(240,82,82,0.25);
+  border-radius:20px;padding:4px 12px;
+  font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--red);letter-spacing:.06em;
+}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* ─── HERO ─── */
+.hero{
+  padding:72px 40px 56px;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 40%,rgba(79,142,247,0.07) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 20% 70%,rgba(62,207,130,0.05) 0%,transparent 55%);
+}
+.hero-grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;max-width:1140px;margin:0 auto}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.countdown-box{
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:16px;padding:28px 32px;text-align:center;min-width:240px;
+  flex-shrink:0;
+}
+.cd-label{font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.cd-digits{display:flex;gap:12px;justify-content:center;margin-bottom:10px}
+.cd-unit{text-align:center}
+.cd-num{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:#fff;line-height:1;display:block}
+.cd-uname{font-size:9px;color:var(--dim);font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;margin-top:3px}
+.cd-date{font-size:11px;color:var(--muted);margin-top:8px}
+.prob-ring-wrap{display:flex;justify-content:center;margin-top:16px}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fed);margin-bottom:14px;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--fed);opacity:.5}
+h1.hero-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(32px,4.5vw,58px);
+  font-weight:700;line-height:1.1;letter-spacing:-.02em;
+  color:#fff;margin-bottom:16px;
+}
+h1.hero-title em{color:var(--fed);font-style:normal}
+.hero-desc{font-size:14px;color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:32px}
+.key-metrics{display:flex;gap:16px;flex-wrap:wrap}
+.km{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:10px;padding:12px 18px;min-width:130px;
+}
+.km .k-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;line-height:1}
+.km .k-lbl{font-size:10px;color:var(--muted);margin-top:4px;font-family:'IBM Plex Mono',monospace}
+.c-fed{color:var(--fed)}
+.c-green{color:var(--green)}
+.c-red{color:var(--red)}
+.c-amber{color:var(--amber)}
+.c-purple{color:var(--purple)}
+
+/* ─── LAYOUT ─── */
+.wrap{max-width:1140px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 16px}.hero{padding:40px 16px 36px}}
+.section{padding:60px 0;border-bottom:1px solid var(--border)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px}
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.08em}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#fff}
+.sec-sub{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* ─── DOT PLOT VISUAL ─── */
+.dotplot-wrap{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;padding:28px;overflow-x:auto;
+}
+.dp-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px}
+.dp-sub{font-size:11px;color:var(--muted);margin-bottom:24px}
+.dp-chart-area{display:flex;gap:0;min-width:640px}
+.dp-col{flex:1;text-align:center;position:relative;padding:0 8px}
+.dp-col-title{font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:16px;letter-spacing:.05em}
+.dp-dots-area{position:relative;height:280px;display:flex;flex-direction:column;justify-content:space-between}
+.dp-row{display:flex;justify-content:center;align-items:center;gap:4px;position:relative}
+.dp-row-label{position:absolute;left:-48px;font-size:9px;color:var(--dim);font-family:'IBM Plex Mono',monospace;white-space:nowrap}
+.dot-circle{
+  width:18px;height:18px;border-radius:50%;
+  border:2px solid;display:inline-block;flex-shrink:0;
+  transition:transform .2s;cursor:default;
+}
+.dot-circle:hover{transform:scale(1.3)}
+.dot-dec25{background:rgba(79,142,247,0.25);border-color:var(--fed)}
+.dot-mar26-hawk{background:rgba(240,82,82,0.25);border-color:var(--red)}
+.dot-mar26-base{background:rgba(245,166,35,0.25);border-color:var(--amber)}
+.dot-mar26-dove{background:rgba(62,207,130,0.25);border-color:var(--green)}
+.dp-median-line{
+  position:absolute;width:calc(100% - 16px);left:8px;
+  height:2px;border-top:2px dashed;opacity:.6;
+}
+.dp-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.dp-leg-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+.dp-leg-dot{width:12px;height:12px;border-radius:50%;border:2px solid;flex-shrink:0}
+
+/* ─── SCENARIO CARDS ─── */
+.scenarios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:800px){.scenarios-grid{grid-template-columns:1fr}}
+.scen-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;transition:border-color .2s;
+}
+.scen-card:hover{border-color:var(--border2)}
+.scen-head{padding:18px 20px 14px;border-bottom:1px solid var(--border)}
+.scen-badge{
+  display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;
+  font-family:'IBM Plex Mono',monospace;letter-spacing:.05em;margin-bottom:10px;
+}
+.badge-hold{background:rgba(79,142,247,0.12);color:var(--fed);border:1px solid rgba(79,142,247,0.25)}
+.badge-dove{background:rgba(62,207,130,0.12);color:var(--green);border:1px solid rgba(62,207,130,0.25)}
+.badge-hawk{background:rgba(240,82,82,0.12);color:var(--red);border:1px solid rgba(240,82,82,0.25)}
+.scen-label{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:4px}
+.prob-bar-wrap{margin-top:10px}
+.prob-bar-track{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.prob-bar-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.fill-hold{background:var(--fed)}
+.fill-dove{background:var(--green)}
+.fill-hawk{background:var(--red)}
+.prob-text{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;margin-top:6px}
+.scen-body{padding:16px 20px 18px}
+.scen-item{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;
+}
+.scen-item:last-child{border-bottom:none;padding-bottom:0}
+.scen-item-icon{width:20px;text-align:center;flex-shrink:0;margin-top:1px;font-size:13px}
+.scen-item-text{color:var(--muted);line-height:1.55}
+.scen-item-text strong{color:var(--text);font-weight:500}
+
+/* ─── DOT PLOT CHANGE TABLE ─── */
+.change-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:700px){.change-grid{grid-template-columns:1fr}}
+.chg-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;padding:18px;
+}
+.chg-year{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:8px}
+.chg-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.chg-label{font-size:11px;color:var(--muted)}
+.chg-val{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+.arrow-up{color:var(--red);font-size:10px;margin-left:4px}
+.arrow-dn{color:var(--green);font-size:10px;margin-left:4px}
+.chg-desc{font-size:11.5px;color:var(--dim);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+/* ─── MARKET IMPACT TABLE ─── */
+.impact-table-wrap{overflow-x:auto}
+table.impact{width:100%;border-collapse:collapse;font-size:12.5px;min-width:680px}
+table.impact thead tr{border-bottom:1px solid var(--border2)}
+table.impact th{
+  padding:10px 14px;text-align:left;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.07em;
+  color:var(--dim);font-weight:400;
+}
+table.impact td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  vertical-align:top;line-height:1.55;color:var(--muted);
+}
+table.impact tr:last-child td{border-bottom:none}
+table.impact .asset{color:var(--text);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:nowrap}
+.cell-dove{color:var(--green)}
+.cell-hawk{color:var(--red)}
+.cell-base{color:var(--fed)}
+.chg-chip{
+  display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;
+  font-family:'IBM Plex Mono',monospace;font-weight:500;margin-bottom:2px;
+}
+.chip-g{background:rgba(62,207,130,0.12);color:var(--green)}
+.chip-r{background:rgba(240,82,82,0.12);color:var(--red)}
+.chip-n{background:rgba(79,142,247,0.12);color:var(--fed)}
+
+/* ─── POWELL PROFILE ─── */
+.powell-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.powell-grid{grid-template-columns:1fr}}
+.powell-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;padding:22px;
+}
+.pw-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.pw-avatar{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+}
+.pw-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:#fff}
+.pw-role{font-size:11px;color:var(--muted)}
+.pw-item{
+  display:flex;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--border);font-size:12.5px;
+}
+.pw-item:last-child{border-bottom:none;padding-bottom:0}
+.pw-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.pw-text{color:var(--muted);line-height:1.55}
+.pw-text strong{color:var(--text);font-weight:500}
+
+/* ─── KEY WATCH ─── */
+.watch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.watch-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.watch-icon{
+  width:36px;height:36px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;flex-shrink:0;background:var(--bg4);
+}
+.watch-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px}
+.watch-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.watch-time{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--fed);
+  margin-top:6px;display:block;
+}
+
+/* ─── CHART CONTAINERS ─── */
+.chart-box{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:14px;padding:22px;
+}
+.chart-box .ct{font-size:13px;font-weight:500;color:#fff;margin-bottom:3px}
+.chart-box .cs{font-size:11px;color:var(--muted);margin-bottom:18px}
+.charts-col2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:740px){.charts-col2{grid-template-columns:1fr}}
+
+/* ─── KOREA SECTION ─── */
+.korea-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.kor-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;
+  border-left:3px solid;
+}
+.kor-card.positive{border-left-color:var(--green)}
+.kor-card.negative{border-left-color:var(--red)}
+.kor-card.neutral{border-left-color:var(--fed)}
+.kor-card.watch{border-left-color:var(--amber)}
+.kor-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:6px}
+.kor-desc{font-size:12px;color:var(--muted);line-height:1.65}
+.kor-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.kor-tag{
+  font-size:10px;padding:2px 7px;border-radius:4px;
+  font-family:'IBM Plex Mono',monospace;
+  background:var(--bg4);border:1px solid var(--border2);color:var(--muted);
+}
+
+/* ─── TIMELINE ─── */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:var(--border2)}
+.tl-item{position:relative;margin-bottom:24px}
+.tl-dot{
+  position:absolute;left:-28px;top:4px;
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--fed);background:var(--bg);
+  z-index:1;
+}
+.tl-dot.tl-now{background:var(--fed);animation:pulse 1.4s ease infinite}
+.tl-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--fed);letter-spacing:.06em;margin-bottom:4px}
+.tl-title{font-size:13px;font-weight:500;color:#fff;margin-bottom:3px}
+.tl-desc{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ─── FOOTER ─── */
+.footer{
+  padding:44px 40px;text-align:center;
+  color:var(--dim);font-size:11px;line-height:1.9;
+}
+.footer .f-brand{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--muted);margin-bottom:8px}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- TICKER BAR -->
+<div class="ticker-bar">
+  <div class="ticker-inner" id="ticker">
+    <span class="t-item"><span class="t-name">S&P500</span><span class="t-dn">6,632.19 ▼0.61%</span></span>
+    <span class="t-item"><span class="t-name">NASDAQ</span><span class="t-dn">22,105.36 ▼0.93%</span></span>
+    <span class="t-item"><span class="t-name">DOW</span><span class="t-dn">46,558.47 ▼0.26%</span></span>
+    <span class="t-item"><span class="t-name">VIX</span><span class="t-dn">27.29 ▲12.63%</span></span>
+    <span class="t-item"><span class="t-name">BRENT</span><span class="t-up">$103.2 ▲4.1%</span></span>
+    <span class="t-item"><span class="t-name">WTI</span><span class="t-up">$95.4 ▲3.8%</span></span>
+    <span class="t-item"><span class="t-name">USD/KRW</span><span class="t-dn">1,468 ▲0.7%</span></span>
+    <span class="t-item"><span class="t-name">10YR UST</span><span class="t-neu">4.31%</span></span>
+    <span class="t-item"><span class="t-name">GOLD</span><span class="t-up">$2,981 ▲0.9%</span></span>
+    <span class="t-item"><span class="t-name">CME HOLD PROB</span><span class="t-up">92.4%</span></span>
+    <!-- 반복 -->
+    <span class="t-item"><span class="t-name">S&P500</span><span class="t-dn">6,632.19 ▼0.61%</span></span>
+    <span class="t-item"><span class="t-name">NASDAQ</span><span class="t-dn">22,105.36 ▼0.93%</span></span>
+    <span class="t-item"><span class="t-name">DOW</span><span class="t-dn">46,558.47 ▼0.26%</span></span>
+    <span class="t-item"><span class="t-name">VIX</span><span class="t-dn">27.29 ▲12.63%</span></span>
+    <span class="t-item"><span class="t-name">BRENT</span><span class="t-up">$103.2 ▲4.1%</span></span>
+    <span class="t-item"><span class="t-name">WTI</span><span class="t-up">$95.4 ▲3.8%</span></span>
+    <span class="t-item"><span class="t-name">USD/KRW</span><span class="t-dn">1,468 ▲0.7%</span></span>
+    <span class="t-item"><span class="t-name">10YR UST</span><span class="t-neu">4.31%</span></span>
+    <span class="t-item"><span class="t-name">GOLD</span><span class="t-up">$2,981 ▲0.9%</span></span>
+    <span class="t-item"><span class="t-name">CME HOLD PROB</span><span class="t-up">92.4%</span></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="brand">FED<span>WATCH</span> REPORT</div>
+  <nav class="nav">
+    <a href="#dotplot">점도표</a>
+    <a href="#scenarios">시나리오</a>
+    <a href="#market">시장영향</a>
+    <a href="#korea">한국</a>
+    <a href="#timeline">일정</a>
+  </nav>
+  <div class="live-badge"><div class="live-dot"></div>PRE-FOMC</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">2026.03.18 FOMC 심층 분석</div>
+        <h1 class="hero-title">
+          점도표가<br><em>모든 것을</em><br>결정한다
+        </h1>
+        <p class="hero-desc">
+          금리 동결은 사실상 확정(CME FedWatch 92.4%). 진짜 시장을 움직이는 것은 <strong style="color:var(--text)">점도표 변화</strong>와 <strong style="color:var(--text)">파월의 발언</strong>이다. 2026년 인하 횟수가 1회→2회로 늘면 랠리, 0회로 줄면 급락. 이 두 가지 결과가 향후 6개월 글로벌 자산시장 방향을 가른다.
+        </p>
+        <div class="key-metrics">
+          <div class="km"><div class="k-val c-fed">3.50–3.75%</div><div class="k-lbl">현재 기준금리</div></div>
+          <div class="km"><div class="k-val" style="color:#fff">92.4%</div><div class="k-lbl">동결 확률 (CME)</div></div>
+          <div class="km"><div class="k-val c-amber">1회</div><div class="k-lbl">Dec '25 점도표<br>2026 인하 중앙값</div></div>
+          <div class="km"><div class="k-val c-red">2.8%</div><div class="k-lbl">Core PCE<br>(2% 목표 상회)</div></div>
+        </div>
+      </div>
+      <div class="countdown-box">
+        <div class="cd-label">D-DAY COUNTDOWN</div>
+        <div class="cd-digits">
+          <div class="cd-unit"><span class="cd-num" id="cd-d">03</span><div class="cd-uname">DAYS</div></div>
+          <div class="cd-unit" style="color:var(--dim);font-size:28px;line-height:1.3">:</div>
+          <div class="cd-unit"><span class="cd-num" id="cd-h">14</span><div class="cd-uname">HRS</div></div>
+          <div class="cd-unit" style="color:var(--dim);font-size:28px;line-height:1.3">:</div>
+          <div class="cd-unit"><span class="cd-num" id="cd-m">22</span><div class="cd-uname">MIN</div></div>
+        </div>
+        <div class="cd-date">2026년 3월 18일 오후 2시 (ET)<br>한국시간 3월 19일 오전 3시</div>
+        <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border)">
+          <div style="font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-bottom:10px">HOLD PROBABILITY</div>
+          <div style="position:relative;height:12px;background:var(--bg4);border-radius:6px;overflow:hidden">
+            <div style="width:92.4%;height:100%;background:linear-gradient(90deg,var(--fed),#7bb3ff);border-radius:6px"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;font-family:'IBM Plex Mono',monospace">
+            <span style="color:var(--fed)">HOLD 92.4%</span>
+            <span style="color:var(--muted)">CUT 7.6%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: DOT PLOT -->
+<div id="dotplot" class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <div>
+        <div class="sec-title">점도표(Dot Plot) 변화 예측</div>
+        <div class="sec-sub">12월 2025 기준 vs 3월 2026 예상 — 중앙값 이동이 핵심</div>
+      </div>
+    </div>
+
+    <div class="change-grid" style="margin-bottom:24px">
+      <div class="chg-card">
+        <div class="chg-year">2026년 말 금리 전망</div>
+        <div class="chg-row">
+          <span class="chg-label">Dec '25 중앙값</span>
+          <span class="chg-val c-fed">3.40%</span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">Mar '26 기본 예상</span>
+          <span class="chg-val c-amber">3.40–3.50% <span class="arrow-up">↑유지/상향</span></span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">인하 횟수 시사</span>
+          <span class="chg-val" style="color:#fff">1회 유지</span>
+        </div>
+        <div class="chg-desc">유가 급등·Core PCE 2.8%로 점도표 상향 조정 압력. 0회 가능성도 배제 불가.</div>
+      </div>
+      <div class="chg-card">
+        <div class="chg-year">2027년 말 금리 전망</div>
+        <div class="chg-row">
+          <span class="chg-label">Dec '25 중앙값</span>
+          <span class="chg-val c-fed">3.10%</span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">Mar '26 예상 방향</span>
+          <span class="chg-val c-amber">3.10–3.25% <span class="arrow-up">↑상향 가능</span></span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">인상 리스크</span>
+          <span class="chg-val c-red">상존</span>
+        </div>
+        <div class="chg-desc">이란 분쟁 장기화·관세 효과 반영 시 장기 경로 상향 조정 가능성.</div>
+      </div>
+      <div class="chg-card">
+        <div class="chg-year">장기 중립금리 (Longer Run)</div>
+        <div class="chg-row">
+          <span class="chg-label">Dec '25 중앙값</span>
+          <span class="chg-val c-fed">3.00%</span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">Mar '26 예상</span>
+          <span class="chg-val" style="color:#fff">3.00% <span style="font-size:10px;color:var(--muted)">유지</span></span>
+        </div>
+        <div class="chg-row">
+          <span class="chg-label">범위</span>
+          <span class="chg-val c-fed">2.625–3.875%</span>
+        </div>
+        <div class="chg-desc">중립금리 상향 시 '고금리 장기화'의 구조적 확인. 시장에 가장 부정적 신호.</div>
+      </div>
+    </div>
+
+    <!-- Dot Plot Visualization -->
+    <div class="dotplot-wrap">
+      <div class="dp-title">점도표 시뮬레이션 — 3가지 시나리오 비교</div>
+      <div class="dp-sub">각 원 = FOMC 위원 1인의 금리 전망 | 가로선 = 시나리오별 중앙값</div>
+      <div style="position:relative;height:320px;margin-top:8px">
+        <canvas id="dotplotChart"></canvas>
+      </div>
+      <div class="dp-legend">
+        <div class="dp-leg-item"><div class="dp-leg-dot dot-dec25" style="border-color:var(--fed);background:rgba(79,142,247,0.3)"></div>Dec 2025 (실제)</div>
+        <div class="dp-leg-item"><div class="dp-leg-dot" style="border-color:var(--amber);background:rgba(245,166,35,0.3)"></div>Mar 2026 기본 (1회 유지)</div>
+        <div class="dp-leg-item"><div class="dp-leg-dot" style="border-color:var(--red);background:rgba(240,82,82,0.3)"></div>Mar 2026 매파 (0회)</div>
+        <div class="dp-leg-item"><div class="dp-leg-dot" style="border-color:var(--green);background:rgba(62,207,130,0.3)"></div>Mar 2026 비둘기 (2회)</div>
+        <div class="dp-leg-item" style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim)">※ 본 그래프는 분석 목적 시뮬레이션이며 실제 점도표와 상이할 수 있습니다</div>
+      </div>
+    </div>
+
+    <!-- 내부 분열 -->
+    <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px">
+        <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:12px">🦅 매파 위원 진영 — 인하 신중론</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 슈미드(캔자스시티) — 1월 FOMC 동결 지지, 인플레 우선</div>
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 바르(Fed 부의장) — 유가 상승→인플레 재점화 우려</div>
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 보우만 — 경제 견고성 강조, 서두를 이유 없음</div>
+          <div style="padding:7px 0">• Kevin Warsh (차기 의장 유력) — 더 매파적 기조 예고</div>
+        </div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px">
+        <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:12px">🕊️ 비둘기 진영 — 인하 선호론</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7">
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 미란 — 1월 FOMC에서 0.25%p 인하 주장 (소수의견)</div>
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 월러 — 인플레 진전 인정, 완화 필요성 언급</div>
+          <div style="padding:7px 0;border-bottom:1px solid var(--border)">• 굴스비(시카고) — 경제 연착륙 자신감 표명</div>
+          <div style="padding:7px 0">• 쿡 — 노동시장 냉각 시 대응 필요성 인정</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: SCENARIOS -->
+<div id="scenarios" class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <div>
+        <div class="sec-title">3가지 결과 시나리오 — 확률·영향·대응</div>
+        <div class="sec-sub">금리 결정보다 점도표와 파월 발언이 시장을 결정한다</div>
+      </div>
+    </div>
+    <div class="scenarios-grid">
+
+      <!-- SCENARIO A: BASE HOLD -->
+      <div class="scen-card">
+        <div class="scen-head">
+          <div class="scen-badge badge-hold">시나리오 A — 기본</div>
+          <div class="scen-label">매파적 동결</div>
+          <div style="font-size:12px;color:var(--muted)">점도표 1회 유지 + 신중 언어</div>
+          <div class="prob-bar-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:'IBM Plex Mono',monospace">
+              <span>확률</span><span class="prob-text c-fed">55%</span>
+            </div>
+            <div class="prob-bar-track"><div class="prob-bar-fill fill-hold" style="width:55%"></div></div>
+          </div>
+        </div>
+        <div class="scen-body">
+          <div class="scen-item"><div class="scen-item-icon">📊</div><div class="scen-item-text"><strong>점도표:</strong> 2026 중앙값 3.40% 유지, 인하 1회 시사. 개별 위원 전망은 상향 이동 가능</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🎙️</div><div class="scen-item-text"><strong>파월 언어:</strong> "인플레 진전 있으나 더 많은 증거 필요" — 신중, 서두르지 않겠다</div></div>
+          <div class="scen-item"><div class="scen-item-icon">📈</div><div class="scen-item-text"><strong>S&P500:</strong> 단기 -0.5~1% 하락 후 안정. 성장주 약세</div></div>
+          <div class="scen-item"><div class="scen-item-icon">💵</div><div class="scen-item-text"><strong>달러:</strong> 강보합. 10년물 국채금리 4.3~4.5%</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🏦</div><div class="scen-item-text"><strong>첫 인하 시점:</strong> 2026년 9월 이후로 후퇴</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🇰🇷</div><div class="scen-item-text"><strong>한국:</strong> 코스피 약보합. 원/달러 1,460~1,480원 유지</div></div>
+        </div>
+      </div>
+
+      <!-- SCENARIO B: HAWKISH -->
+      <div class="scen-card">
+        <div class="scen-head">
+          <div class="scen-badge badge-hawk">시나리오 B — 충격</div>
+          <div class="scen-label">초매파 서프라이즈</div>
+          <div style="font-size:12px;color:var(--muted)">점도표 0회 + 인상 가능성 암시</div>
+          <div class="prob-bar-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:'IBM Plex Mono',monospace">
+              <span>확률</span><span class="prob-text c-red">20%</span>
+            </div>
+            <div class="prob-bar-track"><div class="prob-bar-fill fill-hawk" style="width:20%"></div></div>
+          </div>
+        </div>
+        <div class="scen-body">
+          <div class="scen-item"><div class="scen-item-icon">📊</div><div class="scen-item-text"><strong>점도표:</strong> 2026 중앙값 3.50~3.75% — 인하 0회. 일부 위원 인상 점 추가</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🎙️</div><div class="scen-item-text"><strong>파월 언어:</strong> "에너지 인플레가 근원 물가 위협. 추가 인상 배제 안 해" — 시장 충격</div></div>
+          <div class="scen-item"><div class="scen-item-icon">📉</div><div class="scen-item-text"><strong>S&P500:</strong> 당일 -2~4% 급락. VIX 35 돌파. 성장주·채권 동반 매도</div></div>
+          <div class="scen-item"><div class="scen-item-icon">💵</div><div class="scen-item-text"><strong>달러:</strong> DXY 103+ 급등. 10년물 국채금리 4.7~5.0% 급등</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🏦</div><div class="scen-item-text"><strong>첫 인하 시점:</strong> 2027년 이후 연기. 스태그플레이션 우려 재연</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🇰🇷</div><div class="scen-item-text"><strong>한국:</strong> 코스피 -2~3% 급락. 원/달러 1,500원 돌파 가능</div></div>
+        </div>
+      </div>
+
+      <!-- SCENARIO C: DOVISH -->
+      <div class="scen-card">
+        <div class="scen-head">
+          <div class="scen-badge badge-dove">시나리오 C — 서프라이즈</div>
+          <div class="scen-label">비둘기 서프라이즈</div>
+          <div style="font-size:12px;color:var(--muted)">점도표 2회 + 완화 신호</div>
+          <div class="prob-bar-wrap">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px;font-family:'IBM Plex Mono',monospace">
+              <span>확률</span><span class="prob-text c-green">25%</span>
+            </div>
+            <div class="prob-bar-track"><div class="prob-bar-fill fill-dove" style="width:25%"></div></div>
+          </div>
+        </div>
+        <div class="scen-body">
+          <div class="scen-item"><div class="scen-item-icon">📊</div><div class="scen-item-text"><strong>점도표:</strong> 2026 중앙값 3.15~3.25% — 인하 2회 시사. 비둘기 위원들 주도</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🎙️</div><div class="scen-item-text"><strong>파월 언어:</strong> "인플레 목표 접근, 에너지 충격은 일시적. 경제 연착륙 자신"</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🚀</div><div class="scen-item-text"><strong>S&P500:</strong> 당일 +1.5~3% 랠리. 기술주·성장주 주도 반등</div></div>
+          <div class="scen-item"><div class="scen-item-icon">💵</div><div class="scen-item-text"><strong>달러:</strong> DXY 97~98 하락. 10년물 국채금리 4.0~4.1% 하락</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🏦</div><div class="scen-item-text"><strong>첫 인하 시점:</strong> 2026년 6~7월로 앞당겨짐. 연내 2회 가능</div></div>
+          <div class="scen-item"><div class="scen-item-icon">🇰🇷</div><div class="scen-item-text"><strong>한국:</strong> 코스피 +1~2% 반등. 원/달러 하락. 한은 인하 공간 확대</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 파월 후임 리스크 -->
+    <div style="margin-top:20px;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.2);border-radius:14px;padding:22px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:22px;flex-shrink:0">⚠️</div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:6px">파월 의장 임기 종료 — 추가 불확실성 변수</div>
+          <div style="font-size:12.5px;color:var(--muted);line-height:1.75">
+            제롬 파월의 Fed 의장 임기가 <strong style="color:var(--purple)">2026년 5월 23일</strong> 만료됩니다. 트럼프 행정부의 유력 후임 후보인 <strong style="color:var(--purple)">Kevin Warsh</strong>는 현 파월보다 매파적 성향으로 평가됩니다. 이번 FOMC가 파월 체제의 사실상 마지막 분기 점도표가 될 가능성이 있으며, 시장은 이미 '포스트 파월' 불확실성을 가격에 일부 반영하고 있습니다. 하반기 통화정책 전망은 Warsh 인준 결과에 따라 전면 재조정될 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: MARKET IMPACT -->
+<div id="market" class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <div>
+        <div class="sec-title">자산 시장별 시나리오 영향 분석</div>
+        <div class="sec-sub">3가지 시나리오가 각 자산에 미치는 단기·중기 영향</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-col2" style="margin-bottom:20px">
+      <div class="chart-box">
+        <div class="ct">시나리오별 S&P500 예상 반응 (%)</div>
+        <div class="cs">FOMC 발표 후 48시간 내 예상 등락률</div>
+        <div style="position:relative;height:240px"><canvas id="spChart"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="ct">시나리오별 10년물 국채금리 예상 (%)</div>
+        <div class="cs">FOMC 발표 후 예상 수준</div>
+        <div style="position:relative;height:240px"><canvas id="yieldChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-box" style="margin-bottom:20px">
+      <div class="ct">점도표 변화에 따른 자산별 민감도 지수</div>
+      <div class="cs">+10 = 강한 수혜 / -10 = 강한 피해 / 0 = 중립</div>
+      <div style="position:relative;height:280px"><canvas id="sensitChart"></canvas></div>
+    </div>
+
+    <!-- Impact Table -->
+    <div class="impact-table-wrap">
+      <table class="impact">
+        <thead>
+          <tr>
+            <th>자산/시장</th>
+            <th>현재 상태</th>
+            <th>🦅 매파 시나리오 B (20%)</th>
+            <th>➡️ 기본 시나리오 A (55%)</th>
+            <th>🕊️ 비둘기 시나리오 C (25%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="asset">S&P 500</td>
+            <td>6,632 (3주 하락)</td>
+            <td><div class="chg-chip chip-r">-2~4%</div><br>급락. VIX 35+</td>
+            <td><div class="chg-chip chip-n">-0.5~1%</div><br>단기 소화 후 안정</td>
+            <td><div class="chg-chip chip-g">+1.5~3%</div><br>기술주 주도 랠리</td>
+          </tr>
+          <tr>
+            <td class="asset">10년물 국채</td>
+            <td>수익률 4.31%</td>
+            <td><div class="chg-chip chip-r">4.7~5.0%</div><br>국채 가격 급락</td>
+            <td><div class="chg-chip chip-n">4.3~4.5%</div><br>소폭 상승 유지</td>
+            <td><div class="chg-chip chip-g">4.0~4.1%</div><br>국채 가격 상승</td>
+          </tr>
+          <tr>
+            <td class="asset">달러 인덱스</td>
+            <td>DXY ~100.2</td>
+            <td><div class="chg-chip chip-r">DXY 103+</div><br>달러 강세 가속</td>
+            <td><div class="chg-chip chip-n">DXY 99~101</div><br>현 수준 유지</td>
+            <td><div class="chg-chip chip-g">DXY 97~98</div><br>달러 약세 전환</td>
+          </tr>
+          <tr>
+            <td class="asset">금 (Gold)</td>
+            <td>$2,981/oz</td>
+            <td><div class="chg-chip chip-g">$3,050+</div><br>인플레 헤지 강화</td>
+            <td><div class="chg-chip chip-n">$2,950~3,000</div><br>보합권</td>
+            <td><div class="chg-chip chip-r">$2,850~2,950</div><br>실질금리 하락 혼조</td>
+          </tr>
+          <tr>
+            <td class="asset">비트코인</td>
+            <td>~$82,000</td>
+            <td><div class="chg-chip chip-r">$72,000↓</div><br>ETF 유출 우려</td>
+            <td><div class="chg-chip chip-n">$78,000~85,000</div><br>관망</td>
+            <td><div class="chg-chip chip-g">$90,000+</div><br>ETF 유입 가속</td>
+          </tr>
+          <tr>
+            <td class="asset">나스닥 100</td>
+            <td>22,105 (하락 중)</td>
+            <td><div class="chg-chip chip-r">-3~5%</div><br>고PER 직격</td>
+            <td><div class="chg-chip chip-n">-1~1.5%</div><br>약보합</td>
+            <td><div class="chg-chip chip-g">+2~4%</div><br>기술주 강반등</td>
+          </tr>
+          <tr>
+            <td class="asset">신흥국 통화</td>
+            <td>달러 강세 압박</td>
+            <td><div class="chg-chip chip-r">급락</div><br>자본 유출 가속</td>
+            <td><div class="chg-chip chip-n">현 수준 유지</div><br>소폭 약세</td>
+            <td><div class="chg-chip chip-g">반등</div><br>달러 약세 수혜</td>
+          </tr>
+          <tr>
+            <td class="asset">원유 (WTI)</td>
+            <td>$95.4</td>
+            <td><div class="chg-chip chip-r">수요 우려↑</div><br>경기침체 우려 반영</td>
+            <td><div class="chg-chip chip-n">$92~98</div><br>지정학에 주도권</td>
+            <td><div class="chg-chip chip-g">$98~105</div><br>경기낙관+수요↑</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: KOREA -->
+<div id="korea" class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <div>
+        <div class="sec-title">한국 시장 전이 분석</div>
+        <div class="sec-sub">Fed 결정 → 원/달러 → 외국인 수급 → 코스피 연쇄 경로</div>
+      </div>
+    </div>
+
+    <!-- 전이 경로 시각화 -->
+    <div style="background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px">
+      <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:16px">FOMC → 한국 시장 전이 경로</div>
+      <div style="display:flex;align-items:center;gap:0;overflow-x:auto;min-width:580px;padding-bottom:4px">
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">🏦</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">FOMC 결정</div>
+          <div style="font-size:10px;color:var(--muted)">3/18 오후 2시</div>
+        </div>
+        <div style="color:var(--fed);font-size:18px;padding:0 6px;flex-shrink:0">→</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">💵</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">달러 강약</div>
+          <div style="font-size:10px;color:var(--muted)">DXY 즉각 반응</div>
+        </div>
+        <div style="color:var(--fed);font-size:18px;padding:0 6px;flex-shrink:0">→</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">💱</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">원/달러 환율</div>
+          <div style="font-size:10px;color:var(--muted)">선물 야간 반응</div>
+        </div>
+        <div style="color:var(--fed);font-size:18px;padding:0 6px;flex-shrink:0">→</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">🌊</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">외국인 수급</div>
+          <div style="font-size:10px;color:var(--muted)">3/19 개장 즉시</div>
+        </div>
+        <div style="color:var(--fed);font-size:18px;padding:0 6px;flex-shrink:0">→</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">📊</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">코스피</div>
+          <div style="font-size:10px;color:var(--muted)">3/19 오전장</div>
+        </div>
+        <div style="color:var(--fed);font-size:18px;padding:0 6px;flex-shrink:0">→</div>
+        <div style="background:var(--bg4);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;text-align:center;flex:1;min-width:80px">
+          <div style="font-size:18px;margin-bottom:4px">🏛️</div>
+          <div style="font-size:11px;color:#fff;font-weight:500">한은 정책</div>
+          <div style="font-size:10px;color:var(--muted)">인하 공간 변화</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="korea-grid">
+      <div class="kor-card negative">
+        <div class="kor-title">📉 시나리오 B (매파) — 한국 타격</div>
+        <div class="kor-desc">달러 강세→원/달러 1,500원 돌파 가능. 외국인 코스피 대규모 순매도 예상. 삼성전자·하이닉스 등 대형 수출주도 달러 환산 수익 우려로 동반 매도. 한은 추가 인하 사실상 불가.</div>
+        <div class="kor-tags"><span class="kor-tag">코스피 -2~3%</span><span class="kor-tag">원/달러 1,500+</span><span class="kor-tag">외국인 순매도↑</span></div>
+      </div>
+      <div class="kor-card neutral">
+        <div class="kor-title">➡️ 시나리오 A (기본) — 현상 유지</div>
+        <div class="kor-desc">코스피 약보합 예상. 외국인 수급 중립~소폭 유출. 원/달러 1,450~1,480원 횡보. 한은 연내 1회 인하 기대는 살아 있으나 하반기로 지연. 개별 실적주 장세 지속.</div>
+        <div class="kor-tags"><span class="kor-tag">코스피 -0.5~0.5%</span><span class="kor-tag">원/달러 1,460~1,480</span><span class="kor-tag">수급 중립</span></div>
+      </div>
+      <div class="kor-card positive">
+        <div class="kor-title">🚀 시나리오 C (비둘기) — 한국 수혜</div>
+        <div class="kor-desc">달러 약세→원화 강세→외국인 코스피 순매수 반전 가능. 한은 6월 인하 공간 확보. 반도체·2차전지 중심 기술주 강세. 인플레 압력 완화 → 소비재 마진 개선 기대.</div>
+        <div class="kor-tags"><span class="kor-tag">코스피 +1~2%</span><span class="kor-tag">원/달러 1,420~1,440</span><span class="kor-tag">외국인 순매수</span></div>
+      </div>
+      <div class="kor-card watch">
+        <div class="kor-title">🏛️ 한국은행 통화정책 연계성</div>
+        <div class="kor-desc">Fed 점도표 상향 시 한은도 동결 기조 연장 불가피. 반대로 비둘기 시그널 시 한은 연내 1~2회 추가 인하 가능성 열림. 2월 소비자물가 3.0%대 진입 시 독자적 인하 어려움.</div>
+        <div class="kor-tags"><span class="kor-tag">한은 4/17 회의</span><span class="kor-tag">연내 1~2회 인하?</span></div>
+      </div>
+      <div class="kor-card negative">
+        <div class="kor-title">⚡ 에너지 이중 압박 지속</div>
+        <div class="kor-desc">유가 $100+가 유지되는 상황에서 Fed까지 긴축 기조면 한국은 에너지 수입 비용 상승+자본 유출 이중 압박. 무역수지 악화→경상수지 압박→원화 추가 약세 악순환 우려.</div>
+        <div class="kor-tags"><span class="kor-tag">에너지 수입 의존 90%+</span><span class="kor-tag">무역수지 악화</span></div>
+      </div>
+      <div class="kor-card watch">
+        <div class="kor-title">💼 한국 투자자 Action Plan</div>
+        <div class="kor-desc">3/18 FOMC 전: 환노출 자산 비중 점검·현금 확보. 결과 확인 후: 비둘기 시 IT·2차전지 비중 확대. 매파 시 달러 자산·금 비중 유지. 기본 시 실적 우수 종목 저점 적립.</div>
+        <div class="kor-tags"><span class="kor-tag">현금 비중 확보</span><span class="kor-tag">결과 확인 후 대응</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: KEY WATCH + TIMELINE -->
+<div id="timeline" class="section">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <div>
+        <div class="sec-title">FOMC D-Day 주목 포인트 & 일정</div>
+        <div class="sec-sub">금리 결정보다 SEP·점도표·파월 기자회견이 핵심</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:28px">
+      <div>
+        <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:16px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase">D-DAY 타임라인</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">2026.03.17 (화) 오전</div>
+            <div class="tl-title">FOMC 회의 1일차</div>
+            <div class="tl-desc">경제 상황 브리핑. 직원들의 경기 전망 검토. 비공개 논의 시작.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">2026.03.18 (수) 오전</div>
+            <div class="tl-title">FOMC 회의 2일차 — 투표</div>
+            <div class="tl-desc">최종 정책 성명문 검토. 금리 결정 투표. SEP·점도표 최종 집계.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot tl-now"></div>
+            <div class="tl-time">2026.03.18 오후 2:00 (ET) ★ 핵심</div>
+            <div class="tl-title">정책 성명문 + 점도표 발표</div>
+            <div class="tl-desc">금리 결정 발표. SEP(경제 전망 요약) 동시 공개. 점도표 공개 → 즉각 시장 반응.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">2026.03.18 오후 2:30 (ET) ★ 핵심</div>
+            <div class="tl-title">파월 의장 기자회견</div>
+            <div class="tl-desc">알고리즘 트레이딩 시스템이 파월 발언을 실시간 파싱. "patience", "progress", "risk" 단어 빈도 분석. 실질적 시장 방향 결정.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">2026.03.19 오전 (한국시간)</div>
+            <div class="tl-title">코스피 개장 — 즉각 반영</div>
+            <div class="tl-desc">전일 미 선물 움직임 + 달러/원 변동 반영. 외국인 수급 방향이 오전장 관건.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-time">2026.03.19 이후 1~2주</div>
+            <div class="tl-title">Fed 위원 발언 러시</div>
+            <div class="tl-desc">Blackout 기간 해제 후 위원들 연설. 점도표 의미 해석 추가 제공. 시장 추세 확인 또는 반전 가능.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:12px;font-weight:500;color:#fff;margin-bottom:16px;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase">핵심 모니터링 포인트</div>
+        <div class="watch-grid" style="grid-template-columns:1fr">
+          <div class="watch-card">
+            <div class="watch-icon">📊</div>
+            <div>
+              <div class="watch-title">점도표 중앙값 위치</div>
+              <div class="watch-desc">3.40%(1회 인하) vs 3.50~3.75%(0회) vs 3.15~3.25%(2회). 이것이 가장 중요한 단 하나의 숫자.</div>
+              <span class="watch-time">PM 2:00 — 즉각 반응</span>
+            </div>
+          </div>
+          <div class="watch-card">
+            <div class="watch-icon">📝</div>
+            <div>
+              <div class="watch-title">SEP 인플레 전망 수정</div>
+              <div class="watch-desc">Core PCE 2026년 전망이 2.5%→2.6% 상향 시 매파 신호. 이란 전쟁·유가 효과 반영 여부.</div>
+              <span class="watch-time">PM 2:00 — SEP 동시 공개</span>
+            </div>
+          </div>
+          <div class="watch-card">
+            <div class="watch-icon">🎤</div>
+            <div>
+              <div class="watch-title">파월 핵심 키워드 감시</div>
+              <div class="watch-desc">"patience/인내" = 매파. "progress/진전" = 중립. "confident/자신" = 비둘기. 문맥 속 어조가 실질 신호.</div>
+              <span class="watch-time">PM 2:30 — 기자회견</span>
+            </div>
+          </div>
+          <div class="watch-card">
+            <div class="watch-icon">✂️</div>
+            <div>
+              <div class="watch-title">소수의견(Dissent) 수</div>
+              <div class="watch-desc">1월 FOMC에서 2명 소수의견(인하 선호). 3월에 3명 이상 증가 시 비둘기 신호 강화.</div>
+              <span class="watch-time">PM 2:00 — 성명문</span>
+            </div>
+          </div>
+          <div class="watch-card">
+            <div class="watch-icon">🏦</div>
+            <div>
+              <div class="watch-title">장기 중립금리 변화</div>
+              <div class="watch-desc">Longer Run 중앙값 3.0% 유지 vs 상향. 상향 시 "구조적 고금리" 확인 → 주식 멀티플에 장기 하방 압력.</div>
+              <span class="watch-time">PM 2:00 — SEP 내 확인</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="f-brand">FED<span style="color:var(--fed)">WATCH</span> REPORT 2026.03.15</div>
+  본 리포트는 공개된 시장 데이터와 전문가 분석을 기반으로 한 예측 목적의 참고 자료입니다.<br>
+  실제 FOMC 결과는 경제지표 및 위원들의 판단에 따라 달라질 수 있습니다.<br>
+  투자 결정 및 손익에 대한 책임은 투자자 본인에게 귀속됩니다.
+</div>
+
+<script>
+// ─── COUNTDOWN ───
+function updateCountdown(){
+  const target = new Date('2026-03-18T19:00:00Z');
+  const now = new Date();
+  const diff = target - now;
+  if(diff <= 0){ document.getElementById('cd-d').textContent='00'; document.getElementById('cd-h').textContent='00'; document.getElementById('cd-m').textContent='00'; return; }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+}
+updateCountdown();
+setInterval(updateCountdown, 30000);
+
+// ─── DOT PLOT CHART ───
+const dpCtx = document.getElementById('dotplotChart').getContext('2d');
+
+// y-axis = rate levels, x-axis = time periods
+// Simulate dots as scatter data
+const dec25Dots = [
+  // 2026: spread around 3.40 median
+  {x:1.0,y:3.125},{x:1.1,y:3.375},{x:0.9,y:3.375},{x:1.2,y:3.375},{x:0.8,y:3.375},
+  {x:1.0,y:3.625},{x:1.3,y:3.625},{x:0.7,y:3.625},{x:1.15,y:3.375},{x:0.85,y:3.125},
+  {x:1.05,y:3.375},{x:0.95,y:3.375},{x:1.25,y:3.875},{x:0.75,y:3.875},{x:1.0,y:3.375},
+  {x:1.1,y:3.125},{x:0.9,y:3.625},{x:1.2,y:3.375},{x:0.8,y:3.375},
+  // 2027
+  {x:2.0,y:3.125},{x:2.1,y:3.125},{x:1.9,y:3.125},{x:2.2,y:3.375},{x:1.8,y:2.875},
+  {x:2.0,y:3.375},{x:2.3,y:3.375},{x:1.7,y:2.875},{x:2.15,y:3.125},{x:1.85,y:3.125},
+  {x:2.05,y:2.875},{x:1.95,y:3.125},{x:2.25,y:3.625},{x:1.75,y:2.625},{x:2.0,y:3.125},
+  {x:2.1,y:3.375},{x:1.9,y:2.875},{x:2.2,y:3.125},{x:1.8,y:3.125},
+  // 2028
+  {x:3.0,y:2.875},{x:3.1,y:2.875},{x:2.9,y:2.875},{x:3.2,y:3.125},{x:2.8,y:2.625},
+  {x:3.0,y:3.125},{x:3.3,y:3.125},{x:2.7,y:2.625},{x:3.15,y:2.875},{x:2.85,y:2.875},
+  {x:3.05,y:2.625},{x:2.95,y:2.875},{x:3.25,y:3.375},{x:2.75,y:2.375},{x:3.0,y:2.875},
+  {x:3.1,y:3.125},{x:2.9,y:2.625},{x:3.2,y:2.875},{x:2.8,y:2.875},
+];
+
+// Hawkish scenario dots for 2026 - shifted up
+const hawkDots = [
+  {x:1.0,y:3.625},{x:1.1,y:3.625},{x:0.9,y:3.625},{x:1.2,y:3.625},{x:0.8,y:3.625},
+  {x:1.0,y:3.875},{x:1.3,y:3.875},{x:0.7,y:3.875},{x:1.15,y:3.625},{x:0.85,y:3.375},
+  {x:1.05,y:3.625},{x:0.95,y:3.625},{x:1.25,y:4.125},{x:0.75,y:4.125},{x:1.0,y:3.625},
+  {x:1.1,y:3.375},{x:0.9,y:3.875},{x:1.2,y:3.625},{x:0.8,y:3.625},
+];
+
+// Dove dots - shifted down
+const doveDots = [
+  {x:1.0,y:3.125},{x:1.1,y:3.125},{x:0.9,y:3.125},{x:1.2,y:3.125},{x:0.8,y:3.125},
+  {x:1.0,y:3.375},{x:1.3,y:3.375},{x:0.7,y:3.375},{x:1.15,y:3.125},{x:0.85,y:2.875},
+  {x:1.05,y:3.125},{x:0.95,y:3.125},{x:1.25,y:3.375},{x:0.75,y:2.875},{x:1.0,y:3.125},
+  {x:1.1,y:2.875},{x:0.9,y:3.375},{x:1.2,y:3.125},{x:0.8,y:3.125},
+];
+
+new Chart(dpCtx, {
+  type:'scatter',
+  data:{
+    datasets:[
+      {label:'Dec 2025 (실제)',data:dec25Dots,backgroundColor:'rgba(79,142,247,0.45)',borderColor:'rgba(79,142,247,0.8)',pointRadius:6,pointHoverRadius:8},
+      {label:'Mar 2026 기본 (1회)',data:[...dec25Dots.slice(0,19).map(d=>({x:d.x+0.08,y:d.y+0.05}))],backgroundColor:'rgba(245,166,35,0.45)',borderColor:'rgba(245,166,35,0.8)',pointRadius:6,pointHoverRadius:8},
+      {label:'Mar 2026 매파 (0회)',data:hawkDots.map(d=>({x:d.x+0.04,y:d.y})),backgroundColor:'rgba(240,82,82,0.45)',borderColor:'rgba(240,82,82,0.8)',pointRadius:6,pointHoverRadius:8},
+      {label:'Mar 2026 비둘기 (2회)',data:doveDots.map(d=>({x:d.x-0.04,y:d.y})),backgroundColor:'rgba(62,207,130,0.45)',borderColor:'rgba(62,207,130,0.8)',pointRadius:6,pointHoverRadius:8},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{left:20,right:20,top:20,bottom:20}},
+    plugins:{
+      legend:{labels:{color:'#7a8099',font:{size:10},boxWidth:10,padding:12}},
+      tooltip:{callbacks:{label:ctx=>{
+        const labels = ['2026년 말','2027년 말','2028년 말','장기'];
+        const xi = Math.round(ctx.raw.x);
+        return ` ${labels[xi-1] || '알 수 없음'}: ${ctx.raw.y.toFixed(3)}%`;
+      }}}
+    },
+    scales:{
+      x:{
+        min:0.3,max:4.5,
+        ticks:{color:'#4a5068',font:{size:10},callback:v=>{const l={1:'2026년말',2:'2027년말',3:'2028년말',4:'장기'};return l[Math.round(v)]||''}},
+        grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}
+      },
+      y:{
+        min:2.2,max:4.4,
+        title:{display:true,text:'기준금리 (%)',color:'#4a5068',font:{size:10}},
+        ticks:{color:'#4a5068',font:{size:10},callback:v=>v.toFixed(2)+'%',stepSize:0.25},
+        grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}
+      }
+    }
+  }
+});
+
+// ─── S&P Chart ───
+new Chart(document.getElementById('spChart').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:['매파 시나리오 B','기본 시나리오 A','비둘기 시나리오 C'],
+    datasets:[{
+      data:[-3.0,-0.75,2.25],
+      backgroundColor:['rgba(240,82,82,0.7)','rgba(79,142,247,0.7)','rgba(62,207,130,0.7)'],
+      borderColor:['#f05252','#4f8ef7','#3ecf82'],
+      borderWidth:1,borderRadius:5,borderSkipped:false,
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' S&P500: '+c.raw.toFixed(1)+'%'}}},
+    scales:{
+      x:{ticks:{color:'#7a8099',font:{size:11}},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}},
+      y:{ticks:{color:'#7a8099',font:{size:11},callback:v=>v+'%'},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}}
+    }
+  }
+});
+
+// ─── Yield Chart ───
+new Chart(document.getElementById('yieldChart').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:['매파 (B)','기본 (A)','비둘기 (C)'],
+    datasets:[
+      {label:'하단',data:[4.7,4.3,4.0],backgroundColor:'transparent',borderWidth:0},
+      {label:'예상범위',data:[0.3,0.2,0.1],backgroundColor:['rgba(240,82,82,0.55)','rgba(79,142,247,0.55)','rgba(62,207,130,0.55)'],borderColor:['#f05252','#4f8ef7','#3ecf82'],borderWidth:1,borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{color:'#7a8099',font:{size:11}},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'},stacked:true},
+      y:{min:3.8,max:5.2,ticks:{color:'#7a8099',font:{size:11},callback:v=>v.toFixed(1)+'%'},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'},stacked:true}
+    }
+  }
+});
+
+// ─── Sensitivity Radar ───
+new Chart(document.getElementById('sensitChart').getContext('2d'), {
+  type:'bar',
+  data:{
+    labels:['나스닥100','S&P500','10년채(가격)','달러(반전)','금','비트코인','원/달러(반전)','코스피','신흥국 통화'],
+    datasets:[
+      {label:'비둘기 시나리오 C',data:[9,7,8,6,4,9,7,7,8],backgroundColor:'rgba(62,207,130,0.55)',borderColor:'#3ecf82',borderWidth:1,borderRadius:3},
+      {label:'기본 시나리오 A',data:[-2,-1,-1,-1,1,-1,-1,-1,-1],backgroundColor:'rgba(79,142,247,0.55)',borderColor:'#4f8ef7',borderWidth:1,borderRadius:3},
+      {label:'매파 시나리오 B',data:[-9,-7,-8,-7,5,-8,-7,-7,-9],backgroundColor:'rgba(240,82,82,0.55)',borderColor:'#f05252',borderWidth:1,borderRadius:3},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{color:'#7a8099',font:{size:11},boxWidth:10,padding:14}},
+      tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw>0?'+':''}${c.raw}`}}
+    },
+    scales:{
+      x:{ticks:{color:'#7a8099',font:{size:10},maxRotation:30},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}},
+      y:{
+        min:-10,max:10,
+        ticks:{color:'#7a8099',font:{size:10},callback:v=>v>0?'+'+v:v},
+        grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'},
+        title:{display:true,text:'영향 지수 (+ 수혜 / - 피해)',color:'#4a5068',font:{size:10}}
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
