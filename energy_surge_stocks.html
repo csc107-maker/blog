@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에너지 비용 급등 — 산업 전반 파급 & 종목 분석 리포트 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #181818;
+    --bg4: #202020;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #e8e8e8;
+    --muted: #888;
+    --accent-oil: #f5a623;
+    --accent-win: #3ecf82;
+    --accent-lose: #f04f4f;
+    --accent-neutral: #6b9fff;
+    --accent-uranium: #c8a2f8;
+    --accent-copper: #ff8c42;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+  .logo span { color: var(--accent-oil); }
+  .nav-tabs { display: flex; gap: 4px; }
+  .nav-tab {
+    font-size: 11px; padding: 5px 14px; border-radius: 20px;
+    background: transparent; border: 1px solid transparent;
+    color: var(--muted); cursor: pointer; font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: .04em; transition: all .2s;
+  }
+  .nav-tab:hover { color: var(--text); border-color: var(--border2); }
+  .nav-tab.active { background: var(--accent-oil); color: #000; border-color: var(--accent-oil); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 64px 32px 48px;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: .12em; color: var(--accent-oil);
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--accent-oil); opacity: .4; }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    line-height: 1.0; letter-spacing: .02em;
+    color: #fff; margin-bottom: 8px;
+  }
+  .hero-title em { color: var(--accent-oil); font-style: normal; }
+  .hero-sub {
+    font-size: 15px; color: var(--muted); max-width: 640px;
+    margin-bottom: 32px; line-height: 1.7;
+  }
+  .hero-stats {
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .stat-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 18px;
+  }
+  .stat-pill .val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px; font-weight: 500;
+  }
+  .stat-pill .lbl { font-size: 11px; color: var(--muted); line-height: 1.3; }
+  .up { color: var(--accent-win); }
+  .down { color: var(--accent-lose); }
+  .oil { color: var(--accent-oil); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  .section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px; }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--muted); letter-spacing: .1em;
+  }
+  .section-title { font-size: 22px; font-weight: 500; color: #fff; }
+  .section-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-wrap { overflow-x: auto; padding-bottom: 8px; }
+  .flow {
+    display: flex; align-items: center; gap: 0;
+    min-width: 720px; width: 100%;
+  }
+  .flow-node {
+    flex: 1; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 14px; text-align: center;
+    position: relative;
+  }
+  .flow-node .f-icon { font-size: 22px; margin-bottom: 6px; }
+  .flow-node .f-title { font-size: 12px; font-weight: 500; color: #fff; margin-bottom: 3px; }
+  .flow-node .f-val { font-family: 'IBM Plex Mono', monospace; font-size: 15px; }
+  .flow-arrow {
+    flex: 0 0 28px; text-align: center;
+    font-size: 18px; color: var(--accent-oil); opacity: .7;
+  }
+  .flow-node.highlight { border-color: var(--accent-oil); background: rgba(245,166,35,0.05); }
+
+  /* ── WIN/LOSE GRID ── */
+  .wl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:640px) { .wl-grid { grid-template-columns: 1fr; } }
+  .wl-panel {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .wl-head {
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .wl-head.win { background: rgba(62,207,130,0.07); }
+  .wl-head.lose { background: rgba(240,79,79,0.07); }
+  .wl-head .badge {
+    font-size: 10px; padding: 2px 10px; border-radius: 12px;
+    font-family: 'IBM Plex Mono', monospace; letter-spacing: .05em;
+  }
+  .wl-head.win .badge { background: rgba(62,207,130,0.15); color: var(--accent-win); }
+  .wl-head.lose .badge { background: rgba(240,79,79,0.15); color: var(--accent-lose); }
+  .wl-head .title { font-size: 14px; font-weight: 500; }
+  .sector-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 18px; border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .sector-row:last-child { border-bottom: none; }
+  .sector-name { font-size: 13px; font-weight: 500; }
+  .sector-detail { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+  .sector-chg {
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px;
+    font-weight: 500; white-space: nowrap;
+  }
+  .bar-mini { width: 80px; height: 5px; border-radius: 3px; background: var(--bg4); margin-top: 5px; }
+  .bar-fill-win { background: var(--accent-win); border-radius: 3px; height: 100%; }
+  .bar-fill-lose { background: var(--accent-lose); border-radius: 3px; height: 100%; }
+
+  /* ── STOCK CARDS ── */
+  .stock-section { margin-top: 8px; }
+  .category-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 14px; margin-top: 32px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .category-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .stock-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    position: relative; overflow: hidden;
+    transition: border-color .2s, transform .15s;
+  }
+  .stock-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .stock-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+  }
+  .card-win::before { background: var(--accent-win); }
+  .card-lose::before { background: var(--accent-lose); }
+  .card-neutral::before { background: var(--accent-neutral); }
+  .card-uranium::before { background: var(--accent-uranium); }
+  .card-copper::before { background: var(--accent-copper); }
+  .card-oil::before { background: var(--accent-oil); }
+
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .ticker-box { display: flex; align-items: baseline; gap: 10px; }
+  .ticker { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 500; color: #fff; }
+  .exch { font-size: 10px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+  .card-sector {
+    font-size: 10px; padding: 3px 10px; border-radius: 10px;
+    border: 1px solid var(--border2); color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace; letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  .company-nm { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+  .metrics-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+  .metric { }
+  .metric .m-val { font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 500; }
+  .metric .m-lbl { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .card-desc { font-size: 12.5px; color: #aaa; line-height: 1.65; margin-bottom: 12px; }
+  .catalyst-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg4); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 10px;
+    font-size: 11.5px; color: var(--muted); line-height: 1.5;
+  }
+  .catalyst-tag strong { color: var(--accent-oil); font-weight: 500; }
+  .sentiment {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .s-tag {
+    font-size: 10px; padding: 2px 8px; border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .s-buy { background: rgba(62,207,130,0.12); color: var(--accent-win); border: 1px solid rgba(62,207,130,0.2); }
+  .s-watch { background: rgba(107,159,255,0.12); color: var(--accent-neutral); border: 1px solid rgba(107,159,255,0.2); }
+  .s-caution { background: rgba(240,79,79,0.12); color: var(--accent-lose); border: 1px solid rgba(240,79,79,0.2); }
+
+  /* ── CHART SECTION ── */
+  .chart-wrap {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+    margin-bottom: 20px;
+  }
+  .chart-title { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+  .chart-sub { font-size: 11px; color: var(--muted); margin-bottom: 20px; }
+  .charts-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:700px) { .charts-2col { grid-template-columns: 1fr; } }
+
+  /* ── KOREA IMPACT ── */
+  .impact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .impact-card {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .impact-card .i-icon { font-size: 24px; margin-bottom: 8px; }
+  .impact-card .i-title { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 6px; }
+  .impact-card .i-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+  .impact-card .i-stocks { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .i-stk {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    padding: 2px 7px; border-radius: 4px;
+    background: var(--bg4); border: 1px solid var(--border2); color: var(--accent-oil);
+  }
+
+  /* ── SCENARIO TABLE ── */
+  .scenario-wrap { overflow-x: auto; }
+  table.scenario {
+    width: 100%; border-collapse: collapse;
+    font-size: 12.5px; min-width: 640px;
+  }
+  table.scenario th {
+    background: var(--bg3); padding: 10px 14px;
+    border: 1px solid var(--border); color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+    letter-spacing: .05em; text-align: left; font-weight: 400;
+  }
+  table.scenario td {
+    padding: 11px 14px; border: 1px solid var(--border);
+    color: #ccc; vertical-align: top; line-height: 1.55;
+  }
+  table.scenario tr:nth-child(even) td { background: rgba(255,255,255,0.01); }
+  table.scenario .scen-label { color: #fff; font-weight: 500; white-space: nowrap; }
+  table.scenario .prob {
+    font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 40px 32px; border-top: 1px solid var(--border);
+    text-align: center; color: var(--muted); font-size: 11px; line-height: 1.8;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  @media(max-width:640px) {
+    .site-header { padding: 0 16px; }
+    .hero { padding: 40px 16px 32px; }
+    .container { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">ENERGY<span>SHOCK</span>.REPORT · 2026.03.15</div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="scrollTo('overview')">개요</button>
+    <button class="nav-tab" onclick="scrollTo('winners')">수혜주</button>
+    <button class="nav-tab" onclick="scrollTo('losers')">피해주</button>
+    <button class="nav-tab" onclick="scrollTo('charts')">차트</button>
+    <button class="nav-tab" onclick="scrollTo('korea')">한국영향</button>
+    <button class="nav-tab" onclick="scrollTo('scenario')">시나리오</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">에너지 비용 급등 — 산업 전반 파급 분석 리포트</div>
+    <h1 class="hero-title">
+      OIL <em>$103</em><br>GLOBAL SHOCKWAVE
+    </h1>
+    <p class="hero-sub">
+      브렌트유 $103·WTI $95 돌파가 촉발한 섹터별 수혜·피해 종목 심층 분석.<br>
+      중동 에너지 쇼크가 전력·물류·제조·소비재 전반에 어떻게 전이되는지 데이터로 살펴봅니다.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-pill">
+        <div><div class="val oil">$103.2</div><div class="lbl">브렌트유 (배럴)</div></div>
+      </div>
+      <div class="stat-pill">
+        <div><div class="val oil">$95.4</div><div class="lbl">WTI (배럴)</div></div>
+      </div>
+      <div class="stat-pill">
+        <div><div class="val up">+20%</div><div class="lbl">S&P500 에너지 섹터<br>2026 YTD</div></div>
+      </div>
+      <div class="stat-pill">
+        <div><div class="val down">-4%+</div><div class="lbl">항공주<br>당일 하락폭</div></div>
+      </div>
+      <div class="stat-pill">
+        <div><div class="val up">27.29</div><div class="lbl">VIX 공포지수<br>+12.6%</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 1: OVERVIEW -->
+<div id="overview" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <div class="section-title">에너지 충격 전파 경로</div>
+        <div class="section-desc">유가 $100 돌파가 경제 전반에 미치는 연쇄 파급 메커니즘</div>
+      </div>
+    </div>
+    <div class="flow-wrap">
+      <div class="flow">
+        <div class="flow-node highlight">
+          <div class="f-icon">⚡</div>
+          <div class="f-title">호르무즈 봉쇄 우려</div>
+          <div class="f-val oil">트리거</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node highlight">
+          <div class="f-icon">🛢️</div>
+          <div class="f-title">브렌트유 급등</div>
+          <div class="f-val oil">$103 / bbl</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="f-icon">💰</div>
+          <div class="f-title">에너지 비용 상승</div>
+          <div class="f-val">전산업 원가↑</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="f-icon">📈</div>
+          <div class="f-title">CPI 재반등 우려</div>
+          <div class="f-val">3%대 재진입?</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="f-icon">🏦</div>
+          <div class="f-title">FOMC 금리 동결</div>
+          <div class="f-val">3.50~3.75%</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <div class="f-icon">📉</div>
+          <div class="f-title">성장주 할인율↑</div>
+          <div class="f-val">기술주 압박</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div class="wl-grid">
+        <div class="wl-panel">
+          <div class="wl-head win">
+            <span class="badge">WINNER</span>
+            <span class="title">에너지 급등 수혜 섹터</span>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">E&P (원유·가스 생산)</div>
+              <div class="sector-detail">OXY, DVN, FANG, XOM, CVX</div>
+            </div>
+            <div>
+              <div class="sector-chg up">+2~5%</div>
+              <div class="bar-mini"><div class="bar-fill-win" style="width:85%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">유전 서비스·시추</div>
+              <div class="sector-detail">SLB, HAL, PTEN, BKR</div>
+            </div>
+            <div>
+              <div class="sector-chg up">+3~7%</div>
+              <div class="bar-mini"><div class="bar-fill-win" style="width:90%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">소재·구리·핵연료</div>
+              <div class="sector-detail">FCX, CCO, UUUU, UEC</div>
+            </div>
+            <div>
+              <div class="sector-chg up">+15~25%</div>
+              <div class="bar-mini"><div class="bar-fill-win" style="width:95%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">유틸리티·원자력</div>
+              <div class="sector-detail">CEG, NRG, ETR, SO</div>
+            </div>
+            <div>
+              <div class="sector-chg up">+1~3%</div>
+              <div class="bar-mini"><div class="bar-fill-win" style="width:55%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">방산·안보</div>
+              <div class="sector-detail">LMT, RTX, NOC, GD</div>
+            </div>
+            <div>
+              <div class="sector-chg up">+2~4%</div>
+              <div class="bar-mini"><div class="bar-fill-win" style="width:65%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wl-panel">
+          <div class="wl-head lose">
+            <span class="badge">LOSER</span>
+            <span class="title">에너지 급등 피해 섹터</span>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">항공·여행</div>
+              <div class="sector-detail">UAL, AAL, ALK, DAL, CCL</div>
+            </div>
+            <div>
+              <div class="sector-chg down">-4~6%</div>
+              <div class="bar-mini"><div class="bar-fill-lose" style="width:90%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">해운·물류</div>
+              <div class="sector-detail">MATX, ZIM, FDX, UPS</div>
+            </div>
+            <div>
+              <div class="sector-chg down">-3~5%</div>
+              <div class="bar-mini"><div class="bar-fill-lose" style="width:80%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">석유화학·플라스틱</div>
+              <div class="sector-detail">LYB, DOW, HUN, WLK</div>
+            </div>
+            <div>
+              <div class="sector-chg down">-2~4%</div>
+              <div class="bar-mini"><div class="bar-fill-lose" style="width:70%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">소비재·소매</div>
+              <div class="sector-detail">AMZN, TGT, WMT 물류비↑</div>
+            </div>
+            <div>
+              <div class="sector-chg down">-1~3%</div>
+              <div class="bar-mini"><div class="bar-fill-lose" style="width:55%"></div></div>
+            </div>
+          </div>
+          <div class="sector-row">
+            <div>
+              <div class="sector-name">전기차·배터리</div>
+              <div class="sector-detail">TSLA(-2%), 배터리 소재 원가↑</div>
+            </div>
+            <div>
+              <div class="sector-chg down">-2~3%</div>
+              <div class="bar-mini"><div class="bar-fill-lose" style="width:60%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: WINNERS -->
+<div id="winners" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <div class="section-title">에너지 수혜 종목 심층 분석</div>
+        <div class="section-desc">유가 $100 시대의 직접·간접 수혜 종목들</div>
+      </div>
+    </div>
+
+    <div class="stock-section">
+
+      <div class="category-label">업스트림 E&P — 원유·가스 생산 직접 수혜</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-oil">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">XOM</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">메이저 오일</span>
+          </div>
+          <div class="company-nm">ExxonMobil Corporation</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">+26.5%</div><div class="m-lbl">YTD 수익률</div></div>
+            <div class="metric"><div class="m-val oil">$151.21</div><div class="m-lbl">현재가</div></div>
+            <div class="metric"><div class="m-val">$29B</div><div class="m-lbl">2026E CapEx</div></div>
+          </div>
+          <p class="card-desc">Q4 2025 EPS 시장 예상 대비 3% 초과 달성. 연간 $20B 자사주 매입 프로그램 가동 중. 유가 $100 환경에서 현금흐름 급증 → 주주환원 확대. 구체적으로 $64 유가에서도 예상치를 상회한 이익이 $103 환경에선 폭발적으로 증가.</p>
+          <div class="catalyst-tag"><strong>촉매:</strong> 유가 $10 상승 시 EPS $1.5~2.0 추가 → BofA 목표가 $165 제시</div>
+          <div class="sentiment"><span class="s-tag s-buy">Strong Buy 컨센서스</span><span class="s-tag s-buy">자사주 매입 $20B</span></div>
+        </div>
+
+        <div class="stock-card card-oil">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">OXY</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">E&P</span>
+          </div>
+          <div class="company-nm">Occidental Petroleum — 버핏 픽</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">+2%+</div><div class="m-lbl">3/10 당일 상승</div></div>
+            <div class="metric"><div class="m-val oil">퍼미안</div><div class="m-lbl">핵심 생산지</div></div>
+            <div class="metric"><div class="m-val">버크셔</div><div class="m-lbl">대주주</div></div>
+          </div>
+          <p class="card-desc">워런 버핏의 버크셔해서웨이가 최대주주(28% 이상). 퍼미안 분지 중심 저원가 생산 구조로 유가 상승 시 레버리지 효과 극대화. 탄소포집(CCUS) 사업도 동시 진행 중으로 에너지 전환 리스크 헤지.</p>
+          <div class="catalyst-tag"><strong>촉매:</strong> 버크셔 추가 매수 가능성 + 퍼미안 증산 계획 발표</div>
+          <div class="sentiment"><span class="s-tag s-buy">버핏 픽</span><span class="s-tag s-watch">부채 레버리지 주의</span></div>
+        </div>
+
+        <div class="stock-card card-oil">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">PTEN</span><span class="exch">NASDAQ</span></div>
+            <span class="card-sector">유전 서비스</span>
+          </div>
+          <div class="company-nm">Patterson-UTI Energy — 국내 인지도 ★☆☆☆</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">+61%</div><div class="m-lbl">2026 YTD</div></div>
+            <div class="metric"><div class="m-val oil">$9.85</div><div class="m-lbl">현재가</div></div>
+            <div class="metric"><div class="m-val up">+22.5%</div><div class="m-lbl">공정가치 업사이드</div></div>
+          </div>
+          <p class="card-desc">퍼미안 분지 등 미국 핵심 생산지 시추·압력 펌핑 서비스 전문. 유가 상승 → E&P사들의 탐사 활동 증가 → 시추 서비스 수요 폭증 구조. Goldman Sachs 목표가 상향. 중소형주이나 유가 민감도가 메이저 오일보다 2~3배 높아 레버리지 투자 수단.</p>
+          <div class="catalyst-tag"><strong>촉매:</strong> 2026.02 시추 활동 보고서 호조 + 유가 지속 시 EPS 43% 성장 전망</div>
+          <div class="sentiment"><span class="s-tag s-buy">Goldman Sachs Buy</span><span class="s-tag s-watch">중소형 유동성 리스크</span></div>
+        </div>
+
+      </div>
+
+      <div class="category-label">소재·원자재 — "물리적 현실 트레이드" 핵심</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-copper">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">FCX</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">구리 채굴</span>
+          </div>
+          <div class="company-nm">Freeport-McMoRan — 세계 최대 상장 구리 생산사</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">역대 최고</div><div class="m-lbl">2/25 $69.75 기록</div></div>
+            <div class="metric"><div class="m-val oil">$14,000</div><div class="m-lbl">구리 톤당 가격</div></div>
+            <div class="metric"><div class="m-val">$85B</div><div class="m-lbl">시가총액</div></div>
+          </div>
+          <p class="card-desc">AI 데이터센터 + 전력망 전기화 + 에너지 전환 모두에서 핵심 소재인 구리의 최대 수혜주. 구리 $14,000/톤 돌파, 2025년 평균 대비 28% 급등. Q4 2025 EPS 시장 예상 $0.28 대비 $0.47 달성(68% 어닝 서프라이즈). Grasberg 광산 2026 Q2 재가동 시 생산량 회복 촉매. BofA 목표가 $81→지속 상향.</p>
+          <div class="catalyst-tag"><strong>2026 촉매:</strong> 구리 수요 — AI 인프라·전기차·전력망 삼중 수혜. Grasberg 재가동(Q2) 이후 생산량 85% 회복 예정</div>
+          <div class="sentiment"><span class="s-tag s-buy">BofA Buy $81</span><span class="s-tag s-buy">에너지전환 핵심</span><span class="s-tag s-watch">인도네시아 리스크</span></div>
+        </div>
+
+        <div class="stock-card card-uranium">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">CCO</span><span class="exch">TSX/NYSE</span></div>
+            <span class="card-sector">우라늄 채굴</span>
+          </div>
+          <div class="company-nm">Cameco Corporation — 원자력 르네상스 최대 수혜</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val" style="color:var(--accent-uranium)">우라늄 #1</div><div class="m-lbl">글로벌 공급사</div></div>
+            <div class="metric"><div class="m-val oil">H2 2026</div><div class="m-lbl">주목 시점</div></div>
+            <div class="metric"><div class="m-val up">장기계약</div><div class="m-lbl">수익 안정성</div></div>
+          </div>
+          <p class="card-desc">유가 $100 시대 → 원자력 필요성 급증 → 우라늄 수요 구조적 확대. 데이터센터 AI 전력 수요 폭증으로 "안정적 기저전력" 원자력이 주목받는 환경. BofA 2026 상반기 원자력 테마 Top Pick 선정. 캐나다 Athabasca 분지 세계 최고품위 우라늄 광산 보유.</p>
+          <div class="catalyst-tag"><strong>2026 H2 촉매:</strong> 미국·유럽 원전 신규 계약 발표 + AI 전력수요 공식 확인</div>
+          <div class="sentiment"><span class="s-tag s-buy">BofA 2026 Top Pick</span><span class="s-tag" style="background:rgba(200,162,248,0.12);color:var(--accent-uranium);border:1px solid rgba(200,162,248,0.2)">원자력 르네상스</span></div>
+        </div>
+
+        <div class="stock-card card-uranium">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">UUUU</span><span class="exch">NYSE American</span></div>
+            <span class="card-sector">우라늄·희토류</span>
+          </div>
+          <div class="company-nm">Energy Fuels Inc. — 미국 최대 우라늄 생산사</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val" style="color:var(--accent-uranium)">880K lb</div><div class="m-lbl">2026 우라늄 판매 계획</div></div>
+            <div class="metric"><div class="m-val oil">희토류</div><div class="m-lbl">H2 2026 상업생산</div></div>
+            <div class="metric"><div class="m-val up">+11%</div><div class="m-lbl">2025 생산량 초과</div></div>
+          </div>
+          <p class="card-desc">우라늄 생산 가이던스 상단 11% 초과 달성. 2026년 하반기부터 중희토류(디스프로슘·테르비움) 미국 최초 상업 생산 예정 — 이중 성장 동력. 에너지 안보 차원의 미국 내 우라늄 공급망 구축 정책 최대 수혜. 6개 장기 공급 계약으로 수익 안정성 확보.</p>
+          <div class="catalyst-tag"><strong>독보적 포지션:</strong> 우라늄 + 중희토류 동시 생산 = 미국 내 희소한 이중 전략자원 생산사</div>
+          <div class="sentiment"><span class="s-tag s-buy">에너지 안보 수혜</span><span class="s-tag s-watch">소형주 변동성</span></div>
+        </div>
+
+      </div>
+
+      <div class="category-label">방산·에너지 인프라 — 지정학 리스크 수혜</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-neutral">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">LMT</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">방위산업</span>
+          </div>
+          <div class="company-nm">Lockheed Martin — 방위산업 대장주</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">중동 긴장↑</div><div class="m-lbl">지정학 수혜</div></div>
+            <div class="metric"><div class="m-val">NATO</div><div class="m-lbl">방위비 확대 기조</div></div>
+            <div class="metric"><div class="m-val up">배당</div><div class="m-lbl">방어주 특성</div></div>
+          </div>
+          <p class="card-desc">이스라엘-이란 갈등 심화 → 미국·동맹국 방위 지출 증가 → F-35·미사일 방어 수주 확대. 고금리에도 방어주 특성으로 포트폴리오 안정화 역할. 에너지 충격이 클수록 지정학 불안이 커지며 방산 지출 증가라는 역설적 수혜.</p>
+          <div class="catalyst-tag"><strong>수혜 구조:</strong> 중동 에너지 쇼크 → 지정학 리스크↑ → 방위비 확대 → 수주 증가</div>
+          <div class="sentiment"><span class="s-tag s-buy">방어주 특성</span><span class="s-tag s-buy">NATO 수혜</span></div>
+        </div>
+
+        <div class="stock-card card-win">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">CEG</span><span class="exch">NASDAQ</span></div>
+            <span class="card-sector">원자력 유틸리티</span>
+          </div>
+          <div class="company-nm">Constellation Energy — 미국 최대 원전 운영사</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val up">데이터센터</div><div class="m-lbl">직접 전력 계약</div></div>
+            <div class="metric"><div class="m-val oil">탄소無</div><div class="m-lbl">ESG + AI 수혜</div></div>
+            <div class="metric"><div class="m-val up">+1~3%</div><div class="m-lbl">유틸리티 섹터</div></div>
+          </div>
+          <p class="card-desc">S&P500 유틸리티 섹터 +0.7% vs 전체 시장 하락 — 방어적 특성 발휘. 마이크로소프트·구글 등 빅테크의 원자력 전력 직접구매 계약(PPA) 최대 수혜. 유가 급등 환경에서 화석연료 대비 원자력의 가격 경쟁력 더욱 부각.</p>
+          <div class="catalyst-tag"><strong>AI+원자력 이중 수혜:</strong> 데이터센터 전력 수요 + 에너지 전환 가속</div>
+          <div class="sentiment"><span class="s-tag s-buy">AI 전력 계약</span><span class="s-tag s-buy">유틸리티 방어성</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: LOSERS -->
+<div id="losers" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <div class="section-title">에너지 피해 종목 심층 분석</div>
+        <div class="section-desc">연료비·물류비·원가 직격탄을 맞는 섹터와 대응 전략</div>
+      </div>
+    </div>
+
+    <div class="stock-section">
+      <div class="category-label">항공·여행 — 연료비 직격탄</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-lose">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">UAL</span><span class="exch">NASDAQ</span></div>
+            <span class="card-sector">항공</span>
+          </div>
+          <div class="company-nm">United Airlines Holdings</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val down">-4%+</div><div class="m-lbl">3/10 당일 하락</div></div>
+            <div class="metric"><div class="m-val down">연료비</div><div class="m-lbl">총비용 30~40%</div></div>
+            <div class="metric"><div class="m-val">헤징</div><div class="m-lbl">90일 선제 헤징</div></div>
+          </div>
+          <p class="card-desc">항공 산업에서 연료비는 총 운영비용의 30~40%를 차지. 유가 $10 상승 시 연간 비용 약 $3~4억 추가 발생. 단기적으로 선물 헤징으로 완충 가능하나 6개월 이상 고유가 지속 시 마진 직격. 좌석 가격 인상도 수요 감소로 이어질 수 있어 양방향 압박.</p>
+          <div class="catalyst-tag"><strong>리스크:</strong> 유가 $100 지속 시 2026년 순이익 25~35% 감소 가능성</div>
+          <div class="sentiment"><span class="s-tag s-caution">유가 헤징 확인 필수</span><span class="s-tag s-watch">단기 반등 시 매도 고려</span></div>
+        </div>
+
+        <div class="stock-card card-lose">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">DAL</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">항공</span>
+          </div>
+          <div class="company-nm">Delta Air Lines — 헤징 전략 상이</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val down">-4%+</div><div class="m-lbl">업종 동반 하락</div></div>
+            <div class="metric"><div class="m-val">비즈니스</div><div class="m-lbl">프리미엄 수요 방어</div></div>
+            <div class="metric"><div class="m-val">아멕스</div><div class="m-lbl">파트너십 수익</div></div>
+          </div>
+          <p class="card-desc">아메리칸 항공 대비 비즈니스·프리미엄 클래스 비중이 높아 단기 수요 방어력 상대적으로 강함. 아메리칸 익스프레스 파트너십을 통한 마일리지 수익이 유가 충격을 일부 완충. 그러나 유가 장기 고공 시 업종 전반 하방 압력 불가피.</p>
+          <div class="catalyst-tag"><strong>상대 강점:</strong> UAL·AAL 대비 프리미엄 믹스 유리, 그러나 유가 리스크 회피 불가</div>
+          <div class="sentiment"><span class="s-tag s-caution">항공 업종 전반 언더웨이트</span></div>
+        </div>
+
+      </div>
+
+      <div class="category-label">석유화학·소비재 — 원료비·물류비 동반 상승</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-lose">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">LYB</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">석유화학</span>
+          </div>
+          <div class="company-nm">LyondellBasell Industries — 에틸렌·폴리프로필렌</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val down">원료비↑</div><div class="m-lbl">나프타·에탄 직결</div></div>
+            <div class="metric"><div class="m-val down">마진압박</div><div class="m-lbl">크래킹 스프레드↓</div></div>
+            <div class="metric"><div class="m-val">배당</div><div class="m-lbl">고배당 방어</div></div>
+          </div>
+          <p class="card-desc">폴리에틸렌·폴리프로필렌 등 기초 화학제품 원료는 나프타(석유 유도체). 유가 급등 → 나프타 가격 연동 상승 → 크래킹 스프레드(수익성 지표) 압박. 다운스트림 판매가 인상에 시차 존재. 고배당(배당수익률 약 5~6%)은 방어 요인.</p>
+          <div class="catalyst-tag"><strong>모니터링:</strong> 크래킹 스프레드 추이 + 중국 수요 회복 여부가 핵심 변수</div>
+          <div class="sentiment"><span class="s-tag s-caution">원가 전가 능력 확인 필요</span><span class="s-tag s-watch">고배당 방어 고려</span></div>
+        </div>
+
+        <div class="stock-card card-lose">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">TSLA</span><span class="exch">NASDAQ</span></div>
+            <span class="card-sector">전기차</span>
+          </div>
+          <div class="company-nm">Tesla — 역설적 이중 압박</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val down">-2%</div><div class="m-lbl">3/10 당일 하락</div></div>
+            <div class="metric"><div class="m-val down">배터리</div><div class="m-lbl">소재 원가↑</div></div>
+            <div class="metric"><div class="m-val">장기</div><div class="m-lbl">수혜 가능성</div></div>
+          </div>
+          <p class="card-desc">단기적으로는 배터리 소재(리튬·코발트·니켈) 원가 상승 압박. 리튬은 구리·에너지 가격과 연동성 있음. 그러나 유가 고공 지속 시 EV 경쟁력 장기 부각이라는 역설적 수혜 구조도 존재. 에너지 비용에 민감한 테마주 특성상 단기 변동성 확대.</p>
+          <div class="catalyst-tag"><strong>역설:</strong> 단기(배터리 원가↑) vs 장기(유가고공→EV 전환 가속) 이중 구조</div>
+          <div class="sentiment"><span class="s-tag s-caution">단기 원가 압박</span><span class="s-tag s-watch">장기 구조적 수혜</span></div>
+        </div>
+
+      </div>
+
+      <div class="category-label">해운·물류 — 경로 우회 비용 폭증</div>
+      <div class="cards-grid">
+
+        <div class="stock-card card-lose">
+          <div class="card-top">
+            <div class="ticker-box"><span class="ticker">ZIM</span><span class="exch">NYSE</span></div>
+            <span class="card-sector">해운</span>
+          </div>
+          <div class="company-nm">ZIM Integrated Shipping — 호르무즈 직격</div>
+          <div class="metrics-row">
+            <div class="metric"><div class="m-val down">+50~67%</div><div class="m-lbl">케이프타운 우회 시<br>항해 일수 증가</div></div>
+            <div class="metric"><div class="m-val down">보험료↑</div><div class="m-lbl">분쟁 해역 급등</div></div>
+            <div class="metric"><div class="m-val">운임</div><div class="m-lbl">인상 가능성</div></div>
+          </div>
+          <p class="card-desc">호르무즈 해협 봉쇄 시 아시아-유럽 노선 케이프타운 우회 → 항해 거리 25~30% 증가, 항해 일수 50~67% 증가. 연료비·보험료·인건비 동반 급증. 단, 운임 가격 전가 가능성도 있어 단순 피해주로만 볼 수 없는 복합 구조.</p>
+          <div class="catalyst-tag"><strong>핵심 변수:</strong> 호르무즈 긴장 해소 여부 + 운임 인상 전가 가능 수준</div>
+          <div class="sentiment"><span class="s-tag s-caution">지정학 노출 최대</span><span class="s-tag s-watch">운임 인상 시 부분 상쇄</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: CHARTS -->
+<div id="charts" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <div class="section-title">데이터 시각화</div>
+        <div class="section-desc">유가 충격 기반 섹터 성과 및 영향도 비교</div>
+      </div>
+    </div>
+
+    <div class="charts-2col">
+      <div class="chart-wrap">
+        <div class="chart-title">섹터별 3/10 유가 급등일 등락률</div>
+        <div class="chart-sub">브렌트유 $103 돌파 당일 섹터 반응 (%)</div>
+        <div style="position:relative;height:280px;"><canvas id="chart1"></canvas></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="chart-title">에너지 섹터 YTD 수익률 비교</div>
+        <div class="chart-sub">2026년 초~3/13 누적 수익률 (%)</div>
+        <div style="position:relative;height:280px;"><canvas id="chart2"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-wrap" style="margin-top:20px;">
+      <div class="chart-title">유가 $100 시대 — 섹터별 비용 충격 강도 vs 가격 전가력</div>
+      <div class="chart-sub">버블 크기 = 시가총액 비중 / X축 = 비용 충격 / Y축 = 가격 전가력</div>
+      <div style="position:relative;height:340px;"><canvas id="chart3"></canvas></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SECTION 5: KOREA -->
+<div id="korea" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <div class="section-title">한국 산업·시장 전이 분석</div>
+        <div class="section-desc">에너지 수입 의존도 세계 최고 수준 — 이중 압박의 시작</div>
+      </div>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="i-icon">⚙️</div>
+        <div class="i-title">석유화학 — 원료비 직격</div>
+        <div class="i-desc">나프타 크래커 가동 원가 급등. 에틸렌·프로필렌 스프레드 압박. 중국산 저가 공세와 원가 상승의 이중 고통.</div>
+        <div class="i-stocks">
+          <span class="i-stk">LG화학</span><span class="i-stk">롯데케미칼</span><span class="i-stk">금호석유</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">✈️</div>
+        <div class="i-title">항공 — 연료비 30~40% 직격</div>
+        <div class="i-desc">항공유 가격 WTI 연동. 대한항공·아시아나 연료 헤징 전략 확인 필요. 여름 성수기 전 고유가 지속 시 실적 하향 위험.</div>
+        <div class="i-stocks">
+          <span class="i-stk">대한항공</span><span class="i-stk">아시아나</span><span class="i-stk">제주항공</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">🚢</div>
+        <div class="i-title">해운 — 운임↑ but 비용도↑</div>
+        <div class="i-desc">호르무즈 우회 시 운임 인상 가능하나 연료·보험 비용도 동반 급등. 벙커유 가격 직결. 컨테이너 부족 심화 우려.</div>
+        <div class="i-stocks">
+          <span class="i-stk">HMM</span><span class="i-stk">팬오션</span><span class="i-stk">대한해운</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">🔩</div>
+        <div class="i-title">철강·소재 — 에너지 집약산업</div>
+        <div class="i-desc">고로(Blast Furnace) 가동에 막대한 에너지 소비. 전기로도 전력비 상승. 자동차용 강판 가격 협상에서 원가 전가 시차 존재.</div>
+        <div class="i-stocks">
+          <span class="i-stk">POSCO홀딩스</span><span class="i-stk">현대제철</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">💱</div>
+        <div class="i-title">환율 — 원/달러 상승 압력</div>
+        <div class="i-desc">달러 인덱스 100 급등 → 원/달러 환율 상승 → 에너지 수입비용 이중 압박. 원화 약세는 수출 기업 유리하나 에너지 수입 의존 업종엔 타격.</div>
+        <div class="i-stocks">
+          <span class="i-stk">환율 모니터링</span><span class="i-stk">달러 헤징</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">🔋</div>
+        <div class="i-title">배터리·전기차 — 이중 구조</div>
+        <div class="i-desc">단기: 리튬·니켈 원가 상승 압박. 중기: 고유가 지속 시 EV 전환 수요 가속화라는 역설적 수혜. LG에너지솔루션·삼성SDI 장기 계약 비중 확인 중요.</div>
+        <div class="i-stocks">
+          <span class="i-stk">LG에너지솔루션</span><span class="i-stk">삼성SDI</span><span class="i-stk">SK이노베이션</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">⚡</div>
+        <div class="i-title">정유 — 단기 재고 평가익</div>
+        <div class="i-desc">재고 보유 시 유가 상승으로 단기 평가익 발생. 그러나 정제 마진(크래킹 스프레드)이 실질 이익 결정. 원유 조달 가격과 제품 판매가 시차 주목.</div>
+        <div class="i-stocks">
+          <span class="i-stk">SK이노베이션</span><span class="i-stk">GS칼텍스(GS)</span><span class="i-stk">에쓰오일</span>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="i-icon">🏭</div>
+        <div class="i-title">전력·가스 공기업 — 공공요금 딜레마</div>
+        <div class="i-desc">한전의 연료비 연동제 부담 급증. 전기요금 추가 인상 정치적 제약. LNG 가격 급등 시 한국가스공사 조달 비용 직격. 2026년 공공요금 인상 재논의 가능성.</div>
+        <div class="i-stocks">
+          <span class="i-stk">한국전력</span><span class="i-stk">한국가스공사</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6: SCENARIO -->
+<div id="scenario" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <div class="section-title">유가 시나리오별 투자 전략</div>
+        <div class="section-desc">호르무즈 긴장 지속 여부에 따른 3가지 시나리오 대응</div>
+      </div>
+    </div>
+    <div class="scenario-wrap">
+      <table class="scenario">
+        <thead>
+          <tr>
+            <th>시나리오</th>
+            <th>유가 전망</th>
+            <th>확률</th>
+            <th>S&P500 영향</th>
+            <th>수혜 종목</th>
+            <th>회피 종목</th>
+            <th>한국 영향</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="scen-label" style="color:var(--accent-lose)">① 충격 지속<br>호르무즈 부분 봉쇄</td>
+            <td><span style="color:var(--accent-lose);font-family:'IBM Plex Mono',monospace">$110~130</span></td>
+            <td><span class="prob" style="color:var(--accent-lose)">25%</span></td>
+            <td>추가 -5~10%. VIX 35+. 스태그플레이션 우려</td>
+            <td>XOM, OXY, PTEN, LMT, GLD, FCX</td>
+            <td>항공 전체, 석유화학, 고PER 성장주</td>
+            <td>코스피 -5~8%. 원/달러 1,480~1,520원. 한전 위기</td>
+          </tr>
+          <tr>
+            <td class="scen-label" style="color:var(--accent-oil)">② 현상 유지<br>긴장 고착화</td>
+            <td><span style="color:var(--accent-oil);font-family:'IBM Plex Mono',monospace">$95~110</span></td>
+            <td><span class="prob" style="color:var(--accent-oil)">50%</span></td>
+            <td>횡보~-3%. FOMC 금리 동결 확정. 섹터 양극화</td>
+            <td>에너지 섹터 전반, CEG, FCX, CCO, 방산</td>
+            <td>성장주 일부, 항공, 석유화학</td>
+            <td>코스피 -2~3%. 환율 1,450~1,480원. 제조업 원가 압박</td>
+          </tr>
+          <tr>
+            <td class="scen-label" style="color:var(--accent-win)">③ 긴장 완화<br>협상·휴전 타결</td>
+            <td><span style="color:var(--accent-win);font-family:'IBM Plex Mono',monospace">$75~90</span></td>
+            <td><span class="prob" style="color:var(--accent-win)">25%</span></td>
+            <td>+3~5% 반등. FOMC 이후 인하 기대 재점화 가능</td>
+            <td>기술주 반등, 항공주, 소비재</td>
+            <td>에너지 섹터 차익실현 주의</td>
+            <td>코스피 반등. 환율 안정. 한전 숨통</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:24px;padding:20px 24px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;border-left:3px solid var(--accent-oil);">
+      <div style="font-size:13px;font-weight:500;color:#fff;margin-bottom:8px;">⚡ 종합 투자 전략 제언 (2026.03.18 FOMC 전)</div>
+      <div style="font-size:13px;color:#aaa;line-height:1.75;">
+        기본 시나리오(50%)인 "유가 $95~110 고착화" 전제 하에 에너지 직접 수혜주(XOM, OXY, PTEN)와 소재주(FCX, CCO)를 코어로 유지하고, 방산주(LMT, RTX)·원자력 유틸리티(CEG)로 방어성을 보강하는 포트폴리오가 현실적입니다. 항공·석유화학 비중은 FOMC 결과와 중동 정세 확인 전까지 언더웨이트를 권장합니다.
+        <br><br>
+        <strong style="color:var(--accent-oil)">핵심 모니터링 3가지:</strong> ① 3/18 FOMC 점도표 변화 ② 호르무즈 해협 통항 상황 ③ 4월 CPI 발표 — 이 세 가지가 향후 6~8주 시장 방향을 결정할 것입니다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="margin-bottom:8px;color:#555;font-family:'IBM Plex Mono',monospace;letter-spacing:.08em;">ENERGY SHOCK REPORT · 2026.03.15</div>
+  ※ 본 자료는 투자 참고 목적의 정보 제공으로, 특정 종목에 대한 매매 추천이 아닙니다.<br>
+  투자 판단 및 그에 따른 손익은 투자자 본인에게 귀속됩니다. 투자 전 전문가 상담을 권장합니다.
+</div>
+
+<script>
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Chart 1: Sector performance on oil spike day
+const c1 = document.getElementById('chart1').getContext('2d');
+new Chart(c1, {
+  type: 'bar',
+  data: {
+    labels: ['E&P 에너지', '유전서비스', '방산', '유틸리티', '소비재', '기술주', '해운·물류', '석유화학', '항공'],
+    datasets: [{
+      data: [3.2, 4.8, 2.1, 0.7, -1.5, -1.8, -3.2, -2.8, -4.5],
+      backgroundColor: [
+        '#f5a623','#f5a623','#6b9fff','#3ecf82',
+        '#f04f4f','#f04f4f','#f04f4f','#f04f4f','#f04f4f'
+      ],
+      borderRadius: 4,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        ticks: { color: '#888', font: { size: 10 }, maxRotation: 35 },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      },
+      y: {
+        ticks: { color: '#888', font: { size: 11 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      }
+    }
+  }
+});
+
+// Chart 2: YTD returns
+const c2 = document.getElementById('chart2').getContext('2d');
+new Chart(c2, {
+  type: 'bar',
+  data: {
+    labels: ['XOM', 'CVX', 'OXY', 'PTEN', 'FCX', 'CEG', 'S&P500 에너지', 'S&P500'],
+    datasets: [{
+      data: [26.5, 25.9, 18.0, 61.0, 22.0, 15.0, 20.3, -3.2],
+      backgroundColor: ['#f5a623','#f5a623','#f5a623','#f5a623','#ff8c42','#3ecf82','#f5a623','#f04f4f'],
+      borderRadius: 4,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        ticks: { color: '#888', font: { size: 11 }, maxRotation: 30 },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      },
+      y: {
+        ticks: { color: '#888', font: { size: 11 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      }
+    }
+  }
+});
+
+// Chart 3: Cost impact vs price pass-through bubble
+const c3 = document.getElementById('chart3').getContext('2d');
+new Chart(c3, {
+  type: 'bubble',
+  data: {
+    datasets: [
+      {
+        label: 'E&P 오일',
+        data: [{x:2, y:95, r:22}],
+        backgroundColor: 'rgba(245,166,35,0.6)',
+        borderColor: '#f5a623'
+      },
+      {
+        label: '유전서비스',
+        data: [{x:3, y:88, r:14}],
+        backgroundColor: 'rgba(245,166,35,0.4)',
+        borderColor: '#f5a623'
+      },
+      {
+        label: '구리(FCX)',
+        data: [{x:4, y:85, r:18}],
+        backgroundColor: 'rgba(255,140,66,0.5)',
+        borderColor: '#ff8c42'
+      },
+      {
+        label: '방산',
+        data: [{x:15, y:75, r:16}],
+        backgroundColor: 'rgba(107,159,255,0.5)',
+        borderColor: '#6b9fff'
+      },
+      {
+        label: '원자력 유틸리티',
+        data: [{x:20, y:72, r:15}],
+        backgroundColor: 'rgba(62,207,130,0.5)',
+        borderColor: '#3ecf82'
+      },
+      {
+        label: '철강·소재',
+        data: [{x:55, y:45, r:16}],
+        backgroundColor: 'rgba(200,162,248,0.4)',
+        borderColor: '#c8a2f8'
+      },
+      {
+        label: '석유화학',
+        data: [{x:70, y:30, r:18}],
+        backgroundColor: 'rgba(240,79,79,0.4)',
+        borderColor: '#f04f4f'
+      },
+      {
+        label: '해운',
+        data: [{x:65, y:55, r:13}],
+        backgroundColor: 'rgba(240,79,79,0.35)',
+        borderColor: '#f04f4f'
+      },
+      {
+        label: '항공',
+        data: [{x:85, y:15, r:20}],
+        backgroundColor: 'rgba(240,79,79,0.6)',
+        borderColor: '#f04f4f'
+      },
+      {
+        label: '소비재',
+        data: [{x:40, y:35, r:19}],
+        backgroundColor: 'rgba(240,79,79,0.3)',
+        borderColor: '#f04f4f'
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    layout: { padding: 20 },
+    plugins: {
+      legend: {
+        display: true,
+        labels: { color: '#888', font: { size: 10 }, boxWidth: 10, padding: 12 }
+      },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const d = ctx.raw;
+            return ` ${ctx.dataset.label} — 비용충격: ${d.x}%, 전가력: ${d.y}%`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        min: -5, max: 100,
+        title: { display: true, text: '에너지 비용 충격 강도 (높을수록 직격)', color: '#666', font: { size: 11 } },
+        ticks: { color: '#666', font: { size: 10 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      },
+      y: {
+        min: -5, max: 110,
+        title: { display: true, text: '가격 전가력 (높을수록 이익 방어 가능)', color: '#666', font: { size: 11 } },
+        ticks: { color: '#666', font: { size: 10 }, callback: v => v + '%' },
+        grid: { color: 'rgba(255,255,255,0.04)' },
+        border: { color: 'rgba(255,255,255,0.1)' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
