@@ -1,0 +1,419 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',sans-serif;color:var(--color-text-primary)}
+.report-wrap{padding:1.5rem 0 3rem}
+.report-header{border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:1.25rem;margin-bottom:1.75rem}
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.75rem}
+.tag{font-size:11px;padding:3px 10px;border-radius:20px;font-family:'IBM Plex Mono',monospace;letter-spacing:.02em}
+.tag-red{background:#FCEBEB;color:#A32D2D}
+.tag-blue{background:#E6F1FB;color:#185FA5}
+.tag-green{background:#EAF3DE;color:#3B6D11}
+.tag-amber{background:#FAEEDA;color:#854F0B}
+h1.title{font-size:22px;font-weight:500;line-height:1.3;margin-bottom:.4rem}
+.subtitle{font-size:13px;color:var(--color-text-secondary);font-family:'IBM Plex Mono',monospace}
+.section-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-secondary);font-family:'IBM Plex Mono',monospace;margin-bottom:1rem;padding-bottom:.4rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{padding:6px 16px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:20px;cursor:pointer;background:transparent;color:var(--color-text-secondary);font-family:'Sora',sans-serif;transition:all .15s}
+.tab.active{background:var(--color-text-primary);color:var(--color-background-primary);border-color:var(--color-text-primary)}
+.panel{display:none}.panel.active{display:block}
+.stock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.stock-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem 1.25rem;position:relative;overflow:hidden}
+.stock-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%}
+.card-blue::before{background:#378ADD}
+.card-green::before{background:#639922}
+.card-amber::before{background:#BA7517}
+.card-coral::before{background:#D85A30}
+.card-teal::before{background:#1D9E75}
+.card-purple::before{background:#7F77DD}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.6rem}
+.ticker{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:500}
+.sector-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.company-name{font-size:13px;color:var(--color-text-secondary);margin-bottom:.65rem}
+.card-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:.75rem}
+.meta-item{font-size:11px;color:var(--color-text-secondary);font-family:'IBM Plex Mono',monospace}
+.meta-val{color:var(--color-text-primary);font-weight:500}
+.card-desc{font-size:12.5px;line-height:1.65;color:var(--color-text-secondary);margin-bottom:.85rem}
+.rating-row{display:flex;gap:8px;align-items:center}
+.rating-label{font-size:11px;color:var(--color-text-secondary);font-family:'IBM Plex Mono',monospace;min-width:50px}
+.bar-wrap{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.bar-blue{background:#378ADD}
+.bar-green{background:#639922}
+.bar-red{background:#E24B4A}
+.catalyst{font-size:11.5px;padding:.5rem .75rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-top:.75rem;color:var(--color-text-secondary);line-height:1.5}
+.catalyst strong{color:var(--color-text-primary);font-weight:500}
+.insight-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.1rem 1.25rem;margin-bottom:1.25rem}
+.insight-box h3{font-size:14px;font-weight:500;margin-bottom:.6rem}
+.insight-box p{font-size:13px;line-height:1.7;color:var(--color-text-secondary)}
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.75rem}
+.matrix-cell{padding:.75rem 1rem;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
+.cell-green{background:#EAF3DE;border-color:#C0DD97}
+.cell-red{background:#FCEBEB;border-color:#F7C1C1}
+.cell-amber{background:#FAEEDA;border-color:#FAC775}
+.cell-blue{background:#E6F1FB;border-color:#B5D4F4}
+.cell-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-family:'IBM Plex Mono',monospace;margin-bottom:.3rem}
+.cell-green .cell-label{color:#3B6D11}
+.cell-red .cell-label{color:#A32D2D}
+.cell-amber .cell-label{color:#854F0B}
+.cell-blue .cell-label{color:#185FA5}
+.cell-val{font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.5}
+.chart-area{margin:1.25rem 0}
+.risk-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.risk-table th{text-align:left;font-weight:500;font-size:11px;color:var(--color-text-secondary);padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary);font-family:'IBM Plex Mono',monospace;letter-spacing:.04em}
+.risk-table td{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top;line-height:1.5;color:var(--color-text-secondary)}
+.risk-table td:first-child{color:var(--color-text-primary);font-weight:500;font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle}
+.dot-green{background:#639922}.dot-amber{background:#BA7517}.dot-red{background:#E24B4A}
+</style>
+
+<div class="report-wrap">
+  <div class="report-header">
+    <div class="tag-row">
+      <span class="tag tag-red">고금리 장기화</span>
+      <span class="tag tag-blue">AI 인프라</span>
+      <span class="tag tag-green">데이터센터</span>
+      <span class="tag tag-amber">전력·에너지주</span>
+    </div>
+    <h1 class="title">빅테크 수혜 숨은 종목 분석<br>데이터센터 · 전력 · 냉각 인프라</h1>
+    <div class="subtitle">2026.03.15 기준 — 국내 미공개 유망 종목 집중 분석</div>
+  </div>
+
+  <div class="section-label">핵심 시각화: 고금리 vs 기술주 생존 지도</div>
+  <div class="insight-box">
+    <h3>실적 있는 기술주 vs 스토리만 있는 기술주 — 양극화 심화 구간</h3>
+    <div class="matrix-grid">
+      <div class="matrix-cell cell-green">
+        <div class="cell-label">강세 유지 (고금리 내성 강)</div>
+        <div class="cell-val">빅테크 (MS·구글·NVDA)<br>AI 인프라 수혜 B2B주<br>에너지·냉각 인프라주</div>
+      </div>
+      <div class="matrix-cell cell-red">
+        <div class="cell-label">취약 (할인율 직격)</div>
+        <div class="cell-val">적자 중소형 성장주<br>과열된 AI 테마 종목<br>스토리 의존 SaaS</div>
+      </div>
+      <div class="matrix-cell cell-blue">
+        <div class="cell-label">구조적 매수 수요 (팔기 어렵다)</div>
+        <div class="cell-val">글로벌 연기금·ETF<br>S&amp;P500 패시브 펀드<br>나스닥 의무 비중 유지</div>
+      </div>
+      <div class="matrix-cell cell-amber">
+        <div class="cell-label">체크포인트</div>
+        <div class="cell-val">3/18 FOMC 점도표<br>유가 $100 지속 여부<br>빅테크 실적 가이던스</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">숨은 수혜 종목 — 카테고리별 분석</div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('storage')">스토리지·메모리</button>
+    <button class="tab" onclick="switchTab('infra')">전력·냉각 인프라</button>
+    <button class="tab" onclick="switchTab('network')">네트워크·광학</button>
+    <button class="tab" onclick="switchTab('cloud')">AI 클라우드</button>
+    <button class="tab" onclick="switchTab('risk')">리스크 요약</button>
+  </div>
+
+  <div id="panel-storage" class="panel active">
+    <div class="stock-grid">
+      <div class="stock-card card-blue">
+        <div class="card-head">
+          <span class="ticker">STX</span>
+          <span class="sector-badge">데이터 스토리지</span>
+        </div>
+        <div class="company-name">Seagate Technology — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">매출 YoY <span class="meta-val">+21.5%</span></span>
+          <span class="meta-item">EPS YoY <span class="meta-val">+53%</span></span>
+          <span class="meta-item">1년 수익률 <span class="meta-val">+304%</span></span>
+        </div>
+        <div class="card-desc">AI 데이터센터의 폭발적 HDD 수요로 2026년 생산분 완전 매진. 하이퍼스케일러들이 SSD 대안으로 HDD를 채택하며 가격이 전년 대비 50% 급등. 2028년까지 TAM이 $13B→$23B으로 확대 예상. 국내에선 단순 하드디스크 회사로 인식돼 저평가된 상태.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:88%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:80%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">밸류에이션</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:72%"></div></div></div>
+        <div class="catalyst"><strong>2026 촉매:</strong> HBM4 전환으로 NAND 병목 심화 → HDD 가격 추가 상승 가능. 2027년 상반기분 선주문 이미 진행 중.</div>
+      </div>
+      <div class="stock-card card-teal">
+        <div class="card-head">
+          <span class="ticker">SNDK</span>
+          <span class="sector-badge">플래시 메모리</span>
+        </div>
+        <div class="company-name">Sandisk (구 Western Digital 분사) — 국내 인지도: ★★☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">1년 수익률 <span class="meta-val">+1,600%</span></span>
+          <span class="meta-item">DC 매출 QoQ <span class="meta-val">+64%</span></span>
+          <span class="meta-item">NAND 시장 <span class="meta-val">$59B→$76B</span></span>
+        </div>
+        <div class="card-desc">AI 추론(inference) 워크로드 확산으로 NAND 플래시 수요 급증. 데이터센터 부문이 전체 매출의 아직 15%에 불과해 성장 여지가 큼. 하이퍼스케일러의 GPU 클러스터 확장 직접 수혜. 소비자 전자에서 AI 인프라로 수익 구조 전환 중.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:92%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:65%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">밸류에이션</span><div class="bar-wrap"><div class="bar-fill bar-red" style="width:35%"></div></div></div>
+        <div class="catalyst"><strong>주의:</strong> 1,600% 랠리 이후 밸류에이션 부담 존재. 데이터센터 매출 비중 확대 속도가 핵심 모니터링 지표.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-infra" class="panel">
+    <div class="stock-grid">
+      <div class="stock-card card-amber">
+        <div class="card-head">
+          <span class="ticker">VRT</span>
+          <span class="sector-badge">전력·냉각</span>
+        </div>
+        <div class="company-name">Vertiv Holdings — 국내 인지도: ★★☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">2026E 매출 <span class="meta-val">$13.5B</span></span>
+          <span class="meta-item">유기적 성장 <span class="meta-val">+28%</span></span>
+          <span class="meta-item">수주잔고 <span class="meta-val">$9.5B</span></span>
+        </div>
+        <div class="card-desc">NVDA와 공동 설계하는 데이터센터 전용 냉각·전력 관리 시스템의 독점적 공급자. Blackwell/Rubin 플랫폼 전환으로 액체냉각(Liquid-to-Chip) 의무화 → 고마진 CDU 매출 급증. 하이퍼스케일러가 2GW급 초대형 데이터센터 구축 시 원스톱 솔루션 제공.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:90%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:78%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">진입장벽</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:95%"></div></div></div>
+        <div class="catalyst"><strong>2026 촉매:</strong> 800V DC 포트폴리오 하반기 출시. NVDA Rubin Ultra 플랫폼 동반 확장 예정.</div>
+      </div>
+      <div class="stock-card card-coral">
+        <div class="card-head">
+          <span class="ticker">PWR</span>
+          <span class="sector-badge">전력 인프라</span>
+        </div>
+        <div class="company-name">Quanta Services — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">Q3'25 매출 <span class="meta-val">$7.6B</span></span>
+          <span class="meta-item">매출 YoY <span class="meta-val">+17%</span></span>
+          <span class="meta-item">10년 EPS CAGR <span class="meta-val">+17.97%</span></span>
+        </div>
+        <div class="card-desc">AI 데이터센터 전력 공급망의 숨은 핵심. 발전소→765kV 고압송전→데이터센터 내부 전기설비까지 엔드투엔드 시공 능력 보유(업무 범위 60% 커버). AEP의 $72B 전력망 투자 프로젝트 주계약사. META·AWS 데이터센터 확장에 직접 연결. 북미 최대 숙련공 인력풀 보유.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:82%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:85%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">해자(Moat)</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:88%"></div></div></div>
+        <div class="catalyst"><strong>핵심 경쟁우위:</strong> 숙련 노동력 200+ 자회사 네트워크는 단기 복제 불가. 데이터센터 수요가 폭증해도 시공 인력이 병목 → Quanta 독점적 수혜.</div>
+      </div>
+      <div class="stock-card card-green">
+        <div class="card-head">
+          <span class="ticker">EME</span>
+          <span class="sector-badge">전기·건설</span>
+        </div>
+        <div class="company-name">EMCOR Group — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">2026E 매출 성장 <span class="meta-val">+5.4%</span></span>
+          <span class="meta-item">2026E EPS 성장 <span class="meta-val">+8.6%</span></span>
+          <span class="meta-item">Zacks Rank <span class="meta-val">#1 Strong Buy</span></span>
+        </div>
+        <div class="card-desc">데이터센터 전기·기계 시공 전문 대형 계약업체. 하이퍼스케일러의 신규 데이터센터 건축 붐 직접 수혜. 안정적 수주잔고와 예측 가능한 이익 성장이 특징으로 방어적 성격의 인프라주. 국내에선 거의 알려지지 않은 상태.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:65%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:82%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">안정성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:88%"></div></div></div>
+        <div class="catalyst"><strong>포지셔닝:</strong> 성장성보다 안정성 중시 투자자에게 적합. 데이터센터 건설 사이클이 지속되는 한 꾸준한 이익 성장 가능.</div>
+      </div>
+      <div class="stock-card card-purple">
+        <div class="card-head">
+          <span class="ticker">ETN</span>
+          <span class="sector-badge">전력 관리</span>
+        </div>
+        <div class="company-name">Eaton Corporation — 국내 인지도: ★★☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">데이터센터 주문 <span class="meta-val">급성장</span></span>
+          <span class="meta-item">EPS 성장 전망 <span class="meta-val">두 자릿수</span></span>
+          <span class="meta-item">섹터 <span class="meta-val">산업재</span></span>
+        </div>
+        <div class="card-desc">전력 분배·관리 시스템(UPS, 서지 보호, 스위치기어)의 글로벌 리더. Vertiv와 함께 데이터센터 전력 인프라 이중 수혜주. 기존 제조업 이미지가 강해 AI 수혜주로 재평가가 늦게 진행 중. 산업 전반의 전력화(Electrification) 트렌드와도 맞닿아 있어 복합 성장 동력 보유.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:75%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:80%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">배당안정성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:85%"></div></div></div>
+        <div class="catalyst"><strong>리레이팅 포인트:</strong> "산업재 → AI 인프라 핵심 부품사"로 시장 재인식 시 멀티플 확장 가능.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-network" class="panel">
+    <div class="stock-grid">
+      <div class="stock-card card-blue">
+        <div class="card-head">
+          <span class="ticker">CRDO</span>
+          <span class="sector-badge">데이터센터 네트워킹</span>
+        </div>
+        <div class="company-name">Credo Technology — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">Q3'26 예비 매출 <span class="meta-val">~$406M</span></span>
+          <span class="meta-item">YoY 성장 <span class="meta-val">+200%</span></span>
+          <span class="meta-item">시총 <span class="meta-val">중소형</span></span>
+        </div>
+        <div class="card-desc">GPU간 백엔드 네트워크(Back-end Network) 전문 기업. AI 데이터센터의 핵심 병목인 데이터 전송 속도 문제를 해결하는 Active Electrical Cable(AEC) 기술 보유. 단일 고객이 매출의 67%를 차지하는 집중 리스크가 있으나 해당 고객이 AWS로 추정. 매출이 전년 동기 대비 3배 성장하며 급격한 실적 턴어라운드 진행 중.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:95%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:60%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">고객집중위험</span><div class="bar-wrap"><div class="bar-fill bar-red" style="width:75%"></div></div></div>
+        <div class="catalyst"><strong>핵심 테제:</strong> GPU 클러스터 확장 → 백엔드 대역폭 병목 → Credo AEC 수요 폭증. 아직 월가 레이더에 잘 잡히지 않는 종목.</div>
+      </div>
+      <div class="stock-card card-teal">
+        <div class="card-head">
+          <span class="ticker">LITE</span>
+          <span class="sector-badge">광학 커넥티비티</span>
+        </div>
+        <div class="company-name">Lumentum Holdings — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">2026E 매출 성장 <span class="meta-val">+76.7%</span></span>
+          <span class="meta-item">2026E EPS 성장 <span class="meta-val">+100%+</span></span>
+          <span class="meta-item">파트너십 <span class="meta-val">NVDA Spectrum-X</span></span>
+        </div>
+        <div class="card-desc">AI 데이터센터의 광학 연결(Optical Connectivity) 핵심 공급사. NVDA의 Spectrum-X Photonics 네트워킹 스위치에 실리콘 포토닉스 기술 공급. 고속·저전력 광학 솔루션은 AI 워크로드의 대역폭·에너지 효율 문제를 동시에 해결. 통신 장비 회사 이미지로 AI 수혜주 분류에서 제외되어 저평가 구간 가능성.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:93%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:70%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">기술우위</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:88%"></div></div></div>
+        <div class="catalyst"><strong>2026 촉매:</strong> AI 데이터센터 1.6T 광학 네트워크 전환 가속. NVDA 실리콘 포토닉스 에코시스템 내 핵심 벤더 지위.</div>
+      </div>
+      <div class="stock-card card-coral">
+        <div class="card-head">
+          <span class="ticker">APH</span>
+          <span class="sector-badge">통신 부품</span>
+        </div>
+        <div class="company-name">Amphenol Corporation — 국내 인지도: ★★☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">Zacks Rank <span class="meta-val">#1 Strong Buy</span></span>
+          <span class="meta-item">섹터 <span class="meta-val">산업재·통신부품</span></span>
+          <span class="meta-item">시가총액 <span class="meta-val">대형주</span></span>
+        </div>
+        <div class="card-desc">데이터센터·서버 내 모든 커넥터와 케이블 조립 부품 공급. AI 가속기가 고밀도 연산을 위해 고성능 커넥터 수요를 폭발적으로 늘리고 있어 직접 수혜. 다각화된 포트폴리오(방산·자동차·의료·통신)로 고금리 내성이 강한 편. 안정적 이익 성장과 넓은 해자로 장기 보유 적합.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:75%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:88%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">비즈니스 해자</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:90%"></div></div></div>
+        <div class="catalyst"><strong>특징:</strong> 이름 인지도 낮지만 데이터센터 착공 건수에 비례해 매출 우상향하는 구조. 변동성 낮은 인프라 수혜주.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-cloud" class="panel">
+    <div class="stock-grid">
+      <div class="stock-card card-purple">
+        <div class="card-head">
+          <span class="ticker">NBIS</span>
+          <span class="sector-badge">AI 클라우드</span>
+        </div>
+        <div class="company-name">Nebius Group — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">2026E ARR <span class="meta-val">$7B~$9B</span></span>
+          <span class="meta-item">현재 ARR <span class="meta-val">$551M</span></span>
+          <span class="meta-item">전력 계약 <span class="meta-val">2.5GW</span></span>
+        </div>
+        <div class="card-desc">네덜란드 기반 AI 전용 클라우드·데이터센터 운영사. 2024년 러시아 얀덱스 자산 매각 후 AI 인프라 순수 플레이로 완전 전환. NVDA GPU 기반 학습 클러스터 임대 모델로 AWS와 유사한 비즈니스. 당초 1GW이던 전력 계약을 수요 급증으로 2.5GW로 상향. 수익은 아직 적자지만 연간 매출 run-rate가 10배 이상 성장 예상.</div>
+        <div class="rating-row"><span class="rating-label">성장성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:98%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">금리내성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:45%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">수익성(현재)</span><div class="bar-wrap"><div class="bar-fill bar-red" style="width:20%"></div></div></div>
+        <div class="catalyst"><strong>핵심 리스크:</strong> 현재 적자 운영으로 고금리 취약. 그러나 성장 속도가 리스크를 압도할 경우 멀티배거 가능성. 고위험·고수익 포지션.</div>
+      </div>
+      <div class="stock-card card-green">
+        <div class="card-head">
+          <span class="ticker">FLNC</span>
+          <span class="sector-badge">에너지 저장(BESS)</span>
+        </div>
+        <div class="company-name">Fluence Energy — 국내 인지도: ★☆☆☆</div>
+        <div class="card-meta">
+          <span class="meta-item">DC 개발 파이프라인 <span class="meta-val">36GWh</span></span>
+          <span class="meta-item">설치 총용량 <span class="meta-val">46GWh</span></span>
+          <span class="meta-item">계약 성사 여부 <span class="meta-val">아직 미확정</span></span>
+        </div>
+        <div class="card-desc">대규모 배터리 에너지 저장장치(BESS) 전문기업. 데이터센터의 안정적 전력 확보를 위한 ESS 수요 급증 수혜 예정. CEO "최대 신규 기회가 데이터센터" 발언과 함께 36GWh 개발 파이프라인 확보. 기존 전력 계통 불안정 문제를 해결하는 솔루션으로 주목받는 중. 아직 계약 미체결로 옵션성 높은 포지션.</div>
+        <div class="rating-row"><span class="rating-label">성장 옵션성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:85%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">확실성</span><div class="bar-wrap"><div class="bar-fill bar-blue" style="width:35%"></div></div></div>
+        <div class="rating-row"><span class="rating-label">테마 연관성</span><div class="bar-wrap"><div class="bar-fill bar-green" style="width:90%"></div></div></div>
+        <div class="catalyst"><strong>모니터링 포인트:</strong> 데이터센터향 BESS 계약 1건이라도 체결되면 주가 반응 클 것. 아직 초기 단계의 투기적 포지션.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-risk" class="panel">
+    <div class="insight-box">
+      <h3>종목별 고금리 민감도 & 핵심 리스크 매트릭스</h3>
+      <p>실적과 현금흐름이 뒷받침되는 종목일수록 고금리 내성이 강합니다. 아래 분류를 참고해 비중을 조절하세요.</p>
+    </div>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>티커</th>
+          <th>고금리 내성</th>
+          <th>주요 리스크</th>
+          <th>FOMC 전 포지션 제안</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VRT</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>높은 밸류에이션(PER 35x), 설비투자 지연 리스크</td>
+          <td>코어 보유 유지</td>
+        </tr>
+        <tr>
+          <td>PWR</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>프로젝트 완공 지연, 숙련공 임금 상승</td>
+          <td>코어 보유 유지</td>
+        </tr>
+        <tr>
+          <td>STX</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>HDD 수요 사이클 반전 가능성</td>
+          <td>비중 확대 고려</td>
+        </tr>
+        <tr>
+          <td>APH</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>매크로 경기 둔화 시 다각화 섹터 동반 약세</td>
+          <td>코어 보유 유지</td>
+        </tr>
+        <tr>
+          <td>EME</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>성장 속도 제한적, 섹터 로테이션 시 소외</td>
+          <td>방어적 비중으로 보유</td>
+        </tr>
+        <tr>
+          <td>ETN</td>
+          <td><span class="dot dot-green"></span>강</td>
+          <td>리레이팅 타이밍 불확실</td>
+          <td>장기 관점 적립식 접근</td>
+        </tr>
+        <tr>
+          <td>LITE</td>
+          <td><span class="dot dot-amber"></span>중간</td>
+          <td>통신업 사이클 의존, 고객 집중도</td>
+          <td>FOMC 후 진입 검토</td>
+        </tr>
+        <tr>
+          <td>CRDO</td>
+          <td><span class="dot dot-amber"></span>중간</td>
+          <td>단일 고객 67% 의존, 소형주 유동성 리스크</td>
+          <td>소량 선취 + FOMC 후 확인</td>
+        </tr>
+        <tr>
+          <td>SNDK</td>
+          <td><span class="dot dot-amber"></span>중간</td>
+          <td>1,600% 랠리 후 차익 실현 물량</td>
+          <td>분할 매수 접근</td>
+        </tr>
+        <tr>
+          <td>NBIS</td>
+          <td><span class="dot dot-red"></span>약</td>
+          <td>현재 적자, 고금리 직격, 실행 리스크 높음</td>
+          <td>투기 비중(5% 이하)만 허용</td>
+        </tr>
+        <tr>
+          <td>FLNC</td>
+          <td><span class="dot dot-red"></span>약</td>
+          <td>계약 미체결 상태, 성과 가시성 낮음</td>
+          <td>계약 체결 확인 후 진입</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="catalyst" style="margin-top:1.25rem;padding:.85rem 1rem">
+      <strong>종합 전략 제언 (3월 18일 FOMC 전):</strong> 실적 뒷받침이 되는 VRT·PWR·STX·APH 중심으로 코어 포지션을 유지하고, 고성장·고위험 종목(NBIS·FLNC·CRDO)은 FOMC 점도표 확인 후 비중 조절을 권장합니다. 고금리 장기화 시나리오에서도 AI 인프라 투자 사이클은 멈추지 않으나, 금리에 취약한 종목의 할인율 영향은 무시할 수 없습니다.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+</script>
