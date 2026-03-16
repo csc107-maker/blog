@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>리스크 심층 분석 보고서 | 백화점·반도체 | 2026.03.16</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:        #f5f4f0;
+  --bg2:       #ffffff;
+  --bg3:       #f0ede8;
+  --bg4:       #e8e4de;
+  --border:    rgba(0,0,0,0.08);
+  --border2:   rgba(0,0,0,0.14);
+
+  --amber:     #c07a00;
+  --amber-dim: rgba(192,122,0,0.09);
+  --amber-mid: rgba(192,122,0,0.28);
+
+  --red:       #c0392b;
+  --red-dim:   rgba(192,57,43,0.08);
+  --red-mid:   rgba(192,57,43,0.25);
+
+  --blue:      #1d5fa8;
+  --blue-dim:  rgba(29,95,168,0.09);
+  --cyan:      #0e7fa8;
+  --cyan-dim:  rgba(14,127,168,0.09);
+  --green:     #1a7a3c;
+  --green-dim: rgba(26,122,60,0.09);
+  --purple:    #6b3fb5;
+  --purple-dim:rgba(107,63,181,0.09);
+
+  --text:      #1a1814;
+  --text-dim:  #5a5550;
+  --text-mute: #9a9590;
+
+  --dept-accent: var(--amber);
+  --semi-accent: var(--cyan);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── grain overlay ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  opacity: 0.25;
+}
+
+.page { max-width: 1080px; margin: 0 auto; padding: 0 24px 100px; }
+
+/* ══════════════ COVER ══════════════ */
+.cover {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 56px 0 48px;
+  border-bottom: 1px solid var(--border2);
+  position: relative; overflow: hidden;
+}
+.cover-bg {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(192,57,43,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(14,127,168,0.04) 0%, transparent 60%);
+}
+.cover-top { position: relative; z-index: 1; }
+.cover-stamp {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red-dim);
+  border: 1px solid var(--red-mid);
+  border-radius: 3px; padding: 5px 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 32px;
+}
+.blink { animation: blink 1.4s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+}
+.cover-title .line2 {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(90deg, var(--amber), var(--red));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cover-sub {
+  margin-top: 20px; max-width: 560px;
+  font-size: 15px; color: var(--text-dim); font-weight: 300; line-height: 1.8;
+}
+
+.cover-meta {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.cover-sources {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.source-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-mute); margin-bottom: 4px;
+}
+.source-list {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.source-tag {
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: 3px; padding: 3px 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--text-dim);
+}
+.cover-date {
+  text-align: right;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; color: var(--text-mute); line-height: 2;
+}
+
+/* ══════════════ TOC ══════════════ */
+.toc {
+  padding: 40px 0; border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 640px) { .toc { grid-template-columns: 1fr; } }
+
+.toc-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; border-radius: 8px;
+  background: var(--bg2); border: 1px solid var(--border);
+  text-decoration: none; color: var(--text);
+  transition: border-color .2s, background .2s;
+  cursor: pointer;
+}
+.toc-item:hover { border-color: var(--amber); background: #faf8f4; }
+.toc-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--text-mute); min-width: 24px;
+}
+.toc-title { font-size: 13px; font-weight: 500; }
+.toc-sub { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+.toc-arrow { margin-left: auto; color: var(--text-mute); font-size: 12px; }
+
+/* ══════════════ SECTION HEADERS ══════════════ */
+.sect {
+  margin-top: 72px;
+  scroll-margin-top: 24px;
+}
+.sect-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 36px;
+}
+.sect-icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0; margin-top: 4px;
+}
+.dept-icon { background: var(--amber-dim); border: 1px solid var(--amber-mid); }
+.semi-icon { background: var(--cyan-dim); border: 1px solid rgba(34,211,238,0.3); }
+
+.sect-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-mute); margin-bottom: 6px;
+}
+.sect-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 700; line-height: 1.15; letter-spacing: -0.01em;
+}
+.dept-title { color: var(--amber); }
+.semi-title { color: var(--cyan); }
+
+.sect-lead {
+  margin-top: 8px; font-size: 14px; color: var(--text-dim);
+  font-weight: 300; line-height: 1.8; max-width: 680px;
+}
+
+/* ══════════════ RISK BLOCKS ══════════════ */
+.risk-block {
+  margin-bottom: 40px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.risk-block-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.risk-severity {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; padding: 3px 8px; border-radius: 3px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap; flex-shrink: 0; margin-top: 3px;
+}
+.sev-critical { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
+.sev-high     { background: rgba(245,158,11,0.15); color: var(--amber); border: 1px solid rgba(245,158,11,0.3); }
+.sev-medium   { background: rgba(59,130,246,0.15); color: var(--blue); border: 1px solid rgba(59,130,246,0.3); }
+
+.risk-block-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text);
+}
+.risk-block-sub { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+
+.risk-body { padding: 24px; }
+.risk-body p { font-size: 13px; color: var(--text-dim); line-height: 1.9; margin-bottom: 14px; }
+.risk-body p:last-child { margin-bottom: 0; }
+.risk-body strong { color: var(--text); }
+.risk-body em { color: var(--amber); font-style: normal; font-weight: 600; }
+
+/* ── source quote ── */
+.src-quote {
+  background: var(--bg3);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px; margin: 16px 0;
+  font-size: 13px; color: var(--text-dim); line-height: 1.8;
+}
+.src-quote.cyan-border { border-left-color: var(--cyan); }
+.src-quote.red-border  { border-left-color: var(--red); }
+.src-attr {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--text-mute);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ── stat row ── */
+.stat-row {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px; margin: 20px 0;
+}
+.stat-box {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px;
+}
+.stat-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px; font-weight: 700; line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+.amber-val { color: var(--amber); }
+.red-val   { color: var(--red); }
+.cyan-val  { color: var(--cyan); }
+.blue-val  { color: var(--blue); }
+
+/* ── mechanism chain ── */
+.chain {
+  display: flex; align-items: stretch; flex-wrap: wrap;
+  gap: 0; margin: 20px 0; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden;
+}
+.chain-step {
+  flex: 1; min-width: 120px;
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.chain-step:last-child { border-right: none; }
+.chain-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; color: var(--text-mute);
+  margin-bottom: 6px;
+}
+.chain-label { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.chain-sub   { font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
+.chain-arrow {
+  position: absolute; right: -10px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  font-size: 14px; color: var(--amber);
+  background: var(--bg3);
+  width: 20px; text-align: center;
+}
+.chain.cyan-chain .chain-arrow { color: var(--cyan); }
+
+/* ── chart card ── */
+.chart-card {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; padding: 20px;
+  margin: 20px 0;
+}
+.chart-card-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px; font-weight: 600; color: var(--text);
+  margin-bottom: 3px;
+}
+.chart-card-sub { font-size: 11px; color: var(--text-mute); margin-bottom: 16px; }
+
+/* ── threat matrix ── */
+.matrix-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 20px 0;
+}
+@media (max-width: 580px) { .matrix-grid { grid-template-columns: 1fr; } }
+
+.matrix-cell {
+  border-radius: 10px; padding: 16px;
+  border: 1px solid;
+}
+.cell-hh { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+.cell-hl { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+.cell-lh { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+.cell-ll { background: rgba(34,197,94,0.06); border-color: rgba(34,197,94,0.25); }
+
+.cell-axis {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-mute); margin-bottom: 6px;
+}
+.cell-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.cell-body  { font-size: 11px; color: var(--text-dim); line-height: 1.7; }
+
+/* ── verdict card ── */
+.verdict {
+  background: linear-gradient(135deg, #faf8f4 0%, #f0ede8 100%);
+  border: 1px solid var(--border2);
+  border-radius: 14px; padding: 28px; margin: 32px 0 0;
+  position: relative; overflow: hidden;
+}
+.verdict::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--amber), var(--red), transparent);
+}
+.verdict.cyan-verdict::before {
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), transparent);
+}
+.verdict-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-mute); margin-bottom: 12px;
+}
+.verdict-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+}
+.verdict-body { font-size: 13px; color: var(--text-dim); line-height: 1.9; }
+.verdict-body strong { color: var(--amber); }
+.verdict.cyan-verdict .verdict-body strong { color: var(--cyan); }
+
+/* ── two col ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ══════════════ DIVIDER ══════════════ */
+.sect-divider {
+  margin: 64px 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+}
+
+/* ══════════════ SUMMARY TABLE ══════════════ */
+.sum-table {
+  width: 100%; border-collapse: collapse; margin-top: 16px;
+}
+.sum-table th {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-mute); padding: 10px 16px;
+  border-bottom: 1px solid var(--border2);
+  text-align: left; background: var(--bg3);
+}
+.sum-table td {
+  padding: 12px 16px; font-size: 12px; color: var(--text-dim);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: top;
+}
+.sum-table tr:hover td { background: rgba(255,255,255,0.02); }
+.sum-table td.risk-name { font-weight: 600; color: var(--text); font-size: 13px; }
+.badge {
+  display: inline-block; padding: 2px 7px; border-radius: 3px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em;
+}
+.badge-red    { background: var(--red-dim);   color: var(--red);   border: 1px solid rgba(239,68,68,0.25); }
+.badge-amber  { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+.badge-blue   { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(59,130,246,0.25); }
+.badge-cyan   { background: var(--cyan-dim);  color: var(--cyan);  border: 1px solid rgba(34,211,238,0.25); }
+.badge-green  { background: var(--green-dim); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
+
+/* ══════════════ FOOTER ══════════════ */
+.report-footer {
+  margin-top: 80px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-disclaimer {
+  max-width: 640px; font-size: 11px; color: var(--text-mute); line-height: 1.8;
+}
+.footer-meta {
+  text-align: right; font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--text-mute); line-height: 2;
+}
+
+/* ══ scroll animate ══ */
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+.fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════ COVER ══════════ -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-top">
+    <div class="cover-stamp">
+      <span class="blink">●</span> RISK INTELLIGENCE REPORT
+    </div>
+    <h1 class="cover-title">
+      백화점·반도체<br>
+      <span class="line2">리스크 심층 분석</span>
+    </h1>
+    <p class="cover-sub">
+      유가 급등과 소비 양극화의 충돌, 中 반도체 굴기와 환율 변동의 이중 압박 —<br>
+      신뢰 기관 데이터 기반의 전방위 리스크 해부
+    </p>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-sources">
+      <div class="source-label">데이터 출처</div>
+      <div class="source-list">
+        <span class="source-tag">KDI</span>
+        <span class="source-tag">한국은행</span>
+        <span class="source-tag">KPMG</span>
+        <span class="source-tag">IMF</span>
+        <span class="source-tag">Reuters</span>
+        <span class="source-tag">Korea Herald</span>
+        <span class="source-tag">Nikkei Asia</span>
+        <span class="source-tag">investing.com</span>
+        <span class="source-tag">S&P Global</span>
+        <span class="source-tag">대한상의</span>
+        <span class="source-tag">삼일PwC</span>
+        <span class="source-tag">Morgan Stanley</span>
+      </div>
+    </div>
+    <div class="cover-date">
+      <div>발행일 2026.03.16</div>
+      <div>KOSPI 유통·전기전자 업종</div>
+      <div>분류: 투자 참고용</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOC ══════════ -->
+<nav class="toc">
+  <a class="toc-item" href="#dept">
+    <span class="toc-num">01</span>
+    <div><div class="toc-title">백화점 리스크</div><div class="toc-sub">유가 쇼크 · 소비침체 · 지방 역성장</div></div>
+    <span class="toc-arrow">→</span>
+  </a>
+  <a class="toc-item" href="#semi">
+    <span class="toc-num">02</span>
+    <div><div class="toc-title">반도체 리스크</div><div class="toc-sub">中 굴기 · 환율 변동성 · 공급과잉</div></div>
+    <span class="toc-arrow">→</span>
+  </a>
+  <a class="toc-item" href="#matrix">
+    <span class="toc-num">03</span>
+    <div><div class="toc-title">통합 리스크 매트릭스</div><div class="toc-sub">발생가능성 × 충격강도 비교</div></div>
+    <span class="toc-arrow">→</span>
+  </a>
+  <a class="toc-item" href="#hedge">
+    <span class="toc-num">04</span>
+    <div><div class="toc-title">리스크 대응 전략</div><div class="toc-sub">헤지 방법 · 포트폴리오 조정</div></div>
+    <span class="toc-arrow">→</span>
+  </a>
+</nav>
+
+<!-- ══════════════════════════════════
+     PART 1: 백화점 리스크
+══════════════════════════════════ -->
+<section class="sect" id="dept">
+  <div class="sect-header">
+    <div class="sect-icon dept-icon">🏬</div>
+    <div>
+      <div class="sect-eyebrow">Part 01 · Department Store</div>
+      <h2 class="sect-title dept-title">백화점 업종 리스크 심층 분석</h2>
+      <p class="sect-lead">
+        고유가·소비침체·지역 양극화라는 세 개의 충격파가 동시에 밀려오고 있다.
+        "VIP는 안전하다"는 통념이 얼마나 유효한지, 데이터로 검증한다.
+      </p>
+    </div>
+  </div>
+
+  <!-- RISK 1-1 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-critical">CRITICAL</span>
+      <div>
+        <div class="risk-block-title">🛢️ 리스크 ① — 유가 급등의 스태그플레이션 전이: 고급 소매도 무너지는 조건</div>
+        <div class="risk-block-sub">IEA · RBC이코노믹스 · KPMG · 한국경제 · IMF 데이터 종합</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        "VIP 고객은 물가에 둔감하다"는 명제는 단기적으로는 사실입니다. 그러나 이 명제에는 <strong>전제 조건</strong>이 붙습니다. 자산 시장이 무너지지 않아야 한다는 것, 그리고 고유가가 스태그플레이션으로 전이되지 않아야 한다는 것입니다. 2026년 3월의 현실은 이 두 조건 모두를 흔들고 있습니다.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-val red-val">+58%</div>
+          <div class="stat-desc">WTI 원유 한 달 내 상승폭<br>(배럴당 ~62→98달러)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val amber-val">$50~150B</div>
+          <div class="stat-desc">RBC이코노믹스: WTI 100달러 지속 시<br>글로벌 소비지출 연간 감소액</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val red-val">+0.4%p</div>
+          <div class="stat-desc">IMF: 유가 10% 상승 시<br>글로벌 인플레이션 상승폭</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val amber-val">-0.1~0.2%p</div>
+          <div class="stat-desc">IMF: 유가 10% 상승 시<br>세계 경제성장률 하락폭</div>
+        </div>
+      </div>
+
+      <div class="src-quote">
+        <strong>RBC이코노믹스</strong>: "고유가로 인한 소비 타격은 저소득층에 집중될 것으로 예상된다. 중산층 이하 대중 소매업체에는 타격이지만, 부유층 중심의 고급 소매업은 상대적으로 방어적인 위치에 있다. <strong>단, 유가 충격이 장기화되면 이 방어선도 한계에 봉착할 수 있다.</strong>"
+        <div class="src-attr">출처: RBC이코노믹스 2026 소비 영향 분석</div>
+      </div>
+
+      <p>
+        핵심 메커니즘은 <strong>'자산 가격 역풍'</strong>입니다. 고유가 → 인플레이션 → 금리 인하 지연 → 부동산·주식 자산 가격 하방 압력 → VIP 고객의 가처분 소득 및 자산 효과 약화라는 연쇄 경로입니다. 한국은행 BOK이슈노트(2026년 2월)는 <strong>"주택가격 상승이 소비를 진작시킨다는 자산효과(wealth effect)와 다소 상충되는 현상이 확인됐다"</strong>고 밝혔습니다. 즉, 한국의 VIP 소비는 주택 자산과 연동된 부분이 크다는 것인데, 고유가가 부동산 시장까지 압박하면 이 방어막이 취약해집니다.
+      </p>
+
+      <div class="chain">
+        <div class="chain-step">
+          <div class="chain-num">STEP 01</div>
+          <div class="chain-label">유가 폭등</div>
+          <div class="chain-sub">WTI +58%<br>브렌트 120달러</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">STEP 02</div>
+          <div class="chain-label">인플레 재점화</div>
+          <div class="chain-sub">IMF: +0.4%p/10%<br>스태그 우려</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">STEP 03</div>
+          <div class="chain-label">금리 인하 지연</div>
+          <div class="chain-sub">ING: 인하 2027년<br>으로 후퇴 전망</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">STEP 04</div>
+          <div class="chain-label">자산가격 압박</div>
+          <div class="chain-sub">부동산·주식<br>하방 압력</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">STEP 05</div>
+          <div class="chain-label">VIP 소비 위축</div>
+          <div class="chain-sub">자산효과 약화<br>명품 선구매 소진</div>
+        </div>
+      </div>
+
+      <div class="src-quote red-border">
+        <strong>한국경제신문·ING</strong>: "이번 전쟁과 그로 인한 혼란이 얼마나 오래 지속되고 얼마나 심각할지 불확실해 Fed는 전망에 확신을 갖지 못할 것이다. <strong>2026년 인하를 2027년으로 미룰 것</strong>"이라고 관측했다. 10년물 수익률도 전쟁 발발 전 3.95%에서 4.2%대 중반까지 상승하며 스태그플레이션 우려를 반영하기 시작했다.
+        <div class="src-attr">출처: 한국경제 2026.03.14 보도</div>
+      </div>
+
+      <p>
+        <strong>결론적으로, 이 리스크의 임계치는 유가 지속 기간입니다.</strong> 단기(1~3개월) 고유가는 VIP 방어력이 통합니다. 그러나 KPMG가 경고한 것처럼 "지정학적 충격과 정책 불확실성이 경제 전망을 흐리게 하는" 상황이 6개월 이상 지속된다면, 자산 가격 역풍이 본격화하며 프리미엄 소매 업종도 안전지대를 벗어날 가능성이 있습니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- RISK 1-2 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-critical">CRITICAL</span>
+      <div>
+        <div class="risk-block-title">📉 리스크 ② — 유통산업 '제로 성장' 진입: 소비심리 지표의 균열</div>
+        <div class="risk-block-sub">대한상공회의소 · 삼일PwC · KDI 데이터 종합</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        대형 백화점의 VIP 매출은 견고하지만, 이를 떠받치는 저변인 전체 유통시장이 무너지고 있습니다. 대한상공회의소가 전국 소매유통업체 300곳을 대상으로 조사한 결과는 충격적입니다.
+      </p>
+
+      <div class="src-quote">
+        <strong>대한상공회의소 '2026년 유통산업 전망 조사'</strong>: 내년 국내 소매유통시장 성장률은 <strong>0.6%에 그칠 것</strong>으로 집계됐다. 최근 5년 가운데 가장 낮은 수준이다. 업계는 소비심리 위축(67.9%)과 고물가(46.5%), 시장 경쟁 심화(34.0%), 가계부채 부담(25.8%) 등을 주요 원인으로 꼽았다.
+        <div class="src-attr">출처: 대한상공회의소 유통산업 전망 조사 (2026.01)</div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-val red-val">0.6%</div>
+          <div class="stat-desc">2026 소매유통시장<br>성장률 전망 (5년 최저)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val amber-val">67.9%</div>
+          <div class="stat-desc">업체들이 꼽은<br>1위 원인: 소비심리 위축</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val cyan-val">3.2%</div>
+          <div class="stat-desc">온라인쇼핑 성장률<br>(오프라인 독식)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val blue-val">1,978.8조</div>
+          <div class="stat-desc">2025년 4Q말 가계신용<br>(한국은행, 역대 최고)</div>
+        </div>
+      </div>
+
+      <p>
+        삼일PwC경영연구원은 2026년 전망에서 <strong>"소비 회복세가 견조하게 유지되고 정부 재정 확대가 경기 하방을 완충하겠지만, 수출 회복이 일부 업종에 편중되고 가계 지출 여력 개선이 더딘 점을 고려 시 큰 폭의 성장률 증가는 무리"</strong>라고 진단했습니다. KDI도 민간소비가 전년(1.3%)보다 높은 1.7% 증가에 그칠 것으로 예상하면서 "소비 중심의 내수 회복세가 견조하게 유지된다"는 낙관적 표현 뒤에 가계부채와 부동산 침체를 리스크로 명시했습니다.
+      </p>
+
+      <p>
+        특히 가계신용 잔액이 <strong>1,978조원이라는 역대 최고치</strong>를 기록한 것은 소비 기반 자체의 취약성을 보여줍니다. 고금리 환경이 장기화될수록 이자 부담이 소비 여력을 잠식하며, 이는 가장 먼저 비필수 소비재와 유통 부문에 타격을 줍니다.
+      </p>
+
+      <div class="chart-card">
+        <div class="chart-card-title">유통업태별 2026 성장률 전망</div>
+        <div class="chart-card-sub">대한상공회의소 조사 기반 · 단위: %</div>
+        <div style="height:200px"><canvas id="retailChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK 1-3 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-high">HIGH</span>
+      <div>
+        <div class="risk-block-title">🗺️ 리스크 ③ — 지방 백화점 역성장의 구조적 가속: 양극화의 역설</div>
+        <div class="risk-block-sub">업계 집계 · 한국섬유신문 · 테넌트뉴스</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        VIP 소비 집중으로 대형 플래그십 점포가 성장하는 반면, VIP 인프라가 취약한 지방·중소 백화점의 역성장이 가속화되고 있습니다. 이는 개별 기업의 수익성에 심각한 이중 구조를 만들어내고 있습니다.
+      </p>
+
+      <div class="two-col">
+        <div class="chart-card" style="margin:0">
+          <div class="chart-card-title">성장 점포 vs 역성장 점포</div>
+          <div class="chart-card-sub">2025년 상반기 주요 점포 성장률 (%)</div>
+          <div style="height:200px"><canvas id="storeChart"></canvas></div>
+        </div>
+        <div>
+          <div class="src-quote" style="margin:0 0 12px">
+            <strong>롯데 동래점</strong>: -14.3%<br>
+            <strong>롯데 영등포점</strong>: -13.1%<br>
+            <strong>더현대 서울</strong>: -2.5%<br>
+            <strong>→ 지방 점포, 2자릿수 역성장 고착화</strong>
+            <div class="src-attr">출처: 한국섬유신문 점포별 매출 집계 (2025 상반기)</div>
+          </div>
+          <div class="src-quote" style="margin:0">
+            <strong>신세계 강남점</strong>: +2.1% · 3연속 1위<br>
+            <strong>롯데 잠실점</strong>: +7.6%<br>
+            <strong>현대 판교점</strong>: +10.3%<br>
+            <strong>→ 대형 수도권 점포 독식 심화</strong>
+            <div class="src-attr">출처: 동일</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:16px">
+        이 양극화는 개별 기업 전략보다 구조적 원인이 더 큽니다. 지방 인구 감소, 소비력 집중, 이커머스 대체 가속 등이 복합 작용하고 있기 때문입니다. <strong>롯데쇼핑의 경우 전국에 분산된 점포 포트폴리오 구조상 이 위험에 가장 직접적으로 노출</strong>되어 있습니다. 비효율 점포 폐점과 리뉴얼 투자가 불가피한 상황에서, 이에 따른 <strong>일회성 비용</strong>이 단기 실적을 압박할 수 있습니다.
+      </p>
+
+      <div class="verdict">
+        <div class="verdict-label">⚖️ 분석 결론 | 백화점 리스크 종합 판정</div>
+        <div class="verdict-title">VIP 방어선은 조건부 — 유가 지속 기간과 자산시장이 변수</div>
+        <div class="verdict-body">
+          유가 급등의 즉각적 충격은 VIP 비중이 높은 백화점이 상당 부분 방어합니다. 그러나 <strong>고유가 장기화 → 스태그플레이션 → 자산 가격 하락 → VIP 자산효과 약화</strong>라는 연쇄가 현실화된다면 이 방어선은 무너집니다. IMF 기준 유가 10% 상승 시 세계 GDP -0.1~0.2%p, 인플레 +0.4%p로 한국의 금리 인하 경로가 차질을 빚을 경우 가계부채 부담이 소비를 더욱 압박합니다. <strong>투자 판단의 핵심 변수는 ① 분쟁 지속 기간 ② 국내 부동산 가격 동향 ③ 해당 기업의 지방 점포 비중</strong>입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sect-divider"></div>
+
+<!-- ══════════════════════════════════
+     PART 2: 반도체 리스크
+══════════════════════════════════ -->
+<section class="sect" id="semi">
+  <div class="sect-header">
+    <div class="sect-icon semi-icon">💾</div>
+    <div>
+      <div class="sect-eyebrow">Part 02 · Semiconductor</div>
+      <h2 class="sect-title semi-title">반도체 업종 리스크 심층 분석</h2>
+      <p class="sect-lead">
+        역대 최고의 AI 수요 사이클 속에서도, 중국의 메모리 굴기와 환율 폭탄이라는
+        두 개의 지뢰가 동시에 작동하고 있다. 위협의 실체와 한계를 해부한다.
+      </p>
+    </div>
+  </div>
+
+  <!-- RISK 2-1 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-high">HIGH</span>
+      <div>
+        <div class="risk-block-title">🇨🇳 리스크 ① — 중국 반도체 굴기: CXMT·YMTC의 레거시 잠식과 HBM 침투 시도</div>
+        <div class="risk-block-sub">Korea Herald · Nikkei Asia · S&P Global Automotive · investing.com · Tom's Hardware</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        중국의 메모리 공세는 더 이상 먼 미래의 이야기가 아닙니다. <strong>CXMT(창신메모리·ChangXin Memory Technologies)</strong>와 <strong>YMTC(양쯔메모리)</strong>가 2026년 들어 사상 최대 규모의 생산 능력 확장을 단행하고 있으며, 그 전선이 레거시 D램에서 HBM으로 이동하고 있습니다.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-val red-val">-50%</div>
+          <div class="stat-desc">CXMT의 DDR4 덤핑 가격<br>(한국산 대비 절반 수준)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val amber-val">$4.2B</div>
+          <div class="stat-desc">CXMT IPO 조달 목표<br>(상하이 STAR마켓)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val cyan-val">60,000</div>
+          <div class="stat-desc">CXMT의 HBM3 전환<br>웨이퍼(장/월)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val blue-val">10%</div>
+          <div class="stat-desc">YMTC의 글로벌 NAND<br>시장 점유율 (2025년)</div>
+        </div>
+      </div>
+
+      <div class="src-quote cyan-border">
+        <strong>Korea Herald (2026.02.20)</strong>: "CXMT has been offering older-generation DDR4 chips at about <strong>half the prevailing market rate</strong>. More than half of the total DRAM production capacity at both Samsung and SK Hynix is understood to be allocated to general-purpose products. <strong>'Korean companies concentrate on HBM4 — there are visible cracks emerging in their hold on the legacy market.'</strong>"
+        <div class="src-attr">출처: Korea Herald, Feb. 20, 2026</div>
+      </div>
+
+      <p>
+        한국 기업들이 HBM4 고부가가치 시장에 집중하는 동안, <strong>레거시 D램(DDR4, DDR5) 시장에서 CXMT가 반값 공세를 펼치며 시장 점유율을 잠식</strong>하고 있습니다. HP, Dell은 CXMT D램 품질 테스트를 진행 중이며, ASUS와 에이서는 이미 중국 파트너와의 협력을 타진하고 있다고 코리아헤럴드가 보도했습니다. 삼성전자와 SK하이닉스의 전체 D램 생산 능력의 절반 이상이 여전히 범용 제품에 할당돼 있다는 점이 이 위험을 심각하게 만드는 이유입니다.
+      </p>
+
+      <div class="chain cyan-chain">
+        <div class="chain-step">
+          <div class="chain-num">현재</div>
+          <div class="chain-label">DDR4 반값 덤핑</div>
+          <div class="chain-sub">PC·모바일<br>레거시 잠식</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">2026 하반기</div>
+          <div class="chain-label">HBM3 양산</div>
+          <div class="chain-sub">60,000웨이퍼/月<br>상하이 팹</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">2027~</div>
+          <div class="chain-label">DDR5·HBM3E</div>
+          <div class="chain-sub">서버·AI 시장<br>진입 시도</div>
+          <div class="chain-arrow">→</div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num">장기</div>
+          <div class="chain-label">HBM4 도전</div>
+          <div class="chain-sub">기술 격차 축소<br>시나리오</div>
+        </div>
+      </div>
+
+      <p>
+        그러나 이 위협에는 <strong>명확한 한계</strong>도 존재합니다. investing.com 분석에 따르면 현재 중국 업체들의 점유율은 <em>5~10%에 불과하며, 어드밴스드 HBM 기술은 보유하지 못하고 있습니다.</em> HBM3조차 양산 과정에서 수율(yield) 확보, TSV(실리콘 관통 전극) 정밀도, 후공정 패키징 등에서 수년간의 학습 곡선이 필요합니다. S&P Global은 "CXMT가 HBM3 대량 생산에 성공하더라도, 백엔드 처리량과 수율 문제, 특히 스태킹·접합·휨(warpage) 등에서 느린 생산 수율 학습 곡선에 직면할 것"이라고 분석했습니다.
+      </p>
+
+      <div class="src-quote cyan-border">
+        <strong>investing.com (2026.02)</strong>: "At the advanced end of the DRAM market, including HBM production, capability remains confined to Samsung Electronics, SK hynix and Micron. While Chinese suppliers such as CXMT and YMTC account for an estimated <strong>5–10%, largely in lower-end segments</strong>, they do not currently possess the advanced HBM capabilities required for leading AI systems."
+        <div class="src-attr">출처: investing.com — The End of Cheap Memory (Feb. 2026)</div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px">
+        <div>
+          <div class="chart-card" style="margin:0">
+            <div class="chart-card-title">글로벌 D램 시장 점유율 구조</div>
+            <div class="chart-card-sub">2025 기준 · 출처: 카운터포인트리서치·investing.com</div>
+            <div style="height:180px"><canvas id="dramShare"></canvas></div>
+          </div>
+        </div>
+        <div>
+          <div class="chart-card" style="margin:0">
+            <div class="chart-card-title">HBM 시장 점유율 (출하량 기준)</div>
+            <div class="chart-card-sub">2025 기준 · HBM만 해당</div>
+            <div style="height:180px"><canvas id="hbmShare"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK 2-2 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-critical">CRITICAL</span>
+      <div>
+        <div class="risk-block-title">💱 리스크 ② — 원/달러 환율 변동성: 모건스탠리 장밋빛 전망도 뚫은 외인 매도의 진짜 이유</div>
+        <div class="risk-block-sub">모건스탠리 · 인베스트조선 · 삼일PwC · 머니투데이 데이터</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        2026년 2월 2일, 모건스탠리가 'Memory-Double Up' 보고서를 통해 삼성전자 목표주가를 17만→21만원, SK하이닉스를 84만→110만원으로 전격 상향했음에도, 당일 외국인 투자자들은 오히려 대규모 순매도로 대응했습니다. <strong>코스피 시가총액 약 200조원이 하루에 증발했습니다.</strong>
+      </p>
+
+      <div class="src-quote red-border">
+        <strong>인베스트조선 (2026.02.02)</strong>: "전례없는 장밋빛 전망에도 불구하고 외인들이 매도에 나선 배경엔 <strong>원-달러 환율의 불안정성이 가장 큰 요인</strong>으로 꼽힌다. 이날 서울 외환시장에서 달러 대비 원화 환율은 전보다 24.8원 오른 1464.3원을 기록했다. 삼성전자 6.3%, SK하이닉스 8.7%가 하루 만에 하락하며 코스피 5000선도 붕괴했다."
+        <div class="src-attr">출처: 인베스트조선, 2026.02.02</div>
+      </div>
+
+      <p>
+        이 사건은 한국 반도체 주식이 직면한 환율 리스크의 본질을 극명하게 보여줍니다. 아무리 펀더멘털이 강해도, 환율 불안이 외국인 투자자의 실질 수익률을 갉아먹으면 이탈을 막을 수 없습니다.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-val red-val">1,497.5</div>
+          <div class="stat-desc">원/달러 환율 (2026.03.16)<br>머니투데이 실시간</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val amber-val">+6,885억</div>
+          <div class="stat-desc">SK하이닉스: 환율 10%↑ 시<br>순이익 개선 효과</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val cyan-val">+1.5조</div>
+          <div class="stat-desc">삼성·SK하이닉스·LG전자<br>환율 10%↑ 시 합산 순이익↑</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val blue-val">-200조</div>
+          <div class="stat-desc">2026.02.02 단 하루<br>코스피 시가총액 증발</div>
+        </div>
+      </div>
+
+      <p>
+        환율의 이중성이 핵심입니다. <strong>원화 약세(달러 강세)는 수출 기업의 원화 환산 실적을 높이지만</strong>, 동시에 외국인 투자자 입장에서는 한국 주식의 달러 환산 가치를 낮춰 매도 유인을 제공합니다. 머니투데이 보도에 따르면 업계 관계자는 <strong>"환율 변동으로 발생하는 이익 증가는 실질적인 수익성 개선에 기반한 것이 아니어서 한계가 있고, 환 헤지 비용 증가로 이어질 수 있다"</strong>고 밝혔습니다.
+      </p>
+
+      <div class="chart-card">
+        <div class="chart-card-title">원/달러 환율 방향별 영향 시나리오</div>
+        <div class="chart-card-sub">반도체 기업 및 투자자 관점에서의 이중 효과</div>
+        <div style="height:200px"><canvas id="fxChart"></canvas></div>
+      </div>
+
+      <p>
+        삼일PwC는 2026년 경제 전망에서 <strong>"높은 원/달러 환율에 따른 수입 물가 상승은 위험 요인"</strong>이라고 명시했습니다. 반도체 공정에 필요한 특수 가스, 화학 소재, 장비 부품 상당수가 달러 표시 수입품이라는 점에서, 원화 약세는 원가 구조에도 부담을 주는 두 번째 경로로 작동합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- RISK 2-3 -->
+  <div class="risk-block fade-up">
+    <div class="risk-block-header">
+      <span class="risk-severity sev-medium">MEDIUM</span>
+      <div>
+        <div class="risk-block-title">📦 리스크 ③ — 공급 과잉 시나리오: 슈퍼사이클의 역설적 위험</div>
+        <div class="risk-block-sub">SK증권 리서치 · FinancialContent · Nikkei Asia</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <p>
+        현재의 메모리 슈퍼사이클은 자기파괴적 씨앗을 품고 있습니다. 높은 수익성에 자극받은 삼성·SK하이닉스·마이크론 등이 동시에 대규모 캐팩스(CAPEX)를 집행하고, CXMT도 IPO 자금 42억 달러를 공장 확장에 쏟아붓고 있습니다. <strong>'선증설, 후수주' 메모리의 구조적 특성상, 이 투자들이 동시에 생산으로 이어지는 2027~2028년에 공급 과잉이 찾아올 수 있습니다.</strong>
+      </p>
+
+      <div class="src-quote red-border">
+        <strong>FinancialContent (2026.01)</strong>: "Market analysts point to the risk of significant oversupply <strong>if CXMT reaches its 300,000 wafer-per-month goal at a time when the global AI build-out might be cooling.</strong> The pattern is familiar — build scale in legacy DRAM, then move up the value chain. The technology gap may narrow more quickly than expected."
+        <div class="src-attr">출처: FinancialContent, Jan. 2026</div>
+      </div>
+
+      <p>
+        SK증권 리서치는 이 구조적 위험을 명확히 경고합니다. <strong>"대규모 메모리 증설은 곧 다가올 초과 공급을 의미했다. 공급자들은 자기계산으로 미래 수요를 예측해 증설한다. 실제 수요의 양은 거시경제가 결정하므로, 공급자들은 결국 거시경제를 맞춰야하는 셈이다. 불가능하다."</strong>
+      </p>
+
+      <p>
+        다만 이 리스크가 현실화되는 조건이 필요합니다. <strong>① AI 자본지출 속도가 꺾일 것 ② 2027년 이후 신규 공장들이 예정대로 완공·가동될 것</strong>이라는 두 조건이 동시에 충족되어야 합니다. 현재로선 HBM 시장은 사실상 2026년 물량이 완판이며, 신규 공장 완공에도 수율 안정화까지 1~2년이 추가로 필요합니다.
+      </p>
+
+      <div class="verdict cyan-verdict">
+        <div class="verdict-label">⚖️ 분석 결론 | 반도체 리스크 종합 판정</div>
+        <div class="verdict-title">단기(2026): 리스크 통제 가능 — 중기(2027~): 면밀한 모니터링 필요</div>
+        <div class="verdict-body">
+          중국의 위협은 실질적이지만, <strong>현재 HBM 기술 격차는 최소 2~3년</strong>으로 평가됩니다. 레거시 D램 잠식은 현실이나 HBM·DDR5 핵심 시장에서의 지배력은 유지됩니다. 환율 리스크는 외국인 수급에 직접 영향을 미치는 단기 변수로, <strong>달러 강세 국면에서 외인 이탈 → 주가 하락 → 재진입 기회</strong>의 패턴으로 작동합니다. 공급 과잉 리스크는 2027년 하반기 이후의 중기 시나리오입니다. 투자 판단의 핵심 변수는 <strong>① 환율 1,400~1,500원대 지속 여부 ② AI 자본지출 성장세 ③ CXMT의 HBM3 수율 달성 시점</strong>입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sect-divider"></div>
+
+<!-- ══════════ RISK MATRIX ══════════ -->
+<section class="sect" id="matrix">
+  <div class="sect-header">
+    <div class="sect-icon" style="background:var(--purple-dim);border:1px solid rgba(167,139,250,0.3)">⚡</div>
+    <div>
+      <div class="sect-eyebrow">Part 03 · Integrated Matrix</div>
+      <h2 class="sect-title" style="color:var(--purple)">통합 리스크 매트릭스</h2>
+      <p class="sect-lead">발생 가능성(Probability) × 충격 강도(Impact)로 정리한 전체 리스크 지도</p>
+    </div>
+  </div>
+
+  <div class="matrix-grid">
+    <div class="matrix-cell cell-hh">
+      <div class="cell-axis">발생가능성 HIGH · 충격 HIGH</div>
+      <div class="cell-title">🔴 즉각 대응 필요</div>
+      <div class="cell-body">
+        <strong>① 고유가 장기화 + 스태그플레이션</strong><br>
+        유가 100달러 이상 6개월+ 지속 시 자산 가격 역풍 현실화. 백화점 VIP 방어선 붕괴 가능.<br><br>
+        <strong>② 원/달러 환율 급변동</strong><br>
+        1,500원 돌파 시 외국인 매도 가속 → 반도체 주가 단기 급락 패턴 반복.
+      </div>
+    </div>
+    <div class="matrix-cell cell-hl">
+      <div class="cell-axis">발생가능성 HIGH · 충격 MEDIUM</div>
+      <div class="cell-title">🟡 지속 모니터링</div>
+      <div class="cell-body">
+        <strong>③ CXMT 레거시 D램 잠식</strong><br>
+        DDR4 반값 공세 현실화. 한국 기업 범용 D램 수익성 압박. 단, HBM 대체 불가.<br><br>
+        <strong>④ 지방 백화점 역성장 가속</strong><br>
+        구조적 인구 감소. 이커머스 대체 진행 중. 폐점·리뉴얼 비용 실적 압박.
+      </div>
+    </div>
+    <div class="matrix-cell cell-lh">
+      <div class="cell-axis">발생가능성 MEDIUM · 충격 HIGH</div>
+      <div class="cell-title">🟡 시나리오 대비</div>
+      <div class="cell-body">
+        <strong>⑤ 2027년 메모리 공급 과잉</strong><br>
+        삼성·SK·CXMT 동시 증설 → 2027 하반기 공급 과잉 가능성. AI 수요 둔화 시 가속.<br><br>
+        <strong>⑥ 가계부채 소비 냉각</strong><br>
+        1,978조 가계신용 + 고금리 → 이자 부담 증가 → 소비 여력 잠식.
+      </div>
+    </div>
+    <div class="matrix-cell cell-ll">
+      <div class="cell-axis">발생가능성 LOW · 충격 LOW</div>
+      <div class="cell-title">🟢 현재 제한적</div>
+      <div class="cell-body">
+        <strong>⑦ CXMT의 HBM4 침투</strong><br>
+        기술 격차 2~3년. 수율 확보·후공정 한계. 미국 수출 규제 장벽.<br><br>
+        <strong>⑧ 명품 수요 급랭</strong><br>
+        한국 1인당 명품 지출 세계 1위 구조. VIP 비중 47~46%로 단기 방어력 보유.
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-top:24px">
+    <div class="chart-card-title">리스크 레이더 — 업종별 위협 프로파일 비교</div>
+    <div class="chart-card-sub">발생가능성·충격강도·대응여력·시간지평·역상관 관계 5개 축 평가 (10점 만점)</div>
+    <div style="height:280px"><canvas id="riskRadar"></canvas></div>
+  </div>
+</section>
+
+<div class="sect-divider"></div>
+
+<!-- ══════════ HEDGE STRATEGY ══════════ -->
+<section class="sect" id="hedge">
+  <div class="sect-header">
+    <div class="sect-icon" style="background:var(--green-dim);border:1px solid rgba(34,197,94,0.25)">🛡️</div>
+    <div>
+      <div class="sect-eyebrow">Part 04 · Risk Hedge Strategy</div>
+      <h2 class="sect-title" style="color:var(--green)">리스크 대응 전략</h2>
+      <p class="sect-lead">확인된 리스크에 근거한 실전적 헤지 방법과 포트폴리오 조정 접근법</p>
+    </div>
+  </div>
+
+  <div class="risk-block" style="border-color:rgba(34,197,94,0.2)">
+    <div class="risk-block-header" style="border-bottom-color:rgba(34,197,94,0.1)">
+      <span class="risk-severity" style="background:var(--green-dim);color:var(--green);border-color:rgba(34,197,94,0.3)">STRATEGY</span>
+      <div>
+        <div class="risk-block-title" style="color:var(--green)">백화점 업종 리스크 헤지 전략</div>
+        <div class="risk-block-sub">유가 지속 기간 · VIP 비중 · 점포 포트폴리오 3가지 체크포인트</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <div class="stat-row">
+        <div class="stat-box" style="border-color:rgba(34,197,94,0.2)">
+          <div class="stat-val" style="color:var(--green)">핵심 기준</div>
+          <div class="stat-desc">VIP 매출 비중 45% 이상 + 수도권 대형 점포 집중 기업 선별</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(34,197,94,0.2)">
+          <div class="stat-val" style="color:var(--green)">회피 기준</div>
+          <div class="stat-desc">지방 점포 비중 高 + 저가 유통 채널 병행 운영 기업</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(34,197,94,0.2)">
+          <div class="stat-val" style="color:var(--green)">트리거 신호</div>
+          <div class="stat-desc">원유 분쟁 3개월 이상 지속 or 코스피 부동산 지수 하락 시 비중 축소</div>
+        </div>
+      </div>
+      <p>
+        백화점 리스크의 핵심은 유가 지속 기간입니다. <strong>단기(3개월 이내) 고유가 → 유지 비중. 중기(6개월 이상) 고유가 → 점진적 축소.</strong> 기업 선택 시 신세계·현대백화점처럼 수도권 프리미엄 점포 집중도가 높고 VIP 프로그램이 성숙한 기업에 집중하며, 지방 점포 비중이 높은 기업은 회피 또는 비중 축소가 합리적입니다. 롯데쇼핑은 밸류업 공시와 PBR 0.15배 극단적 저평가를 노리는 단기 카탈리스트 플레이는 가능하되, 구조적 장기 보유에는 신중해야 합니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="risk-block" style="border-color:rgba(34,211,238,0.2)">
+    <div class="risk-block-header" style="border-bottom-color:rgba(34,211,238,0.1)">
+      <span class="risk-severity" style="background:var(--cyan-dim);color:var(--cyan);border-color:rgba(34,211,238,0.3)">STRATEGY</span>
+      <div>
+        <div class="risk-block-title" style="color:var(--cyan)">반도체 업종 리스크 헤지 전략</div>
+        <div class="risk-block-sub">환율 + 中 경쟁 + 공급 과잉 3중 리스크 대응</div>
+      </div>
+    </div>
+    <div class="risk-body">
+      <div class="stat-row">
+        <div class="stat-box" style="border-color:rgba(34,211,238,0.2)">
+          <div class="stat-val cyan-val">분할 매수</div>
+          <div class="stat-desc">환율 급등 → 외인 이탈 → 주가 하락 구간을 분할 매수 진입 기회로 활용</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(34,211,238,0.2)">
+          <div class="stat-val cyan-val">HBM 집중</div>
+          <div class="stat-desc">레거시 D램 중심 기업보다 HBM 매출 비중 높은 기업 선별 (SK하이닉스 우위)</div>
+        </div>
+        <div class="stat-box" style="border-color:rgba(34,211,238,0.2)">
+          <div class="stat-val cyan-val">소부장 분산</div>
+          <div class="stat-desc">중국 경쟁 직격탄 완충 + HBM 확장 수혜 동시 포착. 한미반도체·솔브레인 등</div>
+        </div>
+      </div>
+      <p>
+        반도체 주가의 환율 의존성을 역이용하는 전략이 유효합니다. 원화 약세 국면(달러 강세)에서 외국인 이탈로 주가가 급락하는 패턴이 반복되고 있으므로, <strong>환율 1,480~1,500원 이상 구간에서 외인 매도 출회 시 분할 매수</strong>가 합리적입니다. 중국 위협에 대응하는 방법은 레거시 D램 노출을 최소화하고 <strong>HBM3E·HBM4 매출 비중이 높은 기업에 집중하는 것</strong>입니다. 삼성전자보다 SK하이닉스가 단기 HBM 수혜에서 우위이며, 공급 과잉 리스크가 현실화하는 2027년 하반기 전 수익 실현 계획을 미리 세워두는 것이 중요합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 종합 리스크 요약 테이블 -->
+  <div style="margin-top:32px; background:var(--bg2); border:1px solid var(--border); border-radius:14px; overflow:hidden">
+    <div style="padding:20px 24px 16px; border-bottom:1px solid var(--border)">
+      <div style="font-family:'Noto Serif KR',serif; font-size:15px; font-weight:700">전체 리스크 요약 — 투자자 참조 테이블</div>
+      <div style="font-size:11px; color:var(--text-mute); margin-top:4px">출처: KDI·한국은행·Reuters·Korea Herald·investing.com·대한상의·삼일PwC·모건스탠리 종합</div>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="sum-table">
+        <thead>
+          <tr>
+            <th>리스크</th>
+            <th>업종</th>
+            <th>심각도</th>
+            <th>시간지평</th>
+            <th>트리거 조건</th>
+            <th>대응 전략</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="risk-name">스태그플레이션 전이</td>
+            <td>백화점</td>
+            <td><span class="badge badge-red">CRITICAL</span></td>
+            <td>중기(6M+)</td>
+            <td>유가 100달러 6개월 이상</td>
+            <td>VIP 비중 모니터링 후 축소</td>
+          </tr>
+          <tr>
+            <td class="risk-name">소매유통 제로 성장</td>
+            <td>백화점</td>
+            <td><span class="badge badge-amber">HIGH</span></td>
+            <td>단기(진행 중)</td>
+            <td>소비심리지수 80 이하</td>
+            <td>대형 프리미엄 점포 집중</td>
+          </tr>
+          <tr>
+            <td class="risk-name">지방 점포 역성장</td>
+            <td>백화점</td>
+            <td><span class="badge badge-amber">HIGH</span></td>
+            <td>구조적(장기)</td>
+            <td>지방 점포 비중 50% 이상</td>
+            <td>롯데쇼핑 비중 축소 검토</td>
+          </tr>
+          <tr>
+            <td class="risk-name">원/달러 환율 급변</td>
+            <td>반도체</td>
+            <td><span class="badge badge-red">CRITICAL</span></td>
+            <td>단기(수시)</td>
+            <td>1,480원 이상 외인 매도</td>
+            <td>하락 시 분할 매수 기회</td>
+          </tr>
+          <tr>
+            <td class="risk-name">CXMT 레거시 잠식</td>
+            <td>반도체</td>
+            <td><span class="badge badge-amber">HIGH</span></td>
+            <td>단·중기(진행)</td>
+            <td>DDR4 점유율 15% 돌파</td>
+            <td>HBM 비중 높은 기업 선별</td>
+          </tr>
+          <tr>
+            <td class="risk-name">2027 공급 과잉</td>
+            <td>반도체</td>
+            <td><span class="badge badge-blue">MEDIUM</span></td>
+            <td>중기(2027~)</td>
+            <td>AI 자본지출 둔화 신호</td>
+            <td>2027 상반기 수익 실현 계획</td>
+          </tr>
+          <tr>
+            <td class="risk-name">中 HBM 기술 침투</td>
+            <td>반도체</td>
+            <td><span class="badge badge-cyan">LOW-MED</span></td>
+            <td>장기(2028~)</td>
+            <td>CXMT HBM3 수율 60% 돌파</td>
+            <td>장기 모니터링 유지</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="report-footer">
+  <div class="footer-disclaimer">
+    ⚠️ <strong>투자 유의사항:</strong> 본 보고서는 KDI·한국은행·KPMG·IMF·Reuters·Korea Herald·Nikkei Asia·investing.com·S&P Global·대한상공회의소·삼일PwC경영연구원·Morgan Stanley 등 공신력 있는 기관의 데이터를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 특정 종목의 매수·매도를 권유하지 않으며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 주식 투자에는 원금 손실 위험이 있습니다.
+  </div>
+  <div class="footer-meta">
+    <div>REPORT DATE: 2026.03.16</div>
+    <div>COVERAGE: 백화점 · 반도체</div>
+    <div>TYPE: RISK INTELLIGENCE</div>
+  </div>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+// ── 공통 ──
+const C = {
+  bg3: '#f0ede8', bg4: '#e8e4de',
+  border: 'rgba(0,0,0,0.08)',
+  text: '#5a5550',
+  amber: '#c07a00', red: '#c0392b',
+  blue: '#1d5fa8', cyan: '#0e7fa8',
+  green: '#1a7a3c', purple: '#6b3fb5',
+};
+Chart.defaults.color = C.text;
+Chart.defaults.borderColor = C.border;
+Chart.defaults.font.family = "'Space Mono', monospace";
+Chart.defaults.font.size = 10;
+
+const tooltip = {
+  backgroundColor: '#ffffff',
+  borderColor: 'rgba(0,0,0,0.12)',
+  borderWidth: 1,
+  titleColor: '#1a1814',
+  bodyColor: '#5a5550',
+  padding: 10,
+};
+
+// ── 유통 업태별 성장률 ──
+new Chart(document.getElementById('retailChart'), {
+  type: 'bar',
+  data: {
+    labels: ['온라인쇼핑', '편의점', '백화점(대형)', '대형마트', '중소형 유통', '전체 소매'],
+    datasets: [{
+      label: '성장률(%)',
+      data: [3.2, 1.8, 1.4, 0.3, -1.2, 0.6],
+      backgroundColor: d => d.raw >= 0 ? 'rgba(245,158,11,0.5)' : 'rgba(239,68,68,0.5)',
+      borderColor:      d => d.raw >= 0 ? C.amber : C.red,
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...tooltip } },
+    scales: {
+      x: { grid: { color: C.border } },
+      y: { grid: { color: C.border }, ticks: { callback: v => v + '%' } }
+    }
+  }
+});
+
+// ── 점포 성장률 ──
+new Chart(document.getElementById('storeChart'), {
+  type: 'bar',
+  data: {
+    labels: ['현대 판교', '롯데 잠실', '신세계 강남', '더현대 서울', '롯데 영등포', '롯데 동래'],
+    datasets: [{
+      data: [10.3, 7.6, 2.1, -2.5, -13.1, -14.3],
+      backgroundColor: d => d.raw >= 0 ? 'rgba(34,211,238,0.45)' : 'rgba(239,68,68,0.45)',
+      borderColor:      d => d.raw >= 0 ? C.cyan : C.red,
+      borderWidth: 1.5,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...tooltip } },
+    scales: {
+      x: { grid: { color: C.border }, ticks: { callback: v => v + '%' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ── D램 시장 점유율 ──
+new Chart(document.getElementById('dramShare'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Samsung', 'SK Hynix', 'Micron', 'CXMT·YMTC', '기타'],
+    datasets: [{
+      data: [40, 28, 23, 7, 2],
+      backgroundColor: [
+        'rgba(34,211,238,0.7)', 'rgba(245,158,11,0.7)',
+        'rgba(96,165,250,0.7)', 'rgba(239,68,68,0.7)', 'rgba(100,100,110,0.5)'
+      ],
+      borderColor: '#f0ede8', borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 10, padding: 10, color: C.text } },
+      tooltip: { ...tooltip }
+    },
+    cutout: '62%'
+  }
+});
+
+// ── HBM 점유율 ──
+new Chart(document.getElementById('hbmShare'), {
+  type: 'doughnut',
+  data: {
+    labels: ['SK Hynix', 'Samsung', 'Micron', 'CXMT(소량)'],
+    datasets: [{
+      data: [62, 17, 19, 2],
+      backgroundColor: [
+        'rgba(245,158,11,0.8)', 'rgba(34,211,238,0.7)',
+        'rgba(96,165,250,0.7)', 'rgba(239,68,68,0.6)'
+      ],
+      borderColor: '#f0ede8', borderWidth: 2,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { boxWidth: 10, padding: 10, color: C.text } },
+      tooltip: { ...tooltip }
+    },
+    cutout: '62%'
+  }
+});
+
+// ── 환율 시나리오 ──
+new Chart(document.getElementById('fxChart'), {
+  type: 'bar',
+  data: {
+    labels: ['수출 실적\n원화 환산', '외국인\n달러 수익률', '수입 원가\n(소재·장비)', '환헤지\n비용', '주가 영향\n(외인 수급)'],
+    datasets: [
+      {
+        label: '원화 약세(달러 강세) 시',
+        data: [5, -8, -4, -3, -6],
+        backgroundColor: 'rgba(239,68,68,0.55)',
+        borderColor: C.red, borderWidth: 1.5, borderRadius: 4,
+      },
+      {
+        label: '원화 강세(달러 약세) 시',
+        data: [-4, 6, 3, 1, 5],
+        backgroundColor: 'rgba(34,211,238,0.45)',
+        borderColor: C.cyan, borderWidth: 1.5, borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: C.text, boxWidth: 12 } },
+      tooltip: { ...tooltip },
+    },
+    scales: {
+      x: { grid: { color: C.border } },
+      y: { grid: { color: C.border }, ticks: { callback: v => (v>0?'+':'')+v } }
+    }
+  }
+});
+
+// ── 리스크 레이더 ──
+new Chart(document.getElementById('riskRadar'), {
+  type: 'radar',
+  data: {
+    labels: ['발생 가능성', '충격 강도', '대응 여력', '시간 지평\n(장기일수록 낮음)', '역상관 회복력'],
+    datasets: [
+      {
+        label: '백화점 — 고유가 리스크',
+        data: [7, 8, 6, 5, 5],
+        borderColor: C.amber, backgroundColor: 'rgba(245,158,11,0.12)',
+        pointBackgroundColor: C.amber, borderWidth: 2, pointRadius: 4,
+      },
+      {
+        label: '반도체 — 환율 리스크',
+        data: [8, 7, 7, 9, 7],
+        borderColor: C.red, backgroundColor: 'rgba(239,68,68,0.08)',
+        pointBackgroundColor: C.red, borderWidth: 2, pointRadius: 4,
+      },
+      {
+        label: '반도체 — 中 경쟁 리스크',
+        data: [7, 6, 8, 4, 8],
+        borderColor: C.cyan, backgroundColor: 'rgba(34,211,238,0.08)',
+        pointBackgroundColor: C.cyan, borderWidth: 2, pointRadius: 4,
+      },
+      {
+        label: '반도체 — 공급과잉 리스크',
+        data: [5, 8, 6, 3, 6],
+        borderColor: C.purple, backgroundColor: 'rgba(167,139,250,0.08)',
+        pointBackgroundColor: C.purple, borderWidth: 2, pointRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { color: C.text, boxWidth: 12, padding: 14 } },
+      tooltip: { ...tooltip }
+    },
+    scales: {
+      r: {
+        min: 0, max: 10,
+        grid: { color: C.border },
+        angleLines: { color: C.border },
+        ticks: { display: false },
+        pointLabels: { color: C.text, font: { size: 10 } }
+      }
+    }
+  }
+});
+
+// ── Intersection Observer for fade-up ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
