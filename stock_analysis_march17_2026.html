@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>심층 종목 분석 — NVDA·META·NBIS·XLE & 한국 반도체·에너지 전망 | 2026.03.17</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #08090d;
+  --surface: #0f111a;
+  --card: #141720;
+  --border: #1e2230;
+  --border2: #252840;
+  --text: #e8eaf2;
+  --muted: #6b7194;
+  --dim: #3a3f5c;
+
+  --nvda: #76b900;
+  --nvda-bg: rgba(118,185,0,0.07);
+  --meta: #0866ff;
+  --meta-bg: rgba(8,102,255,0.07);
+  --nbis: #e040fb;
+  --nbis-bg: rgba(224,64,251,0.07);
+  --xle: #ff8f00;
+  --xle-bg: rgba(255,143,0,0.07);
+  --korea: #ff3b5c;
+  --korea-bg: rgba(255,59,92,0.07);
+
+  --up: #00e676;
+  --dn: #ff5252;
+  --warn: #ffab00;
+
+  --font-head: 'Bebas Neue', sans-serif;
+  --font-body: 'Noto Sans KR', sans-serif;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── HEADER ── */
+.site-header {
+  position: relative;
+  background: linear-gradient(135deg, #0a0b10 0%, #0f111a 40%, #0d0f1d 100%);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  z-index: 1;
+}
+.site-header::before {
+  content:'';
+  position:absolute; top:-120px; right:-80px;
+  width:500px; height:500px;
+  background: radial-gradient(circle, rgba(118,185,0,.08) 0%, transparent 65%);
+  pointer-events:none;
+}
+.site-header::after {
+  content:'';
+  position:absolute; bottom:-120px; left:20%;
+  width:400px; height:400px;
+  background: radial-gradient(circle, rgba(8,102,255,.06) 0%, transparent 65%);
+  pointer-events:none;
+}
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 52px 48px 44px;
+  position: relative; z-index:1;
+}
+.header-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.header-eyebrow .dot {
+  width:6px; height:6px; border-radius:50%;
+  background: var(--up);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.7); }
+}
+.header-h1 {
+  font-family: var(--font-head);
+  font-size: clamp(42px, 5.5vw, 80px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.header-h1 .hl-green { color: var(--nvda); }
+.header-h1 .hl-blue { color: var(--meta); }
+.header-sub {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+.header-badges {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.hbadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 5px 12px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.hbadge.green { background: rgba(0,230,118,.12); color: var(--up); border: 1px solid rgba(0,230,118,.2); }
+.hbadge.red { background: rgba(255,82,82,.1); color: var(--dn); border: 1px solid rgba(255,82,82,.2); }
+.hbadge.amber { background: rgba(255,171,0,.1); color: var(--warn); border: 1px solid rgba(255,171,0,.2); }
+.hbadge.blue { background: rgba(8,102,255,.12); color: #6699ff; border: 1px solid rgba(8,102,255,.25); }
+.hbadge.purple { background: rgba(224,64,251,.1); color: #e040fb; border: 1px solid rgba(224,64,251,.2); }
+
+/* ── TICKER ── */
+.ticker-bar {
+  background: rgba(0,0,0,.4);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 9px 0;
+  position: relative; z-index:1;
+}
+.ticker-scroll {
+  display: inline-flex;
+  animation: scroll 32s linear infinite;
+}
+.t-item {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 0 28px;
+  border-right: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.t-item .up { color: var(--up); }
+.t-item .dn { color: var(--dn); }
+.t-item .label { color: var(--text); font-weight: 600; }
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 48px 80px;
+  position: relative; z-index:1;
+}
+
+/* ── SECTION LABEL ── */
+.sec-label {
+  display: flex; align-items: center; gap: 14px;
+  padding: 48px 0 28px;
+}
+.sec-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+}
+.sec-title {
+  font-family: var(--font-head);
+  font-size: clamp(20px, 2.5vw, 30px);
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+.sec-title .accent-green { color: var(--nvda); }
+.sec-title .accent-blue { color: var(--meta); }
+.sec-title .accent-purple { color: var(--nbis); }
+.sec-title .accent-orange { color: var(--xle); }
+.sec-title .accent-red { color: var(--korea); }
+.sec-rule {
+  flex:1; height:1px;
+  background: linear-gradient(to right, var(--border2), transparent);
+}
+
+/* ── STOCK CARD (full-width) ── */
+.stock-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  position: relative;
+}
+.stock-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+}
+.stock-card.nvda::before { background: var(--nvda); }
+.stock-card.meta::before { background: var(--meta); }
+.stock-card.nbis::before { background: var(--nbis); }
+.stock-card.energy::before { background: var(--xle); }
+.stock-card.korea::before { background: var(--korea); }
+
+.card-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.ticker-badge {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 3px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.nvda .ticker-badge { background: var(--nvda-bg); color: var(--nvda); border: 1px solid rgba(118,185,0,.3); }
+.meta .ticker-badge { background: var(--meta-bg); color: #6699ff; border: 1px solid rgba(8,102,255,.3); }
+.nbis .ticker-badge { background: var(--nbis-bg); color: var(--nbis); border: 1px solid rgba(224,64,251,.3); }
+.energy .ticker-badge { background: var(--xle-bg); color: var(--xle); border: 1px solid rgba(255,143,0,.3); }
+.korea .ticker-badge { background: var(--korea-bg); color: var(--korea); border: 1px solid rgba(255,59,92,.3); }
+
+.card-name h2 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.card-name .subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.card-price-area {
+  text-align: right;
+}
+.price-main {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-change {
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.price-change.up { color: var(--up); }
+.price-change.dn { color: var(--dn); }
+
+/* ── CARD BODY ── */
+.card-body {
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+@media(max-width:768px) {
+  .card-body { grid-template-columns: 1fr; }
+}
+
+.analysis-block h3 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items:center; gap:8px;
+}
+.analysis-block h3::after {
+  content:'';
+  flex:1; height:1px; background: var(--border);
+}
+.analysis-block p {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: #c8cce0;
+  margin-bottom: 12px;
+}
+.analysis-block p strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── MINI STATS ── */
+.mini-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+}
+.mstat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 12px 10px;
+  text-align: center;
+}
+.mstat .mv {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 5px;
+}
+.mstat .mk {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+.mstat .mv.green { color: var(--up); }
+.mstat .mv.red { color: var(--dn); }
+.mstat .mv.amber { color: var(--warn); }
+.mstat .mv.nvda { color: var(--nvda); }
+.mstat .mv.meta { color: #6699ff; }
+.mstat .mv.nbis { color: var(--nbis); }
+.mstat .mv.orange { color: var(--xle); }
+
+/* ── CATALYST TAG ── */
+.catalyst-list {
+  list-style: none;
+  margin-top: 14px;
+}
+.catalyst-list li {
+  display: flex; align-items:flex-start; gap: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #c8cce0;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.catalyst-list li:last-child { border-bottom: none; margin-bottom: 0; }
+.catalyst-list li .tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.tag.bull { background: rgba(0,230,118,.12); color: var(--up); border: 1px solid rgba(0,230,118,.2); }
+.tag.bear { background: rgba(255,82,82,.1); color: var(--dn); border: 1px solid rgba(255,82,82,.2); }
+.tag.watch { background: rgba(255,171,0,.1); color: var(--warn); border: 1px solid rgba(255,171,0,.2); }
+.tag.event { background: rgba(224,64,251,.1); color: #e040fb; border: 1px solid rgba(224,64,251,.2); }
+
+/* ── VERDICT BOX ── */
+.verdict-box {
+  margin: 0 28px 24px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.verdict-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.verdict-text {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #c8cce0;
+}
+.verdict-text strong { color: var(--text); font-weight: 500; }
+.verdict-rating {
+  margin-top: 8px;
+  display: flex; align-items:center; gap:8px;
+  flex-wrap: wrap;
+}
+.rating-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.rating-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.rating-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── KOREA SECTION ── */
+.korea-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media(max-width:900px) {
+  .korea-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:600px) {
+  .korea-grid { grid-template-columns: 1fr; }
+}
+
+.k-stock {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.k-stock::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:2px;
+}
+.k-stock.bull-case::after { background: var(--up); }
+.k-stock.bear-case::after { background: var(--dn); }
+.k-stock.neutral::after { background: var(--warn); }
+
+.k-ticker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.k-name {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.k-price {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.k-chg {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.k-desc {
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: #9fa5c8;
+  margin-bottom: 14px;
+}
+.k-outlook {
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+  padding: 8px 12px;
+  border-radius: 2px;
+  display: flex; align-items:center; gap:6px;
+}
+.k-outlook.bull { background: rgba(0,230,118,.08); color: var(--up); border: 1px solid rgba(0,230,118,.15); }
+.k-outlook.bear { background: rgba(255,82,82,.08); color: var(--dn); border: 1px solid rgba(255,82,82,.15); }
+.k-outlook.watch { background: rgba(255,171,0,.08); color: var(--warn); border: 1px solid rgba(255,171,0,.15); }
+
+/* ── RISK MATRIX ── */
+.risk-matrix {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+.risk-matrix h3 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items:center; gap:10px;
+}
+.risk-matrix h3::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.risk-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.risk-label {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 400;
+}
+.risk-bar-wrap {
+  height: 6px;
+  background: var(--surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width .6s ease;
+}
+.risk-bar-fill.h { background: linear-gradient(to right, #ff5252, #ff1744); }
+.risk-bar-fill.m { background: linear-gradient(to right, #ffab00, #ff6d00); }
+.risk-bar-fill.l { background: linear-gradient(to right, #00e676, #00bfa5); }
+.risk-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ── SUMMARY TABLE ── */
+.summary-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.summary-table thead tr {
+  background: var(--surface);
+}
+.summary-table th {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.summary-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  color: #c8cce0;
+}
+.summary-table tr:hover td { background: rgba(255,255,255,.02); }
+.summary-table .stock-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 14px;
+}
+.summary-table .mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.pill.buy { background: rgba(0,230,118,.12); color: var(--up); border:1px solid rgba(0,230,118,.25); }
+.pill.hold { background: rgba(255,171,0,.1); color: var(--warn); border:1px solid rgba(255,171,0,.2); }
+.pill.spec { background: rgba(224,64,251,.1); color: #e040fb; border:1px solid rgba(224,64,251,.2); }
+
+/* ── CALLOUT BANNER ── */
+.callout {
+  padding: 20px 24px;
+  border-radius: 3px;
+  border-left: 3px solid;
+  margin: 20px 0;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #c8cce0;
+}
+.callout strong { color: var(--text); font-weight: 500; }
+.callout.warn { background: rgba(255,171,0,.06); border-color: var(--warn); }
+.callout.bull { background: rgba(0,230,118,.05); border-color: var(--up); }
+.callout.info { background: rgba(8,102,255,.06); border-color: #4488ff; }
+
+/* ── FOOTER ── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 48px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  line-height: 1.8;
+  max-width: 1280px;
+  margin: 40px auto 0;
+}
+
+/* ── ANIMATE ── */
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.stock-card { animation: fadeInUp .4s ease both; }
+.stock-card:nth-child(1) { animation-delay: .05s; }
+.stock-card:nth-child(2) { animation-delay: .1s; }
+.stock-card:nth-child(3) { animation-delay: .15s; }
+.stock-card:nth-child(4) { animation-delay: .2s; }
+
+@media(max-width:768px) {
+  .container { padding: 0 20px 60px; }
+  .header-inner { padding: 40px 20px 36px; }
+  .card-header { grid-template-columns: auto 1fr; }
+  .card-price-area { display:none; }
+  .mini-stats { grid-template-columns: repeat(2,1fr); }
+  .risk-row { grid-template-columns: 120px 1fr 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-eyebrow">
+      <span class="dot"></span>
+      LIVE MARKET ANALYSIS &nbsp;·&nbsp; 2026.03.17 KST &nbsp;·&nbsp; 미국 종목 + 한국 증시 전망
+    </div>
+    <h1 class="header-h1">
+      <span class="hl-green">NVDA</span> · <span class="hl-blue">META</span> · NBIS · XLE<br>
+      & 한국 반도체·전력·에너지 전망
+    </h1>
+    <p class="header-sub">GTC 2026 젠슨 황 키노트, 메타 구조조정, 네비우스 270억 달러 딜, 에너지 ETF 급등 — 그리고 오늘(3/17) 한국 코스피를 움직일 4가지 힘</p>
+    <div class="header-badges">
+      <span class="hbadge green">NVDA +1.2%</span>
+      <span class="hbadge blue">META +2.6%</span>
+      <span class="hbadge purple">NBIS +13%</span>
+      <span class="hbadge amber">XLE YTD+30%</span>
+      <span class="hbadge red">삼성 이달 -12.84%</span>
+      <span class="hbadge green">SK하이닉스 반등</span>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-scroll">
+    <span class="t-item"><span class="label">NVDA</span> $183.98 <span class="up">▲1.56%</span></span>
+    <span class="t-item"><span class="label">META</span> $611.20 <span class="up">▲2.6%</span></span>
+    <span class="t-item"><span class="label">NBIS</span> $52.40 <span class="up">▲13%</span></span>
+    <span class="t-item"><span class="label">XLE</span> $98.70 <span class="up">▲0.8%</span></span>
+    <span class="t-item"><span class="label">XOP</span> $148.30 <span class="up">▲1.1%</span></span>
+    <span class="t-item"><span class="label">S&P500</span> 6,693 <span class="up">▲0.9%</span></span>
+    <span class="t-item"><span class="label">브렌트유</span> $102.40 <span class="up">▲2.3%</span></span>
+    <span class="t-item"><span class="label">삼성전자</span> 188,700원 <span class="up">▲2.1%</span></span>
+    <span class="t-item"><span class="label">SK하이닉스</span> 974,000원 <span class="up">▲3.5%</span></span>
+    <span class="t-item"><span class="label">두산에너빌리티</span> 106,500원 <span class="up">▲5.2%</span></span>
+    <!-- repeat -->
+    <span class="t-item"><span class="label">NVDA</span> $183.98 <span class="up">▲1.56%</span></span>
+    <span class="t-item"><span class="label">META</span> $611.20 <span class="up">▲2.6%</span></span>
+    <span class="t-item"><span class="label">NBIS</span> $52.40 <span class="up">▲13%</span></span>
+    <span class="t-item"><span class="label">XLE</span> $98.70 <span class="up">▲0.8%</span></span>
+    <span class="t-item"><span class="label">XOP</span> $148.30 <span class="up">▲1.1%</span></span>
+    <span class="t-item"><span class="label">S&P500</span> 6,693 <span class="up">▲0.9%</span></span>
+    <span class="t-item"><span class="label">브렌트유</span> $102.40 <span class="up">▲2.3%</span></span>
+    <span class="t-item"><span class="label">삼성전자</span> 188,700원 <span class="up">▲2.1%</span></span>
+    <span class="t-item"><span class="label">SK하이닉스</span> 974,000원 <span class="up">▲3.5%</span></span>
+    <span class="t-item"><span class="label">두산에너빌리티</span> 106,500원 <span class="up">▲5.2%</span></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ── 요약 테이블 ── -->
+<div class="sec-label">
+  <span class="sec-num">00</span>
+  <h2 class="sec-title">TODAY'S <span class="accent-green">SNAPSHOT</span></h2>
+  <span class="sec-rule"></span>
+</div>
+<div class="summary-table-wrap">
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>종목</th>
+        <th>현재가</th>
+        <th>등락</th>
+        <th>핵심 드라이버</th>
+        <th>투자의견</th>
+        <th>목표가 컨센서스</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="stock-name">Nvidia</span><br><span class="mono" style="color:var(--nvda)">NVDA</span></td>
+        <td><span class="mono">$183.98</span></td>
+        <td><span class="mono up">+1.56%</span></td>
+        <td>GTC 2026 키노트, Feynman 아키텍처, 에이전틱 AI</td>
+        <td><span class="pill buy">STRONG BUY</span></td>
+        <td><span class="mono">$263–$274</span></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">Meta</span><br><span class="mono" style="color:var(--meta)">META</span></td>
+        <td><span class="mono">$611.20</span></td>
+        <td><span class="mono up">+2.6%</span></td>
+        <td>20% 감원 계획 보도, Nebius 270억$ 딜, AI 효율화</td>
+        <td><span class="pill buy">BUY</span></td>
+        <td><span class="mono">$859 (avg)</span></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">Nebius Group</span><br><span class="mono" style="color:var(--nbis)">NBIS</span></td>
+        <td><span class="mono">$52.40</span></td>
+        <td><span class="mono up">+13%</span></td>
+        <td>Meta와 270억$ AI 클라우드 계약, Vera Rubin 첫 배포</td>
+        <td><span class="pill spec">SPECULATIVE</span></td>
+        <td><span class="mono">– (신흥주)</span></td>
+      </tr>
+      <tr>
+        <td><span class="stock-name">Energy ETF</span><br><span class="mono" style="color:var(--xle)">XLE / XOP</span></td>
+        <td><span class="mono">XLE $98.7</span></td>
+        <td><span class="mono up">YTD +30%</span></td>
+        <td>이란 전쟁발 유가 $100+, 에너지 기업 이익 급증</td>
+        <td><span class="pill hold">OVERWEIGHT</span></td>
+        <td><span class="mono">유가 연동</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ SECTION 1: NVDA ══ -->
+<div class="sec-label">
+  <span class="sec-num">01</span>
+  <h2 class="sec-title"><span class="accent-green">NVDA</span> — AI의 빛은 전쟁도 못 끈다</h2>
+  <span class="sec-rule"></span>
+</div>
+
+<div class="stock-card nvda">
+  <div class="card-header">
+    <span class="ticker-badge">NVDA · NASDAQ</span>
+    <div class="card-name">
+      <h2>NVIDIA Corporation</h2>
+      <span class="subtitle">GPU · AI 인프라 · 에이전틱 AI 플랫폼</span>
+    </div>
+    <div class="card-price-area">
+      <div class="price-main" style="color:var(--nvda)">$183.98</div>
+      <div class="price-change up">▲ +$2.82 (+1.56%)</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="analysis-block">
+      <h3>GTC 2026 핵심 분석</h3>
+      <p><strong>젠슨 황의 가죽 재킷이 돌아왔다.</strong> 오늘 샌호세 SAP 센터에서 열린 GTC 2026 키노트는 엔비디아가 단순 GPU 회사에서 "AI의 운영체제"를 지향하는 풀스택 플랫폼 기업으로 변신했음을 선언하는 자리였다.</p>
+      <p>Deepwater Asset Management의 Gene Munster는 "엔비디아가 AI 수요가 예상보다 강하며, 기술이 '변곡점(inflection point)'에 도달했다는 메시지를 전달할 것"이라고 예측했다. 실제로 황 CEO는 <strong>데이터센터 지출이 2030년까지 연간 3조~4조 달러</strong>에 달할 수 있다고 밝혔다.</p>
+      <p>가장 주목받는 발표는 <strong>Feynman 아키텍처</strong>다 — Vera Rubin의 차세대 후속으로 1.6nm 공정과 실리콘 포토닉스 결합 가능성이 거론됐다. 추론(inference) 비용을 현세대 대비 <strong>10배 절감</strong>한다는 전망은 기업 AI 채택의 경제성을 근본적으로 바꿀 수 있다.</p>
+
+      <div class="mini-stats">
+        <div class="mstat">
+          <div class="mv nvda">$4.53T</div>
+          <div class="mk">시가총액<br>(세계 1위)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv nvda">$68.1B</div>
+          <div class="mk">4Q25 매출<br>(YoY 급증)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+1,100%</div>
+          <div class="mk">2023년 이후<br>누적 수익률</div>
+        </div>
+        <div class="mstat">
+          <div class="mv nvda">38개</div>
+          <div class="mk">Strong Buy<br>애널리스트</div>
+        </div>
+        <div class="mstat">
+          <div class="mv amber">$263~$274</div>
+          <div class="mk">컨센서스<br>목표가</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+42~48%</div>
+          <div class="mk">현재가 대비<br>상승 여력</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-block">
+      <h3>핵심 카탈리스트 & 리스크</h3>
+      <ul class="catalyst-list">
+        <li><span class="tag bull">BULL</span><strong>Feynman 아키텍처 발표:</strong> 차세대 칩 상용화 로드맵 공개로 AI 인프라 투자 사이클 연장 가시화</li>
+        <li><span class="tag bull">BULL</span><strong>데이터센터 $3~4T 전망:</strong> 황 CEO의 2030 시장 전망이 기존 컨센서스(~$1T)를 4배 초과, 수요 내러티브 강화</li>
+        <li><span class="tag bull">BULL</span><strong>Thinking Machines Lab 파트너십:</strong> 최소 1GW 규모 Vera Rubin 시스템 멀티연도 계약 발표</li>
+        <li><span class="tag bull">BULL</span><strong>에이전틱 AI 시대 선언:</strong> "아이언맨의 자비스"급 자율 AI 에이전트 시대로의 전환 — 인프라 수요 2차 폭발</li>
+        <li><span class="tag bear">RISK</span><strong>2027년 성장 둔화 우려:</strong> "투자자들의 걱정의 벽" — 2026년 이후 AI 지출 지속 여부에 의구심</li>
+        <li><span class="tag bear">RISK</span><strong>중국 H20 수출 제한:</strong> 안보 우려로 생산 중단 보도, 지정학 리스크 상존</li>
+        <li><span class="tag watch">WATCH</span><strong>화요일 애널리스트 Q&A:</strong> 3/17 황 CEO와 월가 직접 문답, 공급망·Rubin 일정 세부 확인 기회</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict-box">
+    <div class="verdict-icon">🟢</div>
+    <div class="verdict-text">
+      <strong>투자 판단:</strong> GTC는 단순 제품 발표 행사가 아니라 AI 인프라 투자 사이클의 <strong>경제성 프레임을 재정의</strong>하는 자리였다. 추론 비용 10배 절감, 데이터센터 시장 $3~4T 전망은 시장이 지금 프라이싱하는 수준을 훨씬 상회한다. 단기 모멘텀과 중장기 구조적 성장 모두 유효하다.
+      <div class="verdict-rating">
+        <div class="rating-dot" style="background:var(--nvda)"></div>
+        <span class="rating-label">단기(1W):</span>
+        <span class="rating-value" style="color:var(--up)">긍정 — GTC 키노트 모멘텀</span>
+        &nbsp;|&nbsp;
+        <span class="rating-label">중기(6M):</span>
+        <span class="rating-value" style="color:var(--up)">강력 매수 — Rubin·Feynman 사이클</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 2: META ══ -->
+<div class="sec-label">
+  <span class="sec-num">02</span>
+  <h2 class="sec-title"><span class="accent-blue">META</span> — 구조조정이 곧 AI 승부수</h2>
+  <span class="sec-rule"></span>
+</div>
+
+<div class="stock-card meta">
+  <div class="card-header">
+    <span class="ticker-badge">META · NASDAQ</span>
+    <div class="card-name">
+      <h2>Meta Platforms</h2>
+      <span class="subtitle">소셜 미디어 · AI 인프라 · 메타버스</span>
+    </div>
+    <div class="card-price-area">
+      <div class="price-main" style="color:#6699ff">$611.20</div>
+      <div class="price-change up">▲ +$15.6 (+2.6%)</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="analysis-block">
+      <h3>감원 + 딜의 이중 모멘텀</h3>
+      <p>로이터가 보도한 <strong>전체 인력의 20% 이상(약 16,000명) 감원 계획</strong>은 역설적으로 주가를 3% 올렸다. 시장은 이를 AI 시대의 효율화 의지로 읽는다 — 2022년 "효율의 해" 이후 메타 주가가 4배 오른 전례가 있기 때문이다.</p>
+      <p>같은 날 공개된 <strong>Nebius와의 270억 달러, 5년 AI 클라우드 계약</strong>은 더 중요한 신호다. 메타의 2026년 capex 가이던스는 <strong>최대 1,350억 달러</strong> — 전년도의 두 배다. Jefferies는 "메타가 이 규모의 감원을 하면서 AI 투자를 확대한다면, AI가 인당 생산성을 근본적으로 바꾸고 있다는 강력한 신호"라고 평가했다.</p>
+      <p>단, 리스크도 있다. AI 주력 모델 'Avocado'는 Google Gemini 3에 미치지 못한다는 NYT 보도가 나왔으며, Meta AI의 1억 명+ 사용자가 <strong>최전선 모델 없이 구축된 수치</strong>라는 점은 프론티어 AI 경쟁력에 의문을 남긴다.</p>
+
+      <div class="mini-stats">
+        <div class="mstat">
+          <div class="mv meta">$135B</div>
+          <div class="mk">2026 capex<br>가이던스</div>
+        </div>
+        <div class="mstat">
+          <div class="mv meta">$27B</div>
+          <div class="mk">Nebius AI<br>클라우드 계약</div>
+        </div>
+        <div class="mstat">
+          <div class="mv red">–20%</div>
+          <div class="mk">예정 감원<br>규모 (약 1.6만명)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">1억+</div>
+          <div class="mk">Meta AI<br>월간 사용자</div>
+        </div>
+        <div class="mstat">
+          <div class="mv meta">$859</div>
+          <div class="mk">평균 목표가<br>(애널 44명)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">20x</div>
+          <div class="mk">Forward P/E<br>(역사적 저평가)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-block">
+      <h3>핵심 카탈리스트 & 리스크</h3>
+      <ul class="catalyst-list">
+        <li><span class="tag bull">BULL</span><strong>감원 = 마진 확대 기대:</strong> 2022년 감원 후 FCF 3배 성장 선례, 이번도 수익성 개선 신호로 해석</li>
+        <li><span class="tag bull">BULL</span><strong>Nebius 딜로 AI 인프라 확보:</strong> 2027년부터 Vera Rubin 기반 최첨단 AI 컴퓨팅 클라우드 직접 접근</li>
+        <li><span class="tag bull">BULL</span><strong>20x P/E 저평가:</strong> 고점 대비 22% 할인, 44명 중 39명이 매수 의견 유지</li>
+        <li><span class="tag bull">BULL</span><strong>AI 배당 성장 시나리오:</strong> FCF 2030년까지 3배 성장 전망, 배당 지속 확대 가능</li>
+        <li><span class="tag bear">RISK</span><strong>'Avocado' 모델 지연:</strong> Gemini 3 대비 열위 보도, 프론티어 AI 리더십 공백</li>
+        <li><span class="tag bear">RISK</span><strong>감원 확정 시 단기 변동성:</strong> 규모·시기 미확정 상태, 뉴스 흐름에 따른 주가 출렁임 가능</li>
+        <li><span class="tag watch">WATCH</span><strong>메타 AI 프론티어 모델 출시 시점:</strong> 진짜 반등의 트리거 — "frontier model이 나오면 자신있다" (Susan Li, CFO)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict-box">
+    <div class="verdict-icon">🔵</div>
+    <div class="verdict-text">
+      <strong>투자 판단:</strong> 단기적으로 <strong>감원 확정 여부</strong>가 주가를 좌우한다. 확정 시 '효율화 랠리', 취소 시 실망 매물 가능성. 그러나 중기 관점에서 1,350억 달러 AI 투자, Nebius 딜, 1억 MAU Meta AI는 2027~2028년 수익성 폭발의 씨앗이다. 역사적 저평가(20x P/E) 구간에서의 분할 매수 전략이 적합하다.
+      <div class="verdict-rating">
+        <div class="rating-dot" style="background:var(--meta)"></div>
+        <span class="rating-label">단기(1W):</span>
+        <span class="rating-value" style="color:var(--warn)">중립-긍정 (변동성 주의)</span>
+        &nbsp;|&nbsp;
+        <span class="rating-label">중기(6M):</span>
+        <span class="rating-value" style="color:var(--up)">매수 — AI 효율화 + 인프라 사이클</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 3: NBIS ══ -->
+<div class="sec-label">
+  <span class="sec-num">03</span>
+  <h2 class="sec-title"><span class="accent-purple">NBIS</span> — 메가딜이 만든 AI 클라우드의 다크호스</h2>
+  <span class="sec-rule"></span>
+</div>
+
+<div class="stock-card nbis">
+  <div class="card-header">
+    <span class="ticker-badge">NBIS · NASDAQ</span>
+    <div class="card-name">
+      <h2>Nebius Group N.V.</h2>
+      <span class="subtitle">AI 클라우드 인프라 · 네오클라우드 · GPU-as-a-Service</span>
+    </div>
+    <div class="card-price-area">
+      <div class="price-main" style="color:var(--nbis)">$52.40</div>
+      <div class="price-change up">▲ +$5.79 (+13%)</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="analysis-block">
+      <h3>270억 달러 딜의 의미</h3>
+      <p><strong>네비우스는 오늘 AI 인프라 업계의 슈퍼스타로 등극했다.</strong> 암스테르담 기반의 이 네오클라우드 회사는 전통 클라우드가 아닌 <strong>AI 전용 데이터센터</strong>를 운영하며 Nvidia GPU 기반 컴퓨팅 파워를 대기업에 판매한다.</p>
+      <p>Meta와의 5년 계약은 두 파트로 구성된다: ①2027년부터 시작되는 <strong>120억 달러 확정 용량</strong>과 ②메타에 우선 제공 후 잔여 시 제공하는 <strong>최대 150억 달러 옵션 용량</strong>. 특히 이 계약은 <strong>Nvidia Vera Rubin 플랫폼의 첫 대규모 배포</strong>를 포함해, 업계의 모든 눈이 Nebius에 집중됐다.</p>
+      <p>Nvidia는 이미 지난주 Nebius에 <strong>20억 달러 전략 투자</strong>를 발표했다. Nebius의 목표는 2030년까지 <strong>5GW 이상의 Nvidia 시스템 배포</strong>다. 독립 애널리스트 Richard Windsor는 "Nebius가 컴퓨팅 비용 절감 방법을 찾아낸 것 같으며, 이는 모든 용량 단위의 경제성을 개선한다"고 평가했다.</p>
+
+      <div class="mini-stats">
+        <div class="mstat">
+          <div class="mv nbis">$27B</div>
+          <div class="mk">Meta 계약 규모<br>(5년)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv nbis">$2B</div>
+          <div class="mk">Nvidia<br>전략 투자</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+400%</div>
+          <div class="mk">최근 12개월<br>누적 상승률</div>
+        </div>
+        <div class="mstat">
+          <div class="mv nbis">5GW</div>
+          <div class="mk">2030 배포<br>목표</div>
+        </div>
+        <div class="mstat">
+          <div class="mv amber">2027~</div>
+          <div class="mk">수익 반영<br>시작 시점</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+13%</div>
+          <div class="mk">오늘 하루<br>주가 상승</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-block">
+      <h3>핵심 카탈리스트 & 리스크</h3>
+      <ul class="catalyst-list">
+        <li><span class="tag bull">BULL</span><strong>Meta와의 메가딜:</strong> AI 클라우드 시장에서 CoreWeave, NScale과 어깨를 나란히 하는 선수로 격상</li>
+        <li><span class="tag bull">BULL</span><strong>Vera Rubin 첫 배포:</strong> AI 업계 최신 GPU 플랫폼을 가장 먼저 대규모 배포하는 인프라 기업 포지셔닝</li>
+        <li><span class="tag bull">BULL</span><strong>Nvidia의 2B$ 투자:</strong> 전략적 파트너십 — 공급망·기술 우선권 확보</li>
+        <li><span class="tag bull">BULL</span><strong>네오클라우드 섹터 구조적 성장:</strong> 빅테크의 자체 데이터센터 한계 → 전문 AI 클라우드 아웃소싱 증가</li>
+        <li><span class="tag bear">RISK</span><strong>수익 반영 2027년부터:</strong> 계약은 확정됐지만 현금흐름은 내년부터 — 밸류에이션 프리미엄 과도 가능</li>
+        <li><span class="tag bear">RISK</span><strong>소규모 신흥주 변동성:</strong> 12개월 +400% 이미 반영, 단기 차익 실현 매물 압박</li>
+        <li><span class="tag watch">WATCH</span><strong>기타 빅테크 후속 계약:</strong> Microsoft, Amazon, Google 등 추가 클라우드 계약 여부가 밸류에이션 재평가의 열쇠</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict-box">
+    <div class="verdict-icon">🟣</div>
+    <div class="verdict-text">
+      <strong>투자 판단:</strong> 오늘의 13% 급등은 '딜 공시' 프리미엄의 즉각 반영이다. <strong>단기 추격 매수는 위험</strong>하지만, 네비우스는 2026~2030년 AI 인프라 폭발의 직접 수혜자로서 구조적 성장 스토리를 갖고 있다. 변동성이 큰 만큼 전체 포트폴리오의 <strong>소형 익스포저(3~5%)로 분산 보유</strong>하는 전략이 합리적이다.
+      <div class="verdict-rating">
+        <div class="rating-dot" style="background:var(--nbis)"></div>
+        <span class="rating-label">단기(1W):</span>
+        <span class="rating-value" style="color:var(--warn)">중립 — 급등 후 차익실현 경계</span>
+        &nbsp;|&nbsp;
+        <span class="rating-label">중기(1Y):</span>
+        <span class="rating-value" style="color:var(--up)">투기적 매수 — 네오클라우드 테마</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SECTION 4: XLE/XOP ══ -->
+<div class="sec-label">
+  <span class="sec-num">04</span>
+  <h2 class="sec-title"><span class="accent-orange">XLE · XOP</span> — 전쟁이 만든 에너지의 봄</h2>
+  <span class="sec-rule"></span>
+</div>
+
+<div class="stock-card energy">
+  <div class="card-header">
+    <span class="ticker-badge">XLE · XOP · NYSE ARCA</span>
+    <div class="card-name">
+      <h2>S&P 에너지 ETF — 전쟁 수혜 섹터</h2>
+      <span class="subtitle">XLE(대형 통합 에너지) / XOP(탐사·생산 특화)</span>
+    </div>
+    <div class="card-price-area">
+      <div class="price-main" style="color:var(--xle)">XLE $98.7</div>
+      <div class="price-change up">▲ YTD +30%</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="analysis-block">
+      <h3>에너지 섹터 전쟁 분석</h3>
+      <p><strong>이란 전쟁은 에너지 섹터에 역설적 선물을 가져다줬다.</strong> 호르무즈 봉쇄로 브렌트유가 배럴당 $73→$120+ 급등하면서 미국 에너지 기업들의 이익이 폭증했다. XLE는 2026년 15번이나 장중 신고점을 경신했으며, XOP는 YTD 약 30%의 압도적 수익률을 기록 중이다.</p>
+      <p>핵심은 <strong>미국이 세계 최대 원유 생산국(글로벌 22% 비중)</strong>이라는 점이다. 중동 공급이 막혀도 미국 셰일 기업들은 직접 수혜를 본다. Chevron(CVX)은 올해에만 +21%, ExxonMobil도 강세다. BofA의 에너지 애널리스트는 "3파로 나뉘는 가스 미드스트림 지출 사이클이 2030년까지 지속될 것"이라고 전망했다.</p>
+      <p>단, 유가 $100 이상에서의 <strong>수요 파괴(demand destruction)</strong> 리스크는 무시할 수 없다. 유가가 지나치게 오르면 전 세계 경기 둔화로 에너지 수요 자체가 줄어드는 아이러니한 상황이 올 수 있다. BofA 하네트는 "$100 이상에서는 에너지주도 매도"를 권고했다.</p>
+
+      <div class="mini-stats">
+        <div class="mstat">
+          <div class="mv orange">$102.4</div>
+          <div class="mk">브렌트유<br>(현재 배럴당)</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+65%</div>
+          <div class="mk">유가 YTD<br>상승률</div>
+        </div>
+        <div class="mstat">
+          <div class="mv green">+30%</div>
+          <div class="mk">XOP YTD<br>수익률</div>
+        </div>
+        <div class="mstat">
+          <div class="mv orange">15회</div>
+          <div class="mk">XLE 신고점<br>경신 횟수</div>
+        </div>
+        <div class="mstat">
+          <div class="mv amber">+21%</div>
+          <div class="mk">Chevron(CVX)<br>2026 YTD</div>
+        </div>
+        <div class="mstat">
+          <div class="mv red">$200?</div>
+          <div class="mk">IRGC<br>극단 시나리오</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-block">
+      <h3>핵심 카탈리스트 & 리스크</h3>
+      <ul class="catalyst-list">
+        <li><span class="tag bull">BULL</span><strong>미국 에너지 독립:</strong> 글로벌 22% 원유 생산 → 중동 공급 차질 시 가격 수혜 + 공급 대체 역할</li>
+        <li><span class="tag bull">BULL</span><strong>Chevron·Exxon 이익 폭증:</strong> 브렌트유 $100 이상에서 자유현금흐름 급증, 배당·자사주 매입 여력</li>
+        <li><span class="tag bull">BULL</span><strong>가스 미드스트림 투자 사이클:</strong> BofA 분석 — AI 데이터센터 전력 수요가 가스 파이프라인 수요를 2035년까지 지탱</li>
+        <li><span class="tag bull">BULL</span><strong>LNG 공급 부족:</strong> 카타르 LNG 시설 중단으로 전 세계 LNG 20% 차질 → 미국 LNG 수출 가격 급등</li>
+        <li><span class="tag bear">RISK</span><strong>전쟁 종식 시 급락:</strong> 호르무즈 재개통 또는 협상 타결 시 유가 단기 20~30% 급락 가능</li>
+        <li><span class="tag bear">RISK</span><strong>수요 파괴 리스크:</strong> 유가 $120+ 지속 시 글로벌 경기 침체 → 에너지 수요 역설적 감소</li>
+        <li><span class="tag watch">WATCH</span><strong>호르무즈 재개통 타임라인:</strong> 미 해군 호위 작전(3월 말 예상), 카르그 섬 협상 진전 여부</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict-box">
+    <div class="verdict-icon">🟠</div>
+    <div class="verdict-text">
+      <strong>투자 판단:</strong> 현재 포지션 보유자라면 <strong>유가 $100~$120 구간에서 일부 차익 실현</strong>을 고려하는 것이 합리적이다. 신규 진입은 BofA 하네트의 경고(유가 $100+ 구간 매도)를 참고해 리스크를 관리해야 한다. 전쟁 장기화 시 XLE·XOP는 계속 수혜를 받지만, <strong>이미 YTD +30%가 많은 기대를 선반영</strong>했다. 전쟁 종식 베팅 시 즉각 출구 전략이 필요하다.
+      <div class="verdict-rating">
+        <div class="rating-dot" style="background:var(--xle)"></div>
+        <span class="rating-label">단기(1W):</span>
+        <span class="rating-value" style="color:var(--up)">보유 — 전쟁 지속 시 추가 상승</span>
+        &nbsp;|&nbsp;
+        <span class="rating-label">중기(6M):</span>
+        <span class="rating-value" style="color:var(--warn)">부분 익절 + 전쟁 종식 모니터링</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ SECTION 5: 한국 시장 전망 ══ -->
+<div class="sec-label">
+  <span class="sec-num">05</span>
+  <h2 class="sec-title">내일(3/17) <span class="accent-red">한국 코스피</span> — 반도체·전력·에너지 전망</h2>
+  <span class="sec-rule"></span>
+</div>
+
+<div class="callout bull">
+  <strong>오늘(3/16) 미국 증시 반등 신호:</strong> 나스닥 +1.1%, S&P 500 +0.9%, 다우 +0.8%. 특히 AI·반도체 종목 강세(NVDA GTC 효과)와 유가가 $100 위에서 안정. 한국 코스피는 미국 증시 + 이란 전쟁 뉴스 + 원/달러 환율을 동시에 반영한다.
+</div>
+
+<div class="stock-card korea">
+  <div class="card-header">
+    <span class="ticker-badge">KOSPI 반도체·전력·에너지</span>
+    <div class="card-name">
+      <h2>한국 증시 3/17 전망 종합</h2>
+      <span class="subtitle">Samsung Electronics · SK Hynix · 두산에너빌리티 · LS ELECTRIC · 한화에어로스페이스</span>
+    </div>
+    <div class="card-price-area">
+      <div class="price-main" style="color:var(--korea)">KOSPI</div>
+      <div class="price-change up">반등 시도 예상</div>
+    </div>
+  </div>
+  <div class="card-body" style="grid-template-columns:1fr;">
+    <div class="analysis-block">
+      <h3>코스피 구조적 배경 — 이란 전쟁이 드러낸 취약성과 기회</h3>
+      <p><strong>이란 전쟁은 한국 증시의 구조적 취약점을 적나라하게 드러냈다.</strong> 삼성전자와 SK하이닉스가 코스피 시가총액의 <strong>38.3%</strong>를 차지하는 상황에서, 두 종목의 일거수일투족이 곧 코스피 지수가 된다. 3월 3일 "블랙 튜즈데이"에 SK하이닉스 -11.5%, 삼성전자 -9.88%로 코스피는 단 하루 -7.24%를 기록했다.</p>
+      <p>그러나 카네기국제평화재단은 "이란 전쟁이 한국 에너지 취약성을 드러냈지만, 동시에 <strong>반도체 AI 수요는 전쟁과 무관하게 지속</strong>된다"고 분석했다. HBM 계약이 연간 단위로 체결돼 있어 단기 충격에도 실적이 훼손되지 않는다는 점이 핵심 방패막이다.</p>
+      <p>오늘 미국 증시에서 NVDA GTC 효과, META AI 딜, S&P 반등이 확인됐다. 이는 내일 한국 반도체주에 긍정적인 오버나이트 시그널을 보낸다. 골드만삭스는 삼성전자 목표가를 <strong>260,000원(기존 205,000원, +27%)으로 상향</strong>했으며, KB증권은 SK하이닉스를 1,700,000원으로 제시했다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Korea Stock Grid -->
+<div class="korea-grid">
+
+  <div class="k-stock bull-case">
+    <div class="k-ticker">005930 · KOSPI</div>
+    <div class="k-name">삼성전자</div>
+    <div class="k-price" style="color:var(--nvda)">188,700원</div>
+    <div class="k-chg"><span class="up">▲ 이달 -12.84% (저점 매수 구간)</span></div>
+    <div class="k-desc">HBM3E 공급 계약 연간 단위 체결로 전쟁 중에도 실적 훼손 없음. 골드만삭스 목표가 260,000원 상향. 개인 투자자 이달 7.9조원 순매수 — 바닥 확인 신호. NVDA GTC에서 AI 수요 재확인 → 삼성 메모리 수요 증가 연쇄 작용 기대. 17일 신한자산운용 'SOL AI반도체 TOP2 Plus' ETF 상장으로 수급 개선 예상.</div>
+    <div class="k-outlook bull">▲ 단기 반등 기대 — AI 수요 재확인</div>
+  </div>
+
+  <div class="k-stock bull-case">
+    <div class="k-ticker">000660 · KOSPI</div>
+    <div class="k-name">SK하이닉스</div>
+    <div class="k-price" style="color:var(--nvda)">974,000원</div>
+    <div class="k-chg"><span class="up">▲ 이달 -8.2% (Micron 실적 이후 모멘텀)</span></div>
+    <div class="k-desc">Nvidia Blackwell·Vera Rubin 시스템의 HBM4 핵심 공급사. "Micron보다 저평가" (대신증권) — Micron 이번 주 실적 발표가 카탈리스트. 키움증권 목표가 1,700,000원. HBM 공급 계약 연간 단위 → 단기 지정학 리스크 무관. NVDA GTC에서 Vera Rubin 발표 → SK하이닉스 HBM 수요 직접 연결.</div>
+    <div class="k-outlook bull">▲ 강력 매수 후보 — HBM4·Micron 실적</div>
+  </div>
+
+  <div class="k-stock neutral">
+    <div class="k-ticker">042700 · KOSPI</div>
+    <div class="k-name">한미반도체</div>
+    <div class="k-price" style="color:var(--warn)">변동성 구간</div>
+    <div class="k-chg"><span class="dn">▼ 이란전쟁 이후 급락 후 반등 중</span></div>
+    <div class="k-desc">SK하이닉스 HBM 패키징 장비 핵심 공급사. 이란 전쟁 발발 직후 13% 급락했지만, AI 수요 구조는 변하지 않음. NVDA GTC에서 AI 데이터센터 수요 재확인 → HBM 패키징 장비 수요 간접 수혜. 단, 전쟁 리스크가 장기화될 경우 글로벌 데이터센터 capex 지연 가능성도 있음.</div>
+    <div class="k-outlook watch">◆ 모니터링 — AI 수요 vs 지정학 리스크</div>
+  </div>
+
+  <div class="k-stock bull-case">
+    <div class="k-ticker">034020 · KOSPI</div>
+    <div class="k-name">두산에너빌리티</div>
+    <div class="k-price" style="color:var(--up)">106,500원</div>
+    <div class="k-chg"><span class="up">▲ 52주 고점 근접 (110,200원)</span></div>
+    <div class="k-desc">원전 르네상스의 핵심 수혜주. 이란 전쟁 + 유가 $100+ → 에너지 안보 우려 → 원자력 르네상스 가속화. 대형 원전 주기기 수주 가시화 전망. SMR(소형모듈원전) 사업 확대. 애널리스트 18명 전원 매수 의견, 평균 목표가 118,000원 (+10.8% 상승 여력). AI 데이터센터 전력 수요가 원전 필요성을 강화하는 구조적 수혜.</div>
+    <div class="k-outlook bull">▲ 강력 매수 — 에너지 안보 + AI 전력</div>
+  </div>
+
+  <div class="k-stock bull-case">
+    <div class="k-ticker">010120 · KOSPI</div>
+    <div class="k-name">LS ELECTRIC</div>
+    <div class="k-price" style="color:var(--up)">전력망 수혜주</div>
+    <div class="k-chg"><span class="up">▲ 전력망 투자 사이클 최대 수혜</span></div>
+    <div class="k-desc">AI 데이터센터 전력 수요 폭증 → 전력망 투자 급증의 직접 수혜자. 변압기·배전반 북미·중동 수출 확대. BofA "가스 미드스트림 3파 투자 사이클" 분석과 함께 전력 인프라 투자가 2035년까지 지속될 구조. 외국인 순매수 전환 이후 신고가 돌파 패턴 반복 확인. 2026년 용인 반도체 클러스터(16GW 전력 필요) 건설 본격화로 추가 수요.</div>
+    <div class="k-outlook bull">▲ 강력 매수 — AI전력·전력망 핵심주</div>
+  </div>
+
+  <div class="k-stock bull-case">
+    <div class="k-ticker">012450 · KOSPI</div>
+    <div class="k-name">한화에어로스페이스</div>
+    <div class="k-price" style="color:var(--up)">방산 급등주</div>
+    <div class="k-chg"><span class="up">▲ 이란전쟁 이후 +24% 급등</span></div>
+    <div class="k-desc">이란 전쟁 → 글로벌 방위비 지출 급증 → 한국 방산주 최대 수혜. K방산(K2 전차, K9 자주포) 수출 주문 급증 예상. 이란 전쟁이 중동 주변국의 방위비 확대를 자극하고, NATO 회원국들도 국방비 증액 압박. 미국 내 방산 ETF(XAR) 강세와 연동된 수혜 구조. 한화에어로스페이스는 이미 이달 24% 급등했지만 전쟁 장기화 시 추가 상승 여력.</div>
+    <div class="k-outlook bull">▲ 매수 — 방산 수요 구조적 증가</div>
+  </div>
+
+</div>
+
+<!-- Risk Matrix -->
+<div class="risk-matrix">
+  <h3>한국 코스피 3/17 섹터별 리스크-리턴 매트릭스</h3>
+  <div class="risk-row">
+    <span class="risk-label">반도체 (삼성·SK하이닉스)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill m" style="width:60%"></div></div>
+    <span class="risk-val" style="color:var(--warn)">중간</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">원전·에너지 (두산에너빌리티)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill l" style="width:25%"></div></div>
+    <span class="risk-val" style="color:var(--up)">낮음</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">전력망 인프라 (LS ELECTRIC)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill l" style="width:28%"></div></div>
+    <span class="risk-val" style="color:var(--up)">낮음</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">방산 (한화에어로스페이스)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill l" style="width:30%"></div></div>
+    <span class="risk-val" style="color:var(--up)">낮음</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">항공 (대한항공·아시아나)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill h" style="width:88%"></div></div>
+    <span class="risk-val" style="color:var(--dn)">매우 높음</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">정유화학 (정제마진 악화)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill m" style="width:68%"></div></div>
+    <span class="risk-val" style="color:var(--warn)">높음</span>
+  </div>
+  <div class="risk-row">
+    <span class="risk-label">코스피 전체 (지정학 변동성)</span>
+    <div class="risk-bar-wrap"><div class="risk-bar-fill m" style="width:55%"></div></div>
+    <span class="risk-val" style="color:var(--warn)">중간</span>
+  </div>
+</div>
+
+<div class="callout warn">
+  <strong>⚠ 핵심 리스크:</strong> 카네기국제평화재단은 한국이 <strong>"에너지 수입국이자 반도체 수출국"이라는 이중 구조</strong>로 이란 전쟁에 가장 복잡하게 노출된 국가 중 하나라고 분석했다. 용인 반도체 클러스터(2027년 부분 개장)는 피크 국내 전력 수요의 17%(16GW)를 필요로 하는데, 에너지 수입 비용 급증이 반도체 생산 원가를 끌어올리는 악순환의 가능성이 있다. <strong>단기 반등과 중장기 구조적 위험</strong>을 구분해야 한다.
+</div>
+
+<div class="callout info">
+  <strong>💡 3월 17일 코스피 체크리스트:</strong> ① FOMC 회의(17~18일) 전 관망 심리 vs 반등 기대 충돌 ② 삼성전자·SK하이닉스 외국인 순매수 전환 여부 — 이달 순매도 지속 시 약세 압박 ③ 호르무즈 관련 협상 뉴스 (트럼프 트윗 한 줄이 시장을 뒤집는다) ④ 신한 'SOL AI반도체 TOP2 Plus' ETF 상장(3/17) — 수급 개선 기대 ⑤ Micron(MU) 이번 주 실적 — SK하이닉스 저평가 재확인 트리거
+</div>
+
+</div><!-- /container -->
+
+<footer class="site-footer">
+  <p>본 리포트는 CNBC, Reuters, Bloomberg, Seeking Alpha, The Korea Herald, BusinessKorea, Carnegie Endowment, NVIDIA Blog, TechCrunch 등 공개 자료를 종합 분석한 정보 제공 목적 콘텐츠입니다. 투자 결정은 본인의 판단과 책임하에 이루어져야 합니다.</p>
+  <p style="margin-top:6px;">Data as of 2026.03.16 (US Market Open) · KST 2026.03.17 기준 · STOCK ANALYSIS REPORT</p>
+</footer>
+
+</body>
+</html>
