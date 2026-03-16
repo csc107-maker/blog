@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>백화점 업종 주가 분석 | 2026.03.16</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0b0c0f;
+    --bg2: #12141a;
+    --bg3: #1a1d26;
+    --border: rgba(255,255,255,0.07);
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text: #e8e6df;
+    --text-dim: #8a8880;
+    --text-muted: #555450;
+    --up: #4ade80;
+    --up-dim: rgba(74,222,128,0.12);
+    --down: #f87171;
+    --down-dim: rgba(248,113,113,0.12);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── 배경 그레인 ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1140px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── 헤더 ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0 24px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .header-left {}
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 400; line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  .header-title em { color: var(--gold); font-style: italic; }
+  .header-sub {
+    margin-top: 8px; color: var(--text-dim);
+    font-size: 13px; font-weight: 300;
+  }
+  .header-right { text-align: right; }
+  .header-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--up-dim);
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: 4px; padding: 3px 10px;
+    font-size: 11px; color: var(--up);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--up);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── 섹션 타이틀 ── */
+  .section { margin-top: 48px; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── 종목 카드 그리드 ── */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .stock-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .stock-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .stock-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .stock-card:hover::before { opacity: 1; }
+
+  .stock-card.up-card { border-left: 3px solid var(--up); }
+  .stock-card.down-card { border-left: 3px solid var(--down); }
+
+  .stock-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .stock-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--text);
+  }
+  .stock-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .stock-change {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; padding: 3px 8px; border-radius: 4px;
+  }
+  .change-up { background: var(--up-dim); color: var(--up); }
+  .change-down { background: var(--down-dim); color: var(--down); }
+
+  .stock-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px; color: var(--text);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .stock-price-unit { font-size: 14px; color: var(--text-dim); font-family: 'Noto Sans KR', sans-serif; }
+  .stock-change-abs {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; margin-bottom: 20px;
+  }
+
+  .stock-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .metric { background: var(--bg3); border-radius: 8px; padding: 10px 12px; }
+  .metric-label {
+    font-size: 10px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .metric-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; color: var(--text); font-weight: 500;
+  }
+  .metric-value.accent { color: var(--gold); }
+
+  /* ── 포인트 배너 ── */
+  .insight-banner {
+    background: linear-gradient(135deg, var(--gold-dim), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 12px; padding: 20px 24px;
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-top: 16px;
+  }
+  .insight-icon { font-size: 20px; margin-top: 1px; flex-shrink: 0; }
+  .insight-text { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+  .insight-text strong { color: var(--gold); }
+
+  /* ── 2컬럼 레이아웃 ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── 차트 카드 ── */
+  .chart-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+  }
+  .chart-card-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .chart-card-sub { font-size: 11px; color: var(--text-muted); margin-bottom: 20px; }
+  .chart-wrap { position: relative; }
+
+  /* ── 매출 순위 테이블 ── */
+  .rank-table { width: 100%; border-collapse: collapse; }
+  .rank-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); padding: 8px 12px;
+    border-bottom: 1px solid var(--border); text-align: left;
+  }
+  .rank-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px; color: var(--text);
+    vertical-align: middle;
+  }
+  .rank-table tr:last-child td { border-bottom: none; }
+  .rank-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .rank-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--text-muted);
+  }
+  .rank-1 { color: var(--gold2) !important; font-weight: 700; }
+  .rank-2 { color: #adb5bd !important; font-weight: 600; }
+  .rank-3 { color: #cd7f32 !important; font-weight: 600; }
+
+  .growth-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .growth-bar-bg {
+    flex: 1; height: 4px; background: var(--bg3);
+    border-radius: 2px; overflow: hidden; max-width: 80px;
+  }
+  .growth-bar-fill { height: 100%; border-radius: 2px; }
+  .growth-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; min-width: 44px; text-align: right;
+  }
+  .pos { color: var(--up); }
+  .neg { color: var(--down); }
+
+  /* ── 분석 카드 ── */
+  .analysis-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .analysis-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .analysis-card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px; color: var(--gold-dim);
+    line-height: 1; margin-bottom: 8px;
+    background: linear-gradient(180deg, var(--gold), rgba(201,168,76,0.3));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .analysis-card-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .analysis-card-body { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
+  .analysis-card-body strong { color: var(--gold2); }
+
+  /* ── 투자 전략 테이블 ── */
+  .strategy-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px;
+  }
+  .strategy-row {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .strategy-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .strategy-type {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    font-weight: 500; white-space: nowrap; flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .type-conservative { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(96,165,250,0.2); }
+  .type-neutral { background: var(--gold-dim); color: var(--gold2); border: 1px solid rgba(201,168,76,0.25); }
+  .type-aggressive { background: var(--up-dim); color: var(--up); border: 1px solid rgba(74,222,128,0.2); }
+  .strategy-content {}
+  .strategy-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .strategy-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+  /* ── 리스크 ── */
+  .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .risk-card {
+    background: rgba(248,113,113,0.05);
+    border: 1px solid rgba(248,113,113,0.15);
+    border-radius: 10px; padding: 16px;
+  }
+  .risk-icon { font-size: 18px; margin-bottom: 8px; }
+  .risk-title { font-size: 13px; font-weight: 600; color: var(--down); margin-bottom: 6px; }
+  .risk-desc { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+  /* ── 면책 ── */
+  .disclaimer {
+    margin-top: 48px; padding: 16px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11px; color: var(--text-muted); line-height: 1.7;
+  }
+
+  /* ── 애니메이션 ── */
+  .fade-in { animation: fadeIn 0.6s ease forwards; opacity: 0; }
+  @keyframes fadeIn { to { opacity: 1; } }
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+
+  /* ── 수치 강조 태그 ── */
+  .tag {
+    display: inline-block; font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; padding: 1px 6px; border-radius: 3px;
+    margin-left: 4px; vertical-align: middle;
+  }
+  .tag-up { background: var(--up-dim); color: var(--up); }
+  .tag-gold { background: var(--gold-dim); color: var(--gold2); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ── 헤더 ── -->
+  <header class="fade-in">
+    <div class="header-left">
+      <div class="header-eyebrow">Korean Equity Sector Analysis</div>
+      <h1 class="header-title">백화점 <em>업종</em> 주가 분석</h1>
+      <p class="header-sub">신세계 · 롯데쇼핑 · 현대백화점 — 고유가 역설 속 상승 구조 해부</p>
+    </div>
+    <div class="header-right">
+      <div class="header-date">
+        <div>분석일 2026.03.16 (月)</div>
+        <div>기준 코스피 유통 업종</div>
+      </div>
+      <div style="margin-top:8px">
+        <span class="live-badge"><span class="live-dot"></span>MARKET DATA</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 종목 현황 ── -->
+  <div class="section">
+    <div class="section-label">📊 주요 종목 현황</div>
+    <div class="stock-grid">
+
+      <!-- 신세계 -->
+      <div class="stock-card up-card fade-in">
+        <div class="stock-header">
+          <div>
+            <div class="stock-name">신세계</div>
+            <div class="stock-code">KRX: 004170 · KOSPI</div>
+          </div>
+          <span class="stock-change change-up">▲ +5.59%</span>
+        </div>
+        <div class="stock-price">330,500 <span class="stock-price-unit">원</span></div>
+        <div class="stock-change-abs pos">+17,500원 (2026.03.10 기준)</div>
+        <div class="stock-metrics">
+          <div class="metric">
+            <div class="metric-label">2월 총매출</div>
+            <div class="metric-value accent">+26.79%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">YTD 누계 매출</div>
+            <div class="metric-value accent">+15.0%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">2025 연매출</div>
+            <div class="metric-value">6.9조원</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">영업이익</div>
+            <div class="metric-value">4,800억원</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 롯데쇼핑 -->
+      <div class="stock-card up-card fade-in">
+        <div class="stock-header">
+          <div>
+            <div class="stock-name">롯데쇼핑</div>
+            <div class="stock-code">KRX: 023530 · KOSPI</div>
+          </div>
+          <span class="stock-change change-up">▲ +10.53%</span>
+        </div>
+        <div class="stock-price">109,200 <span class="stock-price-unit">원</span></div>
+        <div class="stock-change-abs pos">장중 급등 (2026.02.10 기준)</div>
+        <div class="stock-metrics">
+          <div class="metric">
+            <div class="metric-label">2026년 매출 목표</div>
+            <div class="metric-value accent">17조원</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">영업익 목표</div>
+            <div class="metric-value accent">1조원</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value">0.15배</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">저평가 자산</div>
+            <div class="metric-value">17.7조원</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 현대백화점 -->
+      <div class="stock-card up-card fade-in">
+        <div class="stock-header">
+          <div>
+            <div class="stock-name">현대백화점</div>
+            <div class="stock-code">KRX: 069960 · KOSPI</div>
+          </div>
+          <span class="stock-change change-up">▲ +3.90%</span>
+        </div>
+        <div class="stock-price">동반 상승 <span class="stock-price-unit"></span></div>
+        <div class="stock-change-abs pos">업종 동반 강세 흐름 지속</div>
+        <div class="stock-metrics">
+          <div class="metric">
+            <div class="metric-label">명품 매출 성장</div>
+            <div class="metric-value accent">+11.7%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">판교점 성장</div>
+            <div class="metric-value accent">+10.3%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">상반기 매출</div>
+            <div class="metric-value">4.7조원</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">투자 성향</div>
+            <div class="metric-value">보수 최적</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="insight-banner" style="margin-top:16px">
+      <div class="insight-icon">💡</div>
+      <div class="insight-text">
+        <strong>핵심 인사이트:</strong> 2026년 2월 신세계 총매출은 전년 동기 대비 <strong>26.79% 급증</strong>해 4,889억원을 기록했으며, 1~2월 누계도 <strong>+15% 성장</strong>으로 업황 회복을 실적으로 확인했습니다. 유가 급등에도 불구하고 VIP 명품 소비와 인바운드 관광이 매출 성장을 견인 중입니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 차트 ── -->
+  <div class="section">
+    <div class="section-label">📈 매출·성장률 비교</div>
+    <div class="two-col">
+
+      <!-- 점포별 상반기 매출 -->
+      <div class="chart-card">
+        <div class="chart-card-title">백화점 3사 상반기 매출 현황 (2025)</div>
+        <div class="chart-card-sub">단위: 조원 · 출처: 한국섬유신문, 업계 집계</div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 명품 매출 성장률 -->
+      <div class="chart-card">
+        <div class="chart-card-title">명품 카테고리 매출 성장률 비교</div>
+        <div class="chart-card-sub">백화점 3사 명품 부문 성장 · 단위: %</div>
+        <div class="chart-wrap" style="height:220px">
+          <canvas id="luxuryChart"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 점포 순위 ── -->
+  <div class="section">
+    <div class="section-label">🏬 2025 상반기 점포별 매출 순위 (상위 10)</div>
+    <div class="chart-card">
+      <div class="chart-card-title">백화점 점포 매출 순위 및 성장률</div>
+      <div class="chart-card-sub">출처: 한국섬유신문 / 테넌트뉴스 집계 (2025 상반기 기준)</div>
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>점포명</th>
+            <th>매출</th>
+            <th>성장률</th>
+            <th>성장 바</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-num rank-1">① 1위</span></td>
+            <td class="rank-1">신세계 강남점</td>
+            <td>1조 6,947억원</td>
+            <td><span class="growth-val pos">+2.1%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:42%;background:var(--gold)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-2">② 2위</span></td>
+            <td class="rank-2">롯데 잠실점</td>
+            <td>1조 5,925억원</td>
+            <td><span class="growth-val pos">+7.6%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:76%;background:#adb5bd"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num rank-3">③ 3위</span></td>
+            <td class="rank-3">신세계 센텀시티</td>
+            <td>1조 586억원</td>
+            <td><span class="growth-val pos">+5.1%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:51%;background:#cd7f32"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">④ 4위</span></td>
+            <td>롯데 본점</td>
+            <td>1조 334억원</td>
+            <td><span class="growth-val pos">+2.8%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:28%;background:var(--up)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">⑤ 5위</span></td>
+            <td>현대 판교점</td>
+            <td>9,406억원</td>
+            <td><span class="growth-val pos">+10.3%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:100%;background:var(--up)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">⑥ 6위</span></td>
+            <td>신세계 대구점</td>
+            <td>7,871억원</td>
+            <td><span class="growth-val pos">+3.0%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:30%;background:var(--up)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">⑦ 7위</span></td>
+            <td>현대 본점</td>
+            <td>6,275억원</td>
+            <td><span class="growth-val pos">+4.2%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:42%;background:var(--up)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">⑧ 8위</span></td>
+            <td>더현대 서울</td>
+            <td>5,868억원</td>
+            <td><span class="growth-val neg">-2.5%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:25%;background:var(--down)"></div></div></div></td>
+          </tr>
+          <tr>
+            <td><span class="rank-num">★ 특이</span></td>
+            <td style="color:var(--up)">롯데 수원점</td>
+            <td>2,161억원</td>
+            <td><span class="growth-val pos">+31.8%</span></td>
+            <td><div class="growth-bar-wrap"><div class="growth-bar-bg"><div class="growth-bar-fill" style="width:100%;background:var(--gold)"></div></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px; font-size:11px; color:var(--text-muted)">
+        ※ 현대 판교점(+10.3%), 롯데 수원점(+31.8%) 리뉴얼 효과 두드러짐. 지방 점포 역성장 심화 — 롯데 동래(-14.3%), 롯데 영등포(-13.1%)
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 주가 상승 5대 이유 ── -->
+  <div class="section">
+    <div class="section-label">🔍 고유가·원화 강세 속 백화점 주가 상승 5대 구조</div>
+    <div class="analysis-grid">
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">01</div>
+        <div class="analysis-card-title">임대 수수료 구조 — 원가 차단벽</div>
+        <div class="analysis-card-body">백화점은 상품을 직매입하지 않습니다. 브랜드가 임대료를 내는 구조이므로, 수입 물가가 올라도 <strong>백화점의 영업 원가에 직접적인 타격이 없습니다</strong>. 오히려 명품 가격 인상 시 수수료 기반 매출이 증가합니다.</div>
+      </div>
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">02</div>
+        <div class="analysis-card-title">VIP 비중 50% — 물가 둔감 고객층</div>
+        <div class="analysis-card-body">신세계 VIP 매출 비중 <strong>47%</strong>, 롯데·현대 각 <strong>46%</strong> 수준. 매출의 절반이 고물가에도 소비를 줄이지 않는 고객에서 나옵니다. 현대백화점 명품 매출은 +11.7% 성장이 이를 입증합니다.</div>
+      </div>
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">03</div>
+        <div class="analysis-card-title">명품 = 인플레 헤지 자산 (오픈런)</div>
+        <div class="analysis-card-body">불가리·티파니·샤넬은 <strong>사상 최고 매출</strong>을 기록 중. 수입 물가 상승 → "지금이 제일 싸다" 선구매 심리 → 오픈런. 한국 명품 리셀 시장은 2026년 <strong>50조원(약 350억 달러)</strong> 돌파 전망.</div>
+      </div>
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">04</div>
+        <div class="analysis-card-title">K-컬처 인바운드 — 외국인 소비 급증</div>
+        <div class="analysis-card-body">K-팝·K-드라마·K-뷰티 열풍으로 외국인 관광객이 급증 중. 택스 리펀드 가능한 백화점은 외국인 쇼핑 1번지. 모건스탠리는 민간소비 회복과 인바운드 증가를 <strong>이중 수혜 구조</strong>로 분석.</div>
+      </div>
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">05</div>
+        <div class="analysis-card-title">리테일테인먼트 — 원스톱 체험 공간</div>
+        <div class="analysis-card-body">고유가일수록 소비자는 한 곳에서 모든 것을 해결하려 합니다. 현대백화점의 <strong>팝업·프리미엄 주류관</strong> 등 체험형 전략으로 올해 관련 매출 30억원 돌파 예상. 복합형 타운이 집객력 강화.</div>
+      </div>
+
+      <div class="analysis-card">
+        <div class="analysis-card-num">06</div>
+        <div class="analysis-card-title">초양극화 — 대형 점포로 자원 집중</div>
+        <div class="analysis-card-body">신세계 강남(3년 연속 1위), 롯데 잠실 '3조 클럽'. 비효율 지방 점포 폐점·리뉴얼로 수익성 집중. 롯데쇼핑 PBR <strong>0.15배</strong>의 극단적 저평가는 밸류업 공시 후 재평가 여지를 키웁니다.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── 투자 전략 ── -->
+  <div class="section">
+    <div class="section-label">🎯 투자 성향별 전략 (2026.03 기준)</div>
+    <div class="two-col">
+      <div class="strategy-card">
+        <div class="chart-card-title" style="margin-bottom:16px">성향별 포트폴리오 접근법</div>
+        <div class="strategy-row">
+          <span class="strategy-type type-conservative">보수적</span>
+          <div class="strategy-content">
+            <div class="strategy-title">현대백화점 중심 + 신세계 일부</div>
+            <div class="strategy-desc">실적 안정성 최우선. 현대는 명품 성장률 +11.7%로 업종 내 최고 성과. 판교점·현대 본점 등 핵심 점포 중심의 견고한 구조. 중장기 우상향 적합.</div>
+          </div>
+        </div>
+        <div class="strategy-row">
+          <span class="strategy-type type-neutral">중립적</span>
+          <div class="strategy-content">
+            <div class="strategy-title">현대백화점 + 신세계 병행</div>
+            <div class="strategy-desc">신세계는 럭셔리 소비 회복의 직접 수혜주. 2월 매출 +26.79%로 펀더멘털 확인. 이마트 분리 이슈 해소 시 리레이팅 기대. 밸류 부담 적은 구간에서 진입 유리.</div>
+          </div>
+        </div>
+        <div class="strategy-row">
+          <span class="strategy-type type-aggressive">공격적</span>
+          <div class="strategy-content">
+            <div class="strategy-title">호텔신라 비중 확대 + 롯데쇼핑 옵션</div>
+            <div class="strategy-desc">호텔신라는 인바운드 회복 시 주가 레버리지 최대. 롯데쇼핑은 PBR 0.15배 초저평가 + 밸류업 공시 + IR 행사 효과. 단기 변동성 높음, 고위험·고수익 구조.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-card-title">2026년 백화점 업종 전망 레이더</div>
+        <div class="chart-card-sub">5개 핵심 지표 종합 평가 (10점 만점)</div>
+        <div class="chart-wrap" style="height:240px">
+          <canvas id="radarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 리스크 ── -->
+  <div class="section">
+    <div class="section-label">⚠️ 주요 투자 리스크</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-icon">🛢️</div>
+        <div class="risk-title">유가 충격 장기화</div>
+        <div class="risk-desc">RBC이코노믹스: WTI 100달러 지속 시 소비지출 500~1,500억 달러 감소 가능. 중저소득 소비 위축이 중저가 유통 타격 → 이커머스 가속화 우려.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">📍</div>
+        <div class="risk-title">지방 점포 역성장 가속</div>
+        <div class="risk-desc">롯데 동래(-14.3%), 롯데 영등포(-13.1%) 등 지방 점포 2자릿수 역성장. 비효율 점포 폐점 비용 및 리뉴얼 투자 부담이 단기 실적을 압박할 수 있음.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">🛒</div>
+        <div class="risk-title">이커머스 경쟁 심화</div>
+        <div class="risk-desc">쿠팡·네이버·무신사 등 온라인 플랫폼의 명품 시장 진출 가속화. 명품 플랫폼 발란·머스트잇 등도 경쟁. 오프라인 독점 지위가 일부 희석될 수 있음.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-icon">📉</div>
+        <div class="risk-title">내수 소비심리 급랭</div>
+        <div class="risk-desc">뱅가드: 지정학적 불확실성이 주식·채권을 동시 압박 가능 경고. 스태그플레이션 현실화 시 VIP층 외 일반 소비 완전 냉각으로 성장 모멘텀 훼손.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 면책 -->
+  <div class="disclaimer">
+    ⚠️ <strong>투자 유의사항:</strong> 본 분석은 한국섬유신문·모건스탠리·RBC이코노믹스·뱅가드·한국금융신문·서울경제 등 공신력 있는 기관·언론의 데이터를 바탕으로 작성한 정보 제공 목적의 콘텐츠입니다. 특정 종목의 매수·매도를 권유하지 않으며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 주식 투자에는 원금 손실 위험이 있습니다. | 분석일: 2026.03.16
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+// ── 공통 설정 ──
+const gold = '#c9a84c', gold2 = '#e8c96a';
+const up = '#4ade80', down = '#f87171', blue = '#60a5fa';
+const textDim = '#8a8880', bg3 = '#1a1d26', border = 'rgba(255,255,255,0.07)';
+
+Chart.defaults.color = textDim;
+Chart.defaults.borderColor = border;
+Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+Chart.defaults.font.size = 11;
+
+// ── 백화점 3사 매출 바 차트 ──
+new Chart(document.getElementById('salesChart'), {
+  type: 'bar',
+  data: {
+    labels: ['롯데쇼핑', '현대백화점', '신세계'],
+    datasets: [{
+      label: '상반기 매출 (조원)',
+      data: [6.89, 4.69, 6.05],
+      backgroundColor: [
+        'rgba(96,165,250,0.7)',
+        'rgba(201,168,76,0.7)',
+        'rgba(74,222,128,0.7)'
+      ],
+      borderColor: [blue, gold, up],
+      borderWidth: 1.5,
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.parsed.y}조원`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: border } },
+      y: {
+        grid: { color: border },
+        ticks: { callback: v => v + '조' },
+        min: 0, max: 8
+      }
+    }
+  }
+});
+
+// ── 명품 성장률 수평 바 차트 ──
+new Chart(document.getElementById('luxuryChart'), {
+  type: 'bar',
+  data: {
+    labels: ['현대 명품', '롯데 잠실 성장', '신세계 강남 성장', '현대 판교 성장', '신세계 2월 매출'],
+    datasets: [{
+      label: '성장률 (%)',
+      data: [11.7, 7.6, 2.1, 10.3, 26.79],
+      backgroundColor: [
+        'rgba(201,168,76,0.6)',
+        'rgba(96,165,250,0.6)',
+        'rgba(74,222,128,0.6)',
+        'rgba(201,168,76,0.8)',
+        'rgba(74,222,128,0.9)',
+      ],
+      borderRadius: 4,
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` +${ctx.parsed.x}%` } }
+    },
+    scales: {
+      x: {
+        grid: { color: border },
+        ticks: { callback: v => '+' + v + '%' },
+        min: 0, max: 30
+      },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ── 레이더 차트 ──
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['실적 성장성', '밸류에이션', '명품 모멘텀', '인바운드 수혜', '리스크 방어력'],
+    datasets: [
+      {
+        label: '신세계',
+        data: [8, 6, 9, 8, 6],
+        borderColor: gold,
+        backgroundColor: 'rgba(201,168,76,0.15)',
+        pointBackgroundColor: gold,
+        borderWidth: 2,
+        pointRadius: 4,
+      },
+      {
+        label: '현대백화점',
+        data: [7, 7, 8, 7, 8],
+        borderColor: blue,
+        backgroundColor: 'rgba(96,165,250,0.1)',
+        pointBackgroundColor: blue,
+        borderWidth: 2,
+        pointRadius: 4,
+      },
+      {
+        label: '롯데쇼핑',
+        data: [6, 9, 6, 6, 5],
+        borderColor: up,
+        backgroundColor: 'rgba(74,222,128,0.08)',
+        pointBackgroundColor: up,
+        borderWidth: 2,
+        pointRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: { color: textDim, boxWidth: 12, padding: 14 }
+      }
+    },
+    scales: {
+      r: {
+        min: 0, max: 10,
+        grid: { color: border },
+        angleLines: { color: border },
+        ticks: { display: false },
+        pointLabels: { color: textDim, font: { size: 11 } }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
