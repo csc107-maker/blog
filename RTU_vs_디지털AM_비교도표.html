@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RTU vs 디지털 자산관리(AM) 비교 도표</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #050d1a;
+    --surface: #0a1628;
+    --border: #1a2d4a;
+    --rtu-color: #00c6ff;
+    --rtu-glow: rgba(0,198,255,0.15);
+    --am-color: #f7b731;
+    --am-glow: rgba(247,183,49,0.15);
+    --text-primary: #e8f0fe;
+    --text-secondary: #7a9ab8;
+    --accent-green: #00e676;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 960px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+  .header-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+  .header h1 .rtu-word { color: var(--rtu-color); }
+  .header h1 .am-word { color: var(--am-color); }
+  .header-sub {
+    margin-top: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  /* TOP CARDS */
+  .top-cards {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .card {
+    padding: 28px 30px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card.rtu {
+    background: linear-gradient(135deg, #051525 0%, #081e35 100%);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+  }
+  .card.rtu::before { background: linear-gradient(90deg, transparent, var(--rtu-color), transparent); }
+  .card.rtu::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--rtu-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .card.am {
+    background: linear-gradient(135deg, #1a1005 0%, #241808 100%);
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+  }
+  .card.am::before { background: linear-gradient(90deg, transparent, var(--am-color), transparent); }
+  .card.am::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--am-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .card.rtu .card-title { color: var(--rtu-color); }
+  .card.am .card-title { color: var(--am-color); }
+
+  .card-name {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vs-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    writing-mode: vertical-rl;
+    letter-spacing: 4px;
+  }
+  .vs-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  /* METAPHOR ROW */
+  .metaphor-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .metaphor-box {
+    padding: 16px 22px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .metaphor-box.rtu {
+    background: rgba(0,198,255,0.06);
+    border: 1px solid rgba(0,198,255,0.2);
+  }
+  .metaphor-box.am {
+    background: rgba(247,183,49,0.06);
+    border: 1px solid rgba(247,183,49,0.2);
+  }
+  .metaphor-emoji { font-size: 28px; flex-shrink: 0; }
+  .metaphor-text { font-size: 13px; line-height: 1.6; }
+  .metaphor-text strong { font-weight: 700; font-size: 14px; display: block; margin-bottom: 2px; }
+  .metaphor-box.rtu .metaphor-text strong { color: var(--rtu-color); }
+  .metaphor-box.am .metaphor-text strong { color: var(--am-color); }
+  .metaphor-text span { color: var(--text-secondary); font-weight: 300; }
+
+  /* COMPARISON TABLE */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-left: 4px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.35s both;
+  }
+  .compare-table thead tr {
+    background: var(--surface);
+  }
+  .compare-table th {
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  .compare-table th.label-col { color: var(--text-secondary); width: 22%; }
+  .compare-table th.rtu-col { color: var(--rtu-color); }
+  .compare-table th.am-col { color: var(--am-color); }
+
+  .compare-table tbody tr {
+    transition: background 0.2s;
+  }
+  .compare-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+  .compare-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .compare-table td.row-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--surface);
+    letter-spacing: 0.5px;
+  }
+  .compare-table td.rtu-cell { color: #b8dcef; }
+  .compare-table td.am-cell { color: #f0d8a0; }
+
+  .tag-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .tag-hw { background: rgba(0,198,255,0.15); color: var(--rtu-color); border: 1px solid rgba(0,198,255,0.3); }
+  .tag-sw { background: rgba(247,183,49,0.15); color: var(--am-color); border: 1px solid rgba(247,183,49,0.3); }
+
+  /* VALUE CHAIN */
+  .chain-section {
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease 0.45s both;
+  }
+  .chain-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    position: relative;
+  }
+  .chain-row::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: calc(12.5% + 6px);
+    right: calc(12.5% + 6px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--rtu-color), var(--am-color));
+    z-index: 0;
+  }
+  .chain-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 14px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .chain-step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .chain-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .chain-step:nth-child(1) .chain-num { color: var(--rtu-color); }
+  .chain-step:nth-child(2) .chain-num { color: #43d4b5; }
+  .chain-step:nth-child(3) .chain-num { color: #f0923e; }
+  .chain-step:nth-child(4) .chain-num { color: var(--am-color); }
+  .chain-step:nth-child(1) { border-top-color: var(--rtu-color); }
+  .chain-step:nth-child(2) { border-top-color: #43d4b5; }
+  .chain-step:nth-child(3) { border-top-color: #f0923e; }
+  .chain-step:nth-child(4) { border-top-color: var(--am-color); }
+
+  .chain-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .chain-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+  .chain-desc { font-size: 11px; color: var(--text-secondary); font-weight: 300; line-height: 1.5; }
+  .chain-badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+  }
+
+  /* FOOTER TAG */
+  .footer-strip {
+    margin-top: 32px;
+    padding: 18px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: fadeUp 0.8s ease 0.55s both;
+  }
+  .footer-insight {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+  .footer-insight strong { color: var(--accent-green); font-weight: 700; }
+  .footer-hashtags {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+  }
+  .footer-hashtags span { color: var(--rtu-color); margin-right: 8px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* pulse on RTU icon */
+  .pulse-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--rtu-color);
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(0,198,255,0.6); }
+    50% { box-shadow: 0 0 0 6px rgba(0,198,255,0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-tag">ENERGY DATA INTELLIGENCE</div>
+    <h1>
+      <span class="rtu-word">RTU</span> vs <span class="am-word">디지털 자산관리(AM)</span><br>
+      비교 도표
+    </h1>
+    <p class="header-sub">단순 감시(Monitoring)와 가치 창출(Value Creation)의 결정적 차이</p>
+  </div>
+
+  <!-- TOP TWO CARDS -->
+  <div class="top-cards">
+    <div class="card rtu">
+      <span class="card-icon">🔌</span>
+      <div class="card-title">HARDWARE LAYER<span class="pulse-dot"></span></div>
+      <div class="card-name">RTU<br><span style="font-size:14px; font-weight:400; color:var(--text-secondary)">Remote Terminal Unit</span></div>
+      <div class="card-desc">
+        인버터, 기상반, 전력계량기 등<br>
+        현장 설비의 실시간 데이터를<br>
+        수집하고 전송하는 <strong style="color:var(--rtu-color)">하드웨어</strong>
+      </div>
+    </div>
+    <div class="vs-divider">
+      <div class="vs-dot"></div>
+      <div class="vs-text">VS</div>
+      <div class="vs-dot"></div>
+    </div>
+    <div class="card am">
+      <span class="card-icon">🧠</span>
+      <div class="card-title">SOFTWARE LAYER</div>
+      <div class="card-name">디지털 AM<br><span style="font-size:14px; font-weight:400; color:var(--text-secondary)">Digital Asset Management</span></div>
+      <div class="card-desc">
+        수집된 데이터를 분석하여<br>
+        IRR·LCOE·자산 가치를 최적화하는<br>
+        <strong style="color:var(--am-color)">소프트웨어 플랫폼</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- METAPHOR -->
+  <div class="metaphor-row">
+    <div class="metaphor-box rtu">
+      <div class="metaphor-emoji">🫀</div>
+      <div class="metaphor-text">
+        <strong>발전소의 '말초신경'</strong>
+        <span>끊기지 않고 데이터를 보내는 것이 최우선 — 현재 상태 감지</span>
+      </div>
+    </div>
+    <div class="metaphor-box am">
+      <div class="metaphor-emoji">💡</div>
+      <div class="metaphor-text">
+        <strong>발전소의 '두뇌'</strong>
+        <span>데이터를 가공해 IRR을 높이는 의사결정을 내리는 분석 엔진</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-label">// 핵심 항목별 비교 분석</div>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th class="label-col">구분</th>
+        <th class="rtu-col">🔵 RTU <span class="tag-pill tag-hw">HARDWARE</span></th>
+        <th class="am-col">🟡 디지털 AM <span class="tag-pill tag-sw">SOFTWARE</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="row-label">핵심 역할</td>
+        <td class="rtu-cell">인버터·기상반 등<br>실시간 상태 정보 수집·전송</td>
+        <td class="am-cell">LCOE 분석, 수익성 예측,<br>리스크 통합 관리</td>
+      </tr>
+      <tr>
+        <td class="row-label">운영 관점</td>
+        <td class="rtu-cell">"지금 발전기가<br>돌아가고 있는가?"</td>
+        <td class="am-cell">"이 발전소의<br>잔존 가치는 얼마인가?"</td>
+      </tr>
+      <tr>
+        <td class="row-label">결과물</td>
+        <td class="rtu-cell">수치, 알람,<br>이벤트 로그</td>
+        <td class="am-cell">O&M 비용 절감 보고서,<br>자산 가치 평가서, 매각 전략</td>
+      </tr>
+      <tr>
+        <td class="row-label">금융 의미</td>
+        <td class="rtu-cell">데이터 감사 기초 자료<br>품질 = 자산 디스카운트 방지</td>
+        <td class="am-cell">IRR 향상 · 안정적 채권형 자산<br>STO/VPP 금융 상품화 기반</td>
+      </tr>
+      <tr>
+        <td class="row-label">투자 우선순위</td>
+        <td class="rtu-cell">데이터 누락 없는<br>안정적 통신 인프라</td>
+        <td class="am-cell">데이터 분석 툴 도입으로<br>운영 효율 5% 이상 개선</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- VALUE CHAIN -->
+  <div class="section-label">// 데이터 → 금융 자산화 4단계 가치 사슬 (Value Chain)</div>
+  <div class="chain-section">
+    <div class="chain-row">
+      <div class="chain-step">
+        <span class="chain-num">STEP 01</span>
+        <span class="chain-icon">📡</span>
+        <div class="chain-title">데이터 표준화<br>신뢰성 확보</div>
+        <div class="chain-desc">Raw Data 정합성 검증. 누락·왜곡 없는 데이터는 자산 디스카운트 방지</div>
+        <span class="chain-badge">Data Acquisition</span>
+      </div>
+      <div class="chain-step">
+        <span class="chain-num">STEP 02</span>
+        <span class="chain-icon">📊</span>
+        <div class="chain-title">운영 인사이트<br>도출</div>
+        <div class="chain-desc">PR(성능계수) 분석으로 O&M 비용 절감 → 현금 흐름 가시성 향상</div>
+        <span class="chain-badge">Performance Analytics</span>
+      </div>
+      <div class="chain-step">
+        <span class="chain-num">STEP 03</span>
+        <span class="chain-icon">🤖</span>
+        <div class="chain-title">예측 기반<br>리스크 관리</div>
+        <div class="chain-desc">AI 고장 예측으로 수익 정지 리스크 통제 → 채권형 자산 등급 확보</div>
+        <span class="chain-badge">Predictive Maintenance</span>
+      </div>
+      <div class="chain-step">
+        <span class="chain-num">STEP 04</span>
+        <span class="chain-icon">💰</span>
+        <div class="chain-title">자산 유동화<br>금융 상품화</div>
+        <div class="chain-desc">VPP 참여 · STO 발행으로 실물 발전소 → 디지털 금융 자산 완성</div>
+        <span class="chain-badge">Assetization</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-strip">
+    <div class="footer-insight">
+      💡 <strong>핵심 인사이트:</strong> RTU는 데이터의 <strong>시작점</strong>, 디지털 AM은 데이터를 <strong>수익으로 변환</strong>하는 엔진. 두 레이어의 협업이 자산 가치를 극대화합니다.
+    </div>
+    <div class="footer-hashtags">
+      <span>#RTU</span>
+      <span>#디지털자산관리</span>
+      <span>#VPP</span>
+      <span>#에너지IT</span>
+      <span>#재생에너지투자</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
