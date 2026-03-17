@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>건강보험료 환급 체크리스트 4가지</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --blue: #1a3a8f;
+    --sky: #3b82f6;
+    --teal: #0ea5e9;
+    --gold: #f59e0b;
+    --green: #10b981;
+    --red: #ef4444;
+    --orange: #f97316;
+    --purple: #8b5cf6;
+    --light: #f0f6ff;
+    --white: #ffffff;
+    --gray: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: #1e293b;
+    line-height: 1.8;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(145deg, #0d1b3e 0%, #1a3a8f 55%, #1e4fc2 100%);
+    color: white;
+    padding: 56px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: rgba(59,130,246,0.12);
+    top: -160px; right: -80px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: rgba(14,165,233,0.1);
+    bottom: -80px; left: -60px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    letter-spacing: 1.5px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 900;
+    line-height: 1.45;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em { color: var(--gold); font-style: normal; }
+  .hero p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.72);
+    max-width: 460px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* INTRO BOX */
+  .intro-strip {
+    background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+    border-top: 4px solid var(--sky);
+    padding: 22px 24px;
+    text-align: center;
+  }
+  .intro-strip p {
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.9;
+  }
+  .intro-strip strong { color: var(--blue); }
+
+  /* CONTAINER */
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* CHECK CARD */
+  .check-card {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    margin: 32px 0;
+    box-shadow: 0 6px 32px rgba(13,27,62,0.09);
+    border: 1px solid var(--border);
+  }
+
+  .check-header {
+    padding: 24px 28px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    position: relative;
+  }
+  .check-num {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 20px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .check-header-text h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.4;
+    margin-bottom: 5px;
+  }
+  .check-header-text .sub {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+  .check-emoji {
+    font-size: 36px;
+    position: absolute;
+    right: 28px;
+    top: 20px;
+    opacity: 0.18;
+  }
+
+  .check-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 28px;
+  }
+
+  .check-body {
+    padding: 24px 28px 28px;
+  }
+
+  /* SCENARIO BLOCK */
+  .scenario {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    border-left: 4px solid transparent;
+    position: relative;
+  }
+  .scenario-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .scenario-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .scenario p {
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.85;
+  }
+  .scenario p strong { color: var(--navy); }
+
+  /* PERSON BUBBLE */
+  .person-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .bubble {
+    flex: 1;
+    border-radius: 0 14px 14px 14px;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #1e293b;
+  }
+  .bubble .name-tag {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  /* TIMELINE STEPS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0;
+  }
+  .step {
+    display: flex;
+    gap: 14px;
+  }
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 32px;
+    flex-shrink: 0;
+  }
+  .step-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .step-line {
+    width: 2px;
+    flex: 1;
+    min-height: 12px;
+    margin: 2px 0;
+  }
+  .step-content {
+    flex: 1;
+    padding-bottom: 18px;
+  }
+  .step-content .s-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .step-content .s-body {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.75;
+  }
+  .step-content .s-body b { color: #1e293b; }
+
+  /* RESULT BOX */
+  .result-box {
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .result-icon { font-size: 34px; flex-shrink: 0; }
+  .result-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  .result-amount {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--navy);
+  }
+  .result-note {
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 3px;
+    line-height: 1.6;
+  }
+
+  /* INFO TABLE */
+  .info-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 14px 0;
+  }
+  .info-table th, .info-table td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-table th {
+    background: #f1f5f9;
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+    width: 36%;
+  }
+  .info-table td { color: #1e293b; }
+  .info-table tr:last-child th,
+  .info-table tr:last-child td { border-bottom: none; }
+
+  /* HIGHLIGHT ROW */
+  .info-table tr.highlight td,
+  .info-table tr.highlight th {
+    background: #fff7ed;
+  }
+  .info-table tr.highlight td { color: #c2410c; font-weight: 700; }
+
+  /* TIP BOX */
+  .tip-box {
+    border-radius: 12px;
+    padding: 15px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.8;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .tip-box .tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* THRESHOLD TABLE */
+  .threshold-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 16px 0;
+  }
+  .threshold-head {
+    background: #1e293b;
+    color: white;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 8px;
+  }
+  .threshold-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 8px;
+    padding: 11px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .threshold-row:last-child { border-bottom: none; }
+  .threshold-row:nth-child(even) { background: #f8fafc; }
+  .threshold-row .refund-val {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .threshold-row.highlight-row {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5) !important;
+    font-weight: 600;
+  }
+
+  /* OVERLAP DIAGRAM */
+  .overlap-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .overlap-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .overlap-label {
+    width: 80px;
+    font-weight: 700;
+    color: var(--gray);
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+  .bar-wrap { flex: 1; position: relative; height: 32px; }
+  .bar {
+    position: absolute;
+    height: 28px;
+    top: 2px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+  }
+  .overlap-note {
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  /* SECTION SPACER */
+  .spacer { height: 8px; }
+
+  /* SUMMARY SECTION */
+  .summary-section {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    padding: 40px 28px;
+    margin: 40px 0 0;
+  }
+  .summary-section h2 {
+    font-family: 'Noto Serif KR', serif;
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 800px;
+    margin: 0 auto 28px;
+  }
+  .s-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .s-card .s-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 13px;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .s-card .s-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 6px;
+  }
+  .s-card .s-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+  .cta-wrap {
+    text-align: center;
+    padding-top: 8px;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(245,158,11,0.4);
+  }
+  .cta-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 10px;
+  }
+
+  /* HASHTAG */
+  .hashtag-wrap {
+    padding: 24px 20px 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hashtag-wrap span {
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  @media (max-width: 540px) {
+    .check-header { flex-direction: column; gap: 12px; }
+    .check-emoji { display: none; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .threshold-head, .threshold-row { grid-template-columns: 1.5fr 1fr 1fr; }
+    .person-row { flex-direction: column; gap: 6px; }
+    .bubble { border-radius: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">2026 건강보험료 환급 가이드</div>
+  <h1>혹시 나도 환급 대상?<br><em>4가지 체크리스트</em> 실전 예시</h1>
+  <p>막연하게 느껴지던 건강보험료 환급 조건,<br>실제 사례로 쉽고 명확하게 정리했습니다</p>
+</div>
+
+<div class="intro-strip">
+  <p>
+    <strong>건강보험료 환급은 신청하지 않으면 그냥 사라집니다.</strong><br>
+    아래 4가지 체크 중 하나라도 해당한다면, 지금 바로 국민건강보험공단에서 조회해 보세요.
+  </p>
+</div>
+
+<div class="container">
+
+  <!-- ============================================================
+       CHECK 1. 퇴직·이직 후 보험료를 계속 냈다
+  ============================================================ -->
+  <div class="check-card">
+    <div class="check-header">
+      <div class="check-num" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">1</div>
+      <div class="check-header-text">
+        <h2>☑ 퇴직·이직 후에도 보험료가 자동이체로 빠져나갔다</h2>
+        <p class="sub">퇴사 이후 직장 보험료가 이중으로 납부되었다면 과납 환급 대상입니다</p>
+      </div>
+      <div class="check-emoji">🏢</div>
+    </div>
+    <div class="check-divider"></div>
+    <div class="check-body">
+
+      <!-- 사례 -->
+      <div class="scenario" style="border-left-color: #3b82f6;">
+        <div class="scenario-label" style="color: #3b82f6;">
+          <span class="dot" style="background:#3b82f6;"></span> 실제 사례 · 직장인 최씨 (32세)
+        </div>
+
+        <div class="person-row">
+          <div class="avatar" style="background:#eff6ff;">👩‍💼</div>
+          <div class="bubble" style="background:#eff6ff;">
+            <div class="name-tag" style="color:#3b82f6;">최지수 씨의 상황</div>
+            3월 31일 A회사 퇴직 후, 4월 15일 B회사 입사.<br>
+            퇴직 후 한 달간 A회사 보험료가 자동이체로 계속 빠져나갔습니다.
+          </div>
+        </div>
+
+        <table class="info-table">
+          <tr><th>A회사 퇴직일</th><td>2025년 3월 31일</td></tr>
+          <tr><th>B회사 입사일</th><td>2025년 4월 15일</td></tr>
+          <tr><th>월 직장 건강보험료</th><td>약 148,000원</td></tr>
+          <tr class="highlight"><th>4월 이중 납부 발생</th><td>A회사 분 148,000원 + B회사 분 일할 계산 납부</td></tr>
+        </table>
+      </div>
+
+      <!-- 왜 이런 일이? -->
+      <div class="tip-box" style="background:#fff7ed; border:1px solid #fed7aa;">
+        <span class="tip-icon">💡</span>
+        <div style="font-size:13px; color:#92400e; line-height:1.8;">
+          <strong>왜 이런 일이 생길까요?</strong><br>
+          건강보험료는 퇴직 신고가 공단에 반영되기까지 시간 차가 발생합니다.
+          그 사이에 자동이체로 보험료가 빠져나가거나, 이직 후 새 회사 보험료까지 부과되어
+          <strong>이중으로 납부</strong>되는 경우가 생깁니다.
+        </div>
+      </div>
+
+      <!-- 타임라인 -->
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#eff6ff; color:#3b82f6;">📤</div>
+            <div class="step-line" style="background:#bfdbfe;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#3b82f6;">3월 31일 · A회사 퇴직</div>
+            <div class="s-body">보험 자격 상실이 공단에 즉시 반영되지 않음</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#fff7ed; color:#f97316;">⚠️</div>
+            <div class="step-line" style="background:#fed7aa;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#f97316;">4월 · A회사 보험료 자동이체</div>
+            <div class="s-body">퇴직했는데 <b>148,000원이 자동이체</b>로 빠져나감</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#eff6ff; color:#3b82f6;">🏢</div>
+            <div class="step-line" style="background:#bfdbfe;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#3b82f6;">4월 15일 · B회사 입사</div>
+            <div class="s-body">B회사에서도 4월 일할 보험료가 새로 공제됨</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#ecfdf5; color:#10b981;">✅</div>
+          </div>
+          <div class="step-content" style="padding-bottom:0;">
+            <div class="s-title" style="color:#10b981;">환급 신청</div>
+            <div class="s-body">공단에 과납 확인 요청 → A회사 분 보험료 <b>148,000원 환급</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-box" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:1.5px solid #6ee7b7;">
+        <div class="result-icon">💚</div>
+        <div>
+          <div class="result-label" style="color:#10b981;">환급 예상 금액</div>
+          <div class="result-amount">148,000원</div>
+          <div class="result-note">이직·퇴직 후 최근 3년치 납부 내역 모두 조회 가능 → 오래된 과납도 환급 신청 가능</div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="background:#eff6ff; border:1px solid #bfdbfe; margin-top:14px;">
+        <span class="tip-icon">📋</span>
+        <div style="font-size:13px; color:#1e3a8a; line-height:1.8;">
+          <strong>이런 분이라면 꼭 확인하세요</strong><br>
+          · 최근 3년 내에 퇴직 또는 이직한 경험이 있는 분<br>
+          · 퇴직 후 지역가입자로 전환됐는데 직장 보험료도 빠져나간 적 있는 분<br>
+          · 육아휴직 중 보험료 납부 내역이 헷갈리는 분
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       CHECK 2. 작년에 소득이 줄었다
+  ============================================================ -->
+  <div class="check-card">
+    <div class="check-header">
+      <div class="check-num" style="background: linear-gradient(135deg, #10b981, #059669);">2</div>
+      <div class="check-header-text">
+        <h2>☑ 작년에 소득이 줄었다</h2>
+        <p class="sub">소득은 줄었는데 보험료는 작년 기준 그대로? 조정 신청하면 환급받을 수 있습니다</p>
+      </div>
+      <div class="check-emoji">📉</div>
+    </div>
+    <div class="check-divider"></div>
+    <div class="check-body">
+
+      <div class="scenario" style="border-left-color: #10b981;">
+        <div class="scenario-label" style="color: #10b981;">
+          <span class="dot" style="background:#10b981;"></span> 실제 사례 · 프리랜서 디자이너 박씨 (41세)
+        </div>
+
+        <div class="person-row">
+          <div class="avatar" style="background:#f0fdf4;">🎨</div>
+          <div class="bubble" style="background:#f0fdf4;">
+            <div class="name-tag" style="color:#10b981;">박민준 씨의 상황</div>
+            2024년에는 일이 많았는데, 2025년에는 거래처가 끊겨 수입이 반토막 났습니다.
+            근데 건강보험료는 2024년 소득 기준으로 여전히 높게 나오고 있어요.
+          </div>
+        </div>
+
+        <table class="info-table">
+          <tr><th>가입 유형</th><td>지역가입자 (프리랜서)</td></tr>
+          <tr><th>2024년 사업소득</th><td>연 4,200만원</td></tr>
+          <tr><th>2025년 실제 소득</th><td>연 1,800만원 (소득 감소)</td></tr>
+          <tr><th>현재 납부 보험료</th><td>월 약 240,000원 (2024년 기준)</td></tr>
+          <tr class="highlight"><th>조정 후 보험료</th><td>월 약 90,000원 (2025년 실소득 기준)</td></tr>
+        </table>
+      </div>
+
+      <div class="tip-box" style="background:#fff7ed; border:1px solid #fed7aa;">
+        <span class="tip-icon">💡</span>
+        <div style="font-size:13px; color:#92400e; line-height:1.8;">
+          <strong>왜 이런 일이 생길까요?</strong><br>
+          건강보험료는 <strong>전년도 소득</strong>을 기준으로 부과됩니다.
+          즉, 2025년 보험료는 2024년 소득 기준 → 실제 소득이 줄었어도 작년 기준 그대로 납부하게 됩니다.
+          소득 조정 신청을 해야만 현재 소득 기준으로 낮출 수 있습니다.
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#fef9c3; color:#ca8a04;">📋</div>
+            <div class="step-line" style="background:#fde68a;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#ca8a04;">현재 상황 (신청 전)</div>
+            <div class="s-body">월 <b>240,000원</b> 납부 중 → 연간 <b>2,880,000원</b></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#f0fdf4; color:#10b981;">✍️</div>
+            <div class="step-line" style="background:#bbf7d0;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#10b981;">소득 조정 신청</div>
+            <div class="s-body">종합소득세 신고서 또는 소득 확인 서류 제출 → 신청 다음 달부터 보험료 조정</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#eff6ff; color:#3b82f6;">💳</div>
+            <div class="step-line" style="background:#bfdbfe;"></div>
+          </div>
+          <div class="step-content">
+            <div class="s-title" style="color:#3b82f6;">조정 후 보험료 적용</div>
+            <div class="s-body">월 <b>90,000원</b>으로 감소 → 연간 <b>1,080,000원</b></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-left">
+            <div class="step-icon" style="background:#ecfdf5; color:#10b981;">🎉</div>
+          </div>
+          <div class="step-content" style="padding-bottom:0;">
+            <div class="s-title" style="color:#10b981;">2026년 11월 · 최종 정산</div>
+            <div class="s-body">국세청 소득 자료 연계 → 차액 최종 환급 또는 추가 납부 확정</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-box" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5); border:1.5px solid #6ee7b7;">
+        <div class="result-icon">💰</div>
+        <div>
+          <div class="result-label" style="color:#10b981;">월 절감액</div>
+          <div class="result-amount">월 150,000원 절감</div>
+          <div class="result-note">빨리 신청할수록 유리 · 늦게 신청한 기간의 차액은 2026년 11월 정산 시 환급</div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="background:#f0fdf4; border:1px solid #bbf7d0; margin-top:14px;">
+        <span class="tip-icon">📋</span>
+        <div style="font-size:13px; color:#065f46; line-height:1.8;">
+          <strong>이런 분이라면 꼭 확인하세요</strong><br>
+          · 자영업자·프리랜서로 2025년에 소득이 눈에 띄게 줄었다면<br>
+          · 육아휴직 또는 병가로 일정 기간 소득이 없었던 분<br>
+          · 2024년에는 부업 수익이 있었지만 2025년에는 없어진 경우
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       CHECK 3. 병원비를 많이 썼다 (본인부담 상한제)
+  ============================================================ -->
+  <div class="check-card">
+    <div class="check-header">
+      <div class="check-num" style="background: linear-gradient(135deg, #f97316, #ea580c);">3</div>
+      <div class="check-header-text">
+        <h2>☑ 작년에 병원비를 많이 썼다</h2>
+        <p class="sub">본인부담 상한제 — 1년 병원비가 일정 기준 초과 시 초과분 전액을 돌려받습니다</p>
+      </div>
+      <div class="check-emoji">🏥</div>
+    </div>
+    <div class="check-divider"></div>
+    <div class="check-body">
+
+      <div class="tip-box" style="background:#fff7ed; border:1px solid #fed7aa; margin-bottom:18px;">
+        <span class="tip-icon">💡</span>
+        <div style="font-size:13px; color:#92400e; line-height:1.8;">
+          <strong>본인부담 상한제란?</strong><br>
+          국민건강보험이 적용되는 병원비(급여 항목)가 1년 동안 쌓여서 소득 분위별 상한액을 초과하면,
+          그 초과분을 건강보험공단이 <strong>현금으로 돌려주는 제도</strong>입니다.
+          비급여(선택 진료비, 상급 병실료 등)는 해당되지 않습니다.
+        </div>
+      </div>
+
+      <!-- 상한액 테이블 -->
+      <div class="threshold-wrap">
+        <div class="threshold-head">
+          <span>소득 분위</span>
+          <span>연간 상한액</span>
+          <span>초과 시</span>
+        </div>
+        <div class="threshold-row">
+          <span>1분위 (소득 하위 10%)</span>
+          <span><b>87만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>2~3분위</span>
+          <span><b>108만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>4~5분위</span>
+          <span><b>162만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>6~7분위</span>
+          <span><b>289만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>8분위</span>
+          <span><b>360만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>9분위</span>
+          <span><b>443만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+        <div class="threshold-row">
+          <span>10분위 (소득 상위 10%)</span>
+          <span><b>780만원</b></span>
+          <span class="refund-val">초과분 환급</span>
+        </div>
+      </div>
+      <p style="font-size:11px; color:#94a3b8; margin-bottom:16px;">※ 2026년 예상치 기준 · 비급여 항목 제외</p>
+
+      <!-- 사례 -->
+      <div class="scenario" style="border-left-color: #f97316;">
+        <div class="scenario-label" style="color: #f97316;">
+          <span class="dot" style="background:#f97316;"></span> 실제 사례 · 만성질환 치료 중인 정씨 (68세)
+        </div>
+
+        <div class="person-row">
+          <div class="avatar" style="background:#fff7ed;">👴</div>
+          <div class="bubble" style="background:#fff7ed;">
+            <div class="name-tag" style="color:#f97316;">정재국 씨의 상황</div>
+            소득 2분위(하위 20~30%) 은퇴자입니다.
+            2025년 한 해 동안 당뇨·고혈압 치료로 정기 내원하고
+            허리 수술까지 받아서 병원비가 많이 나왔습니다.
+          </div>
+        </div>
+
+        <table class="info-table">
+          <tr><th>소득 분위</th><td>2분위</td></tr>
+          <tr><th>연간 상한액</th><td>108만원</td></tr>
+          <tr><th>2025년 실제 병원비</th><td>약 380만원 (급여 항목 기준)</td></tr>
+          <tr class="highlight"><th>환급 대상금액</th><td>380만원 − 108만원 = <b>272만원</b></td></tr>
+        </table>
+      </div>
+
+      <!-- 사전급여 vs 사후환급 -->
+      <div style="margin:18px 0 14px;">
+        <p style="font-size:13px; font-weight:700; color:#334155; margin-bottom:12px;">📌 환급 방식 두 가지</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div style="background:#eff6ff; border-radius:12px; padding:16px; font-size:13px; color:#1e3a8a; line-height:1.8;">
+            <div style="font-weight:700; margin-bottom:8px;">🏥 사전급여</div>
+            같은 병원에서 지속 치료 중 그 병원에서만 최고 상한액(<b>780만원</b>) 초과 시 → 초과분은 환자가 병원에 내지 않아도 됨. 병원이 공단에 직접 청구
+          </div>
+          <div style="background:#ecfdf5; border-radius:12px; padding:16px; font-size:13px; color:#065f46; line-height:1.8;">
+            <div style="font-weight:700; margin-bottom:8px;">💳 사후환급</div>
+            여러 병원 합산으로 상한액 초과 시 → 다음 해 <b>8~9월</b>에 공단이 우편 안내 후 계좌로 현금 입금
+          </div>
+        </div>
+      </div>
+
+      <div class="result-box" style="background:linear-gradient(135deg,#fff7ed,#fef3c7); border:1.5px solid #fbbf24;">
+        <div class="result-icon">🏆</div>
+        <div>
+          <div class="result-label" style="color:#d97706;">환급 예상 금액</div>
+          <div class="result-amount">272만원 환급</div>
+          <div class="result-note">우편 안내 전에도 'The건강보험' 앱에서 미리 조회 · 신청 가능 (수수료 0원)</div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="background:#fff7ed; border:1px solid #fed7aa; margin-top:14px;">
+        <span class="tip-icon">📋</span>
+        <div style="font-size:13px; color:#92400e; line-height:1.8;">
+          <strong>이런 분이라면 꼭 확인하세요</strong><br>
+          · 2025년에 입원, 수술, 장기 통원 치료를 받으신 분<br>
+          · 암·만성질환·희귀질환으로 정기적으로 치료받는 분<br>
+          · 가족 중 노인 또는 지병이 있는 분 (부모님 보험도 대신 확인해 드리세요!)
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       CHECK 4. 이중 납부한 적 있다
+  ============================================================ -->
+  <div class="check-card">
+    <div class="check-header">
+      <div class="check-num" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">4</div>
+      <div class="check-header-text">
+        <h2>☑ 이중 납부한 적이 있다</h2>
+        <p class="sub">직장 이동, 피부양자 자격 변동 시 보험료가 겹쳐서 납부되는 경우가 자주 발생합니다</p>
+      </div>
+      <div class="check-emoji">🔄</div>
+    </div>
+    <div class="check-divider"></div>
+    <div class="check-body">
+
+      <!-- 두 가지 패턴 -->
+      <p style="font-size:13px; font-weight:700; color:#334155; margin-bottom:14px;">📌 이중 납부가 발생하는 대표적인 2가지 상황</p>
+
+      <!-- 패턴 A -->
+      <div class="scenario" style="border-left-color: #8b5cf6; margin-bottom:16px;">
+        <div class="scenario-label" style="color: #8b5cf6;">
+          <span class="dot" style="background:#8b5cf6;"></span> 패턴 A · 직장 이동 중 공백 기간 이중 납부
+        </div>
+
+        <div class="person-row">
+          <div class="avatar" style="background:#f5f3ff;">💼</div>
+          <div class="bubble" style="background:#f5f3ff;">
+            <div class="name-tag" style="color:#8b5cf6;">이동훈 씨의 상황</div>
+            5월 31일 C사 퇴직, 6월 10일 D사 입사. 퇴직 후 지역가입자로 자동 전환되어 6월 지역 보험료를 납부했는데, D사에서도 6월 보험료를 공제했습니다.
+          </div>
+        </div>
+
+        <!-- 겹침 다이어그램 -->
+        <div style="background:white; border-radius:10px; padding:16px 14px; margin:10px 0; font-size:12px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <div style="width:72px; font-weight:700; color:#64748b; font-size:11px; flex-shrink:0;">6월</div>
+            <div style="flex:1; position:relative; height:28px;">
+              <div style="position:absolute; left:0; width:55%; background:#ede9fe; border-radius:6px; height:26px; display:flex; align-items:center; padding-left:10px; font-size:11px; font-weight:700; color:#7c3aed;">지역보험료 납부</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:72px; font-weight:700; color:#64748b; font-size:11px; flex-shrink:0;">6월</div>
+            <div style="flex:1; position:relative; height:28px;">
+              <div style="position:absolute; left:30%; width:65%; background:#fce7f3; border-radius:6px; height:26px; display:flex; align-items:center; padding-left:10px; font-size:11px; font-weight:700; color:#be185d;">D사 직장보험료 공제</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px; margin-top:6px;">
+            <div style="width:72px; flex-shrink:0;"></div>
+            <div style="flex:1; display:flex; align-items:center; gap:6px;">
+              <span style="width:10px; height:10px; background:#ef4444; border-radius:50%; flex-shrink:0; display:inline-block;"></span>
+              <span style="color:#ef4444; font-size:12px; font-weight:700;">이 기간 이중 납부 발생!</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="info-table">
+          <tr><th>지역 보험료 (6월분)</th><td>약 95,000원</td></tr>
+          <tr><th>D사 직장 보험료 (6월분)</th><td>약 130,000원</td></tr>
+          <tr class="highlight"><th>이중 납부 환급 대상</th><td>지역 보험료 <b>95,000원 환급 가능</b></td></tr>
+        </table>
+      </div>
+
+      <!-- 패턴 B -->
+      <div class="scenario" style="border-left-color: #06b6d4;">
+        <div class="scenario-label" style="color: #0891b2;">
+          <span class="dot" style="background:#06b6d4;"></span> 패턴 B · 피부양자 자격 상실 지연으로 중복 납부
+        </div>
+
+        <div class="person-row">
+          <div class="avatar" style="background:#ecfeff;">👩</div>
+          <div class="bubble" style="background:#ecfeff;">
+            <div class="name-tag" style="color:#0891b2;">김수아 씨의 상황</div>
+            취업 전까지 아버지 피부양자였습니다. 7월에 취업하면서 직장 보험에 가입됐는데, 피부양자 자격 상실 처리가 늦어져서 아버지 보험료에도 그대로 반영되어 8월까지 이중 부담이 발생했습니다.
+          </div>
+        </div>
+
+        <table class="info-table">
+          <tr><th>취업 (직장보험 가입)</th><td>7월</td></tr>
+          <tr><th>피부양자 자격 상실 처리</th><td>9월 (2개월 지연)</td></tr>
+          <tr class="highlight"><th>환급 대상</th><td>2개월치 중복 보험료 → 환급 신청 가능</td></tr>
+        </table>
+      </div>
+
+      <div class="result-box" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe); border:1.5px solid #c4b5fd; margin-top:18px;">
+        <div class="result-icon">✨</div>
+        <div>
+          <div class="result-label" style="color:#7c3aed;">이렇게 하세요</div>
+          <div class="result-amount" style="font-size:17px;">납부확인서 3년치 조회 → 이상 내역 발견 시 즉시 신고</div>
+          <div class="result-note" style="margin-top:6px;">nhis.or.kr → 로그인 → [보험료 납부확인서] → 최근 3년 내역 확인</div>
+        </div>
+      </div>
+
+      <div class="tip-box" style="background:#faf5ff; border:1px solid #ddd6fe; margin-top:14px;">
+        <span class="tip-icon">📋</span>
+        <div style="font-size:13px; color:#4c1d95; line-height:1.8;">
+          <strong>이런 분이라면 꼭 확인하세요</strong><br>
+          · 최근 3년 내 이직·퇴직·재취업을 경험한 분<br>
+          · 자녀가 취업하여 피부양자에서 제외된 가정<br>
+          · 결혼·이혼으로 가족 보험 구성이 바뀐 분<br>
+          · 건강보험료가 헷갈리게 두 군데서 빠져나간 기억이 있는 분
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+
+<!-- SUMMARY -->
+<div class="summary-section">
+  <h2>✅ 4가지 체크리스트 한눈에 정리</h2>
+  <div class="summary-grid">
+    <div class="s-card">
+      <div class="s-num" style="background:#fbbf24;">1</div>
+      <div class="s-title">퇴직·이직 후 자동이체</div>
+      <div class="s-desc">퇴사 후에도 보험료가 빠져나갔다면 과납 환급 신청. 최근 3년치 납부 내역 확인</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num" style="background:#34d399;">2</div>
+      <div class="s-title">소득 감소 조정 신청</div>
+      <div class="s-desc">소득이 줄었다면 즉시 조정 신청. 신청 다음 달부터 낮은 보험료 적용. 늦을수록 손해</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num" style="background:#fb923c;">3</div>
+      <div class="s-title">본인부담 상한제</div>
+      <div class="s-desc">연간 병원비가 소득분위 상한액 초과 시 초과분 전액 환급. 8~9월 우편 안내 또는 앱 직접 조회</div>
+    </div>
+    <div class="s-card">
+      <div class="s-num" style="background:#a78bfa;">4</div>
+      <div class="s-title">이중 납부 확인</div>
+      <div class="s-desc">이직·자격 변동 시 보험료 중복 납부 자주 발생. 납부확인서 3년치 조회 후 이상 시 즉시 신고</div>
+    </div>
+  </div>
+  <div class="cta-wrap">
+    <a href="https://www.nhis.or.kr" class="cta-btn" target="_blank">💚 지금 바로 환급금 조회하기 →</a>
+    <p class="cta-sub">국민건강보험공단 공식 홈페이지 · 수수료 0원 · 1~2분 소요</p>
+  </div>
+</div>
+
+<!-- HASHTAG -->
+<div class="hashtag-wrap">
+  <span>#건강보험료환급</span>
+  <span>#건강보험료과납</span>
+  <span>#본인부담상한제</span>
+  <span>#건강보험이중납부</span>
+  <span>#건강보험료조정</span>
+  <span>#2026건강보험</span>
+  <span>#국민건강보험환급</span>
+  <span>#건강보험료절약</span>
+  <span>#퇴직후건강보험</span>
+  <span>#직장인정보</span>
+  <span>#자영업자정보</span>
+  <span>#생활꿀팁</span>
+  <span>#숨은돈찾기</span>
+  <span>#돈되는정보</span>
+</div>
+
+</body>
+</html>
