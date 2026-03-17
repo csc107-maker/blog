@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="2026년 3월 전자장비·사무용 전자제품 업종 급등 이유 완전 분석. AI 슈퍼사이클, 중동 지정학 리스크, 엔비디아 GTC 2026, CAPEX 확대까지 4가지 핵심 엔진과 수혜 종목 8선을 정리했습니다.">
+<meta name="keywords" content="전자장비급등, 사무용전자제품주식, AI반도체수혜주, HBM주식추천, 삼성전자주가전망, SK하이닉스목표주가, 한미반도체, 코스피전망2026, 반도체업종분석, AI슈퍼사이클, 엔비디아GTC2026, D램가격급등, 메모리반도체, 전자장비업종, 국내주식추천">
+<meta property="og:title" content="전자장비·사무용 전자제품 업종 급등, 그 이유와 수혜 종목은? — 2026년 3월 완전 분석">
+<meta property="og:description" content="AI 슈퍼사이클 + 중동 전쟁발 공급 충격 + 엔비디아 GTC 2026 훈풍. 지금 왜 급등하는지, 어떤 종목을 주목해야 하는지 예리하게 분석합니다.">
+<meta property="og:type" content="article">
+<meta name="author" content="주식 분석 블로그">
+<meta name="robots" content="index, follow">
+<title>전자장비·사무용 전자제품 업종 급등 이유와 수혜 종목 — 2026년 3월 완전 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #fafaf8;
+    --surface: #f3f2ee;
+    --surface2: #eceae3;
+    --text: #1a1916;
+    --text-muted: #6b6a65;
+    --text-faint: #9b9a95;
+    --border: #e0ddd5;
+    --blue: #185FA5;
+    --blue-bg: #E6F1FB;
+    --blue-text: #0c447c;
+    --green: #0F6E56;
+    --green-bg: #E1F5EE;
+    --green-text: #085041;
+    --amber: #854F0B;
+    --amber-bg: #FAEEDA;
+    --amber-text: #633806;
+    --red: #A32D2D;
+    --red-bg: #FCEBEB;
+    --red-text: #791F1F;
+    --purple: #534AB7;
+    --purple-bg: #EEEDFE;
+    --purple-text: #3C3489;
+    --teal: #1D9E75;
+    --accent: #185FA5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.85;
+    font-size: 16px;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 6rem;
+  }
+
+  /* ── HEADER ── */
+  .article-header { margin-bottom: 2.5rem; }
+
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .meta-bar span { display: flex; align-items: center; gap: 4px; }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 11px;
+    border-radius: 30px;
+    letter-spacing: .02em;
+  }
+  .b-red    { background: var(--red-bg);    color: var(--red-text);    }
+  .b-blue   { background: var(--blue-bg);   color: var(--blue-text);   }
+  .b-amber  { background: var(--amber-bg);  color: var(--amber-text);  }
+  .b-green  { background: var(--green-bg);  color: var(--green-text);  }
+  .b-purple { background: var(--purple-bg); color: var(--purple-text); }
+
+  h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(24px, 4.5vw, 36px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -.02em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    max-width: 680px;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 2rem 0;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .stat-card .lbl {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 2.5rem 0 1rem;
+    padding-left: 14px;
+    border-left: 3.5px solid var(--accent);
+    line-height: 1.4;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text);
+    margin: 2rem 0 .6rem;
+  }
+
+  p { font-size: 15px; color: var(--text); margin-bottom: 1rem; line-height: 1.9; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--green-bg);
+    border-left: 3.5px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .highlight p { font-size: 14px; color: var(--green-text); margin: 0; line-height: 1.75; }
+
+  /* ── STOCK GRID ── */
+  .stock-intro { font-size: 13px; color: var(--text-muted); margin-bottom: .75rem; }
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin-top: 1rem;
+  }
+  .stock-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .stock-card:hover {
+    border-color: #b5d4f4;
+    box-shadow: 0 2px 12px rgba(24,95,165,.08);
+  }
+  .stock-card .ticker {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--blue);
+    margin-bottom: 4px;
+    letter-spacing: .04em;
+  }
+  .stock-card .name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: .5rem;
+    color: var(--text);
+  }
+  .stock-card .desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: .85rem;
+  }
+  .stock-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--blue-bg);
+    color: var(--blue-text);
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* ── RISK GRID ── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 1.5rem 0;
+  }
+  .risk-box {
+    background: var(--amber-bg);
+    border: 1px solid #FAC775;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+  .risk-box .rtitle {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amber-text);
+    margin-bottom: .4rem;
+  }
+  .risk-box p {
+    font-size: 13px;
+    color: #633806;
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* ── SUMMARY BOX ── */
+  .summary-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .summary-box h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: .75rem;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .summary-box ul {
+    padding-left: 1.25rem;
+  }
+  .summary-box li {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: .45rem;
+    line-height: 1.75;
+  }
+  .summary-box li strong { color: var(--text); font-weight: 500; }
+
+  /* ── HASHTAGS ── */
+  .hashtag-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .hashtag-section .ht-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: .75rem;
+  }
+  .ht-wrap { display: flex; flex-wrap: wrap; gap: 7px; }
+  .ht {
+    font-size: 13px;
+    color: var(--blue-text);
+    background: var(--blue-bg);
+    padding: 4px 13px;
+    border-radius: 20px;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--text-faint);
+    line-height: 1.75;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0 2rem;
+    font-size: 14px;
+  }
+  .toc .toc-title { font-weight: 500; margin-bottom: .6rem; color: var(--text-muted); font-size: 12px; letter-spacing: .05em; }
+  .toc ol { padding-left: 1.25rem; }
+  .toc li { margin-bottom: .3rem; line-height: 1.6; }
+  .toc a { color: var(--blue); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  @media (max-width: 540px) {
+    .risk-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 380px) {
+    .stat-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; font-size: 13px; }
+    .stock-card:hover { box-shadow: none; }
+    a { color: var(--text); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- ARTICLE HEADER -->
+  <header class="article-header">
+    <div class="meta-bar">
+      <span>📅 2026년 3월 17일</span>
+      <span>📂 주식 · 전자업종 분석</span>
+      <span>⏱ 읽기 약 8분</span>
+      <span>🔍 SEO 최적화</span>
+    </div>
+
+    <div class="badge-row">
+      <span class="badge b-red">전자장비 급등</span>
+      <span class="badge b-blue">AI 반도체</span>
+      <span class="badge b-amber">2026 주식</span>
+      <span class="badge b-green">HBM</span>
+      <span class="badge b-purple">코스피 강세</span>
+    </div>
+
+    <h1>전자장비·사무용 전자제품 업종 급등,<br>그 이유와 수혜 종목은?<br>2026년 3월 완전 분석</h1>
+    <p class="lead">AI 슈퍼사이클 + 중동 전쟁발 공급 충격 + 엔비디아 GTC 2026 훈풍까지. 국내 전자장비·사무용 전자제품 업종이 동시다발적 호재 속에 뜨겁게 달아오르고 있습니다. 지금 왜 급등하는지, 어떤 종목을 주목해야 하는지 예리하게 분석합니다.</p>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc" aria-label="목차">
+    <div class="toc-title">목차</div>
+    <ol>
+      <li><a href="#stats">핵심 지표 한눈에 보기</a></li>
+      <li><a href="#engine">업종 급등의 4가지 핵심 엔진</a></li>
+      <li><a href="#stocks">증권가가 주목하는 수혜 종목 8선</a></li>
+      <li><a href="#risk">투자 전 반드시 체크할 리스크</a></li>
+      <li><a href="#conclusion">결론 — 지금 이 업종을 어떻게 볼 것인가</a></li>
+    </ol>
+  </nav>
+
+  <!-- STAT CARDS -->
+  <section id="stats">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="num">+30%</div>
+        <div class="lbl">D램 현물가<br>보름 상승률</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">7,250</div>
+        <div class="lbl">한투증권<br>코스피 목표치</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">60%+</div>
+        <div class="lbl">SK하이닉스<br>HBM 세계 점유율</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">82조원</div>
+        <div class="lbl">2026년<br>TSMC CAPEX 전망</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 1 — 4 ENGINES -->
+  <section id="engine">
+    <h2>업종 급등의 4가지 핵심 엔진</h2>
+
+    <h3>① AI 슈퍼사이클 — 구조적 수요 폭발</h3>
+    <p>이번 전자장비·사무용 전자제품 업종 급등의 가장 근본적인 동력은 <strong>인공지능(AI) 인프라 투자의 구조적 확장</strong>입니다. 글로벌 빅테크 기업들이 AI 데이터센터 구축에 수십 년 만기 회사채를 발행할 정도로 공격적인 투자를 이어가면서, 고성능 메모리 반도체와 전자 부품 수요가 폭발적으로 증가하고 있습니다. AI 서버 한 대에 탑재되는 메모리 용량은 일반 서버 대비 수십 배에 달해, 전방 산업 수요가 업종 전체를 구조적으로 끌어올리는 효과를 낳고 있습니다.</p>
+    <p>특히 AI 연산의 무게중심이 '모델 훈련'에서 '추론(Inference)'으로 빠르게 이동하면서, 추론 확장 → HBM(고대역폭메모리) 수요 급증 → 삼성전자·SK하이닉스 수혜라는 강력한 가치 사슬이 형성되고 있습니다. 이는 단순한 경기 사이클이 아니라 패러다임의 전환으로, 업종의 중장기 성장 가시성을 크게 높이고 있습니다.</p>
+
+    <div class="highlight">
+      <p>💡 <strong>핵심 포인트</strong> — AI 인프라 투자는 2022년 이후 매년 가속화되고 있으며, 2026년에도 글로벌 빅테크의 AI 설비투자(CAPEX)가 전년 대비 30~50% 이상 증가할 것으로 전망됩니다. 이 자금이 메모리·장비·부품 업종으로 고스란히 흘러들어오는 구조입니다.</p>
+    </div>
+
+    <h3>② 중동 지정학 리스크 — 공급 부족에 불을 지르다</h3>
+    <p>단기 가격 급등의 직접적 방아쇠는 <strong>중동 전쟁 리스크</strong>였습니다. 미국-이란 간 긴장 고조 이후 글로벌 메모리 반도체 현물 가격이 급등, PC용 DDR5 16Gb D램 현물가격이 약 보름 만에 30% 상승하며 39.40달러 수준을 기록했습니다. 올해 1월 28.5달러에서 출발한 계약 가격도 2월 말 30달러로 상승했고, 전쟁 여파로 현물 가격까지 재급등하며 메모리 가격 상승 흐름이 한층 가팔라진 상황입니다.</p>
+    <p>여기에 전쟁 장기화 시나리오가 겹치면 드론·첨단 무기 등 군사 장비에 사용되는 메모리 반도체 수요까지 증가해 수급 불균형이 심화될 수 있다는 전망이 시장에 반영되며 추가 상승 압력을 만들고 있습니다. AI 수요와 지정학 리스크가 '이중 공급 부족' 우려를 동시에 자극하는 셈입니다.</p>
+
+    <h3>③ 엔비디아 GTC 2026 — 한국 전자업종 직접 수혜</h3>
+    <p>지난 16일(현지시간) 개막한 <strong>엔비디아 GTC 2026</strong>은 결정적인 촉매제가 됐습니다. 젠슨 황 CEO가 기조연설에서 "삼성이 그록3(Groq3) LPU 칩을 제조하고 있다"고 공식 확인하면서, 삼성 파운드리와 메모리 사업부 모두에 대한 기대감이 동시에 불붙었습니다. 삼성전자 파운드리 가동률이 선단공정 중심으로 빠르게 회복되고 있다는 분석도 뒤따르며 수혜의 폭이 넓어졌습니다.</p>
+    <p>SK하이닉스 역시 현재 세계 HBM 시장에서 60% 이상의 점유율을 유지하고 있어, 엔비디아의 추론 확장 전략이 현실화될수록 직접적인 수혜를 입습니다. 엔비디아-삼성-SK하이닉스로 이어지는 한국 전자업종 공급망이 AI 인프라 투자의 최전선에 서 있는 것입니다.</p>
+
+    <h3>④ 천문학적 CAPEX — 장비 업종까지 수혜 확산</h3>
+    <p>반도체 기업들이 벌어들이는 막대한 이익을 다시 설비투자로 쏟아부으면서, 수혜가 전자장비·사무용 전자제품 업종 전반으로 번지고 있습니다. 삼성전자는 2026년 메모리 투자를 2025년(DS 부문 40조 9,000억 원) 대비 상당 수준 증가시킬 방침이며, HBM 월 생산량도 현재 17만 장에서 25만 장으로 확대할 계획입니다. TSMC는 2026년 520억~560억 달러(약 76조~82조 원)의 역대 최대 투자를 예고했습니다.</p>
+    <p>이 막대한 CAPEX는 반도체 전공정·후공정 장비, 계측 장비, 사무·공장 자동화 전자제품 기업들에게 직접적인 수주 기회로 이어집니다. 대형 반도체 기업의 투자가 늘수록 관련 전자장비 업종의 실적 가시성이 높아지는 구조적 연결 고리가 형성돼 있는 것입니다.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 2 — STOCKS -->
+  <section id="stocks">
+    <h2>증권가가 주목하는 수혜 종목 8선</h2>
+    <p>아래 종목들은 앞서 분석한 4가지 급등 엔진과 직접 연결된 기업들입니다. 각 기업의 포지셔닝과 수혜 이유를 간략히 정리했습니다.</p>
+    <p class="stock-intro">※ 하기 종목은 분석 목적의 정보 제공이며 투자 권유가 아닙니다.</p>
+
+    <div class="stock-grid">
+
+      <div class="stock-card">
+        <div class="ticker">005930 · KOSPI</div>
+        <div class="name">삼성전자</div>
+        <div class="desc">HBM·D램 가격 급등의 직접 수혜자. 엔비디아 GTC에서 그록3 LPU 제조사로 공식 확인. 파운드리 선단공정 가동률 빠르게 회복 중. 2026년 연간 100조 원 영업이익 시대 진입 전망.</div>
+        <span class="stock-tag">AI + 파운드리 복합 수혜</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">000660 · KOSPI</div>
+        <div class="name">SK하이닉스</div>
+        <div class="desc">세계 HBM 시장 60% 이상 점유. 2026년 HBM 물량 계약이 이미 확정된 상태. 증권가 목표가 145만~154만원 제시. 마이크론 대비 저평가 메리트도 부각.</div>
+        <span class="stock-tag">HBM 절대 강자</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">042700 · KOSDAQ</div>
+        <div class="name">한미반도체</div>
+        <div class="desc">HBM 패키징 핵심 장비인 TC본더 독점 공급. AI 반도체 후공정 장비 수요 직접 연동. 삼성·SK하이닉스 CAPEX 증가 시 수주 직접 수혜. 국내 반도체 장비 대표주.</div>
+        <span class="stock-tag">HBM 장비 독점</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">267260 · KOSPI</div>
+        <div class="name">HD현대일렉트릭</div>
+        <div class="desc">AI 데이터센터 전력 인프라 수요 급증 수혜. 초고압 변압기·전력 설비 국내 1위. 글로벌 전력망 교체 수요와 AI 전력 수요가 동시에 맞물리는 구간.</div>
+        <span class="stock-tag">AI 전력 인프라 핵심</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">006400 · KOSPI</div>
+        <div class="name">삼성SDI</div>
+        <div class="desc">AI 서버 UPS 및 에너지저장장치(ESS) 배터리 수요 증가 수혜. 데이터센터의 안정적 전력 공급을 위한 대용량 배터리 수요 확대. 프리미엄 전지 기술력 보유.</div>
+        <span class="stock-tag">데이터센터 ESS 수요</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">036930 · KOSDAQ</div>
+        <div class="name">주성엔지니어링</div>
+        <div class="desc">반도체·디스플레이 제조 장비 전문. 삼성·SK 등 국내외 반도체 기업 CAPEX 확대 시 수주 증가 직결. 고객사 투자 사이클과 실적이 높은 상관관계.</div>
+        <span class="stock-tag">반도체 장비 수주 수혜</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">196170 · KOSDAQ</div>
+        <div class="name">알테오젠 <small style="font-size:11px;color:var(--amber);">(주의)</small></div>
+        <div class="desc">전자업종은 아니나 AI 로봇·바이오 자동화 장비 라인업 보유. 첨단 제조 자동화 수혜 가능성. 단, 주 사업은 바이오 의약품이므로 업종 성격에 맞게 비중 조절 필요.</div>
+        <span class="stock-tag">자동화 기기 보조 수혜</span>
+      </div>
+
+      <div class="stock-card">
+        <div class="ticker">039030 · KOSDAQ</div>
+        <div class="name">이오테크닉스</div>
+        <div class="desc">반도체 레이저 마킹·절단 장비 전문. 반도체 생산량 증가 시 후공정 레이저 장비 수요 직접 증가. CAPEX 확대 국면에서 수주 모멘텀 기대. 글로벌 고객사 다변화 진행 중.</div>
+        <span class="stock-tag">후공정 장비 수혜</span>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 3 — RISKS -->
+  <section id="risk">
+    <h2>투자 전 반드시 체크해야 할 리스크</h2>
+    <div class="risk-grid">
+      <div class="risk-box">
+        <div class="rtitle">⚠ 단기 과열 리스크</div>
+        <p>코스피 2월에만 사이드카 3회 발동. 단기 급등 부담 누적 구간. 기술적 조정 가능성 항상 존재.</p>
+      </div>
+      <div class="risk-box">
+        <div class="rtitle">⚠ 엔비디아 SRAM 전략 변수</div>
+        <p>엔비디아가 SRAM 기반 칩 비중 확대 시 HBM 의존도 높은 기업에 구조적 위협 가능성.</p>
+      </div>
+      <div class="risk-box">
+        <div class="rtitle">⚠ 미국발 관세 이슈</div>
+        <p>트럼프 행정부의 상호관세 정책 불확실성 지속. 공급망 재편 압박이 언제든 변수로 작용 가능.</p>
+      </div>
+      <div class="risk-box">
+        <div class="rtitle">⚠ AI플레이션 우려</div>
+        <p>AI 투자 급증 → 구리·반도체 가격 급등 → 'AI플레이션' 현실화 시 기준금리 인하 마찰 요인.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SECTION 4 — CONCLUSION -->
+  <section id="conclusion">
+    <h2>결론 — 지금 이 업종을 어떻게 볼 것인가</h2>
+
+    <div class="summary-box">
+      <h4>📋 핵심 요약 체크리스트</h4>
+      <ul>
+        <li>AI 수요 구조 변화 + 중동 공급 충격이 <strong>동시 발화</strong>하며 업종 전반 수혜</li>
+        <li>엔비디아 GTC 2026이 삼성·SK하이닉스 직접 수혜를 확인하는 <strong>공식 촉매</strong>가 됨</li>
+        <li>삼성·TSMC의 천문학적 CAPEX가 장비·부품 기업으로 수혜를 <strong>하방 확산</strong></li>
+        <li>코스피 반도체가 순이익 상향 조정의 96%를 차지하며 <strong>시장 전체 밸류에이션을 견인</strong></li>
+        <li>단기 급등 피로감과 지정학·관세 변수를 고려한 <strong>분할 접근 전략</strong>이 유효</li>
+        <li>HBM 직접 수혜(삼성·SK하이닉스) + 장비 수혜(한미반도체·주성엔지니어링) 조합 관심</li>
+      </ul>
+    </div>
+
+    <p>이번 전자장비·사무용 전자제품 업종의 상승은 단순한 단기 테마가 아닌, AI 패러다임 전환이라는 구조적 변화 위에 지정학 충격이 더해진 복합 랠리입니다. 다만 코스피가 이미 사상 최고치 영역에서 움직이고 있는 만큼, 무리한 단기 추격 매수보다는 분할 분산 접근과 리스크 관리를 병행하는 전략이 중요합니다. 반도체 업황과 미-중·중동 지정학 뉴스 흐름을 지속적으로 모니터링하며 대응하시기 바랍니다.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- HASHTAGS -->
+  <section class="hashtag-section">
+    <div class="ht-label">🔖 해시태그 (SEO · SNS 최적화)</div>
+    <div class="ht-wrap">
+      <span class="ht">#전자장비급등</span>
+      <span class="ht">#사무용전자제품주식</span>
+      <span class="ht">#AI반도체수혜주</span>
+      <span class="ht">#HBM주식추천</span>
+      <span class="ht">#삼성전자주가전망</span>
+      <span class="ht">#SK하이닉스목표주가</span>
+      <span class="ht">#한미반도체</span>
+      <span class="ht">#코스피전망2026</span>
+      <span class="ht">#반도체업종분석</span>
+      <span class="ht">#AI슈퍼사이클</span>
+      <span class="ht">#엔비디아GTC2026</span>
+      <span class="ht">#D램가격급등</span>
+      <span class="ht">#메모리반도체</span>
+      <span class="ht">#전자장비업종</span>
+      <span class="ht">#국내주식추천</span>
+      <span class="ht">#HD현대일렉트릭</span>
+      <span class="ht">#반도체장비주</span>
+      <span class="ht">#주성엔지니어링</span>
+      <span class="ht">#이오테크닉스</span>
+      <span class="ht">#주식투자2026</span>
+      <span class="ht">#코스피6000</span>
+      <span class="ht">#반도체CAPEX</span>
+      <span class="ht">#AI인프라투자</span>
+      <span class="ht">#한국주식시장</span>
+      <span class="ht">#주식블로그</span>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    ⚠ 본 콘텐츠는 투자 참고용 정보 제공을 목적으로 작성되었으며, 특정 종목의 매수·매도를 권유하지 않습니다. 투자의 최종 판단과 책임은 본인에게 있으며, 주식 투자는 원금 손실이 발생할 수 있습니다. 본 내용은 공개된 자료 및 시장 분석을 기반으로 작성되었으며, 이를 통해 발생하는 손익에 대해 책임을 지지 않습니다.
+  </div>
+
+</div><!-- /wrapper -->
+
+</body>
+</html>
