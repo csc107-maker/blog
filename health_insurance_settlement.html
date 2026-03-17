@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 소득 정산제도 확대 완전 정리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --blue: #1a3a8f;
+    --sky: #3b82f6;
+    --teal: #0ea5e9;
+    --gold: #f59e0b;
+    --green: #10b981;
+    --red: #ef4444;
+    --light: #f0f6ff;
+    --white: #ffffff;
+    --gray: #64748b;
+    --border: #e2e8f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.8;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 60%, #1e4fc2 100%);
+    color: white;
+    padding: 60px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(59,130,246,0.15);
+    top: -200px; right: -100px;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(14,165,233,0.1);
+    bottom: -100px; left: -80px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em {
+    color: var(--gold);
+    font-style: normal;
+  }
+  .hero p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* CONTAINER */
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 48px 0 32px;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    border-left: 4px solid var(--sky);
+    padding-left: 14px;
+    margin-bottom: 28px;
+  }
+
+  /* SUMMARY BOX */
+  .summary-box {
+    background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+    border: 1px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 32px;
+  }
+  .summary-box .label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sky);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .summary-box p {
+    font-size: 15px;
+    color: #334155;
+    line-height: 1.9;
+  }
+  .summary-box strong {
+    color: var(--blue);
+  }
+
+  /* COMPARISON TABLE */
+  .compare-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .compare-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+  .compare-card .card-head {
+    padding: 16px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .compare-card.before .card-head {
+    background: #fef2f2;
+    color: var(--red);
+    border-bottom: 2px solid #fca5a5;
+  }
+  .compare-card.after .card-head {
+    background: #f0fdf4;
+    color: var(--green);
+    border-bottom: 2px solid #6ee7b7;
+  }
+  .compare-card .card-body {
+    background: white;
+    padding: 18px 20px;
+  }
+  .compare-card .card-body ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .compare-card .card-body li {
+    font-size: 14px;
+    color: #475569;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.6;
+  }
+  .compare-card.before .card-body li::before {
+    content: '✕';
+    color: #fca5a5;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .compare-card.after .card-body li::before {
+    content: '✔';
+    color: var(--green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* INCOME TYPES */
+  .income-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .income-chip {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #334155;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: all 0.2s;
+  }
+  .income-chip.new {
+    border-color: var(--teal);
+    background: linear-gradient(135deg, #f0f9ff, #e0f7fe);
+    color: var(--blue);
+  }
+  .income-chip .icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .income-chip .new-tag {
+    margin-left: auto;
+    background: var(--teal);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* CASE CARDS */
+  .case-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 24px rgba(13,27,62,0.08);
+    border: 1px solid var(--border);
+  }
+  .case-head {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .case-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 17px;
+    color: white;
+    flex-shrink: 0;
+  }
+  .case-head h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .case-head p {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+  .case-body {
+    padding: 0 24px 24px;
+  }
+
+  /* PERSON INFO */
+  .person-info {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .info-item .key {
+    font-size: 11px;
+    color: var(--gray);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .info-item .val {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--sky), transparent);
+  }
+  .tl-item {
+    position: relative;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.7;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 16px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--sky);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--sky);
+  }
+  .tl-item strong {
+    color: var(--blue);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+
+  /* RESULT BOX */
+  .result-box {
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .result-box.refund {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1.5px solid #6ee7b7;
+  }
+  .result-box.extra {
+    background: linear-gradient(135deg, #fff7ed, #fde68a22);
+    border: 1.5px solid #fbbf24;
+  }
+  .result-box .result-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+  .result-box .result-text .label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .result-box.refund .result-text .label { color: var(--green); }
+  .result-box.extra .result-text .label { color: #d97706; }
+  .result-box .result-text .amount {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--navy);
+  }
+  .result-box .result-text p {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 3px;
+  }
+
+  /* CAUTION */
+  .caution-box {
+    background: #fffbeb;
+    border: 1.5px solid #fcd34d;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-top: 10px;
+  }
+  .caution-box .ctitle {
+    font-weight: 700;
+    color: #92400e;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .caution-box ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .caution-box li {
+    font-size: 14px;
+    color: #78350f;
+    display: flex;
+    gap: 8px;
+    line-height: 1.6;
+  }
+  .caution-box li::before {
+    content: '•';
+    color: #f59e0b;
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  /* FLOW CHART */
+  .flow-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 8px;
+  }
+  .flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow-left {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .flow-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .flow-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--sky), #bfdbfe);
+    min-height: 20px;
+  }
+  .flow-content {
+    flex: 1;
+    padding: 4px 0 20px 16px;
+  }
+  .flow-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+    padding-top: 8px;
+  }
+  .flow-content p {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* KEY POINT */
+  .key-point {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .key-point::before {
+    content: '"';
+    position: absolute;
+    font-size: 140px;
+    font-family: Georgia, serif;
+    color: rgba(255,255,255,0.06);
+    top: -30px;
+    left: 10px;
+    line-height: 1;
+  }
+  .key-point p {
+    font-size: 16px;
+    line-height: 1.9;
+    position: relative;
+    z-index: 1;
+  }
+  .key-point p strong {
+    color: var(--gold);
+  }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1.5px solid #6ee7b7;
+    border-radius: 20px;
+    padding: 32px 28px;
+    text-align: center;
+    margin: 40px 0;
+  }
+  .cta-section h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .cta-section p {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 20px;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(16,185,129,0.35);
+  }
+
+  /* HASHTAG */
+  .hashtag-wrap {
+    padding: 20px 0 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hashtag-wrap span {
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--gray);
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 8px 0;
+  }
+
+  @media (max-width: 560px) {
+    .compare-wrap { grid-template-columns: 1fr; }
+    .income-grid { grid-template-columns: 1fr; }
+    .person-info { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">2026 건강보험 완전정리</div>
+  <h1>소득 정산제도 확대<br><em>예시로 이해하는</em> 핵심 가이드</h1>
+  <p>2025년부터 확대된 제도, 내가 환급받을 수 있는지<br>실제 사례로 쉽게 알아봅니다</p>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: 제도란? -->
+  <section>
+    <div class="section-title">소득 정산제도란 무엇인가요?</div>
+
+    <div class="summary-box">
+      <div class="label">CORE CONCEPT</div>
+      <p>
+        건강보험료는 <strong>작년 소득 기준</strong>으로 부과됩니다.<br>
+        그런데 올해 소득이 크게 줄었거나 늘었다면?<br>
+        소득 정산제도는 <strong>현재 소득에 맞게 보험료를 조정</strong>하고, 나중에 실제 소득 자료가 확인되면 차액을 정산하는 제도입니다.
+      </p>
+    </div>
+
+    <!-- 변경 전/후 비교 -->
+    <div class="compare-wrap">
+      <div class="compare-card before">
+        <div class="card-head">⛔ 2024년 이전 (기존)</div>
+        <div class="card-body">
+          <ul>
+            <li>소득이 <strong>감소</strong>한 경우만 신청 가능</li>
+            <li>사업소득·근로소득 <strong>2종</strong>만 해당</li>
+            <li>소득 증가 시 조정 신청 불가</li>
+            <li>이자·배당·연금소득은 제외</li>
+          </ul>
+        </div>
+      </div>
+      <div class="compare-card after">
+        <div class="card-head">✅ 2025년부터 (확대)</div>
+        <div class="card-body">
+          <ul>
+            <li>소득 <strong>감소 + 증가</strong> 모두 신청 가능</li>
+            <li>대상 소득 <strong>6종</strong>으로 확대</li>
+            <li>소득 증가 시도 보험료 선조정 가능</li>
+            <li>이자·배당·연금·기타소득 포함</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6종 소득 -->
+    <div class="section-title" style="font-size:16px; margin-top:8px;">이제 6가지 소득이 모두 대상이에요</div>
+    <div class="income-grid">
+      <div class="income-chip">
+        <span class="icon">💼</span> 사업소득
+      </div>
+      <div class="income-chip">
+        <span class="icon">🏢</span> 근로소득
+      </div>
+      <div class="income-chip new">
+        <span class="icon">🏦</span> 이자소득
+        <span class="new-tag">NEW</span>
+      </div>
+      <div class="income-chip new">
+        <span class="icon">📈</span> 배당소득
+        <span class="new-tag">NEW</span>
+      </div>
+      <div class="income-chip new">
+        <span class="icon">🧓</span> 연금소득
+        <span class="new-tag">NEW</span>
+      </div>
+      <div class="income-chip new">
+        <span class="icon">📦</span> 기타소득
+        <span class="new-tag">NEW</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: 사례 -->
+  <section>
+    <div class="section-title">실제 사례로 이해하기</div>
+
+    <!-- 사례 1 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">1</div>
+        <div>
+          <h3>퇴직 후 소득 급감한 김씨 — 환급 받은 경우</h3>
+          <p>자영업 폐업 후 소득이 크게 줄었지만 보험료는 그대로</p>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="person-info">
+          <div class="info-item">
+            <span class="key">가입 유형</span>
+            <span class="val">지역가입자</span>
+          </div>
+          <div class="info-item">
+            <span class="key">2024년 사업소득</span>
+            <span class="val">연 4,800만원</span>
+          </div>
+          <div class="info-item">
+            <span class="key">2025년 실제 소득</span>
+            <span class="val">연 1,200만원 (폐업)</span>
+          </div>
+          <div class="info-item">
+            <span class="key">기존 월 보험료</span>
+            <span class="val">약 28만원</span>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <strong>2025년 1월 · 폐업 신고</strong>
+            기존대로라면 2024년 소득 기준 월 28만원을 계속 납부해야 함
+          </div>
+          <div class="tl-item">
+            <strong>2025년 2월 · 소득 조정 신청</strong>
+            폐업사실 확인서 제출 → 실제 소득(월 100만원) 기준으로 보험료 조정 신청<br>
+            조정 후 월 보험료 약 <b style="color:var(--blue)">7만원</b>으로 감소
+          </div>
+          <div class="tl-item">
+            <strong>2026년 11월 · 정산</strong>
+            국세청 확인 소득 자료 연계 → 2025년 실제 소득 최종 확인<br>
+            기존 납부액 vs 조정 납부액 차이를 재계산
+          </div>
+        </div>
+
+        <div class="result-box refund">
+          <div class="result-icon">💰</div>
+          <div class="result-text">
+            <div class="label">환급 결과</div>
+            <div class="amount">약 126만원 환급</div>
+            <p>조정 신청 전 2개월 과납분 + 조정액 정산 차액</p>
+          </div>
+        </div>
+
+        <div class="caution-box" style="margin-top:14px;">
+          <div class="ctitle">⚠️ 이렇게 하면 더 좋아요</div>
+          <ul>
+            <li>폐업 즉시 신청해야 과납 기간이 줄어듭니다. 늦게 신청하면 그만큼 더 냄</li>
+            <li>온라인 신청 가능 (nhis.or.kr) — 방문 없이도 됩니다</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 사례 2 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background: linear-gradient(135deg, #10b981, #059669);">2</div>
+        <div>
+          <h3>부업으로 수입이 늘어난 이씨 — 추가 납부한 경우</h3>
+          <p>직장 외 부업 수입 발생 → 미리 조정 신청하면 나중 충격 최소화</p>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="person-info">
+          <div class="info-item">
+            <span class="key">가입 유형</span>
+            <span class="val">직장가입자</span>
+          </div>
+          <div class="info-item">
+            <span class="key">월급 외 유튜브 수익</span>
+            <span class="val">연 약 2,400만원</span>
+          </div>
+          <div class="info-item">
+            <span class="key">기존 보험료</span>
+            <span class="val">월급 기준만 납부</span>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <strong>기존 제도라면?</strong>
+            소득 증가 조정 신청 불가 → 이듬해 11월 정산 시 한꺼번에 추가 납부 폭탄
+          </div>
+          <div class="tl-item">
+            <strong>2025년부터 달라진 점</strong>
+            소득 증가 시에도 미리 조정 신청 가능 → 매달 조금씩 나눠서 납부
+          </div>
+          <div class="tl-item">
+            <strong>2026년 11월 · 정산</strong>
+            미리 조정 납부한 금액이 반영되어 정산 시 차액이 크지 않음
+          </div>
+        </div>
+
+        <div class="result-box extra">
+          <div class="result-icon">📋</div>
+          <div class="result-text">
+            <div class="label">정산 결과</div>
+            <div class="amount">추가 납부 최소화</div>
+            <p>미리 신청 시 월 약 +5만원 추가 납부 → 정산 시 충격 없음</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 사례 3 -->
+    <div class="case-card">
+      <div class="case-head">
+        <div class="case-num" style="background: linear-gradient(135deg, #f59e0b, #d97706);">3</div>
+        <div>
+          <h3>배당·이자 소득이 있는 박씨 — NEW 대상 소득 해당</h3>
+          <p>2024년까지는 신청 불가, 2025년부터는 가능!</p>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="person-info">
+          <div class="info-item">
+            <span class="key">가입 유형</span>
+            <span class="val">지역가입자 (은퇴)</span>
+          </div>
+          <div class="info-item">
+            <span class="key">2024년 배당소득</span>
+            <span class="val">연 3,000만원</span>
+          </div>
+          <div class="info-item">
+            <span class="key">2025년 배당소득</span>
+            <span class="val">연 800만원 (주식 처분)</span>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <strong>2024년까지 · 조정 불가</strong>
+            배당소득은 조정 대상 소득이 아니었음 → 2024년 기준 보험료 그대로 납부
+          </div>
+          <div class="tl-item">
+            <strong>2025년부터 · 조정 신청 가능!</strong>
+            배당소득도 6종 소득에 포함 → 감소한 배당소득 기준으로 조정 신청 가능
+          </div>
+          <div class="tl-item">
+            <strong>2026년 11월 · 정산</strong>
+            국세청 금융소득 자료 연계 → 실제 배당 800만원 확인 후 차액 환급
+          </div>
+        </div>
+
+        <div class="result-box refund">
+          <div class="result-icon">🎉</div>
+          <div class="result-text">
+            <div class="label">환급 결과</div>
+            <div class="amount">수십만원 환급 기대</div>
+            <p>2025년부터 새로 생긴 권리 — 반드시 신청해야 받을 수 있음</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: 정산 흐름 -->
+  <section>
+    <div class="section-title">2026년 정산 타임라인 한눈에 보기</div>
+
+    <div class="flow-wrap">
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="flow-dot">1</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <h4>2025년 소득 변동 발생</h4>
+          <p>퇴직, 폐업, 소득 감소 또는 증가 발생</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="flow-dot">2</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <h4>조정 신청 (가능한 빨리!)</h4>
+          <p>nhis.or.kr 온라인 또는 지사 방문<br>신청 다음 달부터 조정 보험료 적용</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="flow-dot">3</div>
+          <div class="flow-line"></div>
+        </div>
+        <div class="flow-content">
+          <h4>2026년 4월 · 직장 건강보험 연말정산</h4>
+          <p>직장인은 4월 급여에서 정산분 반영<br>추가 납부 금액이 큰 경우 최대 12회 분할 가능</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-left">
+          <div class="flow-dot" style="background: var(--gold);">4</div>
+          <div class="flow-line" style="background: transparent;"></div>
+        </div>
+        <div class="flow-content">
+          <h4>2026년 11월 · 최종 소득 정산</h4>
+          <p>국세청 2025년 귀속 소득 자료 연계 → 보험료 재산정<br><b style="color:var(--blue)">차액 추가 부과 or 환급 통보</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="key-point">
+      <p>
+        💡 핵심 포인트: <strong>소득이 줄었다면 조정 신청을 늦출수록 손해</strong>입니다.<br>
+        신청한 달의 <strong>다음 달부터</strong> 조정된 보험료가 적용되기 때문에,
+        신청을 미루면 과납 기간이 길어져 돌려받는 금액이 줄어들 수 있습니다.
+      </p>
+    </div>
+
+    <div class="caution-box">
+      <div class="ctitle">⚠️ 꼭 알아야 할 주의사항</div>
+      <ul>
+        <li>소득 중 <strong>어느 한 가지만 조정</strong>해도, 정산 시에는 6가지 소득 전체 기준으로 재산정됩니다.</li>
+        <li>소득이 줄어서 조정 신청했는데, 실제 정산 결과 다른 소득이 많았다면 <strong>추가 납부</strong>가 될 수 있습니다.</li>
+        <li>환급금은 신청하지 않으면 자동 지급되지 않는 경우가 많습니다. <strong>직접 조회·신청</strong>이 필수입니다.</li>
+        <li>조정 신청 가능 방법: 온라인(nhis.or.kr), 우편, 팩스, 지사 방문</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>내 환급금, 지금 바로 확인하세요 💚</h3>
+    <p>국민건강보험공단 홈페이지 또는 'The건강보험' 앱에서<br>1분 만에 미환급금 조회 가능 · 수수료 0원</p>
+    <a href="https://www.nhis.or.kr" class="cta-btn" target="_blank">nhis.or.kr 바로가기 →</a>
+  </div>
+
+  <!-- HASHTAG -->
+  <div class="hashtag-wrap">
+    <span>#건강보험료정산</span>
+    <span>#소득정산제도</span>
+    <span>#건강보험환급금</span>
+    <span>#2026건강보험</span>
+    <span>#건강보험료조정</span>
+    <span>#본인부담상한제</span>
+    <span>#건강보험료인상</span>
+    <span>#국민건강보험</span>
+    <span>#생활정보</span>
+    <span>#돈되는정보</span>
+    <span>#직장인정보</span>
+    <span>#자영업자정보</span>
+  </div>
+
+</div>
+</body>
+</html>
