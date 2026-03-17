@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LG에너지솔루션 AMPC 보조금 리스크 & 대응 전략 보고서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-2: #3d3d3d;
+    --ink-3: #6b6b6b;
+    --paper: #f5f2ec;
+    --paper-2: #ede9e1;
+    --paper-3: #e2ddd4;
+    --accent: #c0392b;
+    --accent-2: #e74c3c;
+    --accent-muted: #f0e0de;
+    --blue: #1a4a7a;
+    --blue-muted: #dde6f0;
+    --green: #1a6040;
+    --green-muted: #ddf0e6;
+    --amber: #7a4a00;
+    --amber-muted: #f5ead0;
+    --border: rgba(26,26,26,0.12);
+    --border-strong: rgba(26,26,26,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 320px;
+    padding: 56px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,242,236,0.08);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: 40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,242,236,0.06);
+  }
+  .cover-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 20px;
+  }
+  .cover-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    max-width: 700px;
+  }
+  .cover-subtitle {
+    font-size: 15px;
+    color: rgba(245,242,236,0.65);
+    max-width: 600px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(245,242,236,0.45);
+    letter-spacing: 0.08em;
+    border-top: 1px solid rgba(245,242,236,0.1);
+    padding-top: 20px;
+  }
+  .cover-meta span strong {
+    display: block;
+    color: rgba(245,242,236,0.7);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── EXECUTIVE SUMMARY ── */
+  .exec-summary {
+    background: var(--accent);
+    color: #fff;
+    padding: 40px 64px;
+  }
+  .exec-summary .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 12px;
+  }
+  .exec-summary p {
+    font-size: 15px;
+    line-height: 1.8;
+    opacity: 0.93;
+    max-width: 760px;
+  }
+
+  /* ── KPI STRIP ── */
+  .kpi-strip {
+    background: var(--paper-3);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .kpi-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .kpi-value.red { color: var(--accent); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-value.blue { color: var(--blue); }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--ink-3);
+    line-height: 1.4;
+  }
+  .kpi-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    opacity: 0.7;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 52px 64px 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-of-type { border-bottom: none; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    min-width: 36px;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .section-title-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 8px;
+  }
+
+  h3 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 28px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  p {
+    color: var(--ink-2);
+    margin-bottom: 16px;
+    font-size: 14.5px;
+    line-height: 1.85;
+  }
+
+  /* ── AMPC TIMELINE ── */
+  .ampc-timeline {
+    background: var(--paper-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin: 24px 0;
+  }
+  .ampc-timeline-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 20px;
+  }
+  .ampc-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ampc-bar-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 80px;
+    gap: 12px;
+    align-items: center;
+  }
+  .ampc-bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .ampc-bar-track {
+    height: 22px;
+    background: var(--paper-3);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ampc-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+  .ampc-bar-fill.q2 { background: var(--accent); width: 100%; }
+  .ampc-bar-fill.q3 { background: var(--amber); width: 74.5%; }
+  .ampc-bar-fill.q4 { background: var(--blue); width: 67.8%; }
+  .ampc-bar-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-2);
+    text-align: right;
+  }
+
+  /* ── RISK BOX ── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .risk-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    background: #fff;
+  }
+  .risk-card.high { border-left: 3px solid var(--accent); }
+  .risk-card.medium { border-left: 3px solid var(--amber); }
+  .risk-card.low { border-left: 3px solid var(--green); }
+  .risk-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .risk-card.high .risk-card-label { color: var(--accent); }
+  .risk-card.medium .risk-card-label { color: var(--amber); }
+  .risk-card.low .risk-card-label { color: var(--green); }
+  .risk-card-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .risk-card p { font-size: 12.5px; line-height: 1.65; color: var(--ink-3); margin-bottom: 0; }
+
+  /* ── STRATEGY CARDS ── */
+  .strategy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .strategy-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    background: #fff;
+  }
+  .strategy-item + .strategy-item {
+    border-top: 1px solid var(--border);
+  }
+  .strategy-num {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .strategy-content {
+    padding: 18px 20px;
+  }
+  .strategy-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .strategy-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+  .strategy-desc { font-size: 13px; color: var(--ink-3); line-height: 1.65; margin: 0; }
+
+  /* ── DATA TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+  }
+  .data-table thead tr {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .data-table thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .data-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+  }
+  .data-table tbody tr:nth-child(even) { background: var(--paper-2); }
+  .data-table tbody td {
+    padding: 10px 14px;
+    color: var(--ink-2);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .data-table tbody td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+  .tag.red { background: var(--accent-muted); color: var(--accent); }
+  .tag.green { background: var(--green-muted); color: var(--green); }
+  .tag.blue { background: var(--blue-muted); color: var(--blue); }
+  .tag.amber { background: var(--amber-muted); color: var(--amber); }
+
+  /* ── HIGHLIGHT QUOTE ── */
+  .highlight-quote {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-muted);
+    padding: 18px 22px;
+    margin: 24px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-quote p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 14px;
+    color: var(--accent);
+    margin: 0;
+    line-height: 1.75;
+  }
+  .highlight-quote cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    opacity: 0.7;
+    margin-top: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .highlight-note {
+    border-left: 3px solid var(--blue);
+    background: var(--blue-muted);
+    padding: 16px 22px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-note p { font-size: 13.5px; color: var(--blue); margin: 0; line-height: 1.7; }
+
+  /* ── SCENARIO TABLE ── */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .scenario-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .scenario-head {
+    padding: 12px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .scenario-head.bearish { background: var(--accent-muted); color: var(--accent); }
+  .scenario-head.base { background: var(--amber-muted); color: var(--amber); }
+  .scenario-head.bullish { background: var(--green-muted); color: var(--green); }
+  .scenario-body { padding: 14px 16px; }
+  .scenario-body p { font-size: 12.5px; line-height: 1.6; color: var(--ink-3); margin-bottom: 8px; }
+  .scenario-body p:last-child { margin-bottom: 0; }
+  .scenario-impact {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .scenario-impact.neg { color: var(--accent); }
+  .scenario-impact.mid { color: var(--amber); }
+  .scenario-impact.pos { color: var(--green); }
+
+  /* ── TECH ROADMAP ── */
+  .roadmap {
+    margin: 20px 0;
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 12px; bottom: 12px;
+    width: 1px;
+    background: var(--border-strong);
+  }
+  .roadmap-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .roadmap-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-3);
+    padding-top: 4px;
+    text-align: right;
+    padding-right: 16px;
+    position: relative;
+  }
+  .roadmap-year::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 8px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 2px solid var(--paper);
+    outline: 1px solid var(--ink);
+  }
+  .roadmap-content {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+  }
+  .roadmap-content-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .roadmap-content p { font-size: 12.5px; color: var(--ink-3); line-height: 1.6; margin: 0; }
+
+  /* ── CONCLUSION ── */
+  .conclusion {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 64px;
+  }
+  .conclusion-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 16px;
+  }
+  .conclusion h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .conclusion p {
+    color: rgba(245,242,236,0.75);
+    font-size: 14px;
+    line-height: 1.85;
+    margin-bottom: 14px;
+  }
+  .conclusion-matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .matrix-cell {
+    background: rgba(245,242,236,0.05);
+    border: 1px solid rgba(245,242,236,0.1);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .matrix-cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .matrix-cell.watch .matrix-cell-label { color: var(--accent-2); }
+  .matrix-cell.monitor .matrix-cell-label { color: #e67e22; }
+  .matrix-cell.positive .matrix-cell-label { color: #2ecc71; }
+  .matrix-cell.neutral .matrix-cell-label { color: #3498db; }
+  .matrix-cell p { font-size: 12.5px; color: rgba(245,242,236,0.65); line-height: 1.6; margin: 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--paper-3);
+    border-top: 1px solid var(--border);
+    padding: 24px 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin: 0;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 680px) {
+    .cover, .exec-summary, .section, .kpi-strip, .conclusion, .footer { padding-left: 24px; padding-right: 24px; }
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+    .risk-grid, .scenario-grid, .conclusion-matrix { grid-template-columns: 1fr; }
+    .cover-meta { flex-wrap: wrap; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">산업 분석 보고서 · 2차전지 / 배터리</div>
+  <div class="cover-title">LG에너지솔루션<br>AMPC 보조금 리스크와 탈보조금 전략</div>
+  <div class="cover-subtitle">미국 IRA 정책 불확실성 속에서 LG에너지솔루션이 추진 중인 수익 구조 전환 전략을 실적 데이터, 공식 발표, 기술 로드맵을 종합하여 분석한다.</div>
+  <div class="cover-meta">
+    <span><strong>발행일</strong>2026.03.17</span>
+    <span><strong>대상 기업</strong>LG에너지솔루션 (373220)</span>
+    <span><strong>분류</strong>2차전지 · 에너지저장</span>
+    <span><strong>데이터 기준</strong>2025년 연간 실적 및 2Q25 실적설명회</span>
+  </div>
+</div>
+
+<!-- EXEC SUMMARY -->
+<div class="exec-summary">
+  <div class="label">Executive Summary</div>
+  <p>LG에너지솔루션의 영업이익 구조는 미국 IRA의 AMPC(첨단제조생산세액공제) 보조금에 상당 부분 의존하고 있다. 2025년 4분기 AMPC 제외 영업손실은 4,548억 원에 달하며, 트럼프 행정부의 IRA 정책 변화 가능성은 상존한다. 그러나 회사는 ① ESS 중심 포트폴리오 피봇, ② 원가 혁신 및 투자 효율화, ③ PFE 조항 활용한 공급망 재편, ④ 차세대 기술(LMR·전고체) 개발이라는 4대 축으로 탈보조금 수익 구조 구축에 나서고 있다. 2025년 2~3분기 연속 AMPC 제외 흑자 달성은 이 전환이 실효성 있음을 보여주는 첫 신호탄이다.</p>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi">
+    <div class="kpi-value red">▼4,548억</div>
+    <div class="kpi-label">2025 4Q AMPC 제외<br>실질 영업손실</div>
+    <div class="kpi-note">보조금 포함 시 △1,220억</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value blue">3,328억</div>
+    <div class="kpi-label">2025 4Q AMPC<br>수령액</div>
+    <div class="kpi-note">2Q 최대치 4,908억 대비 감소</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value green">+2,358억</div>
+    <div class="kpi-label">2025 3Q AMPC 제외<br>영업이익 (2분기 연속 흑자)</div>
+    <div class="kpi-note">6개 분기 만에 흑자 전환</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-value">~2032년</div>
+    <div class="kpi-label">OBBBA 기준<br>AMPC 유지 기간</div>
+    <div class="kpi-note">조기 일몰 위기 벗어난 상태</div>
+  </div>
+</div>
+
+<!-- SECTION 1: AMPC 구조 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">AMPC란 무엇이며, LG엔솔에게 얼마나 중요한가</h2>
+    <div class="section-title-line"></div>
+  </div>
+
+  <p>AMPC(Advanced Manufacturing Production Credit)는 미국 IRA(인플레이션감축법) 45X 조항에 따른 세액공제로, 미국 내에서 배터리 셀을 생산할 경우 <strong>kWh당 35달러</strong>, 모듈 생산 시 <strong>kWh당 10달러</strong>를 세액공제 형태로 지원하는 제도다. 단순 보조금이 아니라 생산량에 연동되는 구조로, 공장 가동률이 높을수록 수혜액도 커진다.</p>
+
+  <p>LG에너지솔루션은 국내 배터리 3사 중 북미 생산 비중이 가장 높아 AMPC 수혜 규모도 가장 크다. 미시간(단독), 오하이오·테네시(GM JV), 오하이오(혼다 JV) 등 북미 생산 거점을 통해 2025년 한 해만 약 1조 4,800억 원의 세액공제를 수령한 것으로 추정된다.</p>
+
+  <div class="ampc-timeline">
+    <div class="ampc-timeline-title">2025년 분기별 AMPC 수령액 추이 (억 원)</div>
+    <div class="ampc-bars">
+      <div class="ampc-bar-row">
+        <div class="ampc-bar-label">2Q25</div>
+        <div class="ampc-bar-track"><div class="ampc-bar-fill q2"></div></div>
+        <div class="ampc-bar-value">4,908억 <span class="tag red">최고</span></div>
+      </div>
+      <div class="ampc-bar-row">
+        <div class="ampc-bar-label">3Q25</div>
+        <div class="ampc-bar-track"><div class="ampc-bar-fill q3"></div></div>
+        <div class="ampc-bar-value">3,655억</div>
+      </div>
+      <div class="ampc-bar-row">
+        <div class="ampc-bar-label">4Q25</div>
+        <div class="ampc-bar-track"><div class="ampc-bar-fill q4"></div></div>
+        <div class="ampc-bar-value">3,328억 <span class="tag amber">↓감소</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-quote">
+    <p>"변동성이 큰 정책 환경 속에서 원가 혁신과 고부가 프로젝트 집중 전략이 주효했다."</p>
+    <cite>— 이창실 LG에너지솔루션 CFO, 2025년 2분기 실적설명회</cite>
+  </div>
+
+  <p>문제는 AMPC가 공장 가동률과 직결된다는 점이다. 얼티엄셀즈 1·2공장 가동 중단, 포드·FBPS 계약 해지 등으로 북미 가동률이 떨어지면서 AMPC 수령액도 2분기 최고점 대비 꾸준히 감소하고 있다. 실적 방어막의 두께가 얇아지고 있는 것이다.</p>
+</div>
+
+<!-- SECTION 2: 리스크 분석 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">AMPC 관련 3대 리스크 분석</h2>
+    <div class="section-title-line"></div>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card high">
+      <div class="risk-card-label">위험도 HIGH</div>
+      <div class="risk-card-title">① IRA 정책 변경 리스크</div>
+      <p>트럼프 행정부는 IRA 폐지를 공약으로 내세웠으나, OBBBA(대규모 감세법안)를 통해 AMPC는 2032년까지 유지됐다. 그러나 세율 축소, 적용 범위 재조정 가능성은 여전히 상존하며, 행정 명령에 의한 탄력적 변경도 배제할 수 없다. 회사 측도 "폐지·축소 가능성 있다"고 공식 인정했다.</p>
+    </div>
+    <div class="risk-card high">
+      <div class="risk-card-label">위험도 HIGH</div>
+      <div class="risk-card-title">② 가동률 하락에 따른 수령액 감소</div>
+      <p>AMPC는 생산량 연동 구조다. 포드·FBPS 계약 해지로 13조 5,000억 원 규모 수주잔고가 소멸됐고, 얼티엄셀즈 가동 중단이 겹치면서 북미 배터리 생산량 자체가 줄었다. 가동률이 낮으면 세액공제도 줄어 이중으로 타격을 입는 구조다.</p>
+    </div>
+    <div class="risk-card medium">
+      <div class="risk-card-label">위험도 MEDIUM</div>
+      <div class="risk-card-title">③ PFE(금지외국단체) 조항 신설</div>
+      <p>OBBBA에 신설된 PFE 조항에 따라 중국산 원재료 비중이 일정 기준을 초과하면 AMPC 적용에서 제외된다. 2026년부터 비중국산 원재료 비중을 60% 이상, 2030년부터는 85% 이상으로 유지해야 한다. 핵심 광물의 중국 의존도가 높은 현실에서 공급망 전환 비용이 수반될 수 있다.</p>
+    </div>
+    <div class="risk-card low">
+      <div class="risk-card-label">위험도 LOW</div>
+      <div class="risk-card-title">④ AMPC 이전·양도 제약</div>
+      <p>합작법인(JV)에서 발생한 AMPC는 지분 비율에 따라 배분되므로, 단독 공장 대비 수혜 효율이 낮다. 합작사 지분 매각(혼다 JV 건물 매각 등) 시 향후 AMPC 수혜 기반 자체가 축소될 수 있다. 단독 운영 체제로 전환하는 흐름은 이 리스크를 헷지하기 위한 전략이기도 하다.</p>
+    </div>
+  </div>
+
+  <div class="highlight-note">
+    <p><strong>시나리오 분석:</strong> 만약 AMPC가 현재의 절반 수준으로 축소된다면, 2025년 연간 기준으로 영업이익은 약 7,400억 원 감소한다는 단순 추정이 가능하다. 이는 연간 영업이익(1조 3,461억 원)의 55%에 해당하는 규모로, 수익 구조의 취약성을 단적으로 보여준다.</p>
+  </div>
+</div>
+
+<!-- SECTION 3: 시나리오 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">AMPC 변화에 따른 3가지 시나리오</h2>
+    <div class="section-title-line"></div>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card">
+      <div class="scenario-head bearish">비관 시나리오</div>
+      <div class="scenario-body">
+        <div class="scenario-impact neg">영업이익 △50~70%</div>
+        <p><strong>조건:</strong> IRA 45X 조항 대폭 축소 또는 폐지. EV 시장 회복 지연.</p>
+        <p>북미 가동률 저조 + 보조금 감소의 이중 압박. AMPC 제외 손실 구조가 연간 단위로 고착화될 위험. ESS 성장세가 이를 상쇄하지 못하면 재무적 압박 극대화.</p>
+      </div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-head base">기본 시나리오</div>
+      <div class="scenario-body">
+        <div class="scenario-impact mid">영업이익 현수준 유지</div>
+        <p><strong>조건:</strong> AMPC 2032년까지 현행 유지. ESS 수요 40%+ 성장 실현.</p>
+        <p>AMPC를 방어막으로 유지하면서 ESS 매출 성장으로 AMPC 의존도를 점진적으로 낮춤. 2026년 매출 10~20% 성장 가이던스 달성 시 수익성 개선 궤도.</p>
+      </div>
+    </div>
+    <div class="scenario-card">
+      <div class="scenario-head bullish">낙관 시나리오</div>
+      <div class="scenario-body">
+        <div class="scenario-impact pos">AMPC 제외 흑자 기조 정착</div>
+        <p><strong>조건:</strong> ESS 급성장 + PFE 조항 활용 경쟁 우위 + LMR 조기 양산.</p>
+        <p>중국 배터리 기업이 PFE 조항으로 미국 시장에서 배제되면서 LG엔솔의 상대적 지위 강화. 보조금 없이도 수익을 내는 구조적 전환 성공.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: 4대 대응 전략 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">LG엔솔의 4대 탈보조금 대응 전략</h2>
+    <div class="section-title-line"></div>
+  </div>
+
+  <p>LG에너지솔루션은 AMPC 의존 구조에서 벗어나기 위해 공식 실적설명회 및 경영 가이던스를 통해 네 가지 핵심 실행 과제(Action Plan)를 제시했다.</p>
+
+  <div class="strategy-list">
+    <div class="strategy-item">
+      <div class="strategy-num">01</div>
+      <div class="strategy-content">
+        <div class="strategy-tag">포트폴리오 피봇 · ESS</div>
+        <div class="strategy-title">EV 중심에서 ESS 중심으로 — '밸류 시프트'</div>
+        <p class="strategy-desc">EV 배터리 수요 둔화에 맞서 ESS(에너지저장장치) 사업을 핵심 성장 축으로 전환 중이다. 2026년 ESS 신규 수주 목표는 사상 최대인 90GWh를 상회하는 수준이며, 글로벌 ESS 배터리 생산 역량은 연말까지 60GWh 이상으로 2배 확대한다. 2026년 글로벌 ESS 설치량은 전년 대비 40% 이상 성장할 전망이다. AI 데이터센터 폭증, 재생에너지 연계 전력 저장 수요가 ESS 시장을 구조적으로 끌어올리고 있으며, LG엔솔은 비중국 업체 중 유일하게 북미에서 LFP ESS 배터리를 대량 생산 중이다.</p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <div class="strategy-num">02</div>
+      <div class="strategy-content">
+        <div class="strategy-tag">원가 혁신 · 운영 효율화</div>
+        <div class="strategy-title">투자 40% 축소 + 고정비 감축 + 원가 혁신</div>
+        <p class="strategy-desc">2026년 설비투자(CAPEX) 규모를 전년 대비 40% 이상 축소하는 고강도 재정 긴축에 들어갔다. 신규 투자 최소화와 내부 자원 재배치를 통한 고정비 감축, 염가 소재 확보, 공급망 최적화를 통한 재료비 절감을 동시 추진한다. 건식전극 공정 등 신공법 도입으로 배터리 생산 원가 자체를 낮추는 기술 원가 혁신도 병행한다. AMPC 없이도 영업이익을 낼 수 있는 원가 구조 달성이 목표다.</p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <div class="strategy-num">03</div>
+      <div class="strategy-content">
+        <div class="strategy-tag">공급망 재편 · PFE 대응</div>
+        <div class="strategy-title">중국산 탈피 + PFE 조항 역이용</div>
+        <p class="strategy-desc">OBBBA의 PFE 조항은 중국 기업·원자재 연관 생산자의 AMPC 수급을 차단한다. 이는 LG엔솔에게 위기이자 기회다. 2026년까지 비중국산 원재료 비중을 60% 이상으로 높여야 하지만, 이 기준을 충족하면 중국 경쟁사 대비 구조적 우위를 확보하게 된다. 토요타통상과의 북미 배터리 리사이클 합작법인(노스캐롤라이나) 설립도 원재료 자립도를 높이기 위한 포석이다.</p>
+      </div>
+    </div>
+    <div class="strategy-item">
+      <div class="strategy-num">04</div>
+      <div class="strategy-content">
+        <div class="strategy-tag">기술 경쟁력 · 차세대 제품</div>
+        <div class="strategy-title">LMR·전고체·소듐 — 보조금 불필요한 기술 우위 확보</div>
+        <p class="strategy-desc">차세대 배터리 기술 개발을 가속화하여 원가·성능 모두에서 중국 업체를 상회하는 차별화 포지션을 구축한다. LMR(리튬망간리치) 배터리는 LFP 대비 30% 이상 에너지밀도가 높으며 GM과 공동 개발 중으로 2028년 상용화 목표다. 전고체 배터리는 로봇·항공 등 신시장용으로 개발 중이다. 10분 내 급속 충전 기술(2028년 상용화), 건식전극 공정(오창 공장 2025년 양산성 확보)도 추진 중이다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: 진행 상황 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">전략 실행 현황 — 데이터로 확인하는 진척도</h2>
+    <div class="section-title-line"></div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>전략 과제</th>
+        <th>진척 현황</th>
+        <th>주요 지표</th>
+        <th>평가</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ESS 피봇</td>
+        <td>2025년 신규 수주 90GWh 사상 최대. 미시간 홀랜드 LFP ESS 양산 개시(2025년 6월). 북미 현지 생산 역량 2025년 17GWh → 2026년 30GWh+.</td>
+        <td>ESS 매출 비중 전분기 대비 빠른 상승</td>
+        <td><span class="tag green">순조</span></td>
+      </tr>
+      <tr>
+        <td>AMPC 제외 흑자</td>
+        <td>2025년 2Q(+14억), 3Q(+2,358억) 연속 AMPC 제외 흑자. 6분기 만의 흑자 전환. 단, 4Q는 일회성 비용으로 적자 재전환.</td>
+        <td>AMPC 제외 누적 이익 1,542억 (3Q 기준)</td>
+        <td><span class="tag amber">진행 중</span></td>
+      </tr>
+      <tr>
+        <td>CAPEX 축소</td>
+        <td>2026년 설비투자 전년 대비 40%+ 축소 계획 공식 발표. 혼다 JV 건물 자산 4.2조 매각 추진(2026년 상반기 매각대금 수령 예정).</td>
+        <td>순부채 감소, 유동성 개선</td>
+        <td><span class="tag green">실행 중</span></td>
+      </tr>
+      <tr>
+        <td>PFE 공급망 전환</td>
+        <td>토요타통상과 북미 배터리 리사이클 JV 설립. 비중국산 원재료 확보 경로 다변화 추진 중. 2026년 60% 기준 충족 여부가 관건.</td>
+        <td>비중국산 원재료 비중 공시 부재</td>
+        <td><span class="tag amber">모니터링</span></td>
+      </tr>
+      <tr>
+        <td>LMR 기술</td>
+        <td>2026년 3월 인터배터리에서 최초 공개. GM과 공동 개발 중. 오창 공장에서 2026년 상반기 중 샘플 생산 예정. 2028년 양산 목표.</td>
+        <td>특허 9만 건, 30년 기술 자산</td>
+        <td><span class="tag blue">개발 단계</span></td>
+      </tr>
+      <tr>
+        <td>시장 다변화</td>
+        <td>중국 체리기차 46시리즈 원통형 공급계약(중국 OEM과 첫 계약). 메르세데스-벤츠 2030년대 공급계약. 폴란드 PGE ESS 계약. 로봇·UAM·데이터센터용 배터리 개발 착수.</td>
+        <td>유럽·신시장 수주 비중 확대</td>
+        <td><span class="tag green">순조</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 6: 기술 로드맵 -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">보조금 독립을 위한 기술 로드맵</h2>
+    <div class="section-title-line"></div>
+  </div>
+  <p>LG에너지솔루션의 기술 개발 타임라인은 단순한 R&D를 넘어 AMPC 의존도를 낮추기 위한 원가 혁신과 직결된다. 중국이 따라올 수 없는 기술 격차를 만들어야만 보조금 없이도 프리미엄을 유지할 수 있다.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-item">
+      <div class="roadmap-year">2025~<br>진행</div>
+      <div class="roadmap-content">
+        <div class="roadmap-content-title">건식전극 공정 양산성 확보 (오창 공장)</div>
+        <p>습식 전극 공정 대비 에너지 소비를 50% 이상 줄이는 기술. 원가 혁신의 핵심 공정으로, 오창 공장에서 양산성을 확보하는 것이 2025년 목표. AMPC 없이도 원가 경쟁력을 갖추기 위한 제조 기반 구축이다.</p>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-year">2026년<br>상반기</div>
+      <div class="roadmap-content">
+        <div class="roadmap-content-title">LMR 각형 셀 — 오창 샘플 생산 개시</div>
+        <p>리튬망간리치(LMR) 배터리는 LFP 대비 30%+ 에너지밀도를 갖추면서도 망간·리튬 비중을 높여 원가 경쟁력을 확보한 차세대 케미스트리. GM과 공동 개발 중이며 2026년 상반기 오창에서 샘플 생산 시작. 성공 시 NCM 없이도 고성능·저원가 배터리 공급 가능.</p>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-year">2026년<br>연말</div>
+      <div class="roadmap-content">
+        <div class="roadmap-content-title">북미 ESS 생산역량 30GWh 이상 구축</div>
+        <p>2025년 17GWh → 2026년 연말 30GWh+로 ESS 생산 역량 확대. EV 유휴 라인을 ESS로 전환, 추가 투자 없이 생산역량 확충. AI 데이터센터·전력망용 ESS 수요 폭증에 선제 대응.</p>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-year">2028년</div>
+      <div class="roadmap-content">
+        <div class="roadmap-content-title">LMR 배터리 양산 + 10분 급속충전 상용화</div>
+        <p>GM 차세대 EV향 LMR 배터리 양산 목표(GM과 공동 개발). 동시에 10분 내 10→80% 충전 기술 상용화. 두 기술이 결합되면 원가는 LFP 수준, 성능은 하이니켈 수준의 배터리 구현이 가능해진다.</p>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-year">2030년<br>이후</div>
+      <div class="roadmap-content">
+        <div class="roadmap-content-title">전고체 배터리 + 소듐 이온 배터리 상용화</div>
+        <p>전고체 배터리는 로봇·항공우주 등 AMPC가 없는 신시장을 개척하는 게임 체인저. 소듐 이온 배터리는 리튬 의존도를 근본적으로 낮춰 원재료 공급망 리스크 자체를 제거하는 장기 전략. 9만 건 특허 자산과 30년 기술 축적이 기반이다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <div class="conclusion-label">결론 및 핵심 관찰</div>
+  <h2>LG에너지솔루션은 AMPC 없이도 살아남을 수 있는가</h2>
+  <p>답은 "아직 완전하지 않지만, 방향은 옳다"이다. 2025년 2~3분기 AMPC 제외 흑자 달성은 단순한 수치가 아니라 체질 변화의 첫 증거다. ESS 성장세, 원가 혁신, 차세대 기술 개발이 동시에 진행 중이며 OBBBA를 통해 AMPC 자체의 수명도 2032년까지 연장됐다.</p>
+  <p>그러나 4분기에 다시 대규모 적자로 돌아선 사실은, 이 전환이 아직 취약하다는 것을 솔직히 인정하게 만든다. 수주잔고 소멸에 따른 가동률 하락, 얼티엄셀즈 가동 중단, 일회성 비용의 집중이 맞물렸을 때 보조금 없이는 흑자를 내기 어렵다는 구조적 한계가 재확인됐다.</p>
+  <p>결국 핵심은 두 질문으로 압축된다. ①ESS 수요 성장이 EV 매출 공백을 얼마나 빠르게 메울 수 있는가, ②LMR·전고체 등 차세대 기술이 2028년 이후 경쟁 구도를 어떻게 바꿀 수 있는가. 이 두 변수가 LG에너지솔루션의 탈보조금 여정의 속도를 결정할 것이다.</p>
+
+  <div class="conclusion-matrix">
+    <div class="matrix-cell watch">
+      <div class="matrix-cell-label">⚠ 주시 항목</div>
+      <p>AMPC 제외 분기 영업이익 추이. 흑자 기조가 정착되는지, 아니면 2Q~3Q만의 일시적 현상이었는지가 2026년 상반기 실적을 통해 판가름 난다.</p>
+    </div>
+    <div class="matrix-cell monitor">
+      <div class="matrix-cell-label">📊 모니터링</div>
+      <p>비중국산 원재료 비중 공시. PFE 조항 60% 기준 충족 여부가 AMPC 수혜 지속의 전제조건이나, 현재 공식 공시 수치가 부재하여 리스크 정량화가 어렵다.</p>
+    </div>
+    <div class="matrix-cell positive">
+      <div class="matrix-cell-label">✓ 긍정 요인</div>
+      <p>중국 경쟁사에 대한 PFE 조항 적용. 비중국 LFP ESS 북미 유일 대량 생산자. ESS ITC 조항 2035년까지 유지. 수주 누적 140GWh+ 확보.</p>
+    </div>
+    <div class="matrix-cell neutral">
+      <div class="matrix-cell-label">→ 중립 전망</div>
+      <p>AMPC 2032년까지 유지됨으로써 극단적 리스크는 해소됐다. 단, 트럼프 행정부의 행정 명령에 의한 탄력적 변화 가능성은 잔존 리스크로 상존.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>※ 본 보고서는 공개된 기업 공시, 실적설명회 자료, 언론 보도를 기반으로 작성된 분석 자료입니다. 투자 권유 목적이 아닙니다.</p>
+  <p>발행: 2026.03.17 · LG에너지솔루션 (373220) AMPC 리스크 분석</p>
+</div>
+
+</body>
+</html>
