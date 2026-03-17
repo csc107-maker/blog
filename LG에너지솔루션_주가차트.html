@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LG에너지솔루션 주가 분석 | 373220</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:       #0b0f1a;
+  --bg2:      #111827;
+  --bg3:      #1a2236;
+  --surface:  #1e2a40;
+  --border:   rgba(255,255,255,0.07);
+  --border2:  rgba(255,255,255,0.12);
+  --text:     #e8eaf0;
+  --muted:    #8892a4;
+  --dim:      #4a5568;
+  --accent:   #3b82f6;
+  --green:    #22c55e;
+  --red:      #ef4444;
+  --amber:    #f59e0b;
+  --purple:   #a855f7;
+  --teal:     #14b8a6;
+  --line:     #3b82f6;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  line-height:1.7;
+  min-height:100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header{
+  background:linear-gradient(180deg,#0d1529 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border2);
+  padding:40px 48px 32px;
+}
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:24px;
+}
+.ticker-badge{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:.15em;
+  background:rgba(59,130,246,.15);
+  color:var(--accent);
+  border:1px solid rgba(59,130,246,.3);
+  padding:4px 10px;
+  border-radius:4px;
+  margin-bottom:12px;
+  display:inline-block;
+}
+.header h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px;
+  letter-spacing:.04em;
+  color:#fff;
+  line-height:1;
+  margin-bottom:6px;
+}
+.header-sub{
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:.03em;
+}
+.price-block{
+  text-align:right;
+}
+.price-current{
+  font-family:'DM Mono',monospace;
+  font-size:38px;
+  font-weight:500;
+  color:#fff;
+  letter-spacing:-.02em;
+}
+.price-unit{
+  font-size:16px;
+  color:var(--muted);
+  margin-left:4px;
+}
+.price-change{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  margin-top:4px;
+}
+.price-change.up{color:var(--green);}
+.price-change.dn{color:var(--red);}
+.price-meta{
+  display:flex;
+  gap:24px;
+  margin-top:20px;
+}
+.price-meta-item{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.price-meta-item label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--dim);
+}
+.price-meta-item span{
+  font-family:'DM Mono',monospace;
+  font-size:14px;
+  color:var(--text);
+}
+.price-meta-item span.hi{color:var(--green);}
+.price-meta-item span.lo{color:var(--red);}
+
+/* ── CONTROLS ───────────────────────────────────────── */
+.controls{
+  padding:16px 48px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+}
+.ctrl-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-right:8px;
+}
+.tab-btn{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  padding:5px 14px;
+  border-radius:4px;
+  border:1px solid var(--border2);
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all .18s;
+  letter-spacing:.06em;
+}
+.tab-btn:hover{background:var(--surface);color:var(--text);}
+.tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.toggle-label{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:var(--muted);
+}
+.toggle-label input[type=checkbox]{
+  accent-color:var(--accent);
+  width:15px;height:15px;cursor:pointer;
+}
+
+/* ── CHART AREA ─────────────────────────────────────── */
+.chart-wrapper{
+  padding:28px 48px 0;
+  background:var(--bg);
+}
+.chart-container{
+  position:relative;
+  width:100%;
+  height:420px;
+}
+
+/* ── EVENTS TIMELINE ────────────────────────────────── */
+.events-section{
+  padding:32px 48px;
+  background:var(--bg);
+}
+.section-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+.events-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.event-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:16px 18px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .2s;
+}
+.event-card::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+}
+.event-card.up::before{background:var(--green);}
+.event-card.dn::before{background:var(--red);}
+.event-card.neu::before{background:var(--amber);}
+.event-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+.event-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:8px;
+}
+.event-date{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.06em;
+}
+.event-badge{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  padding:2px 7px;
+  border-radius:3px;
+  letter-spacing:.04em;
+}
+.event-badge.up{background:rgba(34,197,94,.15);color:var(--green);}
+.event-badge.dn{background:rgba(239,68,68,.15);color:var(--red);}
+.event-badge.neu{background:rgba(245,158,11,.15);color:var(--amber);}
+.event-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:6px;
+  line-height:1.4;
+}
+.event-desc{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.6;
+}
+.event-price{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+}
+.event-price span:first-child{color:var(--dim);}
+.event-price span:last-child{color:var(--text);}
+
+/* ── STATS ROW ──────────────────────────────────────── */
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;
+  background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stat-cell{
+  background:var(--bg2);
+  padding:20px 28px;
+  text-align:center;
+}
+.stat-cell .val{
+  font-family:'DM Mono',monospace;
+  font-size:22px;
+  font-weight:500;
+  margin-bottom:4px;
+}
+.stat-cell .val.red{color:var(--red);}
+.stat-cell .val.green{color:var(--green);}
+.stat-cell .val.blue{color:var(--accent);}
+.stat-cell .lbl{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--dim);
+}
+
+/* ── FOOTER ─────────────────────────────────────────── */
+.footer{
+  padding:20px 48px;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.footer p{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:.06em;
+}
+
+/* ── TOOLTIP CUSTOM ─────────────────────────────────── */
+.custom-tooltip{
+  background:rgba(17,24,39,.96);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:8px;
+  padding:12px 16px;
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--text);
+  pointer-events:none;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  min-width:160px;
+}
+
+/* ── ANNOTATION TOOLTIP ─────────────────────────────── */
+.ann-tooltip{
+  position:fixed;
+  display:none;
+  background:rgba(17,24,39,.97);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:10px;
+  padding:14px 18px;
+  width:260px;
+  font-size:12px;
+  color:var(--text);
+  box-shadow:0 12px 40px rgba(0,0,0,.6);
+  z-index:9999;
+  pointer-events:none;
+}
+.ann-tooltip h4{
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+.ann-tooltip p{font-size:11px;color:var(--muted);line-height:1.6;}
+.ann-tooltip .tt-price{
+  font-family:'DM Mono',monospace;
+  font-size:13px;
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid var(--border);
+  color:var(--accent);
+}
+
+@media(max-width:900px){
+  .header,
+  .controls,
+  .chart-wrapper,
+  .events-section,
+  .footer{padding-left:20px;padding-right:20px;}
+  .header h1{font-size:32px;}
+  .events-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:repeat(3,1fr);}
+  .price-block{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="ticker-badge">KRX · 373220 · KOSPI</div>
+      <h1>LG에너지솔루션</h1>
+      <div class="header-sub">LG Energy Solution Ltd. &nbsp;|&nbsp; 2022.01.27 상장 &nbsp;|&nbsp; 배터리 / 2차전지</div>
+    </div>
+    <div class="price-block">
+      <div class="price-current">394,500<span class="price-unit">원</span></div>
+      <div class="price-change dn">▼ 10,000 &nbsp;(-2.47%)&nbsp; 전일대비</div>
+    </div>
+  </div>
+  <div class="price-meta">
+    <div class="price-meta-item">
+      <label>IPO 공모가</label>
+      <span>300,000원</span>
+    </div>
+    <div class="price-meta-item">
+      <label>상장 시초가</label>
+      <span>597,000원</span>
+    </div>
+    <div class="price-meta-item">
+      <label>역대 최고가</label>
+      <span class="hi">629,000원</span>
+    </div>
+    <div class="price-meta-item">
+      <label>역대 최저가 (상장후)</label>
+      <span class="lo">266,000원</span>
+    </div>
+    <div class="price-meta-item">
+      <label>52주 범위</label>
+      <span>266,000 ~ 527,000원</span>
+    </div>
+    <div class="price-meta-item">
+      <label>시가총액</label>
+      <span>~92조원</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+  <div class="stat-cell">
+    <div class="val red">▼ 37%</div>
+    <div class="lbl">IPO 이후 수익률</div>
+  </div>
+  <div class="stat-cell">
+    <div class="val red">▼ 58%</div>
+    <div class="lbl">고점 대비 하락률</div>
+  </div>
+  <div class="stat-cell">
+    <div class="val green">+134%</div>
+    <div class="lbl">2025 연간 영업이익 증가</div>
+  </div>
+  <div class="stat-cell">
+    <div class="val blue">90GWh</div>
+    <div class="lbl">2025 ESS 수주 최대</div>
+  </div>
+  <div class="stat-cell">
+    <div class="val">~2032</div>
+    <div class="lbl">AMPC 보조금 유지 기한</div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <span class="ctrl-label">Period</span>
+  <button class="tab-btn" onclick="setRange('6m')">6M</button>
+  <button class="tab-btn" onclick="setRange('1y')">1Y</button>
+  <button class="tab-btn active" onclick="setRange('all')">전체</button>
+  <div class="toggle-label">
+    <input type="checkbox" id="showEvents" checked onchange="toggleEvents()">
+    <label for="showEvents">이벤트 마커 표시</label>
+  </div>
+</div>
+
+<!-- CHART -->
+<div class="chart-wrapper">
+  <div class="chart-container">
+    <canvas id="priceChart"></canvas>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="events-section">
+  <div class="section-label">주가 주요 변동 이벤트</div>
+  <div class="events-grid" id="eventsGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>※ 주가 데이터는 공개된 자료를 바탕으로 재구성한 근사치이며 정확한 실거래 데이터와 차이가 있을 수 있습니다.</p>
+  <p>분석 기준일: 2026.03.17 &nbsp;|&nbsp; 투자 권유 목적 아님</p>
+</div>
+
+<!-- ANNOTATION TOOLTIP -->
+<div class="ann-tooltip" id="annTooltip">
+  <h4 id="tt-title"></h4>
+  <p id="tt-desc"></p>
+  <div class="tt-price" id="tt-price"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════ */
+// 월별 근사 주가 데이터 (상장 2022.01 ~ 2026.03)
+const allData = [
+  // 2022
+  {x:'2022-01',y:597},  // 상장 첫날 시초가
+  {x:'2022-02',y:540},
+  {x:'2022-03',y:490},
+  {x:'2022-04',y:478},
+  {x:'2022-05',y:450},
+  {x:'2022-06',y:430},
+  {x:'2022-07',y:470},
+  {x:'2022-08',y:530},  // IRA 통과
+  {x:'2022-09',y:568},
+  {x:'2022-10',y:598},
+  {x:'2022-11',y:629},  // 역대 최고가
+  {x:'2022-12',y:580},
+  // 2023
+  {x:'2023-01',y:530},
+  {x:'2023-02',y:510},
+  {x:'2023-03',y:490},
+  {x:'2023-04',y:478},
+  {x:'2023-05',y:460},
+  {x:'2023-06',y:490},
+  {x:'2023-07',y:545},  // 2차전지 랠리
+  {x:'2023-08',y:515},
+  {x:'2023-09',y:480},
+  {x:'2023-10',y:438},  // GM EV 생산 감축
+  {x:'2023-11',y:410},
+  {x:'2023-12',y:390},
+  // 2024
+  {x:'2024-01',y:410},
+  {x:'2024-02',y:395},
+  {x:'2024-03',y:380},
+  {x:'2024-04',y:355},
+  {x:'2024-05',y:340},
+  {x:'2024-06',y:330},
+  {x:'2024-07',y:318},
+  {x:'2024-08',y:310},
+  {x:'2024-09',y:305},
+  {x:'2024-10',y:290},
+  {x:'2024-11',y:272},  // 트럼프 당선
+  {x:'2024-12',y:285},
+  // 2025
+  {x:'2025-01',y:355},  // 트럼프 취임
+  {x:'2025-02',y:335},
+  {x:'2025-03',y:315},
+  {x:'2025-04',y:298},
+  {x:'2025-05',y:275},  // 공모가 하회 최저점 근접
+  {x:'2025-06',y:295},
+  {x:'2025-07',y:368},  // 2Q 실적 · ESS 양산
+  {x:'2025-08',y:388},
+  {x:'2025-09',y:415},
+  {x:'2025-10',y:473},  // 3Q 실적 호조
+  {x:'2025-11',y:490},
+  {x:'2025-12',y:415},  // 포드 계약 해지
+  // 2026
+  {x:'2026-01',y:378},  // 얼티엄셀즈 가동 중단
+  {x:'2026-02',y:427},
+  {x:'2026-03',y:394},
+];
+
+/* ══════════════════════════════════════════════════
+   EVENTS  (색상: up=상승, dn=하락, neu=중립)
+══════════════════════════════════════════════════ */
+const events = [
+  {
+    date:'2022-01', label:'IPO 상장', type:'up',
+    title:'코스피 역대 최대 IPO 상장',
+    desc:'공모가 30만원으로 2022년 1월 27일 코스피 상장. 시초가 597,000원으로 공모가 대비 99% 상승하며 시가총액 2위 기록. 역대 최대 규모 공모(약 10~12조원).',
+    price:'시초가 597,000원', badge:'▲ +99%'
+  },
+  {
+    date:'2022-08', label:'IRA 통과', type:'up',
+    title:'미국 IRA(인플레이션감축법) 의회 통과',
+    desc:'바이든 대통령 서명 완료(8/16). 북미 배터리 생산 기업에 kWh당 35달러 AMPC 세액공제 지원 조항 확정. LG엔솔 최대 수혜주로 급부상.',
+    price:'530,000원 → 575,000원', badge:'▲ 급등'
+  },
+  {
+    date:'2022-11', label:'역대 최고가', type:'up',
+    title:'상장 후 역대 최고가 629,000원 기록',
+    desc:'IRA 수혜 기대, GM·혼다·스텔란티스 등 잇따른 북미 합작 공장 발표, 전기차 수요 확대 기대감이 극대화되며 고점 달성.',
+    price:'629,000원 (역대 최고)', badge:'▲ 사상 최고'
+  },
+  {
+    date:'2023-07', label:'2차전지 랠리', type:'up',
+    title:'국내 2차전지 테마 폭발적 상승',
+    desc:'에코프로·POSCO홀딩스 주도 2차전지 테마 랠리. 개인 투자 열풍으로 LG엔솔도 동반 급등. 7월 한 달간 국내 코스피 2차전지 지수 30%+ 상승.',
+    price:'460,000원 → 545,000원', badge:'▲ +18%'
+  },
+  {
+    date:'2023-10', label:'GM EV 감축', type:'dn',
+    title:'GM 전기차 생산 감축·얼티엄 투자 축소',
+    desc:'GM이 EV 판매 목표를 하향 조정하고 얼티엄셀즈 관련 투자 일부를 연기한다고 발표. 포드도 F-150 라이트닝 생산 감축. 수주잔고 우려 부각.',
+    price:'478,000원 → 438,000원', badge:'▼ -8%'
+  },
+  {
+    date:'2024-11', label:'트럼프 당선', type:'dn',
+    title:'트럼프 미국 대통령 재당선',
+    desc:'IRA 폐지 공약을 내건 트럼프 후보 당선. EV 보조금 종료·AMPC 축소 우려 급증. 국내 2차전지주 전반 급락. 배터리 3사 시총 수십조원 증발.',
+    price:'290,000원 → 272,000원', badge:'▼ -6%'
+  },
+  {
+    date:'2025-01', label:'트럼프 취임', type:'dn',
+    title:'트럼프 취임 & EV 보조금 즉시 종료',
+    desc:'취임 당일 행정명령으로 전기차 구매 세액공제(7,500달러) 종료. 단기 EV 수요 급감 우려. LG엔솔 주가 단기 반등 후 재하락.',
+    price:'355,000원대', badge:'▼ 하락'
+  },
+  {
+    date:'2025-05', label:'공모가 하회', type:'dn',
+    title:'상장 후 최초로 공모가(30만원) 이하 붕괴',
+    desc:'전기차 캐즘 장기화, EV 보조금 종료, 수주잔고 감소 우려가 겹치며 상장 3년 4개월 만에 공모가 300,000원 이하 기록. 증권사 목표가 연이어 하향.',
+    price:'266,000원 (52주 최저)', badge:'▼ 공모가 하회'
+  },
+  {
+    date:'2025-07', label:'ESS 양산·흑자', type:'up',
+    title:'미시간 ESS LFP 양산 개시 & 2Q 실적 호조',
+    desc:'미시간 홀랜드 공장에서 ESS용 LFP 배터리 대량 양산 시작(6월). 2Q 영업이익 4,922억원(+152% YoY). AMPC 제외 기준 6분기 만에 흑자 전환.',
+    price:'295,000원 → 368,000원', badge:'▲ +25%'
+  },
+  {
+    date:'2025-10', label:'3Q 어닝서프라이즈', type:'up',
+    title:'3분기 실적 시장 전망 16% 상회',
+    desc:'3Q 영업이익 6,013억원(+34% YoY). AMPC 제외 기준 2분기 연속 흑자(2,358억원). ESS 매출 급증이 주요 원인. 목표주가 상향 러시.',
+    price:'415,000원 → 473,000원', badge:'▲ +14%'
+  },
+  {
+    date:'2025-12', label:'포드 계약 해지', type:'dn',
+    title:'포드·FBPS 배터리 계약 연쇄 해지',
+    desc:'포드와 약 9.6조원 규모 EV 배터리 계약 해지. 이어 FBPS와 3.9조원 계약도 해지. 총 13.5조원 수주잔고 소멸. 공시 다음날 주가 8.9% 급락.',
+    price:'490,000원 → 415,000원', badge:'▼ -8.9%'
+  },
+  {
+    date:'2026-01', label:'얼티엄셀즈 중단', type:'dn',
+    title:'GM 합작 얼티엄셀즈 공장 가동 중단',
+    desc:'GM과 합작한 얼티엄셀즈 1·2공장 가동 중단. 미시간 랜싱 3공장 양산 재연기. 1조원+ 일회성 비용 반영 예상. 4Q 영업손실 1,220억원 기록.',
+    price:'427,000원 → 378,000원', badge:'▼ 하락'
+  },
+];
+
+/* ══════════════════════════════════════════════════
+   CHART SETUP
+══════════════════════════════════════════════════ */
+const labels  = allData.map(d=>d.x);
+const prices  = allData.map(d=>d.y * 1000); // 원 단위로 변환
+const ipoLine = allData.map(()=>300000);
+
+// 이벤트 마커 데이터 (포인트만 강조)
+const markerData = allData.map(d=>{
+  const ev = events.find(e=>e.date===d.x);
+  return ev ? d.y * 1000 : null;
+});
+
+// 색상 맵
+const markerColors = allData.map(d=>{
+  const ev = events.find(e=>e.date===d.x);
+  if(!ev) return 'transparent';
+  return ev.type==='up' ? '#22c55e' : ev.type==='dn' ? '#ef4444' : '#f59e0b';
+});
+
+let chartInstance = null;
+let showEvts = true;
+
+function buildChart(data){
+  const ctx = document.getElementById('priceChart').getContext('2d');
+  if(chartInstance) chartInstance.destroy();
+
+  // gradient fill
+  const grad = ctx.createLinearGradient(0,0,0,400);
+  grad.addColorStop(0,'rgba(59,130,246,.25)');
+  grad.addColorStop(1,'rgba(59,130,246,0)');
+
+  chartInstance = new Chart(ctx,{
+    type:'line',
+    data:{
+      labels: data.map(d=>d.x),
+      datasets:[
+        {
+          label:'주가',
+          data: data.map(d=>d.y*1000),
+          borderColor:'#3b82f6',
+          borderWidth:2.5,
+          backgroundColor: grad,
+          fill:true,
+          tension:.35,
+          pointRadius:0,
+          pointHoverRadius:6,
+          pointHoverBackgroundColor:'#3b82f6',
+          pointHoverBorderColor:'#fff',
+          pointHoverBorderWidth:2,
+          order:2,
+        },
+        {
+          label:'IPO 공모가',
+          data: data.map(()=>300000),
+          borderColor:'rgba(245,158,11,.55)',
+          borderWidth:1.5,
+          borderDash:[6,4],
+          fill:false,
+          tension:0,
+          pointRadius:0,
+          pointHoverRadius:0,
+          order:3,
+        },
+        {
+          label:'이벤트',
+          data: data.map(d=>{
+            const ev=events.find(e=>e.date===d.x);
+            return ev&&showEvts ? d.y*1000 : null;
+          }),
+          borderColor:'transparent',
+          backgroundColor: data.map(d=>{
+            const ev=events.find(e=>e.date===d.x);
+            if(!ev||!showEvts) return 'transparent';
+            return ev.type==='up'?'#22c55e':ev.type==='dn'?'#ef4444':'#f59e0b';
+          }),
+          pointRadius: data.map(d=>{
+            const ev=events.find(e=>e.date===d.x);
+            return ev&&showEvts?8:0;
+          }),
+          pointHoverRadius: data.map(d=>{
+            const ev=events.find(e=>e.date===d.x);
+            return ev&&showEvts?10:0;
+          }),
+          pointStyle:'circle',
+          pointBorderColor:'#fff',
+          pointBorderWidth:2,
+          showLine:false,
+          order:1,
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:{duration:600,easing:'easeInOutQuart'},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          enabled:true,
+          backgroundColor:'rgba(17,24,39,.95)',
+          titleColor:'#8892a4',
+          bodyColor:'#e8eaf0',
+          borderColor:'rgba(255,255,255,.12)',
+          borderWidth:1,
+          padding:12,
+          cornerRadius:8,
+          titleFont:{family:'DM Mono, monospace',size:11},
+          bodyFont:{family:'DM Mono, monospace',size:13},
+          callbacks:{
+            title: ctx=>'📅 '+ctx[0].label,
+            label: ctx=>{
+              if(ctx.datasetIndex===0){
+                return ' 주가: '+ctx.parsed.y.toLocaleString()+'원';
+              }
+              if(ctx.datasetIndex===1){
+                return ' 공모가: 300,000원';
+              }
+              const ev=events.find(e=>e.date===ctx.label);
+              if(ev&&ctx.datasetIndex===2){
+                return ' 📌 '+ev.label;
+              }
+              return null;
+            },
+            afterBody: ctx=>{
+              const ev=events.find(e=>e.date===ctx[0].label);
+              if(ev){return [' → '+ev.badge];}
+              return [];
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{color:'rgba(255,255,255,.04)',drawBorder:false},
+          ticks:{
+            color:'#4a5568',
+            font:{family:'DM Mono, monospace',size:10},
+            maxTicksLimit:16,
+            maxRotation:0,
+          },
+          border:{display:false},
+        },
+        y:{
+          position:'right',
+          grid:{color:'rgba(255,255,255,.04)',drawBorder:false},
+          ticks:{
+            color:'#4a5568',
+            font:{family:'DM Mono, monospace',size:11},
+            callback: v=>(v/10000).toFixed(0)+'만',
+            stepSize:100000,
+          },
+          border:{display:false},
+          min:200000,
+          max:700000,
+        }
+      }
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   RANGE FILTER
+══════════════════════════════════════════════════ */
+function setRange(range){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  let filtered=allData;
+  const now=allData[allData.length-1].x;
+  if(range==='6m'){
+    const cut='2025-09';
+    filtered=allData.filter(d=>d.x>=cut);
+  }else if(range==='1y'){
+    const cut='2025-03';
+    filtered=allData.filter(d=>d.x>=cut);
+  }
+  buildChart(filtered);
+}
+
+function toggleEvents(){
+  showEvts=document.getElementById('showEvents').checked;
+  buildChart(allData);
+}
+
+/* ══════════════════════════════════════════════════
+   EVENT CARDS
+══════════════════════════════════════════════════ */
+const grid=document.getElementById('eventsGrid');
+events.forEach(ev=>{
+  const card=document.createElement('div');
+  card.className=`event-card ${ev.type}`;
+  card.innerHTML=`
+    <div class="event-card-top">
+      <span class="event-date">${ev.date}</span>
+      <span class="event-badge ${ev.type}">${ev.badge}</span>
+    </div>
+    <div class="event-title">${ev.title}</div>
+    <div class="event-desc">${ev.desc}</div>
+    <div class="event-price">
+      <span>주가 변화</span>
+      <span>${ev.price}</span>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+/* ══════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════ */
+buildChart(allData);
+</script>
+</body>
+</html>
