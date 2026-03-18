@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 추천 종목 밸류에이션 리포트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=DM+Mono:wght@400;500&family=Pretendard:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --bg2: #ffffff;
+    --bg3: #eeecea;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #1a1a1a;
+    --text2: #555560;
+    --text3: #999aa8;
+    --accent: #b8860b;
+    --accent2: #d4a017;
+    --red: #c0392b;
+    --amber: #b8620a;
+    --green: #2e7d52;
+    --blue: #1a5fa8;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Pretendard', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  .site-header {
+    position: relative;
+    padding: 64px 48px 48px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(184,134,11,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(26,95,168,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    margin-bottom: 20px;
+    padding: 4px 12px;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 2px;
+  }
+  .header-tag::before { content: '◆'; font-size: 8px; }
+  h1.main-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  h1.main-title span { color: var(--accent); }
+  .header-meta {
+    font-size: 13px;
+    color: var(--text2);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .header-meta strong { color: var(--text); font-weight: 500; }
+
+  /* ── LAYOUT ─────────────────────────────── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+  @media (max-width: 768px) { .container, .site-header { padding-left: 20px; padding-right: 20px; } }
+
+  /* ── LEGEND ROW ──────────────────────────── */
+  .legend-bar {
+    display: flex;
+    gap: 20px;
+    padding: 20px 48px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .legend-bar .label { font-size: 11px; color: var(--text3); font-family: var(--mono); letter-spacing:.04em; margin-right: 4px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── FILTER TABS ─────────────────────────── */
+  .filter-row {
+    padding: 28px 48px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 768px) { .filter-row { padding: 20px 20px 0; } }
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-family: var(--mono);
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    background: transparent;
+    transition: all .2s;
+    letter-spacing: .04em;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; }
+
+  /* ── CARDS GRID ──────────────────────────── */
+  .cards-section { padding: 28px 48px 48px; }
+  @media (max-width: 768px) { .cards-section { padding: 20px 20px 40px; } }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+
+  /* ── CARD ────────────────────────────────── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+    cursor: default;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card.red::before   { background: #c0392b; }
+  .card.amber::before { background: #b8620a; }
+  .card.green::before { background: #2e7d52; }
+  .card.blue::before  { background: #1a5fa8; }
+  .card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+  .card-name { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .card-code { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .card-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 500;
+    letter-spacing: .03em;
+  }
+  .badge-red   { background: #fdecea;  color: #a02020; border: 1px solid rgba(192,57,43,0.2); }
+  .badge-amber { background: #fef3e2; color: #8a4a08; border: 1px solid rgba(184,98,10,0.2); }
+  .badge-green { background: #e8f5ed; color: #1e6640; border: 1px solid rgba(46,125,82,0.2); }
+  .badge-blue  { background: #e6f0fb; color: #154e8a; border: 1px solid rgba(26,95,168,0.2); }
+
+  /* price row */
+  .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 18px; }
+  .price-main { font-family: var(--mono); font-size: 24px; font-weight: 500; color: var(--text); }
+  .price-label { font-size: 11px; color: var(--text3); }
+
+  /* 52w bar */
+  .range-wrap { margin-bottom: 18px; }
+  .range-label { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10px; color: var(--text3); margin-bottom: 5px; }
+  .range-bar { position: relative; height: 4px; background: var(--bg3); border-radius: 2px; }
+  .range-fill { position: absolute; left: 0; top: 0; height: 100%; border-radius: 2px; }
+  .range-dot {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 2px solid var(--bg2);
+    margin-left: -4px;
+  }
+  .range-pct { font-family: var(--mono); font-size: 10px; color: var(--text2); margin-top: 5px; text-align: right; }
+
+  /* metrics */
+  .metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .metric { background: var(--bg3); border-radius: 3px; padding: 10px 12px; }
+  .metric-label { font-size: 10px; color: var(--text3); font-family: var(--mono); letter-spacing:.03em; margin-bottom: 4px; }
+  .metric-value { font-family: var(--mono); font-size: 16px; font-weight: 500; color: var(--text); }
+  .metric-value.warn { color: var(--red); }
+  .metric-value.caution { color: var(--amber); }
+  .metric-value.ok { color: var(--green); }
+  .metric-value.good { color: var(--blue); }
+
+  /* per bar */
+  .per-bar-wrap { margin-bottom: 18px; }
+  .per-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-bottom: 5px; }
+  .per-track { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+  .per-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+
+  /* upside */
+  .upside-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .upside-target { font-size: 11px; color: var(--text3); }
+  .upside-target strong { color: var(--text2); font-family: var(--mono); }
+  .upside-pct { font-family: var(--mono); font-size: 18px; font-weight: 500; color: #5aab76; }
+  .upside-pct.low { color: var(--amber); }
+
+  /* comment */
+  .card-comment { font-size: 12px; color: var(--text2); line-height: 1.65; padding-top: 14px; border-top: 1px solid var(--border); }
+
+  /* ── SUMMARY TABLE ───────────────────────── */
+  .table-section { padding: 0 48px 64px; }
+  @media (max-width: 768px) { .table-section { padding: 0 20px 48px; } }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: .05em;
+    border-bottom: 1px solid var(--border2);
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
+  tbody tr:hover { background: var(--bg2); }
+  td { padding: 12px 14px; white-space: nowrap; }
+  .tname { color: var(--text); font-weight: 500; }
+  .tcode { font-family: var(--mono); font-size: 10px; color: var(--text3); }
+  .tprice { font-family: var(--mono); color: var(--text); }
+  .tper   { font-family: var(--mono); }
+  .tupside { font-family: var(--mono); font-weight: 500; color: var(--green); }
+
+  /* ── VERDICT SECTION ─────────────────────── */
+  .verdict-section { padding: 0 48px 64px; }
+  @media (max-width: 768px) { .verdict-section { padding: 0 20px 48px; } }
+  .verdict-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 768px) { .verdict-grid { grid-template-columns: 1fr; } }
+  .verdict-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+  }
+  .verdict-icon { font-size: 24px; margin-bottom: 10px; }
+  .verdict-title { font-family: var(--serif); font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .verdict-list { list-style: none; }
+  .verdict-list li { display: flex; align-items: baseline; gap: 8px; font-size: 13px; color: var(--text2); padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .verdict-list li:last-child { border-bottom: none; }
+  .verdict-list li::before { content: '→'; font-family: var(--mono); font-size: 11px; color: var(--text3); flex-shrink: 0; }
+
+  /* ── DISCLAIMER ──────────────────────────── */
+  .disclaimer {
+    margin: 0 48px 48px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.8;
+  }
+  @media (max-width: 768px) { .disclaimer { margin: 0 20px 40px; } }
+
+  /* ── ANIMATIONS ──────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card { animation: fadeUp .4s ease both; }
+  .card:nth-child(1){ animation-delay:.05s }
+  .card:nth-child(2){ animation-delay:.10s }
+  .card:nth-child(3){ animation-delay:.15s }
+  .card:nth-child(4){ animation-delay:.20s }
+  .card:nth-child(5){ animation-delay:.25s }
+  .card:nth-child(6){ animation-delay:.30s }
+  .card:nth-child(7){ animation-delay:.35s }
+  .card:nth-child(8){ animation-delay:.40s }
+  .card:nth-child(9){ animation-delay:.45s }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-tag">INVESTMENT RESEARCH · 2026.03</div>
+  <h1 class="main-title">추천 종목<br><span>밸류에이션 점검 리포트</span></h1>
+  <div class="header-meta">
+    <span>기준일 <strong>2026년 3월 중순</strong></span>
+    <span>대상 종목 <strong>9개</strong></span>
+    <span>섹터 <strong>K-바이오 · K-뷰티 · 원전·에너지 · AI 플랫폼</strong></span>
+    <span>지표 <strong>현재가 · 52주 위치 · PER · PBR · 컨센서스 목표가</strong></span>
+  </div>
+</header>
+
+<!-- LEGEND -->
+<div class="legend-bar">
+  <span class="label">밸류 판단 기준</span>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>고평가 주의</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>다소 부담</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>적정 수준</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>저평가 매력</div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-row">
+  <button class="filter-btn active" onclick="filter('all',this)">전체</button>
+  <button class="filter-btn" onclick="filter('바이오',this)">K-바이오</button>
+  <button class="filter-btn" onclick="filter('뷰티',this)">K-뷰티</button>
+  <button class="filter-btn" onclick="filter('에너지',this)">원전·에너지</button>
+  <button class="filter-btn" onclick="filter('플랫폼',this)">AI 플랫폼</button>
+</div>
+
+<!-- CARDS -->
+<section class="cards-section">
+  <div class="cards-grid" id="cards-grid"></div>
+</section>
+
+<!-- TABLE -->
+<section class="table-section">
+  <div class="section-title">종목 비교 요약표</div>
+  <div class="tbl-wrap">
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th>종목</th>
+          <th>현재가</th>
+          <th>52주 범위</th>
+          <th>52주 위치</th>
+          <th>PER (26E)</th>
+          <th>PBR</th>
+          <th>컨센서스 목표가</th>
+          <th>상승 여력</th>
+          <th>판단</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- VERDICT -->
+<section class="verdict-section">
+  <div class="section-title">투자 액션 가이드</div>
+  <div class="verdict-grid">
+    <div class="verdict-card">
+      <div class="verdict-icon">🟢</div>
+      <div class="verdict-title">지금 분할 매수 가능</div>
+      <ul class="verdict-list">
+        <li>코스메카코리아 — PER 14배, 52주 하단 근접</li>
+        <li>네이버 — 글로벌 플랫폼 대비 할인 구간</li>
+        <li>아모레퍼시픽 — PBR 역사적 저점, 구조적 회복 기대</li>
+        <li>셀트리온 — 이익 개선 가속, 목표가 22% 상승여력</li>
+      </ul>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-icon">🟡</div>
+      <div class="verdict-title">신중하게 분할 접근</div>
+      <ul class="verdict-list">
+        <li>삼성바이오로직스 — 5공장 가동 이익 레버리지 기대하며 분할</li>
+        <li>카카오 — PBR 0.87배 저평가이나 수익화 시점 불확실</li>
+        <li>한미약품 — 임상 결과 이전 과도한 집중 금물</li>
+        <li>효성중공업 — 적정 밸류, 미국 수주 확인 후 추가 매수</li>
+      </ul>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-icon">🔴</div>
+      <div class="verdict-title">조정 기다렸다 매수</div>
+      <ul class="verdict-list">
+        <li>두산에너빌리티 — 52주 최저 대비 5배 급등, 목표가 여력 10%</li>
+        <li>상승여력 10~15% 미만이면 신규 진입보다 기존 보유자 홀딩</li>
+        <li>원전 수주 발표 후 단기 급등 → 조정 시 분할 매집 전략 유효</li>
+        <li>PBR 8배는 성장 프리미엄 한계치. 실적 확인 후 재점검 필요</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  ※ 본 리포트는 공개된 애널리스트 컨센서스 및 검색 가능한 시장 정보를 바탕으로 한 투자 참고용 자료입니다.
+  PER·PBR 수치는 증권사 리포트 및 공개 자료 기준 추정치이며 실제 수치와 다소 차이가 있을 수 있습니다.
+  본 리포트의 내용은 특정 종목의 매수·매도를 권유하지 않으며, 모든 투자 결정은 투자자 본인의 책임 하에 이루어져야 합니다.
+  투자원금 손실이 발생할 수 있습니다. 기준일: 2026년 3월 중순.
+</div>
+
+<script>
+const stocks = [
+  {
+    name: '삼성바이오로직스', code: '207940', sector: '바이오',
+    price: 1710000, low52: 982000, high52: 1987000,
+    per: 52, pbr: 7.8, target: 2250000,
+    verdict: 'amber', verdictText: '다소 부담',
+    comment: '52주 최저 98만원에서 171만원까지 올라온 상태. 애널리스트 26명 전원 매수 의견, 목표주가 평균 225만원으로 상승여력 약 31% 잔존. PER 52배·PBR 7.8배는 객관적 고평가권이나, 5공장 가동 이익 레버리지로 2026년 하반기 PER 30~35배대 수렴 예상. 한 번에 담기보다 3~4회 분할 매수 필수.',
+    perBar: 85, perColor: '#e05c5c'
+  },
+  {
+    name: '셀트리온', code: '068270', sector: '바이오',
+    price: 205000, low52: 145000, high52: 260000,
+    per: 28, pbr: 3.2, target: 250000,
+    verdict: 'green', verdictText: '적정 수준',
+    comment: '미국 바이오시밀러 직판 전환 이익 개선으로 PER이 빠르게 낮아지는 구간. 4분기 영업이익 4,722억원으로 전년 대비 140% 급증. 신규 제품 비중이 62%로 확대되며 수익 구조 개선 지속. 목표가 25만원 대비 상승여력 약 22%.',
+    perBar: 45, perColor: '#EF9F27'
+  },
+  {
+    name: '한미약품', code: '128940', sector: '바이오',
+    price: 320000, low52: 270000, high52: 420000,
+    per: 38, pbr: 4.1, target: 420000,
+    verdict: 'amber', verdictText: '다소 부담',
+    comment: 'GLP-1 비만 치료제 파이프라인(MSD 기술이전)의 임상 2b상 결과가 2026년 상반기 최대 이벤트. 임상 성공 시 목표가 42만원까지 재산정 가능하나, 실패 시 즉각 30% 이상 급락 리스크 존재. 임상 결과 확인 전 과도한 집중 금물. 전체 포트의 5~8% 이내 소량 분할 접근 권장.',
+    perBar: 62, perColor: '#EF9F27'
+  },
+  {
+    name: '아모레퍼시픽', code: '090430', sector: '뷰티',
+    price: 133000, low52: 95000, high52: 170000,
+    per: 22, pbr: 1.6, target: 170000,
+    verdict: 'green', verdictText: '적정 수준',
+    comment: '탈중국 채널 다변화(북미·동남아·중동) 진행 중. PBR 1.6배는 역사적 저점권으로, 중국 소비 우려가 과도하게 반영된 상태. 북미 매출 비중 확대가 가시화되면 밸류에이션 리레이팅 기대. 12만원 이하 추가 분할 매수 기회 노릴 것.',
+    perBar: 36, perColor: '#5aab76'
+  },
+  {
+    name: '코스메카코리아', code: '241710', sector: '뷰티',
+    price: 28500, low52: 20000, high52: 38000,
+    per: 14, pbr: 2.1, target: 38000,
+    verdict: 'blue', verdictText: '저평가 매력',
+    comment: 'K-뷰티 OEM/ODM 종목 중 밸류에이션 부담이 가장 낮은 구간. PER 14배는 성장성 대비 명확한 저평가. 52주 범위의 하단에 근접해 신규 진입 매력도가 가장 높음. 미국 현지 법인 가동 여부가 핵심 변수로, 흑자 전환 확인 시 목표가 3.5~4만원 레이팅 가능.',
+    perBar: 22, perColor: '#5a8fd4'
+  },
+  {
+    name: '두산에너빌리티', code: '034020', sector: '에너지',
+    price: 106500, low52: 19960, high52: 110200,
+    per: null, pbr: 8.2, target: 118000,
+    verdict: 'amber', verdictText: '다소 부담',
+    comment: '52주 최저 1만9천원에서 10만6천원까지 5배 이상 급등. 컨센서스 목표가 11만8천원 대비 상승여력 10.8%에 불과. PBR 8.2배는 고부담 구간이나 원전 수주 잔고·SMR 모멘텀이 성장 프리미엄 근거. 신규 진입보다 수주 공시 이후 단기 조정 시 매집이 유리.',
+    perBar: 95, perColor: '#e05c5c'
+  },
+  {
+    name: '효성중공업', code: '298040', sector: '에너지',
+    price: 265000, low52: 110000, high52: 310000,
+    per: 18, pbr: 3.5, target: 330000,
+    verdict: 'green', verdictText: '적정 수준',
+    comment: '미국 IRA 수혜주로 ESS·초고압 변압기 수주 본격화. PER 18배는 업종 평균 수준의 적정 밸류에이션. 미국 수주 잔고 증가 시 추가 상향 여지. 52주 고점(31만원) 대비 하락 상태로 상승여력 약 25% 잔존. 분할 매수 접근 가능.',
+    perBar: 30, perColor: '#5aab76'
+  },
+  {
+    name: '네이버', code: '035420', sector: '플랫폼',
+    price: 215000, low52: 160000, high52: 250000,
+    per: 24, pbr: 1.8, target: 280000,
+    verdict: 'green', verdictText: '적정 수준',
+    comment: '글로벌 대형 플랫폼 평균 PER 28~35배 대비 할인된 24배. PBR 1.8배도 합리적 수준. AI 검색(클로바X)·광고 수익화 초기 단계로 2026년 하반기부터 실적 기여 가시화 예상. 안정적 진입 구간. 18만원 이하 추가 분할 기회 활용.',
+    perBar: 40, perColor: '#5aab76'
+  },
+  {
+    name: '카카오', code: '035720', sector: '플랫폼',
+    price: 38450, low52: 32000, high52: 58000,
+    per: 35, pbr: 0.87, target: 50000,
+    verdict: 'blue', verdictText: '저평가 매력',
+    comment: 'PBR 0.87배로 장부가치 미만 역사적 저평가. 증권사 컨센서스 목표가 5만원 대비 약 30% 상승여력. PER 35배는 현 이익 대비 부담이나, 지배구조 개선+AI 광고 수익화 본격화 시 PER·PBR 동반 정상화 여지. 플랫폼 구조조정 완료 여부 지속 모니터링 필요.',
+    perBar: 58, perColor: '#EF9F27'
+  }
+];
+
+function pos(p, l, h) { return Math.round(((p-l)/(h-l))*100); }
+function upside(p, t) { return (((t-p)/p)*100).toFixed(1); }
+function fmtK(n) { return n>=1000000 ? (n/10000).toFixed(0)+'만' : n>=10000 ? (n/10000).toFixed(1)+'만' : n.toLocaleString(); }
+
+function perColor(v) {
+  if (!v) return 'warn';
+  if (v > 45) return 'warn';
+  if (v > 30) return 'caution';
+  if (v > 20) return 'ok';
+  return 'good';
+}
+function pbrColor(v) {
+  if (v > 6) return 'warn';
+  if (v > 3.5) return 'caution';
+  if (v < 1.2) return 'good';
+  return 'ok';
+}
+
+const badgeCls = { red:'badge-red', amber:'badge-amber', green:'badge-green', blue:'badge-blue' };
+const verdictText = { red:'고평가 주의', amber:'다소 부담', green:'적정 수준', blue:'저평가 매력' };
+
+function renderCards(data) {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = data.map(d => {
+    const p = pos(d.price, d.low52, d.high52);
+    const up = upside(d.price, d.target);
+    const rangeColor = p > 80 ? '#e05c5c' : p > 50 ? '#d4924a' : '#5aab76';
+    const upClass = up < 15 ? 'upside-pct low' : 'upside-pct';
+    return `
+    <div class="card ${d.verdict}" data-sector="${d.sector}">
+      <div class="card-header">
+        <div>
+          <div class="card-name">${d.name}</div>
+          <div class="card-code">${d.code} · ${d.sector}</div>
+        </div>
+        <span class="card-badge ${badgeCls[d.verdict]}">${verdictText[d.verdict]}</span>
+      </div>
+
+      <div class="price-row">
+        <div class="price-main">${d.price.toLocaleString()}<span style="font-size:14px;color:var(--text3)">원</span></div>
+        <div class="price-label">현재가</div>
+      </div>
+
+      <div class="range-wrap">
+        <div class="range-label">
+          <span>${d.low52.toLocaleString()} 52주 최저</span>
+          <span>52주 최고 ${d.high52.toLocaleString()}</span>
+        </div>
+        <div class="range-bar">
+          <div class="range-fill" style="width:${p}%;background:${rangeColor}22"></div>
+          <div class="range-dot" style="left:${p}%;background:${rangeColor}"></div>
+        </div>
+        <div class="range-pct">52주 범위 내 <strong style="color:${rangeColor}">${p}%</strong> 위치</div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">PER (26E)</div>
+          <div class="metric-value ${perColor(d.per)}">${d.per ? d.per+'배' : 'N/A'}</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">PBR</div>
+          <div class="metric-value ${pbrColor(d.pbr)}">${d.pbr}배</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">섹터</div>
+          <div class="metric-value" style="font-size:12px;color:var(--text2)">${d.sector}</div>
+        </div>
+      </div>
+
+      <div class="per-bar-wrap">
+        <div class="per-bar-label">
+          <span>PER 부담도</span>
+          <span style="font-family:var(--mono)">${d.per ? d.per+'배' : '적자 전환'}</span>
+        </div>
+        <div class="per-track">
+          <div class="per-fill" style="width:${d.perBar}%;background:${d.perColor}"></div>
+        </div>
+      </div>
+
+      <div class="upside-row">
+        <div class="upside-target">컨센서스 목표가 <strong>${d.target.toLocaleString()}원</strong></div>
+        <div class="${upClass}">+${up}%</div>
+      </div>
+
+      <div class="card-comment">${d.comment}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderTable(data) {
+  const tb = document.getElementById('table-body');
+  tb.innerHTML = data.map(d => {
+    const p = pos(d.price, d.low52, d.high52);
+    const up = upside(d.price, d.target);
+    const rangeColor = p > 80 ? 'var(--red)' : p > 50 ? 'var(--amber)' : 'var(--green)';
+    return `<tr>
+      <td><div class="tname">${d.name}</div><div class="tcode">${d.code}</div></td>
+      <td class="tprice">${d.price.toLocaleString()}원</td>
+      <td style="font-family:var(--mono);font-size:11px;color:var(--text3)">${d.low52.toLocaleString()} ~ ${d.high52.toLocaleString()}</td>
+      <td style="color:${rangeColor};font-family:var(--mono)">${p}%</td>
+      <td class="tper" style="color:${!d.per ? 'var(--text3)' : d.per > 40 ? 'var(--red)' : d.per > 25 ? 'var(--amber)' : 'var(--green)'}">${d.per ? d.per+'배' : 'N/A'}</td>
+      <td style="font-family:var(--mono);color:${d.pbr > 6 ? 'var(--red)' : d.pbr < 1.5 ? 'var(--blue)' : 'var(--text)'}">${d.pbr}배</td>
+      <td style="font-family:var(--mono)">${d.target.toLocaleString()}원</td>
+      <td class="tupside">${up < 15 ? '<span style="color:var(--amber)">+'+up+'%</span>' : '+'+up+'%'}</td>
+      <td><span class="card-badge ${badgeCls[d.verdict]}">${verdictText[d.verdict]}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+let currentFilter = 'all';
+function filter(sector, btn) {
+  currentFilter = sector;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = sector === 'all' ? stocks : stocks.filter(s => s.sector === sector);
+  renderCards(filtered);
+  renderTable(filtered);
+}
+
+renderCards(stocks);
+renderTable(stocks);
+</script>
+</body>
+</html>
