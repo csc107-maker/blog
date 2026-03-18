@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중국 보험 대국의 굴기 — 핑안·중국생명·PICC가 바꾸는 세계 경제와 한국의 대응 전략</title>
+<meta name="description" content="중국 3대 보험사(핑안보험·중국생명·PICC)의 급성장이 중국 경제와 산업에 미치는 영향, 한국 보험사와의 비교 분석, 그리고 한국 경제에 미치는 시사점을 심층 분석합니다.">
+<meta name="keywords" content="중국보험사,핑안보험,중국생명보험,PICC,중국보험시장,한국보험사비교,중국경제,보험산업분석,인슈어테크,글로벌보험">
+<meta property="og:title" content="중국 보험 대국의 굴기 — 핑안·중국생명·PICC가 바꾸는 세계 경제와 한국의 대응 전략">
+<meta property="og:description" content="중국 3대 보험사의 급성장이 중국 경제와 한국에 미치는 영향을 심층 분석합니다.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --crimson: #C0202A;
+    --crimson-dark: #8B0000;
+    --gold: #D4A843;
+    --gold-light: #F0C96A;
+    --ink: #1A1208;
+    --parchment: #FAF6EE;
+    --mist: #F2EDE3;
+    --charcoal: #2C2416;
+    --slate: #5C5040;
+    --border: #D9CEBC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    line-height: 1.85;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    background: var(--ink);
+    overflow: hidden;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 80px 32px 60px;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 68px);
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: #d4cec3;
+    line-height: 1.65;
+    margin-bottom: 32px;
+  }
+
+  .hero-meta {
+    font-size: 12px;
+    color: #a09880;
+    letter-spacing: 2px;
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  article {
+    padding: 72px 0 100px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 700;
+    color: var(--crimson-dark);
+    margin: 68px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gold);
+    position: relative;
+  }
+
+  h2::before {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 100%;
+    background: var(--crimson);
+    position: absolute;
+    left: -18px;
+    top: 0;
+    border-radius: 2px;
+  }
+
+  h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(17px, 2.5vw, 22px);
+    font-weight: 600;
+    color: var(--charcoal);
+    margin: 42px 0 14px;
+  }
+
+  p {
+    font-size: clamp(14.5px, 1.8vw, 16.5px);
+    color: #2e2518;
+    margin-bottom: 20px;
+    word-break: keep-all;
+  }
+
+  strong { color: var(--crimson-dark); font-weight: 700; }
+
+  /* ── LEAD ── */
+  .lead {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.9;
+    color: var(--charcoal);
+    padding: 28px 32px;
+    border-left: 4px solid var(--crimson);
+    background: #fff7f0;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 40px;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin: 36px 0 48px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--crimson);
+    border-radius: 6px;
+    padding: 22px 20px;
+    text-align: center;
+  }
+
+  .stat-card .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    color: var(--crimson);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--slate);
+    letter-spacing: 1px;
+    line-height: 1.5;
+  }
+
+  /* ── ILLUSTRATION WRAPPER ── */
+  .illo-wrap {
+    margin: 44px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  .illo-caption {
+    font-size: 12px;
+    color: var(--slate);
+    text-align: center;
+    margin-top: 10px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── COMPANY CARDS ── */
+  .company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin: 32px 0 48px;
+  }
+
+  .company-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .company-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gold);
+  }
+
+  .company-card .co-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    margin-bottom: 6px;
+  }
+
+  .company-card .co-sub {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .company-card p {
+    font-size: 13.5px;
+    color: #3a2e1e;
+    margin: 0;
+  }
+
+  /* ── COMPARE TABLE ── */
+  .compare-wrap {
+    margin: 36px 0 48px;
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 14px;
+    min-width: 560px;
+  }
+
+  thead tr {
+    background: var(--crimson-dark);
+    color: #fff;
+  }
+
+  thead th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+  }
+
+  tbody tr { border-bottom: 1px solid #ece5d8; }
+  tbody tr:nth-child(even) { background: #fdf9f4; }
+
+  tbody td {
+    padding: 13px 18px;
+    color: #2e2518;
+    vertical-align: top;
+  }
+
+  tbody td:first-child {
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  /* ── PULLQUOTE ── */
+  blockquote {
+    margin: 48px 0;
+    padding: 28px 36px;
+    background: var(--crimson-dark);
+    color: #fff;
+    border-radius: 10px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.8;
+    position: relative;
+  }
+
+  blockquote::before {
+    content: '❝';
+    font-size: 60px;
+    color: var(--gold);
+    opacity: 0.4;
+    position: absolute;
+    top: 8px; left: 20px;
+    line-height: 1;
+    font-family: serif;
+  }
+
+  blockquote p { color: #fff; margin: 0; }
+
+  /* ── IMPACT BOX ── */
+  .impact-box {
+    background: linear-gradient(135deg, #fdf3e3 0%, #fef9f0 100%);
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 28px 30px;
+    margin: 36px 0;
+  }
+
+  .impact-box h4 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--crimson-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .impact-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .impact-box li {
+    padding: 7px 0 7px 22px;
+    position: relative;
+    font-size: 14.5px;
+    color: #2e2518;
+    border-bottom: 1px dashed #e8d9b8;
+  }
+
+  .impact-box li:last-child { border-bottom: none; }
+
+  .impact-box li::before {
+    content: '▸';
+    color: var(--crimson);
+    position: absolute;
+    left: 0;
+    font-size: 13px;
+  }
+
+  /* ── HASHTAGS ── */
+  .hashtag-section {
+    margin-top: 72px;
+    padding-top: 36px;
+    border-top: 2px solid var(--border);
+  }
+
+  .hashtag-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid var(--crimson);
+    color: var(--crimson-dark);
+    padding: 5px 14px;
+    border-radius: 99px;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: default;
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    background: var(--crimson);
+    color: #fff;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #7a6e5e;
+    text-align: center;
+    padding: 40px 28px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  footer strong { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 20px;
+    letter-spacing: 12px;
+    margin: 52px 0 0;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    h2::before { display: none; }
+    .hero-content { padding: 60px 20px 48px; }
+    blockquote { padding: 22px 20px 22px 24px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<header class="hero">
+  <!-- Hero SVG Background Illustration -->
+  <svg class="hero-bg" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#0d0a06"/>
+        <stop offset="60%" stop-color="#1a0d0d"/>
+        <stop offset="100%" stop-color="#2a0808"/>
+      </linearGradient>
+      <radialGradient id="glowRed" cx="75%" cy="50%" r="45%">
+        <stop offset="0%" stop-color="#C0202A" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#C0202A" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="glowGold" cx="25%" cy="30%" r="35%">
+        <stop offset="0%" stop-color="#D4A843" stop-opacity="0.15"/>
+        <stop offset="100%" stop-color="#D4A843" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1440" height="560" fill="url(#heroGrad)"/>
+    <rect width="1440" height="560" fill="url(#glowRed)"/>
+    <rect width="1440" height="560" fill="url(#glowGold)"/>
+
+    <!-- Dragon scale pattern top-left -->
+    <g opacity="0.06" fill="#D4A843">
+      <path d="M-20 0 Q20 40 60 0 Q100 40 140 0 Q180 40 220 0 Q260 40 300 0"/>
+      <path d="M0 40 Q40 80 80 40 Q120 80 160 40 Q200 80 240 40 Q280 80 320 40"/>
+      <path d="M-20 80 Q20 120 60 80 Q100 120 140 80 Q180 120 220 80 Q260 120 300 80"/>
+      <path d="M0 120 Q40 160 80 120 Q120 160 160 120 Q200 160 240 120 Q280 160 320 120"/>
+      <path d="M-20 160 Q20 200 60 160 Q100 200 140 160 Q180 200 220 160 Q260 200 300 160"/>
+      <path d="M0 200 Q40 240 80 200 Q120 240 160 200 Q200 240 240 200 Q280 240 320 200"/>
+    </g>
+    <!-- Diagonal geometric lines -->
+    <g stroke="#D4A843" stroke-width="0.4" opacity="0.12">
+      <line x1="0" y1="560" x2="560" y2="0"/>
+      <line x1="200" y1="560" x2="760" y2="0"/>
+      <line x1="400" y1="560" x2="960" y2="0"/>
+      <line x1="600" y1="560" x2="1160" y2="0"/>
+      <line x1="800" y1="560" x2="1360" y2="0"/>
+      <line x1="1000" y1="560" x2="1560" y2="0"/>
+    </g>
+
+    <!-- Stylized skyscraper cityline (China) - right side -->
+    <g fill="none" stroke="#ffffff" opacity="0.05" stroke-width="1">
+      <rect x="980" y="180" width="30" height="380" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1020" y="120" width="50" height="440" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1082" y="200" width="28" height="360" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1120" y="100" width="60" height="460" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1192" y="160" width="35" height="400" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1238" y="220" width="40" height="340" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1290" y="140" width="55" height="420" fill="#fff" fill-opacity="0.03"/>
+      <rect x="1357" y="200" width="83" height="360" fill="#fff" fill-opacity="0.03"/>
+    </g>
+
+    <!-- Large faded Chinese character 保险 (Insurance) -->
+    <text x="50%" y="65%" text-anchor="middle" font-size="340" fill="#C0202A" opacity="0.04" font-family="serif" font-weight="900">保</text>
+
+    <!-- Circular emblem -->
+    <g transform="translate(720,280)">
+      <circle cx="0" cy="0" r="200" stroke="#D4A843" stroke-width="0.6" fill="none" opacity="0.08"/>
+      <circle cx="0" cy="0" r="180" stroke="#D4A843" stroke-width="0.3" fill="none" opacity="0.06"/>
+      <circle cx="0" cy="0" r="155" stroke="#C0202A" stroke-width="0.5" fill="none" opacity="0.06" stroke-dasharray="6 4"/>
+    </g>
+
+    <!-- Bottom gold bar -->
+    <rect x="0" y="545" width="1440" height="3" fill="#D4A843" opacity="0.35"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">심층 분석 · 2026년 3월</div>
+    <h1 class="hero-title">중국 보험 대국의 굴기</h1>
+    <p class="hero-subtitle">핑안 · 중국생명 · PICC가 바꾸는 글로벌 경제 질서와<br>한국 보험산업의 대응 전략</p>
+    <p class="hero-meta">CHINA INSURANCE · GLOBAL ECONOMY · KOREA STRATEGY</p>
+  </div>
+</header>
+
+<!-- ══════════════ ARTICLE ══════════════ -->
+<article>
+<div class="container">
+
+  <!-- LEAD -->
+  <p class="lead">
+    세계 보험 시장의 판도가 바뀌고 있다. 한때 서구 금융 질서의 외곽에 머물던 중국 보험사들이, 이제는 브랜드 가치·자산 규모·기술 혁신 모든 면에서 글로벌 선두권을 장악했다. 핑안보험(平安)은 8년 연속 세계 1위 보험 브랜드를 지켰고, 중국생명과 PICC는 국유 자본의 힘으로 거대 포트폴리오를 구축했다. 이 세 공룡이 만들어내는 파고(波高)는 중국 경제를 넘어 한국까지 밀려오고 있다. 이 글에서는 중국 보험 산업의 성장이 갖는 경제적 의미, 산업적 파급효과, 그리고 한국 보험사 및 한국 경제에 미치는 영향을 입체적으로 분석한다.
+  </p>
+
+  <!-- STAT CARDS -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">41.3조</div>
+      <div class="label">중국 보험 업계<br>자산총액 (위안, 2025)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">+15.1%</div>
+      <div class="label">보험 자산<br>연간 성장률 (2025)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">$336억</div>
+      <div class="label">핑안보험<br>브랜드 가치 (2024)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">8.8%</div>
+      <div class="label">중국 보험 시장<br>CAGR (∼2032)</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>1. 중국 보험사의 성장이 중국 경제에 갖는 의미</h2>
+
+  <p>
+    보험은 단순한 리스크 분산 수단이 아니다. 국가 경제의 안전망이자, 자본시장의 장기 수혈원(輸血源)이다. 중국 보험 산업이 폭발적으로 성장한 2010년대 이후, 이 업종은 중국 경제의 구조 전환을 뒷받침하는 핵심 기둥으로 자리잡았다.
+  </p>
+
+  <h3>① 사회 안전망의 민영화 보완</h3>
+  <p>
+    중국 정부는 방대한 인구를 국가 단독으로 부양할 수 없다는 현실을 일찍이 인식했다. 노령화 속도가 빨라지고 도시화가 심화되는 가운데, <strong>생명보험·연금보험·건강보험</strong>의 확산은 공적 복지의 공백을 민간이 채우는 역할을 한다. 중국생명보험이 '다층적 사회보장 체계 구축'을 2026년 핵심 과제로 설정한 것은 이 맥락에서 이해할 수 있다. 국가 복지 부담을 분산하면서 동시에 막대한 보험료를 자본시장으로 유입시키는 이중 기능이 가동된다.
+  </p>
+
+  <h3>② 자본시장 안정화의 큰 손</h3>
+  <p>
+    2025년 말 기준 중국 보험사들은 주식 투자 비중을 4년 만에 최고 수준으로 끌어올렸다. 규제 당국이 보험사의 주식 보유 한도를 완화하고 장기 보유 인센티브를 부여한 결과다. 보험사의 장기 자금은 단기 투기 자본과 달리 주가 변동성을 낮추고 기업 지배구조를 안정시키는 효과가 있다. 중국 당국이 보험자금을 '자본시장 안정화 장치'로 적극 활용하는 전략적 의도가 뚜렷하다.
+  </p>
+
+  <h3>③ 실물 경제 자금 공급</h3>
+  <p>
+    중국생명보험이 '실물 경제로의 자본 유입 확대'를 강조하듯, 보험 자금은 인프라·녹색에너지·첨단 제조업에 장기 저금리 자본을 공급하는 채널 역할을 한다. 은행 대출에 의존하는 기업들에게 보험사 투자는 새로운 자금 조달 경로가 되고, 이는 중국의 산업 고도화를 재정적으로 뒷받침한다.
+  </p>
+
+  <!-- SECTION 2 ILLUSTRATION -->
+  <div class="illo-wrap">
+    <svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1A0D0D"/>
+          <stop offset="100%" stop-color="#2C1A0A"/>
+        </linearGradient>
+        <linearGradient id="barGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#E83040"/>
+          <stop offset="100%" stop-color="#8B0000"/>
+        </linearGradient>
+        <linearGradient id="barGold" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F0C96A"/>
+          <stop offset="100%" stop-color="#B8860B"/>
+        </linearGradient>
+      </defs>
+      <rect width="820" height="320" fill="url(#bg2)" rx="12"/>
+      <!-- Grid lines -->
+      <g stroke="#ffffff" stroke-width="0.4" opacity="0.08">
+        <line x1="80" y1="40" x2="80" y2="260"/>
+        <line x1="80" y1="260" x2="760" y2="260"/>
+        <line x1="80" y1="200" x2="760" y2="200"/>
+        <line x1="80" y1="150" x2="760" y2="150"/>
+        <line x1="80" y1="100" x2="760" y2="100"/>
+        <line x1="80" y1="60" x2="760" y2="60"/>
+      </g>
+      <!-- Y-axis labels -->
+      <text x="70" y="264" text-anchor="end" fill="#a09880" font-size="10" font-family="sans-serif">0</text>
+      <text x="70" y="204" text-anchor="end" fill="#a09880" font-size="10" font-family="sans-serif">10조</text>
+      <text x="70" y="154" text-anchor="end" fill="#a09880" font-size="10" font-family="sans-serif">20조</text>
+      <text x="70" y="104" text-anchor="end" fill="#a09880" font-size="10" font-family="sans-serif">30조</text>
+      <text x="70" y="64" text-anchor="end" fill="#a09880" font-size="10" font-family="sans-serif">40조</text>
+
+      <!-- Bars: 중국 보험 자산 성장 (위안) -->
+      <!-- 2020 -->
+      <rect x="110" y="210" width="60" height="50" fill="url(#barGrad)" rx="3" opacity="0.8"/>
+      <text x="140" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2020</text>
+      <!-- 2021 -->
+      <rect x="210" y="190" width="60" height="70" fill="url(#barGrad)" rx="3" opacity="0.85"/>
+      <text x="240" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2021</text>
+      <!-- 2022 -->
+      <rect x="310" y="170" width="60" height="90" fill="url(#barGrad)" rx="3" opacity="0.9"/>
+      <text x="340" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2022</text>
+      <!-- 2023 -->
+      <rect x="410" y="148" width="60" height="112" fill="url(#barGrad)" rx="3" opacity="0.92"/>
+      <text x="440" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2023</text>
+      <!-- 2024 -->
+      <rect x="510" y="118" width="60" height="142" fill="url(#barGrad)" rx="3" opacity="0.95"/>
+      <text x="540" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2024</text>
+      <!-- 2025 -->
+      <rect x="610" y="88" width="60" height="172" fill="url(#barGold)" rx="3"/>
+      <text x="640" y="282" text-anchor="middle" fill="#d4cec3" font-size="11" font-family="sans-serif">2025</text>
+      <text x="640" y="82" text-anchor="middle" fill="#F0C96A" font-size="12" font-weight="bold" font-family="sans-serif">41.3조</text>
+
+      <!-- Title -->
+      <text x="420" y="24" text-anchor="middle" fill="#D4A843" font-size="13" font-weight="bold" font-family="sans-serif">중국 보험업 자산총액 성장 추이 (단위: 위안)</text>
+      <text x="420" y="308" text-anchor="middle" fill="#7a6e5e" font-size="9" font-family="sans-serif">※ 2025년 말 기준 국가금융감독관리총국(NFRA) 발표 데이터 기반</text>
+    </svg>
+  </div>
+  <p class="illo-caption">▲ 중국 보험업 자산총액 연간 성장 추이 — 2025년 41.3조 위안 돌파, 연초 대비 +15.1% 성장</p>
+
+  <!-- SECTION 2 -->
+  <h2>2. 중국 보험 대형사들이 산업계에 미치는 영향</h2>
+
+  <p>
+    중국의 3대 보험사는 단순히 '보험료를 받고 보험금을 지급하는' 전통적 역할에 머물지 않는다. 이들은 거대한 자본력과 데이터 인프라를 바탕으로 다양한 산업 생태계를 재편하고 있다.
+  </p>
+
+  <div class="company-grid">
+    <div class="company-card">
+      <div class="co-name">핑안보험 (平安)</div>
+      <div class="co-sub">Ping An · 민영 · 선전</div>
+      <p>AI·빅데이터·핀테크를 보험에 접목. 의료·자동차·부동산·스마트시티 5대 테크 생태계 구축. 금융·의료·자동차 플랫폼으로 비보험 수익 확대.</p>
+    </div>
+    <div class="company-card">
+      <div class="co-name">중국생명 (中国人寿)</div>
+      <div class="co-sub">China Life · 국유 · 베이징</div>
+      <p>세계 최대 생명보험사 중 하나. 다층 연금·건강보험으로 복지 공백 보완. '333 전략'으로 안정성·효율성·지속가능성 동시 추구.</p>
+    </div>
+    <div class="company-card">
+      <div class="co-name">PICC (中国人民保险)</div>
+      <div class="co-sub">People's Insurance · 국유 · 베이징</div>
+      <p>1949년 창립. 손해보험 1위. 전사 리스크 평가 A등급 달성. 소비 진작·혁신 생태계와 보험 기능을 접목하는 국가전략 연계 강화.</p>
+    </div>
+  </div>
+
+  <h3>① 핀테크·인슈어테크 생태계 구축</h3>
+  <p>
+    핑안보험은 보험사 이상의 존재다. AI 기반 자동차 사고 손해사정 시스템은 3분 안에 수리 견적을 산출하고, 연간 7억 5,000만 달러 이상의 비용을 절감한다. 460개 이상의 중국 은행과 1,800개 넘는 금융사가 핑안의 원커넥트(OneConnect) 플랫폼을 활용한다. 이는 보험사가 금융 인프라 제공자로 탈바꿈했다는 신호다. 중안온라인보험(眾安在線)처럼 알리바바·텐센트와 공동 창업한 인슈어테크 기업도 등장하며 디지털 보험의 표준을 만들어가고 있다.
+  </p>
+
+  <h3>② 녹색금융 및 신에너지 산업 지원</h3>
+  <p>
+    중국 주요 보험사들은 국가 녹색 경제 전략에 보험 자본을 정렬(align)하고 있다. 태양광·풍력·전기차 배터리 보험 등 새로운 보험 영역을 개척하면서, 신에너지 산업의 리스크를 제도적으로 흡수하는 역할을 한다. BYD가 이안화상보험을 인수한 것도 이 맥락의 연장선이다. 전기차 제조사가 직접 보험을 운영함으로써 데이터 기반 보험료 산정과 제조-금융 융합의 새 모델을 만들어낸다.
+  </p>
+
+  <h3>③ 자본시장 구조적 안정화</h3>
+  <p>
+    중국 보험사의 주식 투자 비중 확대는 단기 투기 자금을 대체해 시장 변동성을 완화하는 순기능을 낳는다. 정책 당국은 보험자금을 '내구성 있는 기관 투자자'로 육성하면서 주가 급락 시 자동 안정화 장치(stabilizer)로 작동하도록 제도를 설계하고 있다. 이는 중국 자본시장의 성숙도를 높이는 동시에, 보험사의 수익성도 개선하는 전략적 선택이다.
+  </p>
+
+  <blockquote>
+    <p>중국 보험사는 더 이상 리스크의 수동적 인수자가 아니다. 이들은 산업 생태계의 적극적 설계자이자, 국가 경제 전략의 금융 집행자로 기능하고 있다.</p>
+  </blockquote>
+
+  <!-- SECTION 3 -->
+  <h2>3. 한국 보험사와의 비교 분석</h2>
+
+  <p>
+    한국 보험 시장도 결코 작지 않다. 삼성생명·한화생명·DB손해보험 등 대형사들이 아시아 시장에서 탄탄한 입지를 구축하고 있다. 그러나 중국 보험 대형사와 나란히 놓으면 규모·기술·글로벌화 측면에서 현저한 격차가 드러난다.
+  </p>
+
+  <!-- COMPARE TABLE -->
+  <div class="compare-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>중국 (핑안·중국생명·PICC)</th>
+          <th>한국 (삼성생명·한화생명·DB손보)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>시장 규모</td>
+          <td>자산총액 41.3조 위안 (약 8,000조 원)</td>
+          <td>생명보험 자산 약 1,000조 원 수준</td>
+        </tr>
+        <tr>
+          <td>글로벌 브랜드 가치</td>
+          <td>핑안 336억$·China Life 171억$ (세계 1·3위)</td>
+          <td>삼성생명 세계 10위권, 글로벌 인지도 제한적</td>
+        </tr>
+        <tr>
+          <td>디지털·AI 혁신</td>
+          <td>AI 손해사정, 빅데이터 플랫폼, 자체 테크 생태계</td>
+          <td>디지털 전환 추진 중, 플랫폼 생태계 구축 초기</td>
+        </tr>
+        <tr>
+          <td>해외 진출 전략</td>
+          <td>홍콩·동남아·유럽 적극 진출, PICC 글로벌 재보험</td>
+          <td>동남아 시장 진출 일부, 해외 비중 낮음</td>
+        </tr>
+        <tr>
+          <td>국가전략 연계</td>
+          <td>녹색금융·과학기술·사회안전망 공식 연계</td>
+          <td>K-ESG 기반 전략 수립 단계, 정책 연계 미약</td>
+        </tr>
+        <tr>
+          <td>주요 리스크</td>
+          <td>저금리, 부동산 노출, 지정학적 리스크</td>
+          <td>IFRS17 전환, 저출산·고령화, 경쟁 심화</td>
+        </tr>
+        <tr>
+          <td>성장 전략</td>
+          <td>질적 성장+국가 전략 연계+기술 융합</td>
+          <td>신계약 CSM 성장·건강보험·변액보험 강화</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>핵심 격차: 규모와 기술 생태계</h3>
+  <p>
+    한국 보험사의 가장 큰 약점은 <strong>규모의 경제</strong>와 <strong>기술 생태계의 부재</strong>다. 핑안은 보험료 수입으로만 멈추지 않고 의료·부동산·자동차 플랫폼을 통해 교차판매(Cross-sell)와 데이터 선순환을 이루고 있다. 반면 한국 보험사는 여전히 설계사 중심 판매 채널에 의존하는 비중이 높고, 생태계 구축보다는 상품 경쟁에 집중되어 있다. IFRS17 도입으로 CSM 지표가 부각되면서 수익 구조 개선에는 성과를 내고 있지만, 중장기 플랫폼 경쟁력에서 격차는 좁혀지지 않고 있다.
+  </p>
+
+  <h3>한국의 강점: 리스크 관리와 제도 성숙도</h3>
+  <p>
+    그렇다고 한국 보험사가 열세만은 아니다. 감독 제도의 성숙도, 계리 역량, 보험 침투율(penetration rate) 측면에서 한국은 세계 최고 수준을 자랑한다. 국민의 보험 이해도와 가입률이 높아 안정적 보험료 기반이 유지된다. 또한 IFRS17 전환 이후 미래 수익(CSM) 중심의 사업 체질로 빠르게 전환하고 있다는 점은 장기적 재무 건전성 측면에서 강점이다.
+  </p>
+
+  <!-- SECTION 3 ILLUSTRATION -->
+  <div class="illo-wrap">
+    <svg viewBox="0 0 820 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FAF6EE"/>
+          <stop offset="100%" stop-color="#F2EDE3"/>
+        </linearGradient>
+      </defs>
+      <rect width="820" height="280" fill="url(#bg3)" rx="12"/>
+
+      <!-- Title -->
+      <text x="410" y="30" text-anchor="middle" fill="#8B0000" font-size="13" font-weight="bold" font-family="sans-serif">한국 vs 중국 보험사 경쟁력 레이더 비교</text>
+
+      <!-- Radar Chart Center -->
+      <g transform="translate(410,155)">
+        <!-- Axes -->
+        <g stroke="#c8bfad" stroke-width="0.8" opacity="0.6">
+          <line x1="0" y1="-100" x2="0" y2="100"/>
+          <line x1="-100" y1="0" x2="100" y2="0"/>
+          <line x1="-70.7" y1="-70.7" x2="70.7" y2="70.7"/>
+          <line x1="70.7" y1="-70.7" x2="-70.7" y2="70.7"/>
+        </g>
+        <!-- Concentric hexagons -->
+        <polygon points="0,-50 43.3,-25 43.3,25 0,50 -43.3,25 -43.3,-25" fill="none" stroke="#c8bfad" stroke-width="0.6" opacity="0.5"/>
+        <polygon points="0,-80 69.3,-40 69.3,40 0,80 -69.3,40 -69.3,-40" fill="none" stroke="#c8bfad" stroke-width="0.6" opacity="0.5"/>
+        <polygon points="0,-100 86.6,-50 86.6,50 0,100 -86.6,50 -86.6,-50" fill="none" stroke="#c8bfad" stroke-width="0.6" opacity="0.4"/>
+
+        <!-- China polygon (핑안 기준): 자산규모95 글로벌화80 디지털90 국가연계95 성장성85 리스크60 -->
+        <polygon points="0,-93 72,-46.5 54.6,43.3 0,58 -73.7,42.5 -52,-50"
+          fill="#C0202A" fill-opacity="0.15" stroke="#C0202A" stroke-width="2"/>
+        <!-- Korea polygon: 자산규모35 글로벌화30 디지털55 국가연계45 성장성60 리스크80 -->
+        <polygon points="0,-32 27.6,-18 33,29 0,45 -39,23 -26,-25"
+          fill="#1a6bb5" fill-opacity="0.15" stroke="#1a6bb5" stroke-width="2"/>
+
+        <!-- Labels -->
+        <text x="0" y="-108" text-anchor="middle" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">자산 규모</text>
+        <text x="100" y="-55" text-anchor="start" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">글로벌화</text>
+        <text x="100" y="55" text-anchor="start" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">디지털 혁신</text>
+        <text x="0" y="120" text-anchor="middle" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">성장성</text>
+        <text x="-100" y="55" text-anchor="end" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">국가연계</text>
+        <text x="-100" y="-55" text-anchor="end" fill="#2C2416" font-size="10.5" font-family="sans-serif" font-weight="600">리스크 관리</text>
+      </g>
+
+      <!-- Legend -->
+      <rect x="30" y="245" width="14" height="8" fill="#C0202A" rx="2"/>
+      <text x="50" y="253" fill="#2C2416" font-size="11" font-family="sans-serif">중국 대형 보험사 (핑안 기준)</text>
+      <rect x="240" y="245" width="14" height="8" fill="#1a6bb5" rx="2"/>
+      <text x="260" y="253" fill="#2C2416" font-size="11" font-family="sans-serif">한국 대형 보험사 (삼성생명 기준)</text>
+    </svg>
+  </div>
+  <p class="illo-caption">▲ 한국 vs 중국 보험사 주요 경쟁력 비교 레이더 차트 (개념적 비교, 자체 산정)</p>
+
+  <!-- SECTION 4 -->
+  <h2>4. 중국 보험 대형사의 성장이 한국 경제에 미치는 영향</h2>
+
+  <p>
+    중국 보험사의 굴기는 한국과 무관하지 않다. 금융 자본 이동, 산업 경쟁 구조 변화, 그리고 무역·투자 환경의 재편 등 여러 경로를 통해 한국 경제에 파급된다.
+  </p>
+
+  <div class="impact-box">
+    <h4>⚡ 한국 경제에 미치는 주요 파급 경로</h4>
+    <ul>
+      <li><strong>해외 직접 투자 경쟁</strong> — 중국 보험사 자본의 동남아·유럽 진출이 한국 금융사의 글로벌 투자 공간을 축소할 수 있음</li>
+      <li><strong>재보험 시장 영향</strong> — PICC 등의 글로벌 재보험 시장 확대가 한국 기업들의 재보험 조건에 영향</li>
+      <li><strong>중국발 M&A 리스크</strong> — 중국 보험 자본이 한국 금융사 지분을 인수하거나 전략적 투자를 시도할 가능성</li>
+      <li><strong>인슈어테크 기술 경쟁</strong> — 핑안·중안보험의 AI 보험 기술이 글로벌 표준화되면 한국 보험사 경쟁력 약화</li>
+      <li><strong>금융 시스템 연계 리스크</strong> — 중국 보험사 자산 급증이 중국 부동산 위기와 연동될 경우, 한-중 금융 연계를 통한 전이 위험</li>
+      <li><strong>녹색금융 경쟁</strong> — 중국 보험사가 주도하는 녹색채권·탄소보험 시장이 확대될 경우 한국의 ESG 보험 선점 기회 축소</li>
+    </ul>
+  </div>
+
+  <h3>① 긍정적 측면: 대중 보험 수출 기회</h3>
+  <p>
+    중국 보험 시장의 확대는 한국 보험사에게 위협이지만, 동시에 기회이기도 하다. 중국 중산층의 건강보험·여행보험·반려동물보험 등 니치(niche) 보험에 대한 수요가 급증하고 있으며, 한국의 정밀한 계리 역량과 K-웰니스 브랜드를 결합한 특화 상품이 중국 소비자에게 소구력을 가질 수 있다. 또한 한국 보험사들이 동남아에서 구축한 네트워크는 중국 보험사의 동남아 진출 파트너십 수요와 연결될 여지가 있다.
+  </p>
+
+  <h3>② 부정적 측면: 규모 격차의 심화와 기술 경쟁</h3>
+  <p>
+    한국 보험사들이 가장 경계해야 할 것은 <strong>기술 표준 경쟁에서의 소외</strong>다. 핑안이 만들어가는 AI 손해사정·디지털 보험 플랫폼이 아시아 표준이 된다면, 한국 보험사는 자체 기술 개발보다 중국 플랫폼에 의존하는 구조에 놓일 수 있다. 이는 단기적 비용 절감 효과보다 장기적 플랫폼 종속 위험이 훨씬 크다. 국내 보험사들이 K-인슈어테크 기술력을 조기에 내재화해야 하는 이유다.
+  </p>
+
+  <h3>③ 한국의 전략적 대응 방향</h3>
+  <p>
+    결국 한국 보험사의 선택지는 세 가지다. 첫째, <strong>기술 내재화 전략</strong> — AI·빅데이터를 자체 보험 플랫폼에 통합해 디지털 경쟁력을 강화한다. 둘째, <strong>틈새 글로벌화 전략</strong> — 동남아·중앙아시아 등 중국 보험사가 아직 지배적이지 않은 시장에서 선점 지위를 구축한다. 셋째, <strong>ESG·헬스케어 특화 전략</strong> — K-바이오·K-웰니스 브랜드와 보험을 결합한 건강보험 특화로 차별화한다. 중국이 규모와 국가 자본으로 경쟁한다면, 한국은 정밀성·신뢰성·혁신 속도로 승부해야 한다.
+  </p>
+
+  <!-- SECTION 5 ILLUSTRATION -->
+  <div class="illo-wrap">
+    <svg viewBox="0 0 820 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fdf9f4"/>
+          <stop offset="100%" stop-color="#f5ede0"/>
+        </linearGradient>
+      </defs>
+      <rect width="820" height="260" fill="url(#bg4)" rx="12"/>
+
+      <!-- Title -->
+      <text x="410" y="30" text-anchor="middle" fill="#8B0000" font-size="13" font-weight="bold" font-family="sans-serif">한국 보험사의 3가지 대응 전략 프레임</text>
+
+      <!-- Card 1 -->
+      <rect x="40" y="50" width="220" height="170" rx="10" fill="#fff" stroke="#C0202A" stroke-width="1.5"/>
+      <rect x="40" y="50" width="220" height="6" rx="3" fill="#C0202A"/>
+      <text x="150" y="90" text-anchor="middle" fill="#C0202A" font-size="26" font-family="sans-serif">🤖</text>
+      <text x="150" y="118" text-anchor="middle" fill="#8B0000" font-size="13" font-weight="bold" font-family="sans-serif">기술 내재화 전략</text>
+      <text x="150" y="140" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">AI·빅데이터 자체 플랫폼</text>
+      <text x="150" y="158" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">인슈어테크 조기 내재화</text>
+      <text x="150" y="176" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">디지털 채널 비중 확대</text>
+      <text x="150" y="200" text-anchor="middle" fill="#a09880" font-size="10.5" font-family="sans-serif" font-style="italic">Platform Independence</text>
+
+      <!-- Card 2 -->
+      <rect x="300" y="50" width="220" height="170" rx="10" fill="#fff" stroke="#D4A843" stroke-width="1.5"/>
+      <rect x="300" y="50" width="220" height="6" rx="3" fill="#D4A843"/>
+      <text x="410" y="90" text-anchor="middle" fill="#D4A843" font-size="26" font-family="sans-serif">🌏</text>
+      <text x="410" y="118" text-anchor="middle" fill="#8B0000" font-size="13" font-weight="bold" font-family="sans-serif">틈새 글로벌화 전략</text>
+      <text x="410" y="140" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">동남아·중앙아시아 선점</text>
+      <text x="410" y="158" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">한류 브랜드 활용</text>
+      <text x="410" y="176" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">현지 파트너십 구축</text>
+      <text x="410" y="200" text-anchor="middle" fill="#a09880" font-size="10.5" font-family="sans-serif" font-style="italic">Niche Globalization</text>
+
+      <!-- Card 3 -->
+      <rect x="560" y="50" width="220" height="170" rx="10" fill="#fff" stroke="#1a6bb5" stroke-width="1.5"/>
+      <rect x="560" y="50" width="220" height="6" rx="3" fill="#1a6bb5"/>
+      <text x="670" y="90" text-anchor="middle" fill="#1a6bb5" font-size="26" font-family="sans-serif">💚</text>
+      <text x="670" y="118" text-anchor="middle" fill="#8B0000" font-size="13" font-weight="bold" font-family="sans-serif">ESG·헬스케어 특화</text>
+      <text x="670" y="140" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">K-바이오·웰니스 융합</text>
+      <text x="670" y="158" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">건강보험 프리미엄화</text>
+      <text x="670" y="176" text-anchor="middle" fill="#5C5040" font-size="11" font-family="sans-serif">탄소·ESG 보험 선점</text>
+      <text x="670" y="200" text-anchor="middle" fill="#a09880" font-size="10.5" font-family="sans-serif" font-style="italic">Health &amp; ESG Specialization</text>
+
+      <text x="410" y="248" text-anchor="middle" fill="#7a6e5e" font-size="10" font-family="sans-serif">※ 규모 경쟁 대신 정밀성·신뢰성·혁신 속도로 차별화</text>
+    </svg>
+  </div>
+  <p class="illo-caption">▲ 중국 보험 굴기에 대응하는 한국 보험사 3대 전략 프레임</p>
+
+  <!-- CONCLUSION -->
+  <h2>5. 결론 — 보험은 국력이다</h2>
+
+  <p>
+    중국이 보험을 국가 경제 전략의 핵심 축으로 육성해온 것은 우연이 아니다. 사회 안전망을 민간이 보완하고, 자본시장을 안정시키며, 첨단 기술을 금융에 접목해 새로운 산업 생태계를 만드는 이 과정에서, 보험은 단순한 금융 상품이 아니라 <strong>국가 경쟁력의 하부 구조</strong>가 됐다.
+  </p>
+
+  <p>
+    핑안보험이 8년 연속 세계 1위 보험 브랜드를 지키고, 중국 보험사들이 글로벌 브랜드 가치 상위 10개 중 5개를 점하는 현실은 결코 단순한 수치가 아니다. 이는 중국이 자본·기술·인구를 삼위일체로 결합해 금융 질서를 재편하고 있다는 강력한 메시지다.
+  </p>
+
+  <p>
+    한국은 이 거대한 흐름 앞에 두 가지 선택 앞에 서 있다. 수동적으로 규모의 격차를 지켜보거나, 능동적으로 기술과 신뢰성을 무기로 차별화된 포지션을 만들어내거나. 정답은 자명하다. 규모로는 중국을 이길 수 없다. 그러나 정밀함·신뢰·속도에서는 충분히 경쟁할 수 있다. 한국 보험사가 K-인슈어테크, 글로벌 틈새 전략, ESG 특화를 조기에 내재화한다면, 중국 보험 대국의 굴기는 위협이 아닌 반면교사(反面教師)가 될 것이다.
+  </p>
+
+  <div class="ornament">✦ ✦ ✦</div>
+
+  <!-- HASHTAGS -->
+  <div class="hashtag-section">
+    <p class="hashtag-title">태그 &amp; SEO 키워드</p>
+    <div class="tags">
+      <span class="tag">#중국보험사</span>
+      <span class="tag">#핑안보험</span>
+      <span class="tag">#중국생명보험</span>
+      <span class="tag">#PICC</span>
+      <span class="tag">#중국경제분석</span>
+      <span class="tag">#보험산업트렌드</span>
+      <span class="tag">#글로벌보험시장</span>
+      <span class="tag">#한국보험사</span>
+      <span class="tag">#삼성생명</span>
+      <span class="tag">#한화생명</span>
+      <span class="tag">#인슈어테크</span>
+      <span class="tag">#InsurTech</span>
+      <span class="tag">#중국금융</span>
+      <span class="tag">#보험빅데이터</span>
+      <span class="tag">#AI보험</span>
+      <span class="tag">#녹색금융</span>
+      <span class="tag">#ESG보험</span>
+      <span class="tag">#한국경제</span>
+      <span class="tag">#핀테크</span>
+      <span class="tag">#금융분석</span>
+      <span class="tag">#중국핑안</span>
+      <span class="tag">#보험투자</span>
+      <span class="tag">#자본시장</span>
+      <span class="tag">#2026보험트렌드</span>
+      <span class="tag">#中国保险</span>
+    </div>
+  </div>
+
+</div>
+</article>
+
+<footer>
+  <strong>中国保险大国的崛起 | 중국 보험 대국의 굴기</strong><br><br>
+  본 콘텐츠는 공개 데이터 및 보험 전문 매체 보도를 바탕으로 작성된 분석 블로그입니다.<br>
+  투자 권고나 금융 조언을 목적으로 하지 않습니다. · 2026년 3월 기준
+</footer>
+
+</body>
+</html>
