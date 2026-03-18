@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에코솔루션이 다른 4가지 이유 | 태양광 발전사업</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FDFAF5;
+  --bg2: #F5F0E8;
+  --cream: #EDE7D9;
+  --gold: #D4860A;
+  --gold-lt: #F5A623;
+  --gold-dim: #F5A62318;
+  --amber: #FF8C00;
+  --teal: #0E7C6B;
+  --teal-lt: #12A08A;
+  --teal-dim: #0E7C6B12;
+  --navy: #0F1F35;
+  --navy-mid: #1A3350;
+  --slate: #4A6072;
+  --slate-lt: #8BA3B4;
+  --white: #FFFFFF;
+  --red: #C0392B;
+  --red-dim: #C0392B12;
+  --line: #E0D8CC;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--navy);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ── 배경 패턴 ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(212,134,10,.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(14,124,107,.05) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4860a' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── 네비 ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(253,250,245,.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 6%;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); font-style: italic; }
+.nav-logo b { font-style: normal; color: var(--navy); }
+.nav-contact {
+  display: flex; align-items: center; gap: 14px;
+  font-size: 13px;
+}
+.nav-phone { color: var(--slate); text-decoration: none; font-weight: 500; }
+.nav-phone:hover { color: var(--teal); }
+.nav-kakao {
+  background: #FEE500; color: #191919;
+  padding: 7px 18px; border-radius: 100px;
+  font-size: 12px; font-weight: 700;
+  text-decoration: none;
+  transition: all .25s;
+  box-shadow: 0 2px 8px rgba(254,229,0,.35);
+}
+.nav-kakao:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(254,229,0,.5); }
+
+/* ── 히어로 ── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 80px 6% 60px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+}
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(212,134,10,.2);
+  padding: 6px 16px; border-radius: 100px;
+  margin-bottom: 28px;
+  animation: fadeUp .7s ease both;
+}
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 900; line-height: 1.2;
+  margin-bottom: 20px;
+  animation: fadeUp .8s ease .1s both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-title .teal { color: var(--teal); }
+.hero-desc {
+  font-size: 16px; color: var(--slate); line-height: 1.9;
+  max-width: 600px; margin: 0 auto 40px;
+  animation: fadeUp .8s ease .2s both;
+}
+.hero-pills {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+  animation: fadeUp .8s ease .3s both;
+}
+.hero-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 13px; font-weight: 600; color: var(--navy);
+  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  cursor: pointer; transition: all .25s; text-decoration: none;
+}
+.hero-pill:hover { border-color: var(--gold); background: var(--gold-dim); transform: translateY(-2px); }
+.hero-pill .num { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); }
+
+@keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── 섹션 공통 ── */
+.section { position: relative; z-index: 1; }
+
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 6%;
+}
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 700; line-height: 1.3;
+  margin-bottom: 14px;
+}
+.section-sub { font-size: 15px; color: var(--slate); line-height: 1.85; }
+
+/* ═══════════════════════════════════
+   SECTION 1 — 정책 변화 실시간 대응
+   ═══════════════════════════════════ */
+.s1 { background: var(--white); border-top: 3px solid var(--gold); }
+.s1 .section-tag { color: var(--gold); }
+.s1-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 60px; align-items: start; margin-top: 44px; }
+@media(max-width:800px){ .s1-layout{grid-template-columns:1fr;gap:36px;} }
+
+/* 문제 vs 해결 박스 */
+.compare-box {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.compare-row {
+  display: grid; grid-template-columns: 1fr 36px 1fr;
+  gap: 0; align-items: center;
+}
+.compare-item {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 13px; line-height: 1.6;
+}
+.compare-item.before {
+  background: var(--red-dim);
+  border: 1px solid rgba(192,57,43,.15);
+  color: var(--red);
+}
+.compare-item.after {
+  background: var(--teal-dim);
+  border: 1px solid rgba(14,124,107,.15);
+  color: var(--teal);
+  font-weight: 600;
+}
+.compare-arrow {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--slate-lt); font-size: 16px;
+}
+
+/* 정책 카드 타임라인 */
+.policy-timeline { display: flex; flex-direction: column; gap: 0; }
+.policy-item {
+  display: flex; gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.policy-item:last-child { border-bottom: none; }
+.policy-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  margin-top: 2px;
+}
+.policy-dot.red { background: var(--red-dim); }
+.policy-dot.gold { background: var(--gold-dim); }
+.policy-dot.teal { background: var(--teal-dim); }
+.policy-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.policy-body p { font-size: 12px; color: var(--slate); line-height: 1.7; }
+.policy-badge {
+  display: inline-block; margin-top: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  padding: 2px 8px; border-radius: 4px;
+}
+.policy-badge.new { background: var(--teal-dim); color: var(--teal); }
+.policy-badge.alert { background: var(--red-dim); color: var(--red); }
+.policy-badge.gold { background: var(--gold-dim); color: var(--gold); }
+
+/* ═══════════════════════════════════
+   SECTION 2 — 지역 맞춤 설계
+   ═══════════════════════════════════ */
+.s2 { background: var(--bg2); }
+.s2 .section-tag { color: var(--teal); }
+.s2-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: start; margin-top: 44px; }
+@media(max-width:800px){ .s2-layout{grid-template-columns:1fr;gap:36px;} }
+
+/* 지역 선택기 */
+.region-selector { display: flex; flex-direction: column; gap: 10px; }
+.region-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--white);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer; transition: all .25s;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: left;
+}
+.region-btn:hover, .region-btn.active {
+  border-color: var(--teal);
+  background: var(--teal-dim);
+}
+.region-btn .region-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+.region-btn .region-tag { font-size: 11px; color: var(--teal); background: var(--teal-dim); padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+.region-btn.active .region-name { color: var(--teal); }
+
+/* 지역 상세 카드 */
+.region-detail {
+  background: var(--white);
+  border: 2px solid var(--teal);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all .3s;
+}
+.region-detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.region-detail-icon { font-size: 28px; }
+.region-detail-title { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 700; color: var(--teal); }
+.region-detail-sub { font-size: 12px; color: var(--slate); }
+
+.region-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.region-stat {
+  background: var(--bg2);
+  border-radius: 10px; padding: 14px;
+  text-align: center;
+}
+.region-stat-val { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); font-weight: 700; line-height: 1; }
+.region-stat-label { font-size: 11px; color: var(--slate); margin-top: 4px; }
+
+.region-features { display: flex; flex-direction: column; gap: 8px; }
+.region-feature {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12px; color: var(--slate); line-height: 1.6;
+}
+.region-feature::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* ═══════════════════════════════════
+   SECTION 3 — 수익 최적화 컨설팅
+   ═══════════════════════════════════ */
+.s3 { background: var(--white); }
+.s3 .section-tag { color: var(--gold); }
+.s3-layout { margin-top: 44px; }
+
+/* 단순 설치 vs 에코솔루션 비교 */
+.vs-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; margin-bottom: 48px; }
+@media(max-width:700px){.vs-grid{grid-template-columns:1fr;}}
+.vs-col {
+  border-radius: 16px; overflow: hidden;
+}
+.vs-col-header {
+  padding: 18px 24px;
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.vs-col.plain .vs-col-header { background: #F0F0F0; color: var(--slate); }
+.vs-col.eco .vs-col-header { background: linear-gradient(135deg, var(--gold), var(--amber)); color: var(--white); }
+.vs-col-body { padding: 20px 24px; background: var(--bg); border: 1px solid var(--line); border-radius: 0 0 16px 16px; }
+.vs-col.eco .vs-col-body { background: #FFFDF7; border-color: rgba(212,134,10,.25); }
+
+.vs-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.vs-item:last-child { border-bottom: none; }
+.vs-item .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.vs-item .text { color: var(--slate); line-height: 1.6; }
+.vs-col.eco .vs-item .text { color: var(--navy); font-weight: 500; }
+
+.vs-center { display: flex; align-items: center; justify-content: center; padding: 0 20px; }
+.vs-vs {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--navy); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+
+/* 20년 수익 시각화 */
+.revenue-visual-title { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+.revenue-bars { display: flex; flex-direction: column; gap: 12px; }
+.revenue-bar-row { display: grid; grid-template-columns: 80px 1fr 80px; gap: 12px; align-items: center; }
+.revenue-bar-label { font-size: 12px; color: var(--slate); text-align: right; font-weight: 500; }
+.revenue-bar-track { height: 32px; background: var(--bg2); border-radius: 8px; overflow: hidden; position: relative; }
+.revenue-bar-fill {
+  height: 100%; border-radius: 8px;
+  display: flex; align-items: center; padding-left: 12px;
+  font-size: 12px; font-weight: 700; color: var(--white);
+  transition: width 1s ease;
+  position: relative;
+}
+.revenue-bar-fill::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,.1) 0%, transparent 100%);
+  border-radius: 8px;
+}
+.revenue-bar-val { font-size: 13px; font-weight: 700; color: var(--navy); }
+
+/* ═══════════════════════════════════
+   SECTION 4 — 금융 네트워크
+   ═══════════════════════════════════ */
+.s4 { background: var(--navy); color: var(--white); }
+.s4 .section-tag { color: var(--gold-lt); }
+.s4 .section-title { color: var(--white); }
+.s4 .section-sub { color: var(--slate-lt); }
+
+.finance-intro {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+  margin: 44px 0 48px;
+}
+@media(max-width:700px){.finance-intro{grid-template-columns:1fr;}}
+
+.finance-problem, .finance-solution {
+  border-radius: 16px; padding: 28px;
+}
+.finance-problem { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+.finance-solution { background: rgba(212,134,10,.08); border: 1px solid rgba(212,134,10,.2); }
+.finance-box-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.finance-problem .finance-box-title { color: var(--slate-lt); }
+.finance-solution .finance-box-title { color: var(--gold-lt); }
+.finance-list { display: flex; flex-direction: column; gap: 10px; }
+.finance-list-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.7; }
+.finance-list-item.bad { color: rgba(255,255,255,.5); }
+.finance-list-item.good { color: rgba(255,255,255,.9); font-weight: 500; }
+.fi-icon { flex-shrink: 0; margin-top: 2px; }
+
+/* 금융 기관 그리드 */
+.institutions-title {
+  font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 700;
+  color: var(--white); margin-bottom: 20px; text-align: center;
+}
+.institutions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 40px; }
+.institution-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 20px 16px;
+  text-align: center; transition: all .3s;
+}
+.institution-card:hover { background: rgba(212,134,10,.1); border-color: rgba(212,134,10,.3); transform: translateY(-3px); }
+.inst-icon { font-size: 26px; margin-bottom: 10px; }
+.inst-name { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.inst-desc { font-size: 11px; color: var(--slate-lt); line-height: 1.6; }
+.inst-tag { display: inline-block; margin-top: 8px; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(212,134,10,.2); color: var(--gold-lt); }
+
+/* PF 구조 시각화 */
+.pf-visual {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px; padding: 28px;
+}
+.pf-title { font-size: 14px; font-weight: 700; color: var(--gold-lt); margin-bottom: 20px; text-align: center; }
+.pf-bars { display: flex; gap: 8px; align-items: flex-end; height: 120px; margin-bottom: 12px; }
+.pf-bar { flex: 1; border-radius: 8px 8px 0 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 10px; font-size: 12px; font-weight: 700; color: var(--white); position: relative; transition: all 1.2s ease; }
+.pf-bar span { font-size: 18px; }
+.pf-bar-label { text-align: center; font-size: 11px; color: var(--slate-lt); padding-top: 8px; }
+.pf-note { text-align: center; font-size: 12px; color: var(--slate-lt); margin-top: 12px; }
+
+/* ── CTA 섹션 ── */
+.cta-section {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 100%);
+  padding: 70px 6%;
+  text-align: center;
+  position: relative; z-index: 1;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.05'%3E%3Ccircle cx='20' cy='20' r='1.5'/%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-inner { position: relative; z-index: 1; }
+.cta-title { font-family: 'Noto Serif KR', serif; font-size: clamp(24px,3.5vw,42px); font-weight: 900; color: var(--white); line-height: 1.3; margin-bottom: 14px; }
+.cta-desc { font-size: 15px; color: rgba(255,255,255,.85); line-height: 1.9; margin-bottom: 36px; }
+.cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.cta-kakao {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #FEE500; color: #191919;
+  padding: 16px 36px; border-radius: 100px;
+  font-size: 16px; font-weight: 700; text-decoration: none;
+  transition: all .3s;
+  box-shadow: 0 6px 24px rgba(0,0,0,.15);
+}
+.cta-kakao:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,.2); }
+.cta-phone {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.15); color: var(--white);
+  padding: 16px 32px; border-radius: 100px;
+  font-size: 16px; font-weight: 700; text-decoration: none;
+  border: 2px solid rgba(255,255,255,.4);
+  transition: all .3s;
+}
+.cta-phone:hover { background: rgba(255,255,255,.25); }
+
+/* 푸터 */
+footer {
+  background: var(--navy-mid); padding: 28px 6%;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.footer-logo { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold-lt); font-style: italic; }
+.footer-logo b { font-style: normal; color: rgba(255,255,255,.6); }
+.footer-copy { font-size: 11px; color: var(--slate-lt); }
+
+/* 스크롤 reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: all .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* 탭 버튼 공통 */
+.tab-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.tab-pill {
+  padding: 8px 18px; border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg2); color: var(--slate);
+  border: 1px solid var(--line);
+  transition: all .2s;
+}
+.tab-pill.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+.tab-pill:hover:not(.active) { border-color: var(--teal); color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- 네비 -->
+<nav>
+  <div class="nav-logo"><i>Eco</i><b>Solution</b></div>
+  <div class="nav-contact">
+    <a href="tel:070-5159-5119" class="nav-phone">📞 070-5159-5119</a>
+    <a href="https://open.kakao.com/o/sr1KUAgh" target="_blank" class="nav-kakao">카카오 무료상담</a>
+  </div>
+</nav>
+
+<!-- 히어로 -->
+<div class="hero">
+  <div class="hero-kicker">✦ 에코솔루션만의 차별점</div>
+  <h1 class="hero-title">
+    왜 <span class="gold">에코솔루션</span>이어야<br>
+    <span class="teal">하는가</span>
+  </h1>
+  <p class="hero-desc">
+    태양광 사업을 처음 고민하는 분들이 가장 어려워하는 4가지 —<br>정책 이해, 지역 조건, 수익 예측, 자금 조달.<br>
+    에코솔루션이 이 모든 것을 <strong>쉽고 정확하게</strong> 해결합니다.
+  </p>
+  <div class="hero-pills">
+    <a href="#s1" class="hero-pill"><span class="num">01</span> 정책 실시간 대응</a>
+    <a href="#s2" class="hero-pill"><span class="num">02</span> 지역 맞춤 설계</a>
+    <a href="#s3" class="hero-pill"><span class="num">03</span> 수익 최적화</a>
+    <a href="#s4" class="hero-pill"><span class="num">04</span> 금융 네트워크</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     01 — 정책 변화 실시간 대응
+     ═══════════════════════════════════ -->
+<div class="section s1" id="s1">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag" style="color:var(--gold)">
+        <span style="background:var(--gold-dim);border:1px solid rgba(212,134,10,.2);padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px">01</span>
+        정책 변화 실시간 대응
+      </div>
+      <h2 class="section-title">복잡한 정책,<br>저희가 먼저 읽고 알려드립니다</h2>
+      <p class="section-sub">
+        태양광 사업자가 가장 힘들어하는 것은 끊임없이 바뀌는 정책입니다.<br>
+        에코솔루션은 제도 변화를 사전에 파악하고, 여러분의 사업에 어떤 영향이 미치는지 <strong>즉시 전략에 반영</strong>합니다.
+      </p>
+    </div>
+
+    <div class="s1-layout reveal">
+      <!-- 왼쪽: 문제 vs 해결 -->
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--slate);margin-bottom:14px;letter-spacing:.5px">📋 혼자 하면 vs 에코솔루션과 함께</div>
+        <div class="compare-box">
+          <div style="display:grid;grid-template-columns:1fr 36px 1fr;gap:0;margin-bottom:6px">
+            <div style="font-size:11px;font-weight:700;color:var(--red);padding:0 4px">혼자 알아볼 때</div>
+            <div></div>
+            <div style="font-size:11px;font-weight:700;color:var(--teal);padding:0 4px">에코솔루션</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-item before">❌ RPS 폐지 소식 듣고 패닉 — 이제 수익 없나?</div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-item after">✅ RPS → 장기 고정계약 전환, 오히려 수익 더 안정적</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-item before">❌ 준중앙제도가 뭔지 몰라서 보상을 못 받음</div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-item after">✅ 출력제어 발생 시 정산금 자동 신청 대행</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-item before">❌ 계시별 요금제 시행 몰라서 손해 봄</div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-item after">✅ 낮 시간 발전 최대화 전략으로 수익 추가</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-item before">❌ 이격거리 규제 때문에 포기했던 부지 활용 못함</div>
+            <div class="compare-arrow">→</div>
+            <div class="compare-item after">✅ 2026.02.12 법 개정 — 해당 부지 재검토 즉시 안내</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 정책 타임라인 -->
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--slate);margin-bottom:14px;letter-spacing:.5px">📰 2026년 에코솔루션이 모니터링하는 주요 정책</div>
+        <div class="policy-timeline">
+          <div class="policy-item">
+            <div class="policy-dot red">📜</div>
+            <div class="policy-body">
+              <h4>RPS 폐지 → 재생에너지 계약시장 전환</h4>
+              <p>현물시장 변동성에서 벗어나 장기 고정가격계약으로 안정 수익 확보. 신규 사업자에게 유리한 구조로 개편.</p>
+              <span class="policy-badge gold">핵심 변화</span>
+            </div>
+          </div>
+          <div class="policy-item">
+            <div class="policy-dot teal">⚡</div>
+            <div class="policy-body">
+              <h4>준중앙급전 제도 — 출력제어 보상 신설</h4>
+              <p>발전을 강제로 멈출 때 정산금을 지급하는 제도. 2026년 호남권부터 시행, 전국 확대 예정.</p>
+              <span class="policy-badge new">신규 수익원</span>
+            </div>
+          </div>
+          <div class="policy-item">
+            <div class="policy-dot gold">💡</div>
+            <div class="policy-body">
+              <h4>계시별 요금제 — 낮 시간 전력 가치 상승</h4>
+              <p>낮 시간대 요금 인하로 기업 PPA 수요 증가. 태양광 피크 발전 시간대와 정확히 일치.</p>
+              <span class="policy-badge new">기회 요인</span>
+            </div>
+          </div>
+          <div class="policy-item">
+            <div class="policy-dot teal">📍</div>
+            <div class="policy-body">
+              <h4>이격거리 규제 원칙적 폐지 (2026.02.12 국회 통과)</h4>
+              <p>지자체 조례 이격거리 사실상 폐지. 주민참여형·지붕형 태양광은 이격거리 0m 적용.</p>
+              <span class="policy-badge new">입지 확대</span>
+            </div>
+          </div>
+          <div class="policy-item">
+            <div class="policy-dot red">🏗️</div>
+            <div class="policy-body">
+              <h4>계통 접속 4.1GW 확보 — 대기 기간 단축</h4>
+              <p>허수 사업자 정리로 선로 용량 확보. ADMS 도입으로 완공 후 즉시 발전 판매 가능.</p>
+              <span class="policy-badge alert">대기 기간 단축</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     02 — 지역 맞춤 설계
+     ═══════════════════════════════════ -->
+<div class="section s2" id="s2">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag" style="color:var(--teal)">
+        <span style="background:var(--teal-dim);border:1px solid rgba(14,124,107,.2);padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px">02</span>
+        지역 맞춤 설계
+      </div>
+      <h2 class="section-title">우리 지역에 딱 맞는<br>태양광 설계가 따로 있습니다</h2>
+      <p class="section-sub">
+        지역마다 일사량, 계통 조건, 지자체 보조금이 전혀 다릅니다.<br>
+        에코솔루션은 <strong>세종·충청 지역</strong>을 중심으로 지역 밀착 데이터를 축적하고, 해당 조건에 최적화된 설계를 제공합니다.
+      </p>
+    </div>
+
+    <div class="s2-layout reveal">
+      <!-- 왼쪽: 지역 선택기 -->
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--slate);margin-bottom:14px">📍 지역을 선택하면 맞춤 정보를 확인할 수 있습니다</div>
+        <div class="region-selector" id="region-selector">
+          <button class="region-btn active" onclick="selectRegion('sejong')" data-region="sejong">
+            <span class="region-name">🏛️ 세종특별자치시</span>
+            <span class="region-tag">핵심 거점</span>
+          </button>
+          <button class="region-btn" onclick="selectRegion('chungnam')" data-region="chungnam">
+            <span class="region-name">🌾 충청남도</span>
+            <span class="region-tag">최적 입지</span>
+          </button>
+          <button class="region-btn" onclick="selectRegion('chungbuk')" data-region="chungbuk">
+            <span class="region-name">⛰️ 충청북도</span>
+            <span class="region-tag">산지 활용</span>
+          </button>
+          <button class="region-btn" onclick="selectRegion('daejeon')" data-region="daejeon">
+            <span class="region-name">🏙️ 대전광역시</span>
+            <span class="region-tag">도심 지붕형</span>
+          </button>
+        </div>
+        <div style="margin-top:16px;padding:14px 16px;background:var(--white);border:1px solid var(--line);border-radius:10px;font-size:12px;color:var(--slate);line-height:1.7">
+          💡 <strong>왜 지역이 중요한가요?</strong><br>
+          같은 100kW 발전소도 지역에 따라 연간 수익이 최대 <strong style="color:var(--teal)">15~20% 차이</strong>가 납니다. 일사량, 계통 용량, 출력제어 빈도, 지자체 보조금을 종합 분석해야 정확한 수익 예측이 가능합니다.
+        </div>
+      </div>
+
+      <!-- 오른쪽: 지역 상세 -->
+      <div id="region-detail-wrap">
+        <div class="region-detail" id="region-detail">
+          <!-- JS로 채워짐 -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     03 — 수익 최적화 컨설팅
+     ═══════════════════════════════════ -->
+<div class="section s3" id="s3">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag" style="color:var(--gold)">
+        <span style="background:var(--gold-dim);border:1px solid rgba(212,134,10,.2);padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px">03</span>
+        수익 최적화 컨설팅
+      </div>
+      <h2 class="section-title">단순 설치와<br>20년 수익 설계는 다릅니다</h2>
+      <p class="section-sub">
+        패널을 얹는 것은 시작일 뿐입니다. 어떤 계약 방식을 선택하고, 어떻게 운영하느냐에 따라<br>
+        같은 발전소도 20년 총 수익이 <strong>수천만 원 이상 달라집니다.</strong>
+      </p>
+    </div>
+
+    <div class="s3-layout">
+      <!-- 단순 설치 vs 에코솔루션 -->
+      <div class="vs-grid reveal" style="margin-bottom:48px">
+        <div class="vs-col plain">
+          <div class="vs-col-header">😔 일반 설치업체</div>
+          <div class="vs-col-body">
+            <div class="vs-item"><span class="icon">📦</span><span class="text">설치 후 "알아서 하세요"</span></div>
+            <div class="vs-item"><span class="icon">📉</span><span class="text">SMP 하락해도 대응 방법 없음</span></div>
+            <div class="vs-item"><span class="icon">❓</span><span class="text">현물시장·고정계약·PPA 중 뭐가 좋은지 모름</span></div>
+            <div class="vs-item"><span class="icon">🔧</span><span class="text">인버터 고장 나도 수개월 방치</span></div>
+            <div class="vs-item"><span class="icon">📊</span><span class="text">수익 리포트 없음, 내가 직접 확인</span></div>
+            <div class="vs-item"><span class="icon">💸</span><span class="text">새 제도 생겨도 모르고 지나침</span></div>
+          </div>
+        </div>
+        <div class="vs-center"><div class="vs-vs">VS</div></div>
+        <div class="vs-col eco">
+          <div class="vs-col-header">🌟 에코솔루션</div>
+          <div class="vs-col-body">
+            <div class="vs-item"><span class="icon">🗺️</span><span class="text">20년 수익 로드맵 제공, 매년 업데이트</span></div>
+            <div class="vs-item"><span class="icon">📈</span><span class="text">SMP 하락기엔 PPA·고정계약으로 즉시 전환 제안</span></div>
+            <div class="vs-item"><span class="icon">✅</span><span class="text">현물·고정·PPA 3가지 경로 수익 비교 후 최적 선택</span></div>
+            <div class="vs-item"><span class="icon">⚡</span><span class="text">실시간 발전량 모니터링, 이상 시 즉시 조치</span></div>
+            <div class="vs-item"><span class="icon">📋</span><span class="text">연간 수익 리포트 + 다음 해 전략 포함</span></div>
+            <div class="vs-item"><span class="icon">🎯</span><span class="text">준중앙제도·출력제어 정산금 자동 신청 대행</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 20년 수익 비교 -->
+      <div class="reveal">
+        <div class="revenue-visual-title">📊 100kW 기준 — 20년 총 수익 비교 (누적)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:10px">
+          <div style="font-size:11px;color:var(--slate);text-align:center">일반 설치 (방치형)</div>
+          <div style="font-size:11px;color:var(--teal);font-weight:700;text-align:center">에코솔루션 (최적화형)</div>
+        </div>
+        <div class="revenue-bars" id="rev-bars"></div>
+        <div style="margin-top:16px;padding:14px 18px;background:var(--gold-dim);border:1px solid rgba(212,134,10,.25);border-radius:10px;text-align:center">
+          <span style="font-size:13px;color:var(--navy)">20년 누적 기준 예상 차이:</span>
+          <span style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);font-weight:700;margin-left:8px">+2,400만원 이상</span>
+          <span style="font-size:12px;color:var(--slate);display:block;margin-top:4px">계약 최적화 + 제도 활용 + 발전량 관리 효과 합산 (예시)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     04 — 금융 네트워크
+     ═══════════════════════════════════ -->
+<div class="section s4" id="s4">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag">
+        <span style="background:rgba(212,134,10,.2);border:1px solid rgba(212,134,10,.3);padding:4px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold-lt)">04</span>
+        <span style="color:var(--gold-lt)">금융 네트워크</span>
+      </div>
+      <h2 class="section-title">자금이 없어도 시작할 수 있는<br>이유가 있습니다</h2>
+      <p class="section-sub">
+        태양광 사업의 가장 큰 진입 장벽은 초기 자금입니다.<br>
+        에코솔루션의 금융 파트너 네트워크를 통해 <strong style="color:var(--gold-lt)">자기자본 20~30%</strong>만으로 사업을 시작할 수 있습니다.
+      </p>
+    </div>
+
+    <!-- 문제 vs 해결 -->
+    <div class="finance-intro reveal">
+      <div class="finance-problem">
+        <div class="finance-box-title">😰 자금 조달의 현실적 어려움</div>
+        <div class="finance-list">
+          <div class="finance-list-item bad"><span class="fi-icon">😓</span>"1억이 넘는 초기 비용, 도저히 혼자 감당이 안 됩니다"</div>
+          <div class="finance-list-item bad"><span class="fi-icon">🏦</span>일반 은행에 가면 "태양광 대출? 잘 모르겠어요"</div>
+          <div class="finance-list-item bad"><span class="fi-icon">📋</span>대출 서류, PPA 계약서, 발전 허가서… 어디서부터 시작?</div>
+          <div class="finance-list-item bad"><span class="fi-icon">❓</span>보조금이 있다는데, 어떻게 신청하는지 모름</div>
+          <div class="finance-list-item bad"><span class="fi-icon">⏳</span>금리 조건이 좋은 곳을 찾는 데만 수개월</div>
+        </div>
+      </div>
+      <div class="finance-solution">
+        <div class="finance-box-title">✅ 에코솔루션 금융 솔루션</div>
+        <div class="finance-list">
+          <div class="finance-list-item good"><span class="fi-icon">💰</span>자기자본 20~30%로 사업 착수 가능한 PF 구조 설계</div>
+          <div class="finance-list-item good"><span class="fi-icon">🤝</span>농협·신협·새마을금고·지방은행·에너지 PF 기관 연결</div>
+          <div class="finance-list-item good"><span class="fi-icon">📑</span>금융 심사에 필요한 모든 서류 준비 대행</div>
+          <div class="finance-list-item good"><span class="fi-icon">🎁</span>중앙정부·지자체 보조금 신청 및 농업인 특례 대출 연결</div>
+          <div class="finance-list-item good"><span class="fi-icon">⚡</span>기존 협력 금융사를 통해 빠른 심사·승인 지원</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 금융 기관 -->
+    <div class="reveal">
+      <div class="institutions-title">🏦 에코솔루션이 연결하는 금융 파트너</div>
+      <div class="institutions-grid">
+        <div class="institution-card">
+          <div class="inst-icon">🌾</div>
+          <div class="inst-name">농협은행</div>
+          <div class="inst-desc">농업인 특례 대출<br>저금리 장기 자금 지원</div>
+          <div class="inst-tag">농업인 우대</div>
+        </div>
+        <div class="institution-card">
+          <div class="inst-icon">🤲</div>
+          <div class="inst-name">신협</div>
+          <div class="inst-desc">지역 밀착형 대출<br>유연한 심사 기준</div>
+          <div class="inst-tag">지역 우대</div>
+        </div>
+        <div class="institution-card">
+          <div class="inst-icon">🏘️</div>
+          <div class="inst-name">새마을금고</div>
+          <div class="inst-desc">조합원 특별 우대<br>지역사회 연계 금융</div>
+          <div class="inst-tag">조합원 혜택</div>
+        </div>
+        <div class="institution-card">
+          <div class="inst-icon">🏦</div>
+          <div class="inst-name">지방은행</div>
+          <div class="inst-desc">충청·세종 지역 특화<br>태양광 전담 담당자</div>
+          <div class="inst-tag">지역 전담</div>
+        </div>
+        <div class="institution-card">
+          <div class="inst-icon">⚡</div>
+          <div class="inst-name">에너지 PF 기관</div>
+          <div class="inst-desc">발전소 자산 담보<br>대규모 사업 전문</div>
+          <div class="inst-tag">대형 사업</div>
+        </div>
+        <div class="institution-card">
+          <div class="inst-icon">🎁</div>
+          <div class="inst-name">정부·지자체 보조금</div>
+          <div class="inst-desc">햇빛소득마을 5,500억<br>건물지원사업 보조금</div>
+          <div class="inst-tag">보조금 직접 연결</div>
+        </div>
+      </div>
+
+      <!-- PF 구조 시각화 -->
+      <div class="pf-visual">
+        <div class="pf-title">💡 PF(프로젝트 파이낸싱) 구조 — 이렇게 돈을 만듭니다</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:end;margin-bottom:16px">
+          <div>
+            <div style="background:linear-gradient(180deg,var(--gold),#E07B00);border-radius:8px;height:60px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white)">자기자본<br><span style="font-size:18px;font-family:'Playfair Display',serif">20~30%</span></div>
+            <div style="text-align:center;font-size:11px;color:var(--slate-lt);margin-top:8px">내가 준비하는 금액</div>
+          </div>
+          <div>
+            <div style="background:linear-gradient(180deg,var(--teal-lt),var(--teal));border-radius:8px;height:100px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white);text-align:center">PF 대출<br><span style="font-size:18px;font-family:'Playfair Display',serif">50~60%</span></div>
+            <div style="text-align:center;font-size:11px;color:var(--slate-lt);margin-top:8px">발전소 자산 담보 대출</div>
+          </div>
+          <div>
+            <div style="background:linear-gradient(180deg,#4A8FD4,#2E6BAF);border-radius:8px;height:50px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white);text-align:center">보조금<br><span style="font-size:16px;font-family:'Playfair Display',serif">10~20%</span></div>
+            <div style="text-align:center;font-size:11px;color:var(--slate-lt);margin-top:8px">정부·지자체 지원금</div>
+          </div>
+          <div>
+            <div style="background:linear-gradient(180deg,#E8B84B,var(--gold));border-radius:8px;height:130px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white);text-align:center">발전소<br>완공 🌞<br><span style="font-size:14px">100%</span></div>
+            <div style="text-align:center;font-size:11px;color:var(--slate-lt);margin-top:8px">완성된 발전소</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6)"><span style="width:12px;height:12px;border-radius:2px;background:var(--gold);display:inline-block"></span>내 자본</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6)"><span style="width:12px;height:12px;border-radius:2px;background:var(--teal-lt);display:inline-block"></span>PF 대출 (발전 수익으로 상환)</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6)"><span style="width:12px;height:12px;border-radius:2px;background:#4A8FD4;display:inline-block"></span>정부 보조금</div>
+        </div>
+        <div style="margin-top:16px;padding:12px 16px;background:rgba(212,134,10,.1);border:1px solid rgba(212,134,10,.2);border-radius:8px;font-size:12px;color:rgba(255,255,255,.75);text-align:center;line-height:1.7">
+          💡 PF 대출은 발전소 자체의 미래 발전 수익을 담보로 합니다.<br>
+          개인 신용도가 낮아도 <strong style="color:var(--gold-lt)">발전소의 수익 안정성</strong>이 담보가 됩니다. 에코솔루션이 금융 서류 준비부터 심사까지 함께합니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">지금 바로 무료 상담을<br>신청하세요</h2>
+    <p class="cta-desc">
+      보유 토지·건물 사진 한 장과 간단한 위치 정보만 있으면<br>
+      에코솔루션이 <strong>무료 수익 진단 리포트</strong>를 제공해 드립니다.
+    </p>
+    <div class="cta-btns">
+      <a href="https://open.kakao.com/o/sr1KUAgh" target="_blank" class="cta-kakao">
+        💬 카카오톡으로 무료 상담 신청
+      </a>
+      <a href="tel:070-5159-5119" class="cta-phone">
+        📞 070-5159-5119
+      </a>
+    </div>
+    <div style="margin-top:20px;font-size:12px;color:rgba(255,255,255,.6)">
+      평일 09:00 ~ 18:00 · 상담 내용은 외부에 공개되지 않습니다
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo"><i>Eco</i><b>Solution</b></div>
+  <div class="footer-copy">© 2026 에코솔루션. 세종·충청 태양광 발전사업 전문 파트너.<br>수익 수치는 시장 현황 기준 참고값이며 실제와 다를 수 있습니다.</div>
+</footer>
+
+<script>
+/* 스크롤 reveal */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* 지역 데이터 */
+const REGIONS = {
+  sejong: {
+    icon: '🏛️',
+    title: '세종특별자치시',
+    sub: '에코솔루션 핵심 거점 지역',
+    stats: [
+      { val: '1,285', label: '연간 일사량(kWh/㎡)' },
+      { val: '상위 40%', label: '전국 일사량 순위' },
+      { val: '최우선', label: '계통 접속 우선순위' },
+      { val: '최대 30%', label: '지자체 보조금 지원' },
+    ],
+    features: [
+      '행정중심복합도시 개발 연계 — 공공기관 RE100 PPA 수요 높음',
+      '신도시 지붕형 태양광 설치 우대 (이격거리 규제 없음)',
+      '에코솔루션 본거지 — 현장 방문 빠른 대응 가능',
+      '세종시 에너지 자립 마을 사업 연계 보조금 적극 활용 가능',
+      '충청권 계통 허브 인접 — 접속 대기 기간 단축',
+    ]
+  },
+  chungnam: {
+    icon: '🌾',
+    title: '충청남도',
+    sub: '서해안 일사량 최적 입지',
+    stats: [
+      { val: '1,310', label: '연간 일사량(kWh/㎡)' },
+      { val: '상위 30%', label: '전국 일사량 순위' },
+      { val: '농지 풍부', label: '영농형 태양광 최적지' },
+      { val: '최대 25%', label: '도비 보조금 지원' },
+    ],
+    features: [
+      '서해안 서향 입지 — 오후 발전 극대화로 SMP 고가 시간대 일치',
+      '농지 활용 영농형 태양광 — 농업 소득 + 발전 수익 이중 구조',
+      '햇빛소득마을 사업 조기 참여 우선 지역 포함',
+      '충남 신재생에너지 보급 장려금 별도 지원',
+      '서천·태안·당진 등 해안권 우수 일사량 지역 다수',
+    ]
+  },
+  chungbuk: {
+    icon: '⛰️',
+    title: '충청북도',
+    sub: '내륙 산지형 우수 입지',
+    stats: [
+      { val: '1,260', label: '연간 일사량(kWh/㎡)' },
+      { val: '상위 50%', label: '전국 일사량 순위' },
+      { val: '저렴', label: '토지 매입·임대 비용' },
+      { val: '최대 20%', label: '도비 보조금 지원' },
+    ],
+    features: [
+      '산지·임야 활용 가능 — 상대적으로 저렴한 토지 비용으로 대규모 사업 용이',
+      '청주·충주·제천 산업단지 인근 — 기업 PPA 수요 확보 용이',
+      '이격거리 규제 완화 수혜 지역 — 기존 포기 부지 재검토 가능',
+      '충북 에너지 전환 지원사업 연계 보조금 활용',
+      '출력제어 빈도 낮음 — 발전량 손실 리스크 적음',
+    ]
+  },
+  daejeon: {
+    icon: '🏙️',
+    title: '대전광역시',
+    sub: '도심 지붕형·건물형 특화',
+    stats: [
+      { val: '1,270', label: '연간 일사량(kWh/㎡)' },
+      { val: '지붕형', label: '최적 사업 유형' },
+      { val: '무규제', label: '지붕형 이격거리' },
+      { val: '최대 35%', label: '건물지원사업 보조금' },
+    ],
+    features: [
+      '2026년 건물지원사업 지원 범위 대폭 확대 — 사업장·공장 지붕 적극 활용',
+      '지붕형·자가소비형 태양광은 이격거리 규제 전면 제외',
+      '대덕연구단지·정부 출연기관 RE100 PPA 수요 풍부',
+      '건물 소유자 자가소비로 전기요금 절감 + 잉여 발전 판매 이중 수익',
+      '도시가스 비중 높은 대전 — 계시별 요금제 절감 효과 극대화',
+    ]
+  }
+};
+
+function selectRegion(key) {
+  document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`[data-region="${key}"]`).classList.add('active');
+  const r = REGIONS[key];
+  const detail = document.getElementById('region-detail');
+  detail.innerHTML = `
+    <div class="region-detail-header">
+      <div class="region-detail-icon">${r.icon}</div>
+      <div>
+        <div class="region-detail-title">${r.title}</div>
+        <div class="region-detail-sub">${r.sub}</div>
+      </div>
+    </div>
+    <div class="region-stats">
+      ${r.stats.map(s=>`
+        <div class="region-stat">
+          <div class="region-stat-val">${s.val}</div>
+          <div class="region-stat-label">${s.label}</div>
+        </div>`).join('')}
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:10px;letter-spacing:.5px">✦ 에코솔루션 지역 특화 포인트</div>
+    <div class="region-features">
+      ${r.features.map(f=>`<div class="region-feature">${f}</div>`).join('')}
+    </div>
+  `;
+}
+selectRegion('sejong');
+
+/* 수익 바 차트 */
+const revData = [
+  { year: '5년차', plain: 42, eco: 52 },
+  { year: '10년차', plain: 78, eco: 102 },
+  { year: '15년차', plain: 112, eco: 156 },
+  { year: '20년차', plain: 144, eco: 192 },
+];
+const maxVal = 200;
+const barColors = { plain: '#CBD5E0', eco: '#D4860A' };
+const rBars = document.getElementById('rev-bars');
+revData.forEach(d => {
+  const row = document.createElement('div');
+  row.className = 'revenue-bar-row';
+  row.innerHTML = `
+    <div class="revenue-bar-label">${d.year}</div>
+    <div>
+      <div class="revenue-bar-track" style="margin-bottom:4px">
+        <div class="revenue-bar-fill" style="width:${d.plain/maxVal*100}%;background:linear-gradient(90deg,#94a3b8,#CBD5E0)">일반</div>
+      </div>
+      <div class="revenue-bar-track">
+        <div class="revenue-bar-fill" style="width:${d.eco/maxVal*100}%;background:linear-gradient(90deg,var(--gold),var(--amber))">에코솔루션</div>
+      </div>
+    </div>
+    <div class="revenue-bar-val" style="text-align:left">
+      <div style="color:var(--slate);font-size:11px">${d.plain}백만원</div>
+      <div style="color:var(--gold)">${d.eco}백만원</div>
+    </div>
+  `;
+  rBars.appendChild(row);
+});
+</script>
+</body>
+</html>
