@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 보험사 주가 분석 보고서 2026 | Korea Insurance Stock Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070d14;
+  --bg2: #0d1520;
+  --bg3: #111d2b;
+  --surface: #132030;
+  --surface2: #1a2d42;
+  --border: #1f3550;
+  --border2: #264260;
+  --text: #cdd8e8;
+  --text2: #7e97b0;
+  --text3: #4a6480;
+  --accent: #00c8ff;
+  --accent2: #0090d4;
+  --green: #00e599;
+  --green2: #009966;
+  --red: #ff4d6a;
+  --red2: #c0203a;
+  --gold: #f0b429;
+  --gold2: #c08010;
+  --purple: #8b5cf6;
+  --white: #e8f0f8;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+/* HEADER */
+.report-header {
+  background: linear-gradient(135deg, #070d14 0%, #0a1825 50%, #0d2035 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.18;
+}
+
+.header-glow {
+  position: absolute;
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,200,255,0.08) 0%, transparent 70%);
+  top: -50px; left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 40px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+.report-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0,200,255,0.1);
+  border: 1px solid rgba(0,200,255,0.25);
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.report-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 2s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+.report-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.report-title span { color: var(--accent); }
+
+.report-subtitle {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.header-meta {
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+.header-meta strong {
+  color: var(--text2);
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* NAV */
+.report-nav {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+
+.nav-inner::-webkit-scrollbar { height: 0; }
+
+.nav-item {
+  padding: 14px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text3);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* MAIN */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 64px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-weight: 700;
+  color: var(--white);
+}
+
+.section-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+  margin-left: auto;
+}
+
+/* KPI STRIP */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.kpi-card:hover { border-color: var(--border2); }
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent-color, var(--accent));
+}
+
+.kpi-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.kpi-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.kpi-change {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.up { color: var(--green); }
+.down { color: var(--red); }
+.neutral { color: var(--text2); }
+
+/* STOCK TABLE */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.table-header {
+  padding: 16px 24px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.table-note {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 12px 20px;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text3);
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+thead th:first-child { text-align: left; }
+
+tbody tr {
+  border-bottom: 1px solid rgba(31,53,80,0.5);
+  transition: background 0.15s;
+}
+
+tbody tr:hover { background: rgba(26,45,66,0.5); }
+tbody tr:last-child { border-bottom: none; }
+
+tbody td {
+  padding: 14px 20px;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+tbody td:first-child {
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+
+.company-name {
+  font-weight: 600;
+  color: var(--white);
+  font-size: 13px;
+}
+
+.company-type {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 2px;
+}
+
+.price { color: var(--white); font-weight: 600; }
+
+.badge-up {
+  display: inline-block;
+  background: rgba(0,229,153,0.12);
+  color: var(--green);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-down {
+  display: inline-block;
+  background: rgba(255,77,106,0.12);
+  color: var(--red);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* SPARKLINE */
+.spark {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 24px;
+}
+
+.spark-bar {
+  width: 4px;
+  border-radius: 2px 2px 0 0;
+  opacity: 0.8;
+}
+
+/* CHART AREA */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 780px) {
+  .chart-grid { grid-template-columns: 1fr; }
+  .header-inner { grid-template-columns: 1fr; }
+  .header-meta { text-align: left; }
+  .main { padding: 32px 20px 60px; }
+}
+
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chart-box-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-box-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+}
+
+.chart-box-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.chart-body { padding: 16px; }
+
+/* ANALYSIS GRID */
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+@media (max-width: 680px) { .analysis-grid { grid-template-columns: 1fr; } }
+
+.analysis-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px;
+}
+
+.analysis-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.analysis-card-title::before {
+  content: '';
+  width: 3px; height: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.analysis-card p {
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+.analysis-card p:last-child { margin-bottom: 0; }
+
+.highlight-red { color: var(--red); font-weight: 600; }
+.highlight-green { color: var(--green); font-weight: 600; }
+.highlight-gold { color: var(--gold); font-weight: 600; }
+.highlight-blue { color: var(--accent); font-weight: 600; }
+
+/* RISK TABLE */
+.risk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.risk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-radius: 6px;
+  border-left: 3px solid var(--border2);
+}
+
+.risk-item.high { border-left-color: var(--red); }
+.risk-item.mid { border-left-color: var(--gold); }
+.risk-item.low { border-left-color: var(--green); }
+
+.risk-level {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.risk-item.high .risk-level { background: rgba(255,77,106,0.15); color: var(--red); }
+.risk-item.mid .risk-level { background: rgba(240,180,41,0.15); color: var(--gold); }
+.risk-item.low .risk-level { background: rgba(0,229,153,0.12); color: var(--green); }
+
+.risk-text { font-size: 13px; color: var(--text); line-height: 1.6; }
+.risk-text strong { color: var(--white); font-weight: 600; }
+
+/* CONCLUSION */
+.conclusion-box {
+  background: linear-gradient(135deg, var(--bg3) 0%, rgba(0,200,255,0.04) 100%);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 32px 36px;
+  margin-top: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.conclusion-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--purple), transparent);
+}
+
+.conclusion-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.conclusion-box p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 14px;
+}
+
+/* FOOTER */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  max-width: 100%;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-text {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+  line-height: 1.8;
+}
+
+.footer-disclaimer {
+  font-size: 10px;
+  color: var(--text3);
+  line-height: 1.6;
+  max-width: 500px;
+  text-align: right;
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+/* RATING DOTS */
+.rating {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border2);
+}
+
+.dot.fill-green { background: var(--green); }
+.dot.fill-gold { background: var(--gold); }
+.dot.fill-red { background: var(--red); }
+.dot.fill-blue { background: var(--accent); }
+
+/* CSM BAR */
+.csm-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.csm-company {
+  width: 100px;
+  font-size: 12px;
+  color: var(--text2);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.csm-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.csm-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent2), var(--accent));
+}
+
+.csm-value {
+  width: 80px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--white);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* OUTLOOK TABLE */
+.outlook-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) { .outlook-grid { grid-template-columns: 1fr; } }
+
+.outlook-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+
+.outlook-card-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 8px;
+}
+
+.outlook-card-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.outlook-card-desc {
+  font-size: 11.5px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ANIMATE IN */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+.section { animation: fadeUp 0.5s ease both; }
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.2s; }
+.section:nth-child(4) { animation-delay: 0.3s; }
+.section:nth-child(5) { animation-delay: 0.4s; }
+
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="report-header">
+  <div class="header-grid-bg"></div>
+  <div class="header-glow"></div>
+  <div class="header-inner">
+    <div>
+      <div class="report-badge">LIVE ANALYSIS · KRX INSURANCE SECTOR</div>
+      <h1 class="report-title">한국 보험사<br><span>주가 변동 분석</span> 보고서</h1>
+      <p class="report-subtitle">
+        삼성생명 · 삼성화재 · 한화생명 · DB손해보험 · 메리츠화재 · 현대해상<br>
+        주가 랠리와 실적 역설 — 보험주 신고가 속 수익성 둔화의 이중 구조 심층 분석
+      </p>
+    </div>
+    <div class="header-meta">
+      <strong>보고서 기준일</strong>
+      2026년 3월 18일<br>
+      KRX 보험 섹터<br>
+      생보 6사 · 손보 6사<br>
+      <br>
+      <span style="color:var(--accent)">★ 종합 투자의견</span><br>
+      HOLD / SELECTIVE BUY
+    </div>
+  </div>
+</header>
+
+<!-- ══ NAV ══ -->
+<nav class="report-nav">
+  <div class="nav-inner">
+    <a href="#summary" class="nav-item">① 요약</a>
+    <a href="#stocks" class="nav-item">② 주가 현황</a>
+    <a href="#performance" class="nav-item">③ 실적 분석</a>
+    <a href="#csm" class="nav-item">④ CSM 분석</a>
+    <a href="#risk" class="nav-item">⑤ 리스크</a>
+    <a href="#outlook" class="nav-item">⑥ 투자전망</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+  <!-- ① EXECUTIVE SUMMARY -->
+  <section class="section" id="summary">
+    <div class="section-header">
+      <span class="section-num">01 / EXECUTIVE SUMMARY</span>
+      <h2 class="section-title">핵심 요약</h2>
+      <span class="section-date">2026.03.18 기준</span>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-card" style="--accent-color: var(--green)">
+        <div class="kpi-label">삼성생명 52주 수익률</div>
+        <div class="kpi-value up">+164.7%</div>
+        <div class="kpi-change up">▲ 9만300원 → 23만9천원</div>
+      </div>
+      <div class="kpi-card" style="--accent-color: var(--green)">
+        <div class="kpi-label">미래에셋생명 52주 수익률</div>
+        <div class="kpi-value up">+186.7%</div>
+        <div class="kpi-change up">▲ 생보사 최고 상승률</div>
+      </div>
+      <div class="kpi-card" style="--accent-color: var(--red)">
+        <div class="kpi-label">손보사 합산 순이익 (2025)</div>
+        <div class="kpi-value down">−11.1%</div>
+        <div class="kpi-change down">▼ 6조9,346억원 (YoY)</div>
+      </div>
+      <div class="kpi-card" style="--accent-color: var(--red)">
+        <div class="kpi-label">한화생명 당기순이익 (2025)</div>
+        <div class="kpi-value down">−56.5%</div>
+        <div class="kpi-change down">▼ 7,206억 → 3,133억원</div>
+      </div>
+      <div class="kpi-card" style="--accent-color: var(--gold)">
+        <div class="kpi-label">보험 10대사 합산 매출</div>
+        <div class="kpi-value" style="color:var(--gold)">149조</div>
+        <div class="kpi-change up">▲ 전년比 +7.3%</div>
+      </div>
+      <div class="kpi-card" style="--accent-color: var(--accent)">
+        <div class="kpi-label">신계약 CSM 1위</div>
+        <div class="kpi-value" style="color:var(--accent); font-size:18px">DB손보</div>
+        <div class="kpi-change neutral">전환배수 16.2배 유지</div>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <div class="analysis-card-title">ANALYST NOTE · 주가-실적 역설 현상</div>
+      <p>
+        2025~2026년 한국 보험주는 <span class="highlight-green">52주 최고가 랠리</span>를 기록하는 동시에 <span class="highlight-red">실적 둔화</span>라는 이중 구조를 보이고 있다. 삼성생명은 52주 대비 <span class="highlight-green">+164.7%</span>, 미래에셋생명 <span class="highlight-green">+186.7%</span>로 급등했지만, 손보사 6사 합산 순이익은 전년 대비 <span class="highlight-red">−11.1%</span> 감소했다.
+      </p>
+      <p>
+        주가 상승의 배경은 <span class="highlight-gold">밸류업(Value-Up) 프로그램</span>, <span class="highlight-blue">IFRS17 도입 이후 CSM 가시성 향상</span>, 그리고 금리 환경 정상화 기대감이다. 그러나 실적에서는 보험금 예실차 악화, 자동차보험 손해율 상승, 장기보험 손해율 압박이 수익성을 갉아먹고 있다. 현대해상은 보험손익과 투자손익이 동반 악화되며 순이익이 <span class="highlight-red">−45.6%</span> 급감했다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ② STOCK PRICE TABLE -->
+  <section class="section" id="stocks">
+    <div class="section-header">
+      <span class="section-num">02 / STOCK PRICE</span>
+      <h2 class="section-title">주요 보험사 주가 현황</h2>
+      <span class="section-date">2026년 2월 말 기준 (공시 데이터)</span>
+    </div>
+
+    <!-- 생명보험 -->
+    <div class="table-wrap" style="margin-bottom:20px">
+      <div class="table-header">
+        <span class="table-title">생명보험사 (Life Insurance)</span>
+        <span class="table-note">※ 52주 수익률은 KRX 공시 기준</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>종목명</th>
+            <th>현재가 (원)</th>
+            <th>52주 고가</th>
+            <th>52주 저가</th>
+            <th>52주 수익률</th>
+            <th>추이</th>
+            <th>투자의견</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="company-name">삼성생명</div>
+              <div class="company-type">032830 · KOSPI</div>
+            </td>
+            <td class="price">239,000</td>
+            <td>259,500</td>
+            <td>90,300</td>
+            <td><span class="badge-up">+164.7%</span></td>
+            <td>
+              <div class="spark">
+                <div class="spark-bar" style="height:40%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:55%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:65%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:80%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:100%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:92%;background:var(--green)"></div>
+              </div>
+            </td>
+            <td><span class="badge-up" style="background:rgba(0,200,255,0.1);color:var(--accent)">BUY</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">한화생명</div>
+              <div class="company-type">088350 · KOSPI</div>
+            </td>
+            <td class="price">5,130</td>
+            <td>7,560</td>
+            <td>2,625</td>
+            <td><span class="badge-up">+95.4%</span></td>
+            <td>
+              <div class="spark">
+                <div class="spark-bar" style="height:30%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:50%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:100%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:90%;background:var(--gold)"></div>
+                <div class="spark-bar" style="height:68%;background:var(--red)"></div>
+                <div class="spark-bar" style="height:60%;background:var(--text3)"></div>
+              </div>
+            </td>
+            <td><span style="background:rgba(240,180,41,0.1);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">HOLD</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">미래에셋생명</div>
+              <div class="company-type">085620 · KOSPI</div>
+            </td>
+            <td class="price">13,890</td>
+            <td>19,610</td>
+            <td>4,850</td>
+            <td><span class="badge-up">+186.7%</span></td>
+            <td>
+              <div class="spark">
+                <div class="spark-bar" style="height:25%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:45%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:75%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:100%;background:var(--green)"></div>
+                <div class="spark-bar" style="height:85%;background:var(--gold)"></div>
+                <div class="spark-bar" style="height:71%;background:var(--text3)"></div>
+              </div>
+            </td>
+            <td><span style="background:rgba(240,180,41,0.1);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">HOLD</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 손해보험 -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <span class="table-title">손해보험사 (Non-Life Insurance)</span>
+        <span class="table-note">※ 2026년 2월 26일 종가 기준</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>종목명</th>
+            <th>현재가 (원)</th>
+            <th>신계약 CSM</th>
+            <th>손해율 추이</th>
+            <th>YoY 순이익</th>
+            <th>법인세 (2024)</th>
+            <th>투자의견</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="company-name">삼성화재</div>
+              <div class="company-type">000810 · KOSPI</div>
+            </td>
+            <td class="price">548,000</td>
+            <td>1조 4,212억 (2위)</td>
+            <td><span class="neutral">안정</span></td>
+            <td><span class="badge-up">+14.5%</span></td>
+            <td>6,563억</td>
+            <td><span class="badge-up" style="background:rgba(0,200,255,0.1);color:var(--accent)">BUY</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">DB손해보험</div>
+              <div class="company-type">005830 · KOSPI</div>
+            </td>
+            <td class="price">205,500</td>
+            <td style="color:var(--green); font-weight:600">1조+α (1위)</td>
+            <td><span class="up">개선</span></td>
+            <td><span class="badge-up">+21.5%</span></td>
+            <td>5,936억</td>
+            <td><span class="badge-up" style="background:rgba(0,200,255,0.1);color:var(--accent)">BUY</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">메리츠화재</div>
+              <div class="company-type">000060 · KOSPI</div>
+            </td>
+            <td class="price" style="color:var(--text)">시장 추적</td>
+            <td>7,299억 (5위)</td>
+            <td><span class="neutral">보통</span></td>
+            <td><span class="up">ROE 1위</span></td>
+            <td>5,879억</td>
+            <td><span class="badge-up" style="background:rgba(0,200,255,0.1);color:var(--accent)">BUY</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">현대해상</div>
+              <div class="company-type">001450 · KOSPI</div>
+            </td>
+            <td class="price">35,200</td>
+            <td>1조 49억 (3위)</td>
+            <td><span class="down">악화</span></td>
+            <td><span class="badge-down">−45.6%</span></td>
+            <td>3,358억</td>
+            <td><span style="background:rgba(255,77,106,0.1);color:var(--red);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">UNDER</span></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="company-name">KB손해보험</div>
+              <div class="company-type">KB금융 자회사</div>
+            </td>
+            <td class="price" style="color:var(--text)">비상장</td>
+            <td>8,142억 (4위)</td>
+            <td><span class="neutral">안정</span></td>
+            <td><span class="badge-up">+15.1%</span></td>
+            <td>2,812억</td>
+            <td><span style="background:rgba(240,180,41,0.1);color:var(--gold);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">HOLD</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ③ PERFORMANCE CHARTS -->
+  <section class="section" id="performance">
+    <div class="section-header">
+      <span class="section-num">03 / FINANCIAL PERFORMANCE</span>
+      <h2 class="section-title">실적 분석</h2>
+      <span class="section-date">2024~2025 회계연도</span>
+    </div>
+
+    <div class="chart-grid">
+      <!-- 영업수익 차트 -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">영업수익 TOP 6 비교 (조원, 2024년)</span>
+          <span class="chart-box-sub">법인세 신고 기준</span>
+        </div>
+        <div class="chart-body">
+          <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;overflow:visible">
+            <defs>
+              <linearGradient id="barB1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0090d4"/>
+                <stop offset="100%" stop-color="#00c8ff"/>
+              </linearGradient>
+              <linearGradient id="barB2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#007ab8"/>
+                <stop offset="100%" stop-color="#00aae0"/>
+              </linearGradient>
+            </defs>
+            <!-- grid -->
+            <line x1="110" y1="10" x2="110" y2="205" stroke="#1f3550" stroke-width="1"/>
+            <line x1="110" y1="205" x2="355" y2="205" stroke="#1f3550" stroke-width="1"/>
+            <line x1="180" y1="10" x2="180" y2="205" stroke="#1f3550" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="250" y1="10" x2="250" y2="205" stroke="#1f3550" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="320" y1="10" x2="320" y2="205" stroke="#1f3550" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <text x="180" y="220" text-anchor="middle" fill="#4a6480" font-size="8" font-family="monospace">10조</text>
+            <text x="250" y="220" text-anchor="middle" fill="#4a6480" font-size="8" font-family="monospace">20조</text>
+            <text x="320" y="220" text-anchor="middle" fill="#4a6480" font-size="8" font-family="monospace">27조</text>
+            <!-- Bars -->
+            <!-- 삼성생명 27조 -->
+            <rect x="110" y="22" width="210" height="24" fill="url(#barB1)" rx="3"/>
+            <text x="105" y="38" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">삼성생명</text>
+            <text x="325" y="38" fill="#00c8ff" font-size="10" font-family="monospace" font-weight="600">27.0조</text>
+            <!-- 삼성화재 27조 -->
+            <rect x="110" y="54" width="209" height="24" fill="url(#barB1)" rx="3" opacity="0.88"/>
+            <text x="105" y="70" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">삼성화재</text>
+            <text x="325" y="70" fill="#00c8ff" font-size="10" font-family="monospace" font-weight="600">27.0조</text>
+            <!-- 한화생명 17.2조 -->
+            <rect x="110" y="86" width="133" height="24" fill="url(#barB2)" rx="3"/>
+            <text x="105" y="102" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">한화생명</text>
+            <text x="247" y="102" fill="#00aae0" font-size="10" font-family="monospace" font-weight="600">17.2조</text>
+            <!-- DB손보 17.2조 -->
+            <rect x="110" y="118" width="133" height="24" fill="url(#barB2)" rx="3" opacity="0.88"/>
+            <text x="105" y="134" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">DB손보</text>
+            <text x="247" y="134" fill="#00aae0" font-size="10" font-family="monospace" font-weight="600">17.2조</text>
+            <!-- KB손보 12.7조 -->
+            <rect x="110" y="150" width="99" height="24" fill="url(#barB2)" rx="3" opacity="0.78"/>
+            <text x="105" y="166" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">KB손보</text>
+            <text x="213" y="166" fill="#00aae0" font-size="10" font-family="monospace" font-weight="600">12.7조</text>
+            <!-- 신한라이프 6.7조 -->
+            <rect x="110" y="182" width="52" height="20" fill="url(#barB2)" rx="3" opacity="0.65"/>
+            <text x="105" y="196" text-anchor="end" fill="#7e97b0" font-size="11" font-family="sans-serif">신한라이프</text>
+            <text x="166" y="196" fill="#00aae0" font-size="10" font-family="monospace">6.7조</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 순이익 증감 차트 -->
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">2025년 순이익 YoY 증감율 (%)</span>
+          <span class="chart-box-sub">6개 손보사 + 4개 생보사</span>
+        </div>
+        <div class="chart-body">
+          <svg viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+            <!-- center line 0% -->
+            <line x1="180" y1="10" x2="180" y2="210" stroke="#264260" stroke-width="1.5"/>
+            <text x="180" y="226" text-anchor="middle" fill="#4a6480" font-size="9" font-family="monospace">0%</text>
+            <text x="80" y="226" text-anchor="middle" fill="#4a6480" font-size="9" font-family="monospace">-50%</text>
+            <text x="280" y="226" text-anchor="middle" fill="#4a6480" font-size="9" font-family="monospace">+50%</text>
+            <line x1="80" y1="10" x2="80" y2="210" stroke="#1f3550" stroke-width="0.5" stroke-dasharray="3,3"/>
+            <line x1="280" y1="10" x2="280" y2="210" stroke="#1f3550" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+            <!-- Bars (positive right, negative left from center=180) -->
+            <!-- 현대해상 -45.6% → 180-91.2=88.8 -->
+            <rect x="88.8" y="22" width="91.2" height="22" fill="#ff4d6a" rx="3" opacity="0.8"/>
+            <text x="85" y="37" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">현대해상</text>
+            <text x="84" y="37" text-anchor="end" fill="#ff4d6a" font-size="10" font-family="monospace">−45.6%</text>
+
+            <!-- 한화생명 -56.5% → 180-113=67 -->
+            <rect x="67" y="52" width="113" height="22" fill="#ff4d6a" rx="3" opacity="0.9"/>
+            <text x="63" y="67" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">한화생명</text>
+            <text x="62" y="67" text-anchor="end" fill="#ff4d6a" font-size="10" font-family="monospace">−56.5%</text>
+
+            <!-- 손보합산 -11.1% → 180-22.2=157.8 -->
+            <rect x="157.8" y="82" width="22.2" height="22" fill="#ff4d6a" rx="3" opacity="0.7"/>
+            <text x="155" y="97" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">손보합산</text>
+            <text x="154" y="97" text-anchor="end" fill="#ff7090" font-size="10" font-family="monospace">−11.1%</text>
+
+            <!-- 생보합산 -1.8% → 180-3.6=176.4 -->
+            <rect x="176.4" y="112" width="3.6" height="22" fill="#ff4d6a" rx="3" opacity="0.6"/>
+            <text x="173" y="127" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">생보합산</text>
+            <text x="172" y="127" text-anchor="end" fill="#ff7090" font-size="10" font-family="monospace">−1.8%</text>
+
+            <!-- 삼성화재 +14.5% → 180+29=209 -->
+            <rect x="180" y="142" width="29" height="22" fill="#00e599" rx="3" opacity="0.8"/>
+            <text x="176" y="157" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">삼성화재</text>
+            <text x="213" y="157" fill="#00e599" font-size="10" font-family="monospace">+14.5%</text>
+
+            <!-- DB손보 +21.5% → 180+43=223 -->
+            <rect x="180" y="172" width="43" height="22" fill="#00e599" rx="3" opacity="0.9"/>
+            <text x="176" y="187" text-anchor="end" fill="#7e97b0" font-size="10.5" font-family="sans-serif">DB손보</text>
+            <text x="227" y="187" fill="#00e599" font-size="10" font-family="monospace">+21.5%</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-grid">
+      <div class="analysis-card">
+        <div class="analysis-card-title" style="--accent:var(--red)">손보사 실적 악화 원인</div>
+        <p><span class="highlight-red">보험금 예실차 악화</span> — 예상보다 실제 보험금 지급이 많아지는 구조적 문제로, 장기보험 손해율이 전 사업연도 대비 상승.</p>
+        <p><span class="highlight-red">자동차보험 손해율 상승</span> — 수리비 인플레이션 및 교통사고 증가로 자동차보험 손익이 전반적으로 악화되었으며, 특히 현대해상이 직격탄을 받았다.</p>
+        <p><span class="highlight-gold">간병보험 리스크</span> — 간병인 사용일당 보장 경쟁으로 손해율이 급등. 5월부터 보장 한도 축소(20만원→10~15만원)를 단행.</p>
+      </div>
+      <div class="analysis-card">
+        <div class="analysis-card-title" style="--accent:var(--green)">아웃퍼포머 분석</div>
+        <p><span class="highlight-green">삼성화재</span> — 세전이익 2조 7,041억원(+14.5%). 업계 1위 유효세율 24.3%로 건전한 수익 구조 유지.</p>
+        <p><span class="highlight-green">DB손해보험</span> — 신계약 CSM 1위 달성. 전환배수 16.2배로 업계 최고 수준의 수익성 있는 신계약 확보. 법인세 +21.5% 증가는 이익 성장의 반증.</p>
+        <p><span class="highlight-blue">현대해상</span>은 2024년 법인세가 오히려 +43.4% 증가했는데, 이는 전년 이익이 큰 폭으로 성장했던 기저효과 반영이다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ CSM ANALYSIS -->
+  <section class="section" id="csm">
+    <div class="section-header">
+      <span class="section-num">04 / CSM ANALYSIS</span>
+      <h2 class="section-title">신계약 CSM 경쟁력 분석</h2>
+      <span class="section-date">2025년 상반기 기준</span>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">손보사 신계약 CSM 규모 (2025 상반기)</span>
+          <span class="chart-box-sub">억원 기준</span>
+        </div>
+        <div class="chart-body" style="padding:20px 20px 12px">
+          <div class="csm-row">
+            <div class="csm-company" style="color:var(--accent);font-weight:600">DB손보</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div>
+            </div>
+            <div class="csm-value" style="color:var(--green)">1조+α  🏆</div>
+          </div>
+          <div class="csm-row">
+            <div class="csm-company">삼성화재</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:97%;background:linear-gradient(90deg,#006090,#0090d4)"></div>
+            </div>
+            <div class="csm-value">14,212억</div>
+          </div>
+          <div class="csm-row">
+            <div class="csm-company">현대해상</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:69%"></div>
+            </div>
+            <div class="csm-value">10,049억</div>
+          </div>
+          <div class="csm-row">
+            <div class="csm-company">KB손보</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:56%"></div>
+            </div>
+            <div class="csm-value">8,142억</div>
+          </div>
+          <div class="csm-row">
+            <div class="csm-company">메리츠화재</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:50%;background:linear-gradient(90deg,#6040b0,#9060e0)"></div>
+            </div>
+            <div class="csm-value">7,299억</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-box">
+        <div class="chart-box-header">
+          <span class="chart-box-title">CSM 전환배수 비교</span>
+          <span class="chart-box-sub">높을수록 수익성 있는 계약 확보</span>
+        </div>
+        <div class="chart-body" style="padding:20px 20px 12px">
+          <div class="csm-row">
+            <div class="csm-company" style="color:var(--accent);font-weight:600">DB손보</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--green2),var(--green))"></div>
+            </div>
+            <div class="csm-value" style="color:var(--green)">16.2배 🏆</div>
+          </div>
+          <div class="csm-row">
+            <div class="csm-company">삼성화재</div>
+            <div class="csm-bar-track">
+              <div class="csm-bar-fill" style="width:78%;background:linear-gradient(90deg,#006040,#00aa70)"></div>
+            </div>
+            <div class="csm-value">12.7배</div>
+          </div>
+          <p style="font-size:12px;color:var(--text2);margin-top:16px;line-height:1.7">
+            DB손보의 전환배수(16.2배)는 삼성화재(12.7배)보다 <span style="color:var(--green);font-weight:600">3.5배p 높은 수준</span>으로, 신계약 1원당 더 많은 CSM을 창출하고 있다. 이는 DB손보가 수익성 낮은 계약을 과감하게 배제하고 수익성 있는 상품 포트폴리오에 집중한 결과다.
+          </p>
+          <p style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.7">
+            삼성화재는 전환배수가 전년 14.8배에서 12.7배로 <span style="color:var(--red)">−2.1배p</span> 하락하며 신계약 경쟁 과정에서 수익성이 일부 희생됨.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-card" style="margin-top:0">
+      <div class="analysis-card-title">CSM이 보험주 밸류에이션에 갖는 의미</div>
+      <p>
+        IFRS17 도입 이후 보험사 가치 평가의 핵심 지표는 <span class="highlight-blue">보험계약서비스마진(CSM)</span>으로 이동했다. CSM은 미래에 인식될 이익의 총합이므로, CSM 잔액이 크고 전환배수가 높은 회사일수록 미래 이익 가시성이 높다. 현재 DB손보는 신계약 CSM 1위를 기록하며 <span class="highlight-green">주가 재평가 여지</span>가 가장 크다는 평가를 받는다.
+      </p>
+      <p>
+        반면 현대해상은 신계약 CSM 3위(1조 49억원)를 기록했음에도 불구하고 <span class="highlight-red">손해율 악화로 실제 이익이 크게 줄었다</span>는 점에서, CSM만으로는 단기 실적을 설명하지 못하는 한계도 드러났다.
+      </p>
+    </div>
+  </section>
+
+  <!-- ⑤ RISK ANALYSIS -->
+  <section class="section" id="risk">
+    <div class="section-header">
+      <span class="section-num">05 / RISK FACTORS</span>
+      <h2 class="section-title">주요 리스크 요인 분석</h2>
+    </div>
+
+    <div class="risk-list">
+      <div class="risk-item high">
+        <span class="risk-level">HIGH</span>
+        <div class="risk-text">
+          <strong>보험금 예실차 구조적 악화</strong> — 건강보험·장기보험의 보험금 지급액이 예상치를 지속 상회하면서 손해율 통제에 실패하는 사례가 증가. 간병보험 보장 확대 경쟁의 후과. 2026년에도 계속될 리스크.
+        </div>
+      </div>
+      <div class="risk-item high">
+        <strong></strong>
+        <span class="risk-level">HIGH</span>
+        <div class="risk-text">
+          <strong>한화생명 실적 쇼크 재현 가능성</strong> — 당기순이익 −56.5%라는 충격적 감소는 일회성보다 구조적 문제일 가능성. 해외법인(인도네시아·베트남) 투자 비용 증가와 국내 금리 변동이 복합 작용. 2026년 하반기 추이 주목.
+        </div>
+      </div>
+      <div class="risk-item mid">
+        <span class="risk-level">MID</span>
+        <div class="risk-text">
+          <strong>자동차보험 손해율 상승</strong> — 수리비·인건비 인플레이션, 첨단 운전자 보조 시스템(ADAS) 탑재 차량 수리 비용 급증이 손해율을 끌어올리고 있다. 자동차보험 의존도가 높은 보험사일수록 직격탄.
+        </div>
+      </div>
+      <div class="risk-item mid">
+        <span class="risk-level">MID</span>
+        <div class="risk-text">
+          <strong>저출산·고령화로 인한 장기보험 손해율 악화</strong> — 고령 인구 증가는 장기 건강보험금 지급 증가로 이어진다. 특히 암·심장·뇌혈관 보험의 손해율은 인구 구조 변화와 직결.
+        </div>
+      </div>
+      <div class="risk-item mid">
+        <span class="risk-level">MID</span>
+        <div class="risk-text">
+          <strong>모집수수료 개편 리스크</strong> — 2026년 시행 예정인 GA 모집수수료 개편이 영업 채널 구조를 흔들 가능성. 특히 GA 의존도가 높은 중소형 보험사에 타격 우려.
+        </div>
+      </div>
+      <div class="risk-item low">
+        <span class="risk-level">LOW</span>
+        <div class="risk-text">
+          <strong>금리 재하락 리스크</strong> — 현재 금리 환경은 보험사에 비교적 유리하나, 글로벌 경기 침체 시 금리 재하락 시 이차역마진 압박 재현 가능. K-ICS 비율 관리에도 영향.
+        </div>
+      </div>
+      <div class="risk-item low">
+        <span class="risk-level">LOW</span>
+        <div class="risk-text">
+          <strong>중국 보험사의 국내시장 진출 간접 영향</strong> — 직접 경쟁보다는 재보험 조건 변화, 해외 투자처 경쟁 심화 등의 간접 경로로 국내 보험사에 영향을 줄 수 있음. 단기 영향은 제한적.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ OUTLOOK -->
+  <section class="section" id="outlook">
+    <div class="section-header">
+      <span class="section-num">06 / INVESTMENT OUTLOOK</span>
+      <h2 class="section-title">투자전망 및 종합 평가</h2>
+      <span class="section-date">2026년 2분기 전망</span>
+    </div>
+
+    <div class="outlook-grid">
+      <div class="outlook-card">
+        <div class="outlook-card-label">삼성화재 / DB손보</div>
+        <div class="outlook-card-value" style="color:var(--green)">BUY</div>
+        <div class="outlook-card-desc">CSM 성장 및 수익성 유지. 실적 안정성 최상위권. 배당 매력 겸비.</div>
+      </div>
+      <div class="outlook-card">
+        <div class="outlook-card-label">삼성생명 / 메리츠화재</div>
+        <div class="outlook-card-value" style="color:var(--accent)">BUY</div>
+        <div class="outlook-card-desc">주가 랠리 이후 숨 고르기 구간. ROE 개선 추세. 밸류업 수혜 지속.</div>
+      </div>
+      <div class="outlook-card">
+        <div class="outlook-card-label">한화생명 / 현대해상</div>
+        <div class="outlook-card-value" style="color:var(--red)">HOLD/UNDER</div>
+        <div class="outlook-card-desc">실적 불확실성 높음. 손해율 안정화 확인 후 재진입 검토 권고.</div>
+      </div>
+    </div>
+
+    <div class="conclusion-box">
+      <h3 class="conclusion-title">종합 결론 — 보험주 랠리의 지속 가능성</h3>
+      <p>
+        한국 보험주의 2025~2026년 랠리는 <strong style="color:var(--accent)">밸류업 프로그램·IFRS17 가시성·배당 확대 기대</strong>라는 세 가지 구조적 동력에 기반한다. 그러나 주가와 실적 간의 괴리가 커지면서 단기 과열 해소 국면이 진행 중이다.
+      </p>
+      <p>
+        <strong style="color:var(--green)">아웃퍼포머 전략</strong>: 신계약 CSM 전환배수가 높고 손해율 관리 역량이 검증된 <span style="color:var(--green)">DB손보·삼성화재</span>를 중심으로 포트폴리오를 구성하는 것이 유효하다.
+      </p>
+      <p>
+        <strong style="color:var(--red)">회피 구간</strong>: 한화생명은 별도 순이익이 −56.5%라는 급락을 기록한 만큼 2026년 회계연도 결과를 확인하기 전까지 신규 매수보다 관망이 적절하다. 현대해상 역시 자동차보험 손해율이 2026년에도 개선되지 않으면 실적 부진이 지속될 수 있다.
+      </p>
+      <p>
+        장기적으로는 <strong style="color:var(--gold)">K-인슈어테크 내재화, ESG 보험 선점, 해외 사업 수익화(특히 한화생명 동남아·미국)</strong>가 2030년 이후 재평가의 핵심 변수가 될 전망이다.
+      </p>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3)">
+        ※ 본 보고서는 투자 권고 목적이 아닌 분석 목적으로 작성되었습니다. 투자 결정은 반드시 본인의 판단과 책임 하에 이루어져야 합니다.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">
+      <strong style="color:var(--text2)">한국 보험사 주가 분석 보고서</strong><br>
+      Korea Insurance Sector Stock Report · 2026.03.18<br>
+      KRX 상장 보험사 · 공시 데이터 및 언론 보도 기반
+    </div>
+    <div class="footer-disclaimer">
+      본 보고서에 수록된 주가 및 실적 데이터는 KRX, 금융감독원 전자공시,<br>
+      보험저널·조세일보·미주중앙일보 등 공개 보도를 기반으로 합니다.<br>
+      투자 손익에 대한 책임은 투자자 본인에게 있습니다.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
