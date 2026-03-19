@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>신용 트리거 헤징 5대 전략 — 지붕형 임대 태양광 PF 구조 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0b1520;
+  --bg2:       #0f1e2e;
+  --bg3:       #132638;
+  --bg4:       #172d40;
+  --gold:      #c4963a;
+  --gold-lt:   #e8c87a;
+  --gold-dim:  rgba(196,150,58,.13);
+  --gold-line: rgba(196,150,58,.22);
+  --teal:      #3aa8a0;
+  --teal-dim:  rgba(58,168,160,.1);
+  --rose:      #c45a5a;
+  --rose-dim:  rgba(196,90,90,.1);
+  --rose-line: rgba(196,90,90,.28);
+  --sky:       #5a9ec4;
+  --sky-dim:   rgba(90,158,196,.1);
+  --sage:      #6aaa7c;
+  --sage-dim:  rgba(106,170,124,.1);
+  --amber:     #c49a3a;
+  --amber-dim: rgba(196,154,58,.1);
+  --txt:       #dce8f0;
+  --txt2:      #8dacc4;
+  --txt3:      #506878;
+  --line:      rgba(255,255,255,.06);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  line-height: 1.85;
+  min-height: 100vh;
+}
+
+/* ────────────────────── HEADER ────────────────────── */
+.site-header {
+  background: linear-gradient(160deg, #090f18 0%, #0d1b2c 55%, #0b1825 100%);
+  border-bottom: 1px solid var(--gold-line);
+  padding: 56px 48px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(196,150,58,.07) 0%, transparent 68%);
+  pointer-events: none;
+}
+.site-header::after {
+  content: '§ 04';
+  position: absolute;
+  bottom: -8px; right: 44px;
+  font-family: 'DM Mono', monospace;
+  font-size: 96px;
+  color: rgba(196,150,58,.035);
+  font-weight: 500;
+  letter-spacing: -3px;
+  pointer-events: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-line);
+  background: var(--gold-dim);
+  padding: 5px 13px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+.chip::before { content: '◆'; font-size: 7px; }
+
+h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(20px, 3.6vw, 32px);
+  font-weight: 900;
+  line-height: 1.38;
+  color: #fff;
+  margin-bottom: 18px;
+  max-width: 660px;
+}
+h1 em { color: var(--gold-lt); font-style: normal; }
+
+.header-desc {
+  font-size: 14px;
+  color: var(--txt2);
+  max-width: 580px;
+  line-height: 1.75;
+}
+
+/* ────────────────────── FACT-CHECK BANNER ────────────────────── */
+.fc-banner {
+  background: linear-gradient(135deg, rgba(196,90,90,.08), rgba(196,90,90,.04));
+  border: 1px solid var(--rose-line);
+  border-radius: 6px;
+  margin: 40px 0 36px;
+  padding: 22px 26px;
+}
+.fc-banner-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2.2px;
+  color: var(--rose);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fc-banner-title::before { content: '⚠'; font-size: 13px; }
+
+.fc-rows { display: flex; flex-direction: column; gap: 10px; }
+.fc-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0 16px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.fc-row .fc-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  color: var(--rose);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+.fc-row .fc-val { color: var(--txt2); }
+.fc-row .fc-val strong { color: var(--txt); font-weight: 500; }
+.fc-row .fc-val .correct { color: #7dd4a0; }
+.fc-row .fc-val .wrong   { color: var(--rose); text-decoration: line-through; opacity: .7; }
+
+/* ────────────────────── MAIN LAYOUT ────────────────────── */
+main {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 48px 32px 100px;
+}
+
+/* ────────────────────── STRATEGY CARD ────────────────────── */
+.strategy-card {
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 28px;
+  overflow: hidden;
+  transition: border-color .25s, transform .2s;
+  animation: fadeUp .5s ease both;
+}
+.strategy-card:hover { border-color: rgba(196,150,58,.28); transform: translateY(-2px); }
+
+.card-header {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  align-items: center;
+  gap: 0 20px;
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--accent-color, var(--gold));
+  opacity: .55;
+}
+
+.card-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--accent-color, var(--gold));
+  opacity: .25;
+  line-height: 1;
+}
+
+.card-title-wrap {}
+.card-en {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 1.8px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.card-ko {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.card-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
+}
+.badge-ok    { background: rgba(106,170,124,.12); border: 1px solid rgba(106,170,124,.35); color: var(--sage); }
+.badge-fix   { background: var(--rose-dim);        border: 1px solid var(--rose-line);       color: var(--rose); }
+.badge-add   { background: var(--teal-dim);        border: 1px solid rgba(58,168,160,.3);    color: var(--teal); }
+
+.card-body { padding: 26px 28px; }
+
+/* body paragraph */
+.card-body p {
+  font-size: 14.5px;
+  color: var(--txt2);
+  line-height: 1.85;
+  margin-bottom: 18px;
+}
+.card-body p:last-child { margin-bottom: 0; }
+.card-body p strong { color: var(--txt); font-weight: 500; }
+
+/* callout */
+.callout {
+  border-radius: 5px;
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+.callout-warn {
+  background: var(--rose-dim);
+  border-left: 3px solid var(--rose);
+  color: #c4a0a0;
+}
+.callout-warn strong { color: #e08080; }
+.callout-info {
+  background: var(--teal-dim);
+  border-left: 3px solid var(--teal);
+  color: #90c4c0;
+}
+.callout-info strong { color: var(--teal); }
+.callout-ok {
+  background: var(--sage-dim);
+  border-left: 3px solid var(--sage);
+  color: #a0c4a8;
+}
+.callout-ok strong { color: var(--sage); }
+.callout-gold {
+  background: var(--gold-dim);
+  border-left: 3px solid var(--gold);
+  color: #c4a868;
+}
+.callout-gold strong { color: var(--gold-lt); }
+
+/* sub-list (insurance types) */
+.sub-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 18px 0; }
+.sub-list li {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 0 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  padding: 14px 18px;
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.sub-list li .sl-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: .8px;
+  color: var(--txt3);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+  line-height: 1.5;
+}
+.sub-list li .sl-val { color: var(--txt2); }
+.sub-list li .sl-val strong { color: var(--txt); font-weight: 500; }
+.sub-list li.sl-warn { border-color: var(--rose-line); background: rgba(196,90,90,.04); }
+.sub-list li.sl-warn .sl-key { color: var(--rose); }
+.sub-list li.sl-add  { border-color: rgba(58,168,160,.25); background: var(--teal-dim); }
+.sub-list li.sl-add  .sl-key { color: var(--teal); }
+
+/* portfolio chart */
+.portfolio-vis {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 24px;
+  margin: 20px 0;
+}
+.port-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.port-bars { display: flex; flex-direction: column; gap: 10px; }
+.port-row { display: flex; align-items: center; gap: 12px; }
+.port-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--txt3);
+  width: 70px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.port-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(255,255,255,.04);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+}
+.port-fill {
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: rgba(0,0,0,.7);
+  white-space: nowrap;
+  transition: width 1s ease;
+}
+.port-pct {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--txt3);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.port-note {
+  font-size: 11.5px;
+  color: var(--txt3);
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  line-height: 1.65;
+}
+.port-note strong { color: var(--txt2); }
+
+/* step-in flow */
+.stepin-flow {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 24px;
+  margin: 20px 0;
+}
+.flow-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.flow-steps { display: flex; flex-direction: column; gap: 0; }
+.flow-step {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 0 14px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.flow-step:last-child { border-bottom: none; }
+.flow-step-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--bg4);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--txt3);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.flow-step-body { font-size: 13.5px; color: var(--txt2); line-height: 1.7; }
+.flow-step-body strong { color: var(--txt); font-weight: 500; }
+.flow-step-body .trigger-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.tag-trigger { background: var(--rose-dim); border: 1px solid var(--rose-line); color: var(--rose); }
+.tag-action  { background: var(--teal-dim); border: 1px solid rgba(58,168,160,.3); color: var(--teal); }
+.tag-result  { background: var(--sage-dim); border: 1px solid rgba(106,170,124,.3); color: var(--sage); }
+
+/* guarantee meter */
+.guarantee-meter {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px 24px;
+  margin: 20px 0;
+}
+.gm-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.gm-rows { display: flex; flex-direction: column; gap: 8px; }
+.gm-row { display: flex; align-items: center; gap: 12px; }
+.gm-grade {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  width: 46px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.gm-bar-wrap {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.gm-bar { height: 100%; border-radius: 4px; }
+.gm-desc {
+  font-size: 11px;
+  color: var(--txt3);
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* escrow flow diagram */
+.escrow-flow {
+  background: var(--bg3);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 24px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ef-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.waterfall-steps { display: flex; align-items: stretch; gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+.wf-step {
+  flex: 1;
+  min-width: 100px;
+  background: var(--bg4);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 14px 12px;
+  text-align: center;
+  position: relative;
+}
+.wf-step + .wf-step::before {
+  content: '→';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--txt3);
+  font-size: 14px;
+}
+.wf-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--txt3);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.wf-label {
+  font-size: 11.5px;
+  color: var(--txt2);
+  font-weight: 500;
+  line-height: 1.45;
+}
+.wf-sub {
+  font-size: 10px;
+  color: var(--txt3);
+  margin-top: 4px;
+}
+
+/* section divider */
+.sec-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-line), transparent);
+  margin: 44px 0;
+}
+
+/* footer */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-mono {
+  font-family: 'DM Mono', monospace;
+  font-size: 10.5px;
+  color: var(--txt3);
+  letter-spacing: .8px;
+}
+.footer-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-tag {
+  font-size: 11px;
+  color: var(--txt3);
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--line);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.strategy-card:nth-child(1) { animation-delay: .04s; --accent-color: var(--gold); }
+.strategy-card:nth-child(2) { animation-delay: .10s; --accent-color: var(--teal); }
+.strategy-card:nth-child(3) { animation-delay: .16s; --accent-color: var(--sky);  }
+.strategy-card:nth-child(4) { animation-delay: .22s; --accent-color: var(--sage); }
+.strategy-card:nth-child(5) { animation-delay: .28s; --accent-color: var(--amber);}
+
+@keyframes growBar {
+  from { width: 0; }
+}
+.gm-bar, .port-fill {
+  animation: growBar .9s cubic-bezier(.4,0,.2,1) both;
+  animation-delay: .4s;
+}
+</style>
+</head>
+<body>
+
+<!-- ──── HEADER ──── -->
+<header class="site-header">
+  <div class="chip">SECTION 04 · 신용 트리거 헤징 전략</div>
+  <h1>지붕형 임대 태양광의 <em>5대 헤징 전략</em><br>— 팩트체크 & 심층 분석</h1>
+  <p class="header-desc">
+    원문의 5가지 전략을 법률·회계·금융 실무 관점에서 검증하고,
+    오류 항목을 수정하며 누락된 실무 내용을 보완한 분석 리포트입니다.
+  </p>
+</header>
+
+<main>
+
+  <!-- ──── FACT-CHECK BANNER ──── -->
+  <div class="fc-banner">
+    <div class="fc-banner-title">원문 팩트체크 결과 요약</div>
+    <div class="fc-rows">
+      <div class="fc-row">
+        <span class="fc-key">① 모회사 보증</span>
+        <span class="fc-val">대체로 정확. 단, 보증은 <strong>직접 부채가 아닌 우발부채(Contingent Liability)</strong>로
+        주석 공시됨. 신용평가사가 이를 실질 부채로 환산 분석하므로 신용도에 영향을 미치는 것은 맞으나,
+        "부채비율에 직접 영향"이라는 표현은 <span class="correct">보완 필요</span>.</span>
+      </div>
+      <div class="fc-row">
+        <span class="fc-key">② 에스크로</span>
+        <span class="fc-val">원문의 "임대인이 파산해도 자금이 압류되지 않는다"는 서술은
+        <strong>주체 혼동</strong>. 에스크로는 <span class="correct">SPC 자신의 현금흐름을 대주단이 우선 확보</span>하는 장치이며,
+        임대인의 파산재단과는 별개. 설명 방향 수정.</span>
+      </div>
+      <div class="fc-row">
+        <span class="fc-key">③ 보험 — D&O</span>
+        <span class="fc-val"><span class="wrong">D&O 보험으로 임대인 경영진 리스크를 헤징</span> → 
+        <strong class="correct">중대한 오류</strong>. D&O 보험은 해당 법인 임원을 제3자 소송으로부터 보호하는 보험이며,
+        태양광 사업자의 손실 헤징 수단이 아님. 
+        <span class="correct">공사이행보증보험·임차권 보증으로 대체 설명.</span></span>
+      </div>
+      <div class="fc-row">
+        <span class="fc-key">④ 포트폴리오 분산</span>
+        <span class="fc-val">개념·예시 모두 <strong class="correct">정확</strong>. 100MW/10개 임대인 구조는 실제 대기업 사업 구조와 부합.</span>
+      </div>
+      <div class="fc-row">
+        <span class="fc-key">⑤ Step-In Right</span>
+        <span class="fc-val">원문은 "<span class="wrong">금융기관이 태양광 사업자 대신 개입</span>"이라고 서술했으나
+        <strong class="correct">주체 오류</strong>. Step-In Right는 금융기관이
+        <strong>채무자(SPC)의 사업 운영권에 개입</strong>하는 권리이며, 임대인에게 직접 개입하는 것이 아님. 수정 설명.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- ① PARENT GUARANTEE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="strategy-card">
+    <div class="card-header">
+      <div class="card-num">01</div>
+      <div class="card-title-wrap">
+        <div class="card-en">STRATEGY ONE · CREDIT ENHANCEMENT</div>
+        <div class="card-ko">모회사 보증 (Parent Guarantee) 활용</div>
+      </div>
+      <div class="card-badge badge-ok">✓ 대체로 정확 · 보완</div>
+    </div>
+    <div class="card-body">
+      <p>
+        SPC가 PF 대출을 받을 때 <strong>모회사(스폰서)가 연대보증 또는 채무인수 확약(Keep-Well Agreement)</strong>을
+        제공합니다. 이를 통해 임대인의 신용도와 무관하게 모회사의 신용등급을 근거로
+        금융 구조를 설계할 수 있으며, 대주단이 요구하는 신용 보강의 핵심 수단입니다.
+      </p>
+
+      <!-- 신용등급별 조달 가능 구조 -->
+      <div class="guarantee-meter">
+        <div class="gm-title">▪ 모회사 신용등급별 보증 실효성</div>
+        <div class="gm-rows">
+          <div class="gm-row">
+            <span class="gm-grade" style="color:#e8c87a">AA</span>
+            <div class="gm-bar-wrap"><div class="gm-bar" style="width:96%;background:linear-gradient(90deg,#c4963a,#e8c87a)"></div></div>
+            <span class="gm-desc" style="font-size:11px;color:#a08840">보증만으로 선순위 PF 성립, 최저 스프레드</span>
+          </div>
+          <div class="gm-row">
+            <span class="gm-grade" style="color:#9ec47a">A</span>
+            <div class="gm-bar-wrap"><div class="gm-bar" style="width:84%;background:linear-gradient(90deg,#5a9e60,#8ac878)"></div></div>
+            <span class="gm-desc" style="font-size:11px;color:#607850">표준 PF 구조, 금리 스프레드 +150~200bp</span>
+          </div>
+          <div class="gm-row">
+            <span class="gm-grade" style="color:#7ab4c4">BBB</span>
+            <div class="gm-bar-wrap"><div class="gm-bar" style="width:65%;background:linear-gradient(90deg,#3a7898,#5aaac8)"></div></div>
+            <span class="gm-desc" style="font-size:11px;color:#486878">추가 담보 병행 요구, 스프레드 +250~350bp</span>
+          </div>
+          <div class="gm-row">
+            <span class="gm-grade" style="color:#c48a7a">BB</span>
+            <div class="gm-bar-wrap"><div class="gm-bar" style="width:40%;background:linear-gradient(90deg,#985838,#c87858)"></div></div>
+            <span class="gm-desc" style="font-size:11px;color:#806050">보증 실효성 약화, 부동산 담보 필수 추가</span>
+          </div>
+          <div class="gm-row">
+            <span class="gm-grade" style="color:#c45a5a">B+↓</span>
+            <div class="gm-bar-wrap"><div class="gm-bar" style="width:14%;background:linear-gradient(90deg,#982828,#c44040)"></div></div>
+            <span class="gm-desc" style="font-size:11px;color:#805050">보증의 금융 보강 효과 사실상 소멸</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <strong>⚠ 원문 보완 — 우발부채(Contingent Liability) 구분</strong><br>
+        모회사의 보증은 <strong>직접 부채가 아닌 우발부채</strong>로 처리됩니다.
+        K-IFRS 기준상 재무상태표에 직접 계상되지 않고 주석(Note)에 공시되므로,
+        단순 부채비율 수치에는 즉각 반영되지 않습니다.
+        그러나 NICE평가·한국기업평가 등 신용평가사는 보증 총액을 <strong>실질 부채로 환산</strong>하여
+        신용등급 산정에 반영하며, 은행권 여신심사에서도 <strong>보증 한도 대비 여신 한도</strong>가
+        별도로 관리됩니다. 보증 잔액이 모회사 자기자본의 일정 비율(통상 50~100%)을 초과하면
+        추가 여신이 사실상 불가능해집니다.
+      </div>
+
+      <div class="callout callout-gold">
+        <strong>실무 포인트</strong>: 대기업들은 보증 대신 <strong>Equity Commitment Letter(ECL)</strong>나
+        <strong>Subordinated Loan</strong>을 활용해 모회사 우발부채 부담을 줄이는 구조를
+        금융기관과 협의하는 경우가 증가하고 있습니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- ② ESCROW -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="strategy-card">
+    <div class="card-header">
+      <div class="card-num">02</div>
+      <div class="card-title-wrap">
+        <div class="card-en">STRATEGY TWO · CASH FLOW PROTECTION</div>
+        <div class="card-ko">에스크로(Escrow) 계좌 설계</div>
+      </div>
+      <div class="card-badge badge-fix">⚡ 설명 방향 수정</div>
+    </div>
+    <div class="card-body">
+      <p>
+        SPC가 수취하는 <strong>발전 수익(SMP·REC 판매대금)과 임대 수익</strong>을
+        에스크로 계좌에 귀속시키고, 금융기관은 이 계좌에 <strong>1순위 질권(Pledge)</strong>을
+        설정합니다. 이를 통해 SPC의 현금흐름이 다른 채권자에게 유출되기 전에
+        대주단의 원리금 상환이 최우선적으로 이루어집니다.
+      </p>
+
+      <div class="callout callout-warn">
+        <strong>⚠ 원문 수정 — 주체 혼동 교정</strong><br>
+        원문은 "임대인이 파산하더라도 해당 자금이 압류되지 않도록"이라고 서술했으나,
+        이는 주체가 혼동된 표현입니다. <strong>에스크로에 예치되는 자금은 SPC의 수익</strong>이며,
+        임대인의 자산이 아닙니다. 임대인이 파산하더라도 SPC의 에스크로 자금은
+        임대인의 파산재단에 포함되지 않습니다.
+        에스크로의 실제 기능은 <strong>SPC 자신이 다른 목적으로 자금을 유용하거나,
+        SPC에 대한 다른 채권자가 해당 자금을 압류하지 못하도록</strong> 보호하는 것입니다.
+      </div>
+
+      <!-- Cash Flow Waterfall -->
+      <div class="escrow-flow">
+        <div class="ef-title">▪ 현금흐름 워터폴 (Cash Flow Waterfall) 구조</div>
+        <div class="waterfall-steps">
+          <div class="wf-step">
+            <div class="wf-num">INFLOW</div>
+            <div class="wf-label">발전수익<br>SMP + REC</div>
+            <div class="wf-sub">에스크로 입금</div>
+          </div>
+          <div class="wf-step" style="border-color:rgba(196,150,58,.3); background:rgba(196,150,58,.06)">
+            <div class="wf-num" style="color:var(--gold)">1순위</div>
+            <div class="wf-label" style="color:var(--gold-lt)">대출<br>원리금 상환</div>
+            <div class="wf-sub">대주단 질권</div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-num">2순위</div>
+            <div class="wf-label">O&amp;M<br>운영·유지비</div>
+            <div class="wf-sub">설비 유지보수</div>
+          </div>
+          <div class="wf-step">
+            <div class="wf-num">3순위</div>
+            <div class="wf-label">지붕<br>임대료 지급</div>
+            <div class="wf-sub">임대인 수취</div>
+          </div>
+          <div class="wf-step" style="border-color:rgba(106,170,124,.3); background:var(--sage-dim)">
+            <div class="wf-num" style="color:var(--sage)">잉여</div>
+            <div class="wf-label" style="color:var(--sage)">스폰서<br>배당·배분</div>
+            <div class="wf-sub">조건 충족 시</div>
+          </div>
+        </div>
+        <div style="font-size:11.5px;color:var(--txt3);margin-top:14px;padding-top:12px;border-top:1px solid var(--line);line-height:1.65">
+          ※ 임대료 지급이 3순위에 위치하는 구조로 설계되면, 임대인도 SPC의 재무 건전성을
+          유지해야 임대료를 수취할 수 있어 <strong style="color:var(--txt2)">임대인의 계약 이행 유인</strong>이 강화됩니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- ③ INSURANCE -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="strategy-card">
+    <div class="card-header">
+      <div class="card-num">03</div>
+      <div class="card-title-wrap">
+        <div class="card-en">STRATEGY THREE · RISK TRANSFER</div>
+        <div class="card-ko">보험을 통한 트리거 리스크 전가</div>
+      </div>
+      <div class="card-badge badge-fix">⚠ D&O 항목 오류 수정</div>
+    </div>
+    <div class="card-body">
+      <p>
+        신용 트리거 리스크 중 보험으로 전가 가능한 리스크를 분리하여
+        특정 이벤트 발생 시 손실이 보험사에 전가되도록 구조화합니다.
+        지붕형 임대 태양광에서 실무적으로 활용되는 보험 유형은 아래와 같습니다.
+      </p>
+
+      <ul class="sub-list">
+        <li>
+          <span class="sl-key">신용보험<br>(Credit Insurance)</span>
+          <span class="sl-val">
+            <strong>임대인이 임대 계약을 불이행</strong>하거나 파산으로 임대료를 지급하지 못할 경우
+            SPC의 수익 손실을 보전합니다. 국내에서는 무역보험공사(K-SURE)의 국내 신용보험 또는
+            민간 보험사의 채권보전보험이 활용됩니다. 다만 건물주 임대계약에 적용 가능한
+            상품의 종류가 제한적이며, 보험료 부담도 고려해야 합니다.
+          </span>
+        </li>
+        <li>
+          <span class="sl-key">사업 중단 보험<br>(BI Insurance)</span>
+          <span class="sl-val">
+            임대인의 사업장이 화재·폭발·자연재해 등으로 <strong>가동 중단</strong>되어
+            지붕 접근이 불가능해질 경우, 발전 불능으로 인한 SPC의 수익 손실을 보전합니다.
+            태양광 설비 자체의 All-Risk 보험과 함께 설계되며,
+            발전량 손실을 기준으로 보험금이 산정됩니다.
+          </span>
+        </li>
+        <li class="sl-add">
+          <span class="sl-key" style="color:var(--teal)">공사이행보증보험<br>(Performance Bond)</span>
+          <span class="sl-val" style="color:#90c4c0">
+            <strong>추가 보완 항목</strong>: 시공사 또는 O&amp;M(운영관리) 업체가 계약을 이행하지 못할 경우
+            발주자(SPC)의 손실을 보전하는 보증보험입니다. 설비 설치 단계와 운영 단계 각각에
+            설정되며, 대주단이 PF 조건으로 의무화하는 핵심 보험입니다.
+          </span>
+        </li>
+        <li class="sl-add">
+          <span class="sl-key" style="color:var(--teal)">발전량 보증보험<br>(P50/P90 기반)</span>
+          <span class="sl-val" style="color:#90c4c0">
+            <strong>추가 보완 항목</strong>: 일사량 부족 등으로 실제 발전량이
+            예측치(P90 기준)에 미달할 경우 수익 부족분을 보전하는 파생상품성 보험입니다.
+            국내보다 해외 PF에서 더 발달된 구조이나, 국내 대형 태양광 PF에서도
+            점차 도입이 확대되고 있습니다.
+          </span>
+        </li>
+        <li class="sl-warn">
+          <span class="sl-key">D&O 보험 연계<br><span style="font-size:9px;color:var(--rose)">[원문 오류]</span></span>
+          <span class="sl-val">
+            <strong style="color:var(--rose)">원문의 D&O 보험 서술은 사실관계 오류입니다.</strong>
+            D&O(Directors & Officers Liability) 보험은 해당 법인 임원이
+            경영 판단으로 인해 주주·채권자 등 제3자로부터 소송을 당했을 때
+            <strong>해당 임원 개인을 보호</strong>하는 보험입니다.
+            태양광 사업자가 임대인 D&O 보험에서 수익을 보전받는 구조는
+            성립하지 않으며, 이는 보험의 피보험자 개념과 상충됩니다.
+            임대인 경영진의 부적절한 의사결정에 따른 손실은
+            계약서상의 <strong>손해배상 조항, 이행보증, 또는 신용 트리거 조항</strong>으로 대응하는 것이 정확합니다.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- ④ PORTFOLIO -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="strategy-card">
+    <div class="card-header">
+      <div class="card-num">04</div>
+      <div class="card-title-wrap">
+        <div class="card-en">STRATEGY FOUR · CONCENTRATION RISK</div>
+        <div class="card-ko">다수 임대인 포트폴리오 분산</div>
+      </div>
+      <div class="card-badge badge-ok">✓ 정확 · 보완</div>
+    </div>
+    <div class="card-body">
+      <p>
+        단일 임대인에 사업을 집중하는 대신, <strong>복수의 임대인(건물주)과 계약을 분산</strong>하여
+        특정 임대인의 신용 이벤트가 전체 사업에 미치는 영향을 제한합니다.
+        이는 금융 포트폴리오에서의 분산 투자 원리를 임대 계약 구조에 적용한 것입니다.
+      </p>
+
+      <!-- Portfolio visualization -->
+      <div class="portfolio-vis">
+        <div class="port-title">▪ 100MW 분산 포트폴리오 구성 예시 (임대인 파산 시 영향도)</div>
+        <div class="port-bars">
+          <div class="port-row">
+            <span class="port-label">1개 집중</span>
+            <div class="port-track">
+              <div class="port-fill" style="width:100%;background:linear-gradient(90deg,#982828,#c44040)">파산 시 100% 손실</div>
+            </div>
+            <span class="port-pct" style="color:var(--rose)">100%</span>
+          </div>
+          <div class="port-row">
+            <span class="port-label">3개 분산</span>
+            <div class="port-track">
+              <div class="port-fill" style="width:33%;background:linear-gradient(90deg,#985038,#c87058)">33%</div>
+            </div>
+            <span class="port-pct" style="color:#c48060">33%</span>
+          </div>
+          <div class="port-row">
+            <span class="port-label">10개 분산</span>
+            <div class="port-track">
+              <div class="port-fill" style="width:10%;background:linear-gradient(90deg,#5a7838,#8aaa58)">10%</div>
+            </div>
+            <span class="port-pct" style="color:var(--sage)">10%</span>
+          </div>
+          <div class="port-row">
+            <span class="port-label">20개 이상</span>
+            <div class="port-track">
+              <div class="port-fill" style="width:5%;background:linear-gradient(90deg,#3a7838,#5aaa58)">5%</div>
+            </div>
+            <span class="port-pct" style="color:#6aca80">5%↓</span>
+          </div>
+        </div>
+        <div class="port-note">
+          ※ 단순 파산 시 영향도 기준 (MW 균등 분산 가정).
+          실제 금융기관은 <strong>임대인별 신용등급 가중 한도</strong>를 별도 설정하며,
+          BBB 이하 임대인의 비중을 포트폴리오 전체의 30% 이내로 제한하는 조건을 부과하기도 합니다.
+        </div>
+      </div>
+
+      <div class="callout callout-info">
+        <strong>추가 보완 — 업종 분산의 중요성</strong><br>
+        임대인의 수뿐 아니라 <strong>업종(Industry) 분산</strong>도 핵심입니다.
+        동일 업종(예: 모든 임대인이 반도체 부품 제조사)에 집중될 경우,
+        해당 산업 경기 침체 시 여러 임대인이 동시에 신용 악화될 수 있습니다.
+        대기업 PF에서는 제조업·물류업·농업·유통업 등으로 임대인 업종을 의도적으로 분산합니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- ⑤ STEP-IN RIGHT -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="strategy-card">
+    <div class="card-header">
+      <div class="card-num">05</div>
+      <div class="card-title-wrap">
+        <div class="card-en">STRATEGY FIVE · LENDER INTERVENTION</div>
+        <div class="card-ko">재정의무 이행 담보 (Step-In Right)</div>
+      </div>
+      <div class="card-badge badge-fix">⚡ 주체·메커니즘 수정</div>
+    </div>
+    <div class="card-body">
+      <p>
+        Step-In Right는 <strong>대출 약정서(Loan Agreement)에 삽입되는 금융기관의 개입 권한</strong>으로,
+        프로젝트가 위기 상황에 처했을 때 금융기관이 SPC의 경영권 또는 운영권을 직접 행사하거나
+        제3의 운영자에게 이전하여 사업 연속성을 확보하는 장치입니다.
+      </p>
+
+      <div class="callout callout-warn">
+        <strong>⚠ 원문 수정 — 개입 주체와 메커니즘 교정</strong><br>
+        원문은 "금융기관이 임대인의 부도 또는 계약 위반 시, <em>태양광 사업자 대신</em> 직접 개입"이라고
+        서술했으나 이는 정확하지 않습니다. Step-In Right는
+        <strong>채무자(SPC)가 대출 약정을 위반하거나 프로젝트가 위기에 처했을 때</strong>
+        금융기관이 <strong>SPC의 운영 주체로 개입</strong>하는 권리입니다.
+        임대인에게 직접 개입하는 것이 아니며, '태양광 사업자 대신'이 아닌
+        <strong>'SPC 운영권을 대위 행사'</strong>하는 것입니다.
+        임대인 부도는 EOD(기한이익상실) 트리거 중 하나이며, 이 트리거가 발동되어
+        대출이 기한이익을 상실하면 Step-In이 활성화되는 구조입니다.
+      </div>
+
+      <!-- Step-In Flow -->
+      <div class="stepin-flow">
+        <div class="flow-title">▪ Step-In Right 발동 메커니즘</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-step-icon">①</div>
+            <div class="flow-step-body">
+              <strong>트리거 이벤트 발생</strong>
+              <span class="trigger-tag tag-trigger">TRIGGER</span><br>
+              임대인 파산·신용등급 급락, SPC의 DSCR 1.0 미만 3개월 이상 지속,
+              발전량 P90 기준 대비 70% 미만 6개월 이상 지속 등 대출 약정상
+              열거된 EOD(기한이익상실) 사유 발생
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-icon">②</div>
+            <div class="flow-step-body">
+              <strong>금융기관의 서면 통지 및 유예기간 부여</strong>
+              <span class="trigger-tag tag-trigger">NOTICE</span><br>
+              대주단은 SPC와 스폰서(모회사)에 치유 의무(Cure Obligation)를 포함한
+              서면 통지를 발송합니다. 통상 30~90일의 치유 기간을 부여하며,
+              이 기간 내에 EOD가 해소되면 Step-In은 발동되지 않습니다.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-icon">③</div>
+            <div class="flow-step-body">
+              <strong>Step-In 발동 — 금융기관의 SPC 운영 개입</strong>
+              <span class="trigger-tag tag-action">ACTION</span><br>
+              치유 기간 내 해소 실패 시, 금융기관은 <strong>SPC 주식에 대한 질권을 실행</strong>하거나
+              대리 이사(Proxy Director)를 파견하여 SPC의 의사결정을 대위합니다.
+              에스크로 계좌에 대한 질권도 즉각 행사됩니다.
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-icon">④</div>
+            <div class="flow-step-body">
+              <strong>프로젝트 사업 연속성 확보 또는 정리</strong>
+              <span class="trigger-tag tag-result">RESULT</span><br>
+              금융기관은 <strong>① 신규 O&amp;M 운영사 선임, ② SPC 매각(Project M&amp;A),
+              ③ 설비 철거 후 잔존가치 회수</strong> 중 최선의 방법을 선택합니다.
+              대부분의 경우 사업 연속성을 유지하는 ① 또는 ②를 선호합니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-ok">
+        <strong>실무 포인트 — 직접 협약(Direct Agreement)과의 연계</strong><br>
+        Step-In Right의 실효성을 높이기 위해 금융기관은 임대인과
+        <strong>직접 협약(Direct Agreement)</strong>을 별도로 체결합니다.
+        이 협약에서 임대인은 "금융기관이 Step-In하여 새로운 운영자를 지정하더라도
+        임대 계약을 승계한다"는 의무를 사전에 확약합니다.
+        이것이 없으면 Step-In 후에도 임대인이 계약 해지를 주장할 수 있어
+        Step-In Right의 실질적 효력이 반감됩니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-divider"></div>
+
+  <!-- 종합 요약 -->
+  <div style="background:var(--bg3); border:1px solid var(--gold-line); border-radius:8px; padding:32px; margin-top:8px;">
+    <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--gold); margin-bottom:20px; text-transform:uppercase;">▪ 5대 전략 종합 평가</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 24px;">
+      <div style="font-size:13.5px; color:var(--txt2); display:flex; gap:10px; align-items:flex-start; padding:12px; background:var(--bg4); border-radius:5px; border:1px solid var(--line);">
+        <span style="color:var(--sage); flex-shrink:0">①</span>
+        <span><strong style="color:var(--txt)">모회사 보증</strong> — 신용 보강의 핵심. 단, 우발부채 관리가 전략의 지속 가능성을 결정</span>
+      </div>
+      <div style="font-size:13.5px; color:var(--txt2); display:flex; gap:10px; align-items:flex-start; padding:12px; background:var(--bg4); border-radius:5px; border:1px solid var(--line);">
+        <span style="color:var(--sage); flex-shrink:0">②</span>
+        <span><strong style="color:var(--txt)">에스크로</strong> — 대주단 보호의 실질 핵심. 현금흐름 워터폴과 결합 시 효력 극대화</span>
+      </div>
+      <div style="font-size:13.5px; color:var(--txt2); display:flex; gap:10px; align-items:flex-start; padding:12px; background:var(--bg4); border-radius:5px; border:1px solid rgba(196,90,90,.2);">
+        <span style="color:var(--rose); flex-shrink:0">③</span>
+        <span><strong style="color:var(--txt)">보험</strong> — D&O 보험 오류 수정. 신용보험·BI보험·공사이행보증이 실제 수단</span>
+      </div>
+      <div style="font-size:13.5px; color:var(--txt2); display:flex; gap:10px; align-items:flex-start; padding:12px; background:var(--bg4); border-radius:5px; border:1px solid var(--line);">
+        <span style="color:var(--sage); flex-shrink:0">④</span>
+        <span><strong style="color:var(--txt)">포트폴리오</strong> — 수 분산과 업종 분산 병행 시 집중 리스크 최소화</span>
+      </div>
+      <div style="font-size:13.5px; color:var(--txt2); display:flex; gap:10px; align-items:flex-start; padding:12px; background:var(--bg4); border-radius:5px; border:1px solid rgba(196,90,90,.2); grid-column: 1 / -1;">
+        <span style="color:var(--rose); flex-shrink:0">⑤</span>
+        <span><strong style="color:var(--txt)">Step-In Right</strong> — 주체 수정 완료. 직접 협약(Direct Agreement)과 반드시 연계되어야 실효성 확보</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-mono">SECTION 04 / 헤징 전략 심층 분석 · 팩트체크 완료</div>
+  <div class="footer-tags">
+    <span class="footer-tag">#Step-In Right</span>
+    <span class="footer-tag">#에스크로워터폴</span>
+    <span class="footer-tag">#신용트리거</span>
+    <span class="footer-tag">#PF보험</span>
+    <span class="footer-tag">#지붕형태양광</span>
+    <span class="footer-tag">#프로젝트파이낸싱</span>
+  </div>
+</footer>
+
+</body>
+</html>
