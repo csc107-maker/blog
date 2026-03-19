@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상법 개정 테마 투자 분석 보고서 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #0f1218;
+    --bg3: #141820;
+    --panel: #181d28;
+    --panel2: #1e2535;
+    --border: #2a3448;
+    --border2: #374259;
+    --gold: #c9a84c;
+    --gold2: #e8c87a;
+    --gold3: #f5dfa0;
+    --green: #3ecf8e;
+    --red: #f06060;
+    --blue: #5b9cf6;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --accent: #c9a84c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  .report-header {
+    background: linear-gradient(135deg, #0a0c10 0%, #111827 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 40px 40px;
+  }
+  .report-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold2);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+  .report-label::before {
+    content: '●';
+    font-size: 8px;
+    color: var(--green);
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .report-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .report-title span { color: var(--gold2); }
+
+  .report-subtitle {
+    font-size: 16px;
+    color: var(--text2);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+  .meta-value {
+    font-size: 13px;
+    color: var(--text2);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── CONTENT WRAPPER ── */
+  .content-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    margin-top: 48px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border2), transparent);
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .stat-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.gold::before { background: var(--gold); }
+  .stat-card.green::before { background: var(--green); }
+  .stat-card.blue::before { background: var(--blue); }
+  .stat-card.purple::before { background: var(--purple); }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 30px;
+    font-weight: 700;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-card.gold .stat-value { color: var(--gold2); }
+  .stat-card.green .stat-value { color: var(--green); }
+  .stat-card.blue .stat-value { color: var(--blue); }
+  .stat-card.purple .stat-value { color: var(--purple); }
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(180deg, var(--gold), var(--border), var(--green));
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 0;
+    padding: 20px 0 20px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-dot {
+    position: absolute;
+    left: -28px;
+    top: 24px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .timeline-dot.gold { background: var(--gold); }
+  .timeline-dot.blue { background: var(--blue); }
+  .timeline-dot.green { background: var(--green); }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+  .timeline-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+  .tag.gold { background: rgba(201,168,76,0.15); color: var(--gold2); border: 1px solid rgba(201,168,76,0.3); }
+  .tag.green { background: rgba(62,207,142,0.12); color: var(--green); border: 1px solid rgba(62,207,142,0.3); }
+  .tag.blue { background: rgba(91,156,246,0.12); color: var(--blue); border: 1px solid rgba(91,156,246,0.3); }
+  .tag.red { background: rgba(240,96,96,0.12); color: var(--red); border: 1px solid rgba(240,96,96,0.3); }
+  .tag.purple { background: rgba(167,139,250,0.12); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.75;
+  }
+
+  /* ── DATA TABLE ── */
+  .data-table-wrap {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-header-row {
+    background: var(--panel2);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .table-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.3px;
+  }
+  .table-badge {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text3);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead tr {
+    background: rgba(255,255,255,0.02);
+  }
+  th {
+    text-align: left;
+    padding: 10px 20px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+  td {
+    padding: 13px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(42,52,72,0.5);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .company-name {
+    font-weight: 600;
+    color: #fff;
+  }
+  .company-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 1px;
+  }
+  .num-cell {
+    font-family: 'DM Mono', monospace;
+    color: var(--text2);
+  }
+  .num-high { color: var(--gold2); font-weight: 600; }
+  .num-green { color: var(--green); font-weight: 600; }
+  .num-red { color: var(--red); }
+  .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bar-bg {
+    flex: 1;
+    height: 4px;
+    background: var(--bg3);
+    border-radius: 2px;
+    max-width: 80px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.8s ease;
+  }
+
+  /* ── RATING BADGE ── */
+  .rating {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+  }
+  .rating.A { background: rgba(62,207,142,0.15); color: var(--green); border: 1px solid rgba(62,207,142,0.3); }
+  .rating.B { background: rgba(91,156,246,0.15); color: var(--blue); border: 1px solid rgba(91,156,246,0.3); }
+  .rating.C { background: rgba(201,168,76,0.15); color: var(--gold2); border: 1px solid rgba(201,168,76,0.3); }
+
+  /* ── INVESTMENT CARDS ── */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .strategy-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .strategy-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-2px);
+  }
+  .strategy-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .strategy-card.s1::after { background: var(--gold); right: -30px; top: -30px; }
+  .strategy-card.s2::after { background: var(--green); right: -30px; top: -30px; }
+  .strategy-card.s3::after { background: var(--blue); right: -30px; top: -30px; }
+  .strategy-card.s4::after { background: var(--purple); right: -30px; top: -30px; }
+
+  .strategy-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .strategy-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text3);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .strategy-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .strategy-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+  .strategy-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .check-icon {
+    font-size: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .check-icon.gold { color: var(--gold); }
+  .check-icon.green { color: var(--green); }
+  .check-icon.blue { color: var(--blue); }
+  .check-icon.purple { color: var(--purple); }
+
+  /* ── RISK PANEL ── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .risk-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid;
+    border-radius: 0 6px 6px 0;
+    padding: 16px 18px;
+  }
+  .risk-card.r1 { border-left-color: var(--red); }
+  .risk-card.r2 { border-left-color: var(--gold); }
+  .risk-card.r3 { border-left-color: var(--purple); }
+  .risk-card.r4 { border-left-color: var(--blue); }
+
+  .risk-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .risk-desc {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: rgba(240,96,96,0.05);
+    border: 1px solid rgba(240,96,96,0.2);
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.7;
+    margin-top: 48px;
+  }
+  .disclaimer strong { color: var(--red); }
+
+  /* ── NPS SECTOR ── */
+  .nps-sector-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .nps-sector-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .nps-sector-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .nps-sector-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    color: var(--blue);
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .nps-sector-sub {
+    font-size: 10px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .highlight-box p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+  .highlight-box strong { color: var(--gold2); }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    color: var(--gold);
+  }
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+  }
+
+  /* ── PROGRESS BAR ANIM ── */
+  @keyframes fillIn {
+    from { width: 0%; }
+    to { width: var(--target); }
+  }
+  .bar-fill { animation: fillIn 1.2s ease forwards; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .strategy-grid { grid-template-columns: 1fr; }
+    .nps-sector-grid { grid-template-columns: repeat(2, 1fr); }
+    .report-title { font-size: 28px; }
+    .header-inner { padding: 32px 20px 28px; }
+    .content-wrap { padding: 24px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="report-header">
+  <div class="header-inner">
+    <div class="report-label">Special Report · 2026.03.19</div>
+    <h1 class="report-title">상법 개정 테마<br><span>투자 분석 보고서</span></h1>
+    <p class="report-subtitle">자사주 소각 의무화 · 지배구조 개혁 · 국민연금 수급 변화의 3대 구조적 수혜 종목 분석</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Report Date</span>
+        <span class="meta-value">2026-03-19</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Coverage</span>
+        <span class="meta-value">KOSPI · KOSDAQ</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">기준 법령</span>
+        <span class="meta-value">3차 상법 개정 (2026.03.06 시행)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Data Source</span>
+        <span class="meta-value">DART · 국민연금 공시 · 금감원</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════ CONTENT ══════════════════ -->
+<div class="content-wrap">
+
+  <!-- ── 핵심 지표 ── -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">핵심 시장 지표</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card gold">
+      <div class="stat-label">대기업 자사주 총 규모</div>
+      <div class="stat-value">52조+</div>
+      <div class="stat-sub">코스피 상장사 기준 (추정)</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">2025년 자사주 소각액</div>
+      <div class="stat-value">15.2조</div>
+      <div class="stat-sub">2022년(3.1조) 대비 +390%</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-label">국민연금 국내주식 규모</div>
+      <div class="stat-value">263.7조</div>
+      <div class="stat-sub">기금 적립금의 18.1% (2025.12)</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-label">삼성+SK 소각 결정액</div>
+      <div class="stat-value">21조+</div>
+      <div class="stat-sub">3차 개정 이후 선제 대응</div>
+    </div>
+  </div>
+
+  <!-- ── 상법 개정 타임라인 ── -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">상법 개정 3단계 타임라인</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px 32px;margin-bottom:24px;">
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot gold"></div>
+        <div class="timeline-date">1차 개정 · 2025.07.22 시행</div>
+        <div class="timeline-title">이사의 주주 충실의무 명시</div>
+        <div class="timeline-tags">
+          <span class="tag gold">즉시 시행</span>
+          <span class="tag blue">독립이사 2026.07</span>
+          <span class="tag blue">3%룰 강화 2026.07</span>
+          <span class="tag green">전자주주총회 2027.01</span>
+        </div>
+        <div class="timeline-desc">이사가 직무 수행 시 '총주주의 이익'을 보호·공평 대우해야 하며 위반 시 법적 책임 추궁 가능. 사외이사 → 독립이사 명칭 변경, 의무 선임 비율 이사 총수의 1/3로 상향. 감사위원 선임 시 최대주주 및 특수관계인 합산 3% 의결권 제한 확대.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-date">2차 개정 · 2026.09.10 시행 예정</div>
+        <div class="timeline-title">집중투표제 의무화 · 감사위원 분리선출 강화</div>
+        <div class="timeline-tags">
+          <span class="tag blue">자산 2조원+ 상장사</span>
+          <span class="tag gold">감사위원 2인 이상 분리선출</span>
+        </div>
+        <div class="timeline-desc">대규모 상장회사(자산 2조원 이상)에 집중투표제 의무화로 소액주주의 이사 선임 영향력 강화. 감사위원 분리선출 대상 확대('1명→2명 이상')로 감사기구 실질적 독립성 제고. 기업들은 2026년 정기주총부터 선제 대응 중.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot green"></div>
+        <div class="timeline-date">3차 개정 · 2026.03.06 시행</div>
+        <div class="timeline-title">자기주식 소각 의무화 — 시장 판도 변화의 핵심</div>
+        <div class="timeline-tags">
+          <span class="tag green">신규 취득 1년 내 소각</span>
+          <span class="tag gold">기존 보유분 1년 6개월 유예</span>
+          <span class="tag red">EB 발행 원칙 금지</span>
+          <span class="tag purple">주총 승인 의무</span>
+        </div>
+        <div class="timeline-desc">신규 취득 자사주는 취득일로부터 1년 이내 원칙 소각 의무화. 예외적 보유·처분 시 이사 전원 서명 포함 '자기주식보유처분계획'을 주주총회에서 승인받아야 함. 위반 이사에게 5,000만 원 이하 과태료. 자사주 기반 교환사채(EB) 발행 원칙적 금지로 편법 우회로 차단.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 대기업 자사주 현황 ── -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">대기업 자사주 보유 현황 분석</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="highlight-box">
+    <p>자사주 소각 의무화로 <strong>발행 주식 수 감소 → EPS 증가 → PBR 재평가</strong>의 연쇄 효과가 발생한다. 롯데지주·SK 등 PBR 0.5배 미만이면서 자사주 보유 비율이 높은 지주사는 소각 발표만으로도 주가 재평가 여지가 크다. <strong>한국기업거버넌스포럼 분석에 따르면, SK·LG 등 주요 지주사는 보유 자사주만 소각해도 최소 주가가 두 배 이상 오를 것으로 전망</strong>된다.</p>
+  </div>
+
+  <div class="data-table-wrap">
+    <div class="table-header-row">
+      <div class="table-title">📊 자사주 고보유 대기업 현황 (2026년 초 기준)</div>
+      <div class="table-badge">출처: DART 공시 · 각사 사업보고서</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th>
+          <th>자사주 비율</th>
+          <th>소각 규모</th>
+          <th>소각 의지</th>
+          <th>투자 포인트</th>
+          <th>주목도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="company-name">삼성전자</div>
+            <div class="company-code">005930</div>
+          </td>
+          <td><span class="num-cell">보유분 82.5%</span></td>
+          <td><span class="num-high">≈ 15.6조원</span></td>
+          <td><span class="tag green">선제 소각</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">2026 상반기 8,700만주 소각 확정 공시. EPS 즉각 개선 기대</td>
+          <td><span class="rating A">AAA</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">SK㈜</div>
+            <div class="company-code">034730</div>
+          </td>
+          <td>
+            <div class="score-bar">
+              <span class="num-high">24.8%</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:0%;background:var(--gold);--target:82%"></div></div>
+            </div>
+          </td>
+          <td><span class="num-high">≈ 5.2조원</span></td>
+          <td><span class="tag green">전량 소각</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">1,469만주 2027.01까지 소각 결정. 지분율 24.8%→0% 전환 예정</td>
+          <td><span class="rating A">AA+</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">롯데지주</div>
+            <div class="company-code">004990</div>
+          </td>
+          <td>
+            <div class="score-bar">
+              <span class="num-high">27.5%</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:0%;background:var(--gold);--target:92%"></div></div>
+            </div>
+          </td>
+          <td><span class="num-cell">검토 중</span></td>
+          <td><span class="tag gold">계획 발표</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">2024~2026 주주환원율 35%+ 목표. 중간배당 및 소각 검토 발표</td>
+          <td><span class="rating A">AA</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">대신증권</div>
+            <div class="company-code">003540</div>
+          </td>
+          <td>
+            <div class="score-bar">
+              <span class="num-high">25.1%</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:0%;background:var(--gold2);--target:84%"></div></div>
+            </div>
+          </td>
+          <td><span class="num-high">1,535만주</span></td>
+          <td><span class="tag green">공시 완료</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">2026 기업가치 제고 계획서 제출. 소각 계획 + 비과세 배당 시행</td>
+          <td><span class="rating A">AA</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">두산</div>
+            <div class="company-code">000150</div>
+          </td>
+          <td>
+            <div class="score-bar">
+              <span class="num-cell">17.9%</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:0%;background:var(--blue);--target:60%"></div></div>
+            </div>
+          </td>
+          <td><span class="num-cell">미공표</span></td>
+          <td><span class="tag gold">검토 중</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">두산에너빌리티 등 원전 테마 + 지주 자사주 이슈 복합 관심</td>
+          <td><span class="rating B">A+</span></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="company-name">LS㈜</div>
+            <div class="company-code">006260</div>
+          </td>
+          <td>
+            <div class="score-bar">
+              <span class="num-cell">13.9%</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:0%;background:var(--blue);--target:46%"></div></div>
+            </div>
+          </td>
+          <td><span class="num-cell">미공표</span></td>
+          <td><span class="tag red">관망 중</span></td>
+          <td class="num-cell" style="max-width:200px;font-size:11px;color:var(--text2)">EB 발행 전력 있어 모니터링 필요. 국민연금 지분 12.67%로 압박 강도↑</td>
+          <td><span class="rating B">A</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 국민연금 보유 현황 ── -->
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">국민연금 주요 편입 종목 추적</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="highlight-box">
+    <p>2026년 1월 기금운용위원회는 <strong>해외주식 비중 확대 계획을 철회하고 국내주식 비중 상향</strong>을 결정했다. 2025년 국민연금 국내주식 수익률은 82.44%를 기록했으며, 적립금은 <strong>1,458조 원</strong> 시대를 열었다. 국민연금이 지분 10% 이상 보유한 종목은 37개사이며, 이들 종목은 스튜어드십 코드 강화에 따라 경영 압박과 주주 친화 정책 강화 효과를 동시에 받게 된다.</p>
+  </div>
+
+  <div class="data-table-wrap" style="margin-bottom:20px;">
+    <div class="table-header-row">
+      <div class="table-title">🏛 국민연금 지분율 상위 종목 (2025년 3월 기준 공시)</div>
+      <div class="table-badge">출처: 국민연금공단 · 보건복지위 국감 자료</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th>
+          <th>국민연금 지분율</th>
+          <th>전년 대비</th>
+          <th>섹터</th>
+          <th>자사주 시너지</th>
+          <th>관심도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="company-name">삼성전자</div><div class="company-code">005930</div></td>
+          <td><span class="num-high">7.6%</span></td>
+          <td><span class="num-green">▲ 소폭</span></td>
+          <td><span class="tag blue">IT·반도체</span></td>
+          <td><span class="tag green">자사주 소각 완료</span></td>
+          <td><span class="rating A">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">SK하이닉스</div><div class="company-code">000660</div></td>
+          <td><span class="num-high">~7%</span></td>
+          <td><span class="num-green">지분가치 +136%</span></td>
+          <td><span class="tag blue">IT·반도체</span></td>
+          <td><span class="tag gold">검토 중</span></td>
+          <td><span class="rating A">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">효성중공업</div><div class="company-code">298040</div></td>
+          <td><span class="num-high">12.83%</span></td>
+          <td><span class="num-green">▲ 증가</span></td>
+          <td><span class="tag purple">산업재·전력</span></td>
+          <td><span class="tag gold">잠재 압박↑</span></td>
+          <td><span class="rating A">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">CJ㈜</div><div class="company-code">001040</div></td>
+          <td><span class="num-high">12.72%</span></td>
+          <td><span class="num-green">▲ 증가</span></td>
+          <td><span class="tag gold">지주·소비재</span></td>
+          <td><span class="tag gold">지주 자사주 이슈</span></td>
+          <td><span class="rating A">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">이마트</div><div class="company-code">139480</div></td>
+          <td><span class="num-high">12.71%</span></td>
+          <td><span class="num-green">소각 결정 완료</span></td>
+          <td><span class="tag gold">유통</span></td>
+          <td><span class="tag green">소각 이력 있음</span></td>
+          <td><span class="rating A">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">LS㈜</div><div class="company-code">006260</div></td>
+          <td><span class="num-high">12.67%</span></td>
+          <td><span class="num-green">▲ 증가</span></td>
+          <td><span class="tag purple">전선·소재</span></td>
+          <td><span class="tag red">EB 이슈 유의</span></td>
+          <td><span class="rating B">★★★☆☆</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">신세계</div><div class="company-code">004170</div></td>
+          <td><span class="num-high">11.39%</span></td>
+          <td><span class="num-cell">유지</span></td>
+          <td><span class="tag gold">유통</span></td>
+          <td><span class="tag gold">소각 계획 검토</span></td>
+          <td><span class="rating B">★★★☆☆</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">CJ제일제당</div><div class="company-code">097950</div></td>
+          <td><span class="num-high">11.69%</span></td>
+          <td><span class="num-green">▲ 증가</span></td>
+          <td><span class="tag gold">식품</span></td>
+          <td><span class="tag gold">배당 강화 기조</span></td>
+          <td><span class="rating B">★★★☆☆</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nps-sector-grid">
+    <div class="nps-sector-card">
+      <div class="nps-sector-name">유통업</div>
+      <div class="nps-sector-val">9.8%</div>
+      <div class="nps-sector-sub">평균 지분율 · 최다 확대</div>
+    </div>
+    <div class="nps-sector-card">
+      <div class="nps-sector-name">증권업</div>
+      <div class="nps-sector-val">9.1%</div>
+      <div class="nps-sector-sub">삼성증권 등 고지분</div>
+    </div>
+    <div class="nps-sector-card">
+      <div class="nps-sector-name">식음료</div>
+      <div class="nps-sector-val">8.7%</div>
+      <div class="nps-sector-sub">농심·오리온·CJ제일제당</div>
+    </div>
+    <div class="nps-sector-card">
+      <div class="nps-sector-name">조선·기계</div>
+      <div class="nps-sector-val">8.7%</div>
+      <div class="nps-sector-sub">두산에너빌리티·효성중공업</div>
+    </div>
+  </div>
+
+  <!-- ── 투자 전략 ── -->
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">4대 투자 전략 프레임워크</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="strategy-grid">
+    <div class="strategy-card s1">
+      <div class="strategy-icon">🏦</div>
+      <div class="strategy-num">Strategy 01</div>
+      <div class="strategy-name">자사주 고보유<br>저평가 지주사 공략</div>
+      <div class="strategy-desc">자사주 비율이 높고 PBR이 0.5배 미만인 지주사는 소각 발표만으로도 극적인 주가 재평가가 가능하다. 발행 주식 수 감소 → EPS·BPS 증가 → 밸류에이션 정상화의 연쇄 효과를 노린다.</div>
+      <div class="strategy-checks">
+        <div class="check-item"><span class="check-icon gold">◆</span>자사주 보유 비율 10% 이상인 코스피 대형주</div>
+        <div class="check-item"><span class="check-icon gold">◆</span>PBR 0.5배 미만인 지주사 및 핵심 계열사</div>
+        <div class="check-item"><span class="check-icon gold">◆</span>주주환원 계획을 공개적으로 발표한 기업</div>
+        <div class="check-item"><span class="check-icon gold">◆</span>부채비율 낮고 자사주 소각 재무 여력 충분한 기업</div>
+      </div>
+    </div>
+    <div class="strategy-card s2">
+      <div class="strategy-icon">🏗</div>
+      <div class="strategy-num">Strategy 02</div>
+      <div class="strategy-name">지배구조 개선<br>수혜 섹터 선점</div>
+      <div class="strategy-desc">집중투표제 의무화·감사위원 분리선출 강화로 이사회 독립성이 높아지면 중장기적으로 경영 투명성이 상승하고 외국인 투자자의 장기 자금 유입 가능성이 높아진다.</div>
+      <div class="strategy-checks">
+        <div class="check-item"><span class="check-icon green">◆</span>대규모 상장회사(자산 2조원+) 지주사 그룹주</div>
+        <div class="check-item"><span class="check-icon green">◆</span>행동주의 펀드 주주 제안 대상 기업 — 개혁 압박이 곧 호재</div>
+        <div class="check-item"><span class="check-icon green">◆</span>외국인 지분 확대 여지 있는 저평가 우량주</div>
+        <div class="check-item"><span class="check-icon green">◆</span>2026년 3월 정기주총 의안 변화 모니터링</div>
+      </div>
+    </div>
+    <div class="strategy-card s3">
+      <div class="strategy-icon">🏛</div>
+      <div class="strategy-num">Strategy 03</div>
+      <div class="strategy-name">국민연금 편입 종목<br>지분 추적 전략</div>
+      <div class="strategy-desc">1,458조 원 규모의 국민연금이 국내주식 비중 확대 기조로 전환한 지금, 국민연금 지분율이 높거나 늘어나는 종목은 수급 측면의 강력한 안전판을 확보하게 된다.</div>
+      <div class="strategy-checks">
+        <div class="check-item"><span class="check-icon blue">◆</span>국민연금 지분 10% 이상 보유 37개 종목 추적</div>
+        <div class="check-item"><span class="check-icon blue">◆</span>IT전기전자·조선기계·유통 업종 집중 편입 확대 트렌드</div>
+        <div class="check-item"><span class="check-icon blue">◆</span>스튜어드십 코드 강화 → 주주 친화 정책 압박 수혜</div>
+        <div class="check-item"><span class="check-icon blue">◆</span>분기별 국민연금 대량보유 공시 변동 모니터링</div>
+      </div>
+    </div>
+    <div class="strategy-card s4">
+      <div class="strategy-icon">💰</div>
+      <div class="strategy-num">Strategy 04</div>
+      <div class="strategy-name">배당·주주환원<br>강화 기업 장기 보유</div>
+      <div class="strategy-desc">자사주 소각 의무화로 기업이 내부 자원을 사내에 묶어두는 선택지가 줄어든다. 이는 결과적으로 배당 확대와 주주환원 정책 강화로 연결되며, 중장기 보유 투자자에게 복리 효과를 제공한다.</div>
+      <div class="strategy-checks">
+        <div class="check-item"><span class="check-icon purple">◆</span>중장기 주주환원 계획(배당수익률 + 소각 로드맵) 공시 기업</div>
+        <div class="check-item"><span class="check-icon purple">◆</span>별도 기준 영업이익 대비 주주환원율 지속 상향 기업</div>
+        <div class="check-item"><span class="check-icon purple">◆</span>신영증권 등 — 2023~2026 영업이익 10%+ 배당 정책 시행 기업</div>
+        <div class="check-item"><span class="check-icon purple">◆</span>기업가치 제고 계획서(밸류업 공시) 제출 기업 체크</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 배당 강화 주목 종목 ── -->
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">배당 확대 및 주주환원 강화 주목 기업</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="data-table-wrap">
+    <div class="table-header-row">
+      <div class="table-title">💎 주주환원 정책 강화 기업 (자사주 소각 공시 / 배당 확대)</div>
+      <div class="table-badge">출처: DART 공시 · 각사 IR 자료 · 2026년 3월 기준</div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th>
+          <th>주주환원 내용</th>
+          <th>소각 공시</th>
+          <th>자사주 비율</th>
+          <th>국민연금 지분</th>
+          <th>종합 평가</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="company-name">삼성전자</div><div class="company-code">005930</div></td>
+          <td style="font-size:12px;color:var(--text2)">2025~2026 10조원 자사주 매입 계획 + 상반기 소각 완료</td>
+          <td><span class="tag green">확정</span></td>
+          <td><span class="num-high">소각 전 ~4%</span></td>
+          <td><span class="num-cell">7.6%</span></td>
+          <td><span class="rating A">핵심 보유</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">SK㈜</div><div class="company-code">034730</div></td>
+          <td style="font-size:12px;color:var(--text2)">임직원 보상분 18% 제외 자사주 전량 소각 결의. 지분율 24.6%→0%</td>
+          <td><span class="tag green">이사회 결의</span></td>
+          <td><span class="num-high">24.8% → 0%</span></td>
+          <td><span class="num-cell">추정 5%+</span></td>
+          <td><span class="rating A">최우선 주목</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">롯데지주</div><div class="company-code">004990</div></td>
+          <td style="font-size:12px;color:var(--text2)">2024~2026 주주환원율 35% 이상 목표. 중간배당 및 소각 검토</td>
+          <td><span class="tag gold">계획 발표</span></td>
+          <td><span class="num-high">27.5%</span></td>
+          <td><span class="num-cell">추정 5%+</span></td>
+          <td><span class="rating A">적극 관심</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">대신증권</div><div class="company-code">003540</div></td>
+          <td style="font-size:12px;color:var(--text2)">1,535만주 소각 + 비과세 배당 시행. 기업가치 제고 계획서 제출</td>
+          <td><span class="tag green">공시 완료</span></td>
+          <td><span class="num-high">25.1%</span></td>
+          <td><span class="num-cell">추정 5%+</span></td>
+          <td><span class="rating A">적극 관심</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">LG㈜</div><div class="company-code">003550</div></td>
+          <td style="font-size:12px;color:var(--text2)">2026년까지 자사주 전량 소각 계획 발표. 배당 정책 강화 병행</td>
+          <td><span class="tag green">계획 확정</span></td>
+          <td><span class="num-cell">~5% 내외</span></td>
+          <td><span class="num-cell">5%+</span></td>
+          <td><span class="rating A">적극 관심</span></td>
+        </tr>
+        <tr>
+          <td><div class="company-name">신영증권</div><div class="company-code">001720</div></td>
+          <td style="font-size:12px;color:var(--text2)">2023~2026 별도 기준 영업이익의 10% 이상 배당 정책 시행 중</td>
+          <td><span class="tag blue">배당 강화</span></td>
+          <td><span class="num-cell">중간 수준</span></td>
+          <td><span class="num-cell">추정 5%+</span></td>
+          <td><span class="rating B">관심 유지</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 리스크 요인 ── -->
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">투자 리스크 요인 점검</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card r1">
+      <div class="risk-title">⚠ 기업의 편법 대응 리스크</div>
+      <div class="risk-desc">일부 기업이 소각 의무화 직전 자사주를 우호 세력에 급매각하거나 교환사채(EB)를 선발행하는 사례 발생. 3차 개정으로 EB 발행은 원칙 금지됐으나, 시행 전 발행분 및 신탁 방식 편법은 지속 모니터링 필요.</div>
+    </div>
+    <div class="risk-card r2">
+      <div class="risk-title">📉 자사주 취득 축소 부작용</div>
+      <div class="risk-desc">대한상의 조사 결과, 소각 의무화 시 상장사 60% 이상이 자사주 '신규 취득 계획 없음'을 응답. 소각 의무화가 오히려 자사주 매입 공시라는 단기 주가 부양 모멘텀을 줄일 수 있어 주의 필요.</div>
+    </div>
+    <div class="risk-card r3">
+      <div class="risk-title">🔄 국민연금 리밸런싱 매도 압력</div>
+      <div class="risk-desc">코스피가 4,300~4,500 포인트 이상에서 국민연금의 국내주식 비중이 허용 한도 상단을 채울 가능성 있어 기계적 리밸런싱 매도 압력이 단기 변동성을 키울 수 있음. 비중 확대 기조 유지 여부 지속 확인 필요.</div>
+    </div>
+    <div class="risk-card r4">
+      <div class="risk-title">⚖ 시행령·유권해석 불확실성</div>
+      <div class="risk-desc">1·2·3차 개정 시행 시기가 복잡하게 분산돼 있으며, 예외적 보유 요건 등 세부 해석에 대한 법무부·금감원의 유권해석이 아직 완전히 확립되지 않은 상황. 추가 자본시장법 시행령 정비가 선행될 필요 있음.</div>
+    </div>
+  </div>
+
+  <!-- ── 투자 체크리스트 ── -->
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2 class="section-title">실전 투자 체크리스트</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px 32px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--gold2);margin-bottom:14px;font-family:'Noto Serif KR',serif;">✅ 지금 당장 확인할 것</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="check-item"><span class="check-icon green" style="font-size:12px;">→</span><span>관심 기업의 DART 자사주보유처분계획 공시 유무 확인</span></div>
+          <div class="check-item"><span class="check-icon green" style="font-size:12px;">→</span><span>국민연금 대량보유 보고서 (5% 이상) 분기별 변동 체크</span></div>
+          <div class="check-item"><span class="check-icon green" style="font-size:12px;">→</span><span>2026년 3월 정기주주총회 이사 선임 의안 및 결과 추적</span></div>
+          <div class="check-item"><span class="check-icon green" style="font-size:12px;">→</span><span>PBR 0.5배 미만 + 자사주 10%+ 기업 스크리닝 정기 실시</span></div>
+          <div class="check-item"><span class="check-icon green" style="font-size:12px;">→</span><span>밸류업 기업가치 제고 계획서 제출 기업 목록 업데이트</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--red);margin-bottom:14px;font-family:'Noto Serif KR',serif;">🚫 이것은 피하라</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="check-item"><span class="check-icon red" style="color:var(--red);font-size:12px;">✕</span><span>소각 의지 없이 자사주를 우호 세력에 매각 이력이 있는 기업</span></div>
+          <div class="check-item"><span class="check-icon red" style="color:var(--red);font-size:12px;">✕</span><span>부채비율이 높아 대규모 소각 여력이 없는 지주사</span></div>
+          <div class="check-item"><span class="check-icon red" style="color:var(--red);font-size:12px;">✕</span><span>3차 개정 시행 직전 EB를 발행해 자사주를 담보로 활용한 기업</span></div>
+          <div class="check-item"><span class="check-icon red" style="color:var(--red);font-size:12px;">✕</span><span>국민연금이 지분을 지속 줄이고 있는 섹터 (2차전지·제약 일부)</span></div>
+          <div class="check-item"><span class="check-icon red" style="color:var(--red);font-size:12px;">✕</span><span>단기 주가 급등만을 노린 이벤트 트레이딩 — 장기 구조 변화 관점으로 접근</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 결론 ── -->
+  <div class="section-header" style="margin-top:56px;">
+    <span class="section-num">09</span>
+    <h2 class="section-title">결론 — 지배구조 사이클의 시작점에서</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="highlight-box" style="border-color:rgba(62,207,142,0.25);background:rgba(62,207,142,0.05);">
+    <p>2025~2026년 한국 증시는 <strong>상법 3차 개정 + 국민연금 국내주식 비중 확대 + 코리아 디스카운트 해소</strong>라는 세 가지 제도적 동력이 동시에 작동하는, 역사적 전환점에 놓여 있다. 1차(이사 충실의무) → 2차(집중투표제) → 3차(자사주 소각 의무화)로 이어지는 일련의 개혁은 한국 기업지배구조가 '주주 중심주의'로 구조적 전환하는 과정이다. <strong>자사주 고보유 저평가 지주사, 국민연금 주요 편입 종목, 배당 확대 공시 기업에 대한 선별적 장기 투자</strong>가 이 사이클의 최대 수혜 전략이 될 것이다. 단, 기업별 소각 의지·재무 여력·편법 대응 여부를 꼼꼼히 따지는 것이 전제 조건임을 명심하라.</p>
+  </div>
+
+  <!-- ── 면책고지 ── -->
+  <div class="disclaimer">
+    <strong>⚠ 투자 유의사항 및 면책고지</strong><br>
+    본 보고서는 공개된 법률 문서, 금융감독원 전자공시시스템(DART), 국민연금 공시 자료, 언론 보도 등을 바탕으로 정보 제공의 목적으로만 작성되었습니다. 본 보고서의 내용은 특정 종목에 대한 매수·매도·보유를 권고하거나 투자 수익을 보장하지 않습니다. 모든 투자 결정과 그에 따른 손익은 전적으로 투자자 본인의 판단과 책임 하에 이루어지며, 본 보고서 작성자는 투자 결과에 대한 법적 책임을 지지 않습니다. 투자 전 반드시 공시된 사업보고서, 감사보고서 및 전문 금융투자업자의 조언을 참고하시기 바랍니다. 수록된 수치 및 지분율은 공시 기준일에 따라 현재와 다를 수 있습니다.
+  </div>
+
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<div class="report-footer">
+  <div class="footer-brand">Korea Equity Research</div>
+  <div class="footer-meta">2026.03.19 · 상법개정 테마 투자 분석 보고서 · v1.0</div>
+</div>
+
+<script>
+  // Animate bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          const target = bar.style.getPropertyValue('--target') || '0%';
+          bar.style.width = target;
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.data-table-wrap').forEach(el => observer.observe(el));
+
+  // Subtle stagger on stat cards
+  document.querySelectorAll('.stat-card').forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(12px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 100 + i * 80);
+  });
+</script>
+
+</body>
+</html>
