@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>현대백화점 069960 | SWOT · 주가 · 2026 전망 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:    #1a1410;
+    --paper:  #faf8f4;
+    --gold:   #c8922a;
+    --gold-lt:#f5e9cc;
+    --muted:  #7a7068;
+    --border: #e8e0d0;
+    --white:  #ffffff;
+    --g-s: #eaf5ea; --g-sb: #a8d5a8; --g-st: #2e7d32;
+    --g-w: #fdecea; --g-wb: #f5bcba; --g-wt: #c0392b;
+    --g-o: #e8f4fd; --g-ob: #9fc8ee; --g-ot: #1565c0;
+    --g-t: #fef9e7; --g-tb: #f0cc6a; --g-tt: #8a6a00;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Noto Sans KR',sans-serif;font-size:15px;line-height:1.9;}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 20px 88px;}
+
+  /* ── Section Header ── */
+  .sec-head{display:flex;align-items:center;gap:12px;margin:64px 0 26px;padding-bottom:14px;border-bottom:2.5px solid var(--ink);}
+  .sec-num{background:var(--ink);color:var(--gold);font-size:11px;font-weight:700;font-family:'Noto Sans KR',sans-serif;padding:4px 10px;border-radius:4px;letter-spacing:1.5px;}
+  .sec-head h2{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;}
+  .sec-sub{font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap;}
+
+  /* ── Fact-check Badge ── */
+  .fc-row{display:flex;align-items:center;gap:8px;background:#e8f4fd;border:1px solid #9fc8ee;border-radius:8px;padding:10px 16px;margin-bottom:24px;font-size:12.5px;color:#1565c0;}
+  .fc-row strong{font-weight:700;}
+
+  /* ── SWOT Grid ── */
+  .swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .swot-card{border-radius:14px;padding:22px 20px;}
+  .swot-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+  .swot-card ul{padding-left:17px;}
+  .swot-card li{font-size:13.5px;line-height:1.85;margin-bottom:5px;}
+  .swot-card li.new::after{content:'NEW';background:var(--gold);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:6px;vertical-align:middle;}
+  .sw-s{background:var(--g-s);border:1.5px solid var(--g-sb);} .sw-s .swot-title{color:var(--g-st);}
+  .sw-w{background:var(--g-w);border:1.5px solid var(--g-wb);} .sw-w .swot-title{color:var(--g-wt);}
+  .sw-o{background:var(--g-o);border:1.5px solid var(--g-ob);} .sw-o .swot-title{color:var(--g-ot);}
+  .sw-t{background:var(--g-t);border:1.5px solid var(--g-tb);} .sw-t .swot-title{color:var(--g-tt);}
+
+  /* ── Stat Grid ── */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0;}
+  .stat-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;}
+  .stat-card .val{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:900;line-height:1.2;margin-bottom:4px;}
+  .stat-card .val.red{color:#c0392b;}
+  .stat-card .val.grn{color:#2e7d32;}
+  .stat-card .lbl{font-size:11px;color:var(--muted);font-weight:500;line-height:1.4;}
+  .stat-card .note{font-size:10.5px;color:var(--muted);margin-top:3px;}
+  .stat-highlight{border-color:var(--gold);background:var(--gold-lt);}
+
+  /* ── 주가 흐름 타임라인 ── */
+  .timeline{display:flex;align-items:flex-end;gap:0;margin:24px 0;background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:24px 20px;overflow:hidden;}
+  .tl-item{flex:1;text-align:center;position:relative;}
+  .tl-item:not(:last-child)::after{content:'→';position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;}
+  .tl-dot{width:10px;height:10px;border-radius:50%;margin:0 auto 6px;}
+  .tl-dot.low{background:#2471a3;}
+  .tl-dot.mid{background:var(--gold);}
+  .tl-dot.hi{background:#c0392b;}
+  .tl-dot.cur{background:var(--ink);}
+  .tl-price{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:900;margin-bottom:2px;}
+  .tl-price.low{color:#2471a3;}
+  .tl-price.hi{color:#c0392b;}
+  .tl-price.cur{color:var(--ink);}
+  .tl-date{font-size:10.5px;color:var(--muted);}
+  .tl-label{font-size:11px;font-weight:600;color:var(--muted);margin-top:3px;}
+
+  /* ── Table ── */
+  .tbl-wrap{overflow-x:auto;margin:16px 0;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  thead th{background:var(--ink);color:var(--gold);padding:11px 14px;text-align:left;font-weight:700;font-size:11.5px;letter-spacing:0.7px;white-space:nowrap;}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  tbody tr:nth-child(even) td{background:#faf5ec;}
+  tbody tr.hl td{background:var(--gold-lt)!important;font-weight:700;}
+  .num{text-align:right;font-weight:600;}
+  .badge-buy{display:inline-block;background:#eaf5ea;color:#2e7d32;border:1px solid #a8d5a8;border-radius:99px;padding:2px 10px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+  .badge-sbuy{display:inline-block;background:var(--gold-lt);color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:2px 10px;font-size:11.5px;font-weight:700;white-space:nowrap;}
+
+  /* ── 상승여력 Bar ── */
+  .bar-section{margin:22px 0;}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+  .bar-lbl{min-width:140px;font-size:12.5px;font-weight:600;line-height:1.3;}
+  .bar-lbl span{display:block;font-size:10.5px;color:var(--muted);font-weight:400;}
+  .bar-track{flex:1;height:9px;background:var(--border);border-radius:99px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:99px;background:var(--gold);}
+  .bar-val{min-width:52px;text-align:right;font-weight:700;font-size:13px;color:var(--gold);}
+
+  /* ── Insight / Dark Box ── */
+  .insight{background:var(--ink);color:#fff;border-radius:14px;padding:24px 28px;margin:24px 0;}
+  .i-tag{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+  .insight p{color:rgba(255,255,255,0.85);font-size:14px;margin:0;line-height:2;}
+  .insight strong{color:var(--gold);}
+  .insight ul{padding-left:18px;color:rgba(255,255,255,0.85);font-size:14px;}
+  .insight li{margin-bottom:5px;line-height:1.9;}
+
+  /* ── Valuation Notes ── */
+  .val-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:18px 0;}
+  .val-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:18px 16px;}
+  .val-card .vc-tag{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;display:block;}
+  .val-card h4{font-family:'Noto Serif KR',serif;font-size:14.5px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+  .val-card p{font-size:12.5px;color:#2a2420;line-height:1.85;}
+
+  /* ── 주주환원 box ── */
+  .shareholder-box{background:var(--g-o);border:1.5px solid var(--g-ob);border-radius:12px;padding:20px 22px;margin:20px 0;}
+  .sh-title{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--g-ot);text-transform:uppercase;margin-bottom:10px;}
+  .sh-items{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .sh-item{text-align:center;}
+  .sh-item .sh-val{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:900;color:var(--g-ot);margin-bottom:2px;}
+  .sh-item .sh-lbl{font-size:11px;color:var(--muted);}
+
+  /* ── 2026 Outlook ── */
+  .outlook-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0;}
+  .ok-card{background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;}
+  .ok-card .ok-val{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:900;color:var(--ink);margin-bottom:3px;}
+  .ok-card .ok-lbl{font-size:11px;color:var(--muted);}
+  .ok-card .ok-chg{font-size:12px;font-weight:700;color:#2e7d32;margin-top:3px;}
+
+  /* ── Monitor Points ── */
+  .monitor-list{counter-reset:mc;margin:16px 0;}
+  .monitor-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .mc-num{background:var(--ink);color:var(--gold);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;}
+  .mc-text{font-size:13.5px;line-height:1.8;}
+  .mc-text strong{color:var(--ink);}
+  .mc-badge{display:inline-block;background:var(--gold-lt);color:var(--gold);border:1px solid var(--gold);border-radius:4px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:6px;vertical-align:middle;}
+
+  /* ── Body text ── */
+  .body-text{color:#2a2420;margin:16px 0;line-height:2;font-size:14.5px;}
+  .sub-head{font-family:'Noto Serif KR',serif;font-weight:600;font-size:16px;color:var(--ink);margin:28px 0 12px;}
+
+  @media(max-width:620px){
+    .swot-grid{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .val-grid{grid-template-columns:1fr;}
+    .sh-items{grid-template-columns:1fr 1fr;}
+    .outlook-grid{grid-template-columns:repeat(2,1fr);}
+    .timeline{flex-wrap:wrap;gap:10px;}
+    .tl-item::after{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══════════════ 05. SWOT ═══════════════ -->
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <h2>SWOT 분석</h2>
+    <span class="sec-sub">2025년 결산 기준 업데이트</span>
+  </div>
+
+  <div class="fc-row">
+    ✅ <strong>2025 결산 반영 신규 항목:</strong>&nbsp; 면세점 7년 만에 연간 흑자 전환 · 지누스 258억 흑자 전환 · 3사 수익 기반 완성
+  </div>
+
+  <div class="swot-grid">
+    <!-- S -->
+    <div class="swot-card sw-s">
+      <div class="swot-title">💪 Strength &nbsp;강점</div>
+      <ul>
+        <li>강남·판교·여의도 등 핵심 상권 점포망</li>
+        <li>판교점 2조 돌파로 입증된 MD 경쟁력</li>
+        <li>더현대 서울 외국인 집객력 (14.6%, 182개국)</li>
+        <li class="new">면세점·지누스 동반 흑자 전환으로 3사 수익 기반 완성</li>
+        <li>자가 점포 위주 영업 → 안정적 원가 구조</li>
+        <li class="new">밸류업 프로그램 발표 → 주주환원 정책 강화</li>
+      </ul>
+    </div>
+    <!-- W -->
+    <div class="swot-card sw-w">
+      <div class="swot-title">⚠️ Weakness &nbsp;약점</div>
+      <ul>
+        <li>지누스 매출 성장 미미 (전년 수준 유지, -0.8%)</li>
+        <li>온라인·이커머스 대응력 상대적 열위</li>
+        <li>신규 출점(더현대 광주·부산·경산) 대규모 투자 부담<br><small style="color:var(--muted)">→ 1조 9,000억원 규모 투자 계획</small></li>
+        <li>롯데·신세계 대비 낮은 업계 점유율 (22.7%)</li>
+        <li>면세점 연간 흑자 규모 미미 (2억원 — 안정화 확인 필요)</li>
+      </ul>
+    </div>
+    <!-- O -->
+    <div class="swot-card sw-o">
+      <div class="swot-title">🌱 Opportunity &nbsp;기회</div>
+      <ul>
+        <li>외국인 매출 구조적 확대 (일본 선행 사례, +25% 달성)</li>
+        <li class="new">인천공항 DF1·DF2 신규 적격 사업자 선정 → 카테고리 확장</li>
+        <li>더현대 광주 개점 (2027) → 호남권 거점 구축</li>
+        <li>VIP 소비 양극화 심화 → 고마진 카테고리 집중 수혜</li>
+        <li>지누스 ODM 신규 수주 확대</li>
+        <li class="new">ROE 6%대·PBR 0.8배 목표 — 밸류에이션 리레이팅 여력</li>
+      </ul>
+    </div>
+    <!-- T -->
+    <div class="swot-card sw-t">
+      <div class="swot-title">🔥 Threat &nbsp;위협</div>
+      <ul>
+        <li>미국 관세 정책 → 지누스 원가 상승 리스크</li>
+        <li>지방 점포 양극화 심화 → 구조조정 가능성</li>
+        <li>신규 점포 개발 비용 증가 → 단기 현금흐름 부담</li>
+        <li>내수 소비 불확실성 지속</li>
+        <li>환율 변동 → 외국인 소비 변동성</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ 06. 주가 분석 ═══════════════ -->
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <h2>주가 분석</h2>
+    <span class="sec-sub">저평가인가, 적정 가격인가</span>
+  </div>
+
+  <p class="sub-head">현재 주가 포지션</p>
+
+  <div class="stat-grid">
+    <div class="stat-card stat-highlight">
+      <div class="val red">91,800원</div>
+      <div class="lbl">현재 주가</div>
+      <div class="note">2026.03.21 기준</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" style="color:#2471a3">50,900원</div>
+      <div class="lbl">52주 최저가</div>
+      <div class="note">2024년 11월</div>
+    </div>
+    <div class="stat-card">
+      <div class="val red">109,900원</div>
+      <div class="lbl">52주 최고가</div>
+      <div class="note">2026년 1~2월</div>
+    </div>
+    <div class="stat-card">
+      <div class="val grn">+75.3%</div>
+      <div class="lbl">저점 대비 상승률</div>
+      <div class="note">41,500원 → 현재</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">약 2조 780억원</div>
+      <div class="lbl">시가총액</div>
+      <div class="note">발행주식 22,629천주</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">1.89%</div>
+      <div class="lbl">배당수익률</div>
+      <div class="note">반기배당 포함</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">약 9.2배</div>
+      <div class="lbl">PER (2025 실적)</div>
+      <div class="note">EPS ~10,000원 기준</div>
+    </div>
+    <div class="stat-card">
+      <div class="val">약 0.43배</div>
+      <div class="lbl">PBR</div>
+      <div class="note">BPS ~212,000원 기준</div>
+    </div>
+  </div>
+
+  <!-- 주가 흐름 타임라인 -->
+  <p class="sub-head">주가 흐름 요약</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot low"></div>
+      <div class="tl-price low">41,500원</div>
+      <div class="tl-date">2024.11</div>
+      <div class="tl-label">52주 저점</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot mid"></div>
+      <div class="tl-price" style="color:var(--gold)">75,900원</div>
+      <div class="tl-date">2025.08</div>
+      <div class="tl-label">밸류업 발표</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot mid"></div>
+      <div class="tl-price" style="color:var(--gold)">99,800원</div>
+      <div class="tl-date">2025.12</div>
+      <div class="tl-label">9만원 돌파</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot hi"></div>
+      <div class="tl-price hi">109,900원</div>
+      <div class="tl-date">2026.01~02</div>
+      <div class="tl-label">52주 신고가</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot cur"></div>
+      <div class="tl-price cur">91,800원</div>
+      <div class="tl-date">2026.03.21</div>
+      <div class="tl-label">현재 (조정)</div>
+    </div>
+  </div>
+
+  <p class="body-text">저점(4만 1,500원) 대비 현재 주가는 <strong>+75.3% 상승</strong>했음에도 증권사들이 전원 매수 의견을 유지하는 이유는, 2025년 결산에서 확인된 <strong>이익 구조의 질적 전환</strong>(3사 동반 흑자) 때문입니다. 신고가(109,900원)에서 조정받은 현재 구간은 오히려 재진입 기회로 보는 시각이 우세합니다.</p>
+
+  <!-- 목표주가 -->
+  <p class="sub-head">증권사 목표주가 컨센서스</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>증권사</th><th>투자의견</th><th>목표주가</th><th>현재가 대비</th><th>핵심 근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>흥국증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num"><strong>130,000원</strong></td>
+          <td class="num" style="color:#c0392b;font-weight:700">+41.6%</td>
+          <td>실적 개선, 주주환원 확대</td>
+        </tr>
+        <tr>
+          <td>LS증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num">110,000원</td>
+          <td class="num" style="color:#c0392b">+19.8%</td>
+          <td>백화점·면세 수익성 개선</td>
+        </tr>
+        <tr>
+          <td>IBK투자증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num">106,000원</td>
+          <td class="num" style="color:#c0392b">+15.5%</td>
+          <td>3Q 기대치 하회 불구 본업 견조</td>
+        </tr>
+        <tr>
+          <td>하나증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num">100,000원</td>
+          <td class="num" style="color:#c0392b">+8.9%</td>
+          <td>백화점·면세점 실적 개선</td>
+        </tr>
+        <tr>
+          <td>대신증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num">100,000원</td>
+          <td class="num" style="color:#c0392b">+8.9%</td>
+          <td>외국인 매출 구조적 수혜</td>
+        </tr>
+        <tr>
+          <td>유진투자증권</td>
+          <td><span class="badge-buy">매수 BUY</span></td>
+          <td class="num">98,000원</td>
+          <td class="num" style="color:#c0392b">+6.8%</td>
+          <td>본업 수익성 회복</td>
+        </tr>
+        <tr class="hl">
+          <td><strong>컨센서스 평균</strong></td>
+          <td><span class="badge-sbuy">적극 매수</span></td>
+          <td class="num"><strong>110,000원</strong></td>
+          <td class="num" style="color:#c0392b;font-weight:700"><strong>+19.8%</strong></td>
+          <td>16명 애널리스트 전원 매수</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 상승여력 바 -->
+  <p class="sub-head">현재가(91,800원) 대비 목표주가 상승 여력</p>
+  <div class="bar-section">
+    <div class="bar-row">
+      <div class="bar-lbl">유진투자증권<span>98,000원</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:17%"></div></div>
+      <div class="bar-val">+6.8%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">하나증권 · 대신증권<span>100,000원</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+      <div class="bar-val">+8.9%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">IBK투자증권<span>106,000원</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:39%"></div></div>
+      <div class="bar-val">+15.5%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">LS증권 · 컨센서스<span>110,000원</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:56%"></div></div>
+      <div class="bar-val">+19.8%</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-lbl">흥국증권 (최고치)<span>130,000원</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="bar-val">+41.6%</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <span class="i-tag">📌 핵심 인사이트</span>
+    <p>현재 주가 <strong>91,800원</strong>은 컨센서스 평균 목표주가(110,000원) 대비 <strong>+19.8%</strong>의 상승 여력이 존재합니다. 흥국증권 최고치(13만원) 기준으로는 <strong>+41.6%</strong>. 16명 애널리스트 전원이 매수 의견을 제시한 가운데, 2025년 결산에서 확인된 3사 동반 흑자는 이 투자 논리를 뒷받침하는 결정적 근거입니다.</p>
+  </div>
+
+  <!-- 밸류에이션 관점 -->
+  <p class="sub-head">밸류에이션 관점 — 3가지 저평가 근거</p>
+
+  <div class="val-grid">
+    <div class="val-card">
+      <span class="vc-tag">① PER</span>
+      <h4>역사적 저평가 구간<br>약 9.2배</h4>
+      <p>영업이익이 33% 급증했음에도 PER이 한 자릿수대. 시장이 이익 개선의 지속성을 아직 충분히 반영하지 않은 상태. 2026년에도 성장이 확인되면 멀티플 재평가가 가속될 수 있음.</p>
+    </div>
+    <div class="val-card">
+      <span class="vc-tag">② PBR</span>
+      <h4>자산 대비 극저평가<br>약 0.43배</h4>
+      <p>핵심 상권 자가 부동산 가치를 고려하면 PBR 0.43배는 매우 낮은 수준. 회사 자체 밸류업 목표: <strong>3년 내 PBR 0.4배 → 중장기 0.8배</strong>. 주주환원 강화가 추가 촉매.</p>
+    </div>
+    <div class="val-card">
+      <span class="vc-tag">③ 외국인 비중</span>
+      <h4>일본식 리레이팅<br>시나리오</h4>
+      <p>전사 외국인 비중 현재 6%, 더현대 서울 단독 14.6%. 일본은 5%→15% 상승 시 주가 대폭 재평가. 전사 외국인 비중이 두 자릿수로 올라서는 시점이 주가 재평가 트리거.</p>
+    </div>
+  </div>
+
+  <!-- 주주환원 -->
+  <p class="sub-head">밸류업 & 주주환원 정책</p>
+  <div class="shareholder-box">
+    <div class="sh-title">📣 현대백화점그룹 밸류업 프로그램 (2024.11 발표)</div>
+    <div class="sh-items">
+      <div class="sh-item">
+        <div class="sh-val">100억원+</div>
+        <div class="sh-lbl">반기 배당 (2025년~)</div>
+      </div>
+      <div class="sh-item">
+        <div class="sh-val">500억원</div>
+        <div class="sh-lbl">2027년 연간 배당 목표</div>
+      </div>
+      <div class="sh-item">
+        <div class="sh-val">PBR 0.8배</div>
+        <div class="sh-lbl">중장기 목표 (현재 0.43배)</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════ 07. 2026 전망 ═══════════════ -->
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <h2>2026년 전망</h2>
+    <span class="sec-sub">구조적 성장의 원년</span>
+  </div>
+
+  <div class="outlook-grid">
+    <div class="ok-card">
+      <div class="ok-val">4조 4,000억원</div>
+      <div class="ok-lbl">2026E 매출 (컨센서스)</div>
+      <div class="ok-chg">▲ +4.0%</div>
+    </div>
+    <div class="ok-card">
+      <div class="ok-val">4,264억원</div>
+      <div class="ok-lbl">2026E 영업이익 (하나증권)</div>
+      <div class="ok-chg">▲ +12.7%</div>
+    </div>
+    <div class="ok-card">
+      <div class="ok-val">10,849원</div>
+      <div class="ok-lbl">2026E EPS (하나증권)</div>
+      <div class="ok-chg">▲ +7.7%</div>
+    </div>
+    <div class="ok-card">
+      <div class="ok-val">약 8.5배</div>
+      <div class="ok-lbl">2026E PER (현재가 기준)</div>
+      <div class="ok-chg">추가 밸류에이션 여력</div>
+    </div>
+  </div>
+
+  <!-- 모니터링 포인트 -->
+  <p class="sub-head">2026년 핵심 모니터링 포인트</p>
+  <div class="monitor-list">
+    <div class="monitor-item">
+      <div class="mc-num">1</div>
+      <div class="mc-text"><strong>지누스 분기 영업이익률 5% 안정적 유지 여부</strong><span class="mc-badge">핵심 리스크</span><br>미국 관세 불확실성이 최대 변수. ODM 신규 수주와 비용 절감으로 상쇄 가능한지 주목.</div>
+    </div>
+    <div class="monitor-item">
+      <div class="mc-num">2</div>
+      <div class="mc-text"><strong>인천공항 DF1·DF2 특허 확정 시점</strong><span class="mc-badge">면세 2.0</span><br>화장품·향수·주류·담배 카테고리 추가 → 면세 매출 구조적 확대. 확정 시 주가 모멘텀.</div>
+    </div>
+    <div class="monitor-item">
+      <div class="mc-num">3</div>
+      <div class="mc-text"><strong>전사 외국인 매출 비중 10% 돌파 여부</strong><span class="mc-badge">리레이팅 트리거</span><br>현재 6%. 더현대 서울 14.6%처럼 전사 기준 10% 돌파 시 일본식 밸류에이션 재평가 시작.</div>
+    </div>
+    <div class="monitor-item">
+      <div class="mc-num">4</div>
+      <div class="mc-text"><strong>더현대 광주 착공 일정 확정</strong><span class="mc-badge">2027 개점 목표</span><br>호남권 프리미엄 쇼핑몰 공백 지역 공략. 더현대 서울 DNA의 지방 이식 성공 여부.</div>
+    </div>
+    <div class="monitor-item">
+      <div class="mc-num">5</div>
+      <div class="mc-text"><strong>연간 배당 규모 및 자사주 매입 계획</strong><span class="mc-badge">주주환원</span><br>2027년 배당 500억원 목표 달성 경로 확인. 반기 배당 100억원 이상 유지 여부.</div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <span class="i-tag">🎯 투자 최종 요약</span>
+    <ul>
+      <li><strong>투자의견:</strong> 매수(BUY) — 16명 증권사 애널리스트 전원 매수</li>
+      <li><strong>현재 주가:</strong> 91,800원 (52주 신고가 109,900원 대비 16.5% 조정)</li>
+      <li><strong>컨센서스 목표주가:</strong> 110,000원 (+19.8%) / 최고 130,000원 (+41.6%)</li>
+      <li><strong>2025 결산 핵심:</strong> 영업이익 3,782억원 (+33.2%) — 면세점 7년 만에 흑자, 지누스 258억 흑자 전환</li>
+      <li><strong>밸류에이션:</strong> PER 9.2배 · PBR 0.43배 — 이익 구조 전환 대비 여전히 저평가 구간</li>
+    </ul>
+  </div>
+
+  <p style="font-size:11px;color:var(--muted);margin-top:36px;line-height:1.8;padding:16px;background:#f5f2ec;border-radius:8px;">
+    ⚠️ <strong>투자 유의사항:</strong> 본 분석은 2025년 공시 결산 자료 및 각 증권사 리포트를 기반으로 정보 제공 목적으로 작성된 개인 블로그 포스팅입니다. 투자 권유나 전문적인 금융 조언이 아니며, 실제 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+  </p>
+
+</div>
+</body>
+</html>
