@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고려아연 경영권 분쟁 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --text-primary: #e8e6f0;
+    --text-secondary: #8b8aa0;
+    --text-muted: #4a4a60;
+    --accent-gold: #c9a84c;
+    --accent-gold-dim: #7d6830;
+    --red: #e05252;
+    --blue: #5b9bd5;
+    --yellow: #d4a843;
+    --black-dot: #2a2a3a;
+    --green: #4caf7a;
+    --orange: #e07d3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── 배경 텍스처 ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 80%, rgba(91,155,213,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── 헤더 ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent-gold);
+    font-family: 'DM Serif Display', serif;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.8;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .meta-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-gold);
+  }
+
+  /* ── 타임라인 컨테이너 ── */
+  .timeline-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 100px;
+  }
+
+  /* ── 라운드 블록 ── */
+  .round {
+    margin-top: 70px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .round.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .round-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .round-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .round-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    opacity: 0.3;
+  }
+
+  .round-1 .round-dot { background: var(--red); color: var(--red); }
+  .round-2 .round-dot { background: var(--blue); color: var(--blue); }
+  .round-3 .round-dot { background: var(--yellow); color: var(--yellow); }
+  .round-4 .round-dot { background: #6a6a8a; color: #6a6a8a; }
+  .round-5 .round-dot { background: var(--orange); color: var(--orange); }
+  .round-6 .round-dot { background: var(--green); color: var(--green); }
+
+  .round-badge {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: var(--border);
+  }
+
+  .round-1 .round-badge { color: var(--red); border: 1px solid rgba(224,82,82,0.25); }
+  .round-2 .round-badge { color: var(--blue); border: 1px solid rgba(91,155,213,0.25); }
+  .round-3 .round-badge { color: var(--yellow); border: 1px solid rgba(212,168,67,0.25); }
+  .round-4 .round-badge { color: #8888aa; border: 1px solid rgba(136,136,170,0.25); }
+  .round-5 .round-badge { color: var(--orange); border: 1px solid rgba(224,125,58,0.25); }
+  .round-6 .round-badge { color: var(--green); border: 1px solid rgba(76,175,122,0.25); }
+
+  .round-title-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── 이벤트 카드 ── */
+  .events {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .events::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+
+  .event {
+    position: relative;
+    padding: 20px 0 20px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .event:last-child { border-bottom: none; }
+
+  .event::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 28px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .event:hover::before {
+    background: var(--accent-gold);
+  }
+
+  .event-date {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+
+  .event-content {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    line-height: 1.85;
+  }
+
+  .event-content strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  .event-content mark {
+    background: rgba(201,168,76,0.12);
+    color: var(--accent-gold);
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+
+  /* ── 이사회 변천 박스 ── */
+  .board-box {
+    margin: 24px 0 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .board-box-title {
+    background: rgba(201,168,76,0.08);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+  }
+
+  .board-steps {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .board-step {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    align-items: start;
+  }
+
+  .board-step:last-child { border-bottom: none; }
+
+  .board-step-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    padding-top: 2px;
+  }
+
+  .board-step-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .board-step-text strong { color: var(--text-primary); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .chip-blue { background: rgba(91,155,213,0.12); color: var(--blue); border: 1px solid rgba(91,155,213,0.2); }
+  .chip-red  { background: rgba(224,82,82,0.12);  color: var(--red);  border: 1px solid rgba(224,82,82,0.2); }
+  .chip-gold { background: rgba(201,168,76,0.12); color: var(--accent-gold); border: 1px solid rgba(201,168,76,0.2); }
+  .chip-gray { background: rgba(138,138,160,0.12); color: #9999b8; border: 1px solid rgba(138,138,160,0.2); }
+
+  /* ── 통계 배너 ── */
+  .stat-banner {
+    margin: 28px 0 8px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(91,155,213,0.06) 100%);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--accent-gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+  }
+
+  /* ── 풋터 ── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 12px;
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 600px) {
+    .hero, .timeline-wrap { padding-left: 20px; padding-right: 20px; }
+    .hero-meta { flex-wrap: wrap; gap: 16px; }
+    .board-step { grid-template-columns: 1fr; gap: 4px; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .stat-banner { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 헤더 ── -->
+<header class="hero">
+  <p class="hero-eyebrow">Korea Zinc · 경영권 분쟁 기록</p>
+  <h1 class="hero-title">고려아연<br><em>2024–2026</em> 경영권 분쟁<br>전체 타임라인</h1>
+  <p class="hero-subtitle">
+    75년 공동경영의 균열에서 6조원 쩐의 전쟁, 순환출자 역전극, 2026년 3월 정기주총까지 —
+    주요 사건을 시간 순서대로 정리합니다.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">총 라운드</span>
+      <span class="meta-value">6라운드</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">분쟁 기간</span>
+      <span class="meta-value">2024.06 ~ 2026.03</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">소송 건수</span>
+      <span class="meta-value">24건 이상</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">정기주총</span>
+      <span class="meta-value">2026. 3. 24</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── 타임라인 ── -->
+<main class="timeline-wrap">
+
+  <!-- 1라운드 -->
+  <section class="round round-1">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">1라운드</span>
+      <span class="round-title-text">2024년 6~9월 — 서막과 공개매수 선전포고</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">2024년 6월</div>
+        <div class="event-content">
+          서린상사(고려아연·영풍 공동 자회사) 주총에서 영풍 측 대표 <strong>장세환이 사임</strong>하면서 갈등이 표면화됐습니다.
+          고려아연은 수십 년간 본사로 사용해온 <strong>영풍빌딩을 떠나 종로로 이전</strong>했고, 자회사 서린상사의 사명을
+          <mark>'KZ트레이딩'</mark>으로 변경하며 영풍과의 결별을 공식화했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 9월 12~13일</div>
+        <div class="event-content">
+          영풍그룹 장형진 고문이 국내 최대 사모펀드 <strong>MBK파트너스와 경영협력계약을 체결</strong>했습니다.
+          "3세까지 지분이 쪼개진 상황에서 공동경영은 가능하지도, 적절하지도 않다"는 발언과 함께
+          한국기업투자홀딩스를 설립,
+          <mark>주당 66만원 (직전 종가 55만6000원 대비 약 19% 프리미엄)</mark>에
+          고려아연 주식 최대 14.56%를 공개매수하겠다고 선언했습니다. <strong>75년 동업의 공식적 종언</strong>이었습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 9월 25일</div>
+        <div class="event-content">
+          고려아연은 이차전지 소재 전구체 가공 기술의 <strong>국가핵심기술 지정</strong>을 정부에 신청했습니다.
+          국가핵심기술 보유 기업은 해외 자본 매각 시 정부 승인이 필요해, MBK가 인수 후 해외에 되팔기 어렵게 만드는 선제 포석이었습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 9월 26일</div>
+        <div class="event-content">
+          영풍·MBK가 공개매수가를 <mark>주당 75만원으로 전격 인상</mark>하며 기선을 제압하려 했습니다.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2라운드 -->
+  <section class="round round-2">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">2라운드</span>
+      <span class="round-title-text">2024년 10월 — 최대 6조원 '쩐의 전쟁'</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">2024년 10월 2일</div>
+        <div class="event-content">
+          서울중앙지법이 영풍 측의 자사주 취득 금지 가처분 신청을 기각하자, 고려아연은 즉각
+          글로벌 사모펀드 <strong>베인캐피탈과 손잡고 주당 83만원에 전체 주식의 18%를 공개매수</strong>하는
+          대항 카드를 꺼냈습니다. 자사주를 매입 후 전량 소각한다는 조건도 걸었습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 10월 11일</div>
+        <div class="event-content">
+          영풍·MBK가 가격을 83만원에 맞추자, 고려아연이 <mark>주당 89만원으로 추가 인상</mark>하며
+          치킨게임이 극에 달했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">공개매수 최종 결과</div>
+        <div class="event-content">
+          <div class="stat-banner" style="margin: 12px 0 4px;">
+            <div class="stat-item">
+              <div class="stat-num">2.5조</div>
+              <div class="stat-desc">영풍·MBK 투입 자금<br>110만주 (5.34%) 확보</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">3.7조</div>
+              <div class="stat-desc">고려아연 투입 자금<br>233만주 (9.85%) 확보</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">100만↑</div>
+              <div class="stat-desc">공개매수 종료 후<br>주가 황제주 등극</div>
+            </div>
+          </div>
+          양측 모두 과반을 넘지 못하며 결판은 주주총회로 넘어갔습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 10월 30일</div>
+        <div class="event-content">
+          최 회장 측이 발행가 67만원, <mark>총액 2조5000억원 유상증자</mark>를 전격 발표했습니다.
+          우리사주 20% 우선배정을 통해 의결권 우호지분 3~4%p 확보를 노린 것이었습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 10월 31일</div>
+        <div class="event-content">
+          <strong>금융감독원이 최 회장의 자본시장법 위반 여부 조사에 착수</strong>했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2024년 11월 13일</div>
+        <div class="event-content">
+          시장의 강한 반발과 금감원 제동 앞에 최 회장은 유상증자 계획을 <strong>전면 철회</strong>하고 공개 사과했습니다.
+          이 과정에서 배임 혐의로 고소당하는 등 <mark>'사법 리스크'</mark>가 불거졌습니다.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3라운드 -->
+  <section class="round round-3">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">3라운드</span>
+      <span class="round-title-text">2025년 1월 — 임시주총, 순환출자 역전극</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">2025년 1월 22일 (주총 전날)</div>
+        <div class="event-content">
+          최 회장 측이 회심의 카드를 꺼냈습니다. 호주 손자회사 <strong>선메탈코퍼레이션(SMC)</strong>이
+          영풍 주식 <mark>10.33%를 575억원에 장외 매수</mark>해 하루 만에
+          고려아연 → 영풍 → SMH → SMC → 영풍으로 이어지는 순환출자 고리를 완성했습니다.
+          상법 제369조 3항에 따라 두 회사가 10%를 초과해 서로의 지분을 보유할 경우 의결권이 제한됩니다.
+          이로써 <strong>영풍이 보유한 고려아연 지분 25.42%의 의결권이 사실상 무력화</strong>됐습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2025년 1월 23일 (임시주총)</div>
+        <div class="event-content">
+          <strong>장소:</strong> 서울 용산구 그랜드하얏트서울.<br>
+          영풍의 의결권이 배제된 채 표결이 진행됐고, 결과는 최 회장 측의 완승이었습니다.
+          MBK파트너스 김광일 부회장은 "1대 주주를 우롱하는 의사 진행을 받아들일 수 없다"며
+          주총장을 이탈했습니다.
+        </div>
+      </div>
+
+      <!-- 이사회 변천 박스 -->
+      <div class="event">
+        <div class="event-date">이사회 구성 변천 (핵심 정리)</div>
+        <div class="event-content">
+          <div class="board-box">
+            <div class="board-box-title">📋 이사회 구성 변천 과정</div>
+            <div class="board-steps">
+
+              <div class="board-step">
+                <div class="board-step-date">주총 직전</div>
+                <div class="board-step-text">
+                  총 <strong>13명</strong>
+                  <span class="chip chip-blue" style="margin-left:6px;">최 회장 측 11명</span>
+                  <span class="chip chip-gray" style="margin-left:4px;">영풍 측 1명 (장형진)</span>
+                  <span class="chip chip-gray" style="margin-left:4px;">기타 1명</span>
+                </div>
+              </div>
+
+              <div class="board-step">
+                <div class="board-step-date">임시주총 직후</div>
+                <div class="board-step-text">
+                  최 회장 측 추천 이사 <strong>7명 전원 추가 선임</strong> →
+                  총 <strong>19명</strong>으로 재편
+                  <span class="chip chip-blue" style="margin-left:6px;">최 회장 측 18명</span>
+                  <span class="chip chip-gray" style="margin-left:4px;">영풍 측 1명</span>
+                </div>
+              </div>
+
+              <div class="board-step">
+                <div class="board-step-date">2025년 3월 (법원 가처분)</div>
+                <div class="board-step-text">
+                  서울중앙지법, MBK·영풍 측 신청 <strong>일부 인용</strong> 결정.<br>
+                  집중투표제 효력은 유지, 이사 수 상한·사외이사 의장 선임 등 기타 안건 효력 정지.
+                  <span class="chip chip-red" style="margin-left:6px; margin-top:4px; display:inline-flex;">이사회 다시 12명으로 환원</span>
+                </div>
+              </div>
+
+              <div class="board-step">
+                <div class="board-step-date">2026년 3월 (현재)</div>
+                <div class="board-step-text">
+                  전체 19명 중 직무정지 4명 제외 →
+                  실질 구도
+                  <span class="chip chip-gold" style="margin-left:6px;">최 회장 측 11명</span>
+                  <span class="chip chip-red" style="margin-left:4px;">MBK·영풍 측 4명</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4라운드 -->
+  <section class="round round-4">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">4라운드</span>
+      <span class="round-title-text">2025년 상반기 — 영풍·MBK 반격과 법원 공방</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">YPC 의결권 해소 시도</div>
+        <div class="event-content">
+          영풍과 MBK는 유한회사 <strong>YPC(와이피씨)</strong>를 설립하고 고려아연 지분 26.28%를 현물출자,
+          상호주 관계 해소를 시도했습니다. 그러나 주총 의결권 명부는 직전 해 12월 31일 기준으로 이미 확정되어 있어
+          <mark>2025년 주총에서는 YPC를 통한 의결권 행사가 불가능</mark>했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">법정 공방 (지속)</div>
+        <div class="event-content">
+          임시주총 의결권 무효 소송, 이사·사외이사 선임 효력 무효 소송 등
+          양측이 주고받은 소송 건수는 <mark>24건 이상</mark>에 달했습니다.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5라운드 -->
+  <section class="round round-5">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">5라운드</span>
+      <span class="round-title-text">2025년 하반기 — 여론 역전과 사상 최대 실적</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">2025년 3월</div>
+        <div class="event-content">
+          <strong>홈플러스가 기업회생을 신청</strong>하면서 대주주 MBK에 대한 시장 불신이 급격히 확산됐습니다.
+          '사모펀드는 믿을 수 없다'는 인식이 퍼지면서 고려아연에 우호적인 여론이 형성됐습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2025년 상반기 실적</div>
+        <div class="event-content">
+          고려아연은 <mark>매출 7조6582억원, 영업이익 5300억원</mark>이라는 사상 최대 반기 실적을 달성했습니다.
+          전년 동기 대비 매출 +40.9%, 순이익 +70% 이상 증가했습니다.<br><br>
+          반면 <strong>영풍은 2025년 기준 3년 연속 적자</strong>(연결 기준 영업손실 2,597억원)를 이어갔으며,
+          충당부채는 3,743억원으로 전년 대비 45% 급증했습니다(석포제련소 환경오염 관련).
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6라운드 -->
+  <section class="round round-6">
+    <div class="round-header">
+      <span class="round-dot"></span>
+      <span class="round-badge">6라운드</span>
+      <span class="round-title-text">2025년 12월 ~ 2026년 3월 — 정기주총 준비전</span>
+    </div>
+    <div class="events">
+
+      <div class="event">
+        <div class="event-date">2025년 12월</div>
+        <div class="event-content">
+          고려아연이 미국 정부와 합작법인(JV) <strong>'크루서블(Crucible)'</strong>을 설립,
+          <mark>약 11조원 규모</mark>의 미국 통합 제련소 건설을 공식 발표했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2026년 2월 9일</div>
+        <div class="event-content">
+          2025년 연간 사상 최대 실적 공시 —
+          <mark>영업이익 1조2324억원 (+70.4%)</mark>, 매출 16조5812억원 (+37.6%).
+          44년 연속 영업흑자 달성.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2026년 2월 23일</div>
+        <div class="event-content">
+          고려아연 임시이사회가 <strong>3월 24일 정기주총 일정과 안건을 확정</strong>.
+          영풍·MBK 측이 제안한 안건 상당수가 상정됐습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2026년 3월 7일</div>
+        <div class="event-content">
+          서울중앙지법이 <strong>이사 5인 선임안을 집중투표로 진행하는 것은 적법</strong>하다고 판단했습니다.
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2026년 3월 14~23일</div>
+        <div class="event-content">전자투표 기간 운영.</div>
+      </div>
+
+      <div class="event">
+        <div class="event-date">2026년 3월 19일</div>
+        <div class="event-content">
+          <strong>국민연금(지분 5.20%) 수탁자책임전문위원회</strong>가 최 회장 재선임 안건에 대해
+          의결권 <mark>'미행사'(사실상 기권)</mark> 결정. 감사위원 후보에 대해서는 명확한 반대를 결정했습니다.
+        </div>
+      </div>
+
+      <div class="event" style="background: rgba(201,168,76,0.04); border-radius:6px; padding: 20px 24px; margin-top:12px;">
+        <div class="event-date" style="color: var(--accent-gold); font-size:13px; font-weight:900; letter-spacing: 0.1em;">
+          ⚡ 2026년 3월 24일 — 제52기 정기주주총회 (D-DAY)
+        </div>
+        <div class="event-content" style="margin-top:8px;">
+          <strong>장소:</strong> 서울 중구 세종대로 135 코리아나호텔 2층 그랜드볼룸<br>
+          <strong>핵심 안건:</strong> 최윤범 회장 사내이사 재선임 / 이사 5인 vs 6인 선임 / 지배구조 개선 정관 변경 등<br><br>
+          국내외 의결권 자문사 7곳 중 5곳이 최 회장 재선임 찬성을 권고했으며,
+          <mark>CalSTRS·FRS·BCI 등 북미 연기금도 현 경영진 지지로 전향</mark>한 상태입니다.
+          초박빙 구도 속 소액주주(14.97%)가 캐스팅보트를 쥐고 있습니다.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ── 풋터 ── -->
+<footer class="footer">
+  <span class="footer-left">© 2026 고려아연 경영권 분쟁 기록 — 공개 자료 기반</span>
+  <span class="footer-note">⚠ 본 자료는 정보 제공 목적이며, 투자 권유가 아닙니다.</span>
+</footer>
+
+<script>
+  // Intersection Observer — 섹션 등장 애니메이션
+  const rounds = document.querySelectorAll('.round');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  rounds.forEach(r => observer.observe(r));
+
+  // 첫 번째 섹션은 즉시 표시
+  if (rounds[0]) rounds[0].classList.add('visible');
+</script>
+</body>
+</html>
