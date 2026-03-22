@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이란 전쟁 주가 영향 종목 분석 — 2026.03.23</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+KR:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --bg2: #111318;
+    --bg3: #181b22;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e4d9;
+    --text2: #8a8780;
+    --text3: #5a5855;
+    --up: #3ddc97;
+    --up-bg: rgba(61,220,151,0.08);
+    --up-border: rgba(61,220,151,0.2);
+    --down: #ff5f6d;
+    --down-bg: rgba(255,95,109,0.08);
+    --down-border: rgba(255,95,109,0.2);
+    --caution: #f7b731;
+    --caution-bg: rgba(247,183,49,0.08);
+    --accent: #6c8fff;
+    --accent2: #a78bfa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 40px 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--down);
+    border: 1px solid var(--down-border);
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .date-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.06em;
+  }
+
+  h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  h1 span { color: var(--down); }
+
+  .subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .brent-ticker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 16px;
+    background: var(--down-bg);
+    border: 1px solid var(--down-border);
+    border-radius: 6px;
+    width: fit-content;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+  }
+
+  .brent-ticker .price { color: var(--down); font-weight: 600; font-size: 16px; }
+  .brent-ticker .label { color: var(--text2); font-size: 11px; }
+
+  .main { padding: 32px 40px; position: relative; z-index: 1; }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: var(--caution-bg);
+    border: 1px solid rgba(247,183,49,0.25);
+    border-left: 3px solid var(--caution);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: var(--caution);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .disclaimer strong { font-weight: 600; }
+
+  /* Section */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-top: 8px;
+  }
+
+  .section-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .tag-up { background: var(--up-bg); color: var(--up); border: 1px solid var(--up-border); }
+  .tag-down { background: var(--down-bg); color: var(--down); border: 1px solid var(--down-border); }
+
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* Grid */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 14px;
+    margin-bottom: 44px;
+  }
+
+  .stock-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stock-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .card-up::before { background: var(--up); }
+  .card-down::before { background: var(--down); }
+
+  .stock-card:hover {
+    border-color: rgba(255,255,255,0.14);
+    transform: translateY(-2px);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .ticker-block {}
+  .ticker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+  .market {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .signal-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+
+  .sig-strong-buy { background: rgba(61,220,151,0.15); color: var(--up); border: 1px solid var(--up-border); }
+  .sig-buy { background: rgba(108,143,255,0.12); color: var(--accent); border: 1px solid rgba(108,143,255,0.25); }
+  .sig-caution { background: var(--caution-bg); color: var(--caution); border: 1px solid rgba(247,183,49,0.25); }
+  .sig-sell { background: var(--down-bg); color: var(--down); border: 1px solid var(--down-border); }
+
+  .company-name {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .reason {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    border-left: 2px solid var(--border);
+  }
+
+  .card-up .reason { border-left-color: rgba(61,220,151,0.3); }
+  .card-down .reason { border-left-color: rgba(255,95,109,0.3); }
+
+  .metrics {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .metric {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text2);
+  }
+
+  .metric span { color: var(--text); font-weight: 600; }
+  .metric.up-metric span { color: var(--up); }
+  .metric.down-metric span { color: var(--down); }
+
+  /* Korea section */
+  .korea-section {
+    margin-bottom: 44px;
+  }
+
+  /* Strategy box */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 44px;
+  }
+
+  .strategy-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .strategy-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .strategy-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .strategy-body {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* Separator */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 10px 0 36px;
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .header, .main { padding: 20px; }
+    .footer { padding: 16px 20px; flex-direction: column; gap: 8px; }
+    .stock-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Animate in */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stock-card { animation: fadeUp 0.4s ease both; }
+  .stock-card:nth-child(1) { animation-delay: 0.05s; }
+  .stock-card:nth-child(2) { animation-delay: 0.1s; }
+  .stock-card:nth-child(3) { animation-delay: 0.15s; }
+  .stock-card:nth-child(4) { animation-delay: 0.2s; }
+  .stock-card:nth-child(5) { animation-delay: 0.25s; }
+  .stock-card:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <div>
+      <div class="badge">⚡ 전쟁 리스크 특보</div>
+    </div>
+    <div class="date-tag">2026.03.23 MON · 개장 전 브리핑</div>
+  </div>
+  <h1>미국-이란 전쟁이 바꾸는<br><span>오늘의 주가 지형도</span></h1>
+  <p class="subtitle">호르무즈 해협 봉쇄 · 브렌트유 $120 돌파 · 공급망 재편<br>수혜주 & 피해주 완전 분석</p>
+  <div class="brent-ticker">
+    <div>
+      <div class="label">BRENT CRUDE</div>
+      <div class="price">$121.40 /bbl</div>
+    </div>
+    <div style="width:1px;height:32px;background:var(--border);margin:0 4px;"></div>
+    <div>
+      <div class="label">WTI</div>
+      <div class="price">$117.80 /bbl</div>
+    </div>
+    <div style="width:1px;height:32px;background:var(--border);margin:0 4px;"></div>
+    <div>
+      <div class="label">천연가스 (TTF)</div>
+      <div class="price">+98% MoM</div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="disclaimer">
+    <strong>⚠ 투자 유의사항</strong>: 본 자료는 미국-이란 전쟁의 산업 파급 효과를 분석한 참고용 정보이며, 투자 권유가 아닙니다. 지정학적 불확실성이 극도로 높은 시기로, 모든 투자 결정은 본인 판단과 책임 하에 이루어져야 합니다.
+  </div>
+
+  <!-- 미국 수혜주 -->
+  <div class="section-header">
+    <span class="section-tag tag-up">▲ 수혜주 — 미국 시장</span>
+    <span class="section-title">전쟁 직접 수혜 섹터</span>
+  </div>
+  <div class="stock-grid">
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">XOM</div>
+          <div class="market">NYSE · 에너지</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">ExxonMobil Corp.</div>
+      <div class="reason">세계 최대 민간 석유기업. 유가 $120 환경에서 자유현금흐름 폭발적 증가. 미국 내 셰일 생산 기반으로 중동 공급 차질 반사이익. SPR 방출 논의가 지연될수록 고유가 지속 수혜.</div>
+      <div class="metrics">
+        <div class="metric up-metric">유가 $1 상승당 <span>+$600M FCF</span></div>
+        <div class="metric">섹터 <span>에너지</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">CVX</div>
+          <div class="market">NYSE · 에너지</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">Chevron Corp.</div>
+      <div class="reason">Permian Basin 생산 기반의 미국산 원유 공급 수혜. 분기 배당 + 자사주매입 병행으로 주주환원 극대화 기대. 중동 외 대체 공급처로 각광.</div>
+      <div class="metrics">
+        <div class="metric up-metric">Permian 생산 <span>일 80만 bbl↑</span></div>
+        <div class="metric">배당수익률 <span>~4%</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">LMT</div>
+          <div class="market">NYSE · 방산</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">Lockheed Martin Corp.</div>
+      <div class="reason">F-35, 패트리엇 미사일 등 핵심 방산 자산 보유. 전쟁 장기화 및 NATO·동맹국 방위비 증액 기조에서 수주 급증 기대. 정밀유도무기 수요 폭발.</div>
+      <div class="metrics">
+        <div class="metric up-metric">수주잔고 <span>$165B+</span></div>
+        <div class="metric">섹터 <span>항공우주/방산</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">RTX</div>
+          <div class="market">NYSE · 방산</div>
+        </div>
+        <span class="signal-badge sig-buy">Buy</span>
+      </div>
+      <div class="company-name">RTX Corp. (구 레이시온)</div>
+      <div class="reason">패트리엇 방공 시스템, 토마호크 미사일 제조사. 걸프 국가들의 방공망 증강 수요 직접 수혜. 미사일 재고 재충전 계약 증가 전망.</div>
+      <div class="metrics">
+        <div class="metric up-metric">방공 매출 <span>분기 최대치</span></div>
+        <div class="metric">Backlog <span>$200B+</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">CF / MOS</div>
+          <div class="market">NYSE · 비료</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">CF Industries / Mosaic Co.</div>
+      <div class="reason">중동발 요소·황 수출 50% 차단으로 북미·유럽산 비료 대체 수요 폭증. 요소 가격 한 달 새 30% 급등. 봄 파종 시즌 수요와 맞물려 단기 실적 극대화 시점.</div>
+      <div class="metrics">
+        <div class="metric up-metric">요소 가격 <span>+30% MoM</span></div>
+        <div class="metric">황 가격 <span>상승 전환</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">FSLR / ENPH</div>
+          <div class="market">NASDAQ · 재생에너지</div>
+        </div>
+        <span class="signal-badge sig-buy">Buy</span>
+      </div>
+      <div class="company-name">First Solar / Enphase Energy</div>
+      <div class="reason">에너지 안보 이슈로 재생에너지 투자 명분 대폭 강화. "재생에너지 = 지정학 리스크로부터 자유로운 에너지"라는 서사 재부각. 정책 수혜 기대.</div>
+      <div class="metrics">
+        <div class="metric up-metric">IRA 수혜 <span>지속</span></div>
+        <div class="metric">에너지 자립 <span>테마 강화</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="sep">
+
+  <!-- 미국 피해주 -->
+  <div class="section-header">
+    <span class="section-tag tag-down">▼ 피해주 — 미국 시장</span>
+    <span class="section-title">공급망·비용 충격 노출 섹터</span>
+  </div>
+  <div class="stock-grid">
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">UAL / DAL</div>
+          <div class="market">NASDAQ/NYSE · 항공</div>
+        </div>
+        <span class="signal-badge sig-sell">Sell / Avoid</span>
+      </div>
+      <div class="company-name">United Airlines / Delta Airlines</div>
+      <div class="reason">항공유 비용 직격탄. 중동 노선 운항 중단으로 수익 노선 감소. 연료 헤지 비율에 따라 타격 폭 차이. 항공기당 연료비 분기 수억 달러 추가 비용 불가피.</div>
+      <div class="metrics">
+        <div class="metric down-metric">항공유 가격 <span>급등</span></div>
+        <div class="metric down-metric">중동 노선 <span>중단</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">F / GM / STLA</div>
+          <div class="market">NYSE · 자동차</div>
+        </div>
+        <span class="signal-badge sig-caution">주의</span>
+      </div>
+      <div class="company-name">Ford / GM / Stellantis</div>
+      <div class="reason">EV 배터리·반도체 부품 공급망 차질 현실화. JIT 방식의 취약성 재노출. 생산 라인 중단 리스크. 알루미늄 비용 상승으로 차량 생산 원가 증가.</div>
+      <div class="metrics">
+        <div class="metric down-metric">부품 공급 <span>차질</span></div>
+        <div class="metric down-metric">알루미늄 <span>비용 +</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">AMZN / MSFT</div>
+          <div class="market">NASDAQ · 빅테크/클라우드</div>
+        </div>
+        <span class="signal-badge sig-caution">단기 주의</span>
+      </div>
+      <div class="company-name">Amazon / Microsoft (중동 데이터센터)</div>
+      <div class="reason">두바이·도하 클라우드 인프라가 미사일 공격 영향권. 중동 AI 데이터센터 투자 전략 재검토 불가피. 수백억 달러 투자 자산의 지정학 리스크 재평가.</div>
+      <div class="metrics">
+        <div class="metric down-metric">중동 DC <span>리스크 노출</span></div>
+        <div class="metric">AI 인프라 <span>재배치 필요</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="sep">
+
+  <!-- 한국 수혜주 -->
+  <div class="section-header">
+    <span class="section-tag tag-up">▲ 수혜주 — 한국 시장</span>
+    <span class="section-title">K-방산 · K-조선 · K-에너지</span>
+  </div>
+  <div class="stock-grid">
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">012450</div>
+          <div class="market">KOSPI · 방산</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">한화에어로스페이스</div>
+      <div class="reason">K9 자주포, 천무 다연장로켓 등 검증된 실전 무기 시스템 보유. 전쟁 확산으로 NATO·동유럽·중동 국가들의 한국산 방산 수출 문의 급증 예상. 글로벌 방위비 증액 최대 수혜주.</div>
+      <div class="metrics">
+        <div class="metric up-metric">수출 수주 <span>최대치 경신</span></div>
+        <div class="metric">K9 자주포 <span>글로벌 1위</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">079550</div>
+          <div class="market">KOSPI · 방산</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">LIG넥스원</div>
+      <div class="reason">천궁, 비궁 등 방공 미사일 시스템 전문기업. 이란의 드론·미사일 위협 현실화로 방공 수요 폭발. 중동·동남아시아 방공망 수주 전망 밝음.</div>
+      <div class="metrics">
+        <div class="metric up-metric">방공 미사일 <span>수요 급증</span></div>
+        <div class="metric">국내외 <span>수주 증가</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">329180</div>
+          <div class="market">KOSPI · 조선</div>
+        </div>
+        <span class="signal-badge sig-strong-buy">Strong Buy</span>
+      </div>
+      <div class="company-name">HD현대중공업</div>
+      <div class="reason">LNG선 세계 1위 건조 능력 보유. 카타르 LNG 공급 차질로 대체 LNG 공급원 개발 및 새로운 LNG 운반선 발주 급증 예상. 세계 최고의 LNG선 기술력으로 수주 경쟁 우위.</div>
+      <div class="metrics">
+        <div class="metric up-metric">LNG선 수주 <span>잔고 증가</span></div>
+        <div class="metric">글로벌 <span>점유율 1위</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">009830</div>
+          <div class="market">KOSPI · 에너지/화학</div>
+        </div>
+        <span class="signal-badge sig-buy">Buy</span>
+      </div>
+      <div class="company-name">한화솔루션</div>
+      <div class="reason">태양광 모듈·셀 제조 + 재생에너지 개발 수직계열화. 에너지 안보 이슈로 재생에너지 투자 가속 수혜. 미국 IRA 기반 태양광 사업도 확대 중. 중동 사태로 에너지 전환 명분 강화.</div>
+      <div class="metrics">
+        <div class="metric up-metric">재생에너지 <span>투자 가속</span></div>
+        <div class="metric">IRA 수혜 <span>지속</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-up">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">010950</div>
+          <div class="market">KOSPI · 에너지</div>
+        </div>
+        <span class="signal-badge sig-buy">Buy</span>
+      </div>
+      <div class="company-name">S-Oil</div>
+      <div class="reason">정제 마진(크랙 스프레드) 급격히 개선. 고유가 환경에서 정유 재고 평가이익 발생. 단, 사우디아라비아 아람코 지분 구조로 중동 리스크 모니터링 필요. 단기 정제 마진 수혜 기대.</div>
+      <div class="metrics">
+        <div class="metric up-metric">정제마진 <span>개선</span></div>
+        <div class="metric down-metric">중동 리스크 <span>모니터링</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="sep">
+
+  <!-- 한국 피해주 -->
+  <div class="section-header">
+    <span class="section-tag tag-down">▼ 피해주 — 한국 시장</span>
+    <span class="section-title">에너지 비용·공급망 충격 노출</span>
+  </div>
+  <div class="stock-grid">
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">003490</div>
+          <div class="market">KOSPI · 항공</div>
+        </div>
+        <span class="signal-badge sig-sell">Avoid</span>
+      </div>
+      <div class="company-name">대한항공</div>
+      <div class="reason">항공유 비용 급등으로 수익성 악화. 중동 노선 운항 중단 및 항공로 우회로 비용 증가. 화물 수요는 일부 반사이익 가능하나 전체적으로 부정적. 단기 실적 훼손 불가피.</div>
+      <div class="metrics">
+        <div class="metric down-metric">항공유 <span>비용 급등</span></div>
+        <div class="metric down-metric">중동 노선 <span>차질</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">005380</div>
+          <div class="market">KOSPI · 자동차</div>
+        </div>
+        <span class="signal-badge sig-caution">주의</span>
+      </div>
+      <div class="company-name">현대자동차</div>
+      <div class="reason">글로벌 물류 차질로 부품 조달 불확실성 증대. 중동 시장(이란 제외) 판매 둔화 가능성. 유가 급등이 소비 심리 위축으로 이어질 경우 글로벌 완성차 판매에 부정적. 전기차 배터리 소재 공급도 영향권.</div>
+      <div class="metrics">
+        <div class="metric down-metric">부품 공급 <span>불확실</span></div>
+        <div class="metric down-metric">소비심리 <span>위축 우려</span></div>
+      </div>
+    </div>
+
+    <div class="stock-card card-down">
+      <div class="card-top">
+        <div class="ticker-block">
+          <div class="ticker">000660</div>
+          <div class="market">KOSPI · 반도체</div>
+        </div>
+        <span class="signal-badge sig-caution">단기 주의</span>
+      </div>
+      <div class="company-name">SK하이닉스</div>
+      <div class="reason">반도체 제조 필수 가스(헬륨) 공급 차질 리스크. 중동 물류 마비로 장비 부품 조달 지연 가능성. 단, AI 메모리 수요 구조적 강세는 지속. 중장기 펀더멘탈 훼손 없음 — 단기 변동성 확대.</div>
+      <div class="metrics">
+        <div class="metric down-metric">헬륨 공급 <span>차질 리스크</span></div>
+        <div class="metric up-metric">AI 수요 <span>구조적 강세</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="sep">
+
+  <!-- 투자 전략 -->
+  <div class="section-header">
+    <span class="section-tag" style="background:rgba(108,143,255,0.1);color:var(--accent);border:1px solid rgba(108,143,255,0.2);">전략 노트</span>
+    <span class="section-title">지정학 위기 국면의 투자 원칙</span>
+  </div>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-num">01</div>
+      <div class="strategy-title">단기 vs 장기 구분</div>
+      <div class="strategy-body">에너지·방산주의 단기 급등은 분쟁 장기화 여부에 연동된다. 전쟁 종료 기대감이 높아지면 유가는 빠르게 되돌림. 트레이딩 포지션과 중장기 구조 변화 포지션을 엄격히 분리할 것.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">02</div>
+      <div class="strategy-title">구조적 수혜 vs 반사이익</div>
+      <div class="strategy-body">재생에너지·LNG선·방산은 전쟁 후에도 구조적 수혜가 지속되는 섹터다. 반면 단순 유가 상승 수혜주(정유)는 가격 정상화 시 이익 급감. 전자에 비중을 높여야 한다.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">03</div>
+      <div class="strategy-title">리스크 관리가 최우선</div>
+      <div class="strategy-body">지정학 불확실성이 극도로 높은 시기다. 레버리지 사용 자제, 포지션 사이즈 축소, 손절선 엄수. "옳은 방향이라도 타이밍이 틀리면 손실"을 항상 염두에 두어야 한다.</div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-num">04</div>
+      <div class="strategy-title">K-방산·K-조선 중장기 주목</div>
+      <div class="strategy-body">한국 방산과 LNG선 조선은 이번 전쟁 이후에도 글로벌 에너지 공급망 재편·방위비 증액 흐름에서 구조적 수혜가 지속될 가능성이 높다. 단기 급등 후 조정 시 분할 매수 전략 유효.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <span>© 2026 · 전쟁 리스크 산업 분석 브리핑</span>
+  <span>본 자료는 투자 권유 목적이 아닙니다 · 투자 판단은 본인 책임</span>
+  <span>데이터 기준: 2026.03.23 개장 전</span>
+</footer>
+
+</body>
+</html>
