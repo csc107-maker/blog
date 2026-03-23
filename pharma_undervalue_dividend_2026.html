@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 저평가 제약주 완전분석 | 저PER·저PBR·고배당 종목 추천</title>
+<meta name="description" content="폭락장 이후 주목해야 할 저평가 제약주. 저PER, 저PBR, 고배당률 기준으로 엄선한 2026년 관심 제약 종목 완전 분석.">
+<meta name="keywords" content="저평가 제약주, 고배당 제약주, PER PBR 제약, 경동제약, 동화약품, 종근당홀딩스, JW중외제약, 삼진제약, 2026 제약주">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --bg2: #0f1520;
+    --bg3: #141b2a;
+    --surface: #1a2235;
+    --surface2: #1f2940;
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(200,168,75,0.15);
+    --green: #3ecf8e;
+    --green-dim: rgba(62,207,142,0.12);
+    --red: #e05a5a;
+    --red-dim: rgba(224,90,90,0.12);
+    --text: #e8edf5;
+    --text-muted: #7a8aaa;
+    --text-dim: #4a5a7a;
+    --border: rgba(255,255,255,0.06);
+    --border-gold: rgba(200,168,75,0.3);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Serif KR', serif;
+    line-height: 1.8;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border-gold);
+    padding: 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+  .date-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -60px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(200,168,75,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    border: 1px solid var(--border-gold);
+    padding: 5px 14px;
+    margin-bottom: 28px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    line-height: 1.9;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-stat .val {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+  .hero-stat .lbl {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 64px 0 36px;
+  }
+  .section-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  /* ── INTRO BOX ── */
+  .intro-box {
+    background: var(--surface);
+    border: 1px solid var(--border-gold);
+    border-left: 3px solid var(--gold);
+    padding: 28px 32px;
+    margin-bottom: 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro-box::before {
+    content: '💡';
+    position: absolute;
+    right: 24px;
+    top: 20px;
+    font-size: 2rem;
+    opacity: 0.3;
+  }
+  .intro-box p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+  .intro-box p + p { margin-top: 12px; }
+
+  /* ── COMPARISON TABLE ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin-bottom: 64px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    min-width: 700px;
+  }
+  thead tr {
+    background: var(--surface2);
+  }
+  thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-gold);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  tbody tr:hover { background: var(--surface); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 13px 16px;
+    vertical-align: middle;
+  }
+  td.stock-name {
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  td.stock-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+  .badge-pbr { color: var(--green); font-family: 'DM Mono', monospace; font-weight: 500; }
+  .badge-per { color: #7ec8e3; font-family: 'DM Mono', monospace; font-weight: 500; }
+  .badge-div {
+    display: inline-block;
+    background: var(--green-dim);
+    color: var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    padding: 3px 10px;
+    font-weight: 500;
+    border-radius: 1px;
+  }
+  .badge-div.high { background: rgba(200,168,75,0.15); color: var(--gold-light); }
+  .badge-grade {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+  }
+  .grade-s { background: rgba(200,168,75,0.2); color: var(--gold); }
+  .grade-a { background: rgba(62,207,142,0.15); color: var(--green); }
+  .grade-b { background: rgba(126,200,227,0.12); color: #7ec8e3; }
+
+  /* ── STOCK CARDS ── */
+  .stock-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 700px) { .stock-grid { grid-template-columns: 1fr; } }
+
+  .stock-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .stock-card:hover {
+    border-color: var(--border-gold);
+    transform: translateY(-2px);
+  }
+  .stock-card .card-accent {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .stock-card.green-card .card-accent {
+    background: linear-gradient(90deg, var(--green), transparent);
+  }
+  .stock-card.blue-card .card-accent {
+    background: linear-gradient(90deg, #7ec8e3, transparent);
+  }
+
+  .card-inner { padding: 26px 28px 24px; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .card-title-group {}
+  .card-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .card-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+  .card-recommend {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    border: 1px solid var(--border-gold);
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  .card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    background: var(--surface);
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--gold-light);
+  }
+  .metric-val.green { color: var(--green); }
+  .metric-val.blue { color: #7ec8e3; }
+  .metric-lbl {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+  }
+
+  .card-desc {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+    margin-bottom: 20px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .tag.hot { border-color: rgba(200,168,75,0.4); color: var(--gold); }
+
+  /* ── WIDE CARD (5th) ── */
+  .stock-card-wide {
+    grid-column: 1 / -1;
+  }
+
+  /* ── ANALYSIS SECTION ── */
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 52px;
+  }
+  @media (max-width: 800px) { .analysis-grid { grid-template-columns: 1fr; } }
+
+  .analysis-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 24px;
+  }
+  .analysis-box h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .analysis-box h3::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .analysis-box p {
+    font-size: 0.845rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+  }
+
+  /* ── RISK BOX ── */
+  .risk-box {
+    background: var(--red-dim);
+    border: 1px solid rgba(224,90,90,0.25);
+    border-left: 3px solid var(--red);
+    padding: 24px 28px;
+    margin-bottom: 52px;
+  }
+  .risk-box h3 {
+    font-size: 0.9rem;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .risk-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .risk-list li {
+    font-size: 0.855rem;
+    color: var(--text-muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.75;
+  }
+  .risk-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+  }
+
+  /* ── STRATEGY BOX ── */
+  .strategy-box {
+    background: var(--green-dim);
+    border: 1px solid rgba(62,207,142,0.2);
+    border-left: 3px solid var(--green);
+    padding: 28px 32px;
+    margin-bottom: 52px;
+  }
+  .strategy-box h3 {
+    font-size: 0.95rem;
+    color: var(--green);
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .strategy-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 600px) { .strategy-steps { grid-template-columns: 1fr; } }
+  .strategy-step {
+    display: flex;
+    gap: 14px;
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--green);
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+    opacity: 0.6;
+  }
+  .step-text {
+    font-size: 0.855rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .step-text strong { color: var(--text); font-weight: 700; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 18px 24px;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── HASHTAGS ── */
+  .hashtag-section {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+  .hashtag-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .hashtags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hashtag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    padding: 4px 12px;
+    border: 1px solid var(--border-gold);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .hashtag:hover { opacity: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer .copy {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+  footer .site {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* ── DIVIDER LINE ── */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* ── HIGHLIGHT TEXT ── */
+  .highlight { color: var(--gold); font-weight: 700; }
+  .highlight-green { color: var(--green); font-weight: 700; }
+
+  /* ── SCROLL FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stock-card, .analysis-box, .intro-box {
+    animation: fadeUp 0.5s ease both;
+  }
+  .stock-card:nth-child(1) { animation-delay: 0.05s; }
+  .stock-card:nth-child(2) { animation-delay: 0.12s; }
+  .stock-card:nth-child(3) { animation-delay: 0.19s; }
+  .stock-card:nth-child(4) { animation-delay: 0.26s; }
+  .stock-card:nth-child(5) { animation-delay: 0.33s; }
+
+  /* ── TOP DIVIDEND RIBBON ── */
+  .ribbon {
+    position: absolute;
+    top: 14px;
+    right: -28px;
+    background: var(--gold);
+    color: #000;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 36px;
+    transform: rotate(30deg);
+    transform-origin: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">PHARMA INVEST</div>
+    <div class="date-tag">2026.03.23 · MARKET ANALYSIS</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">저평가 · 고배당 · 관심 종목 특집</div>
+    <h1>폭락장 이후,<br><span>숨겨진 제약주</span>를 찾아라</h1>
+    <p class="hero-desc">
+      삼성바이오로직스·한미약품·HK이노엔·유한양행이 성장 스토리라면, 이들은 <strong>가치 스토리</strong>다.
+      PBR 1배 미만, PER 저평가, 배당수익률 3~7%대 — 시장이 외면한 제약주 속에
+      숨어있는 저평가 기회를 탐색한다.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="val">50곳↑</span>
+        <span class="lbl">PBR 1배 미만 상장 제약사</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val">7.1%</span>
+        <span class="lbl">최고 배당수익률 (경동제약)</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val">0.38x</span>
+        <span class="lbl">최저 PBR (종근당홀딩스)</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val">22년</span>
+        <span class="lbl">연속 배당 (JW중외제약)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    <p>
+      <span class="highlight">PBR(주가순자산비율)이 1배 이하</span>라는 것은 주식의 시장 가격이 기업이 보유한 순자산보다도 낮다는 의미다.
+      즉, 당장 회사를 청산해도 주주가 더 많은 돈을 돌려받을 수 있는 구조다.
+      국내 상장 제약사의 약 40%가 이 구간에 속하지만 시장은 이를 외면하고 있다.
+    </p>
+    <p>
+      이 글에서 소개하는 5개 종목은 모두 안정적인 실적을 바탕으로 꾸준히 배당을 지급하는 기업들이다.
+      폭락장에서 하방 경직성이 강하고, 배당 수익이 낙폭을 상당 부분 방어해주는
+      <span class="highlight-green">방어형 가치주 접근법</span>의 핵심 후보군이다.
+    </p>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>추천 종목 핵심 지표 비교</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>종목명</th>
+          <th>코드</th>
+          <th>PBR</th>
+          <th>PER (추정)</th>
+          <th>배당수익률</th>
+          <th>배당 지속성</th>
+          <th>밸류 등급</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="stock-name">경동제약</td>
+          <td class="stock-code">011040</td>
+          <td class="badge-pbr">0.67x</td>
+          <td class="badge-per">8~10x</td>
+          <td><span class="badge-div high">7.1%</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">꾸준한 고배당 유지</td>
+          <td><span class="badge-grade grade-s">S등급</span></td>
+        </tr>
+        <tr>
+          <td class="stock-name">동화약품</td>
+          <td class="stock-code">000020</td>
+          <td class="badge-pbr">0.45x</td>
+          <td class="badge-per">10~13x</td>
+          <td><span class="badge-div">3.0%</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">100년 이상 역사</td>
+          <td><span class="badge-grade grade-s">S등급</span></td>
+        </tr>
+        <tr>
+          <td class="stock-name">종근당홀딩스</td>
+          <td class="stock-code">001630</td>
+          <td class="badge-pbr">0.38x</td>
+          <td class="badge-per">7~9x</td>
+          <td><span class="badge-div">3.1%</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">안정적 지주사 배당</td>
+          <td><span class="badge-grade grade-s">S등급</span></td>
+        </tr>
+        <tr>
+          <td class="stock-name">JW중외제약</td>
+          <td class="stock-code">001060</td>
+          <td class="badge-pbr">0.55x</td>
+          <td class="badge-per">10~12x</td>
+          <td><span class="badge-div">2.5%</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">22년 연속 배당</td>
+          <td><span class="badge-grade grade-a">A등급</span></td>
+        </tr>
+        <tr>
+          <td class="stock-name">삼진제약</td>
+          <td class="stock-code">018120</td>
+          <td class="badge-pbr">0.85x</td>
+          <td class="badge-per">11~14x</td>
+          <td><span class="badge-div high">4.55%</span></td>
+          <td style="font-size:0.82rem;color:var(--text-muted);">고배당 + 안정 실적</td>
+          <td><span class="badge-grade grade-a">A등급</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STOCK CARDS -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>종목별 심층 분석</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="stock-grid">
+
+    <!-- 1. 경동제약 -->
+    <div class="stock-card" style="position:relative;overflow:hidden;">
+      <div class="card-accent" style="background:linear-gradient(90deg,var(--gold),transparent);"></div>
+      <div class="ribbon">TOP 배당</div>
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-name">경동제약</div>
+            <div class="card-code">KSE · 011040</div>
+          </div>
+          <div class="card-recommend">S등급</div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric">
+            <span class="metric-val">7.1%</span>
+            <span class="metric-lbl">배당수익률</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val green">0.67x</span>
+            <span class="metric-lbl">PBR</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val blue">8~10x</span>
+            <span class="metric-lbl">추정 PER</span>
+          </div>
+        </div>
+        <p class="card-desc">
+          국내 상장 제약사 중 <strong style="color:var(--gold-light)">배당수익률 최상위권</strong>으로, 7.1%라는 수치는
+          예금 금리를 훌쩍 넘는 수준이다. 중소형 전문의약품 제조 중심 기업으로,
+          화려한 신약 파이프라인보다는 꾸준한 수익 창출과 주주 환원에 집중한 경영 스타일을 지속해왔다.
+          PBR 0.67은 순자산 대비 33% 저평가를 의미한다. 폭락장 방어력이 높은 종목.
+        </p>
+        <div class="card-tags">
+          <span class="tag hot">#최고배당</span>
+          <span class="tag hot">#저PBR</span>
+          <span class="tag">#전문의약품</span>
+          <span class="tag">#방어주</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 동화약품 -->
+    <div class="stock-card">
+      <div class="card-accent"></div>
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-name">동화약품</div>
+            <div class="card-code">KSE · 000020</div>
+          </div>
+          <div class="card-recommend">S등급</div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric">
+            <span class="metric-val">3.0%</span>
+            <span class="metric-lbl">배당수익률</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val green">0.45x</span>
+            <span class="metric-lbl">PBR</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val blue">10~13x</span>
+            <span class="metric-lbl">추정 PER</span>
+          </div>
+        </div>
+        <p class="card-desc">
+          1897년 창업, 대한민국에서 <strong style="color:var(--gold-light)">가장 오래된 제약사</strong>다.
+          '활명수'로 유명하지만, 이제는 전문의약품·OTC·건강기능식품까지 아우르는 복합 헬스케어 기업으로 진화했다.
+          PBR 0.45는 5개 종목 중 두 번째로 낮은 수준으로, 100년 이상의 브랜드 가치와 유형 자산이
+          현저히 저평가된 상태다. 장기 보유에 적합한 초방어적 종목.
+        </p>
+        <div class="card-tags">
+          <span class="tag hot">#활명수</span>
+          <span class="tag hot">#초저PBR</span>
+          <span class="tag">#127년역사</span>
+          <span class="tag">#장기보유</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 종근당홀딩스 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background:linear-gradient(90deg,#7ec8e3,transparent);"></div>
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-name">종근당홀딩스</div>
+            <div class="card-code">KSE · 001630</div>
+          </div>
+          <div class="card-recommend">S등급</div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric">
+            <span class="metric-val">3.1%</span>
+            <span class="metric-lbl">배당수익률</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val green">0.38x</span>
+            <span class="metric-lbl">PBR (최저)</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val blue">7~9x</span>
+            <span class="metric-lbl">추정 PER</span>
+          </div>
+        </div>
+        <p class="card-desc">
+          5종목 중 <strong style="color:var(--gold-light)">PBR 최저 (0.38배)</strong>로, 순자산의 38%에 불과한 가격에 거래되고 있다.
+          종근당(185750)의 지배 지주사로, 자회사 8개사를 통해 안정적인 배당 수익을 확보한다.
+          ADC 플랫폼 기술(CKD-703)과 바이오신약 임상이 자회사(종근당)에서 진행 중으로,
+          지주사 할인이 해소될 경우 밸류에이션 재평가가 가능한 구조다. PER 7~9배는 전통 제약 섹터 내에서도 매우 저렴한 수준.
+        </p>
+        <div class="card-tags">
+          <span class="tag hot">#PBR최저</span>
+          <span class="tag hot">#지주사할인</span>
+          <span class="tag">#ADC파이프라인</span>
+          <span class="tag">#밸류업후보</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. JW중외제약 -->
+    <div class="stock-card green-card">
+      <div class="card-accent"></div>
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-name">JW중외제약</div>
+            <div class="card-code">KSE · 001060</div>
+          </div>
+          <div class="card-recommend">A등급</div>
+        </div>
+        <div class="card-metrics">
+          <div class="metric">
+            <span class="metric-val">2.5%</span>
+            <span class="metric-lbl">배당수익률</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val green">0.55x</span>
+            <span class="metric-lbl">PBR</span>
+          </div>
+          <div class="metric">
+            <span class="metric-val blue">10~12x</span>
+            <span class="metric-lbl">추정 PER</span>
+          </div>
+        </div>
+        <p class="card-desc">
+          <strong style="color:var(--green)">22년 연속 배당</strong>이라는 독보적인 기록을 보유한 기업.
+          2025년 기준 매출 7,193억원에 영업이익 824억원, 당기순이익 650억원의 탄탄한 실적 기반을 갖추고 있다.
+          회사는 2027년까지 배당금 총액 30% 이상 증액 계획을 공식 발표했으며, 자사주 매입 200억원 이상도 병행한다.
+          리바로(고지혈증), 헴리브라(혈우병) 등 오리지널 의약품의 꾸준한 성장이 실적을 뒷받침.
+          ROE를 현재 15.9%에서 20% 이상으로 끌어올리겠다는 목표도 주목할 만하다.
+        </p>
+        <div class="card-tags">
+          <span class="tag hot">#22년연속배당</span>
+          <span class="tag hot">#배당증액예고</span>
+          <span class="tag">#자사주매입</span>
+          <span class="tag">#밸류업참여</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. 삼진제약 (wide) -->
+    <div class="stock-card stock-card-wide blue-card">
+      <div class="card-accent"></div>
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="card-title-group">
+            <div class="card-name">삼진제약</div>
+            <div class="card-code">KOSDAQ · 018120</div>
+          </div>
+          <div class="card-recommend">A등급</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div>
+            <div class="card-metrics" style="margin-bottom:16px;">
+              <div class="metric">
+                <span class="metric-val" style="color:#7ec8e3;">4.55%</span>
+                <span class="metric-lbl">배당수익률</span>
+              </div>
+              <div class="metric">
+                <span class="metric-val green">0.85x</span>
+                <span class="metric-lbl">PBR</span>
+              </div>
+              <div class="metric">
+                <span class="metric-val blue">11~14x</span>
+                <span class="metric-lbl">추정 PER</span>
+              </div>
+            </div>
+            <div class="card-tags">
+              <span class="tag hot">#고배당</span>
+              <span class="tag hot">#코스닥저평가</span>
+              <span class="tag">#OTC강자</span>
+              <span class="tag">#게보린</span>
+            </div>
+          </div>
+          <div>
+            <p class="card-desc" style="margin-bottom:0;">
+              '게보린'으로 유명한 삼진제약은 코스닥 제약주 중 <strong style="color:#7ec8e3">배당수익률 상위권</strong> 기업이다.
+              PBR 0.85로 아직 1배 미만이며, OTC(일반의약품) 시장에서 강력한 브랜드 파워를 유지한다.
+              두통약 게보린, 소화제 등 국민 상비약 브랜드를 보유하고 있어 경기 사이클과 무관하게
+              안정적인 매출 흐름이 유지된다. 코스닥 내에서 기관 수급 흐름이 개선될 경우
+              저PBR 해소 수혜를 가장 빠르게 받을 수 있는 구조. 4% 중반대 배당은 채권 대안으로서도 충분히 매력적이다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end stock-grid -->
+
+  <!-- ANALYSIS -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>저평가 제약주를 주목하는 3가지 이유</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="analysis-grid">
+    <div class="analysis-box">
+      <h3>정부 밸류업 정책 수혜</h3>
+      <p>
+        금융당국이 PBR 1배 미만 기업 리스트를 상시 공개하는 정책을 추진 중이다.
+        저PBR 제약사들이 밸류업 대상 기업으로 분류될 경우,
+        기관 자금의 선별적 유입과 배당 확대 압력이 동시에 작용할 수 있다.
+        코스닥 2부 리그 재편도 실적 중심 종목에 유리한 환경을 조성한다.
+      </p>
+    </div>
+    <div class="analysis-box">
+      <h3>약세장에서 강한 하방 경직성</h3>
+      <p>
+        역발상 투자의 대가 데이비드 드레먼에 따르면, 고배당주는 약세장에서
+        저PER·저PBR 종목들보다 오히려 하방 경직성이 더 강하다고 알려져 있다.
+        오늘과 같은 폭락장에서 배당수익률 4~7%대 종목은 매도 압력보다
+        저가 매수 수요가 먼저 유입되는 구조를 갖는다.
+      </p>
+    </div>
+    <div class="analysis-box">
+      <h3>고령화 사회의 구조적 수혜</h3>
+      <p>
+        이명, 비문증, 역류성 식도염 — 이 세 가지 질환 모두 고령화와 함께
+        환자 수가 구조적으로 증가하는 만성질환이다. 소개된 기업들은
+        이 영역에서 오랜 처방 기반을 확보한 기업들로, 경기 침체와 무관하게
+        수요가 유지되는 방어적 성격을 갖춘다.
+      </p>
+    </div>
+  </div>
+
+  <!-- STRATEGY -->
+  <div class="strategy-box">
+    <h3>📐 저평가 제약주 투자 전략 — 4단계 접근법</h3>
+    <div class="strategy-steps">
+      <div class="strategy-step">
+        <span class="step-num">01</span>
+        <p class="step-text">
+          <strong>분할 매수 원칙:</strong> 폭락장 이후 2~3개월에 걸쳐 분할 진입.
+          단일 매수보다 평균 단가를 낮추는 방식이 배당 수익률을 극대화한다.
+        </p>
+      </div>
+      <div class="strategy-step">
+        <span class="step-num">02</span>
+        <p class="step-text">
+          <strong>배당 기준일 전략:</strong> 12월 배당 기준일 전 3~4개월 선진입.
+          배당 수익과 주가 회복 기대수익을 동시에 노리는 이중 수익 구조.
+        </p>
+      </div>
+      <div class="strategy-step">
+        <span class="step-num">03</span>
+        <p class="step-text">
+          <strong>포트폴리오 비중:</strong> 전체 주식 포트폴리오의 10~15%를
+          방어형 배당 제약주로 구성. 성장주(바이오)와 균형을 이루는 헤지 역할.
+        </p>
+      </div>
+      <div class="strategy-step">
+        <span class="step-num">04</span>
+        <p class="step-text">
+          <strong>배당 재투자:</strong> 수령한 배당금을 동일 종목에 재투자하는
+          복리 구조 설계. 장기 10년 관점에서 총 수익률을 극적으로 끌어올린다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- RISK -->
+  <div class="risk-box">
+    <h3>⚠️ 투자 전 반드시 확인할 리스크</h3>
+    <ul class="risk-list">
+      <li>저PBR이 반드시 상승을 보장하지는 않는다. 구조적 실적 악화가 지속될 경우 PBR은 더 낮아질 수 있다 — '가치 함정(Value Trap)' 여부를 반드시 확인할 것.</li>
+      <li>배당수익률이 높아도, 기업이 적자 전환하거나 현금흐름이 악화되면 배당이 삭감·중단될 수 있다. 최근 2~3년 영업이익 추이를 반드시 검토해야 한다.</li>
+      <li>트럼프 행정부의 약가 인하 정책 기조는 글로벌 제약사뿐 아니라 원료의약품 수출 비중이 높은 국내 중소 제약사에도 간접 영향을 미칠 수 있다.</li>
+      <li>중소형 제약주는 거래량이 적어 매수·매도 시 시장 충격이 발생할 수 있다. 한 번에 대량 매수보다 소량 분산 진입 전략이 필수다.</li>
+      <li>본 글에 수록된 PER·PBR·배당수익률 수치는 최근 공개 자료 기반 추정치로, 실제 수치와 차이가 있을 수 있다. 반드시 증권사 HTS 또는 금융감독원 전자공시(DART)에서 최신 수치를 확인할 것.</li>
+    </ul>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    ⚠️ <strong>면책 고지:</strong> 본 콘텐츠는 투자 정보 제공을 목적으로 한 블로그 포스팅으로, 특정 종목에 대한 매수·매도 권고가 아닙니다.
+    제시된 PER, PBR, 배당수익률 등 각종 지표는 공개된 자료를 바탕으로 한 추정치로, 실제 수치와 다를 수 있습니다.
+    모든 투자의 최종 판단 및 책임은 투자자 본인에게 있으며, 투자 전 반드시 전문가 상담 및 공식 공시 자료를 확인하시기 바랍니다.
+  </div>
+
+  <!-- HASHTAGS -->
+  <div class="hashtag-section">
+    <div class="hashtag-title">TAGS</div>
+    <div class="hashtags">
+      <span class="hashtag">#저평가제약주</span>
+      <span class="hashtag">#고배당주</span>
+      <span class="hashtag">#저PBR제약</span>
+      <span class="hashtag">#저PER종목</span>
+      <span class="hashtag">#경동제약</span>
+      <span class="hashtag">#동화약품</span>
+      <span class="hashtag">#종근당홀딩스</span>
+      <span class="hashtag">#JW중외제약</span>
+      <span class="hashtag">#삼진제약</span>
+      <span class="hashtag">#게보린</span>
+      <span class="hashtag">#활명수</span>
+      <span class="hashtag">#배당투자</span>
+      <span class="hashtag">#가치투자</span>
+      <span class="hashtag">#방어주</span>
+      <span class="hashtag">#폭락장전략</span>
+      <span class="hashtag">#배당재투자</span>
+      <span class="hashtag">#밸류업</span>
+      <span class="hashtag">#코리아디스카운트</span>
+      <span class="hashtag">#2026제약주</span>
+      <span class="hashtag">#국내주식</span>
+      <span class="hashtag">#주식블로그</span>
+      <span class="hashtag">#고령화수혜</span>
+      <span class="hashtag">#배당성장주</span>
+    </div>
+  </div>
+
+  <footer>
+    <div class="copy">© 2026 PHARMA INVEST BLOG · 투자정보 · 면책고지 참조</div>
+    <div class="site">PHARMA INVEST</div>
+  </footer>
+
+</div><!-- end wrapper -->
+</body>
+</html>
