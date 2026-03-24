@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 주식 대시보드 | 2026.03.23</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c14;
+    --surface: #0d1320;
+    --surface2: #111827;
+    --border: #1e2d42;
+    --green: #00e5a0;
+    --green-dim: rgba(0,229,160,0.12);
+    --red: #ff3d5a;
+    --red-dim: rgba(255,61,90,0.12);
+    --gold: #f5c518;
+    --gold-dim: rgba(245,197,24,0.1);
+    --blue: #38bdf8;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-left h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    letter-spacing: 0.06em;
+    background: linear-gradient(135deg, #e2e8f0 40%, var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .header-left p {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .market-summary {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .index-chip {
+    text-align: right;
+  }
+
+  .index-chip .label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .index-chip .value {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .index-chip .change {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* STOCK CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card.is-up {
+    border-color: rgba(0,229,160,0.25);
+  }
+
+  .card.is-up::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--green-dim) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .card.is-down {
+    border-color: rgba(255,61,90,0.25);
+  }
+
+  .card.is-down::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--red-dim) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Glow top accent */
+  .card.is-up::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .card.is-down::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .ticker-block .ticker {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .ticker-block .name {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .badge.up {
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid rgba(0,229,160,0.3);
+  }
+
+  .badge.down {
+    background: var(--red-dim);
+    color: var(--red);
+    border: 1px solid rgba(255,61,90,0.3);
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .price {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .price-sub {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  /* Mini bar chart */
+  .range-bar {
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .range-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .range-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .range-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  .range-dot {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1.5px solid var(--bg);
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .stat {
+    background: var(--surface2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+  }
+
+  .stat .s-label {
+    font-size: 0.58rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 3px;
+  }
+
+  .stat .s-value {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* News section inside card */
+  .card-news {
+    position: relative;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  .card-news .news-label {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+
+  .news-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    margin-bottom: 5px;
+  }
+
+  .news-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--blue);
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .news-item p {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    line-height: 1.45;
+  }
+
+  /* SOXL special tag */
+  .etf-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(245,197,24,0.3);
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  /* Warning banner for SOXL */
+  .warning-bar {
+    background: rgba(245,197,24,0.06);
+    border: 1px solid rgba(245,197,24,0.2);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 0.65rem;
+    color: #c4a020;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  /* Index bar at bottom */
+  .index-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .index-strip::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+  }
+
+  .idx {
+    text-align: center;
+  }
+
+  .idx .idx-name {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .idx .idx-val {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .idx .idx-chg {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    margin-top: 1px;
+  }
+
+  .divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.68rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  footer strong {
+    color: #475569;
+  }
+
+  /* Pulse animation for live indicator */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-right: 6px;
+    animation: pulse 1.8s ease-in-out infinite;
+    vertical-align: middle;
+  }
+
+  /* Fade-in stagger */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:nth-child(1) { animation: fadeUp 0.5s ease both; }
+  .card:nth-child(2) { animation: fadeUp 0.5s 0.07s ease both; }
+  .card:nth-child(3) { animation: fadeUp 0.5s 0.14s ease both; }
+  .card:nth-child(4) { animation: fadeUp 0.5s 0.21s ease both; }
+  .card:nth-child(5) { animation: fadeUp 0.5s 0.28s ease both; }
+
+  @media (max-width: 640px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .market-summary { display: none; }
+    .header-left h1 { font-size: 2.2rem; }
+    .index-strip { flex-wrap: wrap; gap: 12px; }
+    .divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <h1>STOCK RADAR</h1>
+      <p><span class="live-dot"></span>기준일: 2026년 3월 23일 (미국 동부시간 종가)</p>
+    </div>
+    <div class="market-summary">
+      <div class="index-chip">
+        <div class="label">S&P 500</div>
+        <div class="value">6,581.00</div>
+        <div class="change up">▲ +1.15%</div>
+      </div>
+      <div class="index-chip">
+        <div class="label">NASDAQ</div>
+        <div class="value">21,946.76</div>
+        <div class="change up">▲ +1.38%</div>
+      </div>
+      <div class="index-chip">
+        <div class="label">DOW</div>
+        <div class="value">46,208.47</div>
+        <div class="change up">▲ +1.38%</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- INDEX STRIP -->
+  <div class="index-strip">
+    <div class="idx">
+      <div class="idx-name">S&amp;P 500</div>
+      <div class="idx-val up">6,581.00</div>
+      <div class="idx-chg up">+74.52 (+1.15%)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="idx">
+      <div class="idx-name">NASDAQ</div>
+      <div class="idx-val up">21,946.76</div>
+      <div class="idx-chg up">+299.15 (+1.38%)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="idx">
+      <div class="idx-name">DOW JONES</div>
+      <div class="idx-val up">46,208.47</div>
+      <div class="idx-chg up">+631.00 (+1.38%)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="idx">
+      <div class="idx-name">VIX</div>
+      <div class="idx-val down">26.15</div>
+      <div class="idx-chg down">-0.63 (-2.35%)</div>
+    </div>
+    <div class="divider"></div>
+    <div class="idx">
+      <div class="idx-name">GOLD</div>
+      <div class="idx-val down">$4,410.40</div>
+      <div class="idx-chg down">-164.50 (-3.60%)</div>
+    </div>
+  </div>
+
+  <!-- SECTION: 상승 종목 -->
+  <div class="section-title">📈 상승 종목</div>
+  <div class="cards-grid">
+
+    <!-- NVDA -->
+    <div class="card is-up">
+      <div class="card-header">
+        <div class="ticker-block">
+          <div class="ticker up">NVDA</div>
+          <div class="name">NVIDIA Corporation · NASDAQ</div>
+        </div>
+        <span class="badge up">▲ +1.70%</span>
+      </div>
+      <div class="price-row">
+        <span class="price">$175.64</span>
+        <span class="price-sub">전일 $172.70</span>
+      </div>
+      <div class="range-bar">
+        <div class="range-label">
+          <span>일중 저가 $174.76</span>
+          <span>일중 고가 $178.37</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill" style="width:100%; background: linear-gradient(90deg, #1e2d42, rgba(0,229,160,0.4));"></div>
+          <div class="range-dot" style="left: 62%; background: var(--green);"></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="s-label">52주 최고</div>
+          <div class="s-value">$212.19</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">52주 최저</div>
+          <div class="s-value">$86.62</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">시가총액</div>
+          <div class="s-value">$4.27T</div>
+        </div>
+      </div>
+      <div class="card-news">
+        <div class="news-label">주요 뉴스</div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>에너지 기업들과 협력해 AI 팩토리 신설 계획 발표 (Emerald AI 포함)</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>TSMC 2nm 공급 부족으로 차세대 Feynman AI 플랫폼 일정 재검토 중</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>Cantor Fitzgerald·Rosenblatt, 매수 의견 유지 ($300~$325 목표가)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TSLA -->
+    <div class="card is-up">
+      <div class="card-header">
+        <div class="ticker-block">
+          <div class="ticker up">TSLA</div>
+          <div class="name">Tesla, Inc. · NASDAQ</div>
+        </div>
+        <span class="badge up">▲ +3.50%</span>
+      </div>
+      <div class="price-row">
+        <span class="price">$380.85</span>
+        <span class="price-sub">전일 $367.97</span>
+      </div>
+      <div class="range-bar">
+        <div class="range-label">
+          <span>52주 최저 $214.25</span>
+          <span>52주 최고 $498.83</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill" style="width:100%; background: linear-gradient(90deg, #1e2d42, rgba(0,229,160,0.4));"></div>
+          <div class="range-dot" style="left: 58%; background: var(--green);"></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="s-label">거래량</div>
+          <div class="s-value">72.6M</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">평균 거래량</div>
+          <div class="s-value">61.3M</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">시가총액</div>
+          <div class="s-value">$1.27T</div>
+        </div>
+      </div>
+      <div class="card-news">
+        <div class="news-label">주요 뉴스</div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>일론 머스크, AI 반도체 공장 프로젝트 '테라팹(Terafab)' 공개 — xAI·스페이스X 공동 참여, 2nm 칩 생산 목표</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>2026년 설비투자 약 $200억 달러 계획, AI 인프라 기업으로 전환 박차</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>사이버캡(Cybercab) 로보택시 4월 기가텍사스 양산 돌입 예정</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLTR -->
+    <div class="card is-up">
+      <div class="card-header">
+        <div class="ticker-block">
+          <div class="ticker up">PLTR</div>
+          <div class="name">Palantir Technologies · NASDAQ</div>
+        </div>
+        <span class="badge up">▲ +6.78%</span>
+      </div>
+      <div class="price-row">
+        <span class="price">$160.92</span>
+        <span class="price-sub">전일 $150.71</span>
+      </div>
+      <div class="range-bar">
+        <div class="range-label">
+          <span>일중 저가 $148.28</span>
+          <span>일중 고가 $161.35</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill" style="width:100%; background: linear-gradient(90deg, #1e2d42, rgba(0,229,160,0.4));"></div>
+          <div class="range-dot" style="left: 96%; background: var(--green);"></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="s-label">거래량</div>
+          <div class="s-value">57.38M</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">다음 실적발표</div>
+          <div class="s-value">5/11</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">EPS (최근)</div>
+          <div class="s-value">$0.25</div>
+        </div>
+      </div>
+      <div class="card-news">
+        <div class="news-label">주요 뉴스</div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>미 국방부, 팔란티어의 Maven AI 시스템을 공식 '프로그램 오브 레코드'로 지정 → 장기 예산 보장</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>52주 범위: $66.12 ~ $207.52, 현재 고점 대비 약 22% 하단</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>2026년 1분기 매출 $14.1억 (+70% YoY), 다음 분기 가이던스 $15.4억 예상</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOXL -->
+    <div class="card is-up">
+      <div class="card-header">
+        <div class="ticker-block">
+          <div class="ticker up">SOXL</div>
+          <div class="name">Direxion Daily Semiconductor Bull 3X ETF</div>
+        </div>
+        <span class="badge up">▲ +9.23%</span>
+      </div>
+      <div class="etf-tag">⚡ 3X 레버리지 ETF</div>
+      <div class="warning-bar">
+        ⚠️ 레버리지 ETF는 반도체 지수의 일일 수익률을 3배 추종합니다. 변동성이 매우 높아 주식 초보자에게는 부적합합니다.
+      </div>
+      <div class="price-row">
+        <span class="price">$55.86</span>
+        <span class="price-sub">전일 $51.14</span>
+      </div>
+      <div class="range-bar">
+        <div class="range-label">
+          <span>52주 최저 $7.23</span>
+          <span>52주 최고 $72.36</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill" style="width:100%; background: linear-gradient(90deg, #1e2d42, rgba(0,229,160,0.4));"></div>
+          <div class="range-dot" style="left: 74%; background: var(--gold);"></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <div class="s-label">추종 지수</div>
+          <div class="s-value" style="font-size:0.65rem">NYSE SOX</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">레버리지</div>
+          <div class="s-value" style="color:var(--gold)">3X</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">1년 변화</div>
+          <div class="s-value up">+197%</div>
+        </div>
+      </div>
+      <div class="card-news">
+        <div class="news-label">상승 배경</div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>NVDA·TSLA 등 반도체 주요 종목 강세로 반도체 섹터 전반 동반 상승</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot"></div>
+          <p>나스닥 +1.38% 상승, 테크주 전반 긍정적 분위기 반영</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION: 하락 종목 -->
+  <div class="section-title">📉 하락 종목</div>
+  <div class="cards-grid">
+
+    <!-- MU -->
+    <div class="card is-down" style="grid-column: 1 / -1; max-width: 680px;">
+      <div class="card-header">
+        <div class="ticker-block">
+          <div class="ticker down">MU</div>
+          <div class="name">Micron Technology, Inc. · NASDAQ</div>
+        </div>
+        <span class="badge down">▼ -3.80%</span>
+      </div>
+      <div class="price-row">
+        <span class="price down">$422.81</span>
+        <span class="price-sub">전일 $439.51 · 52주 최고 $471.34 (3/18)</span>
+      </div>
+      <div class="range-bar">
+        <div class="range-label">
+          <span>52주 최저 $67.53</span>
+          <span>52주 최고 $471.34</span>
+        </div>
+        <div class="range-track">
+          <div class="range-fill" style="width:100%; background: linear-gradient(90deg, #1e2d42, rgba(255,61,90,0.35));"></div>
+          <div class="range-dot" style="left: 88%; background: var(--red);"></div>
+        </div>
+      </div>
+      <div class="stats-row" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="stat">
+          <div class="s-label">Q2 매출</div>
+          <div class="s-value">$23.86B</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">매출 증가율</div>
+          <div class="s-value up">+196%</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">EPS (실제)</div>
+          <div class="s-value">$12.20</div>
+        </div>
+        <div class="stat">
+          <div class="s-label">FY26 CAPEX</div>
+          <div class="s-value down">$25B+</div>
+        </div>
+      </div>
+      <div class="card-news">
+        <div class="news-label">하락 원인 분석</div>
+        <div class="news-item">
+          <div class="news-dot" style="background:var(--red)"></div>
+          <p><strong style="color:#e2e8f0">① 셀 더 뉴스(Sell the News)</strong> — 역대 최고 실적(EPS +682% YoY)에도 주가가 이미 1년간 350% 상승해 기대감이 모두 반영된 상태. 실적 확인 후 차익 실현 매도 집중</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot" style="background:var(--red)"></div>
+          <p><strong style="color:#e2e8f0">② 250억 달러 설비투자 우려</strong> — 2027~2028년 공장 완공 시 공급 과잉 전환 가능성. 월가 일부, 2029년 EPS $20 수준으로 급락 전망</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot" style="background:var(--red)"></div>
+          <p><strong style="color:#e2e8f0">③ 애널리스트 의견 하향</strong> — 서밋 인사이츠, 투자의견 매수→보유 하향. 삼성 HBM 엔비디아 공급망 진입으로 경쟁 심화</p>
+        </div>
+        <div class="news-item">
+          <div class="news-dot" style="background:var(--red)"></div>
+          <p><strong style="color:#e2e8f0">④ 카타르 에너지 인프라 공격</strong> — 실적 발표 컨퍼런스콜 도중 돌발 악재. 반도체 공장의 LNG 의존도 우려 확산</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      ⚠️ <strong>투자 유의사항:</strong> 본 자료는 정보 제공 목적으로만 작성되었으며, 투자 권유가 아닙니다.<br>
+      모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 주식 투자에는 원금 손실의 위험이 있습니다.<br>
+      <strong>데이터 기준: 2026년 3월 23일 미국 동부시간 종가 (Investing.com, Yahoo Finance, Robinhood 참조)</strong>
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
