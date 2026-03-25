@@ -1,0 +1,256 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.wrap{padding:8px 0 16px;}
+.card{border:0.5px solid var(--color-border-tertiary);border-radius:12px;margin-bottom:16px;overflow:hidden;}
+.card-head{padding:14px 18px 12px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.card-head:hover{opacity:.85;}
+.num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;}
+.head-text{flex:1;}
+.head-title{font-size:14px;font-weight:500;color:var(--color-text-primary);}
+.head-sub{font-size:11px;color:var(--color-text-tertiary);margin-top:2px;}
+.chevron{font-size:12px;color:var(--color-text-tertiary);transition:transform .25s;}
+.chevron.open{transform:rotate(90deg);}
+.card-body{border-top:0.5px solid var(--color-border-tertiary);padding:0 18px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;}
+.card-body.open{max-height:900px;padding:16px 18px 18px;}
+.block-label{font-size:11px;font-weight:500;letter-spacing:.06em;margin-bottom:6px;padding:3px 8px;border-radius:4px;display:inline-block;}
+.code-block{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--color-text-secondary);line-height:1.75;font-family:var(--font-mono);white-space:pre-wrap;word-break:break-word;margin-bottom:12px;}
+.neg-block{background:var(--color-background-danger);border:0.5px solid var(--color-border-danger);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--color-text-danger);line-height:1.7;font-family:var(--font-mono);white-space:pre-wrap;word-break:break-word;}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{font-size:11px;padding:3px 10px;border-radius:20px;}
+
+.c1-head{background:linear-gradient(90deg,#e1f5ee,transparent);}
+.c1-num{background:#1D9E75;color:#fff;}
+.c1-label{background:#e1f5ee;color:#0F6E56;}
+.c1-tag{background:#e1f5ee;color:#085041;}
+
+.c2-head{background:linear-gradient(90deg,#e6f1fb,transparent);}
+.c2-num{background:#378ADD;color:#fff;}
+.c2-label{background:#e6f1fb;color:#185FA5;}
+.c2-tag{background:#e6f1fb;color:#0C447C;}
+
+.c3-head{background:linear-gradient(90deg,#fbeaf0,transparent);}
+.c3-num{background:#D4537E;color:#fff;}
+.c3-label{background:#fbeaf0;color:#993556;}
+.c3-tag{background:#fbeaf0;color:#72243E;}
+
+.c4-head{background:linear-gradient(90deg,#faeeda,transparent);}
+.c4-num{background:#EF9F27;color:#fff;}
+.c4-label{background:#faeeda;color:#854F0B;}
+.c4-tag{background:#faeeda;color:#633806;}
+
+.c5-head{background:linear-gradient(90deg,#eeedfe,transparent);}
+.c5-num{background:#7F77DD;color:#fff;}
+.c5-label{background:#eeedfe;color:#534AB7;}
+.c5-tag{background:#eeedfe;color:#3C3489;}
+</style>
+
+<div class="wrap">
+
+<div class="card">
+  <div class="card-head c1-head" onclick="toggle(this)">
+    <div class="num c1-num">01</div>
+    <div class="head-text">
+      <div class="head-title">의료 접근성 향상 — "언제 어디서나 검사"</div>
+      <div class="head-sub">병원 장벽 없는 홈 헬스케어 · 16:9 · Midjourney v6.1</div>
+    </div>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="block-label c1-label">Main Prompt</div>
+    <div class="code-block">A warm and inviting lifestyle photograph of a diverse family — 
+elderly grandmother, young adult daughter, teenage son — 
+each casually using different home diagnostic test kits 
+in a bright, sunlit living room.
+The grandmother checks a blood glucose meter at the kitchen table, 
+the daughter uses a rapid test kit on the sofa with her phone nearby, 
+the teenager reads a test result by the window.
+Relaxed home atmosphere, natural morning light streaming in.
+Empowerment and accessibility theme — healthcare coming to people, 
+not people going to healthcare.
+Color palette: warm whites, honey oak wood, soft teal accents, 
+gentle sunlight gold.
+Photorealistic lifestyle photography, Canon EOS R5 35mm f/2.8.
+--ar 16:9 --style raw --v 6.1</div>
+    <div class="block-label" style="background:var(--color-background-danger);color:var(--color-text-danger);">Negative Prompt</div>
+    <div class="neg-block">no hospital setting, no clinical white rooms, 
+no fear or worry expressions, no needles or blood,
+no crowded waiting rooms, no dark moody tones</div>
+    <div class="tags">
+      <span class="tag c1-tag">lifestyle photo</span>
+      <span class="tag c1-tag">16:9</span>
+      <span class="tag c1-tag">다세대 가족</span>
+      <span class="tag c1-tag">따뜻한 조명</span>
+      <span class="tag c1-tag">권한 부여 테마</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head c2-head" onclick="toggle(this)">
+    <div class="num c2-num">02</div>
+    <div class="head-text">
+      <div class="head-title">무증상 조기 발견 — "증상 없어도 미리 안다"</div>
+      <div class="head-sub">조기 발견의 안도감 · 4:3 · Midjourney v6.1</div>
+    </div>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="block-label c2-label">Main Prompt</div>
+    <div class="code-block">Close-up, serene portrait of a young Asian woman 
+holding a home diagnostic test kit showing a clear result. 
+Her expression radiates calm relief and quiet confidence — 
+not dramatic joy, but peaceful reassurance.
+She sits at a clean white desk, morning light from a window 
+casting a soft halo. A steaming cup of coffee beside her. 
+A subtle magnifying lens motif in the shallow bokeh background 
+hints at "early detection" without being literal.
+The kit result window shows a clear, unambiguous reading.
+Color palette: crisp white, soft sky blue, warm skin tones, 
+pale mint green accents.
+Photorealistic, shallow depth of field, 85mm portrait lens look.
+--ar 4:3 --style raw --v 6.1</div>
+    <div class="block-label" style="background:var(--color-background-danger);color:var(--color-text-danger);">Negative Prompt</div>
+    <div class="neg-block">no dramatic crying or extreme relief expressions,
+no visible illness symptoms, no hospital clothes,
+no dark background, no clinical cold lighting</div>
+    <div class="tags">
+      <span class="tag c2-tag">portrait</span>
+      <span class="tag c2-tag">4:3</span>
+      <span class="tag c2-tag">안도감</span>
+      <span class="tag c2-tag">조기 발견</span>
+      <span class="tag c2-tag">청년 여성</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head c3-head" onclick="toggle(this)">
+    <div class="num c3-num">03</div>
+    <div class="head-text">
+      <div class="head-title">심리적 장벽 해소 · 익명성 — "혼자서, 비밀스럽게"</div>
+      <div class="head-sub">프라이버시와 자율성 · 1:1 · DALL-E 3</div>
+    </div>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="block-label c3-label">Main Prompt</div>
+    <div class="code-block">Intimate, private bathroom scene photographed 
+from a respectful distance — a person's hands 
+(no face shown, preserving anonymity) carefully 
+opening a discreet home test kit over a clean white sink counter.
+The packaging is minimal and plain — no alarming labels.
+Soft natural light from a small frosted window.
+A closed door with a lock in the subtle background 
+communicates privacy and safety.
+One hand wears a simple silver ring — a touch of humanity.
+The mood is calm, empowered, private — 
+"I'm taking care of myself, on my own terms."
+Color palette: matte white, soft blush pink, brushed silver, 
+pale lavender light.
+Lifestyle photography, intimate but tasteful composition.
+--ar 1:1 --style raw --v 6.1</div>
+    <div class="block-label" style="background:var(--color-background-danger);color:var(--color-text-danger);">Negative Prompt</div>
+    <div class="neg-block">no face shown, no revealing clothing,
+no embarrassing or judgmental atmosphere,
+no explicit medical imagery, no scary packaging labels,
+no dark or voyeuristic feeling</div>
+    <div class="tags">
+      <span class="tag c3-tag">1:1 정사각형</span>
+      <span class="tag c3-tag">익명성</span>
+      <span class="tag c3-tag">프라이버시</span>
+      <span class="tag c3-tag">얼굴 없음</span>
+      <span class="tag c3-tag">SNS 썸네일</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head c4-head" onclick="toggle(this)">
+    <div class="num c4-num">04</div>
+    <div class="head-text">
+      <div class="head-title">의료비 절감 — "병원비보다 훨씬 저렴하게"</div>
+      <div class="head-sub">비용 효율과 스마트 소비 · 16:9 · Midjourney v6.1</div>
+    </div>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="block-label c4-label">Main Prompt</div>
+    <div class="code-block">Conceptual flat-lay photograph on a clean white surface.
+Left side: a neat stack of folded currency bills 
+(generic, non-specific country) and a small coin 
+suggesting saved money — warm amber lighting.
+Right side: a compact home diagnostic test kit 
+in simple teal packaging.
+Between them: a small plus (+) symbol made of 
+two thin white paper strips.
+Overall composition reads as "small cost, big health value."
+A tiny green checkmark sticker on the kit packaging.
+Minimal, editorial, aspirational consumer healthcare aesthetic.
+Color palette: crisp white surface, warm gold coins, 
+teal kit, soft amber accent light.
+Top-down flat-lay photography, magazine editorial style.
+--ar 16:9 --style raw --v 6.1</div>
+    <div class="block-label" style="background:var(--color-background-danger);color:var(--color-text-danger);">Negative Prompt</div>
+    <div class="neg-block">no specific currency symbols clearly visible,
+no cluttered money pile, no piggy banks,
+no poverty imagery, no hospital bills or receipts,
+no calculator or spreadsheet</div>
+    <div class="tags">
+      <span class="tag c4-tag">flat-lay</span>
+      <span class="tag c4-tag">16:9</span>
+      <span class="tag c4-tag">비용 절감</span>
+      <span class="tag c4-tag">편집 사진</span>
+      <span class="tag c4-tag">스마트 소비</span>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-head c5-head" onclick="toggle(this)">
+    <div class="num c5-num">05</div>
+    <div class="head-text">
+      <div class="head-title">공중보건 모니터링 강화 — "데이터가 지역을 지킨다"</div>
+      <div class="head-sub">디지털 헬스 네트워크 · 16:9 · Midjourney v6.1</div>
+    </div>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="block-label c5-label">Main Prompt</div>
+    <div class="code-block">Hopeful, community-focused conceptual image. 
+A bird's-eye aerial view of a bright, clean urban neighborhood 
+with small glowing teal dots placed on various homes, 
+pharmacies, and community centers — 
+each dot representing a health data point being shared.
+Thin luminous lines connect the dots forming a gentle network 
+across the city — not ominous surveillance, 
+but warm community care and connection.
+In the center of the network: a subtle shield icon 
+made of light, symbolizing collective health protection.
+Color palette: soft aerial blue sky, warm city tones, 
+glowing teal network lines, gentle purple ambient light.
+3D render / concept art, cinematic overhead perspective, 8K.
+--ar 16:9 --v 6.1</div>
+    <div class="block-label" style="background:var(--color-background-danger);color:var(--color-text-danger);">Negative Prompt</div>
+    <div class="neg-block">no surveillance cameras, no dystopian tracking feel,
+no red warning signals, no scary government imagery,
+no dark night scenes, no invasive monitoring aesthetic</div>
+    <div class="tags">
+      <span class="tag c5-tag">3D 렌더</span>
+      <span class="tag c5-tag">16:9</span>
+      <span class="tag c5-tag">조감도</span>
+      <span class="tag c5-tag">네트워크 시각화</span>
+      <span class="tag c5-tag">공동체 테마</span>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function toggle(head){
+  const body=head.nextElementSibling;
+  const ch=head.querySelector('.chevron');
+  body.classList.toggle('open');
+  ch.classList.toggle('open');
+}
+</script>
