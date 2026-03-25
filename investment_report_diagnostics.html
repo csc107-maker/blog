@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>자가진단키트 섹터 투자분석보고서 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #1a4fa0; --blue-lt: #e8f0fc; --blue-md: #3b6fd4;
+    --teal: #0d7a5f; --teal-lt: #e0f5ee;
+    --red: #c0392b; --red-lt: #fdecea;
+    --amber: #b7770d; --amber-lt: #fdf3dc;
+    --gray: #4a4a4a; --gray-lt: #f4f4f4; --gray-border: #dde1e7;
+    --text: #1c1c1c; --text-sub: #5a5a5a; --text-hint: #9a9a9a;
+    --bg: #f7f8fa; --white: #ffffff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --radius: 10px;
+  }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', -apple-system, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.7; }
+
+  /* ─── Header ─── */
+  .report-header { background: linear-gradient(135deg, #0d2a6e 0%, #1a4fa0 60%, #2563c4 100%); color: #fff; padding: 48px 40px 36px; }
+  .report-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 14px; font-size: 11px; letter-spacing: 0.08em; margin-bottom: 16px; }
+  .report-title { font-size: 26px; font-weight: 700; margin-bottom: 8px; line-height: 1.35; }
+  .report-subtitle { font-size: 14px; opacity: 0.78; margin-bottom: 20px; }
+  .report-meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 16px; }
+  .report-meta span::before { content: '▸ '; }
+
+  /* ─── Layout ─── */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+  .section { background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-border); padding: 28px 32px; margin-bottom: 24px; box-shadow: var(--shadow); }
+  .section-title { font-size: 17px; font-weight: 700; color: var(--blue); border-left: 4px solid var(--blue); padding-left: 12px; margin-bottom: 20px; }
+  .sub-title { font-size: 14px; font-weight: 700; color: var(--text); margin: 20px 0 10px; }
+
+  /* ─── Disclaimer ─── */
+  .disclaimer { background: #fff8e1; border: 1px solid #f5c400; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #7a5c00; margin-bottom: 24px; line-height: 1.6; }
+
+  /* ─── Summary Cards ─── */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .summary-card { background: var(--gray-lt); border-radius: 8px; padding: 16px; text-align: center; }
+  .summary-val { font-size: 22px; font-weight: 700; }
+  .summary-label { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
+  .c-blue { color: var(--blue-md); }
+  .c-teal { color: var(--teal); }
+  .c-amber { color: var(--amber); }
+  .c-red { color: var(--red); }
+
+  /* ─── Tables ─── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f0f4fb; color: var(--blue); font-weight: 700; padding: 10px 12px; text-align: center; border-bottom: 2px solid var(--blue); white-space: nowrap; }
+  td { padding: 9px 12px; border-bottom: 1px solid #eef0f4; text-align: center; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8faff; }
+  td.left { text-align: left; }
+  .badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+  .badge-buy { background: #e0f5ee; color: var(--teal); }
+  .badge-hold { background: var(--amber-lt); color: var(--amber); }
+  .badge-watch { background: var(--blue-lt); color: var(--blue-md); }
+  .badge-caution { background: var(--red-lt); color: var(--red); }
+  .up { color: var(--red); font-weight: 600; }
+  .dn { color: var(--blue-md); font-weight: 600; }
+  .neutral { color: var(--text-sub); }
+
+  /* ─── Company Card ─── */
+  .company-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .company-card { border: 1px solid var(--gray-border); border-radius: var(--radius); overflow: hidden; }
+  .company-header { padding: 16px 18px 12px; display: flex; align-items: flex-start; justify-content: space-between; }
+  .company-name { font-size: 16px; font-weight: 700; }
+  .company-code { font-size: 11px; color: var(--text-hint); }
+  .company-body { padding: 0 18px 16px; }
+  .fin-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #eee; font-size: 12.5px; }
+  .fin-row:last-child { border-bottom: none; }
+  .fin-label { color: var(--text-sub); }
+  .fin-val { font-weight: 600; }
+  .comp-color-1 { background: linear-gradient(90deg, #e8f0fc 0%, #fff 100%); border-top: 3px solid var(--blue-md); }
+  .comp-color-2 { background: linear-gradient(90deg, #e0f5ee 0%, #fff 100%); border-top: 3px solid var(--teal); }
+  .comp-color-3 { background: linear-gradient(90deg, #fdf3dc 0%, #fff 100%); border-top: 3px solid var(--amber); }
+  .comp-color-4 { background: linear-gradient(90deg, #fdecea 0%, #fff 100%); border-top: 3px solid var(--red); }
+  .comp-color-5 { background: linear-gradient(90deg, #f0eeff 0%, #fff 100%); border-top: 3px solid #7c4dff; }
+  .comp-color-6 { background: linear-gradient(90deg, #e8f5f0 0%, #fff 100%); border-top: 3px solid #0097a7; }
+
+  /* ─── SWOT ─── */
+  .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--gray-border); border-radius: 8px; overflow: hidden; }
+  .swot-cell { padding: 16px 18px; }
+  .swot-cell h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .swot-cell ul { padding-left: 16px; font-size: 12.5px; color: var(--text-sub); }
+  .swot-cell ul li { margin-bottom: 4px; }
+  .swot-s { background: #e0f5ee; } .swot-s h4 { color: var(--teal); }
+  .swot-w { background: #fdecea; } .swot-w h4 { color: var(--red); }
+  .swot-o { background: #e8f0fc; } .swot-o h4 { color: var(--blue-md); }
+  .swot-t { background: #fff8e1; } .swot-t h4 { color: var(--amber); }
+
+  /* ─── Risk Meter ─── */
+  .risk-bar-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .risk-label { width: 80px; font-size: 12px; color: var(--text-sub); }
+  .risk-bar { flex: 1; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; }
+  .risk-fill { height: 100%; border-radius: 4px; }
+  .risk-val { width: 30px; font-size: 12px; font-weight: 600; text-align: right; }
+
+  /* ─── Catalyst Timeline ─── */
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 2px; background: var(--gray-border); }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--white); }
+  .tl-date { font-size: 11px; color: var(--text-hint); margin-bottom: 2px; }
+  .tl-text { font-size: 13px; line-height: 1.5; }
+  .tl-tag { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; }
+  .tl-pos { color: var(--teal); background: var(--teal-lt); }
+  .tl-mid { color: var(--amber); background: var(--amber-lt); }
+  .tl-neg { color: var(--red); background: var(--red-lt); }
+
+  /* ─── Footer ─── */
+  .report-footer { text-align: center; padding: 24px; color: var(--text-hint); font-size: 11px; line-height: 1.8; }
+
+  @media (max-width: 700px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .company-grid { grid-template-columns: 1fr; }
+    .swot-grid { grid-template-columns: 1fr; }
+    .section { padding: 20px 16px; }
+    .report-header { padding: 32px 20px 24px; }
+    .report-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="report-header">
+  <div class="report-badge">EQUITY RESEARCH  |  섹터 분석 보고서</div>
+  <div class="report-title">자가진단키트(홈테스트) 섹터<br>투자분석 보고서 2026</div>
+  <div class="report-subtitle">성병·마약·독감 자가진단 시대 — 수혜 기업 발굴 및 투자전략</div>
+  <div class="report-meta">
+    <span>작성일: 2026년 3월 25일</span>
+    <span>섹터: 체외진단(IVD) / 의료기기</span>
+    <span>분석 종목: 6개사</span>
+    <span>기준 환율: USD/KRW 1,380</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 면책 공고 -->
+  <div class="disclaimer">
+    ⚠️ <strong>투자 위험 고지</strong>: 본 보고서는 공개된 자료를 기반으로 작성된 참고 자료이며, 투자 권유 또는 매매 신호가 아닙니다. 재무 데이터는 공시·언론 자료 기반 추정치이며 실제 수치와 다를 수 있습니다. 투자 판단과 그에 따른 결과는 전적으로 투자자 본인의 책임입니다. 전문 금융자문인과 상담 후 투자 결정을 내리시기 바랍니다.
+  </div>
+
+  <!-- ═══ 시장 요약 ═══ -->
+  <div class="section">
+    <div class="section-title">① 시장 개요 — 자가진단 시장 핵심 지표</div>
+    <div class="summary-grid">
+      <div class="summary-card"><div class="summary-val c-blue">$28B+</div><div class="summary-label">2025년 글로벌 홈진단 시장</div></div>
+      <div class="summary-card"><div class="summary-val c-teal">9.4%</div><div class="summary-label">연평균 성장률 (CAGR)</div></div>
+      <div class="summary-card"><div class="summary-val c-amber">$45B+</div><div class="summary-label">2030년 시장 전망치</div></div>
+      <div class="summary-card"><div class="summary-val c-red">44개</div><div class="summary-label">국내 독감진단 제품 (전문가용만)</div></div>
+    </div>
+    <p style="margin-top:16px; font-size:13px; color:var(--text-sub); line-height:1.8;">
+      코로나19 팬데믹은 자가진단 문화를 전 세계적으로 정착시켰다. 성병·마약·독감까지 집에서 검사하는 시대가 열리면서, 국내 체외진단 기업들은 포스트코로나 성장 기회를 모색 중이다. 핵심 촉매는 <strong style="color:var(--blue)">식약처의 독감 자가진단 일반 허가 여부</strong>이며, 성병·마약 자가검사는 중장기 구조적 성장 트렌드로 자리잡고 있다.
+    </p>
+  </div>
+
+  <!-- ═══ 비교 테이블 ═══ -->
+  <div class="section">
+    <div class="section-title">② 주요 종목 밸류에이션 비교 (2025년 기준)</div>
+    <p style="font-size:12px; color:var(--text-hint); margin-bottom:14px;">※ 재무 수치는 공시 및 언론 보도 기반 추정치이며, PER/PBR은 2025년 결산 기준 추정값입니다.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>종목</th>
+          <th>시장</th>
+          <th>시가총액<br>(억원 추정)</th>
+          <th>2025 매출<br>(억원)</th>
+          <th>2025 영업이익<br>(억원)</th>
+          <th>영업이익률</th>
+          <th>추정 PER</th>
+          <th>추정 PBR</th>
+          <th>투자의견</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="left"><strong>에스디바이오센서</strong><br><span style="font-size:11px;color:var(--text-hint)">137310</span></td>
+          <td>KOSPI</td>
+          <td>5,200</td>
+          <td>3,800<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td>150<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td class="neutral">3.9%</td>
+          <td><span style="color:var(--teal)">N/A*</span></td>
+          <td><span style="color:var(--teal)">0.5x</span></td>
+          <td><span class="badge badge-watch">관심</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>씨젠</strong><br><span style="font-size:11px;color:var(--text-hint)">096530</span></td>
+          <td>KOSDAQ</td>
+          <td>8,200</td>
+          <td class="up">4,742</td>
+          <td class="up">345</td>
+          <td class="up">7.3%</td>
+          <td>~17x</td>
+          <td>~0.9x</td>
+          <td><span class="badge badge-buy">매수</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>수젠텍</strong><br><span style="font-size:11px;color:var(--text-hint)">253840</span></td>
+          <td>KOSDAQ</td>
+          <td>1,100</td>
+          <td>800<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td>-20<br><span style="font-size:11px;color:var(--text-hint)">(적자추정)</span></td>
+          <td class="c-red">-2.5%</td>
+          <td class="c-red">적자</td>
+          <td>~1.2x</td>
+          <td><span class="badge badge-hold">보유</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>휴마시스</strong><br><span style="font-size:11px;color:var(--text-hint)">205470</span></td>
+          <td>KOSDAQ</td>
+          <td>1,800</td>
+          <td>600<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td>-50<br><span style="font-size:11px;color:var(--text-hint)">(적자추정)</span></td>
+          <td class="c-red">-8.3%</td>
+          <td class="c-red">적자</td>
+          <td>~0.7x</td>
+          <td><span class="badge badge-hold">보유</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>래피젠</strong><br><span style="font-size:11px;color:var(--text-hint)">147760</span></td>
+          <td>KOSDAQ</td>
+          <td>600</td>
+          <td>400<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td>10<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td class="neutral">2.5%</td>
+          <td>~60x</td>
+          <td>~1.0x</td>
+          <td><span class="badge badge-watch">관심</span></td>
+        </tr>
+        <tr>
+          <td class="left"><strong>젠바디</strong><br><span style="font-size:11px;color:var(--text-hint)">253590</span></td>
+          <td>KOSDAQ</td>
+          <td>900</td>
+          <td>500<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td>30<br><span style="font-size:11px;color:var(--text-hint)">(추정)</span></td>
+          <td class="neutral">6.0%</td>
+          <td>~30x</td>
+          <td>~1.1x</td>
+          <td><span class="badge badge-hold">보유</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:11px; color:var(--text-hint); margin-top:10px;">* SD바이오센서 PER: 2025년 일시적 이익 변동으로 산출 의미 낮음. PBR 기준 저평가 구간. 순이익 흑자 회복 시 재산정 필요.</p>
+  </div>
+
+  <!-- ═══ 개별 기업 심층 분석 ═══ -->
+  <div class="section">
+    <div class="section-title">③ 개별 기업 심층 분석</div>
+
+    <div class="company-grid">
+
+      <!-- SD바이오센서 -->
+      <div class="company-card">
+        <div class="company-header comp-color-1">
+          <div>
+            <div class="company-name">에스디바이오센서</div>
+            <div class="company-code">KOSPI 137310 | 체외진단 플랫폼</div>
+          </div>
+          <span class="badge badge-watch">관심</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표</div>
+          <div class="fin-row"><span class="fin-label">52주 주가 범위</span><span class="fin-val">8,380 ~ 13,550원</span></div>
+          <div class="fin-row"><span class="fin-label">추정 시가총액</span><span class="fin-val">~5,200억원</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val c-teal">0.5배 (저평가 구간)</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PER</span><span class="fin-val neutral">N/A (이익 회복 대기)</span></div>
+          <div class="fin-row"><span class="fin-label">직원 수</span><span class="fin-val">576명</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>Meridian Bioscience M&A — 미국 시장 진출 가속</li>
+            <li>미국 자회사에 1,467억원 대여 → 공격적 투자</li>
+            <li>인도 전진 기지 구축 → 글로벌 생산 원가 절감</li>
+            <li>비코로나 제품군 체질 개선 완료</li>
+            <li>PBR 0.5배 수준의 극단적 저평가 구간</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">코로나 이후 매출 급감 지속, 해외 자회사 투자 성과 불확실, 실적 반등 시점 불명확</p>
+        </div>
+      </div>
+
+      <!-- 씨젠 -->
+      <div class="company-card">
+        <div class="company-header comp-color-2">
+          <div>
+            <div class="company-name">씨젠</div>
+            <div class="company-code">KOSDAQ 096530 | 분자진단 플랫폼</div>
+          </div>
+          <span class="badge badge-buy">매수</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표 (2025년 확정 실적)</div>
+          <div class="fin-row"><span class="fin-label">2025 매출</span><span class="fin-val up">4,742억원 (+14.5% YoY)</span></div>
+          <div class="fin-row"><span class="fin-label">2025 영업이익</span><span class="fin-val up">345억원 (흑자전환)</span></div>
+          <div class="fin-row"><span class="fin-label">2025 순이익</span><span class="fin-val up">484억원 (흑자전환)</span></div>
+          <div class="fin-row"><span class="fin-label">4Q25 매출 성장률</span><span class="fin-val up">+13.3% YoY / +15.0% QoQ</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PER</span><span class="fin-val">~17배</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val">~0.9배</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>비호흡기 신드로믹 제품군 +24.4% 성장 — 코로나 탈피</li>
+            <li>CURECA™ 자동화 + STAgora™ 플랫폼 → SaaS 모델 전환</li>
+            <li>Microsoft AI 협업, Springer Nature 글로벌 프로젝트</li>
+            <li>ESCMID(4월), ADLM(7월) 학회 모멘텀</li>
+            <li>유럽 매출 기반 안정적, 이스라엘·스페인 법인 신설</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">플랫폼 전환 비용으로 인한 수익성 압박, 글로벌 경기 둔화 시 진단 수요 감소 가능성</p>
+        </div>
+      </div>
+
+      <!-- 수젠텍 -->
+      <div class="company-card">
+        <div class="company-header comp-color-3">
+          <div>
+            <div class="company-name">수젠텍</div>
+            <div class="company-code">KOSDAQ 253840 | 신속항원 진단</div>
+          </div>
+          <span class="badge badge-hold">보유</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표</div>
+          <div class="fin-row"><span class="fin-label">주요 제품</span><span class="fin-val">코로나+독감 동시검사 키트</span></div>
+          <div class="fin-row"><span class="fin-label">2025 영업 현황</span><span class="fin-val c-red">적자 추정</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val">~1.2배</span></div>
+          <div class="fin-row"><span class="fin-label">변동성</span><span class="fin-val c-red">매우 높음</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>독감 자가진단 일반 허가 시 즉각 수혜 가능</li>
+            <li>코로나+독감+RSV 트리플 동시검사 기술 보유</li>
+            <li>소형주 특성상 뉴스 모멘텀에 강한 주가 반응</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">현재 적자 구조, 코로나 매출 소멸로 인한 실적 공백, 허가 지연 리스크</p>
+        </div>
+      </div>
+
+      <!-- 휴마시스 -->
+      <div class="company-card">
+        <div class="company-header comp-color-4">
+          <div>
+            <div class="company-name">휴마시스</div>
+            <div class="company-code">KOSDAQ 205470 | 신속항원 진단</div>
+          </div>
+          <span class="badge badge-hold">보유</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표</div>
+          <div class="fin-row"><span class="fin-label">주요 제품</span><span class="fin-val">코로나 자가진단(선발주자)</span></div>
+          <div class="fin-row"><span class="fin-label">2025 영업 현황</span><span class="fin-val c-red">적자 추정</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val c-teal">~0.7배</span></div>
+          <div class="fin-row"><span class="fin-label">코로나 의존도</span><span class="fin-val c-red">매우 높음</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>PBR 0.7배 수준, 자산 가치 대비 저평가</li>
+            <li>독감 자가진단 허가 시 선발 주자 이미지 활용</li>
+            <li>보유 현금·자산이 시가총액 대비 양호</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">코로나 이후 사업 다각화 지연, 지속 적자 가능성, 신규 성장 동력 부재</p>
+        </div>
+      </div>
+
+      <!-- 래피젠 -->
+      <div class="company-card">
+        <div class="company-header comp-color-5">
+          <div>
+            <div class="company-name">래피젠</div>
+            <div class="company-code">KOSDAQ 147760 | 신속항원 진단</div>
+          </div>
+          <span class="badge badge-watch">관심</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표</div>
+          <div class="fin-row"><span class="fin-label">주요 제품</span><span class="fin-val">독감 A·B형 신속항원 키트</span></div>
+          <div class="fin-row"><span class="fin-label">추정 영업이익</span><span class="fin-val">10~20억원</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PER</span><span class="fin-val">~60배</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val">~1.0배</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>독감 자가진단 일반 허가 시 직접 수혜 종목</li>
+            <li>국산 독감 A·B형 키트 정식 허가 제품 보유</li>
+            <li>식약처 뉴스에 주가 즉각 반응하는 이벤트 드리븐</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">소형주 유동성 리스크, PER 고평가 부담, SD바이오센서와의 특허 분쟁 이슈</p>
+        </div>
+      </div>
+
+      <!-- 젠바디 -->
+      <div class="company-card">
+        <div class="company-header comp-color-6">
+          <div>
+            <div class="company-name">젠바디</div>
+            <div class="company-code">KOSDAQ 253590 | 신속항원 진단</div>
+          </div>
+          <span class="badge badge-hold">보유</span>
+        </div>
+        <div class="company-body">
+          <div class="sub-title" style="margin-top:0">재무 지표</div>
+          <div class="fin-row"><span class="fin-label">주요 제품</span><span class="fin-val">코로나+독감 트리플 키트</span></div>
+          <div class="fin-row"><span class="fin-label">추정 영업이익</span><span class="fin-val">30억원 (흑자 유지)</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PER</span><span class="fin-val">~30배</span></div>
+          <div class="fin-row"><span class="fin-label">추정 PBR</span><span class="fin-val">~1.1배</span></div>
+          <div class="sub-title">투자 포인트</div>
+          <ul style="font-size:12.5px; color:var(--text-sub); padding-left:16px; line-height:1.8;">
+            <li>동남아·중동 수출 비중 확대 전략 추진</li>
+            <li>흑자 구조 유지 중 — 안정적인 현금흐름</li>
+            <li>트리플 동시검사 제품 경쟁력 보유</li>
+          </ul>
+          <div class="sub-title">핵심 리스크</div>
+          <p style="font-size:12.5px; color:var(--text-sub);">신흥국 환율 리스크, 국내 시장 점유율 한계, 중소형 규모의 R&amp;D 역량 제약</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ 씨젠 실적 추이 ═══ -->
+  <div class="section">
+    <div class="section-title">④ 씨젠 분기별 실적 추이 (2025년)</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>분기</th>
+          <th>매출액 (억원)</th>
+          <th>YoY 성장률</th>
+          <th>QoQ 성장률</th>
+          <th>영업이익 (억원)</th>
+          <th>영업이익률</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>2025 Q1</strong></td>
+          <td>1,060</td>
+          <td class="up">+10.2%</td>
+          <td class="neutral">—</td>
+          <td>68</td>
+          <td>6.4%</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>2025 Q2</strong></td>
+          <td>1,163</td>
+          <td class="up">+12.8%</td>
+          <td class="up">+9.7%</td>
+          <td>112</td>
+          <td>9.6%</td>
+          <td>비호흡기 성장</td>
+        </tr>
+        <tr>
+          <td><strong>2025 Q3</strong></td>
+          <td>1,135</td>
+          <td class="up">+15.0%</td>
+          <td class="dn">-2.4%</td>
+          <td>96</td>
+          <td>8.5%</td>
+          <td>ESCMID 학회</td>
+        </tr>
+        <tr>
+          <td><strong>2025 Q4</strong></td>
+          <td class="up">1,306</td>
+          <td class="up">+13.3%</td>
+          <td class="up">+15.0%</td>
+          <td class="up">69</td>
+          <td>5.3%</td>
+          <td>독감 시즌 회복</td>
+        </tr>
+        <tr style="background:#f0f9f4; font-weight:700;">
+          <td><strong>2025 연간</strong></td>
+          <td class="up">4,742</td>
+          <td class="up">+14.5%</td>
+          <td>—</td>
+          <td class="up">345</td>
+          <td>7.3%</td>
+          <td>흑자전환 달성</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ═══ SWOT ═══ -->
+  <div class="section">
+    <div class="section-title">⑤ 섹터 SWOT 분석 — 자가진단키트 산업 전반</div>
+    <div class="swot-grid">
+      <div class="swot-cell swot-s">
+        <h4>💪 강점 (Strengths)</h4>
+        <ul>
+          <li>코로나 경험으로 검증된 생산·공급 체계</li>
+          <li>국내 기업들의 글로벌 수출 네트워크 (100+개국)</li>
+          <li>씨젠·SD바이오센서 등 기술력 세계 수준</li>
+          <li>정부 인증으로 신뢰성 확보된 제품 라인</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-w">
+        <h4>📉 약점 (Weaknesses)</h4>
+        <ul>
+          <li>코로나 이후 실적 급락 — 신뢰도 리스크</li>
+          <li>독감 자가진단 일반 허가 부재 (국내)</li>
+          <li>전문가용 대비 낮은 정확도 논란</li>
+          <li>사후 의료 연계 서비스 인프라 미흡</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-o">
+        <h4>🚀 기회 (Opportunities)</h4>
+        <ul>
+          <li>식약처 독감 자가진단 허가 논의 활성화</li>
+          <li>성병·마약 자가검사 시장 구조적 성장</li>
+          <li>AI·디지털 헬스케어 연계 신규 서비스</li>
+          <li>고령화 사회 — 만성질환 자가 모니터링 수요 급증</li>
+          <li>글로벌 IVD 시장 CAGR 9.4% 성장 지속</li>
+        </ul>
+      </div>
+      <div class="swot-cell swot-t">
+        <h4>⚠️ 위협 (Threats)</h4>
+        <ul>
+          <li>식약처 규제 강화 및 허가 지연</li>
+          <li>중국산 저가 키트 시장 잠식</li>
+          <li>대기업(삼성바이오, 셀트리온) 시장 진입</li>
+          <li>신종 감염병 없을 시 특수 수요 소멸</li>
+          <li>정확도 논란으로 인한 소비자 불신</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 리스크 지표 ═══ -->
+  <div class="section">
+    <div class="section-title">⑥ 종목별 투자 리스크 지수 (10점 기준)</div>
+    <p style="font-size:12px; color:var(--text-hint); margin-bottom:18px;">※ 숫자가 높을수록 리스크 높음. 시가총액, 실적 변동성, 코로나 의존도, 규제 리스크를 종합 평가한 추정 수치입니다.</p>
+
+    <div style="margin-bottom:4px"><strong style="font-size:13px;">에스디바이오센서</strong> <span style="font-size:11px; color:var(--text-hint)">(중위험 — 저평가 가치주 성격)</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">실적 안정성</span><div class="risk-bar"><div class="risk-fill" style="width:55%; background:#1a4fa0;"></div></div><span class="risk-val" style="color:#1a4fa0">5.5</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">코로나 의존</span><div class="risk-bar"><div class="risk-fill" style="width:45%; background:#0d7a5f;"></div></div><span class="risk-val" style="color:#0d7a5f">4.5</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">해외 리스크</span><div class="risk-bar"><div class="risk-fill" style="width:60%; background:#b7770d;"></div></div><span class="risk-val" style="color:#b7770d">6.0</span></div>
+
+    <div style="margin:18px 0 4px"><strong style="font-size:13px;">씨젠</strong> <span style="font-size:11px; color:var(--text-hint)">(낮은 리스크 — 실적 개선 흐름)</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">실적 안정성</span><div class="risk-bar"><div class="risk-fill" style="width:35%; background:#1a4fa0;"></div></div><span class="risk-val" style="color:#1a4fa0">3.5</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">코로나 의존</span><div class="risk-bar"><div class="risk-fill" style="width:30%; background:#0d7a5f;"></div></div><span class="risk-val" style="color:#0d7a5f">3.0</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">성장 모멘텀</span><div class="risk-bar"><div class="risk-fill" style="width:75%; background:#2563c4;"></div></div><span class="risk-val" style="color:#2563c4">7.5</span></div>
+
+    <div style="margin:18px 0 4px"><strong style="font-size:13px;">수젠텍·휴마시스</strong> <span style="font-size:11px; color:var(--text-hint)">(고위험 — 적자 지속, 이벤트 의존)</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">실적 안정성</span><div class="risk-bar"><div class="risk-fill" style="width:80%; background:#c0392b;"></div></div><span class="risk-val" style="color:#c0392b">8.0</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">코로나 의존</span><div class="risk-bar"><div class="risk-fill" style="width:75%; background:#c0392b;"></div></div><span class="risk-val" style="color:#c0392b">7.5</span></div>
+    <div class="risk-bar-wrap"><span class="risk-label">규제 리스크</span><div class="risk-bar"><div class="risk-fill" style="width:70%; background:#b7770d;"></div></div><span class="risk-val" style="color:#b7770d">7.0</span></div>
+  </div>
+
+  <!-- ═══ 주요 촉매 타임라인 ═══ -->
+  <div class="section">
+    <div class="section-title">⑦ 주요 투자 촉매 타임라인 (2026년)</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#1a4fa0;"></div>
+        <div class="tl-date">2026년 3월 25일 — SD바이오센서 실적 발표일</div>
+        <div class="tl-text">에스디바이오센서 2025 연간 실적 발표 예정. 비코로나 매출 비중 및 Meridian 시너지 확인이 핵심.<span class="tl-tag tl-pos">긍정적</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#0d7a5f;"></div>
+        <div class="tl-date">2026년 4월 — 유럽임상미생물감염학회 (ESCMID)</div>
+        <div class="tl-text">씨젠의 STAgora™·CURECA™ 플랫폼 글로벌 로드맵 공개. 기술력 대외 홍보 효과.<span class="tl-tag tl-pos">긍정적</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#b7770d;"></div>
+        <div class="tl-date">2026년 상반기 — 식약처 독감 자가진단 허가 심사</div>
+        <div class="tl-text">독감 유행 피크 이후 일반 허가 논의 활성화 예상. 허가 시 래피젠·수젠텍·SD바이오센서 동반 급등 가능.<span class="tl-tag tl-mid">모니터링</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#c0392b;"></div>
+        <div class="tl-date">2026년 7월 — 미국 진단검사의학회 (ADLM)</div>
+        <div class="tl-text">씨젠 글로벌 전략 발표. 미국 시장 내 SD바이오센서 Meridian 시너지 현황 확인.<span class="tl-tag tl-pos">긍정적</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot" style="background:#7c4dff;"></div>
+        <div class="tl-date">2026년 하반기 — 독감 시즌 진입</div>
+        <div class="tl-text">독감 자가진단 허가 유무에 따라 섹터 전반 모멘텀 결정. 자가진단 미허가 시에도 전문가용 수요 증가.<span class="tl-tag tl-mid">모니터링</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 투자 전략 ═══ -->
+  <div class="section">
+    <div class="section-title">⑧ 투자 전략 요약</div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>투자 성향</th><th>추천 접근법</th><th>핵심 종목</th><th>투자 기간</th><th>목표 수익률</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>공격적</strong></td>
+          <td class="left">독감 허가 뉴스 선제 매수<br>이벤트 드리븐 전략</td>
+          <td>래피젠, 수젠텍</td>
+          <td>1~3개월</td>
+          <td class="up">20~40%+</td>
+        </tr>
+        <tr>
+          <td><strong>중립적</strong></td>
+          <td class="left">실적 개선 추세 추종<br>분할 매수 전략</td>
+          <td>씨젠, 젠바디</td>
+          <td>6~12개월</td>
+          <td class="up">15~25%</td>
+        </tr>
+        <tr>
+          <td><strong>보수적</strong></td>
+          <td class="left">저PBR 가치투자<br>글로벌 확장 모니터링</td>
+          <td>SD바이오센서, 씨젠</td>
+          <td>12~24개월</td>
+          <td class="neutral">10~20%</td>
+        </tr>
+        <tr>
+          <td><strong>헤지 포함</strong></td>
+          <td class="left">글로벌 IVD ETF 활용<br>국내 개별주 보완</td>
+          <td>글로벌 ETF + 씨젠</td>
+          <td>12개월 이상</td>
+          <td class="neutral">8~15%</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="background:var(--blue-lt); border-radius:8px; padding:16px 18px; margin-top:18px; font-size:13px; color:var(--blue); line-height:1.8;">
+      <strong>📌 핵심 요약</strong><br>
+      ① 씨젠은 2025년 흑자전환 확인 + 플랫폼 전환 스토리로 중장기 <strong>최선호 종목</strong><br>
+      ② SD바이오센서는 PBR 0.5배 수준의 극단적 저평가 — <strong>실적 반등 대기 포지션</strong><br>
+      ③ 독감 자가진단 허가 이벤트 시 래피젠·수젠텍 단기 트레이딩 기회<br>
+      ④ 성병·마약 자가검사 시장은 중장기 구조적 성장 — 신규 진입 기업 지속 발굴 필요
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="report-footer">
+  <p><strong>에스디바이오센서(137310) · 씨젠(096530) · 수젠텍(253840) · 휴마시스(205470) · 래피젠(147760) · 젠바디(253590)</strong></p>
+  <p style="margin-top:6px;">본 보고서는 2026년 3월 25일 기준으로 공개된 자료를 바탕으로 작성되었습니다.</p>
+  <p>재무 수치는 공시·언론 보도 기반 추정치이며 실제 수치와 다를 수 있습니다.</p>
+  <p><strong>본 보고서는 투자 권유가 아니며, 투자 판단과 책임은 전적으로 투자자 본인에게 있습니다.</strong></p>
+  <p style="margin-top:8px; color:#bbb;">© 2026 Research Analysis | For informational purposes only</p>
+</div>
+
+</body>
+</html>
