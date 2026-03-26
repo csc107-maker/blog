@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>음식물처리기 관련 상장주 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1916;
+    --card: #201f1c;
+    --border: #2e2c28;
+    --accent: #c8a96e;
+    --accent2: #6dbfa8;
+    --accent3: #e07b5a;
+    --text: #ede8df;
+    --muted: #7a7670;
+    --positive: #5fbe8a;
+    --negative: #e07b5a;
+    --warning: #d4a843;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif KR', serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 80px;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    padding: 72px 40px 56px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(200,169,110,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 900;
+    line-height: 1.15;
+    max-width: 720px;
+    margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+  .crisis-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(224,123,90,.12);
+    border: 1px solid rgba(224,123,90,.35);
+    color: var(--accent3);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+  .pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent3);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.4;transform:scale(.7)}
+  }
+
+  /* ── Layout ── */
+  .main { max-width: 1000px; margin: 0 auto; padding: 0 28px; }
+
+  /* ── Section title ── */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 48px 0 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  /* ── Market banner ── */
+  .market-banner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .market-stat {
+    background: var(--card);
+    padding: 20px 22px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .market-stat .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .market-stat .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .market-stat .change {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--positive);
+  }
+
+  /* ── Stock cards ── */
+  .cards { display: flex; flex-direction: column; gap: 2px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color .25s, transform .25s;
+    cursor: default;
+    animation: fadeUp .5s ease both;
+  }
+  .card:nth-child(1){animation-delay:.05s}
+  .card:nth-child(2){animation-delay:.12s}
+  .card:nth-child(3){animation-delay:.19s}
+  @keyframes fadeUp {
+    from{opacity:0;transform:translateY(12px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .card-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0;
+  }
+
+  .card-body { padding: 28px 28px 24px; }
+  
+  .card-tag-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    padding: 3px 9px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  .tag-kospi { background: rgba(200,169,110,.15); color: var(--accent); border: 1px solid rgba(200,169,110,.3); }
+  .tag-hold  { background: rgba(109,191,168,.12); color: var(--accent2); border: 1px solid rgba(109,191,168,.3); }
+  .tag-watch { background: rgba(212,168,67,.12);  color: var(--warning); border: 1px solid rgba(212,168,67,.3); }
+  .tag-new   { background: rgba(224,123,90,.12); color: var(--accent3); border: 1px solid rgba(224,123,90,.3); }
+
+  .ticker {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: .05em;
+  }
+
+  .card h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .card-desc {
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    max-width: 520px;
+  }
+
+  /* ── Metrics row ── */
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .metric {
+    flex: 1;
+    min-width: 100px;
+    padding: 13px 16px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .metric:last-child { border-right: none; }
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .metric-val {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .green { color: var(--positive); }
+  .gold  { color: var(--accent); }
+  .red   { color: var(--negative); }
+  .blue  { color: var(--accent2); }
+
+  /* ── Right panel ── */
+  .card-panel {
+    width: 210px;
+    padding: 28px 22px;
+    border-left: 1px solid var(--border);
+    background: var(--surface);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .rating-bar-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .rating-row { display: flex; align-items: center; gap: 8px; }
+  .rating-label { font-size: 11px; color: var(--muted); min-width: 52px; }
+  .bar-track {
+    flex: 1; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+  .rating-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 26px;
+    text-align: right;
+  }
+
+  .verdict {
+    margin-top: auto;
+    padding: 12px 14px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .verdict-buy   { background: rgba(95,190,138,.15); color: var(--positive); border: 1px solid rgba(95,190,138,.3); }
+  .verdict-hold  { background: rgba(200,169,110,.12); color: var(--accent); border: 1px solid rgba(200,169,110,.3); }
+  .verdict-watch { background: rgba(212,168,67,.12); color: var(--warning); border: 1px solid rgba(212,168,67,.3); }
+
+  /* ── Highlight boxes ── */
+  .highlights {
+    margin-top: 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .highlight {
+    font-size: 11.5px;
+    color: var(--text);
+    line-height: 1.5;
+    padding: 7px 12px;
+    border-left: 2px solid var(--accent);
+    background: rgba(200,169,110,.06);
+  }
+
+  /* ── Disclaimer ── */
+  .disclaimer {
+    margin-top: 60px;
+    padding: 22px 24px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .disclaimer strong { color: var(--accent3); }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .hero { padding: 48px 20px 40px; }
+    .main { padding: 0 16px; }
+    .card-inner { grid-template-columns: 1fr; }
+    .card-panel { width: auto; border-left: none; border-top: 1px solid var(--border); }
+    .metrics .metric { min-width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-label">Stock Research Report · 2026.03</div>
+  <div class="crisis-badge">
+    <span class="pulse"></span>
+    미·이란 전쟁 → 나프타 수급 위기 → 종량제봉투 대란 진행 중
+  </div>
+  <h1>음식물처리기 관련<br><span>상장주 분석</span></h1>
+  <p class="hero-sub">
+    2025년 시장 규모 9,400억원 → 2027년 1조원 돌파 전망.<br>
+    봉투 없이도 쓰레기를 처리하는 시대, 어떤 종목이 수혜를 받을까.
+  </p>
+</div>
+
+<div class="main">
+
+  <!-- Market stats -->
+  <div class="section-title">Market Overview</div>
+  <div class="market-banner">
+    <div class="market-stat">
+      <div class="label">시장 규모(2025E)</div>
+      <div class="value">9,400억</div>
+      <div class="change">▲ 76% YoY</div>
+    </div>
+    <div class="market-stat">
+      <div class="label">2027년 전망</div>
+      <div class="value">1조+</div>
+      <div class="change">▲ 구조적 성장</div>
+    </div>
+    <div class="market-stat">
+      <div class="label">현재 보급률</div>
+      <div class="value">5~6%</div>
+      <div class="change">성장 여력 충분</div>
+    </div>
+    <div class="market-stat">
+      <div class="label">나프타 재고</div>
+      <div class="value">10~15일</div>
+      <div class="change" style="color:var(--negative)">▼ 수급 위기</div>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="section-title">Recommended Stocks</div>
+  <div class="cards">
+
+    <!-- ① 쿠쿠홀딩스 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-body">
+          <div class="card-tag-row">
+            <span class="tag tag-kospi">KOSPI</span>
+            <span class="tag tag-hold">핵심 추천</span>
+            <span class="ticker">192400</span>
+          </div>
+          <h2>쿠쿠홀딩스</h2>
+          <p class="card-desc">
+            밥솥 강자에서 주방가전 플랫폼으로 진화 중. 자회사 쿠쿠전자가 '에코웨일' 브랜드로 
+            음식물처리기 시장을 공략하며 2025년 1~9월 판매 426% 급증을 달성했다.
+            2025년 연결 매출 9,376억원·영업이익 1,137억원의 탄탄한 실적에 
+            PBR 0.8배 저평가와 4.28% 고배당이 겹친 희귀한 가치주.
+          </p>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">2025 매출</div>
+              <div class="metric-val gold">9,376억</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">영업이익</div>
+              <div class="metric-val green">1,137억</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">PBR</div>
+              <div class="metric-val gold">0.80×</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">배당수익률</div>
+              <div class="metric-val green">4.28%</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">영업이익 증가</div>
+              <div class="metric-val green">+18.1%</div>
+            </div>
+          </div>
+          <div class="highlights">
+            <div class="highlight">📦 에코웨일 6세대 출시 3개월 만에 단일 모델 누적 매출 93억원</div>
+            <div class="highlight">💰 DPS 1,400원 예상, 자사주 6.1% 소각 가능성 → 추가 환원 기대</div>
+            <div class="highlight">🌍 해외 매출 비중 30%+, 미국·동남아 유통망 확대 중</div>
+          </div>
+        </div>
+        <div class="card-panel">
+          <div>
+            <div class="panel-title">투자 지표 점수</div>
+            <div class="rating-bar-wrap">
+              <div class="rating-row">
+                <span class="rating-label">밸류에이션</span>
+                <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+                <span class="rating-val">4.4</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">실적 성장</span>
+                <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+                <span class="rating-val">4.0</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">주주환원</span>
+                <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+                <span class="rating-val">4.2</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">사업 모멘텀</span>
+                <div class="bar-track"><div class="bar-fill" style="width:76%"></div></div>
+                <span class="rating-val">3.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="verdict verdict-buy">
+            ★ 핵심 매수 후보<br>
+            <span style="font-weight:400;font-size:11px">저PBR + 고배당 + 음식물처리기 모멘텀</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ② 쿠쿠홈시스 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-body">
+          <div class="card-tag-row">
+            <span class="tag tag-kospi">KOSPI</span>
+            <span class="tag tag-hold">관심 보유</span>
+            <span class="ticker">284740</span>
+          </div>
+          <h2>쿠쿠홈시스</h2>
+          <p class="card-desc">
+            쿠쿠홀딩스에서 렌탈 사업 부문을 인적분할해 설립한 독립 법인. 
+            정수기·공기청정기 렌탈 시장의 강자이며, 음식물처리기를 렌탈 라인업에 추가하면서 
+            구독형 구매 트렌드를 적극 수용하고 있다. 
+            초기 구매 부담이 낮은 렌탈 모델은 처리기 보급률 확대에 직접 기여한다.
+          </p>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">사업 모델</div>
+              <div class="metric-val blue">렌탈</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">특징</div>
+              <div class="metric-val blue">구독형</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">시장 연계</div>
+              <div class="metric-val gold">직접</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">경기 민감도</div>
+              <div class="metric-val green">낮음</div>
+            </div>
+          </div>
+          <div class="highlights">
+            <div class="highlight">🔄 렌탈 특성상 안정적 반복 수익 — 경기 침체 방어력 우수</div>
+            <div class="highlight">📈 음식물처리기 구독 수요 증가 직접 수혜</div>
+          </div>
+        </div>
+        <div class="card-panel">
+          <div>
+            <div class="panel-title">투자 지표 점수</div>
+            <div class="rating-bar-wrap">
+              <div class="rating-row">
+                <span class="rating-label">밸류에이션</span>
+                <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div>
+                <span class="rating-val">3.3</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">실적 성장</span>
+                <div class="bar-track"><div class="bar-fill" style="width:62%"></div></div>
+                <span class="rating-val">3.1</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">주주환원</span>
+                <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
+                <span class="rating-val">2.9</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">사업 모멘텀</span>
+                <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+                <span class="rating-val">3.5</span>
+              </div>
+            </div>
+          </div>
+          <div class="verdict verdict-hold">
+            관심 종목 편입<br>
+            <span style="font-weight:400;font-size:11px">렌탈 모멘텀 추가 확인 후 판단</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ 풀무원 -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-body">
+          <div class="card-tag-row">
+            <span class="tag tag-kospi">KOSPI</span>
+            <span class="tag tag-new">신규 진입</span>
+            <span class="ticker">017810</span>
+          </div>
+          <h2>풀무원</h2>
+          <p class="card-desc">
+            2025년 5월, '그린더 자동 AI 음식물처리기'를 출시하며 식품 기업에서 친환경 가전으로 
+            영역을 넓히고 있다. 브랜드 신뢰도와 유통 채널을 활용한 후발 주자 전략으로, 
+            음식물처리기 사업이 아직 본격화 단계인 만큼 직접적인 실적 기여는 제한적이나 
+            친환경 포트폴리오 확장 관점에서 중장기 주목이 필요하다.
+          </p>
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">진출 시점</div>
+              <div class="metric-val gold">2025.05</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">방식</div>
+              <div class="metric-val blue">AI 자동</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">기여도</div>
+              <div class="metric-val" style="color:var(--warning)">초기</div>
+            </div>
+            <div class="metric">
+              <div class="metric-label">브랜드력</div>
+              <div class="metric-val green">높음</div>
+            </div>
+          </div>
+          <div class="highlights">
+            <div class="highlight">🌱 친환경 브랜드 이미지와 음식물처리기의 친환경 가치 부합</div>
+            <div class="highlight">⚠️ 음식물처리기 매출 기여는 아직 미미 — 중장기 관찰 필요</div>
+          </div>
+        </div>
+        <div class="card-panel">
+          <div>
+            <div class="panel-title">투자 지표 점수</div>
+            <div class="rating-bar-wrap">
+              <div class="rating-row">
+                <span class="rating-label">밸류에이션</span>
+                <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+                <span class="rating-val">2.5</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">실적 성장</span>
+                <div class="bar-track"><div class="bar-fill" style="width:52%"></div></div>
+                <span class="rating-val">2.6</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">주주환원</span>
+                <div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+                <span class="rating-val">2.3</span>
+              </div>
+              <div class="rating-row">
+                <span class="rating-label">사업 모멘텀</span>
+                <div class="bar-track"><div class="bar-fill" style="width:56%"></div></div>
+                <span class="rating-val">2.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="verdict verdict-watch">
+            관망 후 재평가<br>
+            <span style="font-weight:400;font-size:11px">음식물처리기 실적 기여 확인 필요</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /cards -->
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <strong>⚠️ 투자 유의사항</strong><br>
+    본 자료는 블로그 콘텐츠로서 정보 제공 목적으로만 작성되었으며, 특정 종목의 매수·매도를 권유하거나 
+    투자를 권장하지 않습니다. 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 
+    주식 투자에는 원금 손실의 위험이 있으며, 기재된 수치와 정보는 변동될 수 있습니다. 
+    투자 전 반드시 공시 자료 및 전문 금융 어드바이저의 조언을 구하시기 바랍니다.
+  </div>
+
+</div><!-- /main -->
+
+</body>
+</html>
