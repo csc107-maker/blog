@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 법인 — 세무사 조율 실전 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2330;
+    --border: #2d3748;
+    --accent: #f0a500;
+    --accent2: #e05c3a;
+    --green: #3dba7e;
+    --blue: #4a9eff;
+    --red: #e05c3a;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --card-hover: #1e2736;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 24px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240,165,0,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(240,165,0,0.3);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.35;
+    margin-bottom: 16px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    color: var(--text2);
+    font-size: 14px;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    padding: 0 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tab {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text3);
+    padding: 14px 18px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .nav-tab:hover { color: var(--text2); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* SECTIONS */
+  .section { display: none; padding: 40px 24px; max-width: 900px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  /* SECTION HEADER */
+  .sec-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .sec-num {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 700;
+    color: rgba(240,165,0,0.15);
+    line-height: 1;
+    min-width: 40px;
+  }
+  .sec-header-text h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .sec-header-text p { color: var(--text2); font-size: 13.5px; }
+
+  /* CARDS */
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid.cols2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .card:hover { background: var(--card-hover); border-color: #3a4a60; }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-body { color: var(--text2); font-size: 13.5px; line-height: 1.8; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .badge-gold { background: rgba(240,165,0,0.15); color: var(--accent); border: 1px solid rgba(240,165,0,0.2); }
+  .badge-red { background: rgba(224,92,58,0.12); color: #f07a5a; border: 1px solid rgba(224,92,58,0.2); }
+  .badge-green { background: rgba(61,186,126,0.1); color: var(--green); border: 1px solid rgba(61,186,126,0.2); }
+  .badge-blue { background: rgba(74,158,255,0.1); color: var(--blue); border: 1px solid rgba(74,158,255,0.2); }
+
+  /* ICON DOT */
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .dot-gold { background: var(--accent); }
+  .dot-green { background: var(--green); }
+  .dot-red { background: var(--red); }
+  .dot-blue { background: var(--blue); }
+
+  /* DIALOG BOX — 세무사에게 직접 말하는 예시 */
+  .dialog-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+  .dialog-box {
+    border-radius: 8px;
+    padding: 20px 22px;
+    position: relative;
+  }
+  .dialog-box.owner {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+  }
+  .dialog-box.tax {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+  }
+  .dialog-box.warn {
+    background: rgba(224,92,58,0.06);
+    border: 1px solid rgba(224,92,58,0.2);
+    border-left: 3px solid var(--red);
+  }
+  .dialog-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .dialog-text {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.85;
+  }
+  .dialog-text strong { color: var(--accent); font-weight: 700; }
+  .dialog-text .blue { color: var(--blue); }
+  .dialog-text .green { color: var(--green); }
+  .dialog-text .red { color: var(--red); }
+
+  /* STEP ROW */
+  .step-list { display: flex; flex-direction: column; gap: 0; }
+  .step-item {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  .step-item:not(:last-child) .step-line { display: block; }
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 32px;
+  }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .step-line {
+    display: none;
+    width: 1px;
+    flex: 1;
+    background: var(--border);
+    min-height: 24px;
+    margin: 4px 0;
+  }
+  .step-content {
+    padding: 4px 0 32px;
+    flex: 1;
+  }
+  .step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .step-body { color: var(--text2); font-size: 13.5px; line-height: 1.8; }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .data-table th {
+    background: var(--bg3);
+    color: var(--text2);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table td {
+    padding: 11px 14px;
+    color: var(--text2);
+    border-bottom: 1px solid rgba(45,55,72,0.6);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .table-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin: 20px 0;
+    font-size: 13.5px;
+    line-height: 1.85;
+  }
+  .highlight-gold {
+    background: rgba(240,165,0,0.06);
+    border: 1px solid rgba(240,165,0,0.18);
+    color: #daa43e;
+  }
+  .highlight-red {
+    background: rgba(224,92,58,0.06);
+    border: 1px solid rgba(224,92,58,0.18);
+    color: #d0734d;
+  }
+  .highlight-green {
+    background: rgba(61,186,126,0.06);
+    border: 1px solid rgba(61,186,126,0.18);
+    color: #3daa70;
+  }
+  .highlight strong { font-weight: 700; }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li {
+    display: flex;
+    gap: 12px;
+    font-size: 13.5px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .check-icon {
+    width: 18px; height: 18px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+  .check-icon.ok { background: rgba(61,186,126,0.15); color: var(--green); border: 1px solid rgba(61,186,126,0.2); }
+  .check-icon.warn { background: rgba(240,165,0,0.12); color: var(--accent); border: 1px solid rgba(240,165,0,0.2); }
+  .check-icon.no { background: rgba(224,92,58,0.1); color: var(--red); border: 1px solid rgba(224,92,58,0.2); }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-family: 'Noto Sans KR', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    margin: 16px 0;
+    line-height: 2;
+  }
+  .formula-box .comment { color: var(--text3); font-size: 12px; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text3);
+    line-height: 2;
+  }
+
+  /* SCROLL ANIMATE */
+  .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .nav-tab { padding: 12px 12px; font-size: 12px; }
+    .section { padding: 28px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">실전 세무 조율 가이드</div>
+  <h1>태양광·임대 법인 대표가<br><span>세무사에게 꼭 해야 할 말</span></h1>
+  <p>재무 결손을 막고, 신용평가를 높이기 위해 결산 전 세무사와 어떻게 협의해야 하는지 항목별로 정리했습니다.</p>
+</div>
+
+<!-- TABS -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('tab1', this)">① 세무사에게 할 말</button>
+  <button class="nav-tab" onclick="showTab('tab2', this)">② 결손 방지 전략</button>
+  <button class="nav-tab" onclick="showTab('tab3', this)">③ 결산 체크리스트</button>
+  <button class="nav-tab" onclick="showTab('tab4', this)">④ 조율 일정표</button>
+</div>
+
+<!-- TAB 1: 세무사에게 할 말 -->
+<div id="tab1" class="section active">
+  <div class="sec-header fade-in">
+    <div class="sec-num">01</div>
+    <div class="sec-header-text">
+      <h2>세무사에게 정확히 이렇게 요청하세요</h2>
+      <p>막연하게 "잘 해주세요"가 아닌, 항목별 구체적 요구 사항과 대화 예시입니다.</p>
+    </div>
+  </div>
+
+  <!-- 1-1. 자산 계상 요청 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:12px;">▪ 태양광 설비 자산 계상</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "올해 태양광 설비를 <strong>○억 원</strong>에 설치했습니다. 이 금액을 비용으로 처리하지 말고, <strong>유형자산(기계장치)</strong>으로 계상해 주세요. 감가상각은 <strong>정액법, 내용연수 12년</strong>으로 적용해 주시고, 취득세와 설치비용도 <strong>취득원가에 포함</strong>해 주세요. 설비가 재무제표에 자산으로 보여야 부채비율 개선 효과가 납니다."
+      </div>
+    </div>
+    <div class="dialog-box tax">
+      <div class="dialog-label" style="color:var(--blue);">세무사가 확인해야 할 것</div>
+      <div class="dialog-text">
+        세금계산서 원본 · 설치확인서 · <span class="blue">발전사업 허가서</span> 3가지를 반드시 제출해야 자산 계상이 가능합니다. 서류 미비 시 비용 처리로 떨어질 수 있습니다.
+      </div>
+    </div>
+    <div class="dialog-box warn">
+      <div class="dialog-label" style="color:var(--red);">주의</div>
+      <div class="dialog-text">
+        일부 세무사는 편의상 전액 <span class="red">수선비 또는 소모품비(비용)</span>로 처리하는 경우가 있습니다. 이렇게 되면 당기 비용이 늘어나 결손이 발생하고, 자산총계도 감소합니다. 명확히 <strong>"유형자산 처리"</strong>를 요청하세요.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1-2. 매출 분리 요청 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:12px;">▪ 발전수익 / 임대수익 계정 분리</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "태양광 발전으로 받은 <strong>SMP 정산금과 REC 판매 대금</strong>은 별도 계정인 <strong>'발전수익'</strong>으로 분리해 주세요. 공장 지붕 임대료는 <strong>'임대수익'</strong>으로 따로 표시해 주세요. 두 수익이 같은 계정에 섞이면 세무조사 시 문제가 생기고, 금융기관 심사에서 수익 신뢰성도 낮아진다고 합니다."
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1-3. 세액공제 요청 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:12px;">▪ 에너지 절약시설 투자세액공제 적용</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "조세특례제한법 제25조의 <strong>에너지 절약시설 투자세액공제</strong>를 꼭 신청해 주세요. 저희 회사는 중소기업이니까 <strong>투자금액의 최대 25%</strong>까지 공제받을 수 있는 걸로 알고 있습니다. 만약 올해 납부세액이 없더라도 <strong>5년 이월공제</strong>가 가능하다고 하니, 이월 처리도 반드시 챙겨 주세요."
+      </div>
+    </div>
+    <div class="dialog-box tax">
+      <div class="dialog-label" style="color:var(--blue);">세액공제 계산 예시</div>
+      <div class="dialog-text">
+        태양광 설비 투자금 <strong>3억 원</strong> × 25%(중소기업) = <span class="green">세액공제 7,500만 원</span><br>
+        당해 납부세액이 <strong>3,000만 원</strong>이라면 → 3,000만 원 공제 후, 잔여 <span class="blue">4,500만 원은 5년 이월</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1-4. 주석 기재 요청 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:12px;">▪ 재무제표 주석(注釋) 작성 요청</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "결산서 주석에 태양광 관련 내용을 꼭 넣어 주세요. 구체적으로는 ① <strong>태양광 설비 취득 목적</strong>과 금액, ② <strong>시설자금 대출</strong>의 목적 및 상환 계획, ③ <strong>PPA 또는 REC 계약 기간</strong>과 예상 연간 수익을 기재해 주세요. 나중에 은행 대출 심사 때 주석이 중요한 판단 근거가 됩니다."
+      </div>
+    </div>
+    <div class="dialog-box tax">
+      <div class="dialog-label" style="color:var(--blue);">주석 기재 예문</div>
+      <div class="dialog-text">
+        <span class="blue">【주석 12. 유형자산】</span><br>
+        당기 중 태양광 발전시설(200kW) ○○○백만 원을 취득하였으며, 시설자금 대출 ○○○백만 원을 통해 조달하였습니다. 해당 설비는 전력거래소와의 20년 PPA 계약(연간 예상 수익 ○○백만 원)에 기초하여 운영될 예정입니다.
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 1-5. 현금흐름표 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:12px;">▪ 현금흐름표 작성 요청</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "저희 회사는 순이익이 마이너스이지만, <strong>매월 한전에서 발전수익이 정기적으로 입금</strong>됩니다. 이걸 보여주려면 현금흐름표가 필요합니다. 소규모 법인이라 현금흐름표 작성 의무가 없더라도, <strong>금융기관 제출용 간이 현금흐름표</strong>를 별도로 만들어 주실 수 있나요? 영업활동 현금흐름이 플러스라는 점을 보여주는 것이 대출 심사에 중요하다고 합니다."
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: 결손 방지 전략 -->
+<div id="tab2" class="section">
+  <div class="sec-header fade-in">
+    <div class="sec-num">02</div>
+    <div class="sec-header-text">
+      <h2>결손이 생기지 않게 하려면</h2>
+      <p>결손(당기순손실)은 자본잠식을 유발하고, 신용등급과 대출 심사에 직격탄이 됩니다.</p>
+    </div>
+  </div>
+
+  <!-- 결손 발생 구조 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:14px; margin-top:8px;">▪ 결손이 발생하는 주요 원인 (태양광 법인 기준)</p>
+  <div class="table-wrap fade-in">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>원인</th>
+          <th>구체적 상황</th>
+          <th>조치</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>설비 비용 처리</td>
+          <td>태양광 설비를 자산이 아닌 비용(수선비 등)으로 처리</td>
+          <td><span class="badge badge-green">유형자산 계상</span> 요청</td>
+        </tr>
+        <tr>
+          <td>감가상각 과다</td>
+          <td>내용연수를 짧게 설정하거나 가속상각 적용</td>
+          <td><span class="badge badge-gold">정액법·12년</span> 명시</td>
+        </tr>
+        <tr>
+          <td>이자비용 증가</td>
+          <td>시설대출 이자가 비용으로 과다 계상</td>
+          <td>건설중인자산 기간 이자 자본화 검토</td>
+        </tr>
+        <tr>
+          <td>REC 미수익 처리</td>
+          <td>연말 미판매 REC를 수익 인식하지 않음</td>
+          <td>REC 재고자산 계상으로 수익 보완</td>
+        </tr>
+        <tr>
+          <td>선급비용 미계상</td>
+          <td>연간 보험료·부담금을 전액 당기비용 처리</td>
+          <td>선급비용으로 이연하여 비용 분산</td>
+        </tr>
+        <tr>
+          <td>타 사업부 적자</td>
+          <td>본업 손실이 태양광 수익을 상쇄</td>
+          <td>사업부별 손익 분리 분석 요청</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 결손 방지 공식 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:14px;">▪ 손익 구조 계산 — 세무사와 함께 점검할 숫자</p>
+  <div class="formula-box fade-in">
+    당기순이익(손실) = 영업수익 − 영업비용 − 금융비용 + 영업외수익<br>
+    <br>
+    <span style="color:#e2e8f0;">태양광 수익 반영 시:</span><br>
+    영업수익 += <span style="color:var(--green);">발전수익(SMP + REC판매)</span><br>
+    영업비용 − = <span style="color:var(--blue);">세액공제(최대 25%)</span><br>
+    영업비용 − = <span style="color:var(--blue);">선급비용 이연분</span><br>
+    자산 += <span style="color:var(--green);">태양광 설비 취득원가</span> (비용 아님!)<br>
+    <br>
+    <span class="comment">→ 이 4가지 항목이 제대로 반영되면 결손 위험이 크게 줄어듭니다.</span>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 이월결손금 활용 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:14px;">▪ 이미 결손이 쌓여 있다면 — 이월결손금 활용법</p>
+  <div class="dialog-wrap fade-in">
+    <div class="dialog-box owner">
+      <div class="dialog-label" style="color:var(--accent);">대표 → 세무사</div>
+      <div class="dialog-text">
+        "저희가 과거 3년 동안 결손이 쌓였는데, 올해 태양광으로 흑자 전환이 예상됩니다. <strong>이월결손금을 이번 과세소득과 공제</strong>하면 법인세를 얼마나 줄일 수 있는지 계산해 주세요. 단, 이월결손금 공제는 <strong>각 사업연도 소득의 80%까지</strong> 한도가 있다고 하니, 그 계산도 포함해서 알려주세요."
+      </div>
+    </div>
+    <div class="dialog-box tax">
+      <div class="dialog-label" style="color:var(--blue);">이월결손금 활용 예시</div>
+      <div class="dialog-text">
+        과거 누적 결손금 <strong>5,000만 원</strong> 보유 상황<br>
+        올해 태양광 과세소득 <strong>3,000만 원</strong> 발생 시<br>
+        → 공제 가능 한도: 3,000만 원 × 80% = <span class="green">2,400만 원 이월결손금 공제</span><br>
+        → 과세소득: 3,000 − 2,400 = <span class="blue">600만 원에만 과세</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 감가상각 조절 -->
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:14px;">▪ 감가상각 조절로 당기순이익 관리</p>
+  <div class="card-grid cols2 fade-in">
+    <div class="card">
+      <div class="card-title"><span class="dot dot-green"></span> 결손 위기 시 — 감가상각 최소화</div>
+      <div class="card-body">
+        법인세법상 감가상각은 <strong>임의 상각</strong>입니다. 결손이 예상될 때는 당기에 감가상각을 계상하지 않거나 줄여서 비용을 낮출 수 있습니다. 다음 연도 흑자가 충분할 때 몰아서 상각하면 됩니다.<br><br>
+        <strong>세무사에게:</strong> "올해 결손이 예상되니 태양광 설비 감가상각을 이번 연도에 계상하지 않거나 최소한으로 해주세요."
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot dot-blue"></span> 흑자 전환 후 — 감가상각 최대화</div>
+      <div class="card-body">
+        반대로 이익이 많이 날 경우, 감가상각을 최대로 계상하여 과세소득을 줄일 수 있습니다. 법인세법상 허용 범위 내에서 <strong>상각범위액 이내</strong>라면 합법적 절세입니다.<br><br>
+        <strong>세무사에게:</strong> "올해 이익이 예상보다 크게 났으니, 감가상각을 상각범위액 최대로 계상해 주세요."
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-red fade-in">
+    <strong>⚠ 주의:</strong> 감가상각 의도적 조절은 합법이지만, 금융기관 제출용 결산서와 세무서 제출 신고서가 달라지면 안 됩니다. 동일 수치로 일관성을 유지하세요.
+  </div>
+</div>
+
+<!-- TAB 3: 결산 체크리스트 -->
+<div id="tab3" class="section">
+  <div class="sec-header fade-in">
+    <div class="sec-num">03</div>
+    <div class="sec-header-text">
+      <h2>2025년 결산 최종 체크리스트</h2>
+      <p>결산 전 세무사와 함께 이 항목을 하나씩 확인하세요.</p>
+    </div>
+  </div>
+
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:16px;">▪ 자산·부채 관련</p>
+  <ul class="checklist fade-in">
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>태양광 설비가 <strong>유형자산(기계장치)</strong>으로 계상되었는지 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>설비 감가상각 방법이 <strong>정액법, 12년</strong>으로 설정되었는지 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>태양광 관련 시설자금 대출이 <strong>장기차입금</strong>으로 분류되고 주석에 목적 기재 확인</span>
+    </li>
+    <li>
+      <span class="check-icon warn">!</span>
+      <span>연말 미판매 REC가 있다면 <strong>재고자산</strong>으로 계상 여부 확인 (시장가 기준 보수적 평가)</span>
+    </li>
+    <li>
+      <span class="check-icon warn">!</span>
+      <span>연간 보험료, 부담금 등 선급 성격 비용이 <strong>선급비용</strong>으로 이연 처리되었는지 확인</span>
+    </li>
+  </ul>
+
+  <hr class="divider">
+
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:16px;">▪ 수익·비용 관련</p>
+  <ul class="checklist fade-in">
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span><strong>SMP + REC 판매 수익</strong>이 '발전수익' 계정으로 별도 분류되었는지 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span><strong>임대수익</strong>이 발전수익과 분리된 계정(임대수익)으로 처리되었는지 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>올해 수익이 충분하다면 감가상각 최대 계상, 결손 우려 시 최소 계상 전략 세무사와 합의 확인</span>
+    </li>
+    <li>
+      <span class="check-icon no">✗</span>
+      <span>설비 취득비용이 <strong>수선비·소모품비 등 비용 계정</strong>으로 처리된 경우 → 즉시 수정 요청</span>
+    </li>
+  </ul>
+
+  <hr class="divider">
+
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:16px;">▪ 세액공제·신고 관련</p>
+  <ul class="checklist fade-in">
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span><strong>에너지 절약시설 투자세액공제(조특법 제25조)</strong> 신청 여부 및 공제금액 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>세액공제 초과분에 대한 <strong>5년 이월공제 명세서</strong> 작성 확인</span>
+    </li>
+    <li>
+      <span class="check-icon warn">!</span>
+      <span>과거 이월결손금이 있다면 <strong>80% 한도 내 공제 처리</strong>가 반영되었는지 확인</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>법인세 신고서에 <strong>태양광 발전 사업자 등록번호</strong>가 정확히 반영되었는지 확인</span>
+    </li>
+  </ul>
+
+  <hr class="divider">
+
+  <p style="font-size:13px; color:var(--text3); letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:16px;">▪ 금융기관 제출용 별도 작성 요청</p>
+  <ul class="checklist fade-in">
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>영업활동 현금흐름이 표시된 <strong>간이 현금흐름표</strong> 작성 (소규모 법인 의무 없어도 별도 요청)</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span><strong>발전수익 월별 명세</strong> (한전·전력거래소 입금내역)를 별첨 자료로 정리</span>
+    </li>
+    <li>
+      <span class="check-icon ok">✓</span>
+      <span>결산서 주석에 <strong>PPA/REC 계약 기간 및 예상 연간 수익</strong> 기재 확인</span>
+    </li>
+    <li>
+      <span class="check-icon warn">!</span>
+      <span>NICE/KCB 신용평가 재신청을 위한 <strong>재무제표 최신본 갱신</strong> 일정 세무사와 협의</span>
+    </li>
+  </ul>
+</div>
+
+<!-- TAB 4: 조율 일정표 -->
+<div id="tab4" class="section">
+  <div class="sec-header fade-in">
+    <div class="sec-num">04</div>
+    <div class="sec-header-text">
+      <h2>세무사 조율 일정 로드맵</h2>
+      <p>2025년 결산 ~ 2026년 법인세 신고까지 월별 행동 계획입니다.</p>
+    </div>
+  </div>
+
+  <div class="step-list fade-in">
+    <div class="step-item">
+      <div class="step-left">
+        <div class="step-num">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">11~12월 <span class="badge badge-gold">결산 전 사전 미팅</span></div>
+        <div class="step-body">
+          태양광 설비 취득 증빙(세금계산서·설치확인서·발전사업허가서) 전달. 감가상각 전략 협의 (당기 이익 수준에 따라 최소/최대 계상 선택). 연말 미판매 REC 수량 집계 후 자산 계상 여부 결정. 세무사에게 "계정 분리 계획"을 문서로 요청할 것.
+        </div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-left">
+        <div class="step-num">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">1월 <span class="badge badge-blue">결산 초안 검토</span></div>
+        <div class="step-body">
+          세무사로부터 결산 초안(손익계산서·대차대조표) 수령 후 직접 확인. 체크 포인트: ① 태양광 설비가 자산에 올라있는가 ② 발전수익 계정이 분리되어 있는가 ③ 당기순이익이 마이너스인가(결손 여부). 결손이라면 즉시 감가상각 축소·선급비용 이연·REC 자산 계상을 재요청.
+        </div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-left">
+        <div class="step-num">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">2월 <span class="badge badge-green">세액공제 최종 확인</span></div>
+        <div class="step-body">
+          투자세액공제 신청서 작성 확인. 이월공제 명세 확인. 이월결손금 공제 계산 (80% 한도) 재확인. 법인세 예상 납부세액 산출 후 자금 계획 수립.
+        </div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-left">
+        <div class="step-num">4</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">3월 <span class="badge badge-blue">금융기관 제출용 자료 준비</span></div>
+        <div class="step-body">
+          법인세 신고 전 결산서 확정본 수령. 세무사에게 간이 현금흐름표 + 발전수익 월별 명세표 별도 작성 요청. 결산서 주석 최종 확인 (태양광 설비·대출 목적·PPA 계약 내용 포함 여부). NICE/KCB 신용평가 재신청 위한 재무제표 갱신 일정 확정.
+        </div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-left">
+        <div class="step-num">5</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-title">4월 <span class="badge badge-red">법인세 신고 마감 · 신용평가 신청</span></div>
+        <div class="step-body">
+          법인세 신고·납부 (3월~4월 말). 신고 직후 갱신된 재무제표로 NICE/KCB 신용평가 재신청. 은행 대출 심사 필요 시 결산서 + 간이 현금흐름표 + 주석 포함 패키지로 제출. 태양광 PF 대출 추가 검토 시 발전사업허가서·PPA 계약서 함께 제출.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="highlight highlight-gold fade-in">
+    <strong>핵심 요약:</strong> 세무사는 세금 최소화를 기본 목표로 일하지만, 태양광 법인 대표는 <strong>신용등급 관리와 금융기관 심사 대비</strong>라는 추가 목표가 있습니다. 이 두 목표를 미리 세무사에게 명확히 전달하고, 결산 초안 단계에서 한 번 더 확인하는 것이 가장 중요합니다.
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  본 가이드는 일반적인 정보 제공 목적으로 작성되었습니다.<br>
+  개별 법인의 구체적인 세무·회계 전략은 담당 세무사 또는 공인회계사와 반드시 상담하시기 바랍니다.<br><br>
+  © 2025 태양광 법인 실전 가이드
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    // trigger fade-in for newly shown section
+    setTimeout(() => observeAll(), 50);
+  }
+
+  function observeAll() {
+    const els = document.querySelectorAll('.fade-in:not(.visible)');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    els.forEach(el => obs.observe(el));
+  }
+  observeAll();
+</script>
+</body>
+</html>
