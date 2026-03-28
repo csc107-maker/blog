@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>애그플레이션 시대 완전 정복 — 장보기 절약 전략 & 런치플레이션 수혜주 분석</title>
+<meta name="description" content="고물가·런치플레이션 시대, 6가지 장보기 절약 전략과 수혜 주식 종목 재무분석(PER·PBR·ROE)을 한눈에.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #FAF6EF;
+    --warm-white: #FFFDF9;
+    --amber: #C8832A;
+    --amber-light: #E8A94A;
+    --amber-dark: #8B5A1A;
+    --charcoal: #1C1C1C;
+    --mid-gray: #555450;
+    --light-gray: #E8E4DC;
+    --red: #C0392B;
+    --green: #2D7D46;
+    --green-light: #E8F5ED;
+    --blue: #1A5276;
+    --blue-light: #EBF5FB;
+    --orange-muted: #D35400;
+    --section-pad: 80px 40px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--charcoal);
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 30px,
+      rgba(200,131,42,0.06) 30px, rgba(200,131,42,0.06) 31px
+    );
+  }
+  .hero-eyebrow {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--amber-light);
+    margin-bottom: 20px; position: relative;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(28px, 5vw, 52px); font-weight: 900;
+    color: #fff; line-height: 1.3;
+    position: relative; margin-bottom: 20px;
+  }
+  .hero h1 em { color: var(--amber-light); font-style: normal; }
+  .hero-sub {
+    color: rgba(255,255,255,0.65); font-size: 15px;
+    max-width: 560px; position: relative;
+  }
+  .hero-badges {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-content: center; margin-top: 28px; position: relative;
+  }
+  .badge {
+    background: rgba(200,131,42,0.2);
+    border: 1px solid rgba(200,131,42,0.4);
+    color: var(--amber-light); font-size: 12px; font-weight: 600;
+    padding: 5px 14px; border-radius: 20px; letter-spacing: 0.5px;
+  }
+
+  /* ── NAV ── */
+  .nav-bar {
+    background: var(--amber);
+    display: flex; gap: 0; overflow-x: auto;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  .nav-bar a {
+    color: #fff; text-decoration: none; font-size: 12px; font-weight: 700;
+    letter-spacing: 0.5px; padding: 14px 22px; white-space: nowrap;
+    transition: background 0.2s; border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .nav-bar a:hover { background: rgba(0,0,0,0.15); }
+
+  /* ── SECTION TITLES ── */
+  .section-header {
+    text-align: center; padding: 60px 40px 40px;
+  }
+  .section-header .label {
+    font-size: 10px; font-weight: 700; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 12px;
+  }
+  .section-header h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(22px, 4vw, 36px); font-weight: 900;
+    line-height: 1.35; color: var(--charcoal);
+  }
+  .section-header p {
+    color: var(--mid-gray); font-size: 15px;
+    max-width: 600px; margin: 14px auto 0;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: var(--amber); margin: 16px auto 0; border-radius: 2px;
+  }
+
+  /* ── SAVING STRATEGIES ── */
+  #saving { background: var(--warm-white); }
+  .strategies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px; padding: 0 40px 70px; max-width: 1200px; margin: 0 auto;
+  }
+  .strategy-card {
+    background: #fff;
+    border: 1px solid var(--light-gray);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .strategy-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.09);
+  }
+  .strategy-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--amber);
+  }
+  .card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px; color: var(--amber-light);
+    opacity: 0.35; position: absolute; top: 12px; right: 20px;
+    font-weight: 400; line-height: 1;
+  }
+  .card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: linear-gradient(135deg, #FFF3DC, #FFE5B4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 18px;
+  }
+  .strategy-card h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 12px; color: var(--charcoal);
+    line-height: 1.4;
+  }
+  .strategy-card p {
+    font-size: 14px; color: var(--mid-gray);
+    line-height: 1.8; margin-bottom: 16px;
+  }
+  .tip-box {
+    background: linear-gradient(135deg, #FFF8EE, #FFF3DC);
+    border-left: 3px solid var(--amber);
+    padding: 12px 14px; border-radius: 0 8px 8px 0;
+    font-size: 13px; color: var(--amber-dark); font-weight: 500;
+  }
+  .tip-box strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .season-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 14px; }
+  .season-table th {
+    background: var(--amber); color: #fff;
+    padding: 8px 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .season-table td { padding: 8px 10px; border-bottom: 1px solid var(--light-gray); color: var(--mid-gray); }
+  .season-table tr:last-child td { border-bottom: none; }
+  .season-table tr:nth-child(even) td { background: #FAFAF8; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tag {
+    font-size: 12px; padding: 4px 10px; border-radius: 12px;
+    background: var(--light-gray); color: var(--mid-gray); font-weight: 500;
+  }
+  .tag.green { background: var(--green-light); color: var(--green); }
+  .saving-pct {
+    display: inline-block; font-size: 22px; font-weight: 900;
+    color: var(--amber); font-family: 'DM Serif Display', serif;
+    margin-right: 6px;
+  }
+
+  /* ── LUNCHFLATION ── */
+  #lunchflation { background: var(--charcoal); color: #fff; }
+  #lunchflation .section-header .label { color: var(--amber-light); }
+  #lunchflation .section-header h2 { color: #fff; }
+  #lunchflation .section-header p { color: rgba(255,255,255,0.6); }
+  .lunch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px; padding: 0 40px 60px; max-width: 1100px; margin: 0 auto;
+  }
+  @media(max-width:700px) { .lunch-grid { grid-template-columns: 1fr; } }
+  .lunch-stat-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 28px 26px;
+  }
+  .lunch-stat-card h4 {
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--amber-light); margin-bottom: 16px;
+  }
+  .big-stat { font-family: 'DM Serif Display', serif; font-size: 48px; color: #fff; line-height: 1; }
+  .big-stat span { font-size: 20px; color: var(--amber-light); }
+  .stat-desc { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 8px; line-height: 1.6; }
+  .progress-bar-wrap { margin-top: 16px; }
+  .pbar-label { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 5px; }
+  .pbar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+  .pbar-fill { height: 100%; border-radius: 4px; background: var(--amber); transition: width 1s ease; }
+  .lunch-cause-list { list-style: none; }
+  .lunch-cause-list li {
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; color: rgba(255,255,255,0.8);
+  }
+  .lunch-cause-list li:last-child { border-bottom: none; }
+  .cause-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── STOCKS ── */
+  #stocks { background: var(--cream); }
+  .disclaimer {
+    max-width: 900px; margin: 0 auto 32px;
+    background: #FFF8E1; border: 1px solid #FFD54F;
+    border-radius: 10px; padding: 14px 20px;
+    font-size: 13px; color: #7B5800; line-height: 1.6;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .disclaimer .icon { font-size: 18px; flex-shrink: 0; }
+  .stocks-container { max-width: 1100px; margin: 0 auto; padding: 0 40px 60px; }
+  .stock-card {
+    background: #fff;
+    border: 1px solid var(--light-gray);
+    border-radius: 20px; padding: 32px; margin-bottom: 28px;
+    transition: box-shadow 0.25s;
+  }
+  .stock-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .stock-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--light-gray);
+  }
+  .stock-identity h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px; font-weight: 900; color: var(--charcoal);
+  }
+  .stock-identity .ticker {
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    color: var(--amber); margin-top: 3px;
+  }
+  .stock-rating {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .rating-badge {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    padding: 5px 14px; border-radius: 20px;
+  }
+  .rating-badge.buy { background: var(--green); color: #fff; }
+  .rating-badge.hold { background: #2980B9; color: #fff; }
+  .rating-badge.watch { background: #7F8C8D; color: #fff; }
+  .target-price { font-size: 13px; color: var(--mid-gray); }
+  .target-price strong { color: var(--charcoal); font-size: 15px; }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px; margin-bottom: 22px;
+  }
+  @media(max-width:700px) { .metrics-row { grid-template-columns: repeat(2,1fr); } }
+  .metric-box {
+    background: var(--cream); border-radius: 12px;
+    padding: 16px; text-align: center;
+    border: 1px solid var(--light-gray);
+  }
+  .metric-box .mkey {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--mid-gray); margin-bottom: 6px;
+  }
+  .metric-box .mval {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; color: var(--charcoal); line-height: 1;
+  }
+  .metric-box .mval.good { color: var(--green); }
+  .metric-box .mval.caution { color: var(--orange-muted); }
+  .metric-box .mval.warn { color: var(--red); }
+  .metric-box .msub { font-size: 11px; color: var(--mid-gray); margin-top: 4px; }
+
+  .stock-body {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  }
+  @media(max-width:700px) { .stock-body { grid-template-columns: 1fr; } }
+  .stock-section h4 {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--amber);
+    margin-bottom: 12px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  .data-row {
+    display: flex; justify-content: space-between;
+    padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.04);
+    font-size: 13px;
+  }
+  .data-row:last-child { border-bottom: none; }
+  .data-row .dk { color: var(--mid-gray); }
+  .data-row .dv { font-weight: 700; color: var(--charcoal); }
+  .data-row .dv.up { color: var(--green); }
+  .data-row .dv.dn { color: var(--red); }
+  .pros-cons { list-style: none; }
+  .pros-cons li {
+    font-size: 13px; padding: 5px 0;
+    display: flex; gap: 8px; align-items: flex-start;
+    color: var(--mid-gray); line-height: 1.5;
+  }
+  .pros-cons li .pi { flex-shrink: 0; font-size: 14px; }
+  .verdict-bar {
+    margin-top: 20px; padding: 16px 20px;
+    border-radius: 12px; font-size: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .verdict-bar.green-v { background: var(--green-light); border-left: 4px solid var(--green); }
+  .verdict-bar.blue-v { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  .verdict-bar.amber-v { background: #FFF8EE; border-left: 4px solid var(--amber); }
+  .verdict-bar .vi { font-size: 18px; flex-shrink: 0; }
+  .verdict-bar p { color: var(--charcoal); line-height: 1.65; }
+  .verdict-bar strong { display: block; margin-bottom: 4px; color: inherit; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px 60px; }
+  .compare-wrap h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px; font-weight: 900; margin-bottom: 20px;
+    color: var(--charcoal);
+  }
+  .compare-table-scroll { overflow-x: auto; }
+  .compare-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    font-size: 13px; background: #fff;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--light-gray);
+  }
+  .compare-table th {
+    background: var(--charcoal); color: #fff;
+    padding: 14px 16px; font-size: 11px; font-weight: 700;
+    letter-spacing: 1px; text-align: center;
+  }
+  .compare-table td {
+    padding: 13px 16px; border-bottom: 1px solid var(--light-gray);
+    text-align: center; color: var(--charcoal);
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: #FAFAFA; }
+  .compare-table td:first-child { text-align: left; font-weight: 700; }
+  .chip {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+  }
+  .chip.buy { background: #E8F5ED; color: var(--green); }
+  .chip.hold { background: #EBF5FB; color: var(--blue); }
+  .chip.watch { background: #F2F3F4; color: #555; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 36px 40px;
+    font-size: 12px; line-height: 1.8;
+  }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  @media(max-width:600px) {
+    .strategies-grid, .stocks-container, .compare-wrap { padding: 0 20px 50px; }
+    .section-header { padding: 50px 20px 30px; }
+    .hero { padding: 50px 20px; }
+    .nav-bar a { padding: 12px 14px; font-size: 11px; }
+    .metrics-row { grid-template-columns: repeat(2,1fr); }
+  }
+
+  /* animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero h1, .hero-sub, .hero-badges { animation: fadeUp 0.7s ease both; }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero-sub { animation-delay: 0.25s; }
+  .hero-badges { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <p class="hero-eyebrow">2026 밥상물가 완전 분석</p>
+  <h1>애그플레이션 시대<br><em>똑똑한 생존 전략</em></h1>
+  <p class="hero-sub">장보기 절약 6가지 황금 전략부터 런치플레이션 수혜 종목 재무분석까지 — 고물가 시대의 나침반</p>
+  <div class="hero-badges">
+    <span class="badge">🛒 장바구니 절약</span>
+    <span class="badge">📊 재무분석 PER·PBR·ROE</span>
+    <span class="badge">🍱 런치플레이션 수혜주</span>
+    <span class="badge">2026 최신 데이터</span>
+  </div>
+</header>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav-bar">
+  <a href="#saving">① 장보기 절약 전략</a>
+  <a href="#lunchflation">② 런치플레이션 분석</a>
+  <a href="#stocks">③ 수혜 종목 재무분석</a>
+  <a href="#compare">④ 종목 비교표</a>
+</nav>
+
+<!-- ═══════════════ SAVING STRATEGIES ═══════════════ -->
+<section id="saving">
+  <div class="section-header">
+    <p class="label">Smart Shopping Strategy</p>
+    <h2>고물가 시대 장보기<br>6가지 황금 전략</h2>
+    <p>유가·환율·공급망 위기로 식재료 가격이 요동치는 지금, 알면 달라지는 절약 노하우를 구체적으로 정리했습니다.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="strategies-grid">
+
+    <!-- ① 제철 식재료 -->
+    <div class="strategy-card">
+      <span class="card-num">01</span>
+      <div class="card-icon">🌿</div>
+      <h3>제철 식재료 활용하기</h3>
+      <p>제철 채소·과일은 공급량이 풍부해 비수기 대비 가격이 <span class="saving-pct">30~50%</span> 저렴하고, 영양 밀도도 최고조에 달합니다. 수입 과일·채소와 달리 운송 비용과 환율 영향도 최소화됩니다.</p>
+      <table class="season-table">
+        <thead><tr><th>계절</th><th>채소</th><th>과일</th></tr></thead>
+        <tbody>
+          <tr><td>🌸 봄</td><td>봄나물, 달래, 냉이, 쑥</td><td>딸기, 한라봉</td></tr>
+          <tr><td>☀️ 여름</td><td>오이, 호박, 가지, 깻잎</td><td>수박, 복숭아, 포도</td></tr>
+          <tr><td>🍂 가을</td><td>고구마, 연근, 무, 배추</td><td>배, 사과, 감</td></tr>
+          <tr><td>❄️ 겨울</td><td>시금치, 대파, 당근, 브로콜리</td><td>귤, 한라봉, 레드향</td></tr>
+        </tbody>
+      </table>
+      <div class="tip-box" style="margin-top:16px;">
+        <strong>💡 Pro Tip</strong>
+        aT(한국농수산식품유통공사) 농산물유통정보(kamis.or.kr)에서 오늘의 시세를 확인하고 장을 보면 충동 구매를 줄일 수 있습니다.
+      </div>
+    </div>
+
+    <!-- ② 대용량 소분 냉동 -->
+    <div class="strategy-card">
+      <span class="card-num">02</span>
+      <div class="card-icon">🧊</div>
+      <h3>대용량 구매 + 소분 냉동 활용</h3>
+      <p>코스트코·이마트 트레이더스 등 창고형 할인점에서 대용량을 구매한 뒤 즉시 소분·냉동하면 단가를 <span class="saving-pct">25~40%</span> 낮출 수 있습니다. 한 번의 장보기로 한 달 식재료를 해결하는 '먼슬리 쇼핑'도 유효합니다.</p>
+      <div class="tag-list">
+        <span class="tag green">✅ 닭가슴살·닭다리</span>
+        <span class="tag green">✅ 삼겹살·목살</span>
+        <span class="tag green">✅ 새우·오징어</span>
+        <span class="tag green">✅ 두부·단두부</span>
+        <span class="tag green">✅ 대파·마늘</span>
+      </div>
+      <div class="tip-box" style="margin-top:16px;">
+        <strong>💡 냉동 유지 기간 가이드</strong>
+        육류 3~6개월 / 생선류 2~3개월 / 채소류 1~2개월 / 조리식품 1~3개월. 날짜 라벨을 붙이는 습관이 핵심입니다.
+      </div>
+    </div>
+
+    <!-- ③ PB 제품 -->
+    <div class="strategy-card">
+      <span class="card-num">03</span>
+      <div class="card-icon">🏪</div>
+      <h3>PB(자체 브랜드) 제품 적극 활용</h3>
+      <p>대형마트 PB 상품은 동일 규격 NB 브랜드 대비 평균 <span class="saving-pct">20~35%</span> 저렴합니다. 제조는 동일 공장에서 이루어지는 경우가 많아 품질 차이는 크지 않습니다.</p>
+      <div class="progress-bar-wrap">
+        <div class="pbar-label"><span>이마트 노브랜드</span><span>최대 35% 절감</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:35%;background:#2D7D46;"></div></div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-top:10px;">
+        <div class="pbar-label"><span>홈플러스 시그니처</span><span>최대 28% 절감</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:28%;background:#1A5276;"></div></div>
+      </div>
+      <div class="progress-bar-wrap" style="margin-top:10px;">
+        <div class="pbar-label"><span>롯데마트 오늘좋은</span><span>최대 25% 절감</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:25%;background:#C8832A;"></div></div>
+      </div>
+      <div class="tip-box" style="margin-top:16px;">
+        <strong>💡 PB 추천 품목</strong>
+        라면·국수류, 두부·두유, 통조림(참치·캔), 계란, 식용유, 휴지·세제 생활용품. 이 품목들은 품질 체감 차이가 거의 없습니다.
+      </div>
+    </div>
+
+    <!-- ④ 앱/가격비교 -->
+    <div class="strategy-card">
+      <span class="card-num">04</span>
+      <div class="card-icon">📱</div>
+      <h3>알뜰 장보기 앱·가격 비교 서비스</h3>
+      <p>스마트폰 하나로 실시간 최저가를 확인하고 쿠폰·포인트를 적립하면 연간 수십만 원의 절약 효과를 거둘 수 있습니다.</p>
+      <div class="data-row"><span class="dk">🌾 KAMIS (aT)</span><span class="dv up">실시간 농산물 도소매가 비교</span></div>
+      <div class="data-row"><span class="dk">🛍 이마트·롯데마트 앱</span><span class="dv up">당일 특가·쿠폰·앱전용가</span></div>
+      <div class="data-row"><span class="dk">📦 쿠팡 로켓프레시</span><span class="dv up">새벽배송 + 멤버십 할인</span></div>
+      <div class="data-row"><span class="dk">🏷 네이버쇼핑 최저가</span><span class="dv up">식품·생필품 비교견적</span></div>
+      <div class="data-row"><span class="dk">💳 카드사 할인 결합</span><span class="dv up">마트 제휴카드 5~10% 추가 할인</span></div>
+      <div class="tip-box" style="margin-top:14px;">
+        <strong>💡 황금 조합</strong>
+        마트 앱 쿠폰 + 제휴카드 할인 + 포인트 적립을 삼중으로 활용하면 실구매가 기준 15~20%까지 절감 가능합니다.
+      </div>
+    </div>
+
+    <!-- ⑤ 식단 계획 -->
+    <div class="strategy-card">
+      <span class="card-num">05</span>
+      <div class="card-icon">📋</div>
+      <h3>식단 계획 세우고 '계획 구매' 실천</h3>
+      <p>충동 구매 없이 리스트 기반으로 장을 보면 식비를 평균 <span class="saving-pct">20~30%</span> 줄일 수 있다는 연구 결과가 있습니다. 식재료 낭비도 동시에 줄어 쓰레기 배출량도 감소합니다.</p>
+      <div style="background:#F8F5F0;border-radius:10px;padding:16px;margin-top:12px;">
+        <p style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;">📅 주간 식단 계획 프레임워크</p>
+        <div class="data-row"><span class="dk">월·화</span><span class="dv">단백질 중심 (육류·두부)</span></div>
+        <div class="data-row"><span class="dk">수·목</span><span class="dv">탄수화물 중심 (파스타·볶음밥)</span></div>
+        <div class="data-row"><span class="dk">금·토</span><span class="dv">채소·찌개류 (남은 식재료 활용)</span></div>
+        <div class="data-row"><span class="dk">일</span><span class="dv">냉장고 파먹기 + 다음 주 식단 설계</span></div>
+      </div>
+      <div class="tip-box" style="margin-top:14px;">
+        <strong>💡 핵심 원칙</strong>
+        배고픈 상태로 마트에 가지 마세요. 공복 쇼핑은 충동 구매를 최대 40% 증가시킨다는 연구 결과가 있습니다.
+      </div>
+    </div>
+
+    <!-- ⑥ 로컬푸드 -->
+    <div class="strategy-card">
+      <span class="card-num">06</span>
+      <div class="card-icon">🌾</div>
+      <h3>로컬푸드·산지 직거래 활용</h3>
+      <p>대형마트 유통 단계(산지→도매→중도매→소매)를 거치면 소비자가가 산지 대비 <span class="saving-pct">2~4배</span> 높아집니다. 직거래로 유통 마진을 제거하면 신선하고 저렴한 식재료를 확보할 수 있습니다.</p>
+      <div class="data-row"><span class="dk">🏪 농협 하나로마트</span><span class="dv up">산지 직배송, 시세 대비 10~20% 저렴</span></div>
+      <div class="data-row"><span class="dk">🚜 로컬푸드 직판장</span><span class="dv up">당일 수확 농산물, 잔류농약 최소</span></div>
+      <div class="data-row"><span class="dk">📦 못난이 채소 구독</span><span class="dv up">규격 외 상품 30~50% 할인</span></div>
+      <div class="data-row"><span class="dk">🌐 산지 직거래 플랫폼</span><span class="dv up">정기구독·꾸러미 서비스</span></div>
+      <div class="data-row"><span class="dk">👨‍🌾 도시농업·텃밭</span><span class="dv up">쌈채소·허브류 자급 가능</span></div>
+      <div class="tip-box" style="margin-top:14px;">
+        <strong>💡 추천 플랫폼</strong>
+        마켓컬리(새벽배송), 동네시장 장보기(네이버), 농사펀드(산지 직접 연결), 꼬박꼬박(유기농 꾸러미).
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ LUNCHFLATION ═══════════════ -->
+<section id="lunchflation">
+  <div class="section-header">
+    <p class="label">Lunchflation Analysis</p>
+    <h2>런치플레이션 — 직장인 밥값의 반란</h2>
+    <p>점심 한 끼 1만 원 시대. 런치플레이션이 만들어낸 시장 변화와 수혜 산업을 분석합니다.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="lunch-grid">
+    <div class="lunch-stat-card">
+      <h4>📈 외식 물가 상승률 (2020→2025)</h4>
+      <div class="big-stat">+20<span>%↑</span></div>
+      <p class="stat-desc">축산물·수산물 가격 5년간 약 20% 상승. 밀가루·치즈·설탕 등 가공 원료도 동반 급등.</p>
+      <div class="progress-bar-wrap" style="margin-top:18px;">
+        <div class="pbar-label"><span>외식 물가</span><span>+20%</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:80%;"></div></div>
+        <div class="pbar-label" style="margin-top:8px;"><span>전체 소비자물가(동기)</span><span>+14%</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:56%;background:rgba(255,255,255,0.3);"></div></div>
+      </div>
+    </div>
+
+    <div class="lunch-stat-card">
+      <h4>🏢 구내식당 3사 합산 매출</h4>
+      <div class="big-stat">9<span>조 원 돌파</span></div>
+      <p class="stat-desc">삼성웰스토리+CJ프레시웨이+현대그린푸드 2025년 합산 매출 9조746억 원 — 사상 최초 9조 원 돌파. 런치플레이션이 만든 '구내식당 르네상스'.</p>
+    </div>
+
+    <div class="lunch-stat-card">
+      <h4>🥗 구내식당 평균 단가 변화</h4>
+      <div class="big-stat">8,300<span>원</span></div>
+      <p class="stat-desc">5년 전 4,000~6,000원이던 구내식당 평균 단가가 현재 약 8,300원으로 올랐지만, 외부 식당(10,000~15,000원) 대비 여전히 합리적인 선택지로 평가.</p>
+      <div class="progress-bar-wrap" style="margin-top:14px;">
+        <div class="pbar-label"><span>구내식당 평균</span><span>₩8,300</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:55%;"></div></div>
+        <div class="pbar-label" style="margin-top:8px;"><span>외부 식당 평균</span><span>₩12,000+</span></div>
+        <div class="pbar"><div class="pbar-fill" style="width:80%;background:rgba(192,57,43,0.6);"></div></div>
+      </div>
+    </div>
+
+    <div class="lunch-stat-card">
+      <h4>🔍 런치플레이션 주요 원인</h4>
+      <ul class="lunch-cause-list">
+        <li><span class="cause-icon">🛢</span>국제 유가 급등 → 물류·포장·조리 연료비 상승</li>
+        <li><span class="cause-icon">💱</span>원달러 환율 1,500원대 → 수입 식재료 원가 20%↑</li>
+        <li><span class="cause-icon">🌡</span>기후변화 → 작황 불안정, 공급망 변동성 확대</li>
+        <li><span class="cause-icon">👷</span>최저임금 인상 → 조리·서빙 인건비 증가</li>
+        <li><span class="cause-icon">📦</span>배달 플랫폼 수수료 → 외식업체 부담 전가</li>
+        <li><span class="cause-icon">🏠</span>상가 임차료 지속 상승 → 고정비 증가</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STOCKS ═══════════════ -->
+<section id="stocks">
+  <div class="section-header">
+    <p class="label">Investment Analysis</p>
+    <h2>런치플레이션 수혜 종목<br>재무 심층 분석</h2>
+    <p>고물가·런치플레이션 구조에서 실적 수혜를 받는 국내 상장 종목의 PER·PBR·ROE를 분석합니다.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="stocks-container">
+
+    <div class="disclaimer">
+      <span class="icon">⚠️</span>
+      <div>
+        <strong>투자 유의사항:</strong> 본 분석은 공개된 재무 데이터를 기반으로 한 참고 정보이며, 투자 권유가 아닙니다. 주가 및 재무지표는 시장 상황에 따라 변동될 수 있으며, 투자 결정은 반드시 전문 금융투자업자와 상담 후 본인의 판단으로 하시기 바랍니다. 재무수치는 2025년 연간·3Q 누적 기준 공시 데이터 기반 추정치입니다.
+      </div>
+    </div>
+
+    <!-- 삼양식품 -->
+    <div class="stock-card">
+      <div class="stock-header">
+        <div class="stock-identity">
+          <h3>🔥 삼양식품</h3>
+          <div class="ticker">KRX: 003230 · 음식료 섹터</div>
+        </div>
+        <div class="stock-rating">
+          <span class="rating-badge buy">BUY ★★★</span>
+          <div class="target-price">목표주가 <strong>₩1,800,000</strong></div>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-box">
+          <div class="mkey">PER</div>
+          <div class="mval caution">~22x</div>
+          <div class="msub">업종 평균 대비 고평가</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">PBR</div>
+          <div class="mval caution">~8.5x</div>
+          <div class="msub">성장성 반영 프리미엄</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">ROE</div>
+          <div class="mval good">~38%</div>
+          <div class="msub">업계 최상위권</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">영업이익 YoY</div>
+          <div class="mval good">+50%</div>
+          <div class="msub">2025 3Q 누적 기준</div>
+        </div>
+      </div>
+
+      <div class="stock-body">
+        <div class="stock-section">
+          <h4>핵심 재무 데이터</h4>
+          <div class="data-row"><span class="dk">2025 매출(추정)</span><span class="dv">약 2.1~2.2조 원</span></div>
+          <div class="data-row"><span class="dk">매출 YoY 증가율</span><span class="dv up">+37% (3Q 누적)</span></div>
+          <div class="data-row"><span class="dk">영업이익률</span><span class="dv up">~21% (고수익 구조)</span></div>
+          <div class="data-row"><span class="dk">부채비율</span><span class="dv">낮음 (건전한 재무)</span></div>
+          <div class="data-row"><span class="dk">밀양 2공장 가동률</span><span class="dv up">상승 중 → 원가 개선</span></div>
+        </div>
+        <div class="stock-section">
+          <h4>투자 포인트 & 리스크</h4>
+          <ul class="pros-cons">
+            <li><span class="pi">✅</span>불닭볶음면 글로벌 K-Food 열풍 지속, 수출 37% 급증</li>
+            <li><span class="pi">✅</span>미국·유럽·아시아 신규 법인 설립으로 현지화 가속</li>
+            <li><span class="pi">✅</span>B2B 소스류 신사업으로 포트폴리오 다변화</li>
+            <li><span class="pi">⚠️</span>미국 관세 부담 증가 — 가격 인상 전가 가능성 주시</li>
+            <li><span class="pi">⚠️</span>고 PER·PBR 기반 고평가 우려, 성장 둔화 시 조정 위험</li>
+          </ul>
+        </div>
+      </div>
+      <div class="verdict-bar green-v">
+        <span class="vi">🟢</span>
+        <p><strong>종합 투자 의견: 적극 매수 (장기 성장주)</strong>
+        고물가 시대에도 수요가 오히려 증가하는 '라면 디펜시브 + 글로벌 성장주' 성격을 동시에 보유. ROE 38%, 영업이익 +50% 성장은 업계 압도적 1위. 단, 밸류에이션 부담이 있어 분할 매수 전략 권장.</p>
+      </div>
+    </div>
+
+    <!-- CJ프레시웨이 -->
+    <div class="stock-card">
+      <div class="stock-header">
+        <div class="stock-identity">
+          <h3>🥗 CJ프레시웨이</h3>
+          <div class="ticker">KRX: 051500 · 식자재유통·급식 섹터</div>
+        </div>
+        <div class="stock-rating">
+          <span class="rating-badge buy">BUY ★★☆</span>
+          <div class="target-price">목표주가 <strong>₩36,000</strong></div>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-box">
+          <div class="mkey">PER</div>
+          <div class="mval good">~6.4x</div>
+          <div class="msub">업종 평균 수준</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">PBR</div>
+          <div class="mval good">~0.85x</div>
+          <div class="msub">장부가 이하 → 저평가</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">ROE</div>
+          <div class="mval">~13%</div>
+          <div class="msub">안정적 수익성</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">영업이익 YoY</div>
+          <div class="mval good">+8%</div>
+          <div class="msub">역대 최대 실적 달성</div>
+        </div>
+      </div>
+
+      <div class="stock-body">
+        <div class="stock-section">
+          <h4>핵심 재무 데이터</h4>
+          <div class="data-row"><span class="dk">2025 매출</span><span class="dv up">₩3조4,811억 (역대 최대)</span></div>
+          <div class="data-row"><span class="dk">2025 영업이익</span><span class="dv up">₩1,017억 (+8.1% YoY)</span></div>
+          <div class="data-row"><span class="dk">온라인 유통 매출</span><span class="dv up">+55% (O2O 전략 성과)</span></div>
+          <div class="data-row"><span class="dk">급식사업 매출</span><span class="dv">₩1조8,934억</span></div>
+          <div class="data-row"><span class="dk">2026 영업이익 전망</span><span class="dv up">₩1,172억 (+16% 예상)</span></div>
+        </div>
+        <div class="stock-section">
+          <h4>투자 포인트 & 리스크</h4>
+          <ul class="pros-cons">
+            <li><span class="pi">✅</span>런치플레이션 직접 수혜 — 구내식당 수요 폭발적 증가</li>
+            <li><span class="pi">✅</span>군급식·아파트·공항 등 B2B 급식 신규 수주 확대</li>
+            <li><span class="pi">✅</span>PBR 1배 미만 저평가 → 밸류업 정책 수혜 가능성</li>
+            <li><span class="pi">✅</span>키친리스(주방 없는 급식) 신사업 매출 +22% 성장</li>
+            <li><span class="pi">⚠️</span>식자재 원가 상승 → 영업이익률 압박 지속</li>
+          </ul>
+        </div>
+      </div>
+      <div class="verdict-bar green-v">
+        <span class="vi">🟢</span>
+        <p><strong>종합 투자 의견: 매수 (저평가 가치주 + 성장 모멘텀)</strong>
+        PBR 0.85배의 저평가 상태에서 역대 최대 실적을 달성. 런치플레이션 구조적 수혜가 2026년에도 지속 예상. 16% 영업이익 성장 전망과 낮은 밸류에이션의 조합이 매력적.</p>
+      </div>
+    </div>
+
+    <!-- 현대그린푸드 -->
+    <div class="stock-card">
+      <div class="stock-header">
+        <div class="stock-identity">
+          <h3>🏢 현대그린푸드</h3>
+          <div class="ticker">KRX: 453400 · 급식·식자재 섹터</div>
+        </div>
+        <div class="stock-rating">
+          <span class="rating-badge hold">HOLD ★★</span>
+          <div class="target-price">관심 종목 유지</div>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-box">
+          <div class="mkey">PER</div>
+          <div class="mval good">~8x</div>
+          <div class="msub">적정 밸류에이션</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">PBR</div>
+          <div class="mval good">~0.72x</div>
+          <div class="msub">장부가 이하 저평가</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">ROE</div>
+          <div class="mval">~9%</div>
+          <div class="msub">안정적·방어적</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">매출 YoY</div>
+          <div class="mval">+2.6%</div>
+          <div class="msub">안정 성장</div>
+        </div>
+      </div>
+
+      <div class="stock-body">
+        <div class="stock-section">
+          <h4>핵심 재무 데이터</h4>
+          <div class="data-row"><span class="dk">2025 매출</span><span class="dv">₩2조3,296억</span></div>
+          <div class="data-row"><span class="dk">영업이익(2023)</span><span class="dv">₩847억 (역대 최고)</span></div>
+          <div class="data-row"><span class="dk">매출 성장률</span><span class="dv">2.6% (안정적)</span></div>
+          <div class="data-row"><span class="dk">케어푸드 신사업</span><span class="dv up">고령화 수혜 기대</span></div>
+          <div class="data-row"><span class="dk">배당 정책</span><span class="dv">꾸준한 배당 지급</span></div>
+        </div>
+        <div class="stock-section">
+          <h4>투자 포인트 & 리스크</h4>
+          <ul class="pros-cons">
+            <li><span class="pi">✅</span>현대백화점그룹 계열 — 안정적 기업 지배구조</li>
+            <li><span class="pi">✅</span>케어푸드(고령자 맞춤 식품) 고성장 신사업 육성</li>
+            <li><span class="pi">✅</span>PBR 0.72배 저평가 → 밸류업 정책 수혜 가능</li>
+            <li><span class="pi">⚠️</span>성장률이 경쟁사 대비 다소 낮음 (2.6%)</li>
+            <li><span class="pi">⚠️</span>식자재 원가 상승 압박으로 마진 개선 제한적</li>
+          </ul>
+        </div>
+      </div>
+      <div class="verdict-bar amber-v">
+        <span class="vi">🟡</span>
+        <p><strong>종합 투자 의견: 보유 (방어적 배당주 성격)</strong>
+        급격한 성장보다는 안정성에 방점. 고령화 사회에서 케어푸드 신사업이 중장기 성장 동력이 될 수 있으나, 단기 모멘텀은 CJ프레시웨이·삼양식품 대비 약함. 배당 목적 장기 보유에 적합.</p>
+      </div>
+    </div>
+
+    <!-- BGF리테일 -->
+    <div class="stock-card">
+      <div class="stock-header">
+        <div class="stock-identity">
+          <h3>🏪 BGF리테일 (CU편의점)</h3>
+          <div class="ticker">KRX: 282330 · 편의점·소매 섹터</div>
+        </div>
+        <div class="stock-rating">
+          <span class="rating-badge hold">HOLD ★★</span>
+          <div class="target-price">관심 종목</div>
+        </div>
+      </div>
+
+      <div class="metrics-row">
+        <div class="metric-box">
+          <div class="mkey">PER</div>
+          <div class="mval">~14x</div>
+          <div class="msub">업종 평균 수준</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">PBR</div>
+          <div class="mval">~2.1x</div>
+          <div class="msub">브랜드 가치 반영</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">ROE</div>
+          <div class="mval">~14%</div>
+          <div class="msub">양호한 자본 효율성</div>
+        </div>
+        <div class="metric-box">
+          <div class="mkey">매출 YoY</div>
+          <div class="mval">+4.4%</div>
+          <div class="msub">영업익 -5.2% 주의</div>
+        </div>
+      </div>
+
+      <div class="stock-body">
+        <div class="stock-section">
+          <h4>핵심 재무 데이터</h4>
+          <div class="data-row"><span class="dk">2025 3Q 누적 매출</span><span class="dv up">+4.4% YoY</span></div>
+          <div class="data-row"><span class="dk">2025 3Q 영업이익</span><span class="dv dn">-5.2% (비용 증가)</span></div>
+          <div class="data-row"><span class="dk">간편식(HMR) 성장</span><span class="dv up">1인 가구 수요 증가</span></div>
+          <div class="data-row"><span class="dk">전국 점포 수</span><span class="dv">1위권 경쟁 (GS25와 접전)</span></div>
+          <div class="data-row"><span class="dk">PB 도시락 경쟁력</span><span class="dv up">런치플레이션 대안 수요↑</span></div>
+        </div>
+        <div class="stock-section">
+          <h4>투자 포인트 & 리스크</h4>
+          <ul class="pros-cons">
+            <li><span class="pi">✅</span>런치플레이션 속 편의점 도시락 수요 급증</li>
+            <li><span class="pi">✅</span>1~2인 가구 증가 구조적 수혜</li>
+            <li><span class="pi">✅</span>HMR(가정간편식) 자체 제조 역량 강화</li>
+            <li><span class="pi">⚠️</span>영업이익 감소 추세 — 비용 구조 개선 필요</li>
+            <li><span class="pi">⚠️</span>GS25·세븐일레븐과 점포 포화 경쟁 심화</li>
+          </ul>
+        </div>
+      </div>
+      <div class="verdict-bar blue-v">
+        <span class="vi">🔵</span>
+        <p><strong>종합 투자 의견: 관심 보유 (모멘텀 개선 확인 필요)</strong>
+        편의점 도시락이 런치플레이션 최대 수혜 아이템이지만, 영업이익 감소가 걸림돌. 비용 구조 개선이 확인되는 분기부터 매수 접근 유효. 장기적으로 HMR 브랜드 경쟁력이 핵심 관전 포인트.</p>
+      </div>
+    </div>
+
+  </div><!-- /stocks-container -->
+</section>
+
+<!-- ═══════════════ COMPARE TABLE ═══════════════ -->
+<section id="compare" style="background: var(--warm-white); padding-bottom: 80px;">
+  <div class="section-header">
+    <p class="label">Comparison</p>
+    <h2>수혜 종목 한눈에 비교</h2>
+    <p>4개 종목의 핵심 투자 지표를 한 화면에서 비교합니다.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="compare-wrap">
+    <div class="compare-table-scroll">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>종목</th>
+            <th>섹터</th>
+            <th>PER</th>
+            <th>PBR</th>
+            <th>ROE</th>
+            <th>매출 성장률</th>
+            <th>영업이익률</th>
+            <th>런치플레이션 수혜도</th>
+            <th>투자 의견</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🔥 삼양식품</td>
+            <td>식품 제조</td>
+            <td>~22x</td>
+            <td>~8.5x</td>
+            <td style="color:var(--green);font-weight:800;">~38%</td>
+            <td style="color:var(--green);font-weight:800;">+37%</td>
+            <td style="color:var(--green);font-weight:800;">~21%</td>
+            <td>⭐⭐⭐⭐⭐</td>
+            <td><span class="chip buy">BUY ★★★</span></td>
+          </tr>
+          <tr>
+            <td>🥗 CJ프레시웨이</td>
+            <td>급식·식자재</td>
+            <td style="color:var(--green);font-weight:800;">~6.4x</td>
+            <td style="color:var(--green);font-weight:800;">~0.85x</td>
+            <td>~13%</td>
+            <td>+8%</td>
+            <td>~3.2%</td>
+            <td>⭐⭐⭐⭐⭐</td>
+            <td><span class="chip buy">BUY ★★</span></td>
+          </tr>
+          <tr>
+            <td>🏢 현대그린푸드</td>
+            <td>급식·식자재</td>
+            <td>~8x</td>
+            <td style="color:var(--green);font-weight:800;">~0.72x</td>
+            <td>~9%</td>
+            <td>+2.6%</td>
+            <td>~3.9%</td>
+            <td>⭐⭐⭐⭐</td>
+            <td><span class="chip hold">HOLD</span></td>
+          </tr>
+          <tr>
+            <td>🏪 BGF리테일</td>
+            <td>편의점·소매</td>
+            <td>~14x</td>
+            <td>~2.1x</td>
+            <td>~14%</td>
+            <td>+4.4%</td>
+            <td>~2.1%</td>
+            <td>⭐⭐⭐</td>
+            <td><span class="chip watch">관심 보유</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:24px; display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+      <div class="verdict-bar green-v" style="border-radius:12px;">
+        <span class="vi">📌</span>
+        <p><strong>PER 해석:</strong> 낮을수록 저평가. 음식료 업종 평균 12~15배 기준. CJ프레시웨이 6.4배는 매력적.</p>
+      </div>
+      <div class="verdict-bar blue-v" style="border-radius:12px;">
+        <span class="vi">📌</span>
+        <p><strong>PBR 해석:</strong> 1 미만은 장부가 이하 저평가. CJ·현대그린푸드 모두 1 미만 → 밸류업 수혜 가능.</p>
+      </div>
+      <div class="verdict-bar amber-v" style="border-radius:12px;">
+        <span class="vi">📌</span>
+        <p><strong>ROE 해석:</strong> 높을수록 자본 효율이 좋은 기업. 삼양식품 38%는 글로벌 식품 기업 최상위 수준.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>📊 데이터 출처:</strong> 한국개발연구원(KDI), 국가데이터처, 한국은행, CJ뉴스룸, 각 사 공시 자료, FnGuide, 현대차증권 리포트</p>
+  <p style="margin-top:8px;">재무 수치는 2025년 공시 기반 추정치이며 실제와 다를 수 있습니다. 본 자료는 투자 권유가 아닙니다.</p>
+  <p style="margin-top:12px;font-size:11px;opacity:0.5;">#애그플레이션 #런치플레이션 #장바구니물가 #밥상물가 #삼양식품 #CJ프레시웨이 #현대그린푸드 #BGF리테일 #PER #PBR #ROE #식품주 #2026주식</p>
+</footer>
+
+</body>
+</html>
