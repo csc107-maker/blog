@@ -588,7 +588,351 @@
       border-radius: 50%;
     }
 
-    /* ── SAVINGS CALCULATOR ── */
+    /* ── COST BREAKDOWN ── */
+    .cost-breakdown {
+      background: var(--ink);
+      border-radius: 20px;
+      padding: 32px;
+      margin: 32px 0;
+      color: white;
+    }
+
+    .cost-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--sun);
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+    }
+
+    .cost-rows { display: flex; flex-direction: column; gap: 0; }
+
+    .cost-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .cost-row:last-child { border-bottom: none; }
+
+    .cost-row-total {
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 2px solid rgba(245,166,35,0.4) !important;
+      border-bottom: none !important;
+    }
+
+    .cost-item-label {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cost-row-total .cost-item-label {
+      color: var(--sun);
+      font-weight: 700;
+    }
+
+    .cost-icon { font-size: 1.1rem; }
+
+    .cost-amount {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .cost-row-total .cost-amount {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .cost-subsidy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .cost-subsidy strong { color: #5DE88D; }
+    .cost-row-total .cost-subsidy { font-size: 0.85rem; }
+
+    .cost-note {
+      margin-top: 16px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 12px;
+    }
+
+    /* ── PAYBACK BOX ── */
+    .payback-box {
+      background: linear-gradient(135deg, #0D3D6B, #1565C0);
+      border-radius: 20px;
+      padding: 32px;
+      margin: 28px 0;
+      color: white;
+    }
+
+    .payback-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--sun);
+      margin-bottom: 24px;
+    }
+
+    .payback-equation {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .payback-step {
+      background: rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 16px 20px;
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .payback-step-highlight {
+      background: rgba(245,166,35,0.2);
+      border: 1px solid rgba(245,166,35,0.4);
+    }
+
+    .payback-step-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 8px;
+    }
+
+    .payback-step-highlight .payback-step-label { color: var(--sun); }
+
+    .payback-step-value {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .payback-step-result {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: white;
+      letter-spacing: 0.05em;
+    }
+
+    .payback-step-highlight .payback-step-result {
+      color: var(--sun);
+      font-size: 1.6rem;
+    }
+
+    .payback-arrow {
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+    }
+
+    .payback-bonus {
+      margin-top: 20px;
+      background: rgba(93,232,141,0.12);
+      border: 1px solid rgba(93,232,141,0.25);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 0.85rem;
+      color: #5DE88D;
+    }
+
+    .payback-bonus strong { color: #ADFFC9; }
+
+    @media (max-width: 600px) {
+      .cost-row { grid-template-columns: 1fr; gap: 4px; }
+      .cost-amount, .cost-subsidy { text-align: left; }
+      .payback-equation { flex-direction: column; }
+      .payback-arrow { transform: rotate(90deg); }
+    }
+
+    .oil-source-box { background: #1C1C2E; border-radius: 20px; padding: 28px 32px; margin: 32px 0; color: white; }
+    .oil-source-header { font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .oil-source-badge { background: rgba(245,166,35,0.2); border: 1px solid rgba(245,166,35,0.4); color: #F5A623; font-size: 0.68rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.08em; }
+    .oil-price-track { display: flex; flex-direction: column; gap: 12px; }
+    .oil-price-item { display: grid; grid-template-columns: 130px 1fr 180px; gap: 12px; align-items: center; }
+    .oil-price-period { font-size: 0.75rem; color: rgba(255,255,255,0.55); line-height: 1.4; }
+    .oil-price-bar-wrap { background: rgba(255,255,255,0.08); border-radius: 999px; height: 10px; overflow: hidden; }
+    .oil-price-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2E8B57, #5DE88D); }
+    .oil-price-bar.war { background: linear-gradient(90deg, #B91C1C, #EF4444); }
+    .oil-price-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); }
+    .oil-price-val.used { color: #5DE88D; }
+    .oil-price-val.war-val { color: #FCA5A5; }
+    .badge-used { display: inline-block; background: rgba(93,232,141,0.2); border: 1px solid rgba(93,232,141,0.4); color: #5DE88D; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+    .badge-war { display: inline-block; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #FCA5A5; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+    .oil-source-note { margin-top: 16px; font-size: 0.68rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.07); padding-top: 12px; }
+    .savings-calc-box { background: #fff; border: 1px solid #E5E7EB; border-radius: 20px; padding: 28px 32px; margin: 24px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+    .savings-calc-title { font-family: 'Noto Serif KR', serif; font-size: 1rem; font-weight: 900; margin-bottom: 20px; color: #1C1C2E; }
+    .savings-calc-rows { display: flex; flex-direction: column; }
+    .savings-calc-row { display: grid; grid-template-columns: 160px 1fr 140px; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid #F3F4F6; }
+    .savings-calc-total { border-bottom: none; padding-top: 18px; border-top: 2px solid #1A6DB5; }
+    .savings-calc-category { font-size: 0.88rem; font-weight: 700; color: #1C1C2E; }
+    .savings-calc-detail { font-size: 0.82rem; color: #6B7280; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .savings-calc-detail .arr { color: #1A6DB5; font-weight: 700; }
+    .savings-calc-amount { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: #059669; text-align: right; }
+    .total-amt { font-size: 1.6rem; color: #065F46; }
+    .savings-calc-note { margin-top: 14px; font-size: 0.72rem; color: #6B7280; line-height: 1.7; border-top: 1px solid #F3F4F6; padding-top: 12px; }
+    .repayment-section { background: linear-gradient(135deg, #0D1B2A, #0D3D6B); border-radius: 24px; padding: 32px; margin: 24px 0; color: white; }
+    .repayment-title { font-family: 'Noto Serif KR', serif; font-size: 1.1rem; font-weight: 900; color: #F5A623; margin-bottom: 4px; }
+    .repayment-subtitle { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+    .repayment-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .rep-tab { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); font-size: 0.78rem; font-weight: 600; padding: 8px 18px; border-radius: 999px; cursor: pointer; transition: all 0.2s; }
+    .rep-tab.active { background: #F5A623; border-color: #F5A623; color: #1C1C2E; }
+    .repayment-table-wrap { overflow-x: auto; border-radius: 12px; }
+    .repayment-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .repayment-table thead { background: rgba(255,255,255,0.08); }
+    .repayment-table th { padding: 10px 14px; text-align: left; font-size: 0.72rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); font-weight: 700; white-space: nowrap; }
+    .repayment-table td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); white-space: nowrap; }
+    .repayment-table tr.paid-year td { color: #5DE88D; font-weight: 700; }
+    .rep-bar-bg { background: rgba(255,255,255,0.08); border-radius: 999px; height: 8px; overflow: hidden; min-width: 80px; }
+    .rep-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #F5A623, #5DE88D); }
+    .repayment-result { margin-top: 16px; background: rgba(93,232,141,0.12); border: 1px solid rgba(93,232,141,0.3); border-radius: 12px; padding: 14px 20px; font-size: 0.9rem; color: #5DE88D; }
+    .repayment-result strong { color: #ADFFC9; }
+    @media (max-width:600px) {
+      .oil-price-item { grid-template-columns: 90px 1fr; }
+      .savings-calc-row { grid-template-columns: 1fr; gap: 4px; }
+      .savings-calc-amount { text-align: left; }
+    }
+
+    /* ── COMPARE TABLE ── */
+    .compare-table {
+      width: 100%;
+      margin: 24px 0 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #E5E7EB;
+    }
+
+    .compare-head {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1.1fr 1.1fr;
+      background: var(--ink);
+      padding: 12px 18px;
+      gap: 8px;
+    }
+
+    .compare-col-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-align: right;
+    }
+
+    .before-label { color: #F87171; }
+    .after-label  { color: #60A5FA; }
+    .save-label   { color: #34D399; }
+
+    .compare-row {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1.1fr 1.1fr;
+      padding: 14px 18px;
+      gap: 8px;
+      align-items: center;
+      border-bottom: 1px solid #F0F0F0;
+      background: white;
+    }
+
+    .compare-row:hover { background: #FAFAFA; }
+
+    .compare-total-row {
+      background: linear-gradient(135deg, #F0F7FF, #FFF8E7) !important;
+      border-bottom: none;
+      border-top: 2px solid #E0ECFF;
+    }
+
+    .compare-item-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .before-val {
+      font-size: 0.88rem;
+      color: #EF4444;
+      text-align: right;
+      text-decoration: line-through;
+      opacity: 0.8;
+    }
+
+    .after-val {
+      font-size: 0.88rem;
+      color: #1D4ED8;
+      font-weight: 700;
+      text-align: right;
+      position: relative;
+    }
+
+    .after-note {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: #6B7280;
+      margin-top: 2px;
+    }
+
+    .save-val {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #059669;
+      text-align: right;
+    }
+
+    .total-before { font-size: 1rem; font-weight: 700; text-decoration: line-through; }
+    .total-after  { font-size: 1rem; font-weight: 700; }
+    .total-save   {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      color: #065F46;
+      letter-spacing: 0.04em;
+    }
+
+    .clarify-box {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #FFFBEB;
+      border: 1.5px solid #FCD34D;
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 16px;
+    }
+
+    .clarify-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+
+    .clarify-text {
+      font-size: 0.88rem;
+      color: #78350F;
+      line-height: 1.75;
+    }
+
+    .clarify-text strong { color: #92400E; }
+
+    @media (max-width: 600px) {
+      .compare-head,
+      .compare-row { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .compare-col-label:first-child,
+      .compare-item-name { grid-column: 1 / -1; }
+    }
+
+    /* ── SAVINGS ── */
     .savings-section {
       background: linear-gradient(135deg, var(--sun-light), #E8F4FD);
       border-radius: 24px;
@@ -945,7 +1289,7 @@
       <div class="stat-label">히트펌프 에너지 효율 (기름 대비)</div>
     </div>
     <div class="stat-box">
-      <div class="stat-num">10년</div>
+      <div class="stat-num">7년</div>
       <div class="stat-label">평균 투자 회수 기간</div>
     </div>
   </div>
@@ -1365,32 +1709,146 @@
 <!-- SAVINGS -->
 <section class="section">
   <div class="container">
-    <div class="savings-section">
-      <div class="savings-title">💰 실제 절감 효과 시뮬레이션</div>
-      <div class="savings-sub">기름 보일러 → 태양광 + 히트펌프 + AI EMS 전환 시 (4인 가족 단독주택 기준)</div>
-      <div class="savings-grid">
-        <div class="savings-item">
-          <div class="savings-before">월 320,000원</div>
-          <div class="savings-after">96,000<span class="savings-unit">원</span></div>
-          <div class="savings-label">☀ 전기요금 (월)</div>
+
+    <div class="section-label">💸 투자비용 상환 분석</div>
+    <h2 class="section-title">월 절감액이 설치비를 갚아나가는 구조</h2>
+    <p class="section-desc">태양광+히트펌프 설치비를 '대출'로 보고, 매월 줄어드는 에너지 비용으로 상환하는 구조입니다. 숫자로 증명합니다.</p>
+
+    <!-- 등유가격 출처 박스 -->
+    <div class="oil-source-box">
+      <div class="oil-source-header">
+        🛢 등유 가격 기준 <span class="oil-source-badge">한국석유공사 오피넷</span>
+      </div>
+      <div class="oil-price-track">
+        <div class="oil-price-item">
+          <div class="oil-price-period">2024년 상반기<br><small>(전쟁 前 평균)</small></div>
+          <div class="oil-price-bar-wrap">
+            <div class="oil-price-bar" style="width:75%"></div>
+          </div>
+          <div class="oil-price-val used">1,500원/L <span class="badge-used">✓ 적용</span></div>
         </div>
-        <div class="savings-item">
-          <div class="savings-before">월 180,000원</div>
-          <div class="savings-after">0<span class="savings-unit">원</span></div>
-          <div class="savings-label">🛢 기름 난방비 (월)</div>
+        <div class="oil-price-item">
+          <div class="oil-price-period">2025년 평균</div>
+          <div class="oil-price-bar-wrap">
+            <div class="oil-price-bar" style="width:83%"></div>
+          </div>
+          <div class="oil-price-val">1,660원/L</div>
         </div>
-        <div class="savings-item">
-          <div class="savings-before">연 6,000,000원</div>
-          <div class="savings-after">1,152,000<span class="savings-unit">원</span></div>
-          <div class="savings-label">📅 연간 총 에너지 비용</div>
+        <div class="oil-price-item">
+          <div class="oil-price-period">2026년 2월<br><small>(이란 분쟁 후)</small></div>
+          <div class="oil-price-bar-wrap">
+            <div class="oil-price-bar war" style="width:100%"></div>
+          </div>
+          <div class="oil-price-val war-val">1,980원/L <span class="badge-war">⚠ 분쟁가</span></div>
         </div>
+      </div>
+      <div class="oil-source-note">출처: 한국석유공사 오피넷(www.opinet.co.kr) 등유 전국 주유소 월간 평균 판매가격 기준</div>
+    </div>
+
+    <!-- 월 절감액 계산 -->
+    <div class="savings-calc-box">
+      <div class="savings-calc-title">📊 월 절감액 산출 (보수적 기준 적용)</div>
+      <div class="savings-calc-rows">
+
+        <div class="savings-calc-row">
+          <div class="savings-calc-category">⚡ 전기요금 절감</div>
+          <div class="savings-calc-detail">
+            <span>설치 전 320,000원</span>
+            <span class="arr">→</span>
+            <span>설치 후 96,000원</span>
+          </div>
+          <div class="savings-calc-amount">+ 224,000원</div>
+        </div>
+
+        <div class="savings-calc-row">
+          <div class="savings-calc-category">🛢 등유 난방비 절감</div>
+          <div class="savings-calc-detail">
+            <span>1,500원/L × 월 100L</span>
+            <span class="arr">→</span>
+            <span>히트펌프로 0원</span>
+          </div>
+          <div class="savings-calc-amount">+ 150,000원</div>
+        </div>
+
+        <div class="savings-calc-row savings-calc-total">
+          <div class="savings-calc-category">💰 월 총 절감액</div>
+          <div class="savings-calc-detail">
+            <span>연간 절감액</span>
+            <span class="arr">→</span>
+            <span>374,000 × 12 = <strong>4,488,000원</strong></span>
+          </div>
+          <div class="savings-calc-amount total-amt">374,000원</div>
+        </div>
+      </div>
+      <div class="savings-calc-note">
+        ※ 등유 소비량: 난방 성수기 월 150L, 비수기 평균화 → 월 100L 적용<br>
+        ※ 전기요금: 한국전력 주택용 누진제 기준, 태양광+ESS+AI EMS 최적화 후 잔여 요금
+      </div>
+    </div>
+
+    <!-- 연도별 상환 진행표 -->
+    <div class="repayment-section">
+      <div class="repayment-title">📅 연도별 설치비 상환 진행표</div>
+      <div class="repayment-subtitle">총 설치비 3,400만원을 월 374,000원 절감으로 상환하는 구조</div>
+
+      <div class="repayment-tabs">
+        <button class="rep-tab active" onclick="showRepayment('gross')">보조금 미적용 (총액 기준)</button>
+        <button class="rep-tab" onclick="showRepayment('net')">보조금 적용 (자부담 기준)</button>
+      </div>
+
+      <div id="repay-gross" class="repayment-table-wrap">
+        <table class="repayment-table">
+          <thead>
+            <tr>
+              <th>연차</th>
+              <th>연간 절감액</th>
+              <th>누적 절감액</th>
+              <th>남은 미회수 잔액</th>
+              <th>상환 진행도</th>
+            </tr>
+          </thead>
+          <tbody id="gross-body"></tbody>
+        </table>
+      </div>
+
+      <div id="repay-net" class="repayment-table-wrap" style="display:none">
+        <table class="repayment-table">
+          <thead>
+            <tr>
+              <th>연차</th>
+              <th>연간 절감액</th>
+              <th>누적 절감액</th>
+              <th>남은 미회수 잔액</th>
+              <th>상환 진행도</th>
+            </tr>
+          </thead>
+          <tbody id="net-body"></tbody>
+        </table>
+      </div>
+
+      <div class="repayment-result" id="rep-result-gross">
+        🎉 <strong>보조금 미적용 기준 약 7.6년</strong>에 총 설치비 전액 회수 완료
+      </div>
+      <div class="repayment-result" id="rep-result-net" style="display:none">
+        🎉 <strong>보조금 적용 후 자부담 기준 약 4.3년</strong>에 투자금 전액 회수 완료
+      </div>
+    </div>
+
+    <!-- clarify box -->
+    <div class="clarify-box">
+      <div class="clarify-icon">💡</div>
+      <div class="clarify-text">
+        <strong>핵심 포인트: 96,000원은 절감액이 아니라 설치 후 남은 전기요금입니다.</strong><br>
+        실제 월 절감액은 <strong>전기 224,000원 + 등유 150,000원 = 374,000원</strong>이며,<br>
+        이 금액이 매달 설치비 잔액을 줄여나갑니다. 분쟁 전 등유 가격(1,500원/L)을 적용한 보수적 계산에서도 7.6년이면 전액 회수가 가능합니다.
+        이란 분쟁 후 가격(1,980원/L)을 적용하면 절감액이 더 커져 회수 기간은 더 단축됩니다.
       </div>
     </div>
 
     <div class="info-box">
       <p>
-        <strong>📌 정부 보조금 활용하면 투자 회수 기간이 더 단축됩니다.</strong><br>
-        2025년 기준 산업부·환경부의 신재생에너지 설치 보조금, 지방자치단체 추가 보조금, 한국에너지공단 그린홈 지원 사업 등을 활용하면 초기 설치 비용의 30~50%를 지원받을 수 있습니다. 특히 농어촌 지역과 기초생활수급자 가구에 대한 혜택이 더 큽니다.
+        <strong>📌 정부 보조금 활용 시 자부담 기준 회수 기간은 약 4.3년으로 대폭 단축됩니다.</strong><br>
+        2026년 기준 기후에너지환경부·한국에너지공단의 그린홈 보급 사업 및 히트펌프 보급 활성화 방안을 활용하면 초기 설치비의 40~60%를 지원받을 수 있습니다. 특히 <strong>태양광이 이미 설치된 단독주택</strong>은 히트펌프 우선 지원 대상으로 장모님 댁처럼 기존 태양광 설치 가구는 추가 혜택이 큽니다.
       </p>
     </div>
   </div>
@@ -1467,7 +1925,66 @@
 </footer>
 
 <script>
-  // Scroll progress bar
+
+  // ── REPAYMENT TABLE ──
+  function fmtKRW(n) {
+    if (n <= 0) return '<span style="color:#5DE88D;font-weight:700">완납 ✅</span>';
+    return Math.round(n).toLocaleString('ko-KR') + '원';
+  }
+
+  function buildRepayment(totalCost, annualSaving, tbodyId) {
+    var tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    var remaining = totalCost;
+    for (var yr = 1; yr <= 15; yr++) {
+      remaining -= annualSaving;
+      var cumul = annualSaving * yr;
+      var pct = Math.min(100, (cumul / totalCost) * 100);
+      var isPaid = remaining <= 0;
+      var tr = document.createElement('tr');
+      if (isPaid) tr.className = 'paid-year';
+
+      var tdYr = document.createElement('td');
+      tdYr.textContent = yr + '년차' + (isPaid ? ' 🎉' : '');
+
+      var tdAnn = document.createElement('td');
+      tdAnn.textContent = Math.round(annualSaving).toLocaleString('ko-KR') + '원';
+
+      var tdCum = document.createElement('td');
+      tdCum.textContent = Math.round(Math.min(cumul, totalCost)).toLocaleString('ko-KR') + '원';
+
+      var tdRem = document.createElement('td');
+      tdRem.innerHTML = fmtKRW(remaining);
+
+      var tdBar = document.createElement('td');
+      tdBar.innerHTML = '<div class="rep-bar-bg"><div class="rep-bar-fill" style="width:' + pct.toFixed(1) + '%"></div></div>' +
+        '<span style="font-size:0.68rem;color:rgba(255,255,255,0.4);margin-top:3px;display:block">' + pct.toFixed(0) + '% 상환</span>';
+
+      tr.appendChild(tdYr);
+      tr.appendChild(tdAnn);
+      tr.appendChild(tdCum);
+      tr.appendChild(tdRem);
+      tr.appendChild(tdBar);
+      tbody.appendChild(tr);
+      if (isPaid) break;
+    }
+  }
+
+  // 보조금 미적용: 총 3,400만원 / 연 4,488,000원 → 약 7.6년
+  buildRepayment(34000000, 4488000, 'gross-body');
+  // 보조금 적용: 자부담 1,940만원 / 연 4,488,000원 → 약 4.3년
+  buildRepayment(19400000, 4488000, 'net-body');
+
+  function showRepayment(type) {
+    document.getElementById('repay-gross').style.display = (type === 'gross') ? '' : 'none';
+    document.getElementById('repay-net').style.display   = (type === 'net')   ? '' : 'none';
+    document.getElementById('rep-result-gross').style.display = (type === 'gross') ? '' : 'none';
+    document.getElementById('rep-result-net').style.display   = (type === 'net')   ? '' : 'none';
+    document.querySelectorAll('.rep-tab').forEach(function(t){ t.classList.remove('active'); });
+    event.target.classList.add('active');
+  }
+
+    // Scroll progress bar
   window.addEventListener('scroll', () => {
     const doc = document.documentElement;
     const scrollTop = doc.scrollTop || document.body.scrollTop;
