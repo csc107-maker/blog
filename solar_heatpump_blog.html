@@ -1164,6 +1164,10 @@
     tr:last-child td { border-bottom: none; }
     tr:nth-child(even) td { background: #FAFAFA; }
     tr:hover td { background: var(--sun-light); transition: background 0.2s; }
+    /* repayment table overrides – keep dark bg on ALL rows */
+    .repayment-table tr:nth-child(even) td { background: transparent; }
+    .repayment-table tr:hover td { background: rgba(255,255,255,0.05); }
+    .repayment-table tr.paid-year:nth-child(even) td { background: transparent; }
 
     .tag-best {
       background: linear-gradient(90deg, #F5A623, #FF6B35);
@@ -1867,7 +1871,7 @@
 
         <!-- ① 한국에너지공단 그린홈 보조금 -->
         <a class="cta-btn cta-btn-gov"
-           href="https://greenhome.kemco.or.kr"
+           href="https://www.knrec.or.kr/biz/introduce/new_engy/intro_home.do?gubun=A"
            target="_blank"
            rel="noopener noreferrer">
           <span class="cta-btn-icon">🌿</span>
@@ -1879,7 +1883,7 @@
 
         <!-- ② 에코솔루션 오픈채팅 -->
         <a class="cta-btn cta-btn-kakao"
-           href="https://open.kakao.com/o/에코솔루션링크를여기에입력"
+           href="https://open.kakao.com/o/sr1KUAgh"
            target="_blank"
            rel="noopener noreferrer">
           <span class="cta-btn-icon">💬</span>
