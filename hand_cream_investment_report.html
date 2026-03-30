@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>핸드크림 섹터 투자 분석 보고서 2025 | Hand Cream Sector IR Report</title>
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --card: #ffffff;
+    --accent: #1a3a5c;
+    --accent2: #2a6496;
+    --green: #1a7a4a;
+    --red: #c0392b;
+    --amber: #b8780a;
+    --border: #e2e0d8;
+    --text: #1e1e1e;
+    --muted: #6b6b6b;
+    --light: #f0ede6;
+    --tag-bg: #e8f0fb;
+    --tag: #2a6496;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Nanum Gothic', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.7; }
+
+  /* ── 표지 ── */
+  .cover { background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 60%, #1e5080 100%); color: #fff; padding: 60px 48px 50px; position: relative; overflow: hidden; }
+  .cover::after { content: ''; position: absolute; right: -60px; top: -60px; width: 320px; height: 320px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+  .cover .badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 4px 14px; font-size: 12px; margin-bottom: 20px; letter-spacing: 0.05em; }
+  .cover h1 { font-size: 28px; font-weight: 700; line-height: 1.35; margin-bottom: 10px; }
+  .cover .sub { font-size: 15px; color: rgba(255,255,255,0.75); margin-bottom: 32px; }
+  .cover .meta-row { display: flex; gap: 32px; flex-wrap: wrap; font-size: 12px; color: rgba(255,255,255,0.6); border-top: 1px solid rgba(255,255,255,0.15); padding-top: 20px; }
+  .cover .meta-row span b { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+  /* ── 레이아웃 ── */
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 36px 24px 60px; }
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 18px; font-weight: 700; color: var(--accent); border-left: 4px solid var(--accent2); padding-left: 12px; margin-bottom: 18px; }
+  .sub-title { font-size: 14px; font-weight: 600; color: var(--muted); margin: 22px 0 10px; letter-spacing: 0.03em; text-transform: uppercase; }
+  p { color: #3a3a3a; margin-bottom: 8px; }
+
+  /* ── 요약 카드 ── */
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 32px; }
+  .sum-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .sum-card .lbl { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .sum-card .val { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .sum-card .note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── 기업 카드 ── */
+  .company-section { margin-bottom: 48px; }
+  .company-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; padding: 16px 20px; background: var(--accent); border-radius: 10px 10px 0 0; color: #fff; }
+  .company-header .flag { font-size: 22px; }
+  .company-header .co-info h3 { font-size: 17px; font-weight: 700; }
+  .company-header .co-info .ticker { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+  .company-header .co-rating { margin-left: auto; text-align: right; }
+  .company-header .co-rating .rat { font-size: 20px; font-weight: 800; }
+  .company-header .co-rating .rat-label { font-size: 11px; opacity: 0.8; }
+
+  .co-body { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; padding: 20px 22px; }
+
+  /* ── 지표 그리드 ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
+  .kpi { background: var(--light); border-radius: 8px; padding: 10px 12px; text-align: center; }
+  .kpi .k-lbl { font-size: 10px; color: var(--muted); margin-bottom: 3px; }
+  .kpi .k-val { font-size: 16px; font-weight: 700; }
+  .kpi .k-val.good { color: var(--green); }
+  .kpi .k-val.warn { color: var(--amber); }
+  .kpi .k-val.bad { color: var(--red); }
+  .kpi .k-val.neu { color: var(--accent); }
+
+  /* ── 투자 의견 바 ── */
+  .opinion-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .op-tag { display: inline-block; border-radius: 6px; padding: 3px 12px; font-size: 12px; font-weight: 700; }
+  .op-buy { background: #d4edda; color: #155724; }
+  .op-hold { background: #fff3cd; color: #856404; }
+  .op-reduce { background: #f8d7da; color: #721c24; }
+  .op-watch { background: #d1ecf1; color: #0c5460; }
+
+  /* ── 실적 테이블 ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  th { background: var(--accent); color: #fff; padding: 9px 12px; text-align: center; font-weight: 600; font-size: 12px; }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--light); }
+  td.left { text-align: left; }
+  td.green { color: var(--green); font-weight: 600; }
+  td.red { color: var(--red); font-weight: 600; }
+  td.amber { color: var(--amber); font-weight: 600; }
+
+  /* ── 글로벌 비교 테이블 ── */
+  .compare-table table th { background: #2a6496; }
+
+  /* ── SWOT ── */
+  .swot { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .swot-box { border-radius: 8px; padding: 12px 14px; }
+  .swot-box h4 { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .swot-box ul { padding-left: 14px; font-size: 12px; line-height: 1.8; }
+  .sw { background: #e8f5e9; } .sw h4 { color: #2e7d32; }
+  .wk { background: #fff8e1; } .wk h4 { color: #f57f17; }
+  .op { background: #e3f2fd; } .op h4 { color: #1565c0; }
+  .th { background: #fce4ec; } .th h4 { color: #c62828; }
+
+  /* ── 리스크 게이지 ── */
+  .risk-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+  .risk-label { min-width: 90px; color: var(--muted); }
+  .risk-bar { flex: 1; height: 7px; background: #e9e7e0; border-radius: 4px; overflow: hidden; }
+  .risk-fill { height: 100%; border-radius: 4px; }
+  .risk-val { min-width: 30px; text-align: right; font-weight: 600; }
+
+  /* ── 면책 ── */
+  .disclaimer { background: #f0ede6; border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; font-size: 11px; color: var(--muted); line-height: 1.7; margin-top: 40px; }
+
+  @media (max-width: 700px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+    .swot { grid-template-columns: 1fr; }
+    .cover { padding: 36px 20px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────── 표지 ───────────── -->
+<div class="cover">
+  <div class="badge">SECTOR INVESTMENT REPORT</div>
+  <h1>핸드크림 섹터<br>국내·외 상장사 투자 분석 보고서</h1>
+  <div class="sub">Hand Cream &amp; Personal Care Sector — IR Analysis 2025</div>
+  <div class="meta-row">
+    <span><b>발행일</b>　2025년 3월 기준</span>
+    <span><b>섹터</b>　뷰티·퍼스널케어 (Beauty &amp; Personal Care)</span>
+    <span><b>분석 대상</b>　국내 2개사 · 해외 4개사</span>
+    <span><b>데이터 기준</b>　2024년 연간 실적, 공개 재무제표 및 증권사 리포트</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ───────────── 시장 요약 ───────────── -->
+<div class="section">
+  <div class="section-title">📊 글로벌 핸드크림 시장 요약</div>
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="lbl">글로벌 시장 규모 (2023)</div>
+      <div class="val">$8.4억</div>
+      <div class="note">약 1.1조 원</div>
+    </div>
+    <div class="sum-card">
+      <div class="lbl">2030년 전망</div>
+      <div class="val">$12억+</div>
+      <div class="note">CAGR 약 6~7%</div>
+    </div>
+    <div class="sum-card">
+      <div class="lbl">최대 점유 지역</div>
+      <div class="val">아시아·태평양</div>
+      <div class="note">약 42% 점유</div>
+    </div>
+    <div class="sum-card">
+      <div class="lbl">온라인 판매 비중</div>
+      <div class="val">62%</div>
+      <div class="note">아·태 41% 주도</div>
+    </div>
+  </div>
+  <p>핸드크림 섹터는 코로나19 이후 손 위생 인식 전환, 클린뷰티 트렌드, 남성 그루밍 시장 확대라는 세 가지 구조적 성장 동력을 배경으로 안정적인 성장 궤도를 유지하고 있습니다. 상위 5개 글로벌 기업(Unilever·L'Oréal·P&G·Beiersdorf·Coty)이 약 45%의 점유율을 보유하고, 신흥 프리미엄 브랜드가 25%, 나머지 30%를 지역 브랜드와 PB가 분점합니다. 국내에서는 아모레퍼시픽·LG생활건강이 양분하는 구조에서 K-뷰티 인디 브랜드의 빠른 부상이 두드러집니다.</p>
+</div>
+
+<!-- ═══════════════════════════════════════
+     국내 기업
+════════════════════════════════════════ -->
+<div class="section-title">🇰🇷 국내 상장사 분석</div>
+
+<!-- ── 아모레퍼시픽 ── -->
+<div class="company-section">
+  <div class="company-header">
+    <div class="flag">🌸</div>
+    <div class="co-info">
+      <h3>아모레퍼시픽 그룹</h3>
+      <div class="ticker">KRX: 090430 | 시가총액 약 8.6조 원 (2025년 3월 기준)</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★★</div>
+      <div class="rat-label">관심 매수 / 중장기 회복</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-buy">매수 관심</span>
+      <span style="font-size:12px;color:#555;">서구권 고성장·코스알엑스 편입 효과 기대, 글로벌 리밸런싱 진행 중</span>
+    </div>
+
+    <div class="sub-title">핵심 투자 지표 (2024년 연간 기준)</div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val warn">약 30~35배</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val warn">약 1.2~1.5배</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val good">약 7~10%</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val warn">약 5.7%</div></div>
+      <div class="kpi"><div class="k-lbl">배당수익률</div><div class="k-val neu">약 0.8%</div></div>
+    </div>
+
+    <div class="sub-title">연간 실적 추이</div>
+    <table>
+      <thead>
+        <tr><th>구분</th><th>2022</th><th>2023</th><th>2024</th><th>2025E</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="left">매출액 (억 원)</td><td>40,714</td><td>36,740</td><td>38,851</td><td>약 44,000↑</td></tr>
+        <tr><td class="left">영업이익 (억 원)</td><td>1,420</td><td>1,082</td><td class="green">2,205</td><td>약 3,500+</td></tr>
+        <tr><td class="left">영업이익률 (%)</td><td>3.5</td><td>2.9</td><td class="green">5.7</td><td>약 8%</td></tr>
+        <tr><td class="left">당기순이익 (억 원)</td><td>1,145</td><td>1,739</td><td class="green">6,016</td><td>—</td></tr>
+        <tr><td class="left">YoY 영업이익 성장률</td><td>—</td><td class="red">▼24%</td><td class="green">▲104%</td><td>▲58%↑ 전망</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sub-title">사업 구조 분석</div>
+    <p><b>핸드케어·스킨케어 포트폴리오</b>: 설화수·라네즈·이니스프리·코스알엑스 등 브랜드 포트폴리오. 핸드크림 전문 라인보다는 종합 스킨케어 브랜드 내 손 케어 카테고리 포함.</p>
+    <p><b>글로벌 리밸런싱</b>: 2024년 미주 +83%, EMEA +3배 성장. 중국 의존도 낮추고 서구권 고성장 구조로 전환 중. 2025년 목표: 연결 매출 4.4조원, 영업이익률 10% 이상.</p>
+    <p><b>2024년 특이사항</b>: 당기순이익 6,016억원(+246%)은 코스알엑스 인수 관련 지분법 이익 반영. 실질 영업 수익성 회복은 2025~2026년이 핵심 확인 시점.</p>
+
+    <div class="swot">
+      <div class="swot-box sw"><h4>강점 (Strengths)</h4><ul><li>K-뷰티 글로벌 인지도 1위 그룹</li><li>미주·유럽 급성장 중</li><li>코스알엑스 브랜드 편입</li><li>연구개발·제품 혁신 역량</li></ul></div>
+      <div class="swot-box wk"><h4>약점 (Weaknesses)</h4><ul><li>중국 매출 급감·구조 재편 부담</li><li>면세 채널 의존도 조정 과도기</li><li>코스알엑스 실적 부진 지속 중</li><li>국내 사업 수익성 회복 과제</li></ul></div>
+      <div class="swot-box op"><h4>기회 (Opportunities)</h4><ul><li>미국·일본·유럽 K-뷰티 수요 급증</li><li>남성 그루밍 신규 시장</li><li>퍼퓸·프리미엄 핸드케어 확장</li><li>클린뷰티 글로벌 트렌드 수혜</li></ul></div>
+      <div class="swot-box th"><h4>위협 (Threats)</h4><ul><li>중국 자국 브랜드 보호 정책</li><li>글로벌 인디 브랜드와의 경쟁</li><li>원자재·물류비 상승</li><li>환율 변동성</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LG생활건강 ── -->
+<div class="company-section">
+  <div class="company-header" style="background:#2a5a3c;">
+    <div class="flag">🌿</div>
+    <div class="co-info">
+      <h3>LG생활건강</h3>
+      <div class="ticker">KRX: 051900 | 시가총액 약 4.3조 원 (2025년 3월 기준)</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★</div>
+      <div class="rat-label">중립 / 구조조정 경과 관찰</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-hold">중립 관찰</span>
+      <span style="font-size:12px;color:#555;">뷰티 사업 구조조정 중, 체질 개선 확인 후 매수 시점 탐색 필요</span>
+    </div>
+
+    <div class="sub-title">핵심 투자 지표 (2024년 연간 기준)</div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val bad">약 39~44배</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val good">약 0.8~1.0배</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val bad">약 2~3%</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val warn">약 6.7%</div></div>
+      <div class="kpi"><div class="k-lbl">배당수익률</div><div class="k-val neu">약 1.5%</div></div>
+    </div>
+
+    <div class="sub-title">연간 실적 추이</div>
+    <table>
+      <thead>
+        <tr><th>구분</th><th>2023</th><th>2024</th><th>2025F</th><th>2026F</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="left">매출액 (억 원)</td><td>68,048</td><td>68,119</td><td>63,680</td><td>62,532</td></tr>
+        <tr><td class="left">영업이익 (억 원)</td><td>4,870</td><td class="red">4,590</td><td class="red">2,419</td><td>3,141</td></tr>
+        <tr><td class="left">영업이익률 (%)</td><td>7.2</td><td>6.7</td><td class="red">3.8</td><td>5.0</td></tr>
+        <tr><td class="left">순이익 (억 원)</td><td>1,891</td><td>2,039</td><td>1,155</td><td>1,690</td></tr>
+        <tr><td class="left">PER (배)</td><td>44.1</td><td>28.6</td><td>39.6</td><td>27.5</td></tr>
+        <tr><td class="left">PBR (배)</td><td>1.16</td><td>0.97</td><td class="green">0.81</td><td>0.80</td></tr>
+        <tr><td class="left">ROE (%)</td><td>2.7</td><td>3.4</td><td class="bad">2.1</td><td>2.9</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11px;color:#888;margin-top:4px;">* 2025F, 2026F는 키움증권 리서치 추정치 (2026년 1월 기준)</p>
+
+    <div class="sub-title">사업 구조 분석</div>
+    <p><b>뷰티(Beauty) 부문</b>: 후·숨·오휘 등 럭셔리 브랜드. 2025년 3분기 뷰티 매출 4,710억원(-26.5%), 영업손실 588억원으로 2개 분기 연속 뷰티 적자. 고강도 사업 효율화 진행 중.</p>
+    <p><b>HDB(생활용품)·음료</b>: 비교적 안정적. 2024년 HDB 영업이익 +22.1%. 코카콜라 음료 사업이 현금흐름 완충 역할.</p>
+    <p><b>구조조정 진행</b>: 면세·오프라인 판촉 인력 희망퇴직, 비바웨이브(힌스 브랜드) 지분 75% 취득으로 MZ세대 공략 강화.</p>
+    <p><b>밸류에이션 매력</b>: PBR 0.8배 수준은 역사적 저점 구간. 단, ROE가 3% 미만으로 자본 효율성 회복이 선행 조건.</p>
+
+    <div class="swot">
+      <div class="swot-box sw"><h4>강점 (Strengths)</h4><ul><li>후·숨 등 럭셔리 브랜드 헤리티지</li><li>HDB·음료 안정적 현금흐름</li><li>PBR 0.8배 역사적 저평가 구간</li><li>힌스 등 MZ 브랜드 인수 확대</li></ul></div>
+      <div class="swot-box wk"><h4>약점 (Weaknesses)</h4><ul><li>뷰티 사업 2개 분기 연속 적자</li><li>중국 매출 의존도 높음</li><li>ROE 3% 미만, 자본 효율 저하</li><li>SNS·온라인 마케팅 역량 부족</li></ul></div>
+      <div class="swot-box op"><h4>기회 (Opportunities)</h4><ul><li>구조조정 완료 후 수익성 회복</li><li>힌스 브랜드 글로벌 확장</li><li>핸드케어·퍼스널케어 포트폴리오</li><li>밸류업 정책 수혜 가능성</li></ul></div>
+      <div class="swot-box th"><h4>위협 (Threats)</h4><ul><li>중국 소비 회복 지연</li><li>국내 내수 부진 지속</li><li>인디 브랜드와의 경쟁 심화</li><li>구조조정 비용 추가 발생 가능</li></ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     글로벌 기업
+════════════════════════════════════════ -->
+<div class="section-title">🌍 글로벌 상장사 분석</div>
+
+<!-- ── L'Oréal ── -->
+<div class="company-section">
+  <div class="company-header" style="background:#6a1a2a;">
+    <div class="flag">🇫🇷</div>
+    <div class="co-info">
+      <h3>L'Oréal S.A.</h3>
+      <div class="ticker">EPA: OR | 시가총액 약 1,920억 유로 (세계 최대 뷰티 기업)</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★★★</div>
+      <div class="rat-label">장기 핵심 보유 / 뷰티 섹터 대표주</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-buy">장기 매수</span>
+      <span style="font-size:12px;color:#555;">글로벌 뷰티 1위, Kiehl's·L'Occitane 핸드케어 강점. 고PER 부담이나 장기 우위 유지</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val warn">약 28~32배</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val bad">약 5~6배</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val good">약 18~22%</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val good">약 20%</div></div>
+      <div class="kpi"><div class="k-lbl">배당수익률</div><div class="k-val neu">약 2.0%</div></div>
+    </div>
+    <table>
+      <thead><tr><th>구분</th><th>2022</th><th>2023</th><th>2024</th></tr></thead>
+      <tbody>
+        <tr><td class="left">매출 (억 유로)</td><td>380</td><td>412</td><td>약 435</td></tr>
+        <tr><td class="left">영업이익률 (%)</td><td>19.1</td><td>19.8</td><td>약 20.0</td></tr>
+        <tr><td class="left">핵심 뷰티 부문 성장률</td><td>—</td><td>+7.1%</td><td class="green">+4~5%</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:13px;">세계 1위 뷰티 기업으로 Kiehl's(더마 핸드크림), La Roche-Posay, Vichy 등 핸드케어 라인 보유. 티르티르·크레이버 등 K-뷰티 브랜드 M&A를 통해 아시아 강화 중. 2025년 로레알-올리브영 멤버십 협업으로 국내 채널도 확대.</p>
+  </div>
+</div>
+
+<!-- ── Unilever ── -->
+<div class="company-section">
+  <div class="company-header" style="background:#1a4a6a;">
+    <div class="flag">🇬🇧</div>
+    <div class="co-info">
+      <h3>Unilever PLC</h3>
+      <div class="ticker">LON: ULVR / NYSE: UL | 시가총액 약 1,100억 파운드</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★★</div>
+      <div class="rat-label">매수 / 안정 배당 + 핸드케어 1위</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-buy">매수</span>
+      <span style="font-size:12px;color:#555;">Vaseline·Dove 글로벌 핸드케어 1위. 안정적 배당(4%대)과 수익성 개선 진행</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val good">약 18~22배</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val warn">약 7~9배</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val good">약 30~35%</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val good">약 19~20%</div></div>
+      <div class="kpi"><div class="k-lbl">배당수익률</div><div class="k-val good">약 3.5~4.0%</div></div>
+    </div>
+    <table>
+      <thead><tr><th>구분</th><th>2022</th><th>2023</th><th>2024(상반기)</th></tr></thead>
+      <tbody>
+        <tr><td class="left">매출 (억 유로)</td><td>600</td><td>598</td><td>311(H1)</td></tr>
+        <tr><td class="left">뷰티·웰빙 성장률</td><td>—</td><td>+7.1%</td><td class="green">+4.1%(Q1)</td></tr>
+        <tr><td class="left">핵심 EPS (€)</td><td>2.60</td><td>약 2.70</td><td>1.62(H1)</td></tr>
+        <tr><td class="left">FCF (억 유로)</td><td>52</td><td>71</td><td>22(H1)</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:13px;">Vaseline 핸드&바디케어, Dove 핸드크림 등 핸드케어 분야 글로벌 볼륨 1위 브랜드 보유. ROE가 30%대로 높은 이유는 부채 레버리지(D/E 약 1.3배) 효과. 안정적 FCF와 꾸준한 배당이 강점. 고부채는 리스크 요인.</p>
+  </div>
+</div>
+
+<!-- ── Beiersdorf ── -->
+<div class="company-section">
+  <div class="company-header" style="background:#3a5a2a;">
+    <div class="flag">🇩🇪</div>
+    <div class="co-info">
+      <h3>Beiersdorf AG</h3>
+      <div class="ticker">ETR: BEI | 시가총액 약 320억 유로</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★★</div>
+      <div class="rat-label">관심 매수 / Nivea 핸드크림 유럽 1위</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-watch">관심 매수</span>
+      <span style="font-size:12px;color:#555;">Nivea 핸드크림 유럽 1위. PER 23배 수준, 프리미엄 스킨케어 전환 가속</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val warn">약 22~25배</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val warn">약 3~4배</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val good">약 15~18%</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val good">약 14~16%</div></div>
+      <div class="kpi"><div class="k-lbl">배당수익률</div><div class="k-val neu">약 0.6%</div></div>
+    </div>
+    <p style="margin-top:10px;font-size:13px;">Nivea 브랜드 핸드크림이 독일·유럽 대중 시장 1위. La Prairie(럭셔리), Eucerin(더마) 멀티 브랜드 전략. S-Biomedic 인수로 피부 마이크로바이옴 연구 강화. 천연·지속가능 포장 전환으로 유럽 ESG 규제 선제 대응 중.</p>
+  </div>
+</div>
+
+<!-- ── Coty ── -->
+<div class="company-section">
+  <div class="company-header" style="background:#5a3a6a;">
+    <div class="flag">🇺🇸</div>
+    <div class="co-info">
+      <h3>Coty Inc.</h3>
+      <div class="ticker">NYSE: COTY | 시가총액 약 50억 달러</div>
+    </div>
+    <div class="co-rating">
+      <div class="rat">★★★</div>
+      <div class="rat-label">중립 / 부채 관리가 핵심 변수</div>
+    </div>
+  </div>
+  <div class="co-body">
+    <div class="opinion-row">
+      <span class="op-tag op-hold">중립</span>
+      <span style="font-size:12px;color:#555;">Philosophy 핸드크림 미국 포지셔닝. 높은 부채비율이 주요 리스크</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">PER</div><div class="k-val bad">적자 / 고PER</div></div>
+      <div class="kpi"><div class="k-lbl">PBR</div><div class="k-val bad">음수 (자본잠식)</div></div>
+      <div class="kpi"><div class="k-lbl">ROE</div><div class="k-val bad">적자 기조</div></div>
+      <div class="kpi"><div class="k-lbl">영업이익률</div><div class="k-val warn">약 5~8%</div></div>
+      <div class="kpi"><div class="k-lbl">부채비율</div><div class="k-val bad">매우 높음</div></div>
+    </div>
+    <p style="margin-top:10px;font-size:13px;">Philosophy·Gucci Beauty·Burberry 등 핸드케어 포함 뷰티 브랜드 보유. 고부채 구조(부채비율 300%+)가 지속적인 리스크. 2024년 Q1 아로마테라피 기반 핸드크림 출시로 북미 프리미엄 매출 14% 성장 기여. 부채 감축 성과 확인이 매수 시점의 선행 조건.</p>
+  </div>
+</div>
+
+<!-- ─── 글로벌 비교 테이블 ─── -->
+<div class="section">
+  <div class="section-title">📋 주요 상장사 투자 지표 종합 비교</div>
+  <div class="compare-table">
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th><th>국가</th><th>PER(배)</th><th>PBR(배)</th><th>ROE(%)</th><th>영업이익률(%)</th><th>배당수익률(%)</th><th>투자 의견</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="left"><b>아모레퍼시픽</b></td><td>🇰🇷 한국</td><td class="amber">30~35</td><td class="amber">1.2~1.5</td><td class="green">7~10</td><td class="amber">5.7</td><td>0.8</td><td><span class="op-tag op-buy" style="font-size:11px;">관심매수</span></td></tr>
+        <tr><td class="left"><b>LG생활건강</b></td><td>🇰🇷 한국</td><td class="red">39~44</td><td class="green">0.8~1.0</td><td class="red">2~3</td><td class="amber">6.7</td><td class="amber">1.5</td><td><span class="op-tag op-hold" style="font-size:11px;">중립</span></td></tr>
+        <tr><td class="left"><b>L'Oréal</b></td><td>🇫🇷 프랑스</td><td class="amber">28~32</td><td class="red">5~6</td><td class="green">18~22</td><td class="green">20.0</td><td>2.0</td><td><span class="op-tag op-buy" style="font-size:11px;">장기매수</span></td></tr>
+        <tr><td class="left"><b>Unilever</b></td><td>🇬🇧 영국</td><td class="green">18~22</td><td class="red">7~9</td><td class="green">30~35</td><td class="green">19~20</td><td class="green">3.5~4.0</td><td><span class="op-tag op-buy" style="font-size:11px;">매수</span></td></tr>
+        <tr><td class="left"><b>Beiersdorf</b></td><td>🇩🇪 독일</td><td class="amber">22~25</td><td class="amber">3~4</td><td class="green">15~18</td><td class="green">14~16</td><td>0.6</td><td><span class="op-tag op-watch" style="font-size:11px;">관심매수</span></td></tr>
+        <tr><td class="left"><b>Coty</b></td><td>🇺🇸 미국</td><td class="red">N/A</td><td class="red">음수</td><td class="red">적자</td><td class="amber">5~8</td><td>—</td><td><span class="op-tag op-hold" style="font-size:11px;">중립</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:11px;color:#888;margin-top:6px;">* 2024년 연간 실적 및 2025년 3월 기준 주가 추정 기반. 실시간 데이터와 차이가 있을 수 있습니다. 참고용으로만 활용하세요.</p>
+</div>
+
+<!-- ─── 투자 리스크 ─── -->
+<div class="section">
+  <div class="section-title">⚠️ 섹터 공통 투자 리스크 분석</div>
+  <div class="risk-row"><span class="risk-label">중국 수요 불확실성</span><div class="risk-bar"><div class="risk-fill" style="width:85%;background:#c0392b;"></div></div><span class="risk-val" style="color:#c0392b;">고</span></div>
+  <div class="risk-row"><span class="risk-label">원자재 가격 변동</span><div class="risk-bar"><div class="risk-fill" style="width:55%;background:#e67e22;"></div></div><span class="risk-val" style="color:#e67e22;">중</span></div>
+  <div class="risk-row"><span class="risk-label">환율 변동성</span><div class="risk-bar"><div class="risk-fill" style="width:60%;background:#e67e22;"></div></div><span class="risk-val" style="color:#e67e22;">중</span></div>
+  <div class="risk-row"><span class="risk-label">인디 브랜드 경쟁 심화</span><div class="risk-bar"><div class="risk-fill" style="width:70%;background:#e67e22;"></div></div><span class="risk-val" style="color:#e67e22;">중상</span></div>
+  <div class="risk-row"><span class="risk-label">글로벌 경기침체</span><div class="risk-bar"><div class="risk-fill" style="width:45%;background:#f1c40f;"></div></div><span class="risk-val" style="color:#b8780a;">중하</span></div>
+  <div class="risk-row"><span class="risk-label">해외 화장품 규제 강화</span><div class="risk-bar"><div class="risk-fill" style="width:50%;background:#f1c40f;"></div></div><span class="risk-val" style="color:#b8780a;">중하</span></div>
+</div>
+
+<!-- ─── 결론 ─── -->
+<div class="section">
+  <div class="section-title">💡 투자 결론 및 섹터 전망</div>
+  <p><b>단기(6개월)</b>: LG생활건강은 뷰티 부문 구조조정 결과 확인 전 관망 유지. 아모레퍼시픽은 코스알엑스 실적 개선과 미주·EMEA 성장세가 확인되면 점진적 비중 확대 고려.</p>
+  <p><b>중기(1~2년)</b>: 글로벌 핸드케어·뷰티 시장 연 6~7% 성장 기조 유효. 서구권 K-뷰티 수요 폭발은 아모레퍼시픽에 구조적 호재. Unilever는 안정 배당+핸드케어 1위로 포트폴리오 방어 역할.</p>
+  <p><b>장기(3년 이상)</b>: L'Oréal은 글로벌 뷰티 1위의 해자(moat)로 장기 핵심 보유 적합. Beiersdorf는 Nivea 유럽 1위·ESG 선도로 안정적 성장 기대. 아모레퍼시픽의 글로벌 리밸런싱이 완성되면 프리미엄 K-뷰티 대표주로 재평가 가능.</p>
+  <p style="margin-top:12px;"><b>핵심 모니터링 지표</b>: ① 코스알엑스 분기 매출 추이 ② LG생활건강 뷰티 영업이익 흑자 전환 시점 ③ 중국 소비 회복 지수 ④ 아모레퍼시픽 영업이익률 10% 달성 여부 ⑤ Unilever 볼륨 성장률 지속성</p>
+</div>
+
+<!-- ─── 면책 ─── -->
+<div class="disclaimer">
+  <b>⚠️ 투자 면책 고지 (Disclaimer)</b><br>
+  본 보고서는 공개된 재무제표, 증권사 리서치, 언론 보도 등을 바탕으로 정보 제공 목적으로만 작성된 참고 자료이며, 특정 종목의 매수·매도를 권유하는 투자 권유 자료가 아닙니다. 제시된 재무 지표(PER·PBR·ROE 등)는 2024~2025년 기준 추정치를 포함하며 실제 값과 차이가 발생할 수 있습니다. 모든 투자의 최종 결정과 책임은 투자자 본인에게 있습니다. 투자 전 반드시 공시 자료와 전문 금융투자업자의 의견을 확인하시기 바랍니다.<br><br>
+  데이터 출처: 아모레퍼시픽 IR, LG생활건강 IR, 키움증권 리서치(2026.1), 삼성증권 리서치(2025.3), Macrotrends, Yahoo Finance, 한국기업평판연구소, GlobalGrowthInsights, Jarsking Market Report 2025
+</div>
+
+</div><!-- /wrap -->
+</body>
+</html>
