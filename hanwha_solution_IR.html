@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화솔루션 IR Report 2025 · 투자가치 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111826;
+    --surface2: #1a2338;
+    --border: #1e2d45;
+    --accent: #f4a01a;
+    --accent2: #3de8c0;
+    --accent-red: #f45a5a;
+    --accent-blue: #4a9ef5;
+    --text: #e8edf5;
+    --text-muted: #7a8fa8;
+    --text-dim: #4a5e78;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    overflow: hidden;
+    padding: 80px 0 60px;
+    background: linear-gradient(135deg, #0a0e17 0%, #0d1a2e 50%, #0f2040 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(244,160,26,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(61,232,192,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .company-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(244,160,26,0.3);
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .company-tag::before {
+    content: '▶';
+    font-size: 8px;
+  }
+  h1.report-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  h1.report-title span {
+    color: var(--accent);
+  }
+  .report-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .meta-value {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .meta-value.positive { color: var(--accent); }
+  .meta-value.negative { color: var(--accent-red); }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 16px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  section {
+    margin-bottom: 80px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    opacity: 0.7;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .kpi-card.amber::before { background: var(--accent); }
+  .kpi-card.teal::before { background: var(--accent2); }
+  .kpi-card.red::before { background: var(--accent-red); }
+  .kpi-card.blue::before { background: var(--accent-blue); }
+  .kpi-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+  }
+  .kpi-value {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi-value.red { color: var(--accent-red); }
+  .kpi-value.amber { color: var(--accent); }
+  .kpi-value.teal { color: var(--accent2); }
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ── SEGMENT TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .data-table th:not(:first-child) { text-align: right; }
+  .data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(30,45,69,0.5);
+    vertical-align: middle;
+  }
+  .data-table td:not(:first-child) {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .segment-name {
+    font-weight: 500;
+    color: var(--text);
+  }
+  .segment-icon {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .profit { color: var(--accent2); }
+  .loss { color: var(--accent-red); }
+  .neutral { color: var(--text-muted); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -35px; top: 6px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .timeline-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ── ALLOC BAR ── */
+  .alloc-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .alloc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+  }
+  .alloc-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .alloc-amount {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .alloc-bar-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .alloc-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+  .alloc-detail {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  /* ── RISK / OPPORTUNITY GRID ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+  .risk-card, .opp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .risk-card { border-top: 2px solid var(--accent-red); }
+  .opp-card { border-top: 2px solid var(--accent2); }
+  .card-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .risk-card .card-title { color: var(--accent-red); }
+  .opp-card .card-title { color: var(--accent2); }
+  .item-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .item-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .item-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    font-family: var(--mono);
+  }
+  .risk-card .item-list li::before { color: var(--accent-red); }
+  .opp-card .item-list li::before { color: var(--accent2); }
+
+  /* ── VERDICT ── */
+  .verdict-box {
+    background: linear-gradient(135deg, rgba(244,160,26,0.05), rgba(61,232,192,0.03));
+    border: 1px solid rgba(244,160,26,0.2);
+    border-radius: 12px;
+    padding: 36px;
+  }
+  .verdict-rating {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .rating-badge {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .rating-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .rating-stars {
+    display: flex;
+    gap: 4px;
+    font-size: 18px;
+    margin-top: 4px;
+  }
+  .star-full { color: var(--accent); }
+  .star-empty { color: var(--border); }
+  .verdict-text {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.85;
+  }
+  .verdict-text strong { color: var(--accent); }
+
+  /* ── SHAREHOLDER POLICY ── */
+  .policy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .policy-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+  }
+  .policy-item-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .policy-item-value {
+    font-family: var(--mono);
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .policy-item-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── ROADMAP ── */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .roadmap-col {
+    background: var(--surface);
+    padding: 24px;
+  }
+  .roadmap-year {
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .roadmap-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .roadmap-items li {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .roadmap-items li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+    font-size: 10px;
+  }
+  @media (max-width: 640px) {
+    .roadmap { grid-template-columns: 1fr; }
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    margin-top: 60px;
+    padding: 20px;
+    background: rgba(122,143,168,0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 30px 40px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ── ANIMATION ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  section {
+    animation: fadeUp 0.6s ease both;
+  }
+  section:nth-child(2) { animation-delay: 0.1s; }
+  section:nth-child(3) { animation-delay: 0.2s; }
+  section:nth-child(4) { animation-delay: 0.3s; }
+  section:nth-child(5) { animation-delay: 0.4s; }
+
+  /* ── NOTE BOX ── */
+  .note-box {
+    background: rgba(74,158,245,0.05);
+    border-left: 3px solid var(--accent-blue);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+
+  .warn-box {
+    background: rgba(244,90,90,0.05);
+    border-left: 3px solid var(--accent-red);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="company-tag">한화솔루션 · KS: 009830 · IR Report 2025</div>
+    <h1 class="report-title">2025 결산 &amp; 유상증자 심층 분석<br><span>한화솔루션, 위기를 디딤돌로</span></h1>
+    <p class="report-subtitle">2025년 연간 실적 결산 · 2.4조 유상증자 분석 · 2026~2030 투자 로드맵</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">발행일</span>
+        <span class="meta-value">2026.03.30</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">2025 매출</span>
+        <span class="meta-value">13조 3,544억</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">2025 영업손익</span>
+        <span class="meta-value negative">▼ 3,533억 (손실)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">부채비율</span>
+        <span class="meta-value negative">196%</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">신용등급</span>
+        <span class="meta-value">AA− (부정적)</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-link active" href="#section1">재무 요약</a>
+    <a class="nav-link" href="#section2">사업부별 실적</a>
+    <a class="nav-link" href="#section3">유상증자</a>
+    <a class="nav-link" href="#section4">주주환원</a>
+    <a class="nav-link" href="#section5">리스크 &amp; 기회</a>
+    <a class="nav-link" href="#section6">투자 로드맵</a>
+    <a class="nav-link" href="#section7">투자 판단</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ① 재무 요약 -->
+  <section id="section1">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">2025년 연간 재무 핵심 지표</span>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card amber">
+        <div class="kpi-label">연결 매출</div>
+        <div class="kpi-value amber">13.3조</div>
+        <div class="kpi-sub">전년 대비 +7.75% 증가</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">영업손실</div>
+        <div class="kpi-value red">3,533억</div>
+        <div class="kpi-sub">전년 대비 적자폭 17.67% 확대</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">순차입금</div>
+        <div class="kpi-value red">~12.6조</div>
+        <div class="kpi-sub">부채비율 196% (AA− 부정적)</div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">신재생 매출</div>
+        <div class="kpi-value" style="color:var(--accent-blue)">6.86조</div>
+        <div class="kpi-sub">역대 최대 매출 경신</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">케미칼 영업손실</div>
+        <div class="kpi-value red">2,491억</div>
+        <div class="kpi-sub">글로벌 공급과잉 장기화</div>
+      </div>
+      <div class="kpi-card teal">
+        <div class="kpi-label">첨단소재 영업이익</div>
+        <div class="kpi-value teal">62억</div>
+        <div class="kpi-sub">유일한 흑자 부문</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      📌 2025년은 매출이 사상 최대를 기록했음에도 불구하고, 글로벌 석유화학 불황과 미국 통관 지연 이슈가 겹치며 역대급 영업손실을 기록한 한 해였습니다. 핵심은 '매출 성장 vs 수익성 악화'의 극명한 대비입니다.
+    </div>
+  </section>
+
+  <!-- ② 사업부별 실적 -->
+  <section id="section2">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">2025 사업부문별 실적 분석</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>사업 부문</th>
+          <th>매출 (억원)</th>
+          <th>영업손익 (억원)</th>
+          <th>영업이익률</th>
+          <th>주요 이슈</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="segment-name">
+            <span class="segment-icon" style="background:#4a9ef5"></span>
+            신재생에너지 (큐셀)
+          </td>
+          <td>68,594</td>
+          <td class="loss">▼ 852</td>
+          <td class="loss">−1.2%</td>
+          <td style="font-size:12px;color:var(--text-muted)">통관지연, 미국 공장 저율가동</td>
+        </tr>
+        <tr>
+          <td class="segment-name">
+            <span class="segment-icon" style="background:#f45a5a"></span>
+            케미칼
+          </td>
+          <td>46,241</td>
+          <td class="loss">▼ 2,491</td>
+          <td class="loss">−5.4%</td>
+          <td style="font-size:12px;color:var(--text-muted)">공급과잉·스프레드 축소 지속</td>
+        </tr>
+        <tr>
+          <td class="segment-name">
+            <span class="segment-icon" style="background:#3de8c0"></span>
+            첨단소재
+          </td>
+          <td>11,109</td>
+          <td class="profit">▲ 62</td>
+          <td class="profit">+0.6%</td>
+          <td style="font-size:12px;color:var(--text-muted)">미국 신공장 가동, 2년 연속 1조</td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.02)">
+          <td class="segment-name" style="font-weight:700">연결 합계</td>
+          <td style="font-weight:700">133,544</td>
+          <td class="loss" style="font-weight:700">▼ 3,533</td>
+          <td class="loss" style="font-weight:700">−2.6%</td>
+          <td style="font-size:12px;color:var(--text-muted)">—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warn-box">
+      ⚠️ 신재생에너지 부문 실적의 상당 부분이 IRA(인플레이션 감축법) 세제혜택(AMPC)으로 구성됩니다. 3분기의 경우 IRA 이익 682억원 제외 시 본업 수익성은 더욱 악화됩니다. 향후 미국 정책 변화에 따른 AMPC 축소 리스크에 주의가 필요합니다.
+    </div>
+  </section>
+
+  <!-- ③ 유상증자 -->
+  <section id="section3">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">2.4조 유상증자 — 내막 완전 해부</span>
+    </div>
+
+    <div style="margin-bottom:32px">
+      <div class="section-header" style="border:none;padding:0;margin-bottom:16px">
+        <span style="font-size:13px;color:var(--text-muted);font-weight:500">▸ 유상증자 일정</span>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 03. 26</div>
+          <div class="timeline-title">이사회 결의 · 공시</div>
+          <div class="timeline-desc">보통주 7,200만주 신주 발행 결의. 예정 발행가 33,300원. 당일 주가 18% 이상 급락.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 05. 14</div>
+          <div class="timeline-title">신주 배정 기준일</div>
+          <div class="timeline-desc">주주명부 등재 기준. 구주주 1주당 0.3348843614주 배정 비율 적용.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 06. 17</div>
+          <div class="timeline-title">최종 발행가 확정</div>
+          <div class="timeline-desc">1차·2차 발행가 중 낮은 가액으로 결정. 실제 조달액 변동 가능.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 06. 22~23</div>
+          <div class="timeline-title">구주주 청약</div>
+          <div class="timeline-desc">우리사주조합(전체 20% 우선 배정) 및 기존 주주 대상 청약.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 06. 25~26</div>
+          <div class="timeline-title">실권주 일반 공모</div>
+          <div class="timeline-desc">구주주 미청약분 일반 공모. 납입일 6월 30일.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2026. 07. 10</div>
+          <div class="timeline-title">신주 상장 예정</div>
+          <div class="timeline-desc">기존 1억 7,189만주 + 신주 7,200만주 = 총 2억 4,389만주. 주주 희석률 약 42%.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);">▸ 자금 배분 계획</div>
+
+    <div class="alloc-box">
+      <div class="alloc-header">
+        <span class="alloc-label">① 채무 상환 (최우선)</span>
+        <span class="alloc-amount" style="color:var(--accent-red)">1조 4,899억원</span>
+      </div>
+      <div class="alloc-bar-track">
+        <div class="alloc-bar-fill" style="width:62%;background:var(--accent-red)"></div>
+      </div>
+      <div class="alloc-detail">
+        전체 조달액의 약 62%. 올해 만기 도래 회사채·기업어음·한도대출 우선 상환.<br>
+        목표: 2026년 부채비율 196% → 150% 이하, 순차입금 12.6조 → 9조원.<br>
+        장기 목표: 2030년 부채비율 100%, 순차입금 7조원.
+      </div>
+    </div>
+
+    <div class="alloc-box">
+      <div class="alloc-header">
+        <span class="alloc-label">② 미래 시설 투자</span>
+        <span class="alloc-amount" style="color:var(--accent2)">9,077억원</span>
+      </div>
+      <div class="alloc-bar-track">
+        <div class="alloc-bar-fill" style="width:38%;background:var(--accent2)"></div>
+      </div>
+      <div class="alloc-detail">
+        전체 조달액의 약 38%. 3년간 단계적 집행 예정.<br>
+        ▸ 페로브스카이트 탠덤 파일럿 라인: <strong style="color:#fff">1,000억원</strong> — 신뢰성·공정 안정성·양산성 검증.<br>
+        ▸ GW급 탠덤 양산 라인 + TOPCon 생산 확대: <strong style="color:#fff">8,000억원</strong> — PERC→TOPCon→탠덤 기술 전환 완성.
+      </div>
+    </div>
+
+    <div class="warn-box">
+      🔍 <strong style="color:var(--text)">시장의 핵심 우려</strong><br>
+      순차입금 약 13조원에서 1.5조 상환은 전체의 11.5%에 불과. 증자 이후에도 실질적 재무 개선 효과는 제한적이라는 시각이 우세합니다. DS투자증권은 투자의견 '매수→매도' 하향, 목표주가 4.7만→2.5만원으로 대폭 조정. 또한 정관 변경으로 발행예정 주식수가 3억→5억주로 확대되어 추가 증자 가능성에 대한 우려도 상존합니다.
+    </div>
+  </section>
+
+  <!-- ④ 주주환원 -->
+  <section id="section4">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">주주환원 정책 (2026~2030)</span>
+    </div>
+
+    <div class="policy-grid">
+      <div class="policy-item">
+        <div class="policy-item-icon">💰</div>
+        <div class="policy-item-value">최소 300원</div>
+        <div class="policy-item-label">주당 최소 배당금<br>(적자에도 보장)</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-item-icon">📊</div>
+        <div class="policy-item-value">순이익 10%</div>
+        <div class="policy-item-label">연결 당기순이익의<br>주주환원 비율</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-item-icon">📅</div>
+        <div class="policy-item-value">5년간</div>
+        <div class="policy-item-label">2026~2030<br>지속 환원 약속</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-item-icon">🏛️</div>
+        <div class="policy-item-value">42억원</div>
+        <div class="policy-item-label">경영진 자사주 매입<br>(3월 30일부터 순차)</div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:20px">
+      📌 <strong style="color:var(--text)">냉정한 평가</strong>: 주당 300원 최소 배당은 신주 7,200만주 발행 후 총 주식수 기준 약 780억원이 필요합니다. 2025년 적자 상황에서 이 재원의 출처가 불명확하며, 지분 희석으로 인한 주주가치 훼손이 배당 효과를 상쇄할 수 있습니다. 주주환원 정책의 실질적 의미는 실적 회복 이후에 비로소 드러날 것입니다.
+    </div>
+  </section>
+
+  <!-- ⑤ 리스크 & 기회 -->
+  <section id="section5">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">투자 리스크 &amp; 잠재 기회 요인</span>
+    </div>
+
+    <div class="two-col">
+      <div class="risk-card">
+        <div class="card-title">⚠ 핵심 리스크</div>
+        <ul class="item-list">
+          <li>순차입금 12.6조원, 부채비율 196% — 재무 건전성 심각 수준</li>
+          <li>신용등급 AA− (부정적) — 추가 하락 시 차환 비용 급증 위험</li>
+          <li>미국 IRA 정책 변경 리스크 — AMPC 세제혜택 축소 가능성</li>
+          <li>케미칼 부문 구조적 공급과잉 — 단기 회복 기대 난망</li>
+          <li>정관 변경으로 추가 유상증자 가능성 상존</li>
+          <li>금융감독원 중점 심사 — 증자 일정 지연 가능성</li>
+          <li>페로브스카이트 탠덤 상업화 불확실성 (기술 리스크)</li>
+        </ul>
+      </div>
+      <div class="opp-card">
+        <div class="card-title">✦ 잠재 기회</div>
+        <ul class="item-list">
+          <li>전 세계 태양광 설치 수요 지속 증가 — 한화큐셀 시장 지위 견고</li>
+          <li>페로브스카이트 탠덤 기술 선점 — 차세대 태양광 게임체인저</li>
+          <li>미국 카터스빌 GW급 공장 정상 가동 임박 (2026년)</li>
+          <li>미국 주택용 에너지 사업 고성장 지속</li>
+          <li>유상증자 완료 후 재무 안정화 → 신용등급 안정화 기대</li>
+          <li>2030년 매출 33조·영업이익 2.9조 로드맵 — 성장성 프리미엄</li>
+          <li>재생에너지 확대 정책 수혜 (국내외)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ 투자 로드맵 -->
+  <section id="section6">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">2026~2030 중장기 성장 로드맵</span>
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-col">
+        <div class="roadmap-year">2026</div>
+        <ul class="roadmap-items">
+          <li>유상증자 완료 (7월)</li>
+          <li>부채비율 196→150% 목표</li>
+          <li>카터스빌 셀 공장 정상 가동</li>
+          <li>신재생에너지 부문 흑자 전환</li>
+          <li>탠덤 파일럿 라인 착공</li>
+        </ul>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-year">2027~28</div>
+        <ul class="roadmap-items">
+          <li>TOPCon 생산 능력 대규모 확대</li>
+          <li>탠덤 파일럿 검증 완료</li>
+          <li>케미칼 사업 재편 마무리</li>
+          <li>순차입금 9조 수준 관리</li>
+          <li>GW급 탠덤 양산 준비</li>
+        </ul>
+      </div>
+      <div class="roadmap-col">
+        <div class="roadmap-year">2030</div>
+        <ul class="roadmap-items">
+          <li>매출 33조원 달성 목표</li>
+          <li>영업이익 2.9조원 목표</li>
+          <li>부채비율 100% 이하</li>
+          <li>순차입금 7조원 수준</li>
+          <li>탠덤 양산 상업화 완성</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ 투자 판단 -->
+  <section id="section7">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <span class="section-title">투자 가치 종합 판단</span>
+    </div>
+
+    <div class="verdict-box">
+      <div class="verdict-rating">
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;margin-bottom:8px">투자 매력도</div>
+          <div class="rating-badge">★★★☆☆</div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--text-muted);margin-top:6px">중장기 관심 · 단기 리스크 고려</div>
+        </div>
+      </div>
+      <div class="verdict-text">
+        한화솔루션은 현재 <strong>구조적 전환기의 최고 난이도 구간</strong>을 통과하고 있습니다. 2조 4,000억원의 유상증자는 주주 입장에서 단기적으로 명백한 희석 악재이지만, 장기적으로는 <strong>신용등급 하락 방어와 페로브스카이트 탠덤 기술 선점</strong>이라는 두 가지 핵심 목표를 향한 필연적인 선택이었다는 해석도 가능합니다.
+
+        <br><br>투자 가치를 판단하기 위해서는 세 가지 기준을 기억해야 합니다. 첫째, <strong>2026년 신재생에너지 부문 흑자 전환 여부</strong>. 둘째, <strong>미국 카터스빌 공장의 정상 가동 및 판매 정상화</strong>. 셋째, <strong>케미칼 부문 업황 회복 또는 사업 재편 성과</strong>. 이 세 가지가 순서대로 이행된다면, 지금 이 순간은 중장기 투자자에게 유효한 진입 기회로 기록될 수 있습니다.
+
+        <br><br>반면 재무 불안정성, 추가 증자 우려, 기술 상용화 불확실성이 여전히 상존하는 만큼 <strong>단기 투자 목적으로는 높은 변동성을 감내해야</strong> 합니다. 전체 포트폴리오 내에서 비중을 조절하며 분할 접근하는 전략이 합리적입니다.
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      본 보고서는 공개된 뉴스 및 기업 공시 자료를 기반으로 작성된 개인적 정보 분석 글이며, 특정 종목의 매수·매도를 권유하거나 투자를 조언하는 목적으로 작성된 것이 아닙니다. 모든 투자의 최종 판단과 책임은 투자자 본인에게 있습니다. 증권 투자는 원금 손실의 위험이 있습니다.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  HANWHA SOLUTIONS IR REPORT 2025 &nbsp;·&nbsp; 분석 기준일: 2026.03.30 &nbsp;·&nbsp; 본 자료는 투자 권유가 아닙니다
+</footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // Animate bar fills on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.alloc-bar-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => bar.style.width = w, 300);
+    });
+  });
+</script>
+</body>
+</html>
