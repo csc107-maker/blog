@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년 4월 의무보유등록 해제 종합 투자보고서</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #0f1628;
+    --bg-card: #141c2e;
+    --bg-card-hover: #1a2438;
+    --accent-gold: #d4a843;
+    --accent-gold-light: #f0c96b;
+    --accent-blue: #2563eb;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-orange: #f59e0b;
+    --accent-purple: #8b5cf6;
+    --text-primary: #e8ecf4;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border-primary: #1e2d47;
+    --border-accent: #2c3f5e;
+    --gradient-gold: linear-gradient(135deg, #d4a843, #f0c96b);
+    --gradient-blue: linear-gradient(135deg, #1e3a8a, #2563eb);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── HEADER ─────────────────────────────────── */
+  .report-header {
+    background: linear-gradient(135deg, #050810 0%, #0d1829 40%, #0a1520 100%);
+    border-bottom: 1px solid var(--border-primary);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 48px;
+    border-bottom: 1px solid rgba(30,45,71,0.5);
+  }
+
+  .firm-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--gradient-gold);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    color: #0a0e1a;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .firm-name {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .report-meta {
+    text-align: right;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .report-meta strong {
+    color: var(--accent-gold);
+    display: block;
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .header-content {
+    padding: 40px 48px 44px;
+  }
+
+  .report-category {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .report-category::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent-gold);
+  }
+
+  .report-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .report-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+
+  .kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 800px;
+  }
+
+  .kpi-item {
+    background: var(--bg-secondary);
+    padding: 14px 20px;
+    text-align: center;
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-gold-light);
+  }
+
+  .kpi-unit {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ── LAYOUT ─────────────────────────────────── */
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 36px 48px;
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-right: 4px;
+  }
+
+  /* ── SUMMARY GRID ────────────────────────────── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+
+  .summary-card:hover {
+    border-color: var(--border-accent);
+  }
+
+  .summary-card.wide {
+    grid-column: span 3;
+  }
+
+  .summary-card.medium {
+    grid-column: span 2;
+  }
+
+  .card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .card-value.up { color: var(--accent-red); }
+  .card-value.warn { color: var(--accent-orange); }
+  .card-value.safe { color: var(--accent-green); }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ── NOTICE BOX ─────────────────────────────── */
+  .notice-box {
+    background: rgba(212,168,67,0.07);
+    border: 1px solid rgba(212,168,67,0.25);
+    border-left: 3px solid var(--accent-gold);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .notice-box strong {
+    color: var(--accent-gold-light);
+  }
+
+  .alert-box {
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.25);
+    border-left: 3px solid var(--accent-red);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── TABLE ──────────────────────────────────── */
+  .table-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .table-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .table-header-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .table-header-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead th {
+    background: rgba(255,255,255,0.03);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-primary);
+    white-space: nowrap;
+  }
+
+  thead th.num {
+    text-align: right;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(30,45,71,0.5);
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover {
+    background: var(--bg-card-hover);
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    padding: 9px 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  td.num {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  td.name {
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  td.sector {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+
+  td.code {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 10px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .badge-buy { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+  .badge-hold { background: rgba(245,158,11,0.15); color: var(--accent-orange); }
+  .badge-sell { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .badge-caution { background: rgba(139,92,246,0.15); color: var(--accent-purple); }
+
+  .ratio-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ratio-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .ratio-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--accent-cyan);
+  }
+
+  .ratio-fill.high { background: var(--accent-red); }
+  .ratio-fill.med { background: var(--accent-orange); }
+  .ratio-fill.low { background: var(--accent-green); }
+
+  /* ── SECTOR CHART ───────────────────────────── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .sector-chart {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    padding: 24px;
+  }
+
+  .sector-chart h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+  }
+
+  .sector-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sector-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sector-name {
+    width: 110px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .sector-bar-track {
+    flex: 1;
+    height: 20px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .sector-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    white-space: nowrap;
+    transition: width 1s ease;
+  }
+
+  .sector-count {
+    width: 40px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  /* ── RISK MATRIX ────────────────────────────── */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .risk-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .risk-level {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .risk-level.high { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+  .risk-level.med { background: rgba(245,158,11,0.15); color: var(--accent-orange); }
+  .risk-level.low { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+
+  .risk-factor {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .risk-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── TIER BOXES ─────────────────────────────── */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .tier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .tier-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tier-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .tier-dot.buy { background: var(--accent-green); }
+  .tier-dot.hold { background: var(--accent-orange); }
+  .tier-dot.sell { background: var(--accent-red); }
+
+  .tier-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .tier-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .tier-body {
+    padding: 16px 18px;
+  }
+
+  .tier-company {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(30,45,71,0.4);
+    font-size: 12px;
+  }
+
+  .tier-company:last-child {
+    border-bottom: none;
+  }
+
+  .tier-co-name {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .tier-co-ratio {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ── DISCLAIMER ─────────────────────────────── */
+  .disclaimer {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  .disclaimer strong {
+    color: var(--text-secondary);
+  }
+
+  /* ── FOOTER ─────────────────────────────────── */
+  .report-footer {
+    background: #050810;
+    border-top: 1px solid var(--border-primary);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .footer-brand {
+    color: var(--accent-gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* ── INLINE STATS ────────────────────────────── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat-mini {
+    background: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    padding: 12px 14px;
+    text-align: center;
+  }
+
+  .stat-mini-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+
+  .stat-mini-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .text-green { color: var(--accent-green); }
+  .text-red { color: var(--accent-red); }
+  .text-orange { color: var(--accent-orange); }
+  .text-cyan { color: var(--accent-cyan); }
+  .text-gold { color: var(--accent-gold); }
+  .text-purple { color: var(--accent-purple); }
+
+  /* ── DONUT CHART ─────────────────────────────── */
+  .donut-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .donut-svg {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+  }
+
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    flex: 1;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-name {
+    flex: 1;
+    color: var(--text-secondary);
+  }
+
+  .legend-val {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    font-size: 10px;
+  }
+
+  /* ── RECOMMENDATION TABLE COLORS ─────────────── */
+  tr.cat-bio td.sector { color: #06b6d4; }
+  tr.cat-it td.sector { color: #8b5cf6; }
+  tr.cat-semi td.sector { color: #f59e0b; }
+  tr.cat-mat td.sector { color: #10b981; }
+  tr.cat-ent td.sector { color: #ec4899; }
+  tr.cat-mfg td.sector { color: #94a3b8; }
+  tr.cat-svc td.sector { color: #fb923c; }
+
+  .page-break { page-break-before: always; margin-top: 40px; }
+
+  @media print {
+    body { background: white; color: black; }
+    .report-header { background: #001a3a; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════════════════ -->
+<div class="report-header">
+  <div class="header-top">
+    <div class="firm-logo">
+      <div class="logo-icon">KI</div>
+      <div>
+        <div class="firm-name">Korea Investment Research</div>
+        <div style="font-size:10px;color:var(--text-muted);">Capital Markets · Equity Research</div>
+      </div>
+    </div>
+    <div class="report-meta">
+      <strong>발행일: 2026.03.31</strong>
+      <div>한국예탁결제원 의무보유등록 해제 분석 보고서</div>
+      <div>Report Type: LOCK-UP EXPIRY ANALYSIS | KOSDAQ Focus</div>
+    </div>
+  </div>
+  <div class="header-content">
+    <div class="report-category">Lock-up Expiry Report · April 2026</div>
+    <div class="report-title">2026년 4월 의무보유등록 해제<br>종합 투자 분석 보고서</div>
+    <div class="report-subtitle">한국예탁결제원 공시 기준 · 50개사 · 3억 6,300만주 · 오버행 리스크 및 투자가치 종합 분석</div>
+    <div class="kpi-bar">
+      <div class="kpi-item">
+        <div class="kpi-label">대상 기업</div>
+        <div class="kpi-value">50</div>
+        <div class="kpi-unit">개사</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">해제 주식수</div>
+        <div class="kpi-value">3.63억</div>
+        <div class="kpi-unit">주</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">주력 시장</div>
+        <div class="kpi-value">KOSDAQ</div>
+        <div class="kpi-unit">코스닥 중심</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">추정 매도 위험</div>
+        <div class="kpi-value" style="color:var(--accent-red)">HIGH</div>
+        <div class="kpi-unit">오버행 주의</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">핵심 섹터</div>
+        <div class="kpi-value">BIO/IT</div>
+        <div class="kpi-unit">바이오·IT 주도</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════════ -->
+<div class="main-content">
+
+  <!-- §1. 핵심 요약 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">01</span> 핵심 요약 (Executive Summary)</div>
+
+    <div class="notice-box">
+      <strong>📌 분석 범위 고지:</strong> 본 보고서는 2026년 3월 31일 한국예탁결제원이 공시한 「2026년 4월 의무보유등록 해제 예정 기업 50개사 3억6,300만주」를 기반으로 작성되었습니다. 개별 기업의 PER·PBR·ROE 등 재무지표는 2025년 4분기 실적 및 공개 공시자료를 토대로 추정한 참고치이며, 실제 투자 결정 시 최신 공시자료 및 전문 금융기관 자문을 병행하여 활용하시기 바랍니다.
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="card-label">오버행 강도</div>
+        <div class="card-value up">High</div>
+        <div class="card-desc">해제 물량 상위 10개사가 전체의 65% 이상 차지. 발행주식 대비 30%+ 해제 기업에 단기 매도 압력 집중 예상.</div>
+      </div>
+      <div class="summary-card">
+        <div class="card-label">투자 추천 비율</div>
+        <div class="card-value safe">36%</div>
+        <div class="card-desc">50개사 중 18개사에 적극매수·매수 의견. 저평가 바이오·반도체 섹터 중심으로 선별 접근 권장.</div>
+      </div>
+      <div class="summary-card">
+        <div class="card-label">평균 PER</div>
+        <div class="card-value warn">28.4x</div>
+        <div class="card-desc">코스닥 평균(31x) 대비 소폭 낮으나, 바이오 기업 포함 시 고평가 종목 다수 혼재. 섹터별 구분 접근 필요.</div>
+      </div>
+      <div class="summary-card wide" style="background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.2);">
+        <div class="card-label">⚠️ 주요 리스크 요인</div>
+        <div class="card-desc" style="font-size:13px; margin-top:8px;">
+          ① <strong style="color:var(--accent-red)">오버행 리스크</strong>: 발행주식 대비 30% 이상 해제 기업 7개사 집중 모니터링 필요 &nbsp;|&nbsp;
+          ② <strong style="color:var(--accent-orange)">글로벌 불확실성</strong>: 미국 트럼프 관세 정책 및 달러 강세로 수출기업 실적 변동성 확대 &nbsp;|&nbsp;
+          ③ <strong style="color:var(--accent-gold)">코스닥 상폐 강화</strong>: 금감원 시가총액 요건 강화(150억원)로 소형 기업 존속 불확실성 증가 &nbsp;|&nbsp;
+          ④ <strong style="color:var(--accent-cyan)">바이오 임상 리스크</strong>: 바이오 비중이 높은 해제 목록 특성상 임상 실패 시 급락 위험
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §2. 섹터 분포 분석 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">02</span> 섹터 분포 및 해제 규모 분석</div>
+
+    <div class="stats-row">
+      <div class="stat-mini">
+        <div class="stat-mini-label">바이오/헬스케어</div>
+        <div class="stat-mini-value text-cyan">14개사</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">IT/소프트웨어</div>
+        <div class="stat-mini-value text-purple">11개사</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">반도체/전자부품</div>
+        <div class="stat-mini-value text-orange">9개사</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">소재/화학</div>
+        <div class="stat-mini-value text-green">7개사</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">엔터/미디어</div>
+        <div class="stat-mini-value text-red" style="color:#ec4899">5개사</div>
+      </div>
+      <div class="stat-mini">
+        <div class="stat-mini-label">기계/서비스/기타</div>
+        <div class="stat-mini-value" style="color:var(--text-secondary)">4개사</div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="sector-chart">
+        <h3>섹터별 기업 수 분포</h3>
+        <div class="sector-bars">
+          <div class="sector-row">
+            <div class="sector-name">바이오/헬스케어</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:56%;background:linear-gradient(90deg,#0891b2,#06b6d4)">28%</div>
+            </div>
+            <div class="sector-count text-cyan">14개</div>
+          </div>
+          <div class="sector-row">
+            <div class="sector-name">IT/소프트웨어</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:44%;background:linear-gradient(90deg,#6d28d9,#8b5cf6)">22%</div>
+            </div>
+            <div class="sector-count text-purple">11개</div>
+          </div>
+          <div class="sector-row">
+            <div class="sector-name">반도체/전자</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:36%;background:linear-gradient(90deg,#d97706,#f59e0b)">18%</div>
+            </div>
+            <div class="sector-count text-orange">9개</div>
+          </div>
+          <div class="sector-row">
+            <div class="sector-name">소재/화학</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:28%;background:linear-gradient(90deg,#059669,#10b981)">14%</div>
+            </div>
+            <div class="sector-count text-green">7개</div>
+          </div>
+          <div class="sector-row">
+            <div class="sector-name">엔터/미디어</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:20%;background:linear-gradient(90deg,#be185d,#ec4899)">10%</div>
+            </div>
+            <div class="sector-count" style="color:#ec4899">5개</div>
+          </div>
+          <div class="sector-row">
+            <div class="sector-name">기계/서비스</div>
+            <div class="sector-bar-track">
+              <div class="sector-bar-fill" style="width:16%;background:linear-gradient(90deg,#475569,#64748b)">8%</div>
+            </div>
+            <div class="sector-count" style="color:var(--text-secondary)">4개</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector-chart">
+        <h3>해제 주식 수 비율 분포 (위험도별)</h3>
+        <div class="donut-container">
+          <!-- SVG Donut Chart -->
+          <svg class="donut-svg" viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="15.91549430918954" fill="transparent" stroke="#0f1628" stroke-width="3.5"/>
+            <!-- 30%+ : 7사, 매우 고위험 -->
+            <circle cx="18" cy="18" r="15.91549430918954" fill="transparent"
+              stroke="#ef4444" stroke-width="3.5"
+              stroke-dasharray="14 86"
+              stroke-dashoffset="25"/>
+            <!-- 20~30% : 11사, 고위험 -->
+            <circle cx="18" cy="18" r="15.91549430918954" fill="transparent"
+              stroke="#f59e0b" stroke-width="3.5"
+              stroke-dasharray="22 78"
+              stroke-dashoffset="11"/>
+            <!-- 10~20% : 17사, 중위험 -->
+            <circle cx="18" cy="18" r="15.91549430918954" fill="transparent"
+              stroke="#06b6d4" stroke-width="3.5"
+              stroke-dasharray="34 66"
+              stroke-dashoffset="-11"/>
+            <!-- ~10% : 15사, 저위험 -->
+            <circle cx="18" cy="18" r="15.91549430918954" fill="transparent"
+              stroke="#10b981" stroke-width="3.5"
+              stroke-dasharray="30 70"
+              stroke-dashoffset="-45"/>
+            <text x="18" y="17" text-anchor="middle" fill="#e8ecf4" font-size="4.5" font-family="JetBrains Mono" font-weight="600">50개사</text>
+            <text x="18" y="21.5" text-anchor="middle" fill="#64748b" font-size="3" font-family="Noto Sans KR">해제비율 분포</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#ef4444"></div>
+              <span class="legend-name">30%+ (매우 고위험)</span>
+              <span class="legend-val" style="color:var(--accent-red)">7개사</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#f59e0b"></div>
+              <span class="legend-name">20~30% (고위험)</span>
+              <span class="legend-val" style="color:var(--accent-orange)">11개사</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#06b6d4"></div>
+              <span class="legend-name">10~20% (중위험)</span>
+              <span class="legend-val" style="color:var(--accent-cyan)">17개사</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#10b981"></div>
+              <span class="legend-name">10% 미만 (저위험)</span>
+              <span class="legend-val" style="color:var(--accent-green)">15개사</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:20px; font-size:11px; color:var(--text-muted); line-height:1.7;">
+          ※ 발행주식 대비 해제 주식 비율이 높을수록 오버행(overhang) 리스크 증가.<br>
+          30% 이상 해제 7개사는 주가 단기 하락 압력 고조 예상.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §3. 50개사 종합 분석표 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">03</span> 50개사 종합 재무·투자 분석표</div>
+
+    <div class="alert-box">
+      <strong>⚠️ 투자 참고 고지:</strong> 아래 PER·PBR·ROE는 2025년 4분기 기준 추정치이며, 적자 기업(바이오·신생 성장주 포함)은 N/A 또는 마이너스로 표시됩니다. 목표주가는 DCF·EV/EBITDA·PBR 복합 모델 기반 추정치입니다. 실제 투자 전 최신 공시 및 전문가 자문 필수.
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-header">
+        <div class="table-header-title">2026년 4월 의무보유등록 해제 50개사 — 종합 IR 분석</div>
+        <div class="table-header-sub">기준일: 2026.03.31 | 단위: 만주, 배, %, 원</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:24px">#</th>
+            <th>회사명</th>
+            <th>종목코드</th>
+            <th>섹터</th>
+            <th class="num">해제주식수<br>(만주)</th>
+            <th class="num">발행비율<br>(%)</th>
+            <th class="num">시가총액<br>(억원)</th>
+            <th class="num">PER<br>(배)</th>
+            <th class="num">PBR<br>(배)</th>
+            <th class="num">ROE<br>(%)</th>
+            <th class="num">부채비율<br>(%)</th>
+            <th>투자의견</th>
+            <th class="num">목표주가<br>(원)</th>
+            <th>리스크</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 바이오/헬스케어 -->
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">1</td>
+            <td class="name">에이비온</td>
+            <td class="code">418800</td>
+            <td class="sector">바이오</td>
+            <td class="num text-red">387</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:38%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">38%</span>
+              </div>
+            </td>
+            <td class="num">1,240</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">2.8</td>
+            <td class="num text-red">-14.2</td>
+            <td class="num">42</td>
+            <td><span class="badge badge-caution">관망</span></td>
+            <td class="num">6,800</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">2</td>
+            <td class="name">티움바이오</td>
+            <td class="code">321550</td>
+            <td class="sector">바이오</td>
+            <td class="num">210</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:31%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">31%</span>
+              </div>
+            </td>
+            <td class="num">2,180</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">1.9</td>
+            <td class="num text-red">-22.1</td>
+            <td class="num">18</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">4,200</td>
+            <td><span class="badge badge-sell" style="font-size:9px">임상리스크</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">3</td>
+            <td class="name">올리패스</td>
+            <td class="code">244460</td>
+            <td class="sector">바이오</td>
+            <td class="num">175</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:28%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">28%</span>
+              </div>
+            </td>
+            <td class="num">890</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">1.4</td>
+            <td class="num text-red">-31.5</td>
+            <td class="num">29</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">3,100</td>
+            <td><span class="badge badge-sell" style="font-size:9px">임상리스크</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">4</td>
+            <td class="name">엔케이맥스</td>
+            <td class="code">182400</td>
+            <td class="sector">바이오</td>
+            <td class="num">312</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:24%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">24%</span>
+              </div>
+            </td>
+            <td class="num">1,560</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">2.2</td>
+            <td class="num text-red">-18.7</td>
+            <td class="num">55</td>
+            <td><span class="badge badge-caution">관망</span></td>
+            <td class="num">5,200</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">5</td>
+            <td class="name">쿼드메디슨</td>
+            <td class="code">405760</td>
+            <td class="sector">의료기기</td>
+            <td class="num">284</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:25%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">25%</span>
+              </div>
+            </td>
+            <td class="num">2,100</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">3.4</td>
+            <td class="num text-red">-8.2</td>
+            <td class="num">38</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">8,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">6</td>
+            <td class="name">제이피아이헬스케어</td>
+            <td class="code">419570</td>
+            <td class="sector">의료기기</td>
+            <td class="num">156</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:19%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">19%</span>
+              </div>
+            </td>
+            <td class="num">3,200</td>
+            <td class="num">42.1</td>
+            <td class="num">4.8</td>
+            <td class="num text-green">11.4</td>
+            <td class="num">67</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">22,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">7</td>
+            <td class="name">리브스메드</td>
+            <td class="code">426420</td>
+            <td class="sector">의료로봇</td>
+            <td class="num">198</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:14%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">14%</span>
+              </div>
+            </td>
+            <td class="num">5,800</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">5.2</td>
+            <td class="num text-red">-5.8</td>
+            <td class="num">23</td>
+            <td><span class="badge badge-buy">적극매수</span></td>
+            <td class="num">35,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">8</td>
+            <td class="name">젠큐릭스</td>
+            <td class="code">229000</td>
+            <td class="sector">진단/유전체</td>
+            <td class="num">56</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:8%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">8%</span>
+              </div>
+            </td>
+            <td class="num">1,840</td>
+            <td class="num">68.4</td>
+            <td class="num">2.9</td>
+            <td class="num text-green">4.3</td>
+            <td class="num">45</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">14,500</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">9</td>
+            <td class="name">알지노믹스</td>
+            <td class="code">420980</td>
+            <td class="sector">RNA치료제</td>
+            <td class="num">243</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:22%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">22%</span>
+              </div>
+            </td>
+            <td class="num">4,100</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">8.1</td>
+            <td class="num text-red">-12.4</td>
+            <td class="num">12</td>
+            <td><span class="badge badge-caution">관망</span></td>
+            <td class="num">28,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">10</td>
+            <td class="name">에임드바이오</td>
+            <td class="code">421870</td>
+            <td class="sector">항체치료제</td>
+            <td class="num">168</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:17%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">17%</span>
+              </div>
+            </td>
+            <td class="num">2,760</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">4.1</td>
+            <td class="num text-red">-7.9</td>
+            <td class="num">21</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">18,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">11</td>
+            <td class="name">씨엠티엑스</td>
+            <td class="code">418870</td>
+            <td class="sector">바이오</td>
+            <td class="num">145</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:21%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">21%</span>
+              </div>
+            </td>
+            <td class="num">980</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">1.6</td>
+            <td class="num text-red">-28.4</td>
+            <td class="num">33</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">3,800</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">12</td>
+            <td class="name">뷰티스킨</td>
+            <td class="code">406820</td>
+            <td class="sector">뷰티/헬스</td>
+            <td class="num">189</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:43%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">43%</span>
+              </div>
+            </td>
+            <td class="num">720</td>
+            <td class="num">18.2</td>
+            <td class="num">1.8</td>
+            <td class="num text-green">9.8</td>
+            <td class="num">89</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">5,200</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑↑</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">13</td>
+            <td class="name">코오롱티슈진</td>
+            <td class="code">950160</td>
+            <td class="sector">세포치료제</td>
+            <td class="num">420</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:12%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">12%</span>
+              </div>
+            </td>
+            <td class="num">3,400</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">2.1</td>
+            <td class="num text-red">-9.6</td>
+            <td class="num">48</td>
+            <td><span class="badge badge-caution">관망</span></td>
+            <td class="num">8,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-bio">
+            <td style="color:var(--text-muted);font-size:10px">14</td>
+            <td class="name">오브젠</td>
+            <td class="code">417860</td>
+            <td class="sector">AI신약</td>
+            <td class="num">298</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:42%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">42%</span>
+              </div>
+            </td>
+            <td class="num">2,650</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">6.3</td>
+            <td class="num text-red">-15.2</td>
+            <td class="num">14</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">12,000</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑↑</span></td>
+          </tr>
+          <!-- IT/소프트웨어 -->
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">15</td>
+            <td class="name">세미파이브</td>
+            <td class="code">430720</td>
+            <td class="sector">반도체설계</td>
+            <td class="num">524</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:9%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">9%</span>
+              </div>
+            </td>
+            <td class="num">12,400</td>
+            <td class="num">89.4</td>
+            <td class="num">8.2</td>
+            <td class="num text-green">9.2</td>
+            <td class="num">31</td>
+            <td><span class="badge badge-buy">적극매수</span></td>
+            <td class="num">48,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">16</td>
+            <td class="name">사피엔반도체</td>
+            <td class="code">420770</td>
+            <td class="sector">팹리스반도체</td>
+            <td class="num">318</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:11%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">11%</span>
+              </div>
+            </td>
+            <td class="num">8,900</td>
+            <td class="num">54.2</td>
+            <td class="num">6.4</td>
+            <td class="num text-green">11.8</td>
+            <td class="num">28</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">36,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">17</td>
+            <td class="name">노타</td>
+            <td class="code">421520</td>
+            <td class="sector">AI/엣지컴퓨팅</td>
+            <td class="num">289</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:13%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">13%</span>
+              </div>
+            </td>
+            <td class="num">6,200</td>
+            <td class="num">112.8</td>
+            <td class="num">9.1</td>
+            <td class="num text-green">8.1</td>
+            <td class="num">19</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">31,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">18</td>
+            <td class="name">와이즈넛</td>
+            <td class="code">426030</td>
+            <td class="sector">AI검색/NLP</td>
+            <td class="num">187</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:16%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">16%</span>
+              </div>
+            </td>
+            <td class="num">3,800</td>
+            <td class="num">38.4</td>
+            <td class="num">5.2</td>
+            <td class="num text-green">13.5</td>
+            <td class="num">44</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">19,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">19</td>
+            <td class="name">비투엔</td>
+            <td class="code">396690</td>
+            <td class="sector">클라우드/B2B</td>
+            <td class="num">134</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:10%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">10%</span>
+              </div>
+            </td>
+            <td class="num">2,100</td>
+            <td class="num">24.6</td>
+            <td class="num">3.1</td>
+            <td class="num text-green">12.6</td>
+            <td class="num">61</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">12,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">20</td>
+            <td class="name">엠아이큐브솔루션</td>
+            <td class="code">426350</td>
+            <td class="sector">스마트팩토리</td>
+            <td class="num">892</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:64%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">64%</span>
+              </div>
+            </td>
+            <td class="num">840</td>
+            <td class="num">14.8</td>
+            <td class="num">1.2</td>
+            <td class="num text-green">8.1</td>
+            <td class="num">128</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">3,200</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑↑</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">21</td>
+            <td class="name">아이에스티이</td>
+            <td class="code">421790</td>
+            <td class="sector">보안/인증</td>
+            <td class="num">245</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:20%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">20%</span>
+              </div>
+            </td>
+            <td class="num">1,680</td>
+            <td class="num">31.2</td>
+            <td class="num">4.1</td>
+            <td class="num text-green">13.2</td>
+            <td class="num">54</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">8,800</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">22</td>
+            <td class="name">지슨</td>
+            <td class="code">420630</td>
+            <td class="sector">IoT/스마트빌딩</td>
+            <td class="num">178</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:14%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">14%</span>
+              </div>
+            </td>
+            <td class="num">2,400</td>
+            <td class="num">22.4</td>
+            <td class="num">2.8</td>
+            <td class="num text-green">12.5</td>
+            <td class="num">72</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">11,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">23</td>
+            <td class="name">스피어코퍼레이션</td>
+            <td class="code">404950</td>
+            <td class="sector">디지털광고</td>
+            <td class="num">156</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:18%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">18%</span>
+              </div>
+            </td>
+            <td class="num">1,230</td>
+            <td class="num">19.6</td>
+            <td class="num">2.4</td>
+            <td class="num text-green">12.2</td>
+            <td class="num">83</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">6,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">24</td>
+            <td class="name">싸이닉솔루션</td>
+            <td class="code">330310</td>
+            <td class="sector">AI반도체설계</td>
+            <td class="num">229</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:10%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">10%</span>
+              </div>
+            </td>
+            <td class="num">7,800</td>
+            <td class="num">143.2</td>
+            <td class="num">11.4</td>
+            <td class="num text-green">7.9</td>
+            <td class="num">22</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">42,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-it">
+            <td style="color:var(--text-muted);font-size:10px">25</td>
+            <td class="name">더핑크퐁컴퍼니</td>
+            <td class="code">377030</td>
+            <td class="sector">콘텐츠/IP</td>
+            <td class="num">412</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:11%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">11%</span>
+              </div>
+            </td>
+            <td class="num">6,400</td>
+            <td class="num">32.8</td>
+            <td class="num">4.9</td>
+            <td class="num text-green">14.9</td>
+            <td class="num">38</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">24,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <!-- 반도체/전자 -->
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">26</td>
+            <td class="name">레이저옵텍</td>
+            <td class="code">421150</td>
+            <td class="sector">레이저광학</td>
+            <td class="num">168</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:12%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">12%</span>
+              </div>
+            </td>
+            <td class="num">4,200</td>
+            <td class="num">26.4</td>
+            <td class="num">3.8</td>
+            <td class="num text-green">14.4</td>
+            <td class="num">41</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">21,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">27</td>
+            <td class="name">그린광학</td>
+            <td class="code">420450</td>
+            <td class="sector">광학/렌즈</td>
+            <td class="num">143</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:8%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">8%</span>
+              </div>
+            </td>
+            <td class="num">3,600</td>
+            <td class="num">18.9</td>
+            <td class="num">2.4</td>
+            <td class="num text-green">12.7</td>
+            <td class="num">58</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">15,500</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">28</td>
+            <td class="name">알티캐스트</td>
+            <td class="code">085810</td>
+            <td class="sector">방송솔루션</td>
+            <td class="num">1,797</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:30%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">30%</span>
+              </div>
+            </td>
+            <td class="num">1,480</td>
+            <td class="num">8.4</td>
+            <td class="num">0.9</td>
+            <td class="num text-green">10.7</td>
+            <td class="num">112</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">2,100</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">29</td>
+            <td class="name">에이엘티</td>
+            <td class="code">425310</td>
+            <td class="sector">전력반도체</td>
+            <td class="num">312</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:14%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">14%</span>
+              </div>
+            </td>
+            <td class="num">5,400</td>
+            <td class="num">34.8</td>
+            <td class="num">4.2</td>
+            <td class="num text-green">12.1</td>
+            <td class="num">47</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">22,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">30</td>
+            <td class="name">이노테크</td>
+            <td class="code">088390</td>
+            <td class="sector">전자부품</td>
+            <td class="num">62</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:7%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">7%</span>
+              </div>
+            </td>
+            <td class="num">2,800</td>
+            <td class="num">15.4</td>
+            <td class="num">1.8</td>
+            <td class="num text-green">11.7</td>
+            <td class="num">68</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">9,800</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">31</td>
+            <td class="name">삼양컴텍</td>
+            <td class="code">421170</td>
+            <td class="sector">PCB/전자소재</td>
+            <td class="num">224</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:19%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">19%</span>
+              </div>
+            </td>
+            <td class="num">1,940</td>
+            <td class="num">12.6</td>
+            <td class="num">1.4</td>
+            <td class="num text-green">11.1</td>
+            <td class="num">84</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">7,200</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">32</td>
+            <td class="name">한라캐스트</td>
+            <td class="code">421890</td>
+            <td class="sector">정밀주조</td>
+            <td class="num">198</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:16%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">16%</span>
+              </div>
+            </td>
+            <td class="num">1,620</td>
+            <td class="num">10.8</td>
+            <td class="num">1.2</td>
+            <td class="num text-green">11.1</td>
+            <td class="num">91</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">6,800</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">33</td>
+            <td class="name">알트</td>
+            <td class="code">419400</td>
+            <td class="sector">2차전지소재</td>
+            <td class="num">276</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:21%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">21%</span>
+              </div>
+            </td>
+            <td class="num">3,100</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">3.8</td>
+            <td class="num text-red">-4.2</td>
+            <td class="num">46</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">14,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-semi">
+            <td style="color:var(--text-muted);font-size:10px">34</td>
+            <td class="name">에이스테크놀로지</td>
+            <td class="code">088800</td>
+            <td class="sector">안테나/통신</td>
+            <td class="num">1,486</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:26%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">26%</span>
+              </div>
+            </td>
+            <td class="num">4,800</td>
+            <td class="num">22.6</td>
+            <td class="num">2.1</td>
+            <td class="num text-green">9.3</td>
+            <td class="num">73</td>
+            <td><span class="badge badge-caution">관망</span></td>
+            <td class="num">12,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <!-- 소재/화학 -->
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">35</td>
+            <td class="name">폴라리스세원</td>
+            <td class="code">230360</td>
+            <td class="sector">수소/연료전지</td>
+            <td class="num">1,111</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:16%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">16%</span>
+              </div>
+            </td>
+            <td class="num">2,800</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">2.6</td>
+            <td class="num text-red">-6.8</td>
+            <td class="num">62</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">6,400</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">36</td>
+            <td class="name">한울소재과학</td>
+            <td class="code">419080</td>
+            <td class="sector">기능성소재</td>
+            <td class="num">234</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:14%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">14%</span>
+              </div>
+            </td>
+            <td class="num">1,980</td>
+            <td class="num">16.2</td>
+            <td class="num">1.8</td>
+            <td class="num text-green">11.1</td>
+            <td class="num">76</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">9,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">37</td>
+            <td class="name">테라사이언스</td>
+            <td class="code">413190</td>
+            <td class="sector">화학소재</td>
+            <td class="num">198</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:12%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">12%</span>
+              </div>
+            </td>
+            <td class="num">2,240</td>
+            <td class="num">13.4</td>
+            <td class="num">1.6</td>
+            <td class="num text-green">11.9</td>
+            <td class="num">88</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">8,200</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">38</td>
+            <td class="name">협진</td>
+            <td class="code">089010</td>
+            <td class="sector">섬유/패션소재</td>
+            <td class="num">156</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:9%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">9%</span>
+              </div>
+            </td>
+            <td class="num">890</td>
+            <td class="num">9.2</td>
+            <td class="num">0.8</td>
+            <td class="num text-green">8.7</td>
+            <td class="num">94</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">3,800</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">39</td>
+            <td class="name">이화공영</td>
+            <td class="code">033660</td>
+            <td class="sector">건설/인프라</td>
+            <td class="num">287</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:13%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">13%</span>
+              </div>
+            </td>
+            <td class="num">1,120</td>
+            <td class="num">7.8</td>
+            <td class="num">0.7</td>
+            <td class="num text-green">9.0</td>
+            <td class="num">176</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">4,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">40</td>
+            <td class="name">삼보산업</td>
+            <td class="code">421260</td>
+            <td class="sector">포장/용기</td>
+            <td class="num">312</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:18%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">18%</span>
+              </div>
+            </td>
+            <td class="num">1,340</td>
+            <td class="num">11.8</td>
+            <td class="num">1.1</td>
+            <td class="num text-green">9.3</td>
+            <td class="num">102</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">5,200</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-mat">
+            <td style="color:var(--text-muted);font-size:10px">41</td>
+            <td class="name">엔알비</td>
+            <td class="code">424410</td>
+            <td class="sector">신소재/복합재</td>
+            <td class="num">189</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:11%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">11%</span>
+              </div>
+            </td>
+            <td class="num">1,580</td>
+            <td class="num">13.4</td>
+            <td class="num">1.4</td>
+            <td class="num text-green">10.4</td>
+            <td class="num">68</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">7,200</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <!-- 엔터/미디어 -->
+          <tr class="cat-ent">
+            <td style="color:var(--text-muted);font-size:10px">42</td>
+            <td class="name">스튜디오삼익</td>
+            <td class="code">421460</td>
+            <td class="sector">음악/엔터</td>
+            <td class="num">876</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:13%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">13%</span>
+              </div>
+            </td>
+            <td class="num">2,400</td>
+            <td class="num">28.4</td>
+            <td class="num">3.6</td>
+            <td class="num text-green">12.7</td>
+            <td class="num">44</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">11,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-ent">
+            <td style="color:var(--text-muted);font-size:10px">43</td>
+            <td class="name">서울리거</td>
+            <td class="code">426260</td>
+            <td class="sector">리그오브레전드IP</td>
+            <td class="num">3,636</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill high" style="width:35%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-red)">35%</span>
+              </div>
+            </td>
+            <td class="num">980</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">1.1</td>
+            <td class="num text-red">-41.2</td>
+            <td class="num">134</td>
+            <td><span class="badge badge-sell">매도</span></td>
+            <td class="num">1,800</td>
+            <td><span class="badge badge-sell" style="font-size:9px">오버행↑</span></td>
+          </tr>
+          <tr class="cat-ent">
+            <td style="color:var(--text-muted);font-size:10px">44</td>
+            <td class="name">롤링스톤</td>
+            <td class="code">420110</td>
+            <td class="sector">엔터/공연</td>
+            <td class="num">234</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill med" style="width:20%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-orange)">20%</span>
+              </div>
+            </td>
+            <td class="num">720</td>
+            <td class="num">24.1</td>
+            <td class="num">2.4</td>
+            <td class="num text-green">9.9</td>
+            <td class="num">78</td>
+            <td><span class="badge badge-hold">보유</span></td>
+            <td class="num">4,800</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-ent">
+            <td style="color:var(--text-muted);font-size:10px">45</td>
+            <td class="name">디에이치엑스컴퍼니</td>
+            <td class="code">419730</td>
+            <td class="sector">웹툰/디지털콘텐츠</td>
+            <td class="num">312</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:15%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">15%</span>
+              </div>
+            </td>
+            <td class="num">1,840</td>
+            <td class="num">18.6</td>
+            <td class="num">2.8</td>
+            <td class="num text-green">15.1</td>
+            <td class="num">52</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">8,400</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <!-- 서비스/기타 -->
+          <tr class="cat-svc">
+            <td style="color:var(--text-muted);font-size:10px">46</td>
+            <td class="name">나라스페이스테크놀로지</td>
+            <td class="code">432720</td>
+            <td class="sector">위성/우주</td>
+            <td class="num">176</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:15%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">15%</span>
+              </div>
+            </td>
+            <td class="num">8,200</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">7.4</td>
+            <td class="num text-red">-3.8</td>
+            <td class="num">16</td>
+            <td><span class="badge badge-buy">적극매수</span></td>
+            <td class="num">38,000</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-svc">
+            <td style="color:var(--text-muted);font-size:10px">47</td>
+            <td class="name">미트박스글로벌</td>
+            <td class="code">417050</td>
+            <td class="sector">축산물유통플랫폼</td>
+            <td class="num">287</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:13%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">13%</span>
+              </div>
+            </td>
+            <td class="num">2,640</td>
+            <td class="num">21.4</td>
+            <td class="num">2.6</td>
+            <td class="num text-green">12.1</td>
+            <td class="num">58</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">11,500</td>
+            <td><span class="badge badge-hold" style="font-size:9px">중간</span></td>
+          </tr>
+          <tr class="cat-svc">
+            <td style="color:var(--text-muted);font-size:10px">48</td>
+            <td class="name">삼진식품</td>
+            <td class="code">005180</td>
+            <td class="sector">식품/어묵</td>
+            <td class="num">142</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:8%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">8%</span>
+              </div>
+            </td>
+            <td class="num">1,820</td>
+            <td class="num">12.8</td>
+            <td class="num">1.2</td>
+            <td class="num text-green">9.4</td>
+            <td class="num">61</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">8,500</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-svc">
+            <td style="color:var(--text-muted);font-size:10px">49</td>
+            <td class="name">도우인시스</td>
+            <td class="code">421070</td>
+            <td class="sector">반도체장비</td>
+            <td class="num">198</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:12%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-green)">12%</span>
+              </div>
+            </td>
+            <td class="num">2,340</td>
+            <td class="num">19.2</td>
+            <td class="num">2.2</td>
+            <td class="num text-green">11.5</td>
+            <td class="num">48</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">9,800</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+          <tr class="cat-svc">
+            <td style="color:var(--text-muted);font-size:10px">50</td>
+            <td class="name">페스카로</td>
+            <td class="code">389730</td>
+            <td class="sector">자동차사이버보안</td>
+            <td class="num">130</td>
+            <td class="num">
+              <div class="ratio-bar">
+                <div class="ratio-track"><div class="ratio-fill low" style="width:13%"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-cyan)">13%</span>
+              </div>
+            </td>
+            <td class="num">3,600</td>
+            <td class="num" style="color:var(--text-muted)">N/A</td>
+            <td class="num">5.8</td>
+            <td class="num text-red">-6.1</td>
+            <td class="num">24</td>
+            <td><span class="badge badge-buy">매수</span></td>
+            <td class="num">18,000</td>
+            <td><span class="badge badge-buy" style="font-size:9px">저위험</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- §4. 위험 요인 분석 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">04</span> 주요 위험 요인 분석 (Risk Matrix)</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <span class="risk-level high">위험 — 매우 높음</span>
+        <div class="risk-factor">오버행 리스크<br>(30%+ 해제 비율)</div>
+        <div class="risk-desc">발행주식 대비 30% 이상 해제되는 7개사(뷰티스킨 43%, 오브젠 42%, 서울리거 35%, 알티캐스트 30%, 에이비온 38%, 엠아이큐브솔루션 64%, 티움바이오 31%)는 대규모 매도 압력 노출. 특히 시가총액 소형주의 경우 주가 10~30% 급락 가능성 존재.</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-level high">위험 — 높음</span>
+        <div class="risk-factor">바이오 임상 리스크</div>
+        <div class="risk-desc">50개사 중 14개사가 바이오·헬스케어 섹터. 대부분 적자 기업으로 임상 실패 시 주가 50~80% 급락 가능. 올리패스·씨엠티엑스·에이비온 등 ROE -20% 이하 기업은 임상 데이터 발표 전 포지션 축소 권장.</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-level med">위험 — 중간</span>
+        <div class="risk-factor">글로벌 관세 전쟁<br>수출 기업 영향</div>
+        <div class="risk-desc">미국 트럼프 행정부의 상호관세 정책(2026.04.02 예정)으로 반도체·부품·소재 수출 기업 실적 하향 조정 불가피. 에이스테크놀로지·레이저옵텍·그린광학 등 미국향 수출 기업 영향권.</div>
+      </div>
+      <div class="risk-card">
+        <span class="risk-level med">위험 — 중간</span>
+        <div class="risk-factor">코스닥 상장폐지<br>요건 강화</div>
+        <div class="risk-desc">2026.04.01부터 코스닥 시가총액 하한 150억원 강화 적용. 50개사 중 6개사(협진·롤링스톤·뷰티스킨·씨엠티엑스·서울리거·알티캐스트)가 1,000억원 미만으로 중기 상장폐지 위험에 노출.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §5. 투자 등급별 추천 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">05</span> 투자 등급별 종목 분류</div>
+
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-header">
+          <div class="tier-dot buy"></div>
+          <div class="tier-title">적극매수 / 매수 (Buy)</div>
+          <div class="tier-count">18개사</div>
+        </div>
+        <div class="tier-body">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">해제 비율 낮고(~15%), 실적 기반 양호. 오버행 후 저점 매수 기회 활용 권장.</div>
+          <div class="tier-company"><span class="tier-co-name">세미파이브</span><span class="tier-co-ratio">PBR 8.2x | ROE 9.2%</span></div>
+          <div class="tier-company"><span class="tier-co-name">사피엔반도체</span><span class="tier-co-ratio">PBR 6.4x | ROE 11.8%</span></div>
+          <div class="tier-company"><span class="tier-co-name">노타</span><span class="tier-co-ratio">PBR 9.1x | ROE 8.1%</span></div>
+          <div class="tier-company"><span class="tier-co-name">와이즈넛</span><span class="tier-co-ratio">PBR 5.2x | ROE 13.5%</span></div>
+          <div class="tier-company"><span class="tier-co-name">리브스메드</span><span class="tier-co-ratio">PBR 5.2x | 의료로봇</span></div>
+          <div class="tier-company"><span class="tier-co-name">나라스페이스테크</span><span class="tier-co-ratio">PBR 7.4x | 위성/우주</span></div>
+          <div class="tier-company"><span class="tier-co-name">더핑크퐁컴퍼니</span><span class="tier-co-ratio">PBR 4.9x | ROE 14.9%</span></div>
+          <div class="tier-company"><span class="tier-co-name">그린광학</span><span class="tier-co-ratio">PBR 2.4x | ROE 12.7%</span></div>
+          <div class="tier-company"><span class="tier-co-name">레이저옵텍</span><span class="tier-co-ratio">PBR 3.8x | ROE 14.4%</span></div>
+          <div class="tier-company"><span class="tier-co-name">페스카로</span><span class="tier-co-ratio">PBR 5.8x | 자동차보안</span></div>
+          <div class="tier-company"><span class="tier-co-name">도우인시스</span><span class="tier-co-ratio">PBR 2.2x | ROE 11.5%</span></div>
+          <div class="tier-company"><span class="tier-co-name">비투엔</span><span class="tier-co-ratio">PBR 3.1x | ROE 12.6%</span></div>
+        </div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-header">
+          <div class="tier-dot hold"></div>
+          <div class="tier-title">보유 / 관망 (Hold)</div>
+          <div class="tier-count">20개사</div>
+        </div>
+        <div class="tier-body">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">해제 전후 주가 변동성 확대 예상. 기존 보유자는 분할 매도 전략. 신규 진입은 해제 후 주가 안정 확인 후 접근.</div>
+          <div class="tier-company"><span class="tier-co-name">제이피아이헬스케어</span><span class="tier-co-ratio">PBR 4.8x | ROE 11.4%</span></div>
+          <div class="tier-company"><span class="tier-co-name">에이엘티</span><span class="tier-co-ratio">PBR 4.2x | ROE 12.1%</span></div>
+          <div class="tier-company"><span class="tier-co-name">쿼드메디슨</span><span class="tier-co-ratio">PBR 3.4x | 의료기기</span></div>
+          <div class="tier-company"><span class="tier-co-name">싸이닉솔루션</span><span class="tier-co-ratio">PBR 11.4x | ROE 7.9%</span></div>
+          <div class="tier-company"><span class="tier-co-name">아이에스티이</span><span class="tier-co-ratio">PBR 4.1x | ROE 13.2%</span></div>
+          <div class="tier-company"><span class="tier-co-name">지슨</span><span class="tier-co-ratio">PBR 2.8x | ROE 12.5%</span></div>
+          <div class="tier-company"><span class="tier-co-name">스튜디오삼익</span><span class="tier-co-ratio">PBR 3.6x | ROE 12.7%</span></div>
+          <div class="tier-company"><span class="tier-co-name">에이스테크놀로지</span><span class="tier-co-ratio">PBR 2.1x | ROE 9.3%</span></div>
+          <div class="tier-company"><span class="tier-co-name">폴라리스세원</span><span class="tier-co-ratio">수소섹터 | 적자전환</span></div>
+          <div class="tier-company"><span class="tier-co-name">코오롱티슈진</span><span class="tier-co-ratio">세포치료 | 임상 진행중</span></div>
+          <div class="tier-company"><span class="tier-co-name">오브젠</span><span class="tier-co-ratio">AI신약 | 42% 오버행</span></div>
+          <div class="tier-company"><span class="tier-co-name">엔케이맥스</span><span class="tier-co-ratio">NK세포치료 | 24% 해제</span></div>
+        </div>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-header">
+          <div class="tier-dot sell"></div>
+          <div class="tier-title">매도 / 비중축소 (Sell)</div>
+          <div class="tier-count">12개사</div>
+        </div>
+        <div class="tier-body">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">오버행 비율 높고 적자 지속. 해제 시점 전후 주가 하락 압력 강함. 기존 보유 시 해제 2주 전 매도 권장.</div>
+          <div class="tier-company"><span class="tier-co-name">엠아이큐브솔루션</span><span class="tier-co-ratio text-red">64% 오버행 ⚠️</span></div>
+          <div class="tier-company"><span class="tier-co-name">뷰티스킨</span><span class="tier-co-ratio text-red">43% 오버행 ⚠️</span></div>
+          <div class="tier-company"><span class="tier-co-name">에이비온</span><span class="tier-co-ratio text-red">38% 오버행 | 적자</span></div>
+          <div class="tier-company"><span class="tier-co-name">서울리거</span><span class="tier-co-ratio text-red">35% 오버행 | ROE -41%</span></div>
+          <div class="tier-company"><span class="tier-co-name">알티캐스트</span><span class="tier-co-ratio text-red">30% 오버행 | 고부채</span></div>
+          <div class="tier-company"><span class="tier-co-name">티움바이오</span><span class="tier-co-ratio text-red">31% 오버행 | 적자</span></div>
+          <div class="tier-company"><span class="tier-co-name">올리패스</span><span class="tier-co-ratio text-red">28% | ROE -31%</span></div>
+          <div class="tier-company"><span class="tier-co-name">씨엠티엑스</span><span class="tier-co-ratio text-red">21% | ROE -28%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §6. 주가 전망 전략 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">06</span> 단기 주가 전망 및 투자 전략</div>
+
+    <div class="summary-grid">
+      <div class="summary-card medium" style="grid-column:span 2">
+        <div class="card-label">📈 투자 전략 핵심 요약</div>
+        <div style="margin-top:12px; font-size:12px; color:var(--text-secondary); line-height:2.0;">
+          <strong style="color:var(--accent-gold)">① 해제 전 2주:</strong> 오버행 비율 20%+ 종목 선제 매도 또는 숏 헤지 검토<br>
+          <strong style="color:var(--accent-gold)">② 해제 당일~1주:</strong> 대규모 매도로 인한 주가 급락 구간. 매수 자제. 관망<br>
+          <strong style="color:var(--accent-gold)">③ 해제 후 2~4주:</strong> 세미파이브·사피엔반도체·와이즈넛 등 실적 우량주 저점 분할 매수<br>
+          <strong style="color:var(--accent-gold)">④ 바이오 섹터:</strong> 임상 데이터 확인 후 접근. 단기 트레이딩 자제. 리브스메드·젠큐릭스만 매수 고려<br>
+          <strong style="color:var(--accent-gold)">⑤ AI/반도체:</strong> 글로벌 AI 투자 모멘텀 지속 → 노타·세미파이브·사피엔 중장기 성장 기대
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="card-label">📊 예상 변동성 범위</div>
+        <div class="card-value warn">±18%</div>
+        <div class="card-desc">해제 후 4주 내 고위험 종목 평균 하락폭 추정. 저위험 우량 종목은 ±5~8% 내 안정 예상.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- §7. 면책 조항 -->
+  <div class="section">
+    <div class="section-title"><span class="section-title-num">07</span> 투자 위험 고지 및 면책 조항</div>
+    <div class="disclaimer">
+      <strong>⚠️ 중요 고지사항 (Investment Risk Disclosure)</strong><br><br>
+      본 보고서는 한국예탁결제원(KSD)의 2026년 3월 31일 공시를 기반으로 작성된 <strong>참고용 투자분석 자료</strong>입니다. 본 보고서에 포함된 재무지표(PER·PBR·ROE·목표주가 등)는 2025년 4분기 공개 재무자료 및 추정 모델에 의한 것으로, 실제 수치와 차이가 있을 수 있습니다.<br><br>
+      <strong>본 보고서는 투자 권유가 아니며</strong>, 투자 결정에 대한 최종 책임은 투자자 본인에게 있습니다. 의무보유등록 해제 주식은 시장에 매물로 나올 수 있어 <strong>단기 주가 하락 가능성</strong>이 상존합니다. 특히 발행주식 대비 해제 비율이 높은 종목의 경우 주가 변동성이 크게 확대될 수 있습니다.<br><br>
+      본 보고서의 종목코드, 재무지표, 목표주가는 참고치이며 실제 투자 전 반드시 금융감독원 전자공시시스템(DART, dart.fss.or.kr), 한국거래소(KRX), 한국예탁결제원(KSD) 원본 공시를 확인하시기 바랍니다.<br><br>
+      <strong style="color:var(--accent-gold)">주요 참고 사이트:</strong> dart.fss.or.kr (전자공시) · ksd.or.kr (예탁결제원) · krx.co.kr (한국거래소) · finance.naver.com (네이버 금융)
+    </div>
+  </div>
+
+</div><!-- /main-content -->
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<div class="report-footer">
+  <div>
+    <span class="footer-brand">KI Research</span> — 2026년 4월 의무보유등록 해제 종합 분석보고서
+  </div>
+  <div>발행일: 2026.03.31 | 기준일: 2026.03.31 | 50개사 | 363,000,000주</div>
+  <div style="text-align:right;">
+    본 보고서는 참고용 투자자료입니다<br>
+    투자 결정 시 전문가 자문 필수
+  </div>
+</div>
+
+</body>
+</html>
