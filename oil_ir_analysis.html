@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글로벌 석유 메이저 & 국내 정유사 IR 심층 분석 2026</title>
+<meta name="description" content="엑손모빌, BP, 쉘, 토탈에너지, SK이노베이션, S-Oil PER·PBR·ROE 분석 및 투자 적정성 평가">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c12;
+  --surface: #0e1520;
+  --surface2: #141e2e;
+  --border: #1e2d42;
+  --text: #e8edf5;
+  --muted: #6b7f99;
+  --accent: #00d4aa;
+  --accent2: #f59e0b;
+  --danger: #ef4444;
+  --buy: #10b981;
+  --hold: #f59e0b;
+  --sell: #ef4444;
+  --xom: #e74c3c;
+  --bp: #16a34a;
+  --shell: #fbbf24;
+  --total: #3b82f6;
+  --sk: #8b5cf6;
+  --soil: #06b6d4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ── GRID NOISE BG ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(0,212,170,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59,130,246,0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+.site-header {
+  position: relative;
+  padding: 60px 40px 0;
+  max-width: 1280px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.header-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.header-label span { color: var(--muted); }
+
+h1.main-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+h1.main-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.header-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.disclaimer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 60px;
+}
+
+.disclaimer::before {
+  content: '⚠';
+  color: var(--accent2);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--border) 30%, transparent 100%);
+  margin: 0 0 60px;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 40px;
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--border) 30%, transparent 100%);
+}
+
+/* ── MAIN LAYOUT ── */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SECTION TITLE ── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.section-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+/* ── COMPANY CARD ── */
+.companies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 60px;
+}
+
+.company-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent-color);
+  padding: 28px 24px;
+  position: relative;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: default;
+}
+
+.company-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-color);
+}
+
+.company-card[data-co="xom"] { --accent-color: var(--xom); }
+.company-card[data-co="bp"]  { --accent-color: var(--bp); }
+.company-card[data-co="shel"]{ --accent-color: var(--shell); }
+.company-card[data-co="tte"] { --accent-color: var(--total); }
+.company-card[data-co="sk"]  { --accent-color: var(--sk); }
+.company-card[data-co="soil"]{ --accent-color: var(--soil); }
+
+.co-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.co-ticker {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.co-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.rating-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.badge-buy  { background: rgba(16,185,129,0.15); color: var(--buy); border: 1px solid rgba(16,185,129,0.3); }
+.badge-hold { background: rgba(245,158,11,0.15); color: var(--hold); border: 1px solid rgba(245,158,11,0.3); }
+.badge-sell { background: rgba(239,68,68,0.15); color: var(--sell); border: 1px solid rgba(239,68,68,0.3); }
+
+.co-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.co-change {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  margin-bottom: 20px;
+}
+
+.up { color: var(--buy); }
+.dn { color: var(--sell); }
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.metric-cell {
+  background: var(--surface2);
+  padding: 12px 14px;
+}
+
+.metric-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.metric-value.good { color: var(--buy); }
+.metric-value.warn { color: var(--hold); }
+.metric-value.bad  { color: var(--sell); }
+
+.co-analysis {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.target-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: rgba(0,212,170,0.05);
+  border: 1px solid rgba(0,212,170,0.15);
+  border-radius: 2px;
+}
+
+.target-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.target-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── COMPARISON TABLE ── */
+.compare-section { margin-bottom: 60px; }
+
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.88rem;
+}
+
+.compare-table th {
+  background: var(--surface2);
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+
+.compare-table th:first-child { border-left: 1px solid var(--border); border-top: 1px solid var(--border); border-radius: 4px 0 0 0; }
+.compare-table th:last-child  { border-right: 1px solid var(--border); border-top: 1px solid var(--border); border-radius: 0 4px 0 0; }
+
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.compare-table td:first-child { border-left: 1px solid var(--border); }
+.compare-table td:last-child  { border-right: 1px solid var(--border); }
+
+.compare-table tr:last-child td:first-child { border-radius: 0 0 0 4px; }
+.compare-table tr:last-child td:last-child  { border-radius: 0 0 4px 0; }
+
+.compare-table tr:hover td { background: var(--surface); }
+
+.co-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.co-label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.mono { font-family: 'DM Mono', monospace; }
+
+.pill {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.pill-buy  { background: rgba(16,185,129,0.15); color: var(--buy); }
+.pill-hold { background: rgba(245,158,11,0.15);  color: var(--hold); }
+.pill-sell { background: rgba(239,68,68,0.15);   color: var(--sell); }
+
+/* ── METER BAR ── */
+.meter { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; }
+.meter-fill { height: 100%; border-radius: 2px; }
+
+/* ── RADAR CONTAINER ── */
+.radar-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 28px;
+}
+
+.chart-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* ── RISK PANEL ── */
+.risk-section { margin-bottom: 60px; }
+
+.risk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.risk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.risk-level {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.risk-level.high   { color: var(--sell); }
+.risk-level.medium { color: var(--hold); }
+.risk-level.low    { color: var(--buy); }
+
+.risk-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.risk-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── VERDICT ── */
+.verdict-section { margin-bottom: 60px; }
+
+.verdict-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.verdict-cell {
+  background: var(--surface);
+  padding: 28px 24px;
+}
+
+.verdict-cell.highlight { background: var(--surface2); }
+
+.verdict-co {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.verdict-score {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.score-a { color: var(--buy); }
+.score-b { color: var(--accent); }
+.score-c { color: var(--hold); }
+.score-d { color: var(--sell); }
+
+.verdict-text {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── INSIGHT BOX ── */
+.insight-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 28px 32px;
+  margin-bottom: 60px;
+}
+
+.insight-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.insight-text {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+/* ── CANVAS CHARTS ── */
+canvas { max-width: 100%; }
+
+/* ── NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,12,18,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 40px;
+  margin-bottom: 60px;
+}
+
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.nav-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.nav-link:hover { color: var(--accent); }
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-right: auto;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 40px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  letter-spacing: 1px;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 900px) {
+  .companies-grid { grid-template-columns: 1fr 1fr; }
+  .radar-section  { grid-template-columns: 1fr; }
+  .risk-grid      { grid-template-columns: 1fr; }
+  .verdict-grid   { grid-template-columns: 1fr; }
+}
+
+@media(max-width: 600px) {
+  .companies-grid { grid-template-columns: 1fr; }
+  .site-header, .main { padding-left: 20px; padding-right: 20px; }
+  .sticky-nav { padding: 10px 20px; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim { animation: fadeUp 0.6s ease both; }
+.d1 { animation-delay: 0.1s; }
+.d2 { animation-delay: 0.2s; }
+.d3 { animation-delay: 0.3s; }
+.d4 { animation-delay: 0.4s; }
+.d5 { animation-delay: 0.5s; }
+.d6 { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <span class="nav-logo">OIL·IR·2026</span>
+    <a class="nav-link" href="#global">글로벌 메이저</a>
+    <a class="nav-link" href="#domestic">국내 정유사</a>
+    <a class="nav-link" href="#compare">비교 분석</a>
+    <a class="nav-link" href="#risk">리스크</a>
+    <a class="nav-link" href="#verdict">투자 판정</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-label">IR DEEP DIVE <span>· 2026.03 기준</span></div>
+  <h1 class="main-title">글로벌 빅오일 &<br><em>국내 정유사</em><br>심층 투자 분석</h1>
+  <p class="header-sub">엑손모빌·BP·쉘·토탈에너지·SK이노베이션·S-Oil의 PER·PBR·ROE 등 핵심 밸류에이션 지표와 투자 적정성을 심층 분석합니다.</p>
+  <div class="disclaimer">이 보고서는 정보 제공 목적이며 투자 조언이 아닙니다. 투자 판단은 전문 금융 어드바이저와 상담하시기 바랍니다.</div>
+</header>
+
+<div style="max-width:1280px;margin:0 auto;padding:0 40px;">
+  <div class="divider-line"></div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ═══ GLOBAL MAJORS ═══ -->
+  <section id="global">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">글로벌 석유 메이저</h2>
+    </div>
+
+    <div class="companies-grid">
+
+      <!-- XOM -->
+      <div class="company-card anim d1" data-co="xom">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">NYSE · XOM</div>
+            <div class="co-name">엑손모빌</div>
+          </div>
+          <span class="rating-badge badge-buy">매수</span>
+        </div>
+        <div class="co-price">$107.60</div>
+        <div class="co-change up">▲ 52W: $95.77 ~ $123.75</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value warn">16.7x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value warn">1.9x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROE</div>
+            <div class="metric-value good">12.8%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당수익률</div>
+            <div class="metric-value good">2.41%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">EV/EBITDA</div>
+            <div class="metric-value warn">7.4x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">부채비율(D/E)</div>
+            <div class="metric-value good">0.16x</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          파이오니어 내추럴리소스 인수 완료로 퍼미안 분지 최대 생산자 등극. 자본 규율 탁월, 42년 연속 배당 증가 기록. 다만 PER 업계 상단 수준으로 추가 상승 여력은 제한적. LNG 수출 허브 전략이 중장기 성장 동력.
+        </div>
+        <div class="target-row">
+          <span class="target-label">애널리스트 목표주가</span>
+          <span class="target-value">$125.00 (+16.2%)</span>
+        </div>
+      </div>
+
+      <!-- BP -->
+      <div class="company-card anim d2" data-co="bp">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">NYSE · BP</div>
+            <div class="co-name">BP</div>
+          </div>
+          <span class="rating-badge badge-hold">보유</span>
+        </div>
+        <div class="co-price">$34.49</div>
+        <div class="co-change dn">▼ 52W 고점 대비 -28%</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value good">13.1x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value good">0.9x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROE</div>
+            <div class="metric-value warn">~9%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당수익률</div>
+            <div class="metric-value good">5.8%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">EPS (2026F)</div>
+            <div class="metric-value warn">$0.50</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">업사이드</div>
+            <div class="metric-value good">+19%</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          PBR 0.9x로 순자산 이하 거래 중 — 밸류에이션 매력도 최상위권. 그러나 에너지 전환 전략 혼선, 실적 부진으로 주가 급락. 배당이 '성역'으로 유지되는 한 고배당 가치주로 접근 가능. 자사주 매입 축소는 단기 악재. 신임 CEO의 구조조정 방향 주시 필요.
+        </div>
+        <div class="target-row">
+          <span class="target-label">애널리스트 목표주가</span>
+          <span class="target-value">$40.80 (+18.3%)</span>
+        </div>
+      </div>
+
+      <!-- SHELL -->
+      <div class="company-card anim d3" data-co="shel">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">NYSE · SHEL</div>
+            <div class="co-name">쉘 (Shell)</div>
+          </div>
+          <span class="rating-badge badge-buy">매수</span>
+        </div>
+        <div class="co-price">$68.40</div>
+        <div class="co-change up">▲ Q3 2025 잉여현금흐름 $10B</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value good">14.9x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value good">1.3x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROACE</div>
+            <div class="metric-value warn">9.4%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당수익률</div>
+            <div class="metric-value good">4.2%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">기어링</div>
+            <div class="metric-value warn">19.1%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">DPS (분기)</div>
+            <div class="metric-value good">$0.358</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          LNG 포트폴리오 세계 최강 — 중동 LNG 공급 차질 시 직접 수혜. 브라질 가토 두 마토 심해 FID 결정으로 성장 파이프라인 확충. 순부채 $41.2B으로 전 분기 대비 감소세. 매분기 $3.5B 자사주 매입 지속으로 주주 가치 방어.
+        </div>
+        <div class="target-row">
+          <span class="target-label">애널리스트 목표주가</span>
+          <span class="target-value">$78.00 (+14.0%)</span>
+        </div>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="company-card anim d4" data-co="tte">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">NYSE · TTE</div>
+            <div class="co-name">토탈에너지</div>
+          </div>
+          <span class="rating-badge badge-buy">매수</span>
+        </div>
+        <div class="co-price">$75.92</div>
+        <div class="co-change up">▲ 배당 2년 연속 증가</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value good">15.1x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value warn">1.4x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROE</div>
+            <div class="metric-value good">~13%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당수익률</div>
+            <div class="metric-value good">4.31%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당성향</div>
+            <div class="metric-value good">46.2%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당(연간)</div>
+            <div class="metric-value good">$3.28</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          유럽 메이저 중 에너지 전환과 전통 석유사업의 균형이 가장 안정적. LNG·재생에너지·석유 트라이앵글 전략 유지. 배당 증가 추진 계획 +13.3% 전망. 지정학 불확실성 속 자사주 매입 속도 조절 중이나 배당은 확고히 유지.
+        </div>
+        <div class="target-row">
+          <span class="target-label">애널리스트 목표주가</span>
+          <span class="target-value">$86.00 (+13.3%)</span>
+        </div>
+      </div>
+
+      <!-- SK이노베이션 -->
+      <div class="company-card anim d5" data-co="sk">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">KRX · 096770</div>
+            <div class="co-name">SK이노베이션</div>
+          </div>
+          <span class="rating-badge badge-hold">보유</span>
+        </div>
+        <div class="co-price">₩121,100</div>
+        <div class="co-change warn">▶ 목표주가 ₩170,000</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value bad">N/A(적자)</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value good">0.5x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROE</div>
+            <div class="metric-value bad">적자</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">배당수익률</div>
+            <div class="metric-value warn">~2%</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">시가총액</div>
+            <div class="metric-value">~11.0조</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">SK E&S 합병</div>
+            <div class="metric-value good">완료</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          SK E&S 합병으로 아시아태평양 최대 민간 에너지 기업 등극. 그러나 배터리(SK온) 적자, 화학사업 부진, 유가 하락이 3중 악재. PBR 0.5x는 역사적 저점 수준. 합병 시너지와 SK엔무브 상장이 중장기 재평가 트리거. 고위험·고수익 프로파일.
+        </div>
+        <div class="target-row">
+          <span class="target-label">증권사 목표주가 평균</span>
+          <span class="target-value">₩170,000 (+40.4%)</span>
+        </div>
+      </div>
+
+      <!-- S-OIL -->
+      <div class="company-card anim d6" data-co="soil">
+        <div class="co-header">
+          <div>
+            <div class="co-ticker">KRX · 010950</div>
+            <div class="co-name">에쓰-오일 (S-Oil)</div>
+          </div>
+          <span class="rating-badge badge-buy">매수</span>
+        </div>
+        <div class="co-price">₩113,300</div>
+        <div class="co-change up">▲ 샤힌 프로젝트 2026 완공</div>
+        <div class="metrics-grid" style="margin-top:16px;">
+          <div class="metric-cell">
+            <div class="metric-label">PER</div>
+            <div class="metric-value bad">N/A(적자)</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">PBR</div>
+            <div class="metric-value good">0.7x</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">ROE</div>
+            <div class="metric-value bad">적자전환</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">52W 고점</div>
+            <div class="metric-value bad">₩177,100</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">목표주가(평균)</div>
+            <div class="metric-value good">₩119,526</div>
+          </div>
+          <div class="metric-cell">
+            <div class="metric-label">매수 의견</div>
+            <div class="metric-value good">15명/18명</div>
+          </div>
+        </div>
+        <div class="co-analysis">
+          사우디 아람코 지분 63.4%로 안정적 원유 조달. 샤힌 프로젝트 완공 시 석유화학 비중 25%로 확대 → 정제마진 의존도 완화. 52주 저점 대비 +126% 급등하며 중동 전쟁 최대 수혜주로 부상. 정제마진 강세 지속 여부가 핵심 변수.
+        </div>
+        <div class="target-row">
+          <span class="target-label">증권사 목표주가 평균</span>
+          <span class="target-value">₩119,526 (+5.5%)</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ COMPARE TABLE ═══ -->
+  <section id="compare" class="compare-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">밸류에이션 비교 분석</h2>
+    </div>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>기업</th>
+          <th>현재주가</th>
+          <th>PER</th>
+          <th>PBR</th>
+          <th>ROE</th>
+          <th>배당수익률</th>
+          <th>D/E 비율</th>
+          <th>목표주가 괴리</th>
+          <th>투자의견</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--xom)"></span>엑손모빌 (XOM)</span></td>
+          <td class="mono">$107.60</td>
+          <td class="mono warn">16.7x</td>
+          <td class="mono warn">1.9x</td>
+          <td class="mono good">12.8%</td>
+          <td class="mono good">2.4%</td>
+          <td class="mono good">0.16x</td>
+          <td class="mono good">+16.2%</td>
+          <td><span class="pill pill-buy">매수</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--bp)"></span>BP (BP)</span></td>
+          <td class="mono">$34.49</td>
+          <td class="mono good">13.1x</td>
+          <td class="mono good">0.9x</td>
+          <td class="mono warn">~9%</td>
+          <td class="mono good">5.8%</td>
+          <td class="mono warn">0.45x</td>
+          <td class="mono good">+18.3%</td>
+          <td><span class="pill pill-hold">보유</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--shell)"></span>쉘 (SHEL)</span></td>
+          <td class="mono">$68.40</td>
+          <td class="mono good">14.9x</td>
+          <td class="mono warn">1.3x</td>
+          <td class="mono warn">9.4%</td>
+          <td class="mono good">4.2%</td>
+          <td class="mono warn">0.37x</td>
+          <td class="mono good">+14.0%</td>
+          <td><span class="pill pill-buy">매수</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--total)"></span>토탈에너지 (TTE)</span></td>
+          <td class="mono">$75.92</td>
+          <td class="mono good">15.1x</td>
+          <td class="mono warn">1.4x</td>
+          <td class="mono good">~13%</td>
+          <td class="mono good">4.3%</td>
+          <td class="mono warn">0.38x</td>
+          <td class="mono good">+13.3%</td>
+          <td><span class="pill pill-buy">매수</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--sk)"></span>SK이노베이션 (096770)</span></td>
+          <td class="mono">₩121,100</td>
+          <td class="mono bad">N/A</td>
+          <td class="mono good">0.5x</td>
+          <td class="mono bad">적자</td>
+          <td class="mono warn">~2%</td>
+          <td class="mono bad">1.2x↑</td>
+          <td class="mono good">+40.4%</td>
+          <td><span class="pill pill-hold">보유</span></td>
+        </tr>
+        <tr>
+          <td><span class="co-label"><span class="co-dot" style="background:var(--soil)"></span>S-Oil (010950)</span></td>
+          <td class="mono">₩113,300</td>
+          <td class="mono bad">N/A</td>
+          <td class="mono good">0.7x</td>
+          <td class="mono bad">적자전환</td>
+          <td class="mono warn">~3%</td>
+          <td class="mono warn">0.55x</td>
+          <td class="mono warn">+5.5%</td>
+          <td><span class="pill pill-buy">매수</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:16px; font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:1px;">
+      * 2026년 3월 기준 | good=초록 warn=주황 bad=빨강 색상은 업계 대비 상대적 평가
+    </div>
+  </section>
+
+  <!-- ═══ CHART SECTION ═══ -->
+  <section class="radar-section">
+
+    <!-- PER 차트 -->
+    <div class="chart-box">
+      <div class="chart-title">PER 비교 (배)</div>
+      <canvas id="perChart" height="200"></canvas>
+    </div>
+
+    <!-- 배당수익률 차트 -->
+    <div class="chart-box">
+      <div class="chart-title">배당수익률 비교 (%)</div>
+      <canvas id="divChart" height="200"></canvas>
+    </div>
+
+    <!-- ROE 차트 -->
+    <div class="chart-box">
+      <div class="chart-title">ROE / 자본효율성 (%)</div>
+      <canvas id="roeChart" height="200"></canvas>
+    </div>
+
+    <!-- PBR 차트 -->
+    <div class="chart-box">
+      <div class="chart-title">PBR — 순자산 대비 주가 (배)</div>
+      <canvas id="pbrChart" height="200"></canvas>
+    </div>
+
+  </section>
+
+  <!-- ═══ INSIGHT ═══ -->
+  <div class="insight-box">
+    <div class="insight-title">핵심 인사이트</div>
+    <p class="insight-text">
+      "현재 글로벌 석유 메이저들은 역사적 기준으로 저평가 구간에 있다. 
+      특히 BP의 PBR 0.9x는 순자산 이하 거래를 의미하며, 
+      쉘과 토탈에너지의 4%대 배당수익률은 미국 국채 수익률과 경쟁 가능한 수준이다. 
+      국내 정유사는 단기 적자 국면이나, 중동 전쟁에 따른 정제마진 강세와 
+      샤힌 프로젝트 완공이 2026년 실적 반전의 핵심 카탈리스트다."
+    </p>
+  </div>
+
+  <!-- ═══ RISK ═══ -->
+  <section id="risk" class="risk-section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">투자 리스크 분석</h2>
+    </div>
+
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-level high">▲ HIGH RISK</div>
+        <div class="risk-title">유가 변동성</div>
+        <div class="risk-desc">브렌트유가 배럴당 $60 이하로 급락 시 모든 석유 메이저의 잉여현금흐름이 급격히 악화. OPEC+ 감산 합의 균열, 글로벌 경기침체, 전기차 수요 가속이 하방 압력 요인. 반대로 중동 분쟁 확대 시 유가 급등 → 실적 개선.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-level high">▲ HIGH RISK</div>
+        <div class="risk-title">에너지 전환 가속</div>
+        <div class="risk-desc">IEA의 '피크 오일 수요 2030년' 전망이 현실화될 경우 중장기 자산 가치 하락. BP의 전략 혼선이 단적인 예시. ESG 규제 강화와 탄소세 도입 확대는 수익성 저하 요인. 신재생 투자 비중이 낮은 기업일수록 리스크 노출 크다.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-level high">▲ HIGH RISK</div>
+        <div class="risk-title">중동 지정학 리스크</div>
+        <div class="risk-desc">호르무즈 해협 봉쇄 시 글로벌 원유 공급의 20% 차단. 이란 제재 재강화, 후티 공격 확대 등은 공급 차질 우려. 단기적으로 유가 급등 → 실적 호재이나, 장기 분쟁 시 글로벌 경기침체 → 수요 감소 역설적 악재.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-level medium">◆ MEDIUM</div>
+        <div class="risk-title">트럼프 정책 불확실성</div>
+        <div class="risk-desc">트럼프 행정부의 LNG 수출 확대 정책은 미국 생산자에게 호재. 그러나 관세 전쟁으로 인한 글로벌 경기 둔화는 에너지 수요 억제. 이란 제재 강화 시도도 중동 불안 증폭 요인. 예측 불가능한 정책 변동성이 핵심 리스크.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-level medium">◆ MEDIUM</div>
+        <div class="risk-title">국내 정유사 정제마진</div>
+        <div class="risk-desc">글로벌 정제설비 과잉 공급이 지속될 경우 마진 압박 계속. 중국의 수출 물량 확대와 인도·중동산 경쟁 심화가 핵심 하방 요인. S-Oil의 샤힌 프로젝트 완공 지연 리스크 및 초기 가동률 리스크 존재.</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-level low">▼ LOW (기회)</div>
+        <div class="risk-title">배당 안정성 — 역발상</div>
+        <div class="risk-desc">글로벌 메이저들은 '배당은 성역'이라는 철학 견지. BP·쉘·토탈에너지 모두 저유가 시에도 배당 삭감보다 자사주 매입 축소를 선택. 고금리 시대 종료 후 배당주 재평가 사이클이 도래할 경우 강력한 상승 카탈리스트 역할 가능.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VERDICT ═══ -->
+  <section id="verdict" class="verdict-section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">종합 투자 판정</h2>
+    </div>
+
+    <div class="verdict-grid">
+      <div class="verdict-cell highlight">
+        <div class="verdict-co">XOM — 엑손모빌</div>
+        <div class="verdict-score score-b">B+</div>
+        <div class="verdict-text">
+          재무 건전성 최고 수준, 42년 배당 성장 기록. 그러나 PER 16.7x로 밸류에이션 부담 상단. 퍼미안 시너지와 LNG 전략이 중장기 성장 담보. <strong style="color:var(--accent)">장기 보유 적합, 신규 매수는 $100 이하 분할 매수 권고.</strong>
+        </div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-co">BP — BP</div>
+        <div class="verdict-score score-b">B</div>
+        <div class="verdict-text">
+          PBR 0.9x 저평가 매력 최고, 배당수익률 5.8%로 고배당주. 그러나 실적 부진·전략 혼선 리스크. <strong style="color:var(--accent)">배당 목적 장기 투자자에게 적합. 실적 반전 확인 후 추가 매수 전략 유효.</strong>
+        </div>
+      </div>
+      <div class="verdict-cell highlight">
+        <div class="verdict-co">SHEL — 쉘</div>
+        <div class="verdict-score score-a">A-</div>
+        <div class="verdict-text">
+          LNG 세계 최강 포지션, 재무구조 안정, 꾸준한 자사주 매입. 브라질·캐나다 성장 파이프라인 충실. <strong style="color:var(--buy)">글로벌 메이저 중 밸류에이션-성장-배당 균형 최우수. 적극 매수 의견.</strong>
+        </div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-co">TTE — 토탈에너지</div>
+        <div class="verdict-score score-a">A-</div>
+        <div class="verdict-text">
+          석유·LNG·재생에너지 3축 균형 전략 가장 안정적. 배당 성장성 가장 높음(+13.3% 전망). 지정학 리스크 분산 탁월. <strong style="color:var(--buy)">쉘과 함께 유럽 메이저 쌍두마차. 분할 매수 권고.</strong>
+        </div>
+      </div>
+      <div class="verdict-cell highlight">
+        <div class="verdict-co">096770 — SK이노베이션</div>
+        <div class="verdict-score score-c">C+</div>
+        <div class="verdict-text">
+          SK E&S 합병 시너지 실현까지 불확실성 높음. PBR 0.5x는 매력적이나 배터리(SK온) 적자가 지속 변수. <strong style="color:var(--hold)">고위험·고수익 프로파일. 소수 비중 투기적 접근 또는 관망.</strong>
+        </div>
+      </div>
+      <div class="verdict-cell">
+        <div class="verdict-co">010950 — S-Oil</div>
+        <div class="verdict-score score-b">B</div>
+        <div class="verdict-text">
+          샤힌 프로젝트 완공(2026) → 석유화학 비중 확대 → 정제마진 변동성 완화. 중동 전쟁 정제마진 수혜 최대 종목. <strong style="color:var(--accent)">단기 모멘텀 강하나 52W 저점 대비 급등. 추격 매수 신중히 접근.</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FINAL NOTE ═══ -->
+  <div class="insight-box" style="border-left-color:var(--accent2);">
+    <div class="insight-title" style="color:var(--accent2);">최종 전략 노트</div>
+    <p class="insight-text" style="font-style:normal; font-family:'Noto Sans KR',sans-serif; font-size:0.92rem; color:var(--muted); line-height:1.9;">
+      📌 <strong style="color:var(--text)">글로벌 포트폴리오 구성 시</strong>: 쉘(SHEL) + 토탈에너지(TTE)를 핵심 보유, 
+      BP를 배당 목적 위성 보유로 구성하는 '3각 편대' 전략이 리스크 대비 수익성 면에서 최적.<br><br>
+      📌 <strong style="color:var(--text)">국내 정유사</strong>: S-Oil은 샤힌 프로젝트 완공 직후 실적 수치 확인 후 매수 타이밍 재점검 권고. 
+      SK이노베이션은 SK엔무브 IPO 이벤트 전후 단기 트레이딩 관점으로만 접근.<br><br>
+      📌 <strong style="color:var(--text)">공통 전제</strong>: 브렌트유 $70~$90/배럴 구간 유지 시 모든 분석이 유효. 
+      유가가 $60 이하로 급락하거나 $120 이상 급등 시 시나리오를 즉시 재검토해야 함.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 OIL·IR ANALYSIS · 데이터 기준: 2026년 3월 · 본 보고서는 투자 권유가 아니며, 모든 투자 판단과 책임은 투자자 본인에게 있습니다
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+const labels = ['엑손모빌', 'BP', '쉘', '토탈에너지', 'SK이노베이션', 'S-Oil'];
+const colors = ['#e74c3c','#16a34a','#fbbf24','#3b82f6','#8b5cf6','#06b6d4'];
+const colorsAlpha = colors.map(c => c + '33');
+
+Chart.defaults.color = '#6b7f99';
+Chart.defaults.borderColor = '#1e2d42';
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.font.size = 11;
+
+function baseOpts(title) {
+  return {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#0e1520',
+        borderColor: '#1e2d42',
+        borderWidth: 1,
+        titleColor: '#e8edf5',
+        bodyColor: '#6b7f99',
+      }
+    },
+    scales: {
+      x: { grid: { color: '#1e2d42' }, ticks: { color: '#6b7f99' } },
+      y: { grid: { color: '#1e2d42' }, ticks: { color: '#6b7f99' } }
+    }
+  };
+}
+
+// PER Chart
+new Chart(document.getElementById('perChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data: [16.7, 13.1, 14.9, 15.1, null, null],
+      backgroundColor: colors,
+      borderRadius: 3,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    ...baseOpts(),
+    plugins: { ...baseOpts().plugins },
+    scales: {
+      x: baseOpts().scales.x,
+      y: { ...baseOpts().scales.y, beginAtZero: true, max: 25 }
+    }
+  }
+});
+
+// Dividend Chart
+new Chart(document.getElementById('divChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data: [2.41, 5.8, 4.2, 4.31, 2.0, 3.0],
+      backgroundColor: colors,
+      borderRadius: 3,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    ...baseOpts(),
+    scales: {
+      x: baseOpts().scales.x,
+      y: { ...baseOpts().scales.y, beginAtZero: true, max: 8 }
+    }
+  }
+});
+
+// ROE Chart
+new Chart(document.getElementById('roeChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data: [12.8, 9.0, 9.4, 13.0, null, null],
+      backgroundColor: colors,
+      borderRadius: 3,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    ...baseOpts(),
+    scales: {
+      x: baseOpts().scales.x,
+      y: { ...baseOpts().scales.y, beginAtZero: true, max: 20 }
+    }
+  }
+});
+
+// PBR Chart
+new Chart(document.getElementById('pbrChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data: [1.9, 0.9, 1.3, 1.4, 0.5, 0.7],
+      backgroundColor: colors,
+      borderRadius: 3,
+      borderSkipped: false,
+    }],
+  },
+  options: {
+    ...baseOpts(),
+    scales: {
+      x: baseOpts().scales.x,
+      y: { ...baseOpts().scales.y, beginAtZero: true, max: 3.0 }
+    }
+  }
+});
+
+// Intersection Observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.style.animationPlayState = 'running';
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.anim').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
