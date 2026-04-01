@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국내 VPP 애그리게이터 기업 분석 2025-2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:     #0F172A;
+  --ink2:    #334155;
+  --ink3:    #64748B;
+  --line:    #E2E8F0;
+  --bg:      #F8FAFC;
+  --card:    #FFFFFF;
+  --green:   #059669;
+  --green-l: #ECFDF5;
+  --green-b: #6EE7B7;
+  --red:     #DC2626;
+  --red-l:   #FEF2F2;
+  --red-b:   #FCA5A5;
+  --amber:   #D97706;
+  --amber-l: #FFFBEB;
+  --amber-b: #FDE68A;
+  --blue:    #2563EB;
+  --blue-l:  #EFF6FF;
+  --blue-b:  #BFDBFE;
+  --purple:  #7C3AED;
+  --purple-l:#F5F3FF;
+  --gray-l:  #F1F5F9;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* ── TOP BANNER ── */
+.top-banner {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 60%, #0F2744 100%);
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.top-banner::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(37,99,235,.12);
+}
+.top-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(5,150,105,.08);
+}
+.banner-tag {
+  display: inline-block;
+  background: rgba(37,99,235,.25);
+  color: #93C5FD;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(147,197,253,.3);
+  margin-bottom: 1rem;
+}
+.top-banner h1 {
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  color: #F8FAFC;
+  margin-bottom: .6rem;
+  line-height: 1.25;
+}
+.top-banner p {
+  font-size: .9rem;
+  color: #94A3B8;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── MAIN ── */
+.main { max-width: 1020px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+/* ── DISCLAIMER ── */
+.disclaimer {
+  background: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 2.5rem;
+  font-size: .8rem;
+  color: #78350F;
+  line-height: 1.7;
+}
+.disclaimer .icon { font-size: 1.2rem; flex-shrink: 0; }
+
+/* ── SECTION TITLES ── */
+.sec-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  padding-bottom: .6rem;
+  border-bottom: 2px solid var(--line);
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-title .num {
+  width: 24px; height: 24px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── COMPANY CARD ── */
+.company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 20px; margin-bottom: 3rem; }
+@media (max-width: 600px) { .company-grid { grid-template-columns: 1fr; } }
+
+.co-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: box-shadow .2s, transform .2s;
+}
+.co-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.09); transform: translateY(-2px); }
+
+.co-header {
+  padding: 1.1rem 1.3rem .9rem;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+}
+.co-info {}
+.co-name { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 3px; }
+.co-code { font-size: .72rem; color: var(--ink3); font-family: 'DM Mono', monospace; }
+.co-desc { font-size: .78rem; color: var(--ink2); margin-top: 5px; line-height: 1.55; }
+
+.co-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.badge-listed  { background: #DBEAFE; color: #1E3A8A; }
+.badge-unlisted{ background: #F1F5F9; color: #475569; }
+.badge-aggreg  { background: #ECFDF5; color: #065F46; }
+.badge-infra   { background: #F5F3FF; color: #4C1D95; }
+.badge-energy  { background: #FFF7ED; color: #9A3412; }
+
+.co-body { padding: 1rem 1.3rem; }
+
+/* 재무 수치 그리드 */
+.fin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+@media (max-width: 480px) { .fin-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.fin-item {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: .55rem .65rem;
+  text-align: center;
+}
+.fin-label { font-size: .62rem; color: var(--ink3); font-weight: 500; margin-bottom: 3px; }
+.fin-val {
+  font-size: .88rem;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+}
+.fin-val.good   { color: var(--green); }
+.fin-val.warn   { color: var(--amber); }
+.fin-val.bad    { color: var(--red); }
+.fin-val.neutral{ color: var(--ink); }
+.fin-val.na     { color: var(--ink3); font-size: .75rem; font-family: inherit; font-weight: 500; }
+
+/* 투자 판단 */
+.invest-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: .7rem .9rem;
+  border-radius: 10px;
+  font-size: .8rem;
+  margin-bottom: .9rem;
+}
+.invest-bar.buy  { background: var(--green-l); border: 1px solid var(--green-b); color: #065F46; }
+.invest-bar.hold { background: var(--amber-l); border: 1px solid var(--amber-b); color: #78350F; }
+.invest-bar.caution { background: var(--red-l); border: 1px solid var(--red-b); color: #991B1B; }
+.invest-bar.watch { background: var(--blue-l); border: 1px solid var(--blue-b); color: #1E3A8A; }
+.invest-icon { font-size: 1.1rem; flex-shrink: 0; }
+.invest-text strong { font-weight: 700; display: block; }
+
+/* 주가 정보 */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: .55rem;
+}
+.price-main { font-size: 1.2rem; font-weight: 800; font-family: 'DM Mono', monospace; color: var(--ink); }
+.price-chg { font-size: .75rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+.price-chg.up   { background: var(--green-l); color: var(--green); }
+.price-chg.down { background: var(--red-l);   color: var(--red);   }
+.price-note { font-size: .7rem; color: var(--ink3); }
+
+/* 장단점 */
+.pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (max-width: 400px) { .pro-con { grid-template-columns: 1fr; } }
+.pros, .cons {
+  border-radius: 8px;
+  padding: .6rem .8rem;
+  font-size: .73rem;
+  line-height: 1.65;
+}
+.pros { background: var(--green-l); }
+.cons { background: var(--red-l);   }
+.pros .pct { font-size: .65rem; font-weight: 700; color: var(--green); margin-bottom: 3px; display: block; }
+.cons .pct { font-size: .65rem; font-weight: 700; color: var(--red);   margin-bottom: 3px; display: block; }
+.pros li, .cons li { list-style: none; padding-left: .8em; position: relative; color: #1a1a1a; }
+.pros li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+.cons li::before { content: '✗'; position: absolute; left: 0; color: var(--red);   font-weight: 700; }
+
+/* 비상장 섹션 */
+.unlisted-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 3rem; }
+.ul-card {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+}
+.ul-name { font-size: .9rem; font-weight: 800; color: var(--ink); margin-bottom: .3rem; }
+.ul-parent { font-size: .7rem; color: var(--ink3); margin-bottom: .5rem; }
+.ul-body { font-size: .78rem; color: var(--ink2); line-height: 1.7; }
+.ul-tag {
+  display: inline-block;
+  margin-top: .5rem;
+  font-size: .66rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 20px;
+  background: var(--gray-l);
+  color: var(--ink2);
+}
+
+/* 비교 테이블 */
+.compare-wrap { overflow-x: auto; margin-bottom: 3rem; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .78rem;
+  min-width: 640px;
+}
+thead th {
+  background: var(--ink);
+  color: #F8FAFC;
+  padding: .7rem .9rem;
+  text-align: left;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  white-space: nowrap;
+}
+thead th:first-child { border-radius: 10px 0 0 0; }
+thead th:last-child  { border-radius: 0 10px 0 0; }
+tbody td {
+  padding: .65rem .9rem;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #F8FAFC; }
+.td-name   { font-weight: 700; }
+.td-mono   { font-family: 'DM Mono', monospace; font-size: .75rem; }
+.td-good   { color: var(--green); font-weight: 700; font-family: 'DM Mono', monospace; }
+.td-warn   { color: var(--amber); font-weight: 700; font-family: 'DM Mono', monospace; }
+.td-bad    { color: var(--red);   font-weight: 700; font-family: 'DM Mono', monospace; }
+.td-na     { color: var(--ink3); }
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .7rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.v-buy     { background: var(--green-l); color: #065F46; }
+.v-hold    { background: var(--amber-l); color: #78350F; }
+.v-caution { background: var(--red-l);   color: #991B1B; }
+.v-watch   { background: var(--blue-l);  color: #1E3A8A; }
+
+/* 용어 해설 */
+.glossary {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 1.2rem 1.4rem;
+  margin-bottom: 3rem;
+}
+.glossary h3 { font-size: .85rem; font-weight: 800; margin-bottom: .9rem; color: var(--ink); }
+.gl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.gl-item { background: var(--bg); border-radius: 8px; padding: .65rem .8rem; }
+.gl-term { font-size: .72rem; font-weight: 800; color: var(--blue); font-family: 'DM Mono', monospace; margin-bottom: 3px; }
+.gl-def  { font-size: .73rem; color: var(--ink2); line-height: 1.6; }
+
+/* footer */
+.footer {
+  text-align: center;
+  font-size: .72rem;
+  color: var(--ink3);
+  line-height: 1.8;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <div class="banner-tag">2025–2026 기업 분석 리포트</div>
+  <h1>국내 VPP 애그리게이터 기업<br>총망라 · 재무 · 투자 분석</h1>
+  <p>상장 4사 재무지표(PER·PBR·ROE) + 비상장 주요사 현황까지<br>태양광 사업자를 위한 파트너 & 투자 길잡이</p>
+</div>
+
+<div class="main">
+
+  <!-- 투자 주의 -->
+  <div class="disclaimer">
+    <span class="icon">⚠️</span>
+    <p>
+      <strong>투자 유의사항:</strong> 본 자료는 공개된 공시·뉴스·증권사 리포트를 기반으로 작성된 <strong>정보 제공 목적</strong>의 참고 자료이며, 특정 종목의 매수·매도를 권유하지 않습니다.
+      재무 수치는 2025년 결산 및 3분기 누적 공시 기준이며, 주가는 2026년 3~4월 기준입니다. 실제 투자 결정은 반드시 공시 원문과 전문가 상담을 통해 하시기 바랍니다.
+      저는 재무 전문가나 금융투자 분석사가 아닙니다.
+    </p>
+  </div>
+
+  <!-- 섹션 1: 상장 VPP 기업 -->
+  <div class="sec-title"><span class="num">1</span> 상장 VPP 관련 기업 심층 분석</div>
+
+  <div class="company-grid">
+
+    <!-- 그리드위즈 -->
+    <div class="co-card">
+      <div class="co-header">
+        <div class="co-info">
+          <div class="co-name">그리드위즈</div>
+          <div class="co-code">KOSDAQ 453450 | 2024년 6월 상장</div>
+          <div class="co-desc">국내 수요관리(DR) 1위 기업. DR·ESS·전기차충전·태양광을 통합 운영하는 순수 VPP 플랫폼. No.1 VPP 운영 플레이어를 목표로 V2G 서비스 시장 개척 중.</div>
+        </div>
+        <div class="co-badges">
+          <span class="badge badge-listed">📈 코스닥 상장</span>
+          <span class="badge badge-aggreg">⚡ VPP 전문</span>
+        </div>
+      </div>
+      <div class="co-body">
+        <!-- 주가 -->
+        <div class="price-row">
+          <span class="price-main">17,000원</span>
+          <span class="price-chg down">공모가 대비 -57.5%</span>
+        </div>
+        <p class="price-note">52주 범위: 12,120 ~ 25,850원 | 공모가: 40,000원 (2024.6)</p>
+
+        <!-- 재무 수치 -->
+        <div class="fin-grid" style="margin-top:.8rem;">
+          <div class="fin-item">
+            <div class="fin-label">2025 매출</div>
+            <div class="fin-val neutral">1,256억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">영업이익</div>
+            <div class="fin-val good">8억 ↑흑전</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PER</div>
+            <div class="fin-val warn">흑전 전환<br><span style="font-size:.62rem;font-family:inherit;font-weight:500;color:var(--ink3)">의미 제한적</span></div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">현금성자산</div>
+            <div class="fin-val good">578억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">시가총액</div>
+            <div class="fin-val neutral">약 1,200억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">부채비율</div>
+            <div class="fin-val good">낮음</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">DR 매출비중</div>
+            <div class="fin-val warn">81.7%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">ROE</div>
+            <div class="fin-val warn">흑전</div>
+          </div>
+        </div>
+
+        <!-- 투자 판단 -->
+        <div class="invest-bar hold">
+          <span class="invest-icon">🔍</span>
+          <div class="invest-text">
+            <strong>관망/분할매수 검토</strong>
+            공모자금 544억원이 아직 예치 상태. 흑자전환은 긍정적이나 VPP 본격 수익화까지 시간 필요. 단기 주가 하락은 기회일 수 있으나 EV 캐즘 리스크 동반.
+          </div>
+        </div>
+
+        <div class="pro-con">
+          <ul class="pros">
+            <span class="pct">✅ 투자 포인트</span>
+            <li>국내 수요관리(DR) 시장 점유율 1위</li>
+            <li>2025년 영업이익 흑자전환 성공</li>
+            <li>공모자금 578억 현금 보유(무차입)</li>
+            <li>분산에너지법 시행으로 시장 확대</li>
+          </ul>
+          <ul class="cons">
+            <span class="pct">⚠️ 리스크</span>
+            <li>DR 매출 의존도 81.7% 집중 리스크</li>
+            <li>공모가 대비 주가 -57% 부진</li>
+            <li>EV 충전 해외 진출 지연</li>
+            <li>DR 기본급 단가 5.8% 하락</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SK이터닉스 -->
+    <div class="co-card">
+      <div class="co-header">
+        <div class="co-info">
+          <div class="co-name">SK이터닉스</div>
+          <div class="co-code">KOSPI 475150 | 2024년 3월 상장</div>
+          <div class="co-desc">태양광·풍력·ESS·연료전지를 아우르는 신재생에너지 종합 사업자. VPP 플랫폼 사업 확장 및 KKR과 신재생에너지 공동경영으로 글로벌 VPP 사업자 도약 준비 중.</div>
+        </div>
+        <div class="co-badges">
+          <span class="badge badge-listed">📈 코스피 상장</span>
+          <span class="badge badge-energy">🌿 신재생에너지</span>
+        </div>
+      </div>
+      <div class="co-body">
+        <div class="price-row">
+          <span class="price-main">50,400원</span>
+          <span class="price-chg up">3개월 +40.9%</span>
+        </div>
+        <p class="price-note">52주 범위: 20,500 ~ 58,000원 | DS투자 목표주가: 43,000원</p>
+
+        <div class="fin-grid" style="margin-top:.8rem;">
+          <div class="fin-item">
+            <div class="fin-label">2025 매출(연결)</div>
+            <div class="fin-val neutral">3,857억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">영업이익</div>
+            <div class="fin-val good">530억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PER(2025F)</div>
+            <div class="fin-val warn">~55배</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">EPS(2025F)</div>
+            <div class="fin-val neutral">911원</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">시가총액</div>
+            <div class="fin-val neutral">약 1.7조</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">자산총계</div>
+            <div class="fin-val neutral">7,317억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">부채비율</div>
+            <div class="fin-val warn">202%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">2026F 영업이익</div>
+            <div class="fin-val good">680~733억</div>
+          </div>
+        </div>
+
+        <div class="invest-bar watch">
+          <span class="invest-icon">👀</span>
+          <div class="invest-text">
+            <strong>장기 성장 유망 / 단기 밸류에이션 고평가 주의</strong>
+            KKR 투자 유치·해상풍력 착공·미국 ESS 진출로 성장 스토리 뚜렷. 단, PER 55배는 밸류에이션 부담. 2026년 실적 성장이 관건.
+          </div>
+        </div>
+
+        <div class="pro-con">
+          <ul class="pros">
+            <span class="pct">✅ 투자 포인트</span>
+            <li>KKR과 공동경영으로 글로벌 자금 유입</li>
+            <li>해상풍력·미국 ESS 신사업 확장</li>
+            <li>RE100 수요 증가로 PPA 계약 확대</li>
+            <li>2026F 영업이익 +28~38% 고성장 전망</li>
+          </ul>
+          <ul class="cons">
+            <span class="pct">⚠️ 리스크</span>
+            <li>PER 55배 밸류에이션 부담</li>
+            <li>부채비율 202% 재무 레버리지 높음</li>
+            <li>신재생에너지 공사 매출 감소 추세</li>
+            <li>최근 급등(3개월 +41%)으로 단기 부담</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- LS ELECTRIC -->
+    <div class="co-card">
+      <div class="co-header">
+        <div class="co-info">
+          <div class="co-name">LS ELECTRIC</div>
+          <div class="co-code">KOSPI 010120 | 전력인프라 대형주</div>
+          <div class="co-desc">전력기기·자동화 토탈 솔루션 대형주. 'VPP 기반 스마트팩토리' 구축 사업과 '햇빛길중개' 플랫폼을 통한 태양광 VPP 중개 서비스 운영. 미국 데이터센터 수주로 급성장.</div>
+        </div>
+        <div class="co-badges">
+          <span class="badge badge-listed">📈 코스피 상장</span>
+          <span class="badge badge-infra">🏗️ 전력인프라</span>
+        </div>
+      </div>
+      <div class="co-body">
+        <div class="price-row">
+          <span class="price-main">약 220,000원</span>
+          <span class="price-chg up">2025 YTD 강세</span>
+        </div>
+        <p class="price-note">52주 최고치 경신 구간 | 목표주가: 300,000원 (다수 증권사)</p>
+
+        <div class="fin-grid" style="margin-top:.8rem;">
+          <div class="fin-item">
+            <div class="fin-label">2025F 매출</div>
+            <div class="fin-val neutral">약 4.5조</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">영업이익률</div>
+            <div class="fin-val good">9.1%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PER(2025F)</div>
+            <div class="fin-val warn">약 20~22배</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PBR(2024A)</div>
+            <div class="fin-val warn">3.32배</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">ROE(2024A)</div>
+            <div class="fin-val good">13.4%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">ROE(2025F)</div>
+            <div class="fin-val good">17.6%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">부채비율</div>
+            <div class="fin-val warn">137%</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">ROIC(2024)</div>
+            <div class="fin-val good">14.2%</div>
+          </div>
+        </div>
+
+        <div class="invest-bar buy">
+          <span class="invest-icon">💚</span>
+          <div class="invest-text">
+            <strong>우호적 / 분산에너지 + 데이터센터 이중 수혜</strong>
+            영업이익률·ROE 지속 개선 중. 미국 데이터센터 수주(약 2,500억 규모) + VPP 플랫폼 확장 이중 모멘텀. PBR 3.3배는 부담이나 실적 성장이 정당화 중.
+          </div>
+        </div>
+
+        <div class="pro-con">
+          <ul class="pros">
+            <span class="pct">✅ 투자 포인트</span>
+            <li>미국 빅테크 데이터센터 수주 확대</li>
+            <li>ROE 13.4→17.6% 꾸준히 개선</li>
+            <li>VPP 햇빛길 중개플랫폼 성장</li>
+            <li>EV·ESS 자동화 솔루션 신사업</li>
+          </ul>
+          <ul class="cons">
+            <span class="pct">⚠️ 리스크</span>
+            <li>PBR 3.3배로 이미 높은 밸류에이션</li>
+            <li>부채비율 137% (전년比 상승)</li>
+            <li>전력기기 사이클 하락 시 실적 부담</li>
+            <li>VPP 매출 비중은 아직 소수</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 한화솔루션 -->
+    <div class="co-card">
+      <div class="co-header">
+        <div class="co-info">
+          <div class="co-name">한화솔루션</div>
+          <div class="co-code">KOSPI 009830 | 큐셀 태양광 대형주</div>
+          <div class="co-desc">큐셀 태양광 모듈 세계 Top3, Q Energy를 통한 발전소 운영 및 VPP 사업. 국내 가정용 에너지 솔루션(VPP 연계) 강화 중이나 미국 투자 부담으로 2025년 대규모 영업손실.</div>
+        </div>
+        <div class="co-badges">
+          <span class="badge badge-listed">📈 코스피 상장</span>
+          <span class="badge badge-energy">☀️ 태양광 모듈</span>
+        </div>
+      </div>
+      <div class="co-body">
+        <div class="price-row">
+          <span class="price-main">35,650원</span>
+          <span class="price-chg down">52주 저점 근처</span>
+        </div>
+        <p class="price-note">52주 범위: 18,220 ~ 59,300원 | 평균 목표주가: 41,625원</p>
+
+        <div class="fin-grid" style="margin-top:.8rem;">
+          <div class="fin-item">
+            <div class="fin-label">2025 매출</div>
+            <div class="fin-val neutral">13.3조</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">영업손익</div>
+            <div class="fin-val bad">-3,533억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PER</div>
+            <div class="fin-val na">적자 N/A</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">PBR</div>
+            <div class="fin-val warn">약 0.6배</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">ROE</div>
+            <div class="fin-val bad">적자</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">부채비율</div>
+            <div class="fin-val bad">189%↑</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">순손실(2025F)</div>
+            <div class="fin-val bad">~6,000억</div>
+          </div>
+          <div class="fin-item">
+            <div class="fin-label">시가총액</div>
+            <div class="fin-val neutral">6.1조</div>
+          </div>
+        </div>
+
+        <div class="invest-bar caution">
+          <span class="invest-icon">🔴</span>
+          <div class="invest-text">
+            <strong>단기 투자 신중 / 장기 반등 시나리오 모니터링</strong>
+            2025년 대규모 적자, 부채비율 급등. PBR 0.6배는 자산가치 저평가이나 실적 회복 전까지 주가 촉매 부재. 미국 관세·IRA 불확실성 최대 리스크.
+          </div>
+        </div>
+
+        <div class="pro-con">
+          <ul class="pros">
+            <span class="pct">✅ 장기 반등 시나리오</span>
+            <li>PBR 0.6배 = 순자산 대비 저평가</li>
+            <li>미국 모듈 공장 정상화 시 이익 급반등</li>
+            <li>2026년 9GW 출하 목표 달성 기대</li>
+            <li>가정용 에너지·VPP 사업 흑자 견조</li>
+          </ul>
+          <ul class="cons">
+            <span class="pct">⚠️ 단기 핵심 리스크</span>
+            <li>2025년 영업손실 3,533억원 확정</li>
+            <li>부채비율 189%로 재무 악화</li>
+            <li>IRA 세액공제 축소 정책 불확실성</li>
+            <li>중국발 모듈 가격 하락 지속</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /company-grid -->
+
+
+  <!-- 섹션 2: 비상장 주요 애그리게이터 -->
+  <div class="sec-title"><span class="num">2</span> 비상장 / 자회사 VPP 주요 사업자</div>
+
+  <div class="unlisted-grid">
+    <div class="ul-card">
+      <div class="ul-name">🏢 한전KDN</div>
+      <div class="ul-parent">한국전력 자회사 | 비상장</div>
+      <div class="ul-body">
+        한전 IT 전문 자회사로 VPP 운영 플랫폼(K-VPP) 개발·운영의 핵심 기관. 전국 배전망 데이터를 직접 보유해 가장 안정적인 VPP 중개 능력을 갖춤. 공공 부문 VPP 사업의 사실상 표준 제공자.
+      </div>
+      <span class="ul-tag">🔒 비상장 | 한전 모회사</span>
+    </div>
+    <div class="ul-card">
+      <div class="ul-name">📡 KT에너지</div>
+      <div class="ul-parent">KT그룹 | 비상장</div>
+      <div class="ul-body">
+        KT의 통신 인프라와 AI·IoT를 접목한 에너지 플랫폼 기업. 전력거래소에 소규모 전력 중개사업자로 등록 완료. 기업 고객 DR+ESS 통합 관리 서비스를 주력으로 하며 VPP 애그리게이터 역할 수행.
+      </div>
+      <span class="ul-tag">🔒 비상장 | KT 자회사</span>
+    </div>
+    <div class="ul-card">
+      <div class="ul-name">⚡ SK에너지</div>
+      <div class="ul-parent">SK이노베이션 계열 | 비상장</div>
+      <div class="ul-body">
+        2021년 전력거래소 VPP 사업자 등록. 전국 주유소·화물 휴게소 22곳에 태양광 설치. VPP를 통한 소규모 분산자원 중개 선도기업 중 하나. SK E&S와 함께 그룹 에너지 솔루션 시너지 추구.
+      </div>
+      <span class="ul-tag">🔒 비상장 | SK이노 계열</span>
+    </div>
+    <div class="ul-card">
+      <div class="ul-name">🔋 에넥스텔레콤</div>
+      <div class="ul-parent">전력 중개 전문 | 비상장</div>
+      <div class="ul-body">
+        전력거래소 등록 중개사업자 중 적극적으로 운영 중인 에너지테크 기업. ESS·태양광 통합 중개 서비스와 실시간 전력 데이터 분석 플랫폼 보유. 소규모 VPP 참여 희망 사업자에게 적합한 파트너.
+      </div>
+      <span class="ul-tag">🔒 비상장</span>
+    </div>
+    <div class="ul-card">
+      <div class="ul-name">🌿 브이피피랩(VPPlab)</div>
+      <div class="ul-parent">포스코인터내셔널 스핀오프 | 비상장</div>
+      <div class="ul-body">
+        제주도 기반 설립, 국내 최고 수준 발전량 예측 기술 보유. 제주에너지공사 풍력단지 발전량 예측 실증 성공. 재생에너지 발전소·전력거래소·소비자를 연결하는 전력 중개 플랫폼 운영.
+      </div>
+      <span class="ul-tag">🔒 비상장 | 포스코 스핀오프</span>
+    </div>
+    <div class="ul-card">
+      <div class="ul-name">🏭 SK E&S</div>
+      <div class="ul-parent">SK그룹 | 비상장(SK이노 자회사)</div>
+      <div class="ul-body">
+        국내 최대 민간 발전사. LNG·수소·재생에너지 통합 에너지 솔루션 제공. VPP와 연계한 수요관리·전력계통 안정화 서비스 운영. 대규모 수요반응(DR) 자원을 보유한 핵심 VPP 참여 사업자.
+      </div>
+      <span class="ul-tag">🔒 비상장 | SK그룹</span>
+    </div>
+  </div>
+
+  <!-- 섹션 3: 종합 비교 테이블 -->
+  <div class="sec-title"><span class="num">3</span> 상장사 투자지표 종합 비교표</div>
+  <div class="compare-wrap" style="margin-bottom:2rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>기업명</th>
+          <th>종목코드</th>
+          <th>현재주가</th>
+          <th>시가총액</th>
+          <th>PER</th>
+          <th>PBR</th>
+          <th>ROE</th>
+          <th>영업이익률</th>
+          <th>부채비율</th>
+          <th>VPP 역할</th>
+          <th>투자의견</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-name">그리드위즈</td>
+          <td class="td-mono">453450</td>
+          <td class="td-mono">17,000원</td>
+          <td>약 1,200억</td>
+          <td class="td-warn">흑전/고</td>
+          <td class="td-warn">낮음</td>
+          <td class="td-warn">흑전</td>
+          <td class="td-warn">0.6%</td>
+          <td class="td-good">무차입</td>
+          <td>VPP 전문 플랫폼</td>
+          <td><span class="verdict v-hold">🔍 관망</span></td>
+        </tr>
+        <tr>
+          <td class="td-name">SK이터닉스</td>
+          <td class="td-mono">475150</td>
+          <td class="td-mono">50,400원</td>
+          <td>약 1.7조</td>
+          <td class="td-bad">~55배</td>
+          <td class="td-warn">높음</td>
+          <td class="td-good">개선중</td>
+          <td class="td-good">13.8%</td>
+          <td class="td-warn">202%</td>
+          <td>신재생+VPP 플랫폼</td>
+          <td><span class="verdict v-watch">👀 모니터링</span></td>
+        </tr>
+        <tr>
+          <td class="td-name">LS ELECTRIC</td>
+          <td class="td-mono">010120</td>
+          <td class="td-mono">~220,000원</td>
+          <td>약 3.8조</td>
+          <td class="td-warn">20~22배</td>
+          <td class="td-warn">3.3배</td>
+          <td class="td-good">17.6%</td>
+          <td class="td-good">9.1%</td>
+          <td class="td-warn">137%</td>
+          <td>전력인프라+VPP플랫폼</td>
+          <td><span class="verdict v-buy">💚 우호적</span></td>
+        </tr>
+        <tr>
+          <td class="td-name">한화솔루션</td>
+          <td class="td-mono">009830</td>
+          <td class="td-mono">35,650원</td>
+          <td>약 6.1조</td>
+          <td class="td-bad">적자 N/A</td>
+          <td class="td-good">0.6배</td>
+          <td class="td-bad">적자</td>
+          <td class="td-bad">-2.6%</td>
+          <td class="td-bad">189%↑</td>
+          <td>태양광 모듈+발전소</td>
+          <td><span class="verdict v-caution">🔴 신중</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 섹션 4: VPP 파트너 선택 기준 -->
+  <div class="sec-title"><span class="num">4</span> 태양광 사업자를 위한 VPP 파트너 선택 가이드</div>
+
+  <div style="background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:1.4rem 1.5rem;margin-bottom:2.5rem;">
+    <p style="font-size:.82rem;color:var(--ink2);line-height:1.8;margin-bottom:1rem;">
+      투자 관점과 별개로, <strong>VPP에 참여하려는 태양광 사업자</strong> 입장에서는 아래 기준으로 애그리게이터를 선택하는 것이 중요합니다.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+      <div style="background:#F8FAFC;border-radius:10px;padding:.9rem 1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--blue);margin-bottom:.4rem;">① 수익 배분 비율</div>
+        <div style="font-size:.75rem;color:var(--ink2);line-height:1.65;">통상 참여자 75~85% 지급. 그리드위즈·SK이터닉스·LS ELECTRIC 모두 제공하나 구체 조건은 상담 필수.</div>
+      </div>
+      <div style="background:#F8FAFC;border-radius:10px;padding:.9rem 1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--green);margin-bottom:.4rem;">② 플랫폼 안정성</div>
+        <div style="font-size:.75rem;color:var(--ink2);line-height:1.65;">한전KDN(공공), LS ELECTRIC은 인프라 안정성 최상. 그리드위즈는 순수 VPP 전문성 탁월.</div>
+      </div>
+      <div style="background:#F8FAFC;border-radius:10px;padding:.9rem 1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--amber);margin-bottom:.4rem;">③ 내 자원 유형</div>
+        <div style="font-size:.75rem;color:var(--ink2);line-height:1.65;">ESS 없는 소규모 태양광 → 그리드위즈/LS 추천. 대용량 재생에너지+ESS → SK이터닉스 적합.</div>
+      </div>
+      <div style="background:#F8FAFC;border-radius:10px;padding:.9rem 1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--purple);margin-bottom:.4rem;">④ 실시간 모니터링</div>
+        <div style="font-size:.75rem;color:var(--ink2);line-height:1.65;">수익 추적 앱 제공 여부 확인. 그리드위즈는 자체 데이터 플랫폼 운영으로 투명성 높음.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 용어 해설 -->
+  <div class="glossary">
+    <h3>📚 초보자를 위한 투자 용어 해설</h3>
+    <div class="gl-grid">
+      <div class="gl-item">
+        <div class="gl-term">PER (배)</div>
+        <div class="gl-def">주가 ÷ 1주당 순이익. 낮을수록 저평가. 10배 이하 = 저평가, 30배 이상 = 성장주 프리미엄. 적자 기업은 산출 불가.</div>
+      </div>
+      <div class="gl-item">
+        <div class="gl-term">PBR (배)</div>
+        <div class="gl-def">주가 ÷ 1주당 순자산. 1배 미만 = 장부가치 이하로 거래 중. 한화솔루션 PBR 0.6배 = 자산가치보다 40% 싸게 거래.</div>
+      </div>
+      <div class="gl-item">
+        <div class="gl-term">ROE (%)</div>
+        <div class="gl-def">순이익 ÷ 자기자본. 내 돈으로 얼마를 버는지. 10% 이상이면 우수. LS ELECTRIC ROE 17.6%는 매우 양호한 수준.</div>
+      </div>
+      <div class="gl-item">
+        <div class="gl-term">부채비율 (%)</div>
+        <div class="gl-def">총부채 ÷ 자기자본. 100% 미만 = 안정, 200% 초과 = 주의 필요. 에너지 기업은 설비투자 특성상 다소 높은 경향.</div>
+      </div>
+      <div class="gl-item">
+        <div class="gl-term">흑자전환</div>
+        <div class="gl-def">영업손실이 영업이익으로 바뀌는 것. 그리드위즈는 2024년 적자에서 2025년 영업이익 8억원으로 흑자전환 성공.</div>
+      </div>
+      <div class="gl-item">
+        <div class="gl-term">애그리게이터</div>
+        <div class="gl-def">소규모 태양광·ESS를 모아 전력거래소에 집합 판매하는 중개 사업자. VPP 참여의 핵심 창구.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    본 분석은 2025~2026년 4월 공개 자료(DART 공시·증권사 리포트·뉴스)를 기반으로 작성됐습니다.<br>
+    재무 수치는 변동될 수 있으며, 투자 판단의 유일한 근거로 사용하지 마세요. | 기준일: 2026년 4월
+  </div>
+
+</div><!-- /main -->
+</body>
+</html>
