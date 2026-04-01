@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPP 예상 수익 차트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:    #059669;
+    --green-l:  #D1FAE5;
+    --blue:     #2563EB;
+    --blue-l:   #DBEAFE;
+    --amber:    #D97706;
+    --amber-l:  #FEF3C7;
+    --bg:       #F8FAFC;
+    --card:     #FFFFFF;
+    --border:   #E2E8F0;
+    --text:     #1E293B;
+    --muted:    #64748B;
+    --radius:   14px;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #ECFDF5;
+    color: #065F46;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: .75rem;
+    border: 1px solid #6EE7B7;
+  }
+  .header h1 {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 900;
+    margin-bottom: .5rem;
+  }
+  .header p { font-size: .875rem; color: var(--muted); line-height: 1.7; }
+
+  .wrapper { max-width: 760px; margin: 0 auto; }
+
+  /* ── METRIC CARDS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 500px) { .metrics { grid-template-columns: 1fr; } }
+
+  .metric-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .18s, box-shadow .18s;
+  }
+  .metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+  .metric-card.m-green::before  { background: var(--green); }
+  .metric-card.m-blue::before   { background: var(--blue); }
+  .metric-card.m-amber::before  { background: var(--amber); }
+
+  .metric-label { font-size: .72rem; color: var(--muted); font-weight: 500; margin-bottom: .5rem; }
+  .metric-value { font-size: 1.55rem; font-weight: 900; line-height: 1.2; }
+  .metric-card.m-green  .metric-value { color: var(--green); }
+  .metric-card.m-blue   .metric-value { color: var(--blue); }
+  .metric-card.m-amber  .metric-value { color: var(--amber); }
+  .metric-tag {
+    display: inline-block;
+    margin-top: .5rem;
+    font-size: .68rem;
+    font-weight: 600;
+    padding: 2px 9px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  .metric-card.m-green .metric-tag  { background: var(--green-l); color: #065F46; }
+  .metric-card.m-blue  .metric-tag  { background: var(--blue-l);  color: #1E3A8A; }
+  .metric-card.m-amber .metric-tag  { background: var(--amber-l); color: #78350F; }
+
+  /* ── CHART AREA ── */
+  .chart-section {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 18px;
+    padding: 1.5rem 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .chart-title { font-size: .9rem; font-weight: 800; color: var(--text); }
+  .chart-sub   { font-size: .75rem; color: var(--muted); margin-top: 3px; }
+
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .leg-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: .72rem; color: var(--muted);
+    cursor: pointer;
+  }
+  .leg-dot {
+    width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0;
+    transition: opacity .2s;
+  }
+
+  /* ── BAR CHART (CSS only) ── */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 260px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0;
+    margin-bottom: .5rem;
+    position: relative;
+  }
+  /* grid lines */
+  .bar-chart::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent calc(25% - 1px),
+      #F1F5F9 calc(25% - 1px),
+      #F1F5F9 25%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+  }
+  .bar-group:hover .bar-stack { filter: brightness(1.06); }
+
+  .bar-stack {
+    width: 100%;
+    max-width: 60px;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+    transition: height .4s cubic-bezier(.34,1.56,.64,1), filter .2s;
+    position: relative;
+  }
+  .bar-seg {
+    width: 100%;
+    transition: height .4s;
+  }
+  .seg-green  { background: #10B981; }
+  .seg-blue   { background: #3B82F6; }
+  .seg-amber  { background: #F59E0B; }
+
+  .bar-label {
+    margin-top: 8px;
+    font-size: .68rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .bar-label strong { display: block; font-weight: 700; color: var(--text); font-size: .72rem; }
+
+  /* Y-axis */
+  .y-axis {
+    position: absolute;
+    left: -52px; top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+  .y-tick { font-size: .65rem; color: #94A3B8; }
+
+  .chart-note {
+    font-size: .72rem;
+    color: #94A3B8;
+    text-align: center;
+    margin-top: .5rem;
+  }
+
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: none;
+    animation: fadeIn .2s ease;
+  }
+  .detail-panel.visible { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  .dp-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: .9rem; padding-bottom: .9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dp-icon { font-size: 1.5rem; }
+  .dp-title { font-weight: 800; font-size: 1rem; }
+  .dp-subtitle { font-size: .75rem; color: var(--muted); }
+
+  .dp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: .9rem;
+  }
+  @media (max-width: 480px) { .dp-grid { grid-template-columns: 1fr; } }
+
+  .dp-item {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: .75rem .9rem;
+  }
+  .dp-item-label { font-size: .7rem; color: var(--muted); margin-bottom: 3px; }
+  .dp-item-val   { font-size: .95rem; font-weight: 800; color: var(--text); }
+  .dp-item-val span { font-size: .7rem; font-weight: 500; color: var(--muted); }
+
+  .dp-tip {
+    background: #EFF6FF;
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: .65rem .9rem;
+    font-size: .8rem;
+    color: #1D4ED8;
+    line-height: 1.7;
+  }
+  .dp-tip strong { font-weight: 700; }
+
+  /* ── BREAKDOWN TABLE ── */
+  .breakdown {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .breakdown-header {
+    background: #F8FAFC;
+    border-bottom: 1px solid var(--border);
+    padding: .8rem 1.25rem;
+    font-size: .8rem;
+    font-weight: 800;
+    color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .78rem;
+  }
+  th {
+    padding: .65rem 1rem;
+    text-align: left;
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--muted);
+    background: #FAFAFA;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: .65rem 1rem;
+    border-bottom: 1px solid #F1F5F9;
+    color: var(--text);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  .td-tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: .66rem;
+    font-weight: 700;
+  }
+  .tag-green  { background: var(--green-l); color: #065F46; }
+  .tag-blue   { background: var(--blue-l);  color: #1E3A8A; }
+  .tag-amber  { background: var(--amber-l); color: #78350F; }
+  .td-total { font-weight: 800; color: var(--text); font-size: .85rem; }
+
+  /* ── ESS CALLOUT ── */
+  .ess-callout {
+    background: linear-gradient(135deg, #ECFDF5, #D1FAE5);
+    border: 1.5px solid #6EE7B7;
+    border-radius: 16px;
+    padding: 1.1rem 1.4rem;
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+  .ess-callout .icon { font-size: 1.5rem; flex-shrink: 0; }
+  .ess-callout p { font-size: .84rem; color: #065F46; line-height: 1.75; }
+  .ess-callout strong { font-weight: 800; }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    font-size: .72rem;
+    color: #94A3B8;
+    text-align: center;
+    line-height: 1.7;
+    padding-top: .5rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">수익 시뮬레이션 2026</div>
+  <h1>VPP 참여 시 예상 수익은 얼마나 될까?</h1>
+  <p>설치 용량별로 연간 수익을 한눈에 비교해 보세요.<br>막대를 클릭하면 상세 내역이 나옵니다.</p>
+</div>
+
+<div class="wrapper">
+
+  <!-- 핵심 지표 3개 -->
+  <div class="metrics">
+    <div class="metric-card m-green" onclick="showBar(0)">
+      <div class="metric-label">3kW 태양광 기준</div>
+      <div class="metric-value">연 약<br>80만원</div>
+      <span class="metric-tag">가정용 ↗ 클릭</span>
+    </div>
+    <div class="metric-card m-blue" onclick="showBar(2)">
+      <div class="metric-label">10kW + ESS 기준</div>
+      <div class="metric-value">연 약<br>280만원</div>
+      <span class="metric-tag">소규모 ↗ 클릭</span>
+    </div>
+    <div class="metric-card m-amber" onclick="showBar(4)">
+      <div class="metric-label">인센티브 단가</div>
+      <div class="metric-value">kWh당<br>최대 220원</div>
+      <span class="metric-tag">단가 설명 ↗</span>
+    </div>
+  </div>
+
+  <!-- 차트 -->
+  <div class="chart-section">
+    <div class="chart-top">
+      <div>
+        <div class="chart-title">용량별 연간 예상 수익 (만원)</div>
+        <div class="chart-sub">각 막대를 클릭하면 상세 수익 내역을 볼 수 있어요</div>
+      </div>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#10B981"></div>기본 발전 수익</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#3B82F6"></div>VPP 인센티브</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#F59E0B"></div>DR(수요반응) 보상</div>
+      </div>
+    </div>
+
+    <!-- 막대 그래프 -->
+    <div style="padding-left: 52px; position: relative;">
+      <div class="bar-chart" id="barChart">
+        <!-- bars injected by JS -->
+      </div>
+    </div>
+    <div class="chart-note">※ 설치 용량별 연간 예상 수익(만원). 일조량·전력시장 가격에 따라 변동될 수 있음.</div>
+  </div>
+
+  <!-- 상세 패널 -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="dp-header">
+      <span class="dp-icon" id="dpIcon"></span>
+      <div>
+        <div class="dp-title" id="dpTitle"></div>
+        <div class="dp-subtitle" id="dpSub"></div>
+      </div>
+    </div>
+    <div class="dp-grid" id="dpGrid"></div>
+    <div class="dp-tip" id="dpTip"></div>
+  </div>
+
+  <!-- ESS 추천 박스 -->
+  <div class="ess-callout">
+    <span class="icon">🔋</span>
+    <p>
+      <strong>ESS(배터리)를 추가하면 수익이 2~3배!</strong><br>
+      태양광만 있으면 낮에만 돈을 벌지만, ESS가 있으면 AI가 "밤에 충전 → 낮 피크에 방전"을 반복해
+      같은 용량으로도 훨씬 많은 인센티브를 받을 수 있습니다.
+      현재 소규모 ESS 보조금이 확대 중이라 초기 비용 부담도 줄고 있어요.
+    </p>
+  </div>
+
+  <!-- 수익 구성 상세 테이블 -->
+  <div class="breakdown">
+    <div class="breakdown-header">📊 수익 구성 3가지 — 어떻게 돈이 생기나?</div>
+    <table>
+      <thead>
+        <tr>
+          <th>수익 종류</th>
+          <th>설명</th>
+          <th>단가(예시)</th>
+          <th>유형</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>기본 발전 수익</strong></td>
+          <td>태양광이 만든 전기를 전력거래소에 판매</td>
+          <td>kWh당 130~160원</td>
+          <td><span class="td-tag tag-green">기본</span></td>
+        </tr>
+        <tr>
+          <td><strong>VPP 인센티브</strong></td>
+          <td>피크 감소·주파수 조정·예비력 제공 보상</td>
+          <td>kWh당 추가 80~120원</td>
+          <td><span class="td-tag tag-blue">추가</span></td>
+        </tr>
+        <tr>
+          <td><strong>DR(수요반응) 보상</strong></td>
+          <td>피크 시간 전기 사용 줄이기 참여 보상</td>
+          <td>감소 kWh당 최대 80원</td>
+          <td><span class="td-tag tag-amber">보너스</span></td>
+        </tr>
+        <tr>
+          <td class="td-total" colspan="2">3가지 합산 최대</td>
+          <td class="td-total">kWh당 최대 220원+</td>
+          <td><span class="td-tag tag-green">합계</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="disclaimer">
+    ※ 위 수익은 2026년 4월 기준 예상치이며, 실제 수익은 일조량·전력시장 가격·애그리게이터 수수료(15~25%)에 따라 달라집니다.<br>
+    정확한 수익 예측은 VPP 애그리게이터 상담을 통해 확인하세요.
+  </div>
+
+</div>
+
+<script>
+const bars = [
+  {
+    label: '3kW\n(가정용)', icon: '🏠',
+    title: '3kW 가정용 태양광', sub: '에너지 소비 평균 가정 기준 (ESS 없음)',
+    green: 40, blue: 25, amber: 15, total: 80,
+    details: [
+      { label: '월 평균 발전량', val: '약 270 kWh' },
+      { label: '기본 발전 수익', val: '약 40만원 / 년' },
+      { label: 'VPP 인센티브', val: '약 25만원 / 년' },
+      { label: 'DR 보상', val: '약 15만원 / 년' },
+    ],
+    tip: '<strong>처음 시작하기 좋은 규모예요!</strong><br>VPP 참여 전 대비 수익이 약 50% 늘어납니다. ESS를 추가하면 같은 패널로 수익이 2배 이상 됩니다.'
+  },
+  {
+    label: '5kW\n(가정용)', icon: '🏡',
+    title: '5kW 가정용 태양광', sub: '중대형 가정 또는 소규모 상가 기준',
+    green: 65, blue: 40, amber: 22, total: 127,
+    details: [
+      { label: '월 평균 발전량', val: '약 450 kWh' },
+      { label: '기본 발전 수익', val: '약 65만원 / 년' },
+      { label: 'VPP 인센티브', val: '약 40만원 / 년' },
+      { label: 'DR 보상', val: '약 22만원 / 년' },
+    ],
+    tip: '<strong>가정용으로는 최적의 VPP 진입 규모입니다.</strong><br>연 120만원 이상 수익에 한전 전기요금 절감까지 더하면 실질 혜택이 더 큽니다.'
+  },
+  {
+    label: '10kW\n(소규모)', icon: '🏢',
+    title: '10kW + ESS 10kWh', sub: '소규모 사업장·농가 (ESS 포함)',
+    green: 120, blue: 80, amber: 45, total: 245,
+    details: [
+      { label: '월 평균 발전량', val: '약 900 kWh' },
+      { label: '기본 발전 수익', val: '약 120만원 / 년' },
+      { label: 'VPP 인센티브', val: '약 80만원 / 년' },
+      { label: 'DR 보상', val: '약 45만원 / 년' },
+    ],
+    tip: '<strong>ESS 덕분에 수익 점프!</strong><br>ESS가 없는 10kW 대비 수익이 약 40% 증가합니다. ESS 설치비(약 500~700만원)는 보조금 활용 시 3~4년 내 회수 가능합니다.'
+  },
+  {
+    label: '30kW\n(중규모)', icon: '🏭',
+    title: '30kW 중규모', sub: '소형 공장·중규모 농장 기준',
+    green: 340, blue: 220, amber: 120, total: 680,
+    details: [
+      { label: '월 평균 발전량', val: '약 2,700 kWh' },
+      { label: '기본 발전 수익', val: '약 340만원 / 년' },
+      { label: 'VPP 인센티브', val: '약 220만원 / 년' },
+      { label: 'DR 보상', val: '약 120만원 / 년' },
+    ],
+    tip: '<strong>사업화 규모에서 VPP 효과가 극대화됩니다.</strong><br>수요반응(DR) 참여 규모가 커질수록 DR 단가 우대가 적용되어 보상이 더 늘어납니다.'
+  },
+  {
+    label: '100kW\n(사업용)', icon: '⚡',
+    title: '100kW 사업용', sub: '중형 공장·대규모 농가·건물 기준',
+    green: 1100, blue: 700, amber: 380, total: 2180,
+    details: [
+      { label: '월 평균 발전량', val: '약 9,000 kWh' },
+      { label: '기본 발전 수익', val: '약 1,100만원 / 년' },
+      { label: 'VPP 인센티브', val: '약 700만원 / 년' },
+      { label: 'DR 보상', val: '약 380만원 / 년' },
+    ],
+    tip: '<strong>연 2,000만원 이상 수익 구간!</strong><br>100kW 이상은 전력거래소 직접 참여 자격이 생겨 인센티브 우대가 가능합니다. 전문 애그리게이터 상담을 적극 권장합니다.'
+  }
+];
+
+const MAX_TOTAL = 2180;
+const CHART_HEIGHT = 260;
+
+function buildChart() {
+  const chart = document.getElementById('barChart');
+  chart.innerHTML = '';
+  bars.forEach((b, i) => {
+    const totalPx   = (b.total / MAX_TOTAL) * CHART_HEIGHT;
+    const greenPx   = (b.green  / b.total) * totalPx;
+    const bluePx    = (b.blue   / b.total) * totalPx;
+    const amberPx   = (b.amber  / b.total) * totalPx;
+
+    const g = document.createElement('div');
+    g.className = 'bar-group';
+    g.onclick = () => showBar(i);
+    g.innerHTML = `
+      <div class="bar-stack" style="height:${totalPx}px" id="stack-${i}">
+        <div class="bar-seg seg-amber" style="height:${amberPx}px"></div>
+        <div class="bar-seg seg-blue"  style="height:${bluePx}px"></div>
+        <div class="bar-seg seg-green" style="height:${greenPx}px"></div>
+      </div>
+      <div class="bar-label"><strong>${b.total.toLocaleString()}만</strong>${b.label.replace('\n','<br>')}</div>
+    `;
+    chart.appendChild(g);
+  });
+}
+
+function showBar(i) {
+  const b = bars[i];
+  document.getElementById('dpIcon').textContent = b.icon;
+  document.getElementById('dpTitle').textContent = b.title;
+  document.getElementById('dpSub').textContent = b.sub;
+
+  const grid = document.getElementById('dpGrid');
+  grid.innerHTML = b.details.map(d => `
+    <div class="dp-item">
+      <div class="dp-item-label">${d.label}</div>
+      <div class="dp-item-val">${d.val}</div>
+    </div>
+  `).join('') + `
+    <div class="dp-item" style="background:#FEF3C7; border: 1px solid #FDE68A;">
+      <div class="dp-item-label">✨ 연간 합계 수익</div>
+      <div class="dp-item-val" style="color:#D97706; font-size:1.1rem;">약 ${b.total}만원 <span>/ 년</span></div>
+    </div>
+  `;
+
+  document.getElementById('dpTip').innerHTML = b.tip;
+  const panel = document.getElementById('detailPanel');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// 지표 카드 중 kWh 단가 클릭 시
+document.querySelectorAll('.metric-card')[2].onclick = () => {
+  document.getElementById('dpIcon').textContent = '💰';
+  document.getElementById('dpTitle').textContent = 'kWh당 최대 220원 — 어떻게 계산되나요?';
+  document.getElementById('dpSub').textContent = 'VPP 인센티브 단가 구성 안내';
+  document.getElementById('dpGrid').innerHTML = `
+    <div class="dp-item"><div class="dp-item-label">기본 판매 단가 (SMP)</div><div class="dp-item-val">약 130~160원 <span>/ kWh</span></div></div>
+    <div class="dp-item"><div class="dp-item-label">피크 감소 기여금</div><div class="dp-item-val">추가 50~80원 <span>/ kWh</span></div></div>
+    <div class="dp-item"><div class="dp-item-label">주파수 조정 보상</div><div class="dp-item-val">추가 30~60원 <span>/ kWh</span></div></div>
+    <div class="dp-item" style="background:#FEF3C7; border: 1px solid #FDE68A;"><div class="dp-item-label">✨ 피크 시간대 합산 최대</div><div class="dp-item-val" style="color:#D97706;">약 220원+ <span>/ kWh</span></div></div>
+  `;
+  document.getElementById('dpTip').innerHTML = '<strong>왜 피크 시간이 중요한가요?</strong><br>전력 수요가 몰리는 여름 오후·겨울 저녁에는 전력이 부족해져 인센티브 단가가 2~3배 높아집니다. AI가 이 순간에 집중 방전해 수익을 극대화합니다.';
+  const panel = document.getElementById('detailPanel');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+
+buildChart();
+</script>
+</body>
+</html>

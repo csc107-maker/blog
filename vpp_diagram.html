@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPP(가상발전소) 작동 구조</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:  #F59E0B;
+    --amber-l:#FEF3C7;
+    --amber-d:#92400E;
+    --teal:   #0D9488;
+    --teal-l: #CCFBF1;
+    --teal-d: #134E4A;
+    --blue:   #3B82F6;
+    --blue-l: #DBEAFE;
+    --blue-d: #1E3A8A;
+    --purple: #8B5CF6;
+    --purple-l:#EDE9FE;
+    --purple-d:#4C1D95;
+    --green:  #22C55E;
+    --green-l:#DCFCE7;
+    --green-d:#14532D;
+    --coral:  #F43F5E;
+    --coral-l:#FFE4E6;
+    --coral-d:#881337;
+    --gray:   #64748B;
+    --gray-l: #F1F5F9;
+    --gray-d: #0F172A;
+    --bg:     #F8FAFC;
+    --card:   #FFFFFF;
+    --border: #E2E8F0;
+    --text:   #1E293B;
+    --muted:  #64748B;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .header .badge {
+    display: inline-block;
+    background: #EFF6FF;
+    color: #1D4ED8;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: .75rem;
+    border: 1px solid #BFDBFE;
+  }
+  .header h1 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: .5rem;
+    line-height: 1.3;
+  }
+  .header p {
+    font-size: .9rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── INTRO CALLOUT ── */
+  .intro-box {
+    background: #FFFBEB;
+    border: 1.5px solid #FDE68A;
+    border-radius: 14px;
+    padding: 1.1rem 1.4rem;
+    max-width: 660px;
+    margin: 0 auto 2.5rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .intro-box .icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .intro-box p { font-size: .875rem; color: #92400E; line-height: 1.75; }
+  .intro-box strong { font-weight: 700; color: #78350F; }
+
+  /* ── DIAGRAM WRAPPER ── */
+  .diagram {
+    max-width: 780px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Section labels */
+  .section-label {
+    text-align: center;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 80px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── TOP ROW ── */
+  .top-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: .5rem;
+  }
+  @media (max-width: 600px) {
+    .top-row { grid-template-columns: repeat(2, 1fr); }
+    .top-row .resource-card:last-child { grid-column: span 2; max-width: 180px; margin: 0 auto; width: 100%; }
+  }
+
+  .resource-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: .85rem .7rem;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: transform .18s, box-shadow .18s, border-color .18s;
+    position: relative;
+  }
+  .resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  }
+  .resource-card.amber  { border-color: #FDE68A; background: var(--amber-l); }
+  .resource-card.teal   { border-color: #99F6E4; background: var(--teal-l); }
+  .resource-card.blue   { border-color: #BFDBFE; background: var(--blue-l); }
+  .resource-card.purple { border-color: #DDD6FE; background: var(--purple-l); }
+  .resource-card.green  { border-color: #BBF7D0; background: var(--green-l); }
+
+  .resource-card .emoji { font-size: 1.6rem; display: block; margin-bottom: .35rem; }
+  .resource-card .name  { font-size: .8rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: .2rem; }
+  .resource-card .sub   { font-size: .68rem; color: var(--muted); }
+
+  /* ── ARROW SECTION ── */
+  .arrow-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+    position: relative;
+    gap: 0;
+  }
+  .arrow-zone svg { width: 100%; max-width: 640px; height: 52px; overflow: visible; }
+
+  /* ── PLATFORM ── */
+  .platform-section { margin-bottom: .5rem; }
+  .platform-card {
+    background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+    border: 2px solid #FDA4AF;
+    border-radius: 20px;
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .platform-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 90px; height: 90px;
+    background: rgba(244,63,94,.08);
+    border-radius: 50%;
+  }
+  .platform-card .platform-emoji { font-size: 1.8rem; display: block; margin-bottom: .4rem; }
+  .platform-card .platform-name {
+    font-size: 1rem; font-weight: 900; color: var(--coral-d);
+    margin-bottom: .3rem;
+  }
+  .platform-card .platform-sub { font-size: .8rem; color: #BE123C; }
+  .platform-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: .6rem;
+    background: #FFF;
+    border: 1px solid #FDA4AF;
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: .7rem;
+    color: var(--coral-d);
+    font-weight: 600;
+  }
+
+  /* ── BOTTOM ROW ── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 500px) {
+    .bottom-row { grid-template-columns: 1fr; }
+  }
+
+  .output-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: transform .18s, box-shadow .18s;
+  }
+  .output-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  }
+  .output-card.gray-card   { border-color: #CBD5E1; background: #F8FAFC; }
+  .output-card.amber-card  { border-color: #FDE68A; background: var(--amber-l); }
+  .output-card.teal-card   { border-color: #99F6E4; background: var(--teal-l); }
+  .output-card .out-emoji  { font-size: 1.5rem; display: block; margin-bottom: .4rem; }
+  .output-card .out-name   { font-size: .85rem; font-weight: 800; color: var(--text); margin-bottom: .2rem; }
+  .output-card .out-sub    { font-size: .7rem; color: var(--muted); }
+
+  /* ── TOOLTIP PANEL ── */
+  .tooltip-panel {
+    max-width: 780px;
+    margin: 2rem auto 0;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    min-height: 110px;
+    transition: all .2s;
+    display: none;
+  }
+  .tooltip-panel.visible { display: block; }
+  .tooltip-panel .tp-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: .6rem;
+  }
+  .tooltip-panel .tp-emoji { font-size: 1.6rem; }
+  .tooltip-panel .tp-title { font-size: 1rem; font-weight: 800; color: var(--text); }
+  .tooltip-panel .tp-body  { font-size: .85rem; color: var(--muted); line-height: 1.75; }
+  .tooltip-panel .tp-example {
+    margin-top: .75rem;
+    background: #F8FAFC;
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: .65rem .9rem;
+    font-size: .8rem;
+    color: #1D4ED8;
+    line-height: 1.7;
+  }
+  .tooltip-panel .tp-example strong { font-weight: 700; }
+
+  /* ── FLOW LEGEND ── */
+  .flow-legend {
+    max-width: 780px;
+    margin: 1.5rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 500px) { .flow-legend { grid-template-columns: 1fr; } }
+  .legend-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .8rem 1rem;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .legend-item p { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+  .legend-item strong { display: block; font-size: .8rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+
+  /* ── HINT ── */
+  .hint {
+    text-align: center;
+    font-size: .74rem;
+    color: #94A3B8;
+    margin-top: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .hint::before, .hint::after { content: ''; flex: 1; max-width: 100px; height: 1px; background: var(--border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">VPP 개념 완전 이해</div>
+  <h1>VPP(가상발전소) 작동 구조</h1>
+  <p>내 집 태양광이 어떻게 큰 발전소가 되는지,<br>아래 카드를 눌러 하나씩 알아보세요.</p>
+</div>
+
+<!-- 초보자용 안내 -->
+<div class="intro-box">
+  <span class="icon">💡</span>
+  <p>
+    <strong>처음 보시나요?</strong> 어렵게 생각하지 마세요!<br>
+    VPP는 <strong>내 집 태양광·배터리를 AI가 모아서 전기를 똑똑하게 파는 시스템</strong>입니다.
+    아래 카드를 클릭하면 각 항목의 자세한 설명이 나옵니다. 👇
+  </p>
+</div>
+
+<div class="diagram">
+
+  <!-- 상단: 분산 자원들 -->
+  <div class="section-label">① 내가 가진 자원 (클릭해서 알아보기)</div>
+  <div class="top-row">
+    <div class="resource-card amber" onclick="showTip('solar')">
+      <span class="emoji">☀️</span>
+      <div class="name">태양광</div>
+      <div class="sub">내 집·사업장</div>
+    </div>
+    <div class="resource-card teal" onclick="showTip('ess')">
+      <span class="emoji">🔋</span>
+      <div class="name">ESS(배터리)</div>
+      <div class="sub">에너지 저장장치</div>
+    </div>
+    <div class="resource-card blue" onclick="showTip('ev')">
+      <span class="emoji">🚗</span>
+      <div class="name">전기차(V2G)</div>
+      <div class="sub">이동형 배터리</div>
+    </div>
+    <div class="resource-card purple" onclick="showTip('dr')">
+      <span class="emoji">🏭</span>
+      <div class="name">수요반응(DR)</div>
+      <div class="sub">전기 사용 조절</div>
+    </div>
+    <div class="resource-card green" onclick="showTip('wind')">
+      <span class="emoji">💨</span>
+      <div class="name">소형 풍력</div>
+      <div class="sub">분산 자원</div>
+    </div>
+  </div>
+
+  <!-- 화살표 (위→가운데) -->
+  <div class="arrow-zone">
+    <svg viewBox="0 0 640 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- 5개 화살표 -->
+      <line x1="64"  y1="0" x2="310" y2="48" stroke="#FDA4AF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <line x1="192" y1="0" x2="315" y2="48" stroke="#FDA4AF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <line x1="320" y1="0" x2="320" y2="48" stroke="#F43F5E" stroke-width="2.2"/>
+      <line x1="448" y1="0" x2="325" y2="48" stroke="#FDA4AF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <line x1="576" y1="0" x2="330" y2="48" stroke="#FDA4AF" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <!-- 화살표 머리 -->
+      <polygon points="306,43 314,52 322,43" fill="#F43F5E"/>
+    </svg>
+  </div>
+
+  <!-- 중앙: VPP 플랫폼 -->
+  <div class="platform-section">
+    <div class="section-label">② 두뇌 역할 (AI 제어)</div>
+    <div class="platform-card" onclick="showTip('platform')">
+      <span class="platform-emoji">🤖</span>
+      <div class="platform-name">VPP 플랫폼 (중앙 제어 시스템)</div>
+      <div class="platform-sub">AI가 전력 생산·저장·판매를 자동 최적화</div>
+      <div class="platform-pill">⚡ 클릭해서 자세히 알아보기</div>
+    </div>
+  </div>
+
+  <!-- 화살표 (가운데→아래) -->
+  <div class="arrow-zone">
+    <svg viewBox="0 0 640 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="320" y1="0" x2="140" y2="48" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <line x1="320" y1="0" x2="320" y2="48" stroke="#F59E0B" stroke-width="2.2"/>
+      <line x1="320" y1="0" x2="500" y2="48" stroke="#94A3B8" stroke-width="1.8" stroke-dasharray="5 4"/>
+      <polygon points="316,43 324,52 332,43" fill="#F59E0B"/>
+    </svg>
+  </div>
+
+  <!-- 하단: 결과 -->
+  <div class="section-label">③ 나에게 돌아오는 결과</div>
+  <div class="bottom-row">
+    <div class="output-card gray-card" onclick="showTip('grid')">
+      <span class="out-emoji">🔌</span>
+      <div class="out-name">전력망 판매</div>
+      <div class="out-sub">전력시장 거래</div>
+    </div>
+    <div class="output-card amber-card" onclick="showTip('incentive')">
+      <span class="out-emoji">💰</span>
+      <div class="out-name">인센티브 지급</div>
+      <div class="out-sub">참여자에게 수익 배분</div>
+    </div>
+    <div class="output-card teal-card" onclick="showTip('stability')">
+      <span class="out-emoji">🛡️</span>
+      <div class="out-name">전력망 안정화</div>
+      <div class="out-sub">주파수·전압 조절</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 설명 패널 -->
+<div class="tooltip-panel" id="tipPanel">
+  <div class="tp-header">
+    <span class="tp-emoji" id="tipEmoji"></span>
+    <span class="tp-title" id="tipTitle"></span>
+  </div>
+  <p class="tp-body" id="tipBody"></p>
+  <div class="tp-example" id="tipExample"></div>
+</div>
+
+<!-- 흐름 요약 -->
+<div class="flow-legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#F59E0B"></div>
+    <div>
+      <strong>Step 1 — 자원 연결</strong>
+      <p>내 태양광·배터리·전기차를 IoT 장치로 VPP 시스템에 연결합니다.</p>
+    </div>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#F43F5E"></div>
+    <div>
+      <strong>Step 2 — AI 최적화</strong>
+      <p>AI가 날씨·전력가격·수요를 예측해 충전/방전 타이밍을 자동 결정합니다.</p>
+    </div>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#0D9488"></div>
+    <div>
+      <strong>Step 3 — 수익 정산</strong>
+      <p>전력 판매 수익 + 인센티브 보상이 매월 내 통장으로 입금됩니다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="hint">각 카드를 클릭하면 상세 설명이 나타납니다</div>
+
+<script>
+const tips = {
+  solar: {
+    emoji: '☀️',
+    title: '태양광 패널 — 전기를 만드는 나의 발전소',
+    body: '내 집이나 사업장 지붕에 설치된 태양광 패널이 햇빛을 전기로 바꿉니다. 3kW 가정용이라면 하루 약 10~15kWh를 생산할 수 있어요. 이 전기를 VPP에 등록하면 AI가 가장 비쌀 때 팔아줍니다.',
+    example: '💡 예시: 경기도 A씨의 3kW 태양광은 낮에 전기를 만들고, AI가 전기값이 제일 비싼 오후 3~6시에 집중적으로 판매해 월 7~8만원 수익을 올렸습니다.'
+  },
+  ess: {
+    emoji: '🔋',
+    title: 'ESS(에너지저장장치) — 전기를 저금통에 모았다가 파는 장치',
+    body: '배터리에 전기를 저장했다가 전기값이 비쌀 때 방전해서 파는 장치입니다. 태양광만 있으면 낮에만 돈을 벌지만, ESS가 있으면 밤이나 피크시간에도 팔 수 있어 수익이 2~3배 늘어납니다.',
+    example: '💡 예시: "낮에 싸게 저장 → 저녁 피크에 비싸게 방전" 패턴으로 kWh당 50~80원 추가 수익이 발생합니다. ESS가 VPP의 핵심 무기입니다!'
+  },
+  ev: {
+    emoji: '🚗',
+    title: '전기차(V2G) — 내 차가 배터리 발전소가 된다!',
+    body: 'V2G(Vehicle-to-Grid)는 전기차의 대용량 배터리를 ESS처럼 활용하는 기술입니다. 차가 주차된 시간 동안 전기차 배터리의 일부를 전력망에 방전했다가 나중에 다시 충전합니다. 차를 운전하는 데는 영향이 없고, 주차 중 수익을 냅니다.',
+    example: '💡 예시: 64kWh 배터리 전기차로 20kWh를 VPP에 활용하면 월 1~3만원 추가 수익이 가능합니다. 주차하는 동안 차가 돈을 버는 셈이죠!'
+  },
+  dr: {
+    emoji: '🏭',
+    title: '수요반응(DR) — 전기를 덜 쓰면 돈을 받는 제도',
+    body: '전기가 가장 많이 필요한 피크 시간(여름 오후, 겨울 저녁)에 전기 사용량을 줄이면 보상을 받는 제도입니다. 에어컨 온도를 1~2도 올리거나, 불필요한 전기를 잠깐 끄는 것만으로도 참여할 수 있습니다.',
+    example: '💡 예시: 소규모 공장이 오후 2~5시에 전기 사용을 100kWh 줄이면 최대 8,000원의 DR 보상을 받습니다. 전국 공장들이 모이면 발전소 하나를 대체합니다.'
+  },
+  wind: {
+    emoji: '💨',
+    title: '소형 풍력 — 바람도 돈이 된다',
+    body: '농장이나 건물 옥상에 설치한 소형 풍력발전기도 VPP에 참여할 수 있습니다. 태양광이 약한 흐린 날이나 야간에도 발전이 가능해, 태양광과 함께 운영하면 연중 안정적인 수익이 생깁니다.',
+    example: '💡 예시: 3kW 소형 풍력(약 400~600만원 설치)은 연간 약 5,000~8,000kWh를 생산하며, VPP 참여 시 연 50~80만원 수익이 가능합니다.'
+  },
+  platform: {
+    emoji: '🤖',
+    title: 'VPP 플랫폼 — 모든 것을 조율하는 AI 두뇌',
+    body: '수천 곳의 태양광·배터리·전기차를 실시간으로 연결하고, 전력시장 가격·날씨·수요 예측을 종합해서 최적의 시간에 충전·방전·판매를 자동으로 결정합니다. 참여자는 별도 조작 없이 수익을 받을 수 있습니다.',
+    example: '💡 핵심: 혼자라면 3kW 태양광으로 전기를 단순 판매하지만, VPP 플랫폼이 수천 개를 묶어서 운영하면 대형 발전소와 동등하게 전력시장에 참여할 수 있습니다.'
+  },
+  grid: {
+    emoji: '🔌',
+    title: '전력망 판매 — 전력거래소를 통한 전기 판매',
+    body: '생산하거나 저장한 전기를 전력거래소(KPX)의 실시간 시장에 판매합니다. 가격이 높을 때 집중 판매하는 방식으로, 개인이 직접 할 수 없었던 실시간 가격 대응이 VPP를 통해 가능해집니다.',
+    example: '💡 단가: SMP(계통한계가격) 기준 평균 130~160원/kWh. 피크 시간에는 200원 이상이 되기도 합니다.'
+  },
+  incentive: {
+    emoji: '💰',
+    title: '인센티브 지급 — 참여만 해도 추가 보상!',
+    body: 'VPP에 참여하면 전기 판매 수익 외에도 피크 감소 기여금, 주파수 조정 보상, 예비력 제공 보상, DR 보상 등 다양한 인센티브를 중복으로 받을 수 있습니다. 이것이 VPP의 핵심 매력입니다.',
+    example: '💡 보너스 구조: 기본 판매수익 + 피크 감소 kWh당 50~80원 + 주파수 조정 kWh당 30~60원 = 최대 kWh당 220원 이상 수령 가능!'
+  },
+  stability: {
+    emoji: '🛡️',
+    title: '전력망 안정화 — 사회에 기여하는 보람도 함께',
+    body: '전력망의 주파수(60Hz)와 전압이 흔들리면 정전이 발생합니다. VPP 참여자들이 실시간으로 출력을 조절해줌으로써 전력망을 안정시키는 역할을 합니다. 이 기여에 대해서도 별도 보상이 지급됩니다.',
+    example: '💡 의미: 내가 VPP에 참여하는 것은 단순히 돈을 버는 것을 넘어, 에너지 전환과 탄소중립에 직접 기여하는 행동입니다.'
+  }
+};
+
+function showTip(key) {
+  const t = tips[key];
+  if (!t) return;
+  document.getElementById('tipEmoji').textContent = t.emoji;
+  document.getElementById('tipTitle').textContent = t.title;
+  document.getElementById('tipBody').textContent = t.body;
+  document.getElementById('tipExample').innerHTML = t.example;
+  const panel = document.getElementById('tipPanel');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+</script>
+</body>
+</html>
