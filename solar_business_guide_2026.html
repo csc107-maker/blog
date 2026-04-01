@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 태양광 발전사업자 대응 전략 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #F59E0B;
+    --sun-light: #FDE68A;
+    --sun-dark: #D97706;
+    --sky: #0C4A6E;
+    --sky-mid: #075985;
+    --sky-light: #E0F2FE;
+    --earth: #1C1917;
+    --earth-mid: #292524;
+    --earth-light: #44403C;
+    --accent: #10B981;
+    --accent-light: #D1FAE5;
+    --warn: #EF4444;
+    --warn-light: #FEE2E2;
+    --white: #FAFAF9;
+    --text: #1C1917;
+    --text-muted: #57534E;
+    --border: #E7E5E4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.75;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--sky) 0%, var(--sky-mid) 40%, #1E3A5F 100%);
+    padding: 70px 24px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .sun-icon {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 24px rgba(245,158,11,0.6));
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 24px rgba(245,158,11,0.6)); }
+    50% { filter: drop-shadow(0 0 40px rgba(245,158,11,0.9)); }
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--sun);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+  .hero h1 em {
+    color: var(--sun);
+    font-style: normal;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
+    max-width: 560px;
+    margin: 0 auto 28px;
+  }
+  .hero-date {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+  }
+
+  /* ALERT BANNER */
+  .alert-banner {
+    background: linear-gradient(90deg, #FEF3C7, #FDE68A);
+    border-left: 5px solid var(--sun);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #92400E;
+  }
+  .alert-icon { font-size: 22px; flex-shrink: 0; }
+
+  /* LAYOUT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* SECTION */
+  section {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .section-num {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--sky);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    color: var(--sky);
+  }
+
+  /* FACT CARDS */
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .fact-card {
+    background: var(--sky-light);
+    border: 1px solid #BAE6FD;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .fact-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--sky);
+    line-height: 1;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .fact-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--sun), var(--sky));
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -27px; top: 4px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px var(--sun);
+    background: var(--sun);
+  }
+  .timeline-date {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sun-dark);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .timeline-content {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--text);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .timeline-content strong { color: var(--sky); }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  }
+  .compare-table thead {
+    background: var(--sky);
+    color: #fff;
+  }
+  .compare-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+  .compare-table td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: #F5F5F4; }
+  .badge-good {
+    display: inline-block;
+    background: var(--accent-light);
+    color: #065F46;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-warn {
+    display: inline-block;
+    background: var(--warn-light);
+    color: #991B1B;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-neutral {
+    display: inline-block;
+    background: #F3F4F6;
+    color: #374151;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* STRATEGY CARDS */
+  .strategy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .strategy-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .strategy-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .strategy-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .si-sun { background: #FEF3C7; }
+  .si-chart { background: #EDE9FE; }
+  .si-shield { background: #D1FAE5; }
+  .si-doc { background: #DBEAFE; }
+  .si-clock { background: #FCE7F3; }
+  .si-link { background: #FFF7ED; }
+  .strategy-body h4 {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--earth);
+    margin-bottom: 6px;
+  }
+  .strategy-body p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+  .strategy-body .tag {
+    display: inline-block;
+    background: var(--sky-light);
+    color: var(--sky-mid);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* INFO BOX */
+  .info-box {
+    background: linear-gradient(135deg, #F0FDF4, #DCFCE7);
+    border: 1px solid #86EFAC;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin: 24px 0;
+  }
+  .info-box h4 {
+    font-weight: 700;
+    color: #166534;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .info-box p, .info-box li {
+    font-size: 14px;
+    color: #14532D;
+    line-height: 1.7;
+  }
+  .info-box ul { padding-left: 18px; }
+  .info-box li { margin-bottom: 4px; }
+
+  .warn-box {
+    background: linear-gradient(135deg, #FFF7ED, #FFEDD5);
+    border: 1px solid #FED7AA;
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin: 24px 0;
+  }
+  .warn-box h4 {
+    font-weight: 700;
+    color: #9A3412;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .warn-box p, .warn-box li {
+    font-size: 14px;
+    color: #7C2D12;
+    line-height: 1.7;
+  }
+  .warn-box ul { padding-left: 18px; }
+  .warn-box li { margin-bottom: 4px; }
+
+  /* PRICE VISUAL */
+  .price-bar-section { margin: 24px 0; }
+  .price-bar-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .price-bar-track {
+    height: 16px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .price-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 1s ease;
+  }
+  .fill-china { background: linear-gradient(90deg, #F87171, #EF4444); }
+  .fill-domestic { background: linear-gradient(90deg, #34D399, #10B981); }
+  .fill-china-new { background: linear-gradient(90deg, #FBBF24, #F59E0B); }
+
+  /* CHECKLIST */
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1px;
+  }
+  .check-box.checked {
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+  }
+  .check-text strong { display: block; font-weight: 600; margin-bottom: 2px; }
+  .check-text span { color: var(--text-muted); font-size: 13px; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--earth);
+    padding: 40px 24px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+  }
+  .footer strong { color: rgba(255,255,255,0.85); display: block; margin-bottom: 8px; font-size: 15px; }
+
+  /* PROGRESS RING */
+  .readiness-section {
+    background: linear-gradient(135deg, var(--sky), var(--sky-mid));
+    border-radius: 16px;
+    padding: 32px;
+    color: #fff;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .ring-wrap {
+    position: relative;
+    width: 100px; height: 100px;
+    flex-shrink: 0;
+  }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 8; }
+  .ring-fill {
+    fill: none;
+    stroke: var(--sun);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 180;
+    transition: stroke-dashoffset 1.5s ease;
+  }
+  .ring-label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+  }
+  .ring-label span { font-size: 22px; font-weight: 900; color: var(--sun); display: block; line-height: 1; }
+  .ring-label small { font-size: 11px; color: rgba(255,255,255,0.7); }
+  .readiness-text h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .readiness-text p { font-size: 13.5px; opacity: 0.8; max-width: 500px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .fact-grid { grid-template-columns: 1fr 1fr; }
+    .readiness-section { flex-direction: column; text-align: center; }
+    .strategy-card { flex-direction: column; }
+    .strategy-icon { width: 40px; height: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="sun-icon">☀️</span>
+  <span class="hero-badge">2026 긴급 가이드</span>
+  <h1>중국 VAT 환급 폐지 시대,<br><em>태양광 발전사업자 생존 전략</em></h1>
+  <p class="hero-sub">모듈 가격 급등·국산화 인센티브 강화·사업비 상승까지 — 지금 당장 알아야 할 핵심 정보를 총정리합니다.</p>
+  <p class="hero-date">⚡ 2026년 4월 1일 기준 최신 정보 | 발전사업자 전용 가이드</p>
+</div>
+
+<!-- ALERT -->
+<div class="alert-banner">
+  <span class="alert-icon">⚠️</span>
+  <span>오늘(2026.4.1)부터 중국 태양광 제품 수출 부가가치세 환급이 <strong>전면 폐지</strong>됩니다. 모듈 가격은 이미 전년 대비 20% 이상 올랐으며 추가 상승이 예고되어 있습니다. 지금 바로 사업 계획을 점검하세요.</span>
+</div>
+
+<!-- SECTION 1: 정책 개요 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <h2 class="section-title">중국 부가세 환급 폐지 — 핵심 수치</h2>
+  </div>
+
+  <div class="fact-grid">
+    <div class="fact-card">
+      <span class="fact-num">249</span>
+      <span class="fact-label">환급 폐지 대상<br>품목 수</span>
+    </div>
+    <div class="fact-card">
+      <span class="fact-num">9%</span>
+      <span class="fact-label">기존 수출세 환급률<br>(2013년~2025년)</span>
+    </div>
+    <div class="fact-card">
+      <span class="fact-num">90%</span>
+      <span class="fact-label">글로벌 태양광 시장<br>중국 점유율</span>
+    </div>
+    <div class="fact-card">
+      <span class="fact-num">+20%</span>
+      <span class="fact-label">2026년 초 기준<br>모듈 가격 상승률</span>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top:8px;">
+    <div></div>
+    <h3 style="font-size:16px;font-weight:700;color:var(--text);">정책 시행 타임라인</h3>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2025년 9월</div>
+      <div class="timeline-content">태양광 제품 VAT 환급률 <strong>13% → 9%</strong>로 첫 인하</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2026년 1월 9일</div>
+      <div class="timeline-content">중국 재정부·국가세무총국 <strong>공동 성명 발표</strong> — 4월 1일부터 태양광 VAT 환급 전면 폐지 예고</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:var(--warn);box-shadow:0 0 0 2px var(--warn);"></div>
+      <div class="timeline-date">2026년 4월 1일 ← 오늘</div>
+      <div class="timeline-content">태양광 셀·모듈·웨이퍼·인버터 포함 <strong>249개 품목 환급 전면 폐지</strong> 시행. 배터리는 환급률 9%→6%로 인하</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot" style="background:#A78BFA;box-shadow:0 0 0 2px #A78BFA;"></div>
+      <div class="timeline-date">2027년 1월 1일</div>
+      <div class="timeline-content">배터리 제품 수출세 환급 <strong>완전 폐지</strong> 예정</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 2: 가격 격차 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <h2 class="section-title">국산 vs 중국산 — 가격 격차 변화</h2>
+  </div>
+
+  <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;">
+    국산 제품과 중국산 제품의 총사업비 기준 가격 차이는 기존 <strong>15~20%</strong>였습니다. 환급 폐지와 원자재 가격 상승이 겹치면서 이 격차가 빠르게 줄어들고 있습니다.
+  </p>
+
+  <div class="price-bar-section">
+    <div class="price-bar-label">
+      <span>🇨🇳 기존 중국산 (VAT 환급 포함)</span>
+      <span>기준 100</span>
+    </div>
+    <div class="price-bar-track">
+      <div class="price-bar-fill fill-china" style="width:63%"></div>
+    </div>
+
+    <div class="price-bar-label">
+      <span>🇰🇷 국산 모듈</span>
+      <span>기준 약 115~120</span>
+    </div>
+    <div class="price-bar-track">
+      <div class="price-bar-fill fill-domestic" style="width:75%"></div>
+    </div>
+
+    <div class="price-bar-label">
+      <span>🇨🇳 4월 이후 중국산 (환급 폐지 + 원자재 반영)</span>
+      <span>기준 약 109~115 (추정)</span>
+    </div>
+    <div class="price-bar-track">
+      <div class="price-bar-fill fill-china-new" style="width:72%"></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">※ 상대적 비교 개념의 시각화이며, 실제 시장 가격은 공급사·환율 등에 따라 다를 수 있습니다.</p>
+  </div>
+
+  <div class="warn-box">
+    <h4>⚠️ 단기 주의사항</h4>
+    <ul>
+      <li>4월 시행 전 중국 업체들이 <strong>재고 밀어내기</strong>를 할 수 있어 단기적으로 일시적 저가 물량이 유입될 수 있습니다.</li>
+      <li>은(銀) 가격이 1개월 내 48% 폭등하는 등 원자재 변동성이 매우 큰 상황입니다.</li>
+      <li>달러 환율 상승 리스크도 중국산 모듈 수입 가격에 추가 부담으로 작용합니다.</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <h4>✅ 중장기 전망</h4>
+    <ul>
+      <li>VAT 환급 폐지로 중국산 수출 원가가 <strong>약 9% 상승</strong> 효과 → 국산과 가격 격차 축소</li>
+      <li>고효율 N형·HJT 등 기술 차별화 모듈의 국산 경쟁력 회복 기대</li>
+      <li>한화솔루션 등 국내 기업 주가 이미 반응 — 시장도 국산 반사이익 기대 중</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 3: ODM 이슈 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <h2 class="section-title">한국 ODM 제조사 실태 — 브랜드만 한국?</h2>
+  </div>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>구분</th>
+        <th>생산 방식</th>
+        <th>VAT 폐지 영향</th>
+        <th>지원사업 적합성</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>한국 완전 국내생산</strong></td>
+        <td>셀~모듈 모두 국내</td>
+        <td><span class="badge-good">영향 없음</span></td>
+        <td><span class="badge-good">최적</span></td>
+      </tr>
+      <tr>
+        <td><strong>한국 브랜드 ODM</strong><br><small>(중국서 생산, 한국 브랜드)</small></td>
+        <td>중국 공장 위탁 생산</td>
+        <td><span class="badge-warn">원가 상승</span></td>
+        <td><span class="badge-neutral">검토 필요</span></td>
+      </tr>
+      <tr>
+        <td><strong>중국산 직수입</strong></td>
+        <td>중국 공장 직접 수입</td>
+        <td><span class="badge-warn">가격 인상</span></td>
+        <td><span class="badge-warn">저탄소 인증 어려움</span></td>
+      </tr>
+      <tr>
+        <td><strong>셀 수입+국내 조립</strong></td>
+        <td>셀 중국산, 조립 국내</td>
+        <td><span class="badge-warn">셀 원가 상승</span></td>
+        <td><span class="badge-neutral">부분 인정</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box" style="margin-top:24px;">
+    <h4>🔍 발전사업자가 확인해야 할 질문</h4>
+    <ul>
+      <li>계약 예정 모듈의 <strong>실제 생산지</strong>가 어디인지 공급사에 확인하셨나요?</li>
+      <li>한국 브랜드 표기가 있어도 실제 제조가 중국이라면 VAT 폐지 영향을 받습니다.</li>
+      <li>저탄소 모듈 인증서 보유 여부를 반드시 확인하세요.</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 4: 정부 정책 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <h2 class="section-title">정부 지원사업 — 국내 생산 배제 정책, 사실은?</h2>
+  </div>
+
+  <div class="info-box">
+    <h4>📋 팩트체크 결과</h4>
+    <p>현재 국내 생산이 아닌 제품을 정부 지원사업에서 <strong>완전 배제하는 공식 규정은 존재하지 않습니다.</strong> 그러나 아래와 같은 방식으로 실질적인 차별화가 진행 중입니다.</p>
+  </div>
+
+  <div class="strategy-list">
+    <div class="strategy-card">
+      <div class="strategy-icon si-doc">📄</div>
+      <div class="strategy-body">
+        <span class="tag">현행 정책</span>
+        <h4>저탄소 모듈 인센티브</h4>
+        <p>탄소배출량 670kg·CO₂-eq/kW 이하 인증 제품은 정부 지원 단가가 높습니다. 석탄 전력 기반 생산인 중국산은 이 기준 충족이 어렵습니다. 주택·건물 지원사업에서 실질적 차별화 효과를 내고 있습니다.</p>
+      </div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon si-chart">📊</div>
+      <div class="strategy-body">
+        <span class="tag">논의 중</span>
+        <h4>국산 모듈 사용 인센티브 강화</h4>
+        <p>에너지경제연구원 보고서에 따르면 인증제도·보조금 설계·공공조달 기준 등 간접 인센티브를 통한 국산 제품 사용 확대 정책이 검토 중입니다. 업계의 51.9%도 이를 가장 시급한 지원으로 꼽았습니다.</p>
+      </div>
+    </div>
+    <div class="strategy-card">
+      <div class="strategy-icon si-shield">🛡️</div>
+      <div class="strategy-body">
+        <span class="tag">해외 참고</span>
+        <h4>인도형 국산 의무화 모델 확산 가능성</h4>
+        <p>인도는 이미 2026년 6월 이후 정부 프로젝트에 국산 셀 의무화를 시행했습니다. 미국 IRA, 유럽 NZIA도 같은 방향입니다. 한국도 중장기적으로 유사한 제도 도입 가능성이 높습니다.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- SECTION 5: 사업자 대응 전략 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <h2 class="section-title">발전사업자 6대 핵심 대응 전략</h2>
+  </div>
+
+  <div class="readiness-section">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 100 100" width="100" height="100">
+        <circle class="ring-bg" cx="50" cy="50" r="40"/>
+        <circle class="ring-fill" cx="50" cy="50" r="40"/>
+      </svg>
+      <div class="ring-label">
+        <span>지금</span>
+        <small>대응 시작</small>
+      </div>
+    </div>
+    <div class="readiness-text">
+      <h3>🚀 지금이 가장 빠른 대응 타이밍입니다</h3>
+      <p>모듈 가격이 추가 상승하기 전 계약을 확정하고, 변화한 정책 환경에 맞게 사업 계획을 재수립하는 것이 초기 비용 부담을 최소화하는 핵심입니다.</p>
+    </div>
+  </div>
+
+  <div class="strategy-list">
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-clock">⏱️</div>
+      <div class="strategy-body">
+        <span class="tag">전략 1 — 즉시</span>
+        <h4>모듈 계약 조기 확정</h4>
+        <p>4월 이후 환급 폐지분이 가격에 반영되기 시작하면 추가 인상이 불가피합니다. 사업 추진이 결정된 경우라면 공급 계약을 지금 확정하는 것이 유리합니다. 단, 재고 밀어내기 물량의 경우 품질을 철저히 검증하세요.</p>
+      </div>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-shield">🛡️</div>
+      <div class="strategy-body">
+        <span class="tag">전략 2 — 모듈 선택</span>
+        <h4>국산·저탄소 모듈 전면 재검토</h4>
+        <p>중국산과 국산의 가격 격차가 좁혀지는 지금, 단순 단가 비교를 넘어 ① 저탄소 인증 여부 ② 25년 장기 A/S 보장 ③ 지원사업 보조금 혜택 ④ 환율 리스크 ⑤ 공급망 안정성을 종합한 총소유비용(TCO)으로 비교하세요.</p>
+      </div>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-chart">📈</div>
+      <div class="strategy-body">
+        <span class="tag">전략 3 — 사업성</span>
+        <h4>수익성 분석 전면 재수립</h4>
+        <p>기존에 분석한 사업비 예산을 그대로 사용하지 마세요. 모듈 가격 20% 이상 인상분을 반영해 새로 계산하되, 상승하는 REC 가격도 함께 반영해야 정확한 사업성이 나옵니다. 100kW 기준 월 약 200만 원 수준의 수익 기조는 유지될 전망입니다.</p>
+      </div>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-doc">📑</div>
+      <div class="strategy-body">
+        <span class="tag">전략 4 — 인허가</span>
+        <h4>인허가·계통 연계 선제적 처리</h4>
+        <p>이격거리 규제 통일을 위한 신재생에너지법 개정안 마련이 2026년 연내 예정되어 있습니다. 규제 완화 시행 전이라도 현행 기준으로 먼저 인허가를 받아두면 사업 타임라인을 앞당길 수 있습니다. 한국전력 계통 연계 신청도 조기에 처리하세요.</p>
+      </div>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-link">🔗</div>
+      <div class="strategy-body">
+        <span class="tag">전략 5 — 공급망</span>
+        <h4>분할 발주·장기 공급 계약</h4>
+        <p>원자재 가격 변동성이 큰 지금은 단일 공급사에 100% 의존하는 것이 리스크입니다. 물량을 2~3개 공급사로 분산하거나, 주요 공급사와 6개월~1년 단위 고정 가격 계약을 검토하세요. 환율 헤징(선물환 계약)도 고려 대상입니다.</p>
+      </div>
+    </div>
+
+    <div class="strategy-card">
+      <div class="strategy-icon si-sun">🌟</div>
+      <div class="strategy-body">
+        <span class="tag">전략 6 — 기회</span>
+        <h4>정부 지원 사업 적극 활용</h4>
+        <p>2026년 정부의 재생에너지 100GW 목표 아래 다양한 지원 사업이 확대 중입니다. 영농형 태양광 규제 완화, 햇빛소득마을 사업(연내 500곳 선정), 배전망 ESS 사업(1,200억 규모) 등 새로운 수익 모델을 적극 검토하세요.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- SECTION 6: 체크리스트 -->
+<section>
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <h2 class="section-title">발전사업 준비 체크리스트</h2>
+  </div>
+
+  <ul class="checklist" id="checklist">
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>모듈 생산지 확인</strong>
+        <span>계약 예정 모듈의 실제 제조 공장이 한국인지 중국 ODM인지 공급사에 문서로 확인</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>저탄소 인증 여부 확인</strong>
+        <span>한국에너지공단 저탄소 태양광모듈 인증서(탄소배출량 670kg·CO₂-eq/kW 이하) 보유 여부</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>사업비 재산정</strong>
+        <span>모듈 가격 20% 이상 상승분, 환율 리스크, 기타 자재비 인상분을 반영한 신규 견적 수령</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>수익성 재분석</strong>
+        <span>상승한 사업비와 현재 SMP·REC 가격을 반영한 수익률 재계산 (목표 IRR 7~9% 확인)</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>금융 조달 계획 업데이트</strong>
+        <span>상승한 사업비에 맞춰 대출 한도·이자 비용·자기자본 비율 재검토</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>인허가 및 계통 연계 현황 점검</strong>
+        <span>발전사업 허가, 개발행위 허가, 한국전력 계통 연계 신청 현황 확인</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>정부 지원사업 신청 가능 여부 확인</strong>
+        <span>신재생에너지 보급사업, 융복합지원사업, RPS 입찰 일정 확인 및 적합 여부 검토</span>
+      </div>
+    </li>
+    <li>
+      <div class="check-box" onclick="toggleCheck(this)"></div>
+      <div class="check-text">
+        <strong>공급 계약 조기 체결</strong>
+        <span>추가 가격 인상 전 주요 기자재(모듈·인버터·전력기자재) 공급 계약 확정</span>
+      </div>
+    </li>
+  </ul>
+</div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <strong>2026 태양광 발전사업자 대응 전략 가이드</strong>
+    <p>이 가이드는 공개된 언론 보도(전기신문, 경향신문, 이투데이, 글로벌이코노믹 등), KOTRA 베이징무역관 자료, 에너지경제연구원 보고서 등을 바탕으로 작성되었습니다.</p>
+    <p style="margin-top:8px;">정책 세부사항은 산업통상자원부·한국에너지공단에 직접 확인하시기 바랍니다.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    el.textContent = el.classList.contains('checked') ? '✓' : '';
+  }
+
+  // Animate ring on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const ring = document.querySelector('.ring-fill');
+      if (ring) ring.style.strokeDashoffset = '62.8'; // ~75% filled
+    }, 400);
+  });
+</script>
+</body>
+</html>
