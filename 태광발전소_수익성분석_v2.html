@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태광발전소 수익성 분석 v2 — 4.2h · Project IRR</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --bg:#f0f2f7;
+  --white:#fff;
+  --navy:#0f1c3f;
+  --navy2:#162350;
+  --blue:#2151d4;
+  --blue-lt:#e8edfc;
+  --teal:#059669;
+  --teal-lt:#d1fae5;
+  --amber:#d97706;
+  --amber-lt:#fef3c7;
+  --red:#dc2626;
+  --red-lt:#fee2e2;
+  --slate:#475569;
+  --border:#e2e8f0;
+  --shadow:0 1px 6px rgba(0,0,0,.07);
+  --shadow-md:0 4px 18px rgba(0,0,0,.10);
+  --ff:'Pretendard',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:var(--ff);font-size:14px;color:var(--navy);line-height:1.75;}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(140deg,#0a1428 0%,#0f1c3f 55%,#152a5c 100%);padding:56px 40px 48px;overflow:hidden;position:relative;}
+.hero::before{content:'';position:absolute;top:-100px;right:-60px;width:480px;height:480px;background:radial-gradient(circle,rgba(33,81,212,.18),transparent 68%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-80px;left:20%;width:320px;height:320px;background:radial-gradient(circle,rgba(5,150,105,.10),transparent 70%);pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.hero-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:28px;}
+.hero-left{flex:1;min-width:280px;}
+.version-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(33,81,212,.18);border:1px solid rgba(33,81,212,.4);color:#93b8ff;font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:18px;}
+.update-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 6px #4ade80;}
+.hero h1{font-size:clamp(24px,3.5vw,44px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;}
+.hero h1 em{color:#5b9bff;font-style:normal;}
+.hero-desc{color:#94a3b8;font-size:14px;max-width:620px;line-height:1.7;}
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+.chip{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 16px;}
+.chip-lbl{font-size:10px;color:#64748b;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.chip-val{font-size:15px;font-weight:700;color:#fff;}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-width:280px;}
+.irr-card{border-radius:14px;padding:18px 20px;text-align:center;}
+.irr-card.blue-c{background:linear-gradient(135deg,#1e40af,#2151d4);border:1px solid #3b68f5;}
+.irr-card.teal-c{background:linear-gradient(135deg,#065f46,#059669);border:1px solid #10b981;}
+.irr-card.span2{grid-column:span 2;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);}
+.irr-lbl{font-size:11px;color:rgba(255,255,255,.65);margin-bottom:4px;}
+.irr-val{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;}
+.irr-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;}
+.change-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);color:#4ade80;font-size:11px;font-family:var(--mono);padding:3px 10px;border-radius:12px;margin-top:6px;}
+
+/* ── LAYOUT ── */
+.main{max-width:1100px;margin:0 auto;padding:36px 24px 64px;}
+.sec{margin-bottom:44px;}
+.sec-label{font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.sec-title{font-size:20px;font-weight:800;color:var(--navy);margin-bottom:20px;}
+
+/* ── UPGRADE BANNER ── */
+.upgrade-bar{background:linear-gradient(135deg,#fef3c7,#fde68a);border:1px solid #f59e0b;border-radius:12px;padding:16px 22px;margin-bottom:32px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;}
+.upg-item{display:flex;flex-direction:column;gap:2px;}
+.upg-lbl{font-size:10px;font-family:var(--mono);color:#92400e;letter-spacing:1px;}
+.upg-val{font-size:14px;font-weight:700;color:#78350f;}
+.upg-arrow{font-size:18px;color:#d97706;margin:0 4px;}
+
+/* ── METRIC CARDS ── */
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;}
+.mc{background:var(--white);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow);border-top:3px solid transparent;}
+.mc.blue-t{border-top-color:var(--blue);}
+.mc.teal-t{border-top-color:var(--teal);}
+.mc.amber-t{border-top-color:var(--amber);}
+.mc.red-t{border-top-color:var(--red);}
+.mc-lbl{font-size:11px;color:var(--slate);margin-bottom:6px;}
+.mc-val{font-size:21px;font-weight:800;color:var(--navy);line-height:1;}
+.mc-sub{font-size:11px;color:#94a3b8;margin-top:5px;}
+.mc-diff{display:inline-block;font-size:11px;font-family:var(--mono);padding:2px 8px;border-radius:8px;margin-top:6px;}
+.mc-diff.up{background:#d1fae5;color:#065f46;}
+.mc-diff.dn{background:#fee2e2;color:#991b1b;}
+
+/* ── SCENARIO CARDS ── */
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;}
+.sc-card{background:var(--white);border-radius:16px;box-shadow:var(--shadow-md);overflow:hidden;}
+.sc-hdr{padding:20px 24px 16px;}
+.sc-hdr.blue-h{background:linear-gradient(135deg,#1e3a8a,#2151d4);}
+.sc-hdr.teal-h{background:linear-gradient(135deg,#064e3b,#059669);}
+.sc-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:3px;}
+.sc-sub{font-size:12px;color:rgba(255,255,255,.65);}
+.sc-irr{font-size:32px;font-weight:900;color:#fff;margin-top:10px;font-family:var(--mono);}
+.sc-irr-lbl{font-size:11px;color:rgba(255,255,255,.55);}
+.sc-body{padding:20px 24px;}
+.sc-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.sc-row:last-child{border-bottom:none;}
+.sc-lbl{color:var(--slate);}
+.sc-val{font-weight:700;color:var(--navy);}
+.sc-val.blue{color:var(--blue);}
+.sc-val.teal{color:var(--teal);}
+.sc-val.red{color:var(--red);}
+.sc-val.amber{color:var(--amber);}
+
+/* ── CHARTS ── */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px;}
+.cbox{background:var(--white);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);}
+.cbox.wide{grid-column:span 2;}
+.ct{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.cs{font-size:11px;color:var(--slate);margin-bottom:12px;}
+.cleg{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--slate);margin-bottom:10px;}
+.cleg span{display:flex;align-items:center;gap:5px;}
+.dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+
+/* ── TABLES ── */
+.tbl-wrap{background:var(--white);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px;}
+.tbl-head{padding:16px 22px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.tbl-head h3{font-size:15px;font-weight:700;}
+.tbl-legend{display:flex;gap:14px;font-size:11px;color:var(--slate);}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead tr{background:#f8fafc;}
+th{padding:9px 11px;text-align:right;font-weight:600;font-size:11px;color:var(--slate);border-bottom:1px solid var(--border);white-space:nowrap;}
+th:first-child,th:nth-child(2){text-align:left;}
+td{padding:8px 11px;text-align:right;border-bottom:1px solid #f1f5f9;color:#334155;}
+td:first-child{font-weight:700;color:var(--navy);text-align:left;}
+td:nth-child(2){font-size:11px;color:#94a3b8;text-align:left;}
+tr:hover td{background:#fafbff;}
+tr.grace{background:#fffbeb;}
+tr.grace td{color:#92400e;}
+tr.total td{background:#eff6ff;font-weight:700;color:var(--navy);border-top:2px solid var(--blue);}
+.pos{color:var(--teal);font-weight:700;}
+.neg{color:var(--red);font-weight:700;}
+
+/* ── MONTHLY ── */
+.month-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px;}
+.mbox{background:var(--white);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);}
+.mbox-title{font-size:13px;font-weight:700;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.mrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f1f5f9;font-size:12.5px;}
+.mrow:last-child{border-bottom:none;font-weight:700;}
+.mlbl{color:var(--slate);}
+.mval{font-weight:600;}
+
+/* ── SUMMARY ── */
+.sum-wrap{background:var(--navy);border-radius:16px;padding:32px 36px;margin-bottom:32px;}
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.sg{padding:0 24px;border-right:1px solid rgba(255,255,255,.08);}
+.sg:first-child{padding-left:0;}
+.sg:last-child{border-right:none;}
+.sg-tag{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:#475569;text-transform:uppercase;margin-bottom:16px;}
+.sg-item{margin-bottom:14px;}
+.sg-lbl{font-size:11px;color:#64748b;margin-bottom:3px;}
+.sg-val{font-size:17px;font-weight:700;color:#fff;}
+.sg-val.bv{color:#60a5fa;}
+.sg-val.tv{color:#34d399;}
+.sg-val.av{color:#fbbf24;}
+.sg-val.rv{color:#f87171;}
+
+/* ── ADVICE ── */
+.adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;}
+.adv{background:var(--white);border-radius:12px;padding:20px;box-shadow:var(--shadow);border-left:4px solid;}
+.adv.bl{border-color:var(--blue);}
+.adv.tl{border-color:var(--teal);}
+.adv.al{border-color:var(--amber);}
+.adv.rl{border-color:var(--red);}
+.adv-t{font-weight:700;font-size:13px;margin-bottom:8px;}
+.adv-b{font-size:12.5px;color:#475569;line-height:1.65;}
+
+/* ── COMPARISON TABLE ── */
+.diff-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:24px;}
+.diff-table th{background:var(--navy);color:#94a3b8;padding:10px 14px;font-size:11px;font-weight:600;font-family:var(--mono);letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.05);}
+.diff-table td{padding:10px 14px;border-bottom:1px solid var(--border);}
+.diff-table tr:hover td{background:#f8fafc;}
+.diff-table .old{color:#94a3b8;text-decoration:line-through;}
+.diff-table .new{color:var(--blue);font-weight:700;}
+.diff-table .arrow{color:#d1d5db;}
+
+.footer{text-align:center;padding:28px;font-family:var(--mono);font-size:11px;color:var(--slate);border-top:1px solid var(--border);background:var(--white);}
+@media(max-width:760px){
+  .hero{padding:36px 18px 30px;}
+  .metric-row,.sc-grid,.chart-grid,.month-grid,.adv-grid,.sum-grid{grid-template-columns:1fr;}
+  .cbox.wide{grid-column:auto;}
+  .sg{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:0 0 14px;margin-bottom:14px;}
+  .hero-right{grid-template-columns:1fr 1fr;}
+  .irr-card.span2{grid-column:span 2;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-row">
+      <div class="hero-left">
+        <div class="version-badge"><span class="update-dot"></span> V2 업데이트 · 2026.04.03</div>
+        <h1>태광발전소 <em>수익성 분석</em><br>시나리오 A / B 비교</h1>
+        <p class="hero-desc">발전시간 4.2h/일 적용 · Project IRR(총투자비 기준) 전환 · 감가상각·이자비용·법인세 반영 재무회계 기준</p>
+        <div class="hero-chips">
+          <div class="chip"><div class="chip-lbl">설비용량</div><div class="chip-val">100 kW</div></div>
+          <div class="chip"><div class="chip-lbl">총 투자비</div><div class="chip-val">140 백만원</div></div>
+          <div class="chip"><div class="chip-lbl">발전시간</div><div class="chip-val">4.2 h/일</div></div>
+          <div class="chip"><div class="chip-lbl">연간발전량</div><div class="chip-val">153,300 kWh</div></div>
+          <div class="chip"><div class="chip-lbl">SMP+REC</div><div class="chip-val">192.21 원/kWh</div></div>
+          <div class="chip"><div class="chip-lbl">금리 / 기간</div><div class="chip-val">4.7% / 20년</div></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="irr-card blue-c">
+          <div class="irr-lbl">A안 Project IRR</div>
+          <div class="irr-val">7.28%</div>
+          <div class="irr-sub">원금균등</div>
+        </div>
+        <div class="irr-card teal-c">
+          <div class="irr-lbl">B안 Project IRR</div>
+          <div class="irr-val">6.63%</div>
+          <div class="irr-sub">원리금균등</div>
+        </div>
+        <div class="irr-card span2">
+          <div class="irr-lbl" style="margin-bottom:8px">v1 대비 순현금흐름 개선 (발전시간 3.8h → 4.2h)</div>
+          <div style="display:flex;justify-content:space-around;">
+            <div style="text-align:center"><div style="font-size:11px;color:#64748b">A안 원금균등</div><div style="font-size:18px;font-weight:700;color:#4ade80">+28.8백만원</div><div style="font-size:10px;color:#64748b">77.0 → 105.8</div></div>
+            <div style="text-align:center"><div style="font-size:11px;color:#64748b">B안 원리금균등</div><div style="font-size:18px;font-weight:700;color:#4ade80">+32.1백만원</div><div style="font-size:10px;color:#64748b">62.8 → 94.9</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- v1 → v2 변경 사항 -->
+<div class="sec">
+  <div class="sec-label">WHAT CHANGED</div>
+  <div class="sec-title">v1 → v2 주요 변경 사항</div>
+  <div class="upgrade-bar">
+    <div class="upg-item"><div class="upg-lbl">변경 ①</div><div class="upg-val">발전시간</div></div>
+    <span style="font-size:22px;color:#d97706">📡</span>
+    <div class="upg-item"><div class="upg-lbl">이전</div><div class="upg-val" style="color:#9ca3af;text-decoration:line-through">3.8h/일 = 138,700 kWh/년</div></div>
+    <span class="upg-arrow">→</span>
+    <div class="upg-item"><div class="upg-lbl">변경 후</div><div class="upg-val" style="color:#065f46">4.2h/일 = 153,300 kWh/년 (+10.5%)</div></div>
+    <div style="width:2px;height:36px;background:#f59e0b;opacity:.4;margin:0 8px;"></div>
+    <div class="upg-item"><div class="upg-lbl">변경 ②</div><div class="upg-val">수익률 지표</div></div>
+    <span style="font-size:22px;color:#d97706">📊</span>
+    <div class="upg-item"><div class="upg-lbl">이전</div><div class="upg-val" style="color:#9ca3af;text-decoration:line-through">Equity IRR (자기자본 기준) → 수렴불가</div></div>
+    <span class="upg-arrow">→</span>
+    <div class="upg-item"><div class="upg-lbl">변경 후</div><div class="upg-val" style="color:#065f46">Project IRR (총투자비 140M 기준) → 7.28% / 6.63%</div></div>
+  </div>
+
+  <table class="diff-table">
+    <thead><tr><th>항목</th><th>v1 (3.8h 기준)</th><th></th><th>v2 (4.2h · Project IRR)</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td>연간 발전량</td><td class="old">138,700 kWh</td><td class="arrow">→</td><td class="new">153,300 kWh</td><td style="color:var(--teal);font-weight:700">+14,600 kWh (+10.5%)</td></tr>
+      <tr><td>20년 총 매출</td><td class="old">342.6 백만원</td><td class="arrow">→</td><td class="new">359.7 백만원</td><td style="color:var(--teal);font-weight:700">+17.1 백만원</td></tr>
+      <tr><td>A안 20년 순현금 (원금균등)</td><td class="old">77.0 백만원</td><td class="arrow">→</td><td class="new">105.8 백만원</td><td style="color:var(--teal);font-weight:700">+28.8 백만원 (+37.4%)</td></tr>
+      <tr><td>B안 20년 순현금 (원리금균등)</td><td class="old">62.8 백만원</td><td class="arrow">→</td><td class="new">94.9 백만원</td><td style="color:var(--teal);font-weight:700">+32.1 백만원 (+51.1%)</td></tr>
+      <tr><td>수익률 지표 (A안)</td><td class="old">Equity IRR = 수렴불가</td><td class="arrow">→</td><td class="new">Project IRR = 7.28%</td><td style="color:var(--teal);font-weight:700">계산 가능 ✓</td></tr>
+      <tr><td>수익률 지표 (B안)</td><td class="old">Equity IRR = 수렴불가</td><td class="arrow">→</td><td class="new">Project IRR = 6.63%</td><td style="color:var(--teal);font-weight:700">계산 가능 ✓</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 핵심 지표 -->
+<div class="sec">
+  <div class="sec-label">KEY METRICS</div>
+  <div class="sec-title">20년 핵심 지표 요약</div>
+  <div class="metric-row">
+    <div class="mc blue-t">
+      <div class="mc-lbl">20년 총 매출액 (공통)</div>
+      <div class="mc-val">359.7<small style="font-size:14px;font-weight:400"> 백만원</small></div>
+      <div class="mc-sub">153,300kWh × 192.21원 × 감소 효율 누적</div>
+      <span class="mc-diff up">v1 대비 +17.1백만원</span>
+    </div>
+    <div class="mc teal-t">
+      <div class="mc-lbl">A안 20년 순현금흐름</div>
+      <div class="mc-val" style="color:var(--teal)">105.8<small style="font-size:14px;font-weight:400"> 백만원</small></div>
+      <div class="mc-sub">원금균등 상환 누적 (Project IRR 7.28%)</div>
+      <span class="mc-diff up">v1(77.0) 대비 +28.8백만원</span>
+    </div>
+    <div class="mc amber-t">
+      <div class="mc-lbl">B안 20년 순현금흐름</div>
+      <div class="mc-val" style="color:var(--amber)">94.9<small style="font-size:14px;font-weight:400"> 백만원</small></div>
+      <div class="mc-sub">원리금균등 상환 누적 (Project IRR 6.63%)</div>
+      <span class="mc-diff up">v1(62.8) 대비 +32.1백만원</span>
+    </div>
+    <div class="mc red-t">
+      <div class="mc-lbl">A-B 우위 (순현금 차이)</div>
+      <div class="mc-val" style="color:var(--blue)">+10.9<small style="font-size:14px;font-weight:400"> 백만원</small></div>
+      <div class="mc-sub">원금균등이 원리금균등 대비 유리</div>
+      <span class="mc-diff up">이자 절감 9.1백만원 포함</span>
+    </div>
+  </div>
+</div>
+
+<!-- 시나리오 카드 -->
+<div class="sec">
+  <div class="sec-label">SCENARIO COMPARISON</div>
+  <div class="sec-title">A안 vs B안 핵심 수치 비교</div>
+  <div class="sc-grid">
+    <div class="sc-card">
+      <div class="sc-hdr blue-h">
+        <div class="sc-name">🅰 원금균등 (A안) — 추천</div>
+        <div class="sc-sub">월 원금 614,035원 고정 · 납입총액 점감</div>
+        <div class="sc-irr">7.28%</div>
+        <div class="sc-irr-lbl">Project IRR (총투자비 140M 기준)</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-row"><span class="sc-lbl">대출 원금</span><span class="sc-val">140 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">월 원금 (고정)</span><span class="sc-val blue">614,035원</span></div>
+        <div class="sc-row"><span class="sc-lbl">거치 1년차 월 이자</span><span class="sc-val">548,333원</span></div>
+        <div class="sc-row"><span class="sc-lbl">상환 첫달 총 납입</span><span class="sc-val amber">1,162,368원 ⚠</span></div>
+        <div class="sc-row"><span class="sc-lbl">상환 마지막달 납입</span><span class="sc-val teal">~616,000원 ↓</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 총 이자 비용</span><span class="sc-val blue">69.4 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 총 원금상환</span><span class="sc-val">140.0 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">법인세 (5년 면제 후 10%)</span><span class="sc-val">8.54 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 순현금흐름 합계</span><span class="sc-val teal">105.8 백만원 ✓</span></div>
+        <div class="sc-row"><span class="sc-lbl">Project IRR</span><span class="sc-val teal">7.28%</span></div>
+      </div>
+    </div>
+    <div class="sc-card">
+      <div class="sc-hdr teal-h">
+        <div class="sc-name">🅱 원리금균등 (B안)</div>
+        <div class="sc-sub">월 납입액 929,600원 완전 고정 · 원금 비중 점증</div>
+        <div class="sc-irr">6.63%</div>
+        <div class="sc-irr-lbl">Project IRR (총투자비 140M 기준)</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-row"><span class="sc-lbl">대출 원금</span><span class="sc-val">140 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">월 납입액 (완전 고정)</span><span class="sc-val blue">929,600원</span></div>
+        <div class="sc-row"><span class="sc-lbl">거치 1년차 월 이자</span><span class="sc-val">548,333원</span></div>
+        <div class="sc-row"><span class="sc-lbl">상환 첫달 원금 비중</span><span class="sc-val teal">381,266원 (41%)</span></div>
+        <div class="sc-row"><span class="sc-lbl">매월 동일 납입 (고정)</span><span class="sc-val teal">929,600원</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 총 이자 비용</span><span class="sc-val amber">78.5 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 총 원금상환</span><span class="sc-val">140.0 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">법인세 (5년 면제 후 10%)</span><span class="sc-val">5.28 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">20년 순현금흐름 합계</span><span class="sc-val amber">94.9 백만원</span></div>
+        <div class="sc-row"><span class="sc-lbl">Project IRR</span><span class="sc-val amber">6.63%</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 차트 -->
+<div class="sec">
+  <div class="sec-label">CHARTS</div>
+  <div class="sec-title">20년 현금흐름 시각화</div>
+  <div class="chart-grid">
+
+    <div class="cbox wide">
+      <div class="ct">누적 순현금흐름 비교 (단위: 백만원)</div>
+      <div class="cs">A안(원금균등)이 전 구간 우위 — B안은 17년차부터 역전 불가 구간 진입</div>
+      <div class="cleg">
+        <span><span class="dot" style="background:#2151d4"></span>A안 원금균등 (105.8백만원)</span>
+        <span><span class="dot" style="background:#059669"></span>B안 원리금균등 (94.9백만원)</span>
+        <span><span class="dot" style="background:#f59e0b;opacity:.5;border:1px dashed #f59e0b"></span>손익분기</span>
+      </div>
+      <div style="position:relative;height:280px"><canvas id="cumChart"></canvas></div>
+    </div>
+
+    <div class="cbox">
+      <div class="ct">연도별 순현금흐름 (백만원)</div>
+      <div class="cs">B안 17년차부터 마이너스 전환</div>
+      <div class="cleg">
+        <span><span class="dot" style="background:#3b72f6"></span>A안</span>
+        <span><span class="dot" style="background:#10b981"></span>B안</span>
+      </div>
+      <div style="position:relative;height:250px"><canvas id="annualChart"></canvas></div>
+    </div>
+
+    <div class="cbox">
+      <div class="ct">연도별 이자 비용 비교 (백만원)</div>
+      <div class="cs">A안 이자 감소 속도가 B안보다 빠름</div>
+      <div class="cleg">
+        <span><span class="dot" style="background:#3b72f6"></span>A안 이자</span>
+        <span><span class="dot" style="background:#f97316"></span>B안 이자</span>
+      </div>
+      <div style="position:relative;height:250px"><canvas id="intChart"></canvas></div>
+    </div>
+
+    <div class="cbox">
+      <div class="ct">연도별 발전량 추이 (kWh)</div>
+      <div class="cs">2년차 90% 이후 매년 5% 감소</div>
+      <div class="cleg">
+        <span><span class="dot" style="background:#8b5cf6"></span>연간 발전량</span>
+      </div>
+      <div style="position:relative;height:250px"><canvas id="kwhChart"></canvas></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 연도별 테이블 A안 -->
+<div class="sec">
+  <div class="sec-label">ANNUAL DETAIL — A안</div>
+  <div class="sec-title">원금균등 연도별 손익·현금흐름 (단위: 백만원)</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head">
+      <h3 style="color:var(--blue)">🅰 원금균등 — 20년 순현금 합계 105.8백만원 · Project IRR 7.28%</h3>
+      <div class="tbl-legend"><span><span class="dot" style="background:#fffbeb;border:1px solid #f59e0b"></span>거치기간</span></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr><th>년차</th><th>비고</th><th>발전량(kWh)</th><th>매출액</th><th>운영비</th><th>감가상각</th><th>이자비용</th><th>법인세</th><th>세후이익</th><th>원금상환</th><th style="color:var(--blue)">순현금흐름</th><th style="color:var(--blue)">누적</th></tr>
+      </thead>
+      <tbody id="tblA"></tbody>
+    </table>
+    </div>
+  </div>
+
+<!-- 연도별 테이블 B안 -->
+  <div class="sec-label" style="margin-top:28px">ANNUAL DETAIL — B안</div>
+  <div class="sec-title" style="margin-top:8px">원리금균등 연도별 손익·현금흐름 (단위: 백만원)</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head">
+      <h3 style="color:var(--teal)">🅱 원리금균등 — 20년 순현금 합계 94.9백만원 · Project IRR 6.63%</h3>
+      <div class="tbl-legend"><span><span class="dot" style="background:#fffbeb;border:1px solid #f59e0b"></span>거치기간</span></div>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr><th>년차</th><th>비고</th><th>발전량(kWh)</th><th>매출액</th><th>운영비</th><th>감가상각</th><th>이자비용</th><th>법인세</th><th>세후이익</th><th>원금상환</th><th style="color:var(--teal)">순현금흐름</th><th style="color:var(--teal)">누적</th></tr>
+      </thead>
+      <tbody id="tblB"></tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- 월별 납입 구조 -->
+<div class="sec">
+  <div class="sec-label">MONTHLY PAYMENT</div>
+  <div class="sec-title">월별 납입 구조 비교</div>
+  <div class="month-grid">
+    <div class="mbox">
+      <div class="mbox-title" style="color:var(--blue)">🅰 원금균등 — 거치 1년차 (이자만)</div>
+      <div class="mrow"><span class="mlbl">월 이자 (고정)</span><span class="mval">548,333원</span></div>
+      <div class="mrow"><span class="mlbl">월 원금</span><span class="mval">0원</span></div>
+      <div class="mrow"><span class="mlbl">월 납입 합계</span><span class="mval" style="color:var(--blue)">548,333원</span></div>
+    </div>
+    <div class="mbox">
+      <div class="mbox-title" style="color:var(--teal)">🅱 원리금균등 — 거치 1년차 (이자만)</div>
+      <div class="mrow"><span class="mlbl">월 이자 (고정)</span><span class="mval">548,333원</span></div>
+      <div class="mrow"><span class="mlbl">월 원금</span><span class="mval">0원</span></div>
+      <div class="mrow"><span class="mlbl">월 납입 합계</span><span class="mval" style="color:var(--teal)">548,333원</span></div>
+    </div>
+    <div class="mbox">
+      <div class="mbox-title" style="color:var(--blue)">🅰 원금균등 — 상환 개시 후</div>
+      <div class="mrow"><span class="mlbl">월 원금 (고정)</span><span class="mval">614,035원</span></div>
+      <div class="mrow"><span class="mlbl">첫달 이자</span><span class="mval">548,333원</span></div>
+      <div class="mrow"><span class="mlbl">첫달 총 납입</span><span class="mval" style="color:var(--amber)">1,162,368원 ⚠</span></div>
+      <div class="mrow"><span class="mlbl">마지막달 총 납입</span><span class="mval" style="color:var(--teal)">약 616,000원 ↓</span></div>
+    </div>
+    <div class="mbox">
+      <div class="mbox-title" style="color:var(--teal)">🅱 원리금균등 — 상환 개시 후</div>
+      <div class="mrow"><span class="mlbl">월 납입액 (완전 고정)</span><span class="mval">929,600원</span></div>
+      <div class="mrow"><span class="mlbl">첫달 이자 비중</span><span class="mval">548,333원 (59%)</span></div>
+      <div class="mrow"><span class="mlbl">첫달 원금 비중</span><span class="mval">381,266원 (41%)</span></div>
+      <div class="mrow"><span class="mlbl">매월 동일 납입</span><span class="mval" style="color:var(--teal)">929,600원 (고정)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 종합 요약 -->
+<div class="sec">
+  <div class="sec-label">SUMMARY</div>
+  <div class="sec-title">투자 종합 요약</div>
+  <div class="sum-wrap" style="margin-bottom:24px">
+    <div class="sum-grid">
+      <div class="sg">
+        <div class="sg-tag">수익성 핵심</div>
+        <div class="sg-item"><div class="sg-lbl">A안 Project IRR</div><div class="sg-val bv">7.28%</div></div>
+        <div class="sg-item"><div class="sg-lbl">B안 Project IRR</div><div class="sg-val tv">6.63%</div></div>
+        <div class="sg-item"><div class="sg-lbl">IRR 차이 (A 우위)</div><div class="sg-val av">+0.65%p</div></div>
+      </div>
+      <div class="sg">
+        <div class="sg-tag">현금흐름 20년</div>
+        <div class="sg-item"><div class="sg-lbl">A안 순현금 (원금균등)</div><div class="sg-val bv">105.8 백만원</div></div>
+        <div class="sg-item"><div class="sg-lbl">B안 순현금 (원리금균등)</div><div class="sg-val tv">94.9 백만원</div></div>
+        <div class="sg-item"><div class="sg-lbl">이자 절감 (A-B)</div><div class="sg-val av">9.1 백만원</div></div>
+      </div>
+      <div class="sg">
+        <div class="sg-tag">발전소 조건</div>
+        <div class="sg-item"><div class="sg-lbl">발전시간 (v2 기준)</div><div class="sg-val">4.2h/일 × 365일</div></div>
+        <div class="sg-item"><div class="sg-lbl">연간 발전량 (1년차)</div><div class="sg-val">153,300 kWh</div></div>
+        <div class="sg-item"><div class="sg-lbl">발전량 감소 구조</div><div class="sg-val rv">2년차 90% → 매년 5%↓</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="adv-grid">
+    <div class="adv bl">
+      <div class="adv-t">✅ A안 선택 시 (원금균등 — Project IRR 7.28%)</div>
+      <div class="adv-b">초기 납입이 월 최대 116만원으로 다소 높지만, 시간이 지날수록 납입액이 줄어들어 현금 여유가 생깁니다. 총 이자가 B안 대비 9.1백만원 절감되고, 20년 누적 순현금이 105.8백만원으로 가장 유리합니다.</div>
+    </div>
+    <div class="adv tl">
+      <div class="adv-t">📊 B안 선택 시 (원리금균등 — Project IRR 6.63%)</div>
+      <div class="adv-b">매월 92.96만원 고정으로 예산 관리가 쉽습니다. 단 17년차(매출 12.3백만원) 이후 순현금흐름이 마이너스로 전환되어 별도 준비금이 필요합니다. A안 대비 20년 누적 10.9백만원 불리합니다.</div>
+    </div>
+    <div class="adv al">
+      <div class="adv-t">⚠️ 공통 주의 — 발전량 감소 리스크</div>
+      <div class="adv-b">연간 발전량이 2년차 90% 이후 매년 5%씩 감소하는 구조입니다. 20년차 예상 발전량은 54,804kWh로 1년차(153,300kWh)의 약 35.7% 수준입니다. 패널 주기적 세정·유지보수가 실제 발전 효율 유지의 핵심입니다.</div>
+    </div>
+    <div class="adv rl">
+      <div class="adv-t">🔴 최우선 과제 — 한전 계통 연결</div>
+      <div class="adv-b">변압기 수급 부족으로 계통 연결 지연 중입니다. 거치 기간 매월 548,333원 이자가 수익 없이 지출됩니다. 한전 담당 지사 직접 연락, 고객센터 123 민원 접수, 지역 의원실 협조를 즉각 실행하시기 바랍니다.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  태광발전소 수익성 분석 v2 | 발전시간 4.2h/일 · Project IRR(총투자비 기준) | 작성일: 2026.04.03 | 투자 결정 전 전문 금융기관 상담을 권장합니다.
+</div>
+
+<script>
+const dataA=[
+  {yr:'1년차',note:'거치기간',kwh:153300,rev:29.4658,op:2.9466,dep:5.6,int:6.58,tax:0,ni:14.3392,pr:0,cf:19.9392,cum:19.9392},
+  {yr:'2년차',note:'상환1년차',kwh:137970,rev:26.5192,op:2.6519,dep:5.6,int:6.42,tax:0,ni:11.8473,pr:7.3684,cf:10.0789,cum:30.0181},
+  {yr:'3년차',note:'상환2년차',kwh:131072,rev:25.1933,op:2.5193,dep:5.6,int:6.07,tax:0,ni:11.0039,pr:7.3684,cf:9.2355,cum:39.2536},
+  {yr:'4년차',note:'상환3년차',kwh:124518,rev:23.9336,op:2.3934,dep:5.6,int:5.73,tax:0,ni:10.2102,pr:7.3684,cf:8.4418,cum:47.6955},
+  {yr:'5년차',note:'상환4년차',kwh:118292,rev:22.7369,op:2.2737,dep:5.6,int:5.38,tax:0,ni:9.4832,pr:7.3684,cf:7.7148,cum:55.4103},
+  {yr:'6년차',note:'상환5년차',kwh:112377,rev:21.6001,op:2.16,dep:5.6,int:5.04,tax:0.88,ni:7.9201,pr:7.3684,cf:6.1517,cum:61.5619},
+  {yr:'7년차',note:'상환6년차',kwh:106759,rev:20.5201,op:2.052,dep:5.6,int:4.69,tax:0.82,ni:7.3581,pr:7.3684,cf:5.5897,cum:67.1516},
+  {yr:'8년차',note:'상환7년차',kwh:101421,rev:19.4941,op:1.9494,dep:5.6,int:4.34,tax:0.76,ni:6.8447,pr:7.3684,cf:5.0763,cum:72.2279},
+  {yr:'9년차',note:'상환8년차',kwh:96350,rev:18.5194,op:1.8519,dep:5.6,int:4.0,tax:0.71,ni:6.3574,pr:7.3684,cf:4.589,cum:76.8169},
+  {yr:'10년차',note:'상환9년차',kwh:91532,rev:17.5934,op:1.7593,dep:5.6,int:3.65,tax:0.66,ni:5.924,pr:7.3684,cf:4.1556,cum:80.9725},
+  {yr:'11년차',note:'상환10년차',kwh:86956,rev:16.7137,op:1.6714,dep:5.6,int:3.3,tax:0.61,ni:5.5323,pr:7.3684,cf:3.7639,cum:84.7365},
+  {yr:'12년차',note:'상환11년차',kwh:82608,rev:15.878,op:1.5878,dep:5.6,int:2.96,tax:0.57,ni:5.1602,pr:7.3684,cf:3.3918,cum:88.1283},
+  {yr:'13년차',note:'상환12년차',kwh:78477,rev:15.0841,op:1.5084,dep:5.6,int:2.61,tax:0.54,ni:4.8257,pr:7.3684,cf:3.0573,cum:91.1856},
+  {yr:'14년차',note:'상환13년차',kwh:74553,rev:14.3299,op:1.433,dep:5.6,int:2.27,tax:0.50,ni:4.5269,pr:7.3684,cf:2.7585,cum:93.9441},
+  {yr:'15년차',note:'상환14년차',kwh:70826,rev:13.6134,op:1.3613,dep:5.6,int:1.92,tax:0.47,ni:4.2621,pr:7.3684,cf:2.4937,cum:96.4378},
+  {yr:'16년차',note:'상환15년차',kwh:67285,rev:12.9328,op:1.2933,dep:5.6,int:1.57,tax:0.45,ni:4.0195,pr:7.3684,cf:2.2511,cum:98.6889},
+  {yr:'17년차',note:'상환16년차',kwh:63920,rev:12.2861,op:1.2286,dep:5.6,int:1.23,tax:0.42,ni:3.8075,pr:7.3684,cf:2.0391,cum:100.728},
+  {yr:'18년차',note:'상환17년차',kwh:60724,rev:11.6718,op:1.1672,dep:5.6,int:0.88,tax:0.40,ni:3.6246,pr:7.3684,cf:1.8562,cum:102.5843},
+  {yr:'19년차',note:'상환18년차',kwh:57688,rev:11.0882,op:1.1088,dep:5.6,int:0.53,tax:0.38,ni:3.4694,pr:7.3684,cf:1.701,cum:104.2853},
+  {yr:'20년차',note:'상환19년차',kwh:54804,rev:10.5338,op:1.0534,dep:5.6,int:0.19,tax:0.37,ni:3.3204,pr:7.3684,cf:1.552,cum:105.8373},
+];
+const dataB=[
+  {yr:'1년차',note:'거치기간',kwh:153300,rev:29.4658,op:3.36,dep:7.0,int:6.58,tax:0,ni:12.5258,pr:0,cf:19.5258,cum:19.5258},
+  {yr:'2년차',note:'상환1년차',kwh:137970,rev:26.5192,op:3.02,dep:7.0,int:6.48,tax:0,ni:10.0192,pr:4.6751,cf:12.3441,cum:31.8699},
+  {yr:'3년차',note:'상환2년차',kwh:131072,rev:25.1933,op:2.87,dep:7.0,int:6.26,tax:0,ni:9.0633,pr:4.8996,cf:11.1637,cum:43.0336},
+  {yr:'4년차',note:'상환3년차',kwh:124518,rev:23.9336,op:2.73,dep:7.0,int:6.02,tax:0,ni:8.1836,pr:5.1349,cf:10.0487,cum:53.0823},
+  {yr:'5년차',note:'상환4년차',kwh:118292,rev:22.7369,op:2.59,dep:7.0,int:5.77,tax:0,ni:7.3769,pr:5.3815,cf:8.9954,cum:62.0777},
+  {yr:'6년차',note:'상환5년차',kwh:112377,rev:21.6001,op:2.46,dep:7.0,int:5.52,tax:0.66,ni:5.9601,pr:5.6399,cf:7.3202,cum:69.3978},
+  {yr:'7년차',note:'상환6년차',kwh:106759,rev:20.5201,op:2.34,dep:7.0,int:5.24,tax:0.59,ni:5.3501,pr:5.9108,cf:6.4393,cum:75.8371},
+  {yr:'8년차',note:'상환7년차',kwh:101421,rev:19.4941,op:2.22,dep:7.0,int:4.96,tax:0.53,ni:4.7841,pr:6.1947,cf:5.5894,cum:81.4264},
+  {yr:'9년차',note:'상환8년차',kwh:96350,rev:18.5194,op:2.11,dep:7.0,int:4.66,tax:0.47,ni:4.2794,pr:6.4922,cf:4.7872,cum:86.2136},
+  {yr:'10년차',note:'상환9년차',kwh:91532,rev:17.5934,op:2.00,dep:7.0,int:4.35,tax:0.42,ni:3.8234,pr:6.804,cf:4.0194,cum:90.233},
+  {yr:'11년차',note:'상환10년차',kwh:86956,rev:16.7137,op:1.90,dep:7.0,int:4.02,tax:0.38,ni:3.4137,pr:7.1307,cf:3.283,cum:93.516},
+  {yr:'12년차',note:'상환11년차',kwh:82608,rev:15.878,op:1.81,dep:7.0,int:3.68,tax:0.34,ni:3.048,pr:7.4732,cf:2.5748,cum:96.0908},
+  {yr:'13년차',note:'상환12년차',kwh:78477,rev:15.0841,op:1.72,dep:7.0,int:3.32,tax:0.30,ni:2.7441,pr:7.8321,cf:1.912,cum:98.0029},
+  {yr:'14년차',note:'상환13년차',kwh:74553,rev:14.3299,op:1.63,dep:7.0,int:2.95,tax:0.27,ni:2.4799,pr:8.2082,cf:1.2717,cum:99.2746},
+  {yr:'15년차',note:'상환14년차',kwh:70826,rev:13.6134,op:1.55,dep:7.0,int:2.55,tax:0.25,ni:2.2634,pr:8.6024,cf:0.661,cum:99.9356},
+  {yr:'16년차',note:'상환15년차',kwh:67285,rev:12.9328,op:1.47,dep:7.0,int:2.14,tax:0.23,ni:2.0928,pr:9.0156,cf:0.0772,cum:100.0128},
+  {yr:'17년차',note:'상환16년차',kwh:63920,rev:12.2861,op:1.40,dep:7.0,int:1.71,tax:0.22,ni:1.9561,pr:9.4486,cf:-0.4925,cum:99.5203},
+  {yr:'18년차',note:'상환17년차',kwh:60724,rev:11.6718,op:1.33,dep:7.0,int:1.25,tax:0.21,ni:1.8818,pr:9.9023,cf:-1.0205,cum:98.4998},
+  {yr:'19년차',note:'상환18년차',kwh:57688,rev:11.0882,op:1.26,dep:7.0,int:0.78,tax:0.20,ni:1.8482,pr:10.3779,cf:-1.5297,cum:96.9701},
+  {yr:'20년차',note:'상환19년차',kwh:54804,rev:10.5338,op:1.20,dep:7.0,int:0.28,tax:0.21,ni:1.8438,pr:10.8763,cf:-2.0325,cum:94.9377},
+];
+const labels=dataA.map(d=>d.yr.replace('년차','년'));
+
+function fmtCF(n){const v=n.toFixed(2);if(n<0)return`<span class="neg">${v}</span>`;if(n>0)return`<span class="pos">${v}</span>`;return v;}
+
+function buildTable(data,id){
+  const tb=document.getElementById(id);
+  let totals={rev:0,op:0,dep:0,int:0,tax:0,ni:0,pr:0,cf:0};
+  data.forEach((r,i)=>{
+    const g=i===0?'class="grace"':'';
+    tb.innerHTML+=`<tr ${g}>
+      <td>${r.yr}</td><td>${r.note}</td>
+      <td>${r.kwh.toLocaleString()}</td>
+      <td>${r.rev.toFixed(2)}</td><td>${r.op.toFixed(2)}</td>
+      <td>${r.dep.toFixed(2)}</td><td>${r.int.toFixed(2)}</td>
+      <td>${r.tax.toFixed(2)}</td><td>${r.ni.toFixed(2)}</td>
+      <td>${r.pr.toFixed(2)}</td>
+      <td>${fmtCF(r.cf)}</td>
+      <td><strong>${r.cum.toFixed(2)}</strong></td>
+    </tr>`;
+    ['rev','op','dep','int','tax','ni','pr','cf'].forEach(k=>totals[k]+=r[k]);
+  });
+  tb.innerHTML+=`<tr class="total">
+    <td>합 계</td><td>—</td><td>—</td>
+    <td>${totals.rev.toFixed(2)}</td><td>${totals.op.toFixed(2)}</td>
+    <td>${totals.dep.toFixed(2)}</td><td>${totals.int.toFixed(2)}</td>
+    <td>${totals.tax.toFixed(2)}</td><td>${totals.ni.toFixed(2)}</td>
+    <td>${totals.pr.toFixed(2)}</td>
+    <td>${fmtCF(totals.cf)}</td><td>—</td>
+  </tr>`;
+}
+buildTable(dataA,'tblA');
+buildTable(dataB,'tblB');
+
+// ── CHARTS ──
+const gridColor='rgba(0,0,0,0.05)';
+const tickFont={size:10};
+const yFmt=v=>v+'백만';
+
+// Cumulative
+new Chart(document.getElementById('cumChart'),{
+  type:'line',
+  data:{labels,datasets:[
+    {label:'A안',data:dataA.map(d=>+d.cum.toFixed(2)),borderColor:'#2151d4',backgroundColor:'rgba(33,81,212,.08)',borderWidth:2.5,pointRadius:3,fill:true,tension:.35},
+    {label:'B안',data:dataB.map(d=>+d.cum.toFixed(2)),borderColor:'#059669',backgroundColor:'rgba(5,150,105,.06)',borderWidth:2.5,pointRadius:3,fill:true,tension:.35}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(1)+'백만원'}}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{font:tickFont,maxRotation:45}},
+      y:{grid:{color:gridColor},ticks:{font:tickFont,callback:yFmt}}
+    }
+  }
+});
+
+// Annual CF
+new Chart(document.getElementById('annualChart'),{
+  type:'bar',
+  data:{labels,datasets:[
+    {label:'A안',data:dataA.map(d=>+d.cf.toFixed(2)),backgroundColor:'rgba(33,81,212,.75)',borderRadius:3},
+    {label:'B안',data:dataB.map(d=>+d.cf.toFixed(2)),backgroundColor:'rgba(5,150,105,.75)',borderRadius:3}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(2)+'백만원'}}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{font:{size:9},maxRotation:45,autoSkip:false}},
+      y:{grid:{color:gridColor},ticks:{font:tickFont,callback:yFmt}}
+    }
+  }
+});
+
+// Interest
+new Chart(document.getElementById('intChart'),{
+  type:'line',
+  data:{labels,datasets:[
+    {label:'A안 이자',data:dataA.map(d=>+d.int.toFixed(2)),borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,.1)',borderWidth:2,pointRadius:2,fill:true,tension:.4},
+    {label:'B안 이자',data:dataB.map(d=>+d.int.toFixed(2)),borderColor:'#f97316',backgroundColor:'rgba(249,115,22,.08)',borderWidth:2,pointRadius:2,fill:true,tension:.4}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(2)+'백만원'}}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{font:{size:9},maxRotation:45,autoSkip:false}},
+      y:{grid:{color:gridColor},ticks:{font:tickFont,callback:yFmt}}
+    }
+  }
+});
+
+// kWh
+new Chart(document.getElementById('kwhChart'),{
+  type:'bar',
+  data:{labels,datasets:[
+    {label:'발전량',data:dataA.map(d=>d.kwh),backgroundColor:'rgba(139,92,246,.7)',borderRadius:3}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y.toLocaleString()+' kWh'}}},
+    scales:{
+      x:{grid:{color:gridColor},ticks:{font:{size:9},maxRotation:45,autoSkip:false}},
+      y:{grid:{color:gridColor},ticks:{font:tickFont,callback:v=>Math.round(v/1000)+'천'}}
+    }
+  }
+});
+</script>
+</body>
+</html>
