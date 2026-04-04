@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외국인 투자자 매도 선행 포착 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a12;
+    --surface: #0d1520;
+    --surface2: #111d2e;
+    --border: #1a2e45;
+    --accent: #00e5ff;
+    --accent2: #ff4d6d;
+    --accent3: #ffd60a;
+    --accent4: #39d353;
+    --text: #c8d8e8;
+    --text-dim: #5a7a96;
+    --text-bright: #e8f4ff;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+    --glow: 0 0 20px rgba(0,229,255,0.15);
+    --glow2: 0 0 20px rgba(255,77,109,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    padding: 56px 5% 48px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(0,229,255,0.04) 0%, transparent 100%);
+    z-index: 1;
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 6px 14px;
+    border: 1px solid rgba(0,229,255,0.3);
+    border-radius: 2px;
+    background: rgba(0,229,255,0.05);
+  }
+
+  .header-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.4s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  h1 {
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 900;
+    color: var(--text-bright);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 620px;
+    font-weight: 300;
+  }
+
+  /* ── ALERT BOX ── */
+  .alert-box {
+    margin: 32px 5% 0;
+    padding: 16px 20px;
+    background: rgba(255,77,109,0.07);
+    border: 1px solid rgba(255,77,109,0.3);
+    border-left: 3px solid var(--accent2);
+    border-radius: 4px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    color: #f0a0ae;
+    max-width: 900px;
+    z-index: 1;
+    position: relative;
+  }
+
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── MAIN LAYOUT ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 5%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 52px 0 0;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  h2 {
+    font-size: clamp(20px, 2.5vw, 28px);
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── SIGNAL CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--card-accent, var(--accent));
+    opacity: 0.6;
+  }
+
+  .card:hover {
+    border-color: var(--card-accent, var(--accent));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), var(--glow);
+  }
+
+  .card-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--card-accent, var(--accent));
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-tag .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--card-accent, var(--accent));
+  }
+
+  .card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+    line-height: 1.35;
+  }
+
+  .card p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .card-links { display: flex; flex-direction: column; gap: 6px; }
+
+  .card-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--card-accent, var(--accent));
+    text-decoration: none;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .card-link:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .card-link::before { content: '→'; opacity: 0.6; }
+
+  /* ── PRIORITY BADGE ── */
+  .priority {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+
+  .priority.high {
+    background: rgba(255,77,109,0.15);
+    color: var(--accent2);
+    border: 1px solid rgba(255,77,109,0.3);
+  }
+
+  .priority.mid {
+    background: rgba(255,214,10,0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(255,214,10,0.3);
+  }
+
+  .priority.low {
+    background: rgba(57,211,83,0.1);
+    color: var(--accent4);
+    border: 1px solid rgba(57,211,83,0.25);
+  }
+
+  /* ── TIMELINE (선행지표 체크 순서) ── */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 12px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+
+  .tl-item:hover { border-color: rgba(0,229,255,0.3); }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -27px; top: 22px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .tl-step {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .tl-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 8px;
+  }
+
+  .tl-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .tl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.2);
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .chip.warn {
+    background: rgba(255,214,10,0.07);
+    border-color: rgba(255,214,10,0.2);
+    color: var(--accent3);
+  }
+
+  .chip.danger {
+    background: rgba(255,77,109,0.07);
+    border-color: rgba(255,77,109,0.2);
+    color: var(--accent2);
+  }
+
+  /* ── INDICATOR TABLE ── */
+  .ind-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .ind-table thead tr {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ind-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .ind-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(26,46,69,0.6);
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  .ind-table tbody tr:last-child td { border-bottom: none; }
+
+  .ind-table tbody tr:hover td {
+    background: rgba(0,229,255,0.03);
+  }
+
+  .ind-name {
+    font-weight: 600;
+    color: var(--text-bright);
+    white-space: nowrap;
+  }
+
+  .ind-source {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .signal-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .sd-red { background: var(--accent2); box-shadow: 0 0 6px var(--accent2); }
+  .sd-yellow { background: var(--accent3); box-shadow: 0 0 6px var(--accent3); }
+  .sd-green { background: var(--accent4); box-shadow: 0 0 6px var(--accent4); }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+
+  .checklist li:hover { border-color: rgba(0,229,255,0.25); }
+
+  .check-num {
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(0,229,255,0.1);
+    border: 1px solid rgba(0,229,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 1px;
+  }
+
+  .checklist strong { color: var(--text-bright); }
+
+  /* ── TOOL BOX ── */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .tool-card:hover {
+    border-color: rgba(0,229,255,0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .tool-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.15);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .tool-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .tool-info p {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .tool-info a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .tool-info a:hover { text-decoration: underline; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    margin: 52px 0 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 5%;
+    border-top: 1px solid var(--border);
+    margin-top: 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 720px;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 18px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+    font-weight: 500;
+  }
+
+  .tab-btn:hover { color: var(--text); }
+
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── SIGNAL METER ── */
+  .meter-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .meter-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .meter-name { font-weight: 600; color: var(--text-bright); }
+  .meter-val {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .meter-bar-bg {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .meter-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent4), var(--accent3), var(--accent2));
+    transition: width 1s ease;
+  }
+
+  .meter-desc { font-size: 11.5px; color: var(--text-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    header { padding: 36px 5% 32px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .tool-grid { grid-template-columns: 1fr; }
+    .ind-table th:nth-child(4),
+    .ind-table td:nth-child(4) { display: none; }
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── STAGGERED CHILDREN ── */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+  .stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.07s; }
+  .stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.14s; }
+  .stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.21s; }
+  .stagger.visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 0.28s; }
+  .stagger.visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 0.35s; }
+</style>
+</head>
+<body>
+
+<!-- ─────────────────────────────────── HEADER ─────────────────────────────────── -->
+<header>
+  <div class="header-badge">Intelligence System · Korean Market</div>
+  <h1>외국인 투자자 매도를<br><em>미리 포착</em>하는 법</h1>
+  <p class="header-sub">공시·거래소·글로벌 지표를 연결해 외국인 대규모 이탈 징후를 선제적으로 읽어내는 실전 모니터링 가이드</p>
+
+  <div class="alert-box" style="margin-left:0; margin-right:0; margin-top:28px;">
+    <span class="alert-icon">⚡</span>
+    <span>외국인 매도는 <strong>단 하나의 신호</strong>로 포착되지 않습니다. 환율·ETF 자금흐름·선물 포지션·공시 데이터를 <strong>동시에 읽는 복합 레이더</strong>가 핵심입니다. 이 가이드는 그 레이더를 구성하는 방법을 안내합니다.</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ─── SECTION 1: 실시간 공식 채널 ─── -->
+  <section class="fade-in">
+    <div class="section-label">01 · Official Real-time</div>
+    <h2>국내 공식 실시간 채널 — 당일 매도 확인</h2>
+
+    <div class="cards-grid stagger">
+
+      <!-- KRX -->
+      <div class="card" style="--card-accent: #00e5ff;">
+        <span class="priority high">필수</span>
+        <div class="card-tag"><span class="dot"></span>한국거래소 공식</div>
+        <h3>KRX 투자자별 매매동향</h3>
+        <p>외국인·기관·개인의 순매수/순매도를 종목별·업종별·지수별로 실시간 확인. 가장 공식적이고 정확한 수급 데이터 원천.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://data.krx.co.kr" target="_blank">data.krx.co.kr</a>
+          <a class="card-link" href="https://www.krx.co.kr/main/main.jsp" target="_blank">KRX 공식 홈페이지</a>
+        </div>
+      </div>
+
+      <!-- DART -->
+      <div class="card" style="--card-accent: #ffd60a;">
+        <span class="priority high">필수</span>
+        <div class="card-tag"><span class="dot" style="background:var(--accent3)"></span>금융감독원 공시</div>
+        <h3>DART 대량보유 공시 (5% 룰)</h3>
+        <p>외국인 기관이 특정 종목을 5% 이상 보유하거나, 1% 이상 변동 시 <strong>5일 이내 의무 공시</strong>. 대규모 매도의 법적 흔적을 추적할 수 있는 핵심 채널.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://dart.fss.or.kr" target="_blank">dart.fss.or.kr</a>
+        </div>
+      </div>
+
+      <!-- 금융투자협회 -->
+      <div class="card" style="--card-accent: #39d353;">
+        <span class="priority mid">권장</span>
+        <div class="card-tag"><span class="dot" style="background:var(--accent4)"></span>금융투자협회</div>
+        <h3>KOFIA 외국인 보유현황</h3>
+        <p>업종별 외국인 보유 비율 추이, 외국인 전체 보유금액 변동을 월별·일별로 제공. 외국인 지분율 장기 트렌드 파악에 유용.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://freesis.kofia.or.kr" target="_blank">freesis.kofia.or.kr</a>
+        </div>
+      </div>
+
+      <!-- 한국예탁결제원 -->
+      <div class="card" style="--card-accent: #c77dff;">
+        <span class="priority mid">권장</span>
+        <div class="card-tag"><span class="dot" style="background:#c77dff"></span>한국예탁결제원</div>
+        <h3>증권정보포털 (SEIBRO)</h3>
+        <p>외국인 증권 보유·거래 현황 통계, 국적별 외국인 투자자 보유 현황 조회 가능. 외국인 내부에서도 어느 국가 자금이 움직이는지 분류 가능.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://seibro.or.kr" target="_blank">seibro.or.kr</a>
+        </div>
+      </div>
+
+      <!-- 금융위원회 -->
+      <div class="card" style="--card-accent: #ff9f1c;">
+        <span class="priority low">참고</span>
+        <div class="card-tag"><span class="dot" style="background:#ff9f1c"></span>금융위원회</div>
+        <h3>FSC 자본시장 통계</h3>
+        <p>외국인 증권 투자 동향 월별 보도자료, 정책 변화(공매도 규제, 외환 거래 제한 등) 사전 공지 확인. 제도 리스크 선행 포착에 유용.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://www.fsc.go.kr" target="_blank">www.fsc.go.kr</a>
+        </div>
+      </div>
+
+      <!-- 금융감독원 -->
+      <div class="card" style="--card-accent: #ff4d6d;">
+        <span class="priority low">참고</span>
+        <div class="card-tag"><span class="dot" style="background:#ff4d6d"></span>금융감독원</div>
+        <h3>FSS 외국인투자현황</h3>
+        <p>외국인 투자자 등록 현황, 투자 한도 소진율 등 공식 통계. 외국인 등록 기관 수 감소 자체가 유출 신호가 될 수 있음.</p>
+        <div class="card-links">
+          <a class="card-link" href="https://www.fss.or.kr" target="_blank">www.fss.or.kr</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SECTION 2: 선행지표 ─── -->
+  <section class="fade-in">
+    <div class="section-label">02 · Leading Indicators</div>
+    <h2>외국인 매도를 <em style="font-style:normal;color:var(--accent2)">앞서 알려주는</em> 글로벌 선행지표</h2>
+
+    <p style="font-size:14px;color:var(--text-dim);margin-bottom:28px;max-width:680px;">
+      외국인 기관은 한국 시장에 들어오기 전부터 글로벌 지표를 보고 포지션을 결정합니다. 이 지표들이 먼저 움직이면, 수 시간에서 수일 내 외국인 매도가 뒤따를 수 있습니다.
+    </p>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(event,'tab-macro')">🌐 매크로 지표</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-etf')">📊 ETF 자금흐름</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-futures')">⚡ 선물·파생</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-short')">🔻 공매도</button>
+    </div>
+
+    <!-- TAB 1: 매크로 -->
+    <div class="tab-panel active" id="tab-macro">
+      <table class="ind-table">
+        <thead>
+          <tr>
+            <th>지표명</th>
+            <th>신호 해석</th>
+            <th>확인처</th>
+            <th>선행성</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ind-name">원/달러 환율 (USD/KRW)</span></td>
+            <td><span class="signal-dot sd-red"></span>원화 급등(원화 약세) → 외국인 달러 환산 수익 감소 → 매도 유인 증가</td>
+            <td><span class="ind-source">kr.investing.com</span></td>
+            <td>당일~1일</td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">VIX 공포지수</span></td>
+            <td><span class="signal-dot sd-red"></span>VIX 25 돌파 → 글로벌 리스크오프 → 신흥국 전반 외국인 매도</td>
+            <td><span class="ind-source">CBOE / investing.com</span></td>
+            <td>1~2일</td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">국제 유가 (WTI/브렌트)</span></td>
+            <td><span class="signal-dot sd-yellow"></span>배럴당 $90 초과 급등 → 한국 무역적자 우려 → 원화 약세 → 외국인 이탈</td>
+            <td><span class="ind-source">EIA / bloomberg</span></td>
+            <td>2~3일</td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">미국 10년 국채 금리</span></td>
+            <td><span class="signal-dot sd-yellow"></span>금리 급등(5% 이상) → 달러 강세 → 신흥국 자금 이탈 패턴</td>
+            <td><span class="ind-source">미 재무부 / FRED</span></td>
+            <td>3~7일</td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">DXY (달러 인덱스)</span></td>
+            <td><span class="signal-dot sd-yellow"></span>DXY 급등 → 원화·원화자산 동반 약세 → 외국인 차익실현 유인</td>
+            <td><span class="ind-source">kr.investing.com</span></td>
+            <td>1~3일</td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">MSCI EM(신흥국) 지수</span></td>
+            <td><span class="signal-dot sd-green"></span>MSCI EM 약세 → 신흥국 전반 비중 축소 → 한국 포함 매도</td>
+            <td><span class="ind-source">MSCI.com / iShares</span></td>
+            <td>1~2일</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TAB 2: ETF -->
+    <div class="tab-panel" id="tab-etf">
+      <p style="font-size:13.5px;color:var(--text-dim);margin-bottom:20px;">한국 시장에 투자하는 글로벌 ETF의 자금 유출(outflow)은 외국인 매도보다 <strong style="color:var(--text-bright)">수 시간~1일 앞서</strong> 감지될 수 있습니다.</p>
+      <table class="ind-table">
+        <thead>
+          <tr>
+            <th>ETF명</th>
+            <th>삼성전자 비중</th>
+            <th>신호 포인트</th>
+            <th>확인처</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ind-name">EWY (iShares MSCI Korea)</span></td>
+            <td>~24%</td>
+            <td><span class="signal-dot sd-red"></span>일간 순유출액 $1억 이상 → 삼성전자 기계적 매도 예고</td>
+            <td><span class="ind-source">etf.com / ishares.com</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">HKOR (HSBC MSCI Korea)</span></td>
+            <td>~22%</td>
+            <td><span class="signal-dot sd-yellow"></span>유럽 장 시간대 유출 증가 시 국내 장 시초가 압박</td>
+            <td><span class="ind-source">bloomberg / LSE 데이터</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">XMKO (Xtrackers MSCI Korea)</span></td>
+            <td>~23%</td>
+            <td><span class="signal-dot sd-yellow"></span>독일 거래소 기준, 유럽 자금 이탈 선행 신호</td>
+            <td><span class="ind-source">dws.com</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">FLKR (Franklin FTSE Korea)</span></td>
+            <td>~20%</td>
+            <td><span class="signal-dot sd-green"></span>FTSErusell 지수 추종, MSCI와 리밸런싱 일정 상이</td>
+            <td><span class="ind-source">franklintempleton.com</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:6px; font-size:13px; color:var(--text-dim);">
+        💡 <strong style="color:var(--text-bright)">MSCI 비중 상한(25%) 경보</strong> — 삼성전자 주가가 급등해 EWY 내 비중이 25%에 근접하면, 분기 리밸런싱 시점(3·6·9·12월)에 기계적 매도가 발생합니다. <span style="color:var(--accent)">MSCI.com</span>의 지수 비중 변화 알림 구독이 효과적입니다.
+      </div>
+    </div>
+
+    <!-- TAB 3: 선물 -->
+    <div class="tab-panel" id="tab-futures">
+      <p style="font-size:13.5px;color:var(--text-dim);margin-bottom:20px;">외국인은 현물 매도 전 <strong style="color:var(--text-bright)">코스피200 선물 매도</strong>로 헤지 포지션을 먼저 취하는 경향이 있습니다. 선물 포지션이 먼저 움직입니다.</p>
+      <table class="ind-table">
+        <thead>
+          <tr>
+            <th>지표</th>
+            <th>신호 해석</th>
+            <th>확인처</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ind-name">외국인 코스피200 선물 순포지션</span></td>
+            <td><span class="signal-dot sd-red"></span>외국인 선물 매도 전환(순매도 1만 계약 이상) → 수일 내 현물 매도 가능성 ↑</td>
+            <td><span class="ind-source">KRX / HTS 선물 탭</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">베이시스 (선물-현물 괴리)</span></td>
+            <td><span class="signal-dot sd-red"></span>베이시스 마이너스 전환 → 프로그램 매도 물량 출회 예고</td>
+            <td><span class="ind-source">KRX 데이터포털</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">코스피200 풋/콜 비율 (P/C Ratio)</span></td>
+            <td><span class="signal-dot sd-yellow"></span>P/C 비율 1.2 이상 → 시장 헤지 수요 급증, 하락 경계 신호</td>
+            <td><span class="ind-source">KRX / 증권사 HTS</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">VKOSPI (코스피 변동성지수)</span></td>
+            <td><span class="signal-dot sd-yellow"></span>VKOSPI 30 이상 → 시장 공포 극대화, 외국인 매도 클라이맥스 구간</td>
+            <td><span class="ind-source">KRX 공식</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">외국인 KOSDAQ150 선물</span></td>
+            <td><span class="signal-dot sd-green"></span>KOSDAQ 선물 매도 전환 → 성장주·중소형 외국인 이탈 선행</td>
+            <td><span class="ind-source">KRX / HTS</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TAB 4: 공매도 -->
+    <div class="tab-panel" id="tab-short">
+      <p style="font-size:13.5px;color:var(--text-dim);margin-bottom:20px;">공매도는 외국인의 하락 베팅을 가장 직접적으로 보여주는 지표입니다. 공매도 잔고가 늘어나면 이후 현물 매도 압력이 따릅니다.</p>
+      <table class="ind-table">
+        <thead>
+          <tr>
+            <th>지표</th>
+            <th>신호 해석</th>
+            <th>확인처</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ind-name">종목별 공매도 잔고비율</span></td>
+            <td><span class="signal-dot sd-red"></span>삼성전자·SK하이닉스 공매도 잔고 시총의 1% 이상 급증 → 외국인 하락 베팅</td>
+            <td><span class="ind-source">KRX 공매도 종합포털</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">공매도 거래대금 비중</span></td>
+            <td><span class="signal-dot sd-red"></span>전체 거래대금 중 공매도 비중 5% 초과 시 하락 압력 가중</td>
+            <td><span class="ind-source">data.krx.co.kr</span></td>
+          </tr>
+          <tr>
+            <td><span class="ind-name">대차잔고 변동</span></td>
+            <td><span class="signal-dot sd-yellow"></span>대차잔고 급증 → 공매도 준비 단계, 실제 매도 1~2주 선행</td>
+            <td><span class="ind-source">금융투자협회 freesis</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:14px; padding:14px 16px; background:rgba(255,77,109,0.06); border:1px solid rgba(255,77,109,0.2); border-radius:6px; font-size:13px; color:#f0a0ae;">
+        ⚠️ 한국은 2023년 공매도 전면 금지 → 2025년 부분 재개 상태입니다. 현재 공매도 재개 종목과 규제 현황은 <strong>금융위원회(fsc.go.kr)</strong>에서 반드시 최신 정보를 확인하세요.
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SECTION 3: 선행 포착 루틴 ─── -->
+  <section class="fade-in">
+    <div class="section-label">03 · Morning Routine</div>
+    <h2>외국인 매도 징후 포착 — 아침 10분 체크루틴</h2>
+
+    <div class="timeline stagger">
+
+      <div class="tl-item">
+        <div class="tl-step">Step 01 · 오전 6:00~8:00</div>
+        <div class="tl-title">🌐 글로벌 야간 지표 스캔</div>
+        <div class="tl-desc">전날 미국 장 마감 후 VIX, DXY, 미국 10년 금리, 국제 유가 변동을 확인합니다. VIX +15% 이상, 유가 $3 이상 상승, 달러 강세가 동시에 발생하면 외국인 매도 가능성이 높습니다.</div>
+        <div class="tl-chips">
+          <span class="chip">VIX 25 초과 → 경보</span>
+          <span class="chip warn">유가 $90 이상</span>
+          <span class="chip warn">원달러 1,400 초과</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-step">Step 02 · 오전 8:30~9:00</div>
+        <div class="tl-title">📊 EWY 전일 자금흐름 확인</div>
+        <div class="tl-desc">etf.com 또는 iShares 공식 사이트에서 EWY의 전일 순자산 변동(NAV 변화)을 확인합니다. $5천만 이상 유출 시 국내 시장 개장 직후 삼성전자·SK하이닉스에 매도 압력이 들어올 수 있습니다.</div>
+        <div class="tl-chips">
+          <span class="chip">EWY 유출 $5천만 → 주의</span>
+          <span class="chip danger">유출 $1억 이상 → 경보</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-step">Step 03 · 오전 9:00~9:30 (개장)</div>
+        <div class="tl-title">⚡ 외국인 선물 포지션 점검</div>
+        <div class="tl-desc">KRX HTS 또는 증권사 앱에서 외국인의 코스피200 선물 당일 포지션 방향을 확인합니다. 선물 매도가 뚜렷하면 현물 추가 매도 가능성을 염두에 두고 대응 전략을 수립합니다.</div>
+        <div class="tl-chips">
+          <span class="chip">외국인 선물 매도 전환</span>
+          <span class="chip warn">베이시스 마이너스</span>
+          <span class="chip">VKOSPI 급등</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-step">Step 04 · 오전 10:00 이후</div>
+        <div class="tl-title">🏦 KRX 실시간 투자자별 동향 모니터</div>
+        <div class="tl-desc">KRX 데이터포털에서 업종별·종목별 외국인 순매도 상위 현황을 확인합니다. 삼성전자 단일 종목 외국인 순매도가 5,000억 원을 넘으면 당일 지수 하방 압력이 강화됩니다.</div>
+        <div class="tl-chips">
+          <span class="chip">삼성전자 순매도 5,000억 → 주의</span>
+          <span class="chip danger">1조 이상 → 경보</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-step">Step 05 · 매주 월요일</div>
+        <div class="tl-title">📋 DART 대량보유 공시 주간 점검</div>
+        <div class="tl-desc">DART(dart.fss.or.kr)에서 '주요사항보고서 → 주식대량보유상황보고서'를 검색해 대형 외국인 기관의 지분 변동 공시를 확인합니다. 공시 제출 기한은 취득/처분 후 5일 이내이므로 주 1회 이상 정기 확인이 필요합니다.</div>
+        <div class="tl-chips">
+          <span class="chip">5% 이상 변동 공시 필수</span>
+          <span class="chip warn">1% 이상 변동 시 보고</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SECTION 4: 신호 강도 미터 ─── -->
+  <section class="fade-in">
+    <div class="section-label">04 · Signal Strength</div>
+    <h2>외국인 매도 신호 강도 — 지표별 위험도</h2>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">원/달러 환율 급등 (1,450원 이상)</span>
+        <span class="meter-val">위험도 ████ 매우 높음</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:90%"></div></div>
+      <div class="meter-desc">한국 원화 약세 = 외국인 달러 환산 수익 직격. 환율 상승은 외국인 매도의 가장 직접적 트리거.</div>
+    </div>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">VIX 지수 급등 (25+ 돌파)</span>
+        <span class="meter-val">위험도 ███░ 높음</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:78%"></div></div>
+      <div class="meter-desc">글로벌 리스크오프 국면. 신흥국 전체에서 자금 이탈이 동시에 발생하는 구간.</div>
+    </div>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">EWY 자금 유출 (1억 달러 이상/일)</span>
+        <span class="meter-val">위험도 ███░ 높음</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:75%"></div></div>
+      <div class="meter-desc">패시브 ETF 유출은 삼성전자 기계적 매도로 직결. 실시간 NAV 추적이 핵심.</div>
+    </div>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">외국인 코스피200 선물 대규모 순매도</span>
+        <span class="meter-val">위험도 ██░░ 중간</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:60%"></div></div>
+      <div class="meter-desc">선물은 현물 매도의 헤지 수단. 선물 포지션 변화는 1~3일 선행 신호가 될 수 있음.</div>
+    </div>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">DART 대량보유 공시 (1% 이상 감소)</span>
+        <span class="meter-val">위험도 ██░░ 중간</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:55%"></div></div>
+      <div class="meter-desc">공시는 5일 이내 의무이므로 이미 매도가 완료된 후 확인. 추가 매도 가능성의 사후 증거로 활용.</div>
+    </div>
+
+    <div class="meter-box">
+      <div class="meter-label">
+        <span class="meter-name">공매도 잔고 급증 (시총 1% 이상)</span>
+        <span class="meter-val">위험도 █░░░ 낮음~중간</span>
+      </div>
+      <div class="meter-bar-bg"><div class="meter-bar" style="width:40%"></div></div>
+      <div class="meter-desc">공매도는 준비 단계의 신호. 실제 매도 실행까지 1~2주 시차 존재. 중장기 포지션 판단에 유용.</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SECTION 5: 실전 도구 ─── -->
+  <section class="fade-in">
+    <div class="section-label">05 · Tools</div>
+    <h2>실전에서 쓸 수 있는 무료·유료 도구</h2>
+
+    <div class="tool-grid stagger">
+      <div class="tool-card">
+        <div class="tool-icon">📡</div>
+        <div class="tool-info">
+          <h4>KRX 데이터포털</h4>
+          <p>투자자별 매매동향, 공매도, 프로그램 매매 등 모든 공식 수급 데이터 무료 제공.</p>
+          <a href="https://data.krx.co.kr" target="_blank">data.krx.co.kr →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🔎</div>
+        <div class="tool-info">
+          <h4>DART 공시시스템</h4>
+          <p>대량보유 공시 실시간 알림 설정 가능. 관심 종목 등록 후 이메일·앱 알림 수신.</p>
+          <a href="https://dart.fss.or.kr" target="_blank">dart.fss.or.kr →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📊</div>
+        <div class="tool-info">
+          <h4>Investing.com (한국어)</h4>
+          <p>VIX, DXY, 유가, 미국 국채 금리, 코스피 선물 등을 한 화면에서 모니터링. 알림 설정 가능.</p>
+          <a href="https://kr.investing.com" target="_blank">kr.investing.com →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🇺🇸</div>
+        <div class="tool-info">
+          <h4>ETF.com / iShares EWY</h4>
+          <p>EWY 일별 자금흐름(Flows), 삼성전자 비중 변화 실시간 확인. 유출 알림 설정 가능.</p>
+          <a href="https://www.etf.com/EWY" target="_blank">etf.com/EWY →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🧮</div>
+        <div class="tool-info">
+          <h4>SEIBRO (예탁결제원)</h4>
+          <p>국적별 외국인 투자자 현황, 외국인 증권 보유 통계 무료 조회.</p>
+          <a href="https://seibro.or.kr" target="_blank">seibro.or.kr →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📈</div>
+        <div class="tool-info">
+          <h4>증권사 HTS/MTS</h4>
+          <p>키움·미래에셋·NH투자증권 등 HTS의 수급 탭에서 외국인 실시간 순매수/매도 확인. 선물 포지션 분석 포함.</p>
+          <a href="#" target="_blank">각 증권사 앱 →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🌐</div>
+        <div class="tool-info">
+          <h4>MSCI.com</h4>
+          <p>한국 지수 내 종목 비중, 분기 리밸런싱 일정 공지. 삼성전자 비중 25% 상한 여부 사전 파악.</p>
+          <a href="https://www.msci.com" target="_blank">msci.com →</a>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🔔</div>
+        <div class="tool-info">
+          <h4>Reuters / Bloomberg</h4>
+          <p>글로벌 기관의 한국 시장 코멘트, 외국인 자금 이탈 관련 속보를 가장 빠르게 전달. 영문 알림 설정 권장.</p>
+          <a href="https://reuters.com" target="_blank">reuters.com →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SECTION 6: 최종 체크리스트 ─── -->
+  <section class="fade-in">
+    <div class="section-label">06 · Final Checklist</div>
+    <h2>외국인 대규모 매도 임박 시 점검 체크리스트</h2>
+
+    <ul class="checklist stagger">
+      <li>
+        <span class="check-num">1</span>
+        <span><strong>원/달러 환율</strong>이 1,400원을 넘어 지속적으로 상승 중인가? 원화 약세가 외국인 이탈의 첫 번째 트리거입니다.</span>
+      </li>
+      <li>
+        <span class="check-num">2</span>
+        <span><strong>VIX 지수</strong>가 25를 돌파하고 상승세가 이어지고 있는가? 글로벌 리스크오프는 신흥국 동반 이탈로 연결됩니다.</span>
+      </li>
+      <li>
+        <span class="check-num">3</span>
+        <span><strong>EWY 등 한국 ETF</strong>에서 최근 3일 연속 자금 순유출이 발생하고 있는가? 패시브 유출은 기계적 매도로 이어집니다.</span>
+      </li>
+      <li>
+        <span class="check-num">4</span>
+        <span><strong>외국인 코스피200 선물</strong>이 순매도로 전환됐는가? 선물 포지션이 현물 매도를 1~3일 선행하는 경향이 있습니다.</span>
+      </li>
+      <li>
+        <span class="check-num">5</span>
+        <span><strong>삼성전자·SK하이닉스 공매도 잔고</strong>가 급격히 늘어나고 있는가? 대차잔고 증가는 하락 베팅 준비 신호입니다.</span>
+      </li>
+      <li>
+        <span class="check-num">6</span>
+        <span><strong>DART에 대형 외국인 기관의 지분 감소 공시</strong>가 잇따라 올라오고 있는가? 공시 집중 구간은 추가 매도의 사전 경보입니다.</span>
+      </li>
+      <li>
+        <span class="check-num">7</span>
+        <span><strong>국제 유가(WTI/브렌트)</strong>가 배럴당 $90을 넘어 급등 중인가? 한국의 에너지 의존도를 고려할 때 유가 급등은 원화 약세와 외국인 이탈을 동시에 유발합니다.</span>
+      </li>
+      <li>
+        <span class="check-num">8</span>
+        <span><strong>MSCI Korea 지수 분기 리밸런싱 일정</strong>(3·6·9·12월)이 임박했는가? 삼성전자 비중이 상한(25%)에 근접했다면 기계적 매도가 예정돼 있습니다.</span>
+      </li>
+    </ul>
+
+    <div style="margin-top:24px; padding:20px 24px; background:rgba(0,229,255,0.05); border:1px solid rgba(0,229,255,0.2); border-radius:8px; font-size:14px; color:var(--text); line-height:1.75;">
+      💡 <strong style="color:var(--accent)">핵심 원칙</strong> — 위 8개 항목 중 <strong style="color:var(--text-bright)">3개 이상이 동시에 해당</strong>된다면 외국인 대규모 매도 가능성이 높은 구간으로 보고 포트폴리오 리스크 관리를 강화하세요. 단, 외국인 매도가 반드시 주가 하락을 의미하지는 않습니다. 개인·기관의 매수 여력과 기업 펀더멘털을 함께 고려하는 것이 중요합니다.
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p class="footer-note">📌 본 가이드는 한국거래소(KRX), 금융감독원(FSS), 금융위원회(FSC), 예탁결제원(SEIBRO), 금융투자협회(KOFIA)의 공식 공개 데이터 및 Investing.com, Reuters, CNBC, Goldman Sachs 보고서 등을 바탕으로 작성된 정보성 자료입니다.</p>
+  <p class="footer-note">⚠️ 본 자료는 투자 권유가 아니며, 모든 투자 판단의 최종 책임은 투자자 본인에게 있습니다. 투자 전 반드시 전문가 상담을 받으시기 바랍니다.</p>
+  <p style="font-family:var(--mono); font-size:11px; color:var(--text-dim); margin-top:12px;">Last Updated: 2026.04.04 · Korean Market Foreign Investor Intelligence Guide</p>
+</footer>
+
+<script>
+  // ── TAB SWITCH ──
+  function switchTab(e, id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ── SCROLL ANIMATIONS ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in, .stagger').forEach(el => observer.observe(el));
+
+  // ── METER BAR ANIMATION ──
+  const meterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll('.meter-bar');
+        bars.forEach(bar => {
+          const target = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => { bar.style.width = target; }, 100);
+        });
+        meterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('section').forEach(s => meterObserver.observe(s));
+</script>
+</body>
+</html>
