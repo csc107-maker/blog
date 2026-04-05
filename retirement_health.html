@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 은퇴 건강보험 완전 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --border: rgba(255,255,255,0.08);
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #484f58;
+    --accent-blue: #58a6ff;
+    --accent-teal: #39d353;
+    --accent-orange: #f0883e;
+    --accent-red: #f85149;
+    --accent-purple: #bc8cff;
+    --accent-gold: #e3b341;
+    --glow-blue: rgba(88,166,255,0.15);
+    --glow-teal: rgba(57,211,83,0.12);
+    --glow-orange: rgba(240,136,62,0.15);
+    --glow-red: rgba(248,81,73,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(88,166,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-year {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--accent-blue);
+    background: rgba(88,166,255,0.1);
+    border: 1px solid rgba(88,166,255,0.25);
+    border-radius: 20px;
+    padding: 4px 16px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e6edf3 0%, #a0b4c8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto 40px;
+    font-weight: 300;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  .section { margin-bottom: 64px; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.15); }
+
+  /* ── STAT GRID ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media(max-width:600px){ .stat-grid { grid-template-columns: 1fr 1fr; } }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.blue::before { background: var(--accent-blue); }
+  .stat-card.teal::before { background: var(--accent-teal); }
+  .stat-card.orange::before { background: var(--accent-orange); }
+  .stat-card.red::before { background: var(--accent-red); }
+  .stat-card.purple::before { background: var(--accent-purple); }
+  .stat-card.gold::before { background: var(--accent-gold); }
+  .stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .stat-value { font-size: 22px; font-weight: 700; line-height: 1.1; }
+  .stat-value.blue { color: var(--accent-blue); }
+  .stat-value.teal { color: var(--accent-teal); }
+  .stat-value.orange { color: var(--accent-orange); }
+  .stat-value.red { color: var(--accent-red); }
+  .stat-value.gold { color: var(--accent-gold); }
+  .stat-note { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    position: relative;
+  }
+  .flow-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    text-align: center;
+    width: 100%;
+    max-width: 340px;
+    position: relative;
+    z-index: 1;
+  }
+  .flow-node.start {
+    background: linear-gradient(135deg, rgba(88,166,255,0.15), rgba(88,166,255,0.05));
+    border-color: rgba(88,166,255,0.4);
+  }
+  .flow-node-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .flow-node-title { font-size: 15px; font-weight: 700; }
+  .flow-node-title.blue { color: var(--accent-blue); }
+  .flow-node-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .flow-arrow {
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, var(--border), rgba(255,255,255,0.2), var(--border));
+    position: relative;
+  }
+  .flow-arrow::after {
+    content: '▼';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-dim);
+  }
+  .flow-arrow-label {
+    position: absolute;
+    right: calc(50% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    color: var(--accent-orange);
+    white-space: nowrap;
+  }
+
+  .branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  @media(max-width:600px){ .branch { grid-template-columns: 1fr; } }
+  .branch::before {
+    content: '';
+    position: absolute;
+    top: -32px; left: 25%; right: 25%;
+    height: 1px;
+    background: var(--border);
+  }
+  .branch-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .branch-node::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .branch-node.green::before { background: var(--accent-teal); }
+  .branch-node.red::before { background: var(--accent-red); }
+  .branch-node.orange::before { background: var(--accent-orange); }
+  .branch-node.blue::before { background: var(--accent-blue); }
+  .branch-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .branch-title.green { color: var(--accent-teal); }
+  .branch-title.red { color: var(--accent-red); }
+  .branch-title.orange { color: var(--accent-orange); }
+  .branch-title.blue { color: var(--accent-blue); }
+  .branch-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .branch-item .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .dot-green { background: var(--accent-teal); }
+  .dot-red { background: var(--accent-red); }
+  .dot-orange { background: var(--accent-orange); }
+  .dot-blue { background: var(--accent-blue); }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-wrap { overflow-x: auto; }
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+  }
+  .compare-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .compare-table th:first-child { border-radius: 10px 0 0 0; }
+  .compare-table th:last-child { border-radius: 0 10px 0 0; }
+  .compare-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .compare-table .item-col { color: var(--text); font-weight: 500; font-size: 13px; }
+  .val-green { color: var(--accent-teal); font-weight: 600; }
+  .val-orange { color: var(--accent-orange); font-weight: 600; }
+  .val-red { color: var(--accent-red); font-weight: 600; }
+  .val-blue { color: var(--accent-blue); font-weight: 600; }
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* ── CRITERIA CARDS ── */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media(max-width:600px){ .criteria-grid { grid-template-columns: 1fr; } }
+  .criteria-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .criteria-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .criteria-head {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .criteria-body { font-size: 12px; color: var(--text-muted); line-height: 1.8; }
+  .criteria-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tag-danger { background: rgba(248,81,73,0.15); color: var(--accent-red); border: 1px solid rgba(248,81,73,0.25); }
+  .tag-warn   { background: rgba(240,136,62,0.15); color: var(--accent-orange); border: 1px solid rgba(240,136,62,0.25); }
+  .tag-ok     { background: rgba(57,211,83,0.12); color: var(--accent-teal); border: 1px solid rgba(57,211,83,0.2); }
+  .tag-info   { background: rgba(88,166,255,0.12); color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.25); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-box {
+    border-left: 3px solid var(--accent-blue);
+    background: rgba(88,166,255,0.07);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 16px 0;
+  }
+  .highlight-box strong { color: var(--accent-blue); }
+  .warn-box {
+    border-left: 3px solid var(--accent-orange);
+    background: rgba(240,136,62,0.07);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 16px 0;
+  }
+  .warn-box strong { color: var(--accent-orange); }
+  .danger-box {
+    border-left: 3px solid var(--accent-red);
+    background: rgba(248,81,73,0.07);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 16px 0;
+  }
+  .danger-box strong { color: var(--accent-red); }
+
+  /* ── CASE CARDS ── */
+  .case-list { display: flex; flex-direction: column; gap: 12px; }
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .case-card:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-1px); }
+  .case-badge {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .badge-green { background: rgba(57,211,83,0.12); color: var(--accent-teal); border: 1px solid rgba(57,211,83,0.2); }
+  .badge-orange { background: rgba(240,136,62,0.12); color: var(--accent-orange); border: 1px solid rgba(240,136,62,0.2); }
+  .badge-red { background: rgba(248,81,73,0.12); color: var(--accent-red); border: 1px solid rgba(248,81,73,0.2); }
+  .badge-blue { background: rgba(88,166,255,0.12); color: var(--accent-blue); border: 1px solid rgba(88,166,255,0.2); }
+  .case-condition { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+  .case-action { font-size: 14px; font-weight: 600; color: var(--text); }
+  .case-note { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── PROCESS TIMELINE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent-blue), transparent);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -28px; top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent-blue);
+  }
+  .tl-item.done::before { background: var(--accent-blue); }
+  .tl-item.warn::before { border-color: var(--accent-orange); background: var(--accent-orange); }
+  .tl-item.danger::before { border-color: var(--accent-red); background: var(--accent-red); }
+  .tl-time { font-size: 11px; color: var(--accent-blue); font-weight: 600; margin-bottom: 4px; }
+  .tl-item.warn .tl-time { color: var(--accent-orange); }
+  .tl-item.danger .tl-time { color: var(--accent-red); }
+  .tl-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .tl-body { font-size: 12px; color: var(--text-muted); }
+
+  /* ── SOLAR SECTION ── */
+  .solar-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width:600px){ .solar-compare { grid-template-columns: 1fr; } }
+  .solar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .solar-card::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+  .solar-card.green::after { background: var(--accent-teal); }
+  .solar-card.amber::after { background: var(--accent-gold); }
+  .solar-icon { font-size: 28px; margin-bottom: 12px; }
+  .solar-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+  .solar-title.green { color: var(--accent-teal); }
+  .solar-title.amber { color: var(--accent-gold); }
+  .solar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 12px;
+  }
+  .solar-row:last-child { border-bottom: none; }
+  .solar-row .label { color: var(--text-muted); }
+  .solar-row .value { font-weight: 600; }
+
+  /* ── FOOTER NOTE ── */
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    padding: 32px 24px 48px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate { animation: fadeUp 0.5s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 56px 0;
+  }
+
+  /* ── PILL BADGE ── */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .pill::before { content: '●'; font-size: 7px; }
+  .pill.ok { background: rgba(57,211,83,0.1); color: var(--accent-teal); }
+  .pill.warn { background: rgba(240,136,62,0.1); color: var(--accent-orange); }
+  .pill.danger { background: rgba(248,81,73,0.1); color: var(--accent-red); }
+  .pill.info { background: rgba(88,166,255,0.1); color: var(--accent-blue); }
+
+  /* ── PERCENT BAR ── */
+  .pbar-wrap { margin: 8px 0; }
+  .pbar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom-5px; margin-bottom: 5px; }
+  .pbar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .pbar-fill { height: 100%; border-radius: 3px; }
+  .pbar-fill.blue { background: var(--accent-blue); }
+  .pbar-fill.teal { background: var(--accent-teal); }
+  .pbar-fill.orange { background: var(--accent-orange); }
+  .pbar-fill.red { background: var(--accent-red); }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero animate">
+  <div class="hero-year">2026년 기준 완전 가이드</div>
+  <h1>은퇴 후 건강보험<br>완전 해부</h1>
+  <p class="hero-sub">
+    퇴직 직후 찾아오는 건강보험료 폭탄, 자녀 피부양자 등재,<br>
+    임의계속가입, 태양광 사업까지 — 한눈에 이해하는 시각 가이드
+  </p>
+</div>
+
+<div class="container">
+
+  <!-- ═══ SECTION 1: 핵심 수치 ═══ -->
+  <div class="section animate delay-1">
+    <div class="section-label">핵심 수치 2026</div>
+    <div class="stat-grid">
+      <div class="stat-card blue">
+        <div class="stat-label">2026년 건강보험료율</div>
+        <div class="stat-value blue">7.19%</div>
+        <div class="stat-note">전년 대비 +0.1%p 인상</div>
+      </div>
+      <div class="stat-card teal">
+        <div class="stat-label">피부양자 소득 기준</div>
+        <div class="stat-value teal">2,000만</div>
+        <div class="stat-note">연간 합산소득 (원) 이하</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-label">재산 기준 (피부양자)</div>
+        <div class="stat-value orange">9억</div>
+        <div class="stat-note">재산세 과세표준 초과 시 탈락</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">사업소득 기준</div>
+        <div class="stat-value red">1원+</div>
+        <div class="stat-note">사업자등록 시 즉시 탈락</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-label">임의계속가입 신청 기한</div>
+        <div class="stat-value" style="color:var(--accent-gold);">2개월</div>
+        <div class="stat-note">최초 고지서 납부기한 내</div>
+      </div>
+      <div class="stat-card" style="border-top-color: var(--accent-purple);">
+        <div class="stat-label">임의계속가입 유지 기간</div>
+        <div class="stat-value" style="color:var(--accent-purple);">36개월</div>
+        <div class="stat-note">최대 3년간 직장 수준 유지</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 2: 퇴직 후 4가지 경로 ═══ -->
+  <div class="section animate">
+    <div class="section-label">경로 분기</div>
+    <div class="section-title">퇴직 후 건강보험, 4가지 갈림길</div>
+
+    <div class="flow">
+      <!-- 출발: 직장가입자 -->
+      <div class="flow-node start">
+        <div class="flow-node-label">현재 상태</div>
+        <div class="flow-node-title blue">직장가입자</div>
+        <div class="flow-node-sub">회사 50% 부담 · 소득에만 부과</div>
+      </div>
+      <div class="flow-arrow" style="position:relative;">
+        <span style="position:absolute;left:50%;transform:translateX(-50%) translateY(-4px);font-size:11px;color:var(--accent-orange);white-space:nowrap;background:var(--bg);padding:0 6px;">퇴직 순간</span>
+      </div>
+
+      <!-- 4개 분기 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;">
+
+        <div class="branch-node green">
+          <div class="branch-title green">① 피부양자 등재</div>
+          <div class="branch-item"><span class="dot dot-green"></span><span>자녀·배우자 직장보험에 등록</span></div>
+          <div class="branch-item"><span class="dot dot-green"></span><span>건강보험료 완전 면제 (0원)</span></div>
+          <div class="branch-item"><span class="dot dot-green"></span><span>자녀 보험료 변동 없음</span></div>
+          <div style="margin-top:10px;"><span class="pill ok">최우선 검토</span></div>
+        </div>
+
+        <div class="branch-node" style="border-color: rgba(188,140,255,0.3);">
+          <div class="branch-title" style="color:var(--accent-purple);">② 임의계속가입</div>
+          <div class="branch-item"><span class="dot" style="background:var(--accent-purple);"></span><span>최대 36개월 직장 수준 유지</span></div>
+          <div class="branch-item"><span class="dot" style="background:var(--accent-purple);"></span><span>2개월 내 신청 필수</span></div>
+          <div class="branch-item"><span class="dot" style="background:var(--accent-purple);"></span><span>월 평균 15만 원+ 절약 가능</span></div>
+          <div style="margin-top:10px;"><span class="pill info">한시적 완충</span></div>
+        </div>
+
+        <div class="branch-node red">
+          <div class="branch-title red">③ 지역가입자 전환</div>
+          <div class="branch-item"><span class="dot dot-red"></span><span>소득 + 재산 합산 부과</span></div>
+          <div class="branch-item"><span class="dot dot-red"></span><span>회사 부담 없음 (100% 본인)</span></div>
+          <div class="branch-item"><span class="dot dot-red"></span><span>재산 많을수록 폭탄 증가</span></div>
+          <div style="margin-top:10px;"><span class="pill danger">최악 시나리오</span></div>
+        </div>
+
+        <div class="branch-node blue">
+          <div class="branch-title blue">④ 재취업 (직장가입)</div>
+          <div class="branch-item"><span class="dot dot-blue"></span><span>다시 직장가입자 자격 취득</span></div>
+          <div class="branch-item"><span class="dot dot-blue"></span><span>고용주 50% 부담 재개</span></div>
+          <div class="branch-item"><span class="dot dot-blue"></span><span>건보료 부담 절감 효과</span></div>
+          <div style="margin-top:10px;"><span class="pill info">선택 가능 시</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 3: 피부양자 3대 요건 ═══ -->
+  <div class="section">
+    <div class="section-label">피부양자 자격</div>
+    <div class="section-title">이 3가지, 동시에 충족해야 피부양자</div>
+
+    <div class="criteria-grid">
+      <div class="criteria-card" style="border-color:rgba(57,211,83,0.2);">
+        <div class="criteria-num" style="color:var(--accent-teal);">요건 01</div>
+        <div class="criteria-head">소득 요건</div>
+        <div class="criteria-body">
+          연간 합산소득이 <strong style="color:var(--text);">2,000만 원 이하</strong>여야 합니다.<br><br>
+          ✓ 포함: 이자·배당·사업·근로·공적연금·기타소득<br>
+          ✗ 제외: 개인연금(IRP·연금저축)<br><br>
+          국민연금, 공무원연금 등 공적연금은 전액 합산됩니다.
+        </div>
+        <span class="criteria-tag tag-ok">핵심 관리 항목</span>
+      </div>
+
+      <div class="criteria-card" style="border-color:rgba(240,136,62,0.2);">
+        <div class="criteria-num" style="color:var(--accent-orange);">요건 02</div>
+        <div class="criteria-head">재산 요건</div>
+        <div class="criteria-body">
+          재산세 <strong style="color:var(--text);">과세표준</strong> 기준으로 판단합니다.<br><br>
+          ✓ 5.4억 이하 → 소득 요건만 충족하면 가능<br>
+          ⚠ 5.4억~9억 → 연소득 1,000만 원 이하도 충족<br>
+          ✗ 9억 초과 → 소득 무관 피부양자 불가<br><br>
+          주택·건물·토지 포함 (자동차는 2026.2월부터 제외)
+        </div>
+        <span class="criteria-tag tag-warn">부동산 가격 주의</span>
+      </div>
+
+      <div class="criteria-card" style="border-color:rgba(248,81,73,0.2);">
+        <div class="criteria-num" style="color:var(--accent-red);">요건 03</div>
+        <div class="criteria-head">사업소득 요건</div>
+        <div class="criteria-body">
+          가장 까다로운 함정입니다.<br><br>
+          ✗ 사업자등록 있음 → 소득 <strong style="color:var(--accent-red);">1원이라도</strong> 즉시 탈락<br>
+          ⚠ 사업자등록 없음 → 연 500만 원 이하 허용<br>
+          ✗ 주택임대소득 → 등록 여부 무관 즉시 탈락<br><br>
+          태양광 사업자등록 시 이 요건에서 탈락합니다.
+        </div>
+        <span class="criteria-tag tag-danger">가장 위험한 함정</span>
+      </div>
+
+      <div class="criteria-card" style="border-color:rgba(88,166,255,0.2);">
+        <div class="criteria-num" style="color:var(--accent-blue);">요건 04</div>
+        <div class="criteria-head">부양 요건</div>
+        <div class="criteria-body">
+          등재 가능한 가족 범위입니다.<br><br>
+          ✓ 배우자, 직계존속(부모·조부모)<br>
+          ✓ 직계비속(자녀·손자녀)과 그 배우자<br>
+          △ 형제자매: 재산과표 1.8억 이하 + 미혼 + 65세 이상 또는 30세 미만<br><br>
+          부부 중 한 명이라도 탈락하면 배우자도 함께 탈락!
+        </div>
+        <span class="criteria-tag tag-info">가족 관계 확인 필수</span>
+      </div>
+    </div>
+
+    <div class="danger-box" style="margin-top:20px;">
+      <strong>⚠ 부부 동반 탈락 규정:</strong> 부부는 경제적 단일 생계 단위로 간주됩니다. 남편의 사업소득이 500만 원을 초과하거나 소득 기준을 넘으면, 소득 요건을 충족한 아내도 함께 피부양자 자격을 잃습니다.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 4: 자녀 피해 여부 ═══ -->
+  <div class="section">
+    <div class="section-label">가장 많이 묻는 질문</div>
+    <div class="section-title">자녀 밑으로 들어가면 자녀에게 피해가 있나?</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+      <div class="card" style="border-color:rgba(57,211,83,0.3);text-align:center;padding:32px 20px;">
+        <div style="font-size:40px;font-weight:800;color:var(--accent-teal);margin-bottom:8px;">0원</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;">자녀 건강보험료 증가액</div>
+        <div style="font-size:12px;color:var(--text-muted);">피부양자 등록 전후 변동 없음</div>
+      </div>
+      <div class="card" style="border-color:rgba(57,211,83,0.3);text-align:center;padding:32px 20px;">
+        <div style="font-size:40px;font-weight:800;color:var(--accent-teal);margin-bottom:8px;">0원</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;">부모 건강보험료 (등재 후)</div>
+        <div style="font-size:12px;color:var(--text-muted);">피부양자는 보험료 완전 면제</div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>이유:</strong> 직장가입자의 건강보험료는 오직 <strong>보수월액(월급)</strong>에만 비례합니다. 피부양자를 몇 명 등록하더라도 자녀가 내는 보험료에는 단 한 푼도 변화가 없습니다.
+    </div>
+
+    <div class="card" style="margin-top:20px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text);">실제 절감 효과 비교 (예시: 공시가 7억 아파트 보유, 퇴직 전 월급 400만 원)</div>
+
+      <div class="pbar-wrap">
+        <div class="pbar-label">
+          <span style="font-size:12px;color:var(--text-muted);">지역가입자 전환 시 보험료</span>
+          <span style="font-size:12px;color:var(--accent-red);">약 월 295,880원</span>
+        </div>
+        <div class="pbar-track"><div class="pbar-fill red" style="width:100%;"></div></div>
+      </div>
+      <div class="pbar-wrap" style="margin-top:12px;">
+        <div class="pbar-label">
+          <span style="font-size:12px;color:var(--text-muted);">임의계속가입 시 보험료</span>
+          <span style="font-size:12px;color:var(--accent-orange);">약 월 145,000원</span>
+        </div>
+        <div class="pbar-track"><div class="pbar-fill orange" style="width:49%;"></div></div>
+      </div>
+      <div class="pbar-wrap" style="margin-top:12px;">
+        <div class="pbar-label">
+          <span style="font-size:12px;color:var(--text-muted);">자녀 피부양자 등재 시 보험료</span>
+          <span style="font-size:12px;color:var(--accent-teal);">월 0원</span>
+        </div>
+        <div class="pbar-track"><div class="pbar-fill teal" style="width:1%;"></div></div>
+      </div>
+
+      <div style="margin-top:16px;padding:12px 14px;background:rgba(57,211,83,0.06);border-radius:8px;border:1px solid rgba(57,211,83,0.15);">
+        <div style="font-size:12px;color:var(--text-muted);">피부양자 등재로 연간 절감액</div>
+        <div style="font-size:18px;font-weight:700;color:var(--accent-teal);">약 355만 원 / 년</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">vs 지역가입자 전환 시 대비 (장기요양보험료 포함)</div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:16px;">
+      <strong>주의할 점:</strong> 부모의 소득·재산 서류를 자녀 회사 인사팀에 제출해야 합니다. 퇴직일(자격변동일)로부터 <strong>90일 이내</strong>에 피부양자 자격 취득 신고를 해야 하며, 가능하면 매월 1일에 신고해야 해당 월 지역보험료를 면제받을 수 있습니다.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 5: 임의계속가입 타임라인 ═══ -->
+  <div class="section">
+    <div class="section-label">임의계속가입</div>
+    <div class="section-title">퇴직 후 3년을 버티는 완충 카드</div>
+
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-time">D-Day: 퇴직일</div>
+        <div class="tl-title">직장가입자 자격 상실</div>
+        <div class="tl-body">퇴직 즉시 직장가입자 자격이 사라집니다. 아무 조치를 하지 않으면 자동으로 지역가입자로 전환됩니다.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-time">D+1개월: 최초 고지서 수령</div>
+        <div class="tl-title">지역건강보험료 고지서 도착</div>
+        <div class="tl-body">예상보다 훨씬 높은 금액에 놀라게 됩니다. 이 고지서의 납부 기한이 신청 기산점입니다.</div>
+      </div>
+      <div class="tl-item warn">
+        <div class="tl-time">납부기한 + 2개월 이내 ← 절대 마감</div>
+        <div class="tl-title">임의계속가입 신청 기한</div>
+        <div class="tl-body">이 기한을 단 하루라도 넘기면 영구히 신청 불가합니다. 국민건강보험공단(1577-1000)에 즉시 문의하세요.<br><br>
+          <strong style="color:var(--accent-orange);">조건:</strong> 퇴직 전 18개월 중 365일 이상 직장가입자 자격 유지자</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-time">최대 36개월 (3년)</div>
+        <div class="tl-title">임의계속가입 유지</div>
+        <div class="tl-body">직장가입자 시절 본인 부담 수준으로 보험료를 납부합니다. 이 기간 동안 피부양자 자격 요건을 갖추거나 소득 구조를 재설계할 수 있습니다.</div>
+      </div>
+      <div class="tl-item danger">
+        <div class="tl-time">36개월 후</div>
+        <div class="tl-title">임의계속가입 종료 → 지역가입자 전환</div>
+        <div class="tl-body">3년이 지나면 자동으로 지역가입자로 전환됩니다. 이때까지 피부양자 등재 또는 소득 구조 조정을 완료해야 합니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 6: 태양광 사업 비교 ═══ -->
+  <div class="section">
+    <div class="section-label">태양광 사업 vs 피부양자</div>
+    <div class="section-title">두 선택지, 건강보험료로 따져보면?</div>
+
+    <div class="solar-compare">
+      <div class="solar-card green">
+        <div class="solar-icon">🏠</div>
+        <div class="solar-title green">피부양자 등재</div>
+        <div class="solar-row">
+          <span class="label">건강보험료</span>
+          <span class="value" style="color:var(--accent-teal);">월 0원</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">추가 수익</span>
+          <span class="value" style="color:var(--text-muted);">없음</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">초기 비용</span>
+          <span class="value" style="color:var(--accent-teal);">없음</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">조건 관리</span>
+          <span class="value" style="color:var(--accent-orange);">연소득 2,000만 이하</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">리스크</span>
+          <span class="value" style="color:var(--accent-teal);">소득 초과 시 탈락</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">적합 대상</span>
+          <span class="value" style="color:var(--text-muted);">요건 충족 가능한 분</span>
+        </div>
+      </div>
+
+      <div class="solar-card amber">
+        <div class="solar-icon">☀️</div>
+        <div class="solar-title amber">태양광 사업 (100kW)</div>
+        <div class="solar-row">
+          <span class="label">건강보험료</span>
+          <span class="value" style="color:var(--accent-orange);">월 20~40만 원+</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">예상 매출</span>
+          <span class="value" style="color:var(--accent-gold);">월 약 200만 원</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">초기 비용</span>
+          <span class="value" style="color:var(--accent-red);">수억 원 투자</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">피부양자 영향</span>
+          <span class="value" style="color:var(--accent-red);">즉시 탈락</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">리스크</span>
+          <span class="value" style="color:var(--accent-orange);">출력제어·SMP 변동</span>
+        </div>
+        <div class="solar-row">
+          <span class="label">적합 대상</span>
+          <span class="value" style="color:var(--text-muted);">충분한 수익 확보 시</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:14px;">태양광 수익 vs 건강보험료 실질 계산 (100kW 기준)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center;">
+        <div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">월 매출 (SMP+REC)</div>
+          <div style="font-size:18px;font-weight:700;color:var(--accent-gold);">+200만 원</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">건보료 + 소득세 + 유지비</div>
+          <div style="font-size:18px;font-weight:700;color:var(--accent-red);">-50~70만 원</div>
+        </div>
+        <div style="border-left:1px solid var(--border);padding-left:12px;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:4px;">실수령 추정</div>
+          <div style="font-size:18px;font-weight:700;color:var(--accent-teal);">130~150만 원</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-dim);border-top:1px solid var(--border);padding-top:12px;">
+        ※ 소규모(3~10kW 가정용)는 월 수익 5~15만 원 수준으로, 건보료 부담 감안 시 사업자등록 없이 연 500만 원 이하로 운영하는 것이 유리할 수 있습니다.
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top:16px;">
+      <strong>핵심 원칙:</strong> 피부양자 등재가 가능한 상황이라면 건강보험료를 0원으로 유지하는 것이 최우선입니다. 태양광 사업은 수익이 건강보험료를 압도적으로 넘어설 때만 시작하세요.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 7: 직장 vs 지역 비교표 ═══ -->
+  <div class="section">
+    <div class="section-label">상세 비교</div>
+    <div class="section-title">직장가입자 vs 지역가입자 — 무엇이 다른가</div>
+    <div class="table-wrap">
+      <div class="compare-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width:26%;">항목</th>
+              <th style="color:var(--accent-blue);">직장가입자</th>
+              <th style="color:var(--accent-orange);">지역가입자</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="item-col">보험료 부과 기준</td>
+              <td class="val-blue">소득(월급)에만</td>
+              <td class="val-orange">소득 + 재산 합산</td>
+            </tr>
+            <tr>
+              <td class="item-col">고용주 부담</td>
+              <td class="val-blue">50% 부담</td>
+              <td class="val-red">없음 (100% 본인)</td>
+            </tr>
+            <tr>
+              <td class="item-col">피부양자</td>
+              <td class="val-blue">있음 (보험료 면제)</td>
+              <td class="val-red">없음</td>
+            </tr>
+            <tr>
+              <td class="item-col">2026년 월평균</td>
+              <td class="val-blue">160,699원</td>
+              <td class="val-orange">90,242원 *</td>
+            </tr>
+            <tr>
+              <td class="item-col">월 보험료율</td>
+              <td>7.19% × 보수월액 × 50%</td>
+              <td>(7.19% × 소득월액) + 재산점수</td>
+            </tr>
+            <tr>
+              <td class="item-col">재산 반영</td>
+              <td class="val-blue">없음</td>
+              <td class="val-orange">토지·건물·주택 반영</td>
+            </tr>
+            <tr>
+              <td class="item-col">장기요양보험</td>
+              <td>건보료의 12.95%</td>
+              <td>건보료의 12.95%</td>
+            </tr>
+            <tr>
+              <td class="item-col">상한액 (2026)</td>
+              <td>약 918만 원 / 월</td>
+              <td>약 459만 원 / 월</td>
+            </tr>
+            <tr>
+              <td class="item-col">하한액 (2026)</td>
+              <td>20,160원 / 월</td>
+              <td>20,160원 / 월</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-top:8px;">* 지역가입자 평균은 소득 없는 저소득층 포함 평균. 재산 보유 은퇴자의 실제 보험료는 이를 크게 웃돌 수 있습니다.</div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ SECTION 8: 상황별 전략 ═══ -->
+  <div class="section">
+    <div class="section-label">상황별 전략</div>
+    <div class="section-title">나는 어느 케이스? 최적 전략 찾기</div>
+
+    <div class="case-list">
+      <div class="case-card">
+        <div class="case-badge badge-green">A</div>
+        <div>
+          <div class="case-condition">재산세 과세표준 5.4억 이하 + 연소득 2,000만 원 미만</div>
+          <div class="case-action">→ 자녀 피부양자 등재 즉시 신청</div>
+          <div class="case-note">건강보험료 0원 유지 가능. 소규모 태양광(사업자 미등록, 연 500만 이하)은 병행 가능하나 소득 합산 주의.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-badge badge-orange">B</div>
+        <div>
+          <div class="case-condition">재산세 과표 5.4억~9억 + 연소득 1,000만 원 이하</div>
+          <div class="case-action">→ 피부양자 가능하나 소득 정밀 관리 필수</div>
+          <div class="case-note">국민연금 수령액이 합산되므로 정확한 소득 계산 선행. 태양광 사업자등록 시 즉시 탈락. IRP 연금수령으로 소득 분산 검토.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-badge badge-red">C</div>
+        <div>
+          <div class="case-condition">재산세 과표 9억 초과 또는 연소득 2,000만 원 초과</div>
+          <div class="case-action">→ 피부양자 불가 → 임의계속가입 즉시 신청</div>
+          <div class="case-note">최초 지역건보료 고지서 납부기한 2개월 이내 신청. 3년 안에 자산 재배치 또는 소득 구조 조정. 주택담보대출 공제 제도 활용 검토.</div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-badge badge-blue">D</div>
+        <div>
+          <div class="case-condition">태양광 사업 적극 고려 (100kW 이상 대규모)</div>
+          <div class="case-action">→ 수익성 계산 후 결정. 보험료 감수해도 이득인지 확인</div>
+          <div class="case-note">월 200만 원 수익 기준 건보료·세금·유지비 공제 후 130~150만 원 실수령. 피부양자 포기 비용(연 200~300만 원)과 태양광 수익을 비교하여 의사결정.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer-note">
+    <div style="margin-bottom:8px;">※ 이 자료는 2026년 4월 기준으로 작성된 일반 정보입니다.</div>
+    <div>정확한 보험료 산정 및 자격 여부는 국민건강보험공단 ☎ 1577-1000 또는 <br>건강보험공단 홈페이지 보험료 모의계산 서비스를 통해 확인하시기 바랍니다.</div>
+  </div>
+
+</div><!-- /.container -->
+
+</body>
+</html>
