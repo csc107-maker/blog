@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.04.06 코스피 시장 시나리오 분석 — 3개 시나리오 심층 전망</title>
+<meta name="description" content="2026년 4월 6일 월요일 코스피 주가 전망. VIX 23.87, WTI 111달러, 호르무즈 재개방 기대 속 시나리오 A(강세)·B(중립)·C(약세) 심층 분석.">
+<meta name="keywords" content="코스피전망,주가전망,4월6일증시,호르무즈,WTI유가,외국인순매수,시나리오분석">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-card2: #f0f4fa;
+    --border: rgba(0,0,0,0.07);
+    --border-bright: rgba(0,0,0,0.13);
+    --text-primary: #0f1923;
+    --text-secondary: #4a6080;
+    --text-muted: #8fa5be;
+    --bull: #008c5e;
+    --bull-dim: rgba(0,140,94,0.07);
+    --bull-mid: rgba(0,140,94,0.15);
+    --bear: #d42b48;
+    --bear-dim: rgba(212,43,72,0.07);
+    --bear-mid: rgba(212,43,72,0.15);
+    --neutral: #b87000;
+    --neutral-dim: rgba(184,112,0,0.07);
+    --neutral-mid: rgba(184,112,0,0.15);
+    --accent-blue: #1976d2;
+    --accent-purple: #6b4ecf;
+    --glow-bull: 0 4px 24px rgba(0,140,94,0.13);
+    --glow-bear: 0 4px 24px rgba(212,43,72,0.13);
+    --glow-neutral: 0 4px 24px rgba(184,112,0,0.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GRID BACKGROUND ───────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(25,118,210,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(25,118,210,0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── HEADER ────────────────────────────────── */
+  .site-header {
+    padding: 32px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .site-header .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    border: 1px solid var(--border-bright);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .site-header .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--bull);
+    box-shadow: 0 0 8px var(--bull);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── HERO ──────────────────────────────────── */
+  .hero {
+    border-top: 1px solid var(--border-bright);
+    padding-top: 40px;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .hero-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-blue);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .hero-title span.hl {
+    color: var(--neutral);
+    display: inline-block;
+    position: relative;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  .hero-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .hero-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 3px;
+    border: 1px solid;
+    letter-spacing: 0.05em;
+  }
+  .hero-badge.danger { border-color: var(--bear); color: var(--bear); background: var(--bear-dim); }
+  .hero-badge.warn   { border-color: var(--neutral); color: var(--neutral); background: var(--neutral-dim); }
+  .hero-badge.info   { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(79,195,247,0.07); }
+
+  /* ── DIVIDER ───────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright) 30%, var(--border-bright) 70%, transparent);
+    margin: 48px 0;
+  }
+
+  /* ── SECTION HEADER ────────────────────────── */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+  }
+
+  /* ── GLOBAL INDICATORS ─────────────────────── */
+  .indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .ind-cell {
+    background: var(--bg-card);
+    padding: 20px 18px;
+    position: relative;
+  }
+
+  .ind-cell::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .ind-cell.warn::after  { background: var(--neutral); }
+  .ind-cell.danger::after { background: var(--bear); }
+  .ind-cell.ok::after    { background: var(--bull); }
+
+  .ind-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .ind-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .ind-cell.warn  .ind-value { color: var(--neutral); }
+  .ind-cell.danger .ind-value { color: var(--bear); }
+  .ind-cell.ok    .ind-value { color: var(--bull); }
+
+  .ind-status {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* ── RISK METER ────────────────────────────── */
+  .risk-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 28px 28px 24px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .risk-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bear), var(--neutral), var(--neutral) 80%, var(--bear));
+  }
+
+  .risk-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .risk-score-box {
+    text-align: center;
+    min-width: 90px;
+  }
+
+  .risk-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--bear);
+    text-shadow: var(--glow-bear);
+  }
+
+  .risk-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .risk-label {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 10px;
+    background: var(--bear-mid);
+    border: 1px solid var(--bear);
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--bear);
+    letter-spacing: 0.1em;
+  }
+
+  .risk-bars {
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .rbar-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 32px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .rbar-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  .rbar-track {
+    height: 5px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rbar-fill {
+    height: 100%;
+    border-radius: 10px;
+    animation: barGrow 1.2s cubic-bezier(.22,.61,.36,1) forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+
+  @keyframes barGrow {
+    to { transform: scaleX(1); }
+  }
+
+  .rbar-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-align: right;
+  }
+
+  /* ── SCENARIOS ─────────────────────────────── */
+  .scenarios-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 36px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border-bright);
+  }
+
+  /* Scenario Card */
+  .scenario-card {
+    border-radius: 10px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid transparent;
+    transition: transform 0.3s ease;
+  }
+  .scenario-card:hover { transform: translateY(-3px); }
+
+  .scenario-card.bull  { border-color: rgba(0,140,94,0.25);  background: linear-gradient(135deg, #edfaf5 0%, #ffffff 60%); box-shadow: var(--glow-bull); }
+  .scenario-card.mid   { border-color: rgba(184,112,0,0.25);  background: linear-gradient(135deg, #fffbec 0%, #ffffff 60%); box-shadow: var(--glow-neutral); }
+  .scenario-card.bear  { border-color: rgba(212,43,72,0.25);  background: linear-gradient(135deg, #fff0f3 0%, #ffffff 60%); box-shadow: var(--glow-bear); }
+
+  .sc-top-bar {
+    height: 4px;
+    width: 100%;
+  }
+  .bull .sc-top-bar  { background: linear-gradient(90deg, var(--bull), #00c4ff); }
+  .mid  .sc-top-bar  { background: linear-gradient(90deg, var(--neutral), #ff6b00); }
+  .bear .sc-top-bar  { background: linear-gradient(90deg, var(--bear), #ff8c42); }
+
+  .sc-inner { padding: 28px 30px 30px; }
+
+  .sc-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .sc-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .sc-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .sc-label-group {}
+  .sc-label-en {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .bull .sc-label-en { color: var(--bull); }
+  .mid  .sc-label-en { color: var(--neutral); }
+  .bear .sc-label-en { color: var(--bear); }
+
+  .sc-label-ko {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+  }
+
+  .sc-prob-ring {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+  }
+
+  .sc-prob-ring svg {
+    transform: rotate(-90deg);
+    width: 70px;
+    height: 70px;
+  }
+
+  .sc-prob-ring .ring-bg { fill: none; stroke: rgba(0,0,0,0.07); stroke-width: 5; }
+  .sc-prob-ring .ring-fill {
+    fill: none;
+    stroke-width: 5;
+    stroke-linecap: round;
+    animation: ringAnim 1.5s cubic-bezier(.22,.61,.36,1) forwards;
+    stroke-dashoffset: 195.5;
+  }
+
+  .bull .ring-fill { stroke: var(--bull); }
+  .mid  .ring-fill { stroke: var(--neutral); }
+  .bear .ring-fill { stroke: var(--bear); }
+
+  @keyframes ringAnim {
+    to { stroke-dashoffset: var(--target-offset); }
+  }
+
+  .sc-prob-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .bull .sc-prob-num { color: var(--bull); }
+  .mid  .sc-prob-num { color: var(--neutral); }
+  .bear .sc-prob-num { color: var(--bear); }
+
+  .sc-prob-sub {
+    font-size: 8px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* Range Display */
+  .sc-range-block {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 22px;
+    background: rgba(0,0,0,0.03);
+    border-radius: 6px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+  }
+
+  .sc-range-item {
+    flex: 1;
+    text-align: center;
+  }
+
+  .sc-range-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .sc-range-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .bull .sc-range-val { color: var(--bull); }
+  .mid  .sc-range-val { color: var(--neutral); }
+  .bear .sc-range-val { color: var(--bear); }
+
+  .sc-range-sep {
+    width: 1px;
+    height: 36px;
+    background: var(--border-bright);
+    margin: 0 16px;
+  }
+
+  .sc-range-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin: 0 8px;
+  }
+
+  /* Conditions & Sectors */
+  .sc-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 560px) { .sc-two-col { grid-template-columns: 1fr; } }
+
+  .sc-box {
+    border-radius: 6px;
+    padding: 14px 16px;
+  }
+
+  .bull .sc-box  { background: var(--bull-dim); border: 1px solid rgba(0,229,160,0.12); }
+  .mid  .sc-box  { background: var(--neutral-dim); border: 1px solid rgba(255,170,0,0.12); }
+  .bear .sc-box  { background: var(--bear-dim); border: 1px solid rgba(255,59,92,0.12); }
+
+  .sc-box-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .sc-cond-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .sc-cond-item .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .bull .dot { background: var(--bull); }
+  .mid  .dot { background: var(--neutral); }
+  .bear .dot { background: var(--bear); }
+
+  .sector-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sector-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .bull .sector-pill.positive  { border-color: var(--bull); color: var(--bull); background: var(--bull-dim); }
+  .bull .sector-pill.negative  { border-color: var(--text-muted); color: var(--text-muted); }
+  .mid  .sector-pill.positive  { border-color: var(--neutral); color: var(--neutral); background: var(--neutral-dim); }
+  .mid  .sector-pill.negative  { border-color: var(--text-muted); color: var(--text-muted); }
+  .bear .sector-pill.positive  { border-color: var(--accent-purple); color: var(--accent-purple); background: rgba(155,125,255,0.08); }
+  .bear .sector-pill.negative  { border-color: var(--bear); color: var(--bear); background: var(--bear-dim); }
+
+  /* ── PROBABILITY CHART BAR ─────────────────── */
+  .prob-chart {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 28px 28px 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .prob-chart-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  .prob-bar-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 40px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .prob-bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .prob-bar-track {
+    height: 18px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .prob-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    animation: fillAnim 1.4s cubic-bezier(.22,.61,.36,1) forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @keyframes fillAnim { to { transform: scaleX(1); } }
+
+  .prob-bar-pct {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  /* ── ANALYSIS SECTIONS ─────────────────────── */
+  .analysis-block {
+    margin-bottom: 40px;
+  }
+
+  .analysis-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .analysis-sub .tag-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+  }
+
+  .analysis-body {
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  .analysis-body p { margin-bottom: 14px; }
+
+  .analysis-body strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .analysis-body .highlight {
+    background: rgba(0,0,0,0.03);
+    border-left: 2px solid var(--accent-blue);
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 13.5px;
+  }
+
+  .analysis-body .highlight.bull-hl { border-left-color: var(--bull); }
+  .analysis-body .highlight.bear-hl { border-left-color: var(--bear); }
+  .analysis-body .highlight.warn-hl { border-left-color: var(--neutral); }
+
+  /* ── SECTOR TABLE ──────────────────────────── */
+  .sector-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .sector-table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-bright);
+    font-weight: 400;
+  }
+
+  .sector-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: middle;
+  }
+
+  .sector-table tr:hover td { background: rgba(0,0,0,0.02); }
+
+  .sector-table .sect-name { color: var(--text-primary); font-weight: 500; }
+
+  .badge-bull { color: var(--bull); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .badge-bear { color: var(--bear); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .badge-mid  { color: var(--neutral); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  .meter-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .meter-track-sm {
+    width: 80px;
+    height: 4px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .meter-fill-sm {
+    height: 100%;
+    border-radius: 2px;
+  }
+
+  /* ── KEY WATCH ─────────────────────────────── */
+  .watch-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 560px) { .watch-grid { grid-template-columns: 1fr; } }
+
+  .watch-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .watch-card:hover { border-color: var(--border-bright); box-shadow: 0 4px 16px rgba(0,0,0,0.09); }
+
+  .watch-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--accent-blue);
+    opacity: 0.6;
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  .watch-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .watch-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── CONCLUSION ────────────────────────────── */
+  .conclusion-card {
+    background: #ffffff;
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    padding: 32px 30px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+
+  .conclusion-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--bear) 0%, var(--neutral) 50%, var(--bull) 100%);
+  }
+
+  .conclusion-card .quote-mark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    line-height: 0.8;
+    color: rgba(0,0,0,0.04);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    pointer-events: none;
+  }
+
+  .conclusion-text {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+  }
+
+  .conclusion-text strong { color: var(--text-primary); font-weight: 500; }
+
+  .conclusion-text .key-phrase {
+    color: var(--neutral);
+    font-weight: 500;
+  }
+
+  .conclusion-sign {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+
+  /* ── DISCLAIMER ────────────────────────────── */
+  .disclaimer {
+    margin-top: 40px;
+    padding: 16px 20px;
+    background: rgba(255,59,92,0.04);
+    border: 1px solid rgba(255,59,92,0.1);
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .disclaimer strong { color: var(--bear); }
+
+  /* ── HASHTAGS ──────────────────────────────── */
+  .hashtag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 28px;
+  }
+
+  .hashtag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    padding: 3px 8px;
+    background: rgba(0,0,0,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  /* ── RESPONSIVE ────────────────────────────── */
+  @media (max-width: 640px) {
+    .indicators-grid { grid-template-columns: repeat(2, 1fr); }
+    .sc-inner { padding: 20px 18px 22px; }
+    .risk-row { gap: 16px; }
+  }
+
+  /* ── SCROLL ANIMATION ──────────────────────── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger delays */
+  .fade-in:nth-child(2) { transition-delay: 0.1s; }
+  .fade-in:nth-child(3) { transition-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="live-dot"></div>
+    <div class="tag">외국인·기관 모니터</div>
+    <div class="tag">MARKET INTEL</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-date">2026. 04. 06 MON — SCENARIO ANALYSIS</div>
+    <h1 class="hero-title">
+      KOSPI<br>
+      <span class="hl">3-WAY</span><br>
+      SCENARIO
+    </h1>
+    <p class="hero-subtitle">
+      2026년 4월 3일(금) 글로벌 선행지표를 바탕으로 4월 6일(월) 코스피의 세 가지 시나리오를 면밀히 분석합니다.
+      호르무즈 해협의 운명이 한국 증시의 방향을 결정합니다.
+    </p>
+    <div class="hero-badge-row">
+      <span class="hero-badge danger">⚠ 리스크 점수 80/100</span>
+      <span class="hero-badge warn">WTI $111.54</span>
+      <span class="hero-badge warn">VIX 23.87</span>
+      <span class="hero-badge info">외국인 12일만에 순매수 전환</span>
+    </div>
+  </section>
+
+  <!-- GLOBAL INDICATORS -->
+  <div class="section-header fade-in">
+    <span class="section-num">01 — INDICATORS</span>
+    <h2 class="section-title">4월 3일(금) 핵심 선행지표</h2>
+  </div>
+
+  <div class="indicators-grid fade-in">
+    <div class="ind-cell warn">
+      <div class="ind-label">VIX · 공포지수</div>
+      <div class="ind-value">23.87</div>
+      <div class="ind-status">⚠ 주의 — 25 돌파 시 경보 전환</div>
+    </div>
+    <div class="ind-cell danger">
+      <div class="ind-label">WTI · 국제유가</div>
+      <div class="ind-value">$111.54</div>
+      <div class="ind-status">🔴 경보 — 배럴당 110달러 상회</div>
+    </div>
+    <div class="ind-cell danger">
+      <div class="ind-label">달러-원 환율</div>
+      <div class="ind-value">1,505</div>
+      <div class="ind-status">🔴 경보 — 심리적 마지노선 이탈</div>
+    </div>
+    <div class="ind-cell ok">
+      <div class="ind-label">코스피 종가</div>
+      <div class="ind-value">5,377</div>
+      <div class="ind-status">✅ +2.74% 반등 성공</div>
+    </div>
+    <div class="ind-cell warn">
+      <div class="ind-label">美 10년 국채금리</div>
+      <div class="ind-value">4.34%</div>
+      <div class="ind-status">✅ 안전 — 현수준 유지 중</div>
+    </div>
+    <div class="ind-cell ok">
+      <div class="ind-label">외국인 순매수</div>
+      <div class="ind-value">+9,490억</div>
+      <div class="ind-status">✅ 12거래일 만에 순매수 전환</div>
+    </div>
+  </div>
+
+  <!-- RISK METER -->
+  <div class="risk-block fade-in">
+    <div class="risk-row">
+      <div class="risk-score-box">
+        <div class="risk-number">80</div>
+        <div class="risk-denom">/ 100점</div>
+        <div class="risk-label">극도 위험</div>
+      </div>
+      <div class="risk-bars">
+        <div class="rbar-row">
+          <div class="rbar-name">원달러 환율</div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:100%;background:var(--bear);animation-delay:0.1s"></div></div>
+          <div class="rbar-val" style="color:var(--bear)">20</div>
+        </div>
+        <div class="rbar-row">
+          <div class="rbar-name">EWY 하락폭</div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:75%;background:var(--bear);animation-delay:0.2s"></div></div>
+          <div class="rbar-val" style="color:var(--bear)">15</div>
+        </div>
+        <div class="rbar-row">
+          <div class="rbar-name">국제 유가</div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:50%;background:var(--neutral);animation-delay:0.3s"></div></div>
+          <div class="rbar-val" style="color:var(--neutral)">10</div>
+        </div>
+        <div class="rbar-row">
+          <div class="rbar-name">VIX 공포지수</div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:15%;background:var(--neutral);animation-delay:0.4s"></div></div>
+          <div class="rbar-val" style="color:var(--neutral)">3</div>
+        </div>
+        <div class="rbar-row">
+          <div class="rbar-name">외국인 순매도</div>
+          <div class="rbar-track"><div class="rbar-fill" style="width:0%;background:var(--bull);animation-delay:0.5s"></div></div>
+          <div class="rbar-val" style="color:var(--bull)">0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBABILITY CHART -->
+  <div class="divider"></div>
+
+  <div class="section-header fade-in">
+    <span class="section-num">02 — PROBABILITY</span>
+    <h2 class="section-title">시나리오별 발생 확률</h2>
+  </div>
+
+  <div class="prob-chart fade-in">
+    <div class="prob-chart-title">4월 6일(월) 코스피 방향 — 확률 분포</div>
+    <div class="prob-bar-row">
+      <div class="prob-bar-label" style="color:var(--neutral)">시나리오 B</div>
+      <div class="prob-bar-track">
+        <div class="prob-bar-fill" style="width:45%;background:linear-gradient(90deg,rgba(255,170,0,0.5),rgba(255,170,0,0.3));color:var(--neutral);animation-delay:0.1s">중립 · 완만한 상승</div>
+      </div>
+      <div class="prob-bar-pct" style="color:var(--neutral)">45%</div>
+    </div>
+    <div class="prob-bar-row">
+      <div class="prob-bar-label" style="color:var(--bull)">시나리오 A</div>
+      <div class="prob-bar-track">
+        <div class="prob-bar-fill" style="width:30%;background:linear-gradient(90deg,rgba(0,229,160,0.5),rgba(0,229,160,0.3));color:var(--bull);animation-delay:0.2s">강세 반등</div>
+      </div>
+      <div class="prob-bar-pct" style="color:var(--bull)">30%</div>
+    </div>
+    <div class="prob-bar-row">
+      <div class="prob-bar-label" style="color:var(--bear)">시나리오 C</div>
+      <div class="prob-bar-track">
+        <div class="prob-bar-fill" style="width:25%;background:linear-gradient(90deg,rgba(255,59,92,0.5),rgba(255,59,92,0.3));color:var(--bear);animation-delay:0.3s">약세 하락</div>
+      </div>
+      <div class="prob-bar-pct" style="color:var(--bear)">25%</div>
+    </div>
+  </div>
+
+  <!-- SCENARIO CARDS -->
+  <div class="section-header fade-in">
+    <span class="section-num">03 — SCENARIOS</span>
+    <h2 class="section-title">3대 시나리오 심층 분석</h2>
+  </div>
+
+  <p class="scenarios-intro fade-in">
+    4월 3일 금요일, 코스피는 2.74% 반등하며 희망의 신호를 보냈습니다. 그러나 위험 점수 80점이라는 현실은 냉혹합니다.
+    아래 세 가지 시나리오는 단순한 예측이 아니라, 각 조건이 충족될 경우 발생 가능한 구체적인 시장 경로입니다.
+    어떤 시나리오가 현실이 되든, 핵심은 <strong>미리 준비된 투자자만이 기회를 잡는다</strong>는 사실입니다.
+  </p>
+
+  <!-- SCENARIO A -->
+  <div class="scenario-card bull fade-in">
+    <div class="sc-top-bar"></div>
+    <div class="sc-inner">
+      <div class="sc-head">
+        <div class="sc-badge">
+          <div class="sc-icon">📈</div>
+          <div class="sc-label-group">
+            <div class="sc-label-en">Scenario A · Bullish</div>
+            <div class="sc-label-ko">강세 시나리오</div>
+          </div>
+        </div>
+        <div class="sc-prob-ring">
+          <svg viewBox="0 0 70 70">
+            <circle class="ring-bg" cx="35" cy="35" r="31"/>
+            <!-- circumference = 2*π*31 ≈ 194.8, 30% offset = 194.8*(1-0.30) = 136.4 -->
+            <circle class="ring-fill" cx="35" cy="35" r="31" stroke-dasharray="194.8" style="--target-offset:136.4"/>
+          </svg>
+          <div class="sc-prob-num">30%<div class="sc-prob-sub">확률</div></div>
+        </div>
+      </div>
+
+      <div class="sc-range-block">
+        <div class="sc-range-item">
+          <div class="sc-range-label">하단 지지선</div>
+          <div class="sc-range-val">5,450</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-arrow">→</div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">상단 목표선</div>
+          <div class="sc-range-val">5,550</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">전일 대비</div>
+          <div class="sc-range-val">+1~3%</div>
+        </div>
+      </div>
+
+      <div class="sc-two-col">
+        <div class="sc-box">
+          <div class="sc-box-title">✅ 발동 조건</div>
+          <div class="sc-cond-item"><div class="dot"></div><span>주말 중 호르무즈 해협 정식 개방 합의 발표 — 이란·오만 공동 성명 발효</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>미국-이란 간 휴전 또는 협상 개시 뉴스 유입 (트럼프 발언 완화)</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>WTI 100달러 이하 급락 → 정유·방산 차익 실현, 소비주 반등</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>VIX 20 이하로 복귀 → 글로벌 리스크온 전환 확인</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>달러-원 환율 1,480원대 복귀 → 외국인 추가 순매수 지속</span></div>
+        </div>
+        <div class="sc-box">
+          <div class="sc-box-title">🎯 주목 업종 & 종목</div>
+          <div class="sector-pills">
+            <span class="sector-pill positive">반도체 ▲</span>
+            <span class="sector-pill positive">삼성전자 ▲</span>
+            <span class="sector-pill positive">SK하이닉스 ▲</span>
+            <span class="sector-pill positive">자동차 ▲</span>
+            <span class="sector-pill positive">현대차 ▲</span>
+            <span class="sector-pill positive">바이오 ▲</span>
+            <span class="sector-pill positive">금융 ▲</span>
+            <span class="sector-pill positive">소비재 ▲</span>
+            <span class="sector-pill negative">방산 ▼ 차익실현</span>
+            <span class="sector-pill negative">정유 ▼ 유가하락</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO A DEEP DIVE -->
+  <div class="analysis-block fade-in">
+    <div class="analysis-sub"><span class="tag-num">A-01</span> 시나리오 A — 왜 30%인가</div>
+    <div class="analysis-body">
+      <p>
+        강세 시나리오의 핵심 전제는 <strong>호르무즈 해협의 정식 개방 합의</strong>입니다.
+        4월 3일 이란 외무부 차관이 오만과 공동 통행 프로토콜을 작성 중이라고 밝혔고, 세계 40여 개국이 개방 방안을 모색하는 외교장관 회의를 열었습니다.
+        이 흐름이 주말 사이 공식 합의로 결실을 맺으면 시장은 즉각 강한 반응을 보일 것입니다.
+      </p>
+      <div class="highlight bull-hl">
+        💡 핵심 논거: 3월 반도체 수출이 전년 대비 +151.4% 증가하며 월 300억달러(사상 최대)를 돌파했습니다.
+        지정학적 우려만 걷히면 펀더멘털은 이미 강세 재료가 충분히 준비된 상태입니다.
+        AI 반도체 수요 확대라는 구조적 상승 동력은 훼손되지 않았습니다.
+      </div>
+      <p>
+        단, 30%라는 낮지 않은 확률 부여에는 이유가 있습니다.
+        트럼프 대통령이 "이란을 석기시대로 되돌리겠다"는 강경 발언을 유지하고 있고,
+        4월 3일 당일에도 테헤란 인근 교량 공습이 진행됐습니다.
+        <strong>하루아침에 전황이 뒤집힐 가능성은 현재로서 낮습니다.</strong>
+        강세 시나리오는 '기적의 시나리오'가 아니라, 외교 채널이 살아있는 한 언제든 현실이 될 수 있는 경로입니다.
+      </p>
+      <p>
+        반도체 대형주의 단기 반등을 노린다면, 삼성전자 4.37%·SK하이닉스 5.54%가 이미 4월 3일에 회복된 만큼
+        <strong>추가 상승 여력은 지수 5,500 탈환 여부에 달려있습니다.</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- SCENARIO B -->
+  <div class="scenario-card mid fade-in">
+    <div class="sc-top-bar"></div>
+    <div class="sc-inner">
+      <div class="sc-head">
+        <div class="sc-badge">
+          <div class="sc-icon">➡️</div>
+          <div class="sc-label-group">
+            <div class="sc-label-en">Scenario B · Neutral</div>
+            <div class="sc-label-ko">중립 · 완만한 상승</div>
+          </div>
+        </div>
+        <div class="sc-prob-ring">
+          <svg viewBox="0 0 70 70">
+            <circle class="ring-bg" cx="35" cy="35" r="31"/>
+            <!-- 45% offset = 194.8*(1-0.45) = 107.1 -->
+            <circle class="ring-fill" cx="35" cy="35" r="31" stroke-dasharray="194.8" style="--target-offset:107.1"/>
+          </svg>
+          <div class="sc-prob-num">45%<div class="sc-prob-sub">확률</div></div>
+        </div>
+      </div>
+
+      <div class="sc-range-block">
+        <div class="sc-range-item">
+          <div class="sc-range-label">하단 지지선</div>
+          <div class="sc-range-val">5,350</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-arrow">→</div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">상단 저항선</div>
+          <div class="sc-range-val">5,430</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">전일 대비</div>
+          <div class="sc-range-val">±1%</div>
+        </div>
+      </div>
+
+      <div class="sc-two-col">
+        <div class="sc-box">
+          <div class="sc-box-title">⚖️ 발동 조건</div>
+          <div class="sc-cond-item"><div class="dot"></div><span>호르무즈 협상이 진행 중이나 공식 합의 없이 주말 경과 — "논의 계속" 분위기</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>미국의 이란 공습이 산발적으로 지속되나 확전 없이 현상 유지</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>WTI 105~115달러 사이 횡보 — 유가 급등도 급락도 없는 구간</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>달러-원 환율 1,490~1,520원 사이 등락 반복</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>외국인 소규모 순매수(2,000~5,000억원) 또는 관망 흐름 유지</span></div>
+        </div>
+        <div class="sc-box">
+          <div class="sc-box-title">🔍 차별화 업종</div>
+          <div class="sector-pills">
+            <span class="sector-pill positive">방산 ▲ 지속</span>
+            <span class="sector-pill positive">정유·에너지 ▲</span>
+            <span class="sector-pill positive">조선 ▲</span>
+            <span class="sector-pill positive">HD현대중공업 ▲</span>
+            <span class="sector-pill positive">GS ▲</span>
+            <span class="sector-pill negative">항공 ▼</span>
+            <span class="sector-pill negative">타이어 ▼</span>
+            <span class="sector-pill negative">화장품 ▼</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO B DEEP DIVE -->
+  <div class="analysis-block fade-in">
+    <div class="analysis-sub"><span class="tag-num">B-01</span> 시나리오 B — 가장 높은 확률, 그러나 함정이 있다</div>
+    <div class="analysis-body">
+      <p>
+        45%라는 최고 확률을 부여받은 시나리오 B는 '현상 유지'처럼 보이지만, 사실 <strong>가장 다루기 어려운 장세</strong>입니다.
+        뚜렷한 방향이 없는 박스권 등락은 개인 투자자의 판단을 흐리게 하고, 고점에서 추격 매수·저점에서 패닉 셀을 유발합니다.
+      </p>
+      <div class="highlight warn-hl">
+        ⚠️ 함정 경보: 이 구간에서 가장 위험한 행동은 "적당히 올라서 팔아야지"라는 심리로 인한 잦은 매매입니다.
+        거래 비용과 세금이 수익을 잠식하는 사이, 진짜 상승 혹은 하락의 모멘텀이 시작될 수 있습니다.
+      </div>
+      <p>
+        시나리오 B에서 주목해야 할 핵심은 <strong>업종 내 차별화</strong>입니다.
+        지수 자체가 5,350~5,430 사이 횡보를 반복하더라도, 방산·정유·조선은 고유가·지정학적 긴장이라는 구조적 수혜를 받으며
+        개별 종목으로는 강한 상승이 가능합니다.
+      </p>
+      <p>
+        반대로 항공, 타이어, 화장품, 호텔·레저처럼 <strong>유가 상승에 비용이 직결되는 섹터</strong>는 지수 횡보와 무관하게
+        4월 3일에 이미 하락 반응을 보였습니다.
+        이 흐름은 호르무즈 불확실성이 해소되지 않는 한 구조적으로 지속됩니다.
+      </p>
+      <p>
+        삼성증권이 4월 월간 코스피 밴드로 제시한 <strong>4,700~5,900포인트</strong>의 중간값이 이 시나리오의 실제 작동 영역입니다.
+        인내심을 갖고 핵심 포지션을 유지하면서 고유가 수혜주의 추가 모멘텀을 노리는 전략이 합리적입니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- SCENARIO C -->
+  <div class="scenario-card bear fade-in">
+    <div class="sc-top-bar"></div>
+    <div class="sc-inner">
+      <div class="sc-head">
+        <div class="sc-badge">
+          <div class="sc-icon">📉</div>
+          <div class="sc-label-group">
+            <div class="sc-label-en">Scenario C · Bearish</div>
+            <div class="sc-label-ko">약세 시나리오</div>
+          </div>
+        </div>
+        <div class="sc-prob-ring">
+          <svg viewBox="0 0 70 70">
+            <circle class="ring-bg" cx="35" cy="35" r="31"/>
+            <!-- 25% offset = 194.8*(1-0.25) = 146.1 -->
+            <circle class="ring-fill" cx="35" cy="35" r="31" stroke-dasharray="194.8" style="--target-offset:146.1"/>
+          </svg>
+          <div class="sc-prob-num">25%<div class="sc-prob-sub">확률</div></div>
+        </div>
+      </div>
+
+      <div class="sc-range-block">
+        <div class="sc-range-item">
+          <div class="sc-range-label">하단 위험선</div>
+          <div class="sc-range-val">5,150</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-arrow">→</div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">상단 저항선</div>
+          <div class="sc-range-val">5,280</div>
+        </div>
+        <div class="sc-range-sep"></div>
+        <div class="sc-range-item">
+          <div class="sc-range-label">전일 대비</div>
+          <div class="sc-range-val">-1~4%</div>
+        </div>
+      </div>
+
+      <div class="sc-two-col">
+        <div class="sc-box">
+          <div class="sc-box-title">🚨 발동 조건</div>
+          <div class="sc-cond-item"><div class="dot"></div><span>트럼프 추가 강경 발언 — "이란 핵시설 직접 타격" 또는 지상군 파병 시사</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>이란의 호르무즈 완전 봉쇄 선언 또는 실제 봉쇄 행위 발생</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>WTI 120달러 돌파 → 오일쇼크 공포 확산</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>VIX 25 이상 급등 → 글로벌 리스크오프 가속</span></div>
+          <div class="sc-cond-item"><div class="dot"></div><span>달러-원 환율 1,530원 재돌파 → 외국인 5,000억원 이상 일평균 순매도 재개</span></div>
+        </div>
+        <div class="sc-box">
+          <div class="sc-box-title">🛡 피해야 할 업종</div>
+          <div class="sector-pills">
+            <span class="sector-pill negative">항공 ▼▼</span>
+            <span class="sector-pill negative">대한항공 ▼▼</span>
+            <span class="sector-pill negative">소비재 ▼</span>
+            <span class="sector-pill negative">유통 ▼</span>
+            <span class="sector-pill negative">금융 ▼</span>
+            <span class="sector-pill negative">은행주 ▼</span>
+            <span class="sector-pill negative">바이오 ▼</span>
+            <span class="sector-pill positive">방산 ▲ 헤지</span>
+            <span class="sector-pill positive">금 ETF ▲ 헤지</span>
+            <span class="sector-pill positive">달러 자산 ▲</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENARIO C DEEP DIVE -->
+  <div class="analysis-block fade-in">
+    <div class="analysis-sub"><span class="tag-num">C-01</span> 시나리오 C — 25%라는 숫자를 가볍게 보면 안 되는 이유</div>
+    <div class="analysis-body">
+      <p>
+        25%라는 수치는 "낮은 확률"처럼 느껴질 수 있습니다. 그러나 금융 시장에서 1/4 확률은 결코 무시할 수 없습니다.
+        4월 3일 당일에도 <strong>장중 미국의 이란 교량 공습 소식에 5,400선이 5,377로 밀렸습니다.</strong>
+        지정학적 뉴스 한 건이 시장 방향 전체를 바꾼 실제 사례입니다.
+      </p>
+      <div class="highlight bear-hl">
+        🔴 최악 시나리오 수치: 하나증권은 이란이 호르무즈를 완전 봉쇄하고 정유시설을 타격받는 최악의 경우 WTI가 배럴당 120달러까지 급등하고,
+        외국인이 일평균 5,000억원 이상 순매도할 수 있다고 경고합니다. 코스피 4,700포인트가 하단 마지노선으로 제시된 이유입니다.
+      </div>
+      <p>
+        시나리오 C가 발동되는 시점에서 가장 빠르게 피해야 할 섹터는 <strong>항공·여행·소비재</strong>입니다.
+        유가 급등은 항공사에 직접적인 연료비 타격을 주며, 고환율·고물가는 소비자 구매력을 동시에 약화시킵니다.
+        반면 방산주와 금 ETF, 달러 자산은 이 구간에서 가장 효과적인 헤지 수단입니다.
+      </p>
+      <p>
+        3월 3일 코스피가 7.24% 폭락(-452p, 역대 최대 낙폭)했을 때, 한화시스템은 +29.14%,
+        한화에어로스페이스는 +19.83%를 기록했습니다.
+        <strong>약세 시나리오에서도 방향만 잘 잡으면 수익을 낼 수 있는 섹터가 존재합니다.</strong>
+      </p>
+      <p>
+        투자자 심리 측면에서도 주의가 필요합니다. 4월 3일처럼 큰 반등 이후의 월요일 장에서,
+        차익 실현 매물이 쏟아지면서 갭 하락이 나타나는 것은 역사적으로 자주 발생하는 패턴입니다.
+        "어제 올랐으니 오늘도 오를 것"이라는 안이한 낙관론은 25%의 약세 가능성 앞에서 위험합니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTOR TABLE -->
+  <div class="section-header fade-in">
+    <span class="section-num">04 — SECTORS</span>
+    <h2 class="section-title">업종별 시나리오 대응 매트릭스</h2>
+  </div>
+
+  <div style="overflow-x:auto;" class="fade-in">
+    <table class="sector-table">
+      <thead>
+        <tr>
+          <th>업종 / 종목</th>
+          <th>시나리오 A (강세)</th>
+          <th>시나리오 B (중립)</th>
+          <th>시나리오 C (약세)</th>
+          <th>핵심 변수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="sect-name">반도체<br><small style="color:var(--text-muted);font-size:11px">삼성전자·SK하이닉스</small></td>
+          <td><span class="badge-bull">▲▲ 강세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:90%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-mid">▲ 소폭 강세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:55%;background:var(--neutral)"></div></div></div></td>
+          <td><span class="badge-bear">▼ 약세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:30%;background:var(--bear)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">외국인 수급·AI 수요</td>
+        </tr>
+        <tr>
+          <td class="sect-name">방산<br><small style="color:var(--text-muted);font-size:11px">한화에어로·한화시스템</small></td>
+          <td><span class="badge-mid">▼ 차익실현</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:30%;background:var(--neutral)"></div></div></div></td>
+          <td><span class="badge-bull">▲▲ 강세지속</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:85%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-bull">▲▲ 급등</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:95%;background:var(--bull)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">지정학 긴장 강도</td>
+        </tr>
+        <tr>
+          <td class="sect-name">정유·에너지<br><small style="color:var(--text-muted);font-size:11px">S-Oil·SK이노·GS</small></td>
+          <td><span class="badge-bear">▼ 약세(유가↓)</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:20%;background:var(--bear)"></div></div></div></td>
+          <td><span class="badge-bull">▲▲ 수혜지속</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:80%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-bull">▲▲ 급등</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:95%;background:var(--bull)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">WTI 가격 방향</td>
+        </tr>
+        <tr>
+          <td class="sect-name">조선<br><small style="color:var(--text-muted);font-size:11px">HD한국조선·HD현대중공업</small></td>
+          <td><span class="badge-bull">▲ 강세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:70%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-bull">▲ 강세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:75%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-mid">▲ 방어</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:50%;background:var(--neutral)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">LNG선·우회항로 수요</td>
+        </tr>
+        <tr>
+          <td class="sect-name">항공·여행<br><small style="color:var(--text-muted);font-size:11px">대한항공·하나투어</small></td>
+          <td><span class="badge-bull">▲ 반등</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:65%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-bear">▼ 부진지속</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:20%;background:var(--bear)"></div></div></div></td>
+          <td><span class="badge-bear">▼▼ 급락</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:5%;background:var(--bear)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">연료비·환율 이중고</td>
+        </tr>
+        <tr>
+          <td class="sect-name">자동차<br><small style="color:var(--text-muted);font-size:11px">현대차·기아</small></td>
+          <td><span class="badge-bull">▲▲ 강세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:80%;background:var(--bull)"></div></div></div></td>
+          <td><span class="badge-mid">→ 혼조</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:45%;background:var(--neutral)"></div></div></div></td>
+          <td><span class="badge-bear">▼ 약세</span><br><div class="meter-inline"><div class="meter-track-sm"><div class="meter-fill-sm" style="width:25%;background:var(--bear)"></div></div></div></td>
+          <td style="font-size:12px;color:var(--text-muted)">환율·소비심리</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KEY WATCHPOINTS -->
+  <div class="section-header fade-in">
+    <span class="section-num">05 — WATCHPOINTS</span>
+    <h2 class="section-title">월요일 시장 방향을 결정할 5대 변수</h2>
+  </div>
+
+  <div class="watch-grid fade-in">
+    <div class="watch-card">
+      <div class="watch-num">1</div>
+      <div>
+        <div class="watch-title">호르무즈 협상 공식화 여부</div>
+        <div class="watch-desc">이란·오만 공동 프로토콜 서명 발표가 있으면 시나리오 A 즉시 발동. "협상 중"만 확인되면 시나리오 B 유지.</div>
+      </div>
+    </div>
+    <div class="watch-card">
+      <div class="watch-num">2</div>
+      <div>
+        <div class="watch-title">트럼프 발언 톤 변화</div>
+        <div class="watch-desc">"석기시대" 발언 유지 = 시나리오 B~C. 협상 개시 발언 = 시나리오 A 전환. 추가 공습 지시 = 시나리오 C 확정.</div>
+      </div>
+    </div>
+    <div class="watch-card">
+      <div class="watch-num">3</div>
+      <div>
+        <div class="watch-title">WTI 유가 방향 — $105 vs $115</div>
+        <div class="watch-desc">105달러 하회 시 정유·방산 차익실현 + 소비주 반등(시나리오 A). 115달러 돌파 시 오일쇼크 공포 재확산(시나리오 C).</div>
+      </div>
+    </div>
+    <div class="watch-card">
+      <div class="watch-num">4</div>
+      <div>
+        <div class="watch-title">외국인 수급 연속성</div>
+        <div class="watch-desc">4월 6일 장 초반 외국인 순매수 유지 여부가 핵심 신호. 순매도 전환 시 시나리오 C 경계. 5,000억원 이상 순매수 = 시나리오 A.</div>
+      </div>
+    </div>
+    <div class="watch-card">
+      <div class="watch-num">5</div>
+      <div>
+        <div class="watch-title">달러-원 환율 1,490원 지지</div>
+        <div class="watch-desc">1,490원대 하락 안착 = 외국인 추가 유입 기대. 1,520원 돌파 = 외국인 이탈 가속 신호. VIX 25 동반 돌파 시 복합 위험.</div>
+      </div>
+    </div>
+    <div class="watch-card">
+      <div class="watch-num">6</div>
+      <div>
+        <div class="watch-title">미국 야간 선물 시장 흐름</div>
+        <div class="watch-desc">한국 시장 개장 전 S&P500 선물·나스닥 선물 방향이 갭 출발 여부를 결정. 주말 뉴욕 증시 혼조는 시나리오 B 지지.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONCLUSION -->
+  <div class="section-header fade-in">
+    <span class="section-num">06 — CONCLUSION</span>
+    <h2 class="section-title">결론 — 불확실성을 안고 가는 법</h2>
+  </div>
+
+  <div class="conclusion-card fade-in">
+    <div class="quote-mark">"</div>
+    <p class="conclusion-text">
+      4월 3일의 반등은 <strong>진짜였습니다.</strong> 외국인이 12거래일 만에 돌아왔고, 코스피는 5,377선을 회복했습니다.
+      그러나 이 반등이 추세 전환의 신호인지, 단순한 기술적 되돌림인지는 <strong>아직 결론이 나지 않았습니다.</strong>
+    </p>
+    <p class="conclusion-text">
+      리스크 점수 80점이라는 경고는 여전히 유효합니다. WTI 111달러, 달러-원 1,505원, VIX 23.87—
+      이 세 지표가 동시에 경보를 울리는 한, <span class="key-phrase">포트폴리오의 30~40%를 현금으로 보유</span>하며
+      다음 충격에 대비하는 것이 현재 국면에서 가장 합리적인 선택입니다.
+    </p>
+    <p class="conclusion-text">
+      시나리오 A(30%)의 기회도, 시나리오 C(25%)의 위험도 동시에 열려있는 지금,
+      <strong>핵심 전략은 하나입니다 —</strong>
+      방산·정유·조선이라는 지정학적 수혜주의 포지션을 일부 유지하면서,
+      반도체 낙폭 과대주는 분할 매수 전략으로 대응하고,
+      항공·소비재는 리스크 해소 신호가 명확해질 때까지 기다리는 것입니다.
+    </p>
+    <p class="conclusion-text">
+      <strong class="key-phrase">시장은 두려움과 탐욕 사이에서 움직입니다.</strong>
+      지금 이 순간은 두 감정이 팽팽히 맞서는 구간입니다.
+      이 균형이 어느 쪽으로 기울어지는지를 가장 먼저 알려주는 신호가
+      바로 <strong>월요일 아침 9시의 외국인 수급 방향</strong>입니다.
+    </p>
+    <div class="conclusion-sign">
+      ANALYSIS DATE: 2026.04.05 (SUN) &nbsp;|&nbsp; REFERENCE: 2026.04.03 CLOSE &nbsp;|&nbsp; SOURCES: KRX · SAMSUNG SEC. · HANA SEC. · KIEP
+    </div>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer fade-in">
+    <strong>⚠ 투자 유의 사항:</strong> 본 분석은 공개된 시장 데이터와 증권사 리포트를 바탕으로 정보 제공 목적으로 작성된 것입니다.
+    특정 종목에 대한 매수·매도 추천이 아니며, 투자의 최종 판단과 책임은 투자자 본인에게 있습니다.
+    주식 투자는 원금 손실 위험이 있으며, 과거의 수익이 미래를 보장하지 않습니다.
+  </div>
+
+  <!-- HASHTAGS -->
+  <div class="hashtag-cloud fade-in">
+    <span class="hashtag">#코스피전망</span>
+    <span class="hashtag">#주가전망</span>
+    <span class="hashtag">#4월6일증시</span>
+    <span class="hashtag">#월요일주식</span>
+    <span class="hashtag">#시나리오분석</span>
+    <span class="hashtag">#호르무즈해협</span>
+    <span class="hashtag">#이란전쟁</span>
+    <span class="hashtag">#WTI유가</span>
+    <span class="hashtag">#VIX공포지수</span>
+    <span class="hashtag">#달러원환율</span>
+    <span class="hashtag">#외국인순매수</span>
+    <span class="hashtag">#삼성전자주가</span>
+    <span class="hashtag">#SK하이닉스</span>
+    <span class="hashtag">#방산주</span>
+    <span class="hashtag">#한화에어로스페이스</span>
+    <span class="hashtag">#에스오일</span>
+    <span class="hashtag">#정유주</span>
+    <span class="hashtag">#조선주</span>
+    <span class="hashtag">#HD한국조선해양</span>
+    <span class="hashtag">#코스피5400</span>
+    <span class="hashtag">#중동리스크</span>
+    <span class="hashtag">#지정학리스크</span>
+    <span class="hashtag">#오일쇼크</span>
+    <span class="hashtag">#AI반도체</span>
+    <span class="hashtag">#개인투자자전략</span>
+    <span class="hashtag">#포트폴리오</span>
+    <span class="hashtag">#리스크관리</span>
+    <span class="hashtag">#외국인기관모니터</span>
+    <span class="hashtag">#코스피2026</span>
+    <span class="hashtag">#주식투자</span>
+  </div>
+
+</div>
+
+<script>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
