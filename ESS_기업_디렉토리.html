@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국내 ESS 제조사 & 시공사 디렉토리 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #00d4ff;
+    --accent2: #00ff88;
+    --accent3: #ff6b35;
+    --accent4: #a78bfa;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+    --maker-tag: #00d4ff22;
+    --const-tag: #00ff8822;
+    --sys-tag: #a78bfa22;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Grid BG ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #0d1526 0%, transparent 100%);
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 6px 18px;
+    border-radius: 2px;
+    margin-bottom: 28px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    animation: fadeDown 0.7s 0.1s ease both;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero-sub {
+    margin-top: 16px;
+    color: var(--text-dim);
+    font-size: 15px;
+    font-weight: 300;
+    animation: fadeDown 0.7s 0.2s ease both;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    animation: fadeDown 0.7s 0.3s ease both;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ── Tabs ── */
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    flex: 1;
+    min-width: 160px;
+    padding: 18px 24px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-muted);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(0,212,255,0.05); }
+  .tab-btn:hover:not(.active) { color: var(--text); background: rgba(255,255,255,0.03); }
+
+  .tab-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .tab-dot.blue { background: var(--accent); }
+  .tab-dot.green { background: var(--accent2); }
+  .tab-dot.purple { background: var(--accent4); }
+
+  /* ── Section ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 60px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: none;
+  }
+
+  .section.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .section-title span { color: var(--accent); }
+
+  .section-desc {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  /* ── Cards Grid ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    animation: cardIn 0.5s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+
+  .card.maker { border-top: 3px solid var(--accent); }
+  .card.maker:hover { border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,212,255,0.1); }
+
+  .card.constructor { border-top: 3px solid var(--accent2); }
+  .card.constructor:hover { border-color: var(--accent2); box-shadow: 0 20px 40px rgba(0,255,136,0.1); }
+
+  .card.system { border-top: 3px solid var(--accent4); }
+  .card.system:hover { border-color: var(--accent4); box-shadow: 0 20px 40px rgba(167,139,250,0.1); }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100px; height: 100px;
+    border-radius: 0 0 0 100%;
+    opacity: 0.04;
+  }
+
+  .card.maker::before { background: var(--accent); }
+  .card.constructor::before { background: var(--accent2); }
+  .card.system::before { background: var(--accent4); }
+
+  .card-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .card-name {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .card-name-en {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge.top { background: rgba(255,107,53,0.15); color: var(--accent3); border: 1px solid rgba(255,107,53,0.3); }
+  .badge.listed { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
+  .badge.specialist { background: rgba(167,139,250,0.1); color: var(--accent4); border: 1px solid rgba(167,139,250,0.2); }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    border-left: 2px solid var(--border);
+    padding-left: 12px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .tag.blue { background: var(--maker-tag); color: var(--accent); border: 1px solid rgba(0,212,255,0.15); }
+  .tag.green { background: var(--const-tag); color: var(--accent2); border: 1px solid rgba(0,255,136,0.15); }
+  .tag.purple { background: var(--sys-tag); color: var(--accent4); border: 1px solid rgba(167,139,250,0.15); }
+
+  .card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .meta-item { }
+
+  .meta-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .meta-value {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── Notice Box ── */
+  .notice {
+    background: rgba(255,107,53,0.08);
+    border: 1px solid rgba(255,107,53,0.25);
+    border-left: 4px solid var(--accent3);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .notice-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+  .notice-text { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+
+  .notice-text strong { color: var(--accent3); }
+
+  /* ── Flow Chart ── */
+  .flow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+
+  .flow-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .flow-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .flow-step {
+    flex-shrink: 0;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .flow-step-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: border-color 0.2s;
+  }
+
+  .flow-step-box.blue { border-color: rgba(0,212,255,0.4); color: var(--accent); }
+  .flow-step-box.green { border-color: rgba(0,255,136,0.4); color: var(--accent2); }
+  .flow-step-box.purple { border-color: rgba(167,139,250,0.4); color: var(--accent4); }
+  .flow-step-box.orange { border-color: rgba(255,107,53,0.4); color: var(--accent3); }
+
+  .flow-step-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--text-muted);
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 20px 40px; }
+    .section { padding: 40px 20px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .stats-row { gap: 24px; }
+    .flow-steps { gap: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">KOREA ESS INDUSTRY DIRECTORY 2025</div>
+  <h1>국내 <span>ESS</span> 제조사 &<br>시공사 디렉토리</h1>
+  <p class="hero-sub">에너지저장시스템(ESS) 배터리 제조 · PCS/EMS 공급 · EPC 시공까지 국내 핵심 기업 총정리</p>
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num">4.3GW</span>
+      <div class="stat-label">국내 누적 ESS 설비 (2023)</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">세계 4위</span>
+      <div class="stat-label">글로벌 ESS 설치 규모</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">45조원</span>
+      <div class="stat-label">2036년까지 정부 투자 목표</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">6GW</span>
+      <div class="stat-label">2030년 누적 설비 목표</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('makers', this)">
+    <span class="tab-dot blue"></span> 배터리 제조사
+  </button>
+  <button class="tab-btn" onclick="switchTab('system', this)">
+    <span class="tab-dot purple"></span> PCS·EMS 공급사
+  </button>
+  <button class="tab-btn" onclick="switchTab('constructors', this)">
+    <span class="tab-dot green"></span> EPC·시공사
+  </button>
+  <button class="tab-btn" onclick="switchTab('flow', this)">
+    <span class="tab-dot blue"></span> 사업 구조
+  </button>
+</div>
+
+<!-- ════════════════ 배터리 제조사 ════════════════ -->
+<div class="section active" id="section-makers">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🔋 국내 <span>배터리 제조사</span></div>
+      <div class="section-desc">ESS용 셀·팩·시스템을 제조하는 핵심 기업. LFP 전환 가속 중.</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <div class="notice-icon">⚡</div>
+    <div class="notice-text">
+      <strong>2026년 최신 동향:</strong> 블룸버그NEF ESS Tier1 리스트에 한국 기업 중 <strong>LG에너지솔루션</strong>이 유일하게 선정(2026년 2월). 국내 배터리 3사 모두 전기차에서 ESS로 무게중심 이동 중이며, LFP(리튬인산철) 배터리 기반 ESS 시스템 확대가 핵심 전략.
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card maker" style="animation-delay:0.0s">
+      <div class="card-rank">RANK #01 · BNEF Tier1 선정</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">LG에너지솔루션</div>
+          <div class="card-name-en">LG ENERGY SOLUTION</div>
+        </div>
+        <div>
+          <span class="badge top">🏆 Tier 1</span>
+        </div>
+      </div>
+      <div class="card-desc">
+        국내 배터리 1위. ESS 전문 자회사 버테크(Vertech)를 통해 북미 시장 공략 중. 2027년 국내 오창 공장에서 ESS용 LFP 배터리 양산 예정. 테슬라 추정 미국 기업에 5.9조 원 규모 LFP ESS 배터리 공급 계약(역대 최대).
+      </div>
+      <div class="card-tags">
+        <span class="tag blue">LFP 배터리</span>
+        <span class="tag blue">ESS 완제품</span>
+        <span class="tag blue">턴키 솔루션</span>
+        <span class="tag blue">북미 생산</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">주요 제품</div>
+          <div class="meta-value">LGES ESS</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KRX 상장</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">배터리 유형</div>
+          <div class="meta-value">NCM / LFP</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">글로벌 점유율</div>
+          <div class="meta-value">14.1% (2위)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card maker" style="animation-delay:0.1s">
+      <div class="card-rank">RANK #02 · 완제품 SBB 시리즈</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">삼성SDI</div>
+          <div class="card-name-en">SAMSUNG SDI</div>
+        </div>
+        <div>
+          <span class="badge listed">KOSPI</span>
+        </div>
+      </div>
+      <div class="card-desc">
+        ESS 완제품 SBB(Samsung Battery Box) 시리즈로 글로벌 에너지 기업 공략. 미국 인디애나 공장 전기차 라인 일부를 ESS용으로 전환. 2조 원 규모 ESS LFP 배터리 수주 공시(2025).
+      </div>
+      <div class="card-tags">
+        <span class="tag blue">SBB 2.0</span>
+        <span class="tag blue">각형 LFP</span>
+        <span class="tag blue">일체형 ESS</span>
+        <span class="tag blue">글로벌 EPC</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">주요 제품</div>
+          <div class="meta-value">SBB 2.0</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KRX 상장</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">배터리 유형</div>
+          <div class="meta-value">NCM / LFP</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">글로벌 점유율</div>
+          <div class="meta-value">5.7% (4위)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card maker" style="animation-delay:0.2s">
+      <div class="card-rank">RANK #03 · ESS 전환 가속</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">SK온</div>
+          <div class="card-name-en">SK ON</div>
+        </div>
+        <div>
+          <span class="badge listed">SK이노 계열</span>
+        </div>
+      </div>
+      <div class="card-desc">
+        미국 테네시 공장에서 ESS 전용 생산 비중 확대. 미국 플랫아이언 에너지와 1GWh 규모 ESS 공급 계약 체결(약 2조 원). 파우치형 LFP 배터리 기반 ESS 제품 공급 본격화.
+      </div>
+      <div class="card-tags">
+        <span class="tag blue">파우치형 LFP</span>
+        <span class="tag blue">북미 현지화</span>
+        <span class="tag blue">재생에너지 연계</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">비상장(SK이노)</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">배터리 유형</div>
+          <div class="meta-value">NCM / LFP</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">글로벌 점유율</div>
+          <div class="meta-value">3.6% (5위)</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">핵심 시장</div>
+          <div class="meta-value">북미·유럽</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card maker" style="animation-delay:0.3s">
+      <div class="card-rank">RANK #04 · 태양광 연계 특화</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">한화솔루션<br><small style="font-weight:400;font-size:14px">큐셀 부문</small></div>
+          <div class="card-name-en">HANWHA SOLUTIONS / QCELLS</div>
+        </div>
+        <div>
+          <span class="badge listed">KOSPI</span>
+        </div>
+      </div>
+      <div class="card-desc">
+        태양광과 ESS를 결합한 통합 에너지 솔루션 제공. 한화큐셀 미국 법인과 LG에너지솔루션 간 4.8GWh ESS 공급 계약. 재생에너지-ESS 연계 사업 확대 중.
+      </div>
+      <div class="card-tags">
+        <span class="tag blue">태양광+ESS</span>
+        <span class="tag blue">에너지 통합</span>
+        <span class="tag blue">미국 사업</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">핵심 사업</div>
+          <div class="meta-value">RE+ESS 통합</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">주력 시장</div>
+          <div class="meta-value">국내·미국</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KRX 상장</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">연계 분야</div>
+          <div class="meta-value">태양광 EPC</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════ PCS·EMS 공급사 ════════════════ -->
+<div class="section" id="section-system">
+  <div class="section-header">
+    <div>
+      <div class="section-title">⚙️ <span>PCS·EMS</span> 공급사</div>
+      <div class="section-desc">전력변환장치(PCS)와 에너지관리시스템(EMS)은 ESS 사업비의 25% 이상을 차지하는 핵심 설비.</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card system" style="animation-delay:0.0s">
+      <div class="card-rank">PCS · 주파수조정 특화</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">효성중공업</div>
+          <div class="card-name-en">HYOSUNG HEAVY INDUSTRIES</div>
+        </div>
+        <span class="badge specialist">PCS 전문</span>
+      </div>
+      <div class="card-desc">
+        국내 대형 ESS 시공 실적 다수 보유. 전북 김제 한전 154kV 주파수 조정용 48MW ESS, 인천 영흥 태양광 연계 7MW·18MWh, 평창풍력 연계 6MW 등 주요 레퍼런스 확보.
+      </div>
+      <div class="card-tags">
+        <span class="tag purple">PCS 제조</span>
+        <span class="tag purple">주파수조정</span>
+        <span class="tag purple">신재생 연계</span>
+        <span class="tag purple">마이크로그리드</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">주요 레퍼런스</div>
+          <div class="meta-value">48MW 김제ESS</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KRX 상장</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">전문 영역</div>
+          <div class="meta-value">PCS · 변압기</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">적용 분야</div>
+          <div class="meta-value">산업·발전용</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card system" style="animation-delay:0.1s">
+      <div class="card-rank">PCS · LS Electric 계열</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">LS ELECTRIC</div>
+          <div class="card-name-en">LS ELECTRIC CO., LTD.</div>
+        </div>
+        <span class="badge listed">KOSPI</span>
+      </div>
+      <div class="card-desc">
+        전력기기 국내 1위 기업. ESS용 PCS와 전력 관리 솔루션 제공. 산업용·발전용 ESS 공급 레퍼런스 다수 보유. 스마트에너지 사업 확대 중.
+      </div>
+      <div class="card-tags">
+        <span class="tag purple">PCS</span>
+        <span class="tag purple">전력관리</span>
+        <span class="tag purple">스마트에너지</span>
+        <span class="tag purple">산업용 ESS</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">핵심 제품</div>
+          <div class="meta-value">PCS · SCADA</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KRX 상장</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">전문 영역</div>
+          <div class="meta-value">전력기기 통합</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">사업 범위</div>
+          <div class="meta-value">국내·글로벌</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card system" style="animation-delay:0.2s">
+      <div class="card-rank">EMS · 태양광 통합 솔루션</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">신성이엔지</div>
+          <div class="card-name-en">SHINSUNG E&G</div>
+        </div>
+        <span class="badge listed">KOSDAQ</span>
+      </div>
+      <div class="card-desc">
+        태양광 모듈 제조에서 EPC·ESS 연계 솔루션까지 확장. 자체 ECO Platform으로 RE100 컨설팅 및 태양광+ESS 통합 서비스 제공. ESS 브랜드 평판 국내 Top10 진입.
+      </div>
+      <div class="card-tags">
+        <span class="tag purple">EMS</span>
+        <span class="tag purple">태양광 EPC</span>
+        <span class="tag purple">RE100</span>
+        <span class="tag purple">ECO Platform</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">핵심 서비스</div>
+          <div class="meta-value">EPC + EMS</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장 여부</div>
+          <div class="meta-value">KOSDAQ</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">플랫폼</div>
+          <div class="meta-value">ECO Platform</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">적용 시장</div>
+          <div class="meta-value">국내·CIS·동남아</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card system" style="animation-delay:0.3s">
+      <div class="card-rank">PCS · 데스틴파워</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">데스틴파워</div>
+          <div class="card-name-en">DESTIN POWER</div>
+        </div>
+        <span class="badge specialist">PCS 강자</span>
+      </div>
+      <div class="card-desc">
+        전력변환장치(PCS) 분야 국내 선두 전문기업. ESS 사업비의 25% 이상을 차지하는 PCS 부문에서 강세. 태양광 연계형 및 산업용 ESS PCS 공급 다수 레퍼런스.
+      </div>
+      <div class="card-tags">
+        <span class="tag purple">PCS 전문</span>
+        <span class="tag purple">전력변환</span>
+        <span class="tag purple">계통연계</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">전문 분야</div>
+          <div class="meta-value">PCS 제조</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">시장 점유</div>
+          <div class="meta-value">국내 PCS 선두</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">적용 대상</div>
+          <div class="meta-value">태양광·산업용</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">제품 라인</div>
+          <div class="meta-value">PCS 전 용량</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card system" style="animation-delay:0.4s">
+      <div class="card-rank">EMS · HD현대 계열</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">HD현대에너지솔루션</div>
+          <div class="card-name-en">HD HYUNDAI ENERGY SOLUTION</div>
+        </div>
+        <span class="badge listed">KOSDAQ</span>
+      </div>
+      <div class="card-desc">
+        태양광 모듈 및 ESS 통합 에너지 솔루션 제공. HD현대 계열사로 대규모 프로젝트 수행 능력 보유. ESS 브랜드 평판 상위권.
+      </div>
+      <div class="card-tags">
+        <span class="tag purple">통합 에너지</span>
+        <span class="tag purple">태양광 모듈</span>
+        <span class="tag purple">EMS</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">계열</div>
+          <div class="meta-value">HD현대그룹</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장</div>
+          <div class="meta-value">KOSDAQ</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">주요 제품</div>
+          <div class="meta-value">모듈+ESS</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">사업 범위</div>
+          <div class="meta-value">국내·해외</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════ EPC·시공사 ════════════════ -->
+<div class="section" id="section-constructors">
+  <div class="section-header">
+    <div>
+      <div class="section-title">🏗️ <span>EPC·시공사</span></div>
+      <div class="section-desc">설계(Engineering)·조달(Procurement)·시공(Construction)을 담당하는 태양광+ESS 현장 전문기업.</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <div class="notice-icon">⚠️</div>
+    <div class="notice-text">
+      <strong>현장 핵심 이슈:</strong> 한전 변전소 용량 부족 시 <strong>태양광 허가용량의 4배 이상 ESS 배터리 설치</strong>를 조건으로 계통 연계가 가능합니다. 예: 태양광 100kW → ESS 400kWh 이상 설치 시 D/L 접속 가능. 이에 따라 태양광+ESS 통합 EPC 역량이 시공사 선택의 핵심 기준이 됩니다.
+    </div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card constructor" style="animation-delay:0.0s">
+      <div class="card-rank">대형 EPC · 에너지 종합</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">한화에너지</div>
+          <div class="card-name-en">HANWHA ENERGY</div>
+        </div>
+        <span class="badge top">대형 EPC</span>
+      </div>
+      <div class="card-desc">
+        태양광과 에너지관리시스템을 결합한 비즈니스 모델 개발 중. 국내외 대규모 태양광+ESS 프로젝트 수행. 한화그룹 계열 에너지 사업 총괄.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">대형 EPC</span>
+        <span class="tag green">태양광+ESS</span>
+        <span class="tag green">EMS 통합</span>
+        <span class="tag green">발전소 개발</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">사업 범위</div>
+          <div class="meta-value">개발·EPC·O&M</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">프로젝트 규모</div>
+          <div class="meta-value">MW급 이상</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">계열</div>
+          <div class="meta-value">한화그룹</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">주요 시장</div>
+          <div class="meta-value">국내·미국·호주</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card constructor" style="animation-delay:0.1s">
+      <div class="card-rank">EPC · ESS 시스템 통합</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">피앤이솔루션</div>
+          <div class="card-name-en">P&E SOLUTION</div>
+        </div>
+        <span class="badge specialist">시스템 통합</span>
+      </div>
+      <div class="card-desc">
+        설계-시공-유지보수 일관 서비스. 소용량 가정용 ESS부터 MWh급 산업용까지 전 영역 대응. 태양광 ESS 하이브리드 및 옥외형 등 다양한 솔루션 제공.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">턴키 시공</span>
+        <span class="tag green">가정용~산업용</span>
+        <span class="tag green">유지보수</span>
+        <span class="tag green">하이브리드형</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">서비스 범위</div>
+          <div class="meta-value">설계~O&M 전체</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">용량 범위</div>
+          <div class="meta-value">소용량~MWh</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장</div>
+          <div class="meta-value">KOSDAQ</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">전문 형태</div>
+          <div class="meta-value">옥외·하이브리드</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card constructor" style="animation-delay:0.2s">
+      <div class="card-rank">EPC · 계통 연계 특화</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">쏠라테크</div>
+          <div class="card-name-en">SOLARTECH</div>
+        </div>
+        <span class="badge specialist">계통연계 특화</span>
+      </div>
+      <div class="card-desc">
+        한전 선로 용량 부족 지역 ESS 조건부 계통 연계 전문. 태양광 허가용량 4배 이상 ESS 설치 시 즉시 연계 서비스 제공. REC 가중치 5.0 적용 조건 사업 컨설팅.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">계통연계 특화</span>
+        <span class="tag green">REC 5.0</span>
+        <span class="tag green">컨설팅</span>
+        <span class="tag green">태양광+ESS</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">핵심 서비스</div>
+          <div class="meta-value">계통연계 컨설팅</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">ESS 조건</div>
+          <div class="meta-value">태양광 4배 이상</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">적용 지역</div>
+          <div class="meta-value">계통 포화 지역</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">REC 가중치</div>
+          <div class="meta-value">5.0 적용 조건</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card constructor" style="animation-delay:0.3s">
+      <div class="card-rank">EPC · 태양광 전문</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">현대글로벌<br><small style="font-weight:400;font-size:13px">(태양광 EPC)</small></div>
+          <div class="card-name-en">HYUNDAI GLOBAL</div>
+        </div>
+        <span class="badge specialist">EPC 전문</span>
+      </div>
+      <div class="card-desc">
+        태양광 EPC 사업과 ESS 통합 EMS 솔루션(U&EMS) 보유. 다양한 전력기기(인버터·PCS·배터리·미터기) 통합 관리 플랫폼으로 발전수익 및 ESS 효율 극대화 서비스 제공.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">태양광 EPC</span>
+        <span class="tag green">U&EMS</span>
+        <span class="tag green">통합 관리</span>
+        <span class="tag green">발전수익 최적화</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">플랫폼</div>
+          <div class="meta-value">U&EMS</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">적용 기기</div>
+          <div class="meta-value">인버터·PCS·배터리</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">전문 분야</div>
+          <div class="meta-value">태양광+ESS EPC</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">REC 연계</div>
+          <div class="meta-value">야간 방전 최적화</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card constructor" style="animation-delay:0.4s">
+      <div class="card-rank">EPC · 대용량 전문</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">그랜드썬기술단</div>
+          <div class="card-name-en">GRANDSUN</div>
+        </div>
+        <span class="badge specialist">대용량 시공</span>
+      </div>
+      <div class="card-desc">
+        MW급 대용량 태양광 발전소 시공 전문. 자체 시공팀·A/S팀·O&M팀 운영으로 설계-시공-유지보수 원스톱 서비스. 광양항, 경북 성주, 경남 창녕 등 주요 레퍼런스 보유.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">MW급 시공</span>
+        <span class="tag green">직영 O&M</span>
+        <span class="tag green">24시간 모니터링</span>
+        <span class="tag green">구조물 설계</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">시공 규모</div>
+          <div class="meta-value">MW급 이상</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">운영 체계</div>
+          <div class="meta-value">직영팀 운영</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">모니터링</div>
+          <div class="meta-value">24H 능동제어</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">주요 레퍼런스</div>
+          <div class="meta-value">광양항 1.22MW</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card constructor" style="animation-delay:0.5s">
+      <div class="card-rank">부품 제조 · ESS 케이스</div>
+      <div class="card-header">
+        <div>
+          <div class="card-name">서진시스템</div>
+          <div class="card-name-en">SEOJIN SYSTEM</div>
+        </div>
+        <span class="badge listed">KOSDAQ</span>
+      </div>
+      <div class="card-desc">
+        ESS 배터리 컨테이너·랙 등 부품 제조 전문. 삼성SDI·SK온에 이어 LG에너지솔루션과도 협력 추진 중. 2024년 ESS 사업 매출 비중 52.4%. 연간 매출 1조 원 달성.
+      </div>
+      <div class="card-tags">
+        <span class="tag green">ESS 컨테이너</span>
+        <span class="tag green">배터리 랙</span>
+        <span class="tag green">부품 제조</span>
+        <span class="tag green">배터리 3사 협력</span>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <div class="meta-label">주요 고객</div>
+          <div class="meta-value">삼성SDI·SK온·LGES</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">2024 매출</div>
+          <div class="meta-value">1조 원 이상</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">상장</div>
+          <div class="meta-value">KOSDAQ</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">ESS 비중</div>
+          <div class="meta-value">52.4% (2024)</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════ 사업 구조 ════════════════ -->
+<div class="section" id="section-flow">
+  <div class="section-header">
+    <div>
+      <div class="section-title">📊 ESS <span>사업 구조</span> & 밸류체인</div>
+      <div class="section-desc">태양광+ESS 프로젝트의 전체 밸류체인과 각 참여 주체의 역할을 한눈에.</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-title">// VALUE CHAIN — 태양광+ESS 프로젝트 흐름</div>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-box blue">셀·배터리 제조</div>
+        <div class="flow-step-sub">LG엔솔·삼성SDI<br>SK온</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box purple">PCS·EMS 공급</div>
+        <div class="flow-step-sub">효성중공업<br>LS Electric</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box green">EPC 시공</div>
+        <div class="flow-step-sub">한화에너지<br>그랜드썬 등</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box orange">계통 연계</div>
+        <div class="flow-step-sub">한전 협의<br>ESS 조건부</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-step-box blue">운영·O&M</div>
+        <div class="flow-step-sub">발전사업자<br>EMS 플랫폼</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-title">// ISSUE MAP — 현장 3대 장벽</div>
+    <div class="flow-steps">
+      <div class="flow-step" style="min-width:160px">
+        <div class="flow-step-box orange">변전소 포화</div>
+        <div class="flow-step-sub">전국 205개소<br>계통관리변전소 지정</div>
+      </div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-step" style="min-width:160px">
+        <div class="flow-step-box orange">REC 가중치 미결</div>
+        <div class="flow-step-sub">분특법 시행 후<br>ESS 가중치 미확정</div>
+      </div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-step" style="min-width:160px">
+        <div class="flow-step-box orange">CMI 보험 불가</div>
+        <div class="flow-step-sub">화재 리스크로<br>보험 가입 어려움</div>
+      </div>
+      <div class="flow-arrow">=</div>
+      <div class="flow-step" style="min-width:160px">
+        <div class="flow-step-box" style="border-color:rgba(255,107,53,0.6);color:#ff6b35">사업 중단 위험</div>
+        <div class="flow-step-sub">금융 계약 해지<br>투자 손실 발생</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div style="overflow-x:auto; margin-top: 20px;">
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr style="background:var(--surface2);border-bottom:2px solid var(--accent);">
+          <th style="padding:14px 16px;text-align:left;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;">기업명</th>
+          <th style="padding:14px 16px;text-align:left;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;">분류</th>
+          <th style="padding:14px 16px;text-align:left;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;">핵심 역할</th>
+          <th style="padding:14px 16px;text-align:left;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;">상장</th>
+          <th style="padding:14px 16px;text-align:left;color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;">특이사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:12px 16px;font-weight:700;">LG에너지솔루션</td>
+          <td style="padding:12px 16px;"><span class="tag blue" style="font-size:10px;">배터리 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">셀·팩·턴키 ESS</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KRX</td>
+          <td style="padding:12px 16px;color:var(--accent2);font-size:12px;">BNEF Tier1 유일 한국기업</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+          <td style="padding:12px 16px;font-weight:700;">삼성SDI</td>
+          <td style="padding:12px 16px;"><span class="tag blue" style="font-size:10px;">배터리 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">SBB 완제품 ESS</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KRX</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">2조원 LFP ESS 수주</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:12px 16px;font-weight:700;">SK온</td>
+          <td style="padding:12px 16px;"><span class="tag blue" style="font-size:10px;">배터리 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">파우치형 LFP ESS</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">비상장</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">테네시 ESS 전용 라인</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+          <td style="padding:12px 16px;font-weight:700;">효성중공업</td>
+          <td style="padding:12px 16px;"><span class="tag purple" style="font-size:10px;">PCS 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">대형 PCS·변압기</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KRX</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">김제 48MW 레퍼런스</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:12px 16px;font-weight:700;">LS ELECTRIC</td>
+          <td style="padding:12px 16px;"><span class="tag purple" style="font-size:10px;">PCS 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">PCS·전력관리</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KRX</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">전력기기 국내 1위</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+          <td style="padding:12px 16px;font-weight:700;">신성이엔지</td>
+          <td style="padding:12px 16px;"><span class="tag purple" style="font-size:10px;">EMS</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">EPC·EMS 통합</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KOSDAQ</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">RE100 ECO Platform</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:12px 16px;font-weight:700;">한화에너지</td>
+          <td style="padding:12px 16px;"><span class="tag green" style="font-size:10px;">EPC 시공</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">개발·EPC·O&M</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">비상장</td>
+          <td style="padding:12px 16px;color:var(--text-dim);font-size:12px;">한화그룹 에너지 총괄</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);background:rgba(255,255,255,0.01);">
+          <td style="padding:12px 16px;font-weight:700;">서진시스템</td>
+          <td style="padding:12px 16px;"><span class="tag green" style="font-size:10px;">부품 제조</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">ESS 컨테이너·랙</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">KOSDAQ</td>
+          <td style="padding:12px 16px;color:var(--accent2);font-size:12px;">배터리 3사 공급</td>
+        </tr>
+        <tr style="background:rgba(255,255,255,0.01);">
+          <td style="padding:12px 16px;font-weight:700;">쏠라테크</td>
+          <td style="padding:12px 16px;"><span class="tag green" style="font-size:10px;">EPC 시공</span></td>
+          <td style="padding:12px 16px;color:var(--text-dim);">계통연계 컨설팅</td>
+          <td style="padding:12px 16px;color:var(--text-dim);">비상장</td>
+          <td style="padding:12px 16px;color:var(--accent2);font-size:12px;">한전 조건부 연계 특화</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div style="font-size:14px;color:var(--text-dim);margin-bottom:8px;">📌 데이터 기준: 2025~2026년 공개 자료 (BNEF·SNE리서치·각사 공시·언론 보도 종합)</div>
+  <div>참고 기관: 한국에너지공단 · 한국전력공사 · 산업통상자원부 · 전력거래소 · Bloomberg NEF · SNE리서치</div>
+  <div style="margin-top:8px;color:var(--text-muted);">※ 본 자료는 공개 정보 기반 참고용이며, 투자 판단의 근거로 사용할 수 없습니다. 사업 추진 전 각 기관 최신 공고를 확인하시기 바랍니다.</div>
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('active');
+    btn.classList.add('active');
+    // re-trigger card animations
+    document.querySelectorAll('#section-' + id + ' .card').forEach((card, i) => {
+      card.style.animation = 'none';
+      card.offsetHeight;
+      card.style.animation = `cardIn 0.4s ${i * 0.07}s ease both`;
+    });
+  }
+</script>
+</body>
+</html>
