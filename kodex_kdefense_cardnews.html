@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>K방산 카드뉴스 — KODEX K방산TOP10 완전 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --card-w: min(420px, 100vw);
+  --card-h: min(560px, calc(var(--card-w) * 4 / 3));
+  --serif: 'Noto Serif KR', Georgia, serif;
+  --sans: 'Noto Sans KR', sans-serif;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #111;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ── STAGE ── */
+.stage {
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+
+/* ── CARD WRAPPER ── */
+.card-track-outer {
+  width: var(--card-w);
+  height: var(--card-h);
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+}
+
+.card-track {
+  display: flex;
+  height: 100%;
+  width: calc(var(--card-w) * 10);
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
+}
+
+/* ── SINGLE CARD ── */
+.card {
+  width: var(--card-w);
+  height: var(--card-h);
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ── CARD BACKGROUNDS ── */
+.card-1  { background: linear-gradient(160deg, #0a0a0a 0%, #1a0500 60%, #3d0c00 100%); }
+.card-2  { background: linear-gradient(145deg, #030f1c 0%, #04203a 55%, #083360 100%); }
+.card-3  { background: linear-gradient(155deg, #060d06 0%, #0a2010 55%, #0f3318 100%); }
+.card-4  { background: linear-gradient(150deg, #0e0802 0%, #271900 55%, #4a2e00 100%); }
+.card-5  { background: linear-gradient(145deg, #080010 0%, #160030 55%, #280060 100%); }
+.card-6  { background: linear-gradient(155deg, #0a0303 0%, #200a08 55%, #3d1410 100%); }
+.card-7  { background: linear-gradient(145deg, #030a10 0%, #081828 55%, #0d2840 100%); }
+.card-8  { background: linear-gradient(150deg, #060c00 0%, #121e00 55%, #202e04 100%); }
+.card-9  { background: linear-gradient(155deg, #0d0006 0%, #220010 55%, #380018 100%); }
+.card-10 { background: linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 55%, #2a2a2a 100%); }
+
+/* noise overlay on every card */
+.card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── CARD INNER ── */
+.card-inner {
+  position: relative;
+  z-index: 1;
+  padding: 28px 28px 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card-top {
+  position: absolute;
+  top: 24px; left: 28px; right: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+.card-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+.badge-red    { color: #ff6b5b; border-color: rgba(255,107,91,0.4); background: rgba(255,107,91,0.1); }
+.badge-blue   { color: #5bc4ff; border-color: rgba(91,196,255,0.4); background: rgba(91,196,255,0.1); }
+.badge-green  { color: #5bff9a; border-color: rgba(91,255,154,0.4); background: rgba(91,255,154,0.1); }
+.badge-gold   { color: #ffd166; border-color: rgba(255,209,102,0.4); background: rgba(255,209,102,0.1); }
+.badge-purple { color: #c084fc; border-color: rgba(192,132,252,0.4); background: rgba(192,132,252,0.1); }
+.badge-white  { color: #e0e0e0; border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+
+.card-num {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+
+/* ── BIG DECORATIVE NUMBER ── */
+.deco-num {
+  position: absolute;
+  right: -0.04em;
+  bottom: -0.1em;
+  font-family: var(--serif);
+  font-size: clamp(140px, 40vw, 220px);
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* ── EYEBROW ── */
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: currentColor;
+}
+
+/* ── HEADLINE ── */
+.headline {
+  font-family: var(--serif);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  color: #fff;
+}
+.headline .em { display: block; }
+.hl-xl { font-size: clamp(30px, 8vw, 40px); }
+.hl-lg  { font-size: clamp(24px, 6vw, 32px); }
+.hl-md  { font-size: clamp(20px, 5vw, 26px); }
+
+/* ── ACCENT COLOR VARIANTS ── */
+.c-red    { color: #ff6b5b; }
+.c-blue   { color: #5bc4ff; }
+.c-green  { color: #5bff9a; }
+.c-gold   { color: #ffd166; }
+.c-purple { color: #c084fc; }
+.c-orange { color: #ff9f43; }
+
+/* ── BODY TEXT ── */
+.card-body {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 16px;
+}
+.card-body strong { color: rgba(255,255,255,0.9); }
+
+/* ── DATA ROW ── */
+.data-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.data-chip {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 8px 12px;
+  flex: 1;
+  min-width: 80px;
+}
+.dc-label { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+.dc-value { font-size: clamp(15px, 4vw, 19px); font-weight: 700; line-height: 1; }
+.dc-sub   { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+/* ── TABLE ── */
+.mini-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+.mini-table thead td { color: rgba(255,255,255,0.35); font-size: 10px; letter-spacing: 0.08em; padding: 0 0 6px; }
+.mini-table tbody tr { border-top: 1px solid rgba(255,255,255,0.08); }
+.mini-table tbody tr.total { border-top: 1px solid rgba(255,255,255,0.25); }
+.mini-table td { padding: 6px 0; color: rgba(255,255,255,0.75); }
+.mini-table td:last-child { text-align: right; }
+.mini-table .hl { color: #ffd166; font-weight: 700; }
+.mini-table .pos { color: #5bff9a; }
+
+/* ── BAR LIST ── */
+.bar-list { margin-bottom: 14px; }
+.bar-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.bar-name { font-size: 11px; color: rgba(255,255,255,0.5); width: 100px; flex-shrink: 0; text-align: right; }
+.bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.bar-fill  { height: 100%; border-radius: 3px; }
+.bar-val   { font-size: 11px; color: rgba(255,255,255,0.7); width: 40px; text-align: right; flex-shrink: 0; font-weight: 600; }
+
+/* ── TIMELINE ── */
+.tl { border-left: 1px solid rgba(255,255,255,0.15); padding-left: 14px; margin-bottom: 14px; }
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-item::before { content: ''; position: absolute; left: -18px; top: 5px; width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+.tl-date { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; margin-bottom: 1px; }
+.tl-text { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+.tl-text strong { color: rgba(255,255,255,0.9); }
+
+/* ── VERDICT BOX ── */
+.verdict-box {
+  border-left: 3px solid;
+  padding: 10px 12px;
+  border-radius: 0 6px 6px 0;
+  background: rgba(255,255,255,0.05);
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.verdict-box strong { color: #fff; }
+.vb-red    { border-color: #ff6b5b; }
+.vb-blue   { border-color: #5bc4ff; }
+.vb-green  { border-color: #5bff9a; }
+.vb-gold   { border-color: #ffd166; }
+.vb-purple { border-color: #c084fc; }
+
+/* ── PRO-CON ── */
+.pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.pc-card { border-radius: 8px; padding: 10px; }
+.pc-card.pro { background: rgba(91,255,154,0.07); border: 1px solid rgba(91,255,154,0.2); }
+.pc-card.con { background: rgba(255,107,91,0.07); border: 1px solid rgba(255,107,91,0.2); }
+.pc-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px; }
+.pc-card.pro .pc-label { color: #5bff9a; }
+.pc-card.con .pc-label { color: #ff6b5b; }
+.pc-text { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.65; }
+.pc-text strong { color: rgba(255,255,255,0.85); }
+
+/* ── STRATEGY LIST ── */
+.strat-list { list-style: none; margin-bottom: 14px; }
+.strat-list li { display: flex; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.65; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.strat-list li::before { content: '→'; color: #ffd166; flex-shrink: 0; }
+.strat-list li:last-child { border-bottom: none; }
+
+/* ── SCHEDULE ── */
+.sched { margin-bottom: 14px; }
+.sched-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 12px; }
+.sched-item:last-child { border-bottom: none; }
+.sched-date { font-size: 10px; color: rgba(255,255,255,0.35); width: 90px; flex-shrink: 0; letter-spacing: 0.04em; }
+.sched-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.dot-done { background: #5bff9a; }
+.dot-upcoming { background: #ffd166; }
+.sched-text { color: rgba(255,255,255,0.65); }
+.sched-tag { font-size: 9px; padding: 2px 7px; border-radius: 2px; flex-shrink: 0; margin-left: auto; font-weight: 700; letter-spacing: 0.06em; }
+.tag-done { background: rgba(91,255,154,0.15); color: #5bff9a; }
+.tag-up   { background: rgba(255,209,102,0.15); color: #ffd166; }
+
+/* ── RISK SUMMARY GRID ── */
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.risk-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 10px 11px; }
+.ri-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 3px; }
+.ri-level { font-size: 10px; margin-bottom: 5px; }
+.ri-desc  { font-size: 10px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* ── HASHTAGS ── */
+.hashtag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.hashtag-row span { font-size: 10px; color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 3px; }
+
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  width: var(--card-w);
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+.prog-dot {
+  width: 20px; height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.prog-dot.active {
+  background: #fff;
+  width: 28px;
+}
+
+/* ── NAVIGATION ── */
+.nav-btns {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.nav-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-btn:hover { background: rgba(255,255,255,0.2); }
+.nav-btn:active { transform: scale(0.93); }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+.nav-counter {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.12em;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ── DIVIDER LINE IN CARD ── */
+.card-divider { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 12px 0; }
+
+/* ── QUOTE ── */
+.quote-block {
+  border-left: 3px solid rgba(255,255,255,0.2);
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* big stat */
+.big-stat { margin-bottom: 14px; }
+.big-stat .bs-val { font-family: var(--serif); font-size: clamp(44px, 13vw, 64px); font-weight: 900; line-height: 1; }
+.big-stat .bs-unit { font-size: 18px; color: rgba(255,255,255,0.5); }
+.big-stat .bs-label { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; margin-top: 4px; }
+.big-stat .bs-yoy { font-size: 13px; font-weight: 700; margin-top: 3px; }
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- PROGRESS DOTS -->
+  <div class="progress-bar-wrap" id="progressBar"></div>
+
+  <!-- CARD TRACK -->
+  <div class="card-track-outer">
+    <div class="card-track" id="track">
+
+      <!-- ─── CARD 1: 표지 ─── -->
+      <div class="card card-1">
+        <div class="card-top">
+          <span class="card-badge badge-red">K방산 카드뉴스</span>
+          <span class="card-num">1 / 10</span>
+        </div>
+        <div class="deco-num">K</div>
+        <div class="card-inner">
+          <p class="eyebrow">2026년 4월 8일 기준</p>
+          <h2 class="headline hl-xl">
+            KODEX<br>
+            <span class="em c-red">K방산TOP10</span>
+            ETF<br>완전 분석
+          </h2>
+          <p class="card-body">실적 · 리스크 · 투자 전략<br>10장으로 총정리합니다</p>
+          <div class="hashtag-row">
+            <span>#K방산</span><span>#방산ETF</span><span>#투자전략</span><span>#2026방산</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 2: 미-이란 휴전 ─── -->
+      <div class="card card-2">
+        <div class="card-top">
+          <span class="card-badge badge-blue">🕊 속보</span>
+          <span class="card-num">2 / 10</span>
+        </div>
+        <div class="deco-num">2</div>
+        <div class="card-inner">
+          <p class="eyebrow">2026.04.08 — 극적 합의</p>
+          <h2 class="headline hl-lg">
+            미-이란<br>
+            <span class="c-blue">2주 휴전</span><br>성사
+          </h2>
+          <div class="quote-block">
+            "이란이 호르무즈 해협 개방에 동의하는 조건으로 이란에 대한 폭격을 2주간 중단하기로 했다." — 트럼프
+          </div>
+          <div class="data-row">
+            <div class="data-chip">
+              <div class="dc-label">국제 유가</div>
+              <div class="dc-value c-blue">▼ 급락</div>
+              <div class="dc-sub">$100↑ → 하락 전환</div>
+            </div>
+            <div class="data-chip">
+              <div class="dc-label">달러-원</div>
+              <div class="dc-value c-blue">▼ 하락</div>
+              <div class="dc-sub">원화 가치 회복</div>
+            </div>
+          </div>
+          <div class="verdict-box vb-blue">
+            4월 10일 파키스탄 이슬라마바드에서 미-이란 공식 협상 개시. <strong>휴전 ≠ 종전</strong> — 지정학 리스크 재점화 가능성 상존.
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 3: ETF 기본 정보 ─── -->
+      <div class="card card-3">
+        <div class="card-top">
+          <span class="card-badge badge-green">ETF 정보</span>
+          <span class="card-num">3 / 10</span>
+        </div>
+        <div class="deco-num">3</div>
+        <div class="card-inner">
+          <p class="eyebrow">KODEX K방산TOP10 · 0080G0</p>
+          <h2 class="headline hl-md">
+            <span class="c-green">진짜 방산 기업</span>만<br>담은 ETF
+          </h2>
+          <table class="mini-table">
+            <tbody>
+              <tr><td style="color:rgba(255,255,255,0.4);font-size:10px;">운용사</td><td>삼성자산운용</td></tr>
+              <tr><td style="color:rgba(255,255,255,0.4);font-size:10px;">상장일</td><td>2025년 7월 15일</td></tr>
+              <tr><td style="color:rgba(255,255,255,0.4);font-size:10px;">순자산</td><td>약 2,200억 원</td></tr>
+              <tr><td style="color:rgba(255,255,255,0.4);font-size:10px;">총보수</td><td>연 0.45%</td></tr>
+              <tr><td style="color:rgba(255,255,255,0.4);font-size:10px;">리밸런싱</td><td>연 2회 (6·12월)</td></tr>
+            </tbody>
+          </table>
+          <div class="data-row">
+            <div class="data-chip">
+              <div class="dc-label">선별 기준 ①</div>
+              <div class="dc-value" style="font-size:14px;color:#5bff9a;">방산 매출</div>
+              <div class="dc-sub">실제 매출 비중</div>
+            </div>
+            <div class="data-chip">
+              <div class="dc-label">선별 기준 ②</div>
+              <div class="dc-value" style="font-size:14px;color:#5bff9a;">수출 비중</div>
+              <div class="dc-sub">고마진 구조</div>
+            </div>
+            <div class="data-chip">
+              <div class="dc-label">선별 기준 ③</div>
+              <div class="dc-value" style="font-size:14px;color:#5bff9a;">AI 방산</div>
+              <div class="dc-sub">기술 보유 여부</div>
+            </div>
+          </div>
+          <p class="card-body">BIG4(한화에어로, 현대로템, LIG넥스원, KAI)에 <strong>약 80% 집중</strong> 투자.</p>
+        </div>
+      </div>
+
+      <!-- ─── CARD 4: 2025 실적 ─── -->
+      <div class="card card-4">
+        <div class="card-top">
+          <span class="card-badge badge-gold">2025 실적</span>
+          <span class="card-num">4 / 10</span>
+        </div>
+        <div class="deco-num">4</div>
+        <div class="card-inner">
+          <p class="eyebrow">방산 BIG4 합산</p>
+          <h2 class="headline hl-lg">
+            영업이익<br>
+            <span class="c-gold">4.63조 원</span><br>
+            <span style="font-size:0.6em;font-weight:400;color:rgba(255,255,255,0.5);">역대 최대 · 2년 만에 3.7배</span>
+          </h2>
+          <table class="mini-table">
+            <thead><tr><td>기업</td><td>영업이익</td><td style="text-align:right;">YoY</td></tr></thead>
+            <tbody>
+              <tr><td>한화에어로스페이스</td><td>3조 345억</td><td class="pos" style="text-align:right;">+101%</td></tr>
+              <tr><td>현대로템 ★</td><td>1조 56억</td><td class="pos" style="text-align:right;">+132%</td></tr>
+              <tr><td>LIG넥스원</td><td>3,507억</td><td class="pos" style="text-align:right;">+52%</td></tr>
+              <tr><td>KAI</td><td>3,161억</td><td class="pos" style="text-align:right;">+28%</td></tr>
+              <tr class="total"><td style="font-weight:700;color:#ffd166;">합산</td><td class="hl">4.63조</td><td style="text-align:right;color:#ffd166;">—</td></tr>
+            </tbody>
+          </table>
+          <div class="verdict-box vb-gold">
+            <strong>현대로템 영업이익률 17.2%</strong> — K2 전차 폴란드 수출이 내수 저마진 구조를 고마진 수출 구조로 완전 전환시킨 결과.
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 5: 수주잔고 ─── -->
+      <div class="card card-5">
+        <div class="card-top">
+          <span class="card-badge badge-purple">수주잔고</span>
+          <span class="card-num">5 / 10</span>
+        </div>
+        <div class="deco-num">5</div>
+        <div class="card-inner">
+          <p class="eyebrow">BIG4 합산 · 3Q25 기준</p>
+          <div class="big-stat">
+            <div class="bs-val c-purple">91<span class="bs-unit">조</span></div>
+            <div class="bs-label">합산 수주잔고 — 연간 100조 돌파 유력</div>
+          </div>
+          <div class="bar-list">
+            <div class="bar-item">
+              <div class="bar-name">한화에어로</div>
+              <div class="bar-track"><div class="bar-fill" style="width:88%;background:#c084fc;"></div></div>
+              <div class="bar-val">31조</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-name">KAI</div>
+              <div class="bar-track"><div class="bar-fill" style="width:74%;background:#c084fc;"></div></div>
+              <div class="bar-val">26조</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-name">LIG넥스원</div>
+              <div class="bar-track"><div class="bar-fill" style="width:65%;background:#c084fc;"></div></div>
+              <div class="bar-val">23조</div>
+            </div>
+            <div class="bar-item">
+              <div class="bar-name">현대로템</div>
+              <div class="bar-track"><div class="bar-fill" style="width:31%;background:#c084fc;"></div></div>
+              <div class="bar-val">11조</div>
+            </div>
+          </div>
+          <p class="card-body" style="font-size:12px;">수주잔고 = <strong>향후 3~4년치 매출 선확보</strong>. 단기 지정학 이슈에 흔들려도 실적 펀더멘탈은 견고하다.</p>
+        </div>
+      </div>
+
+      <!-- ─── CARD 6: 리스크 ① 밸류에이션 ─── -->
+      <div class="card card-6">
+        <div class="card-top">
+          <span class="card-badge badge-red">리스크 ①</span>
+          <span class="card-num">6 / 10</span>
+        </div>
+        <div class="deco-num">6</div>
+        <div class="card-inner">
+          <p class="eyebrow">밸류에이션 · 중·고위험</p>
+          <h2 class="headline hl-md">
+            PER이 록히드마틴<br>
+            <span class="c-red">2~3배</span> 높다<br>
+            <span style="font-size:0.6em;font-weight:400;color:rgba(255,255,255,0.4);">정당한가 vs 버블인가</span>
+          </h2>
+          <div class="data-row">
+            <div class="data-chip">
+              <div class="dc-label">한화시스템</div>
+              <div class="dc-value c-red">61배</div>
+              <div class="dc-sub">2025E PER</div>
+            </div>
+            <div class="data-chip">
+              <div class="dc-label">LIG넥스원</div>
+              <div class="dc-value c-red">44배</div>
+              <div class="dc-sub">2025E PER</div>
+            </div>
+            <div class="data-chip">
+              <div class="dc-label">록히드마틴</div>
+              <div class="dc-value c-green">19.6배</div>
+              <div class="dc-sub">비교 기준</div>
+            </div>
+          </div>
+          <div class="pro-con">
+            <div class="pc-card pro">
+              <div class="pc-label">정당화</div>
+              <p class="pc-text">CAGR <strong>19.3%</strong> — 글로벌 피어 2배↑<br>수주잔고 100조로 가시성 확보</p>
+            </div>
+            <div class="pc-card con">
+              <div class="pc-label">위험</div>
+              <p class="pc-text">어닝 쇼크 한 번에<strong> -15%</strong> 급락 전례<br>외국인 이미 순매도 전환</p>
+            </div>
+          </div>
+          <div class="verdict-box vb-red">추격 매수보다 <strong>실적 발표 전후 변동성</strong>을 활용한 분할 접근이 유효.</div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 7: 리스크 ② 희토류 ─── -->
+      <div class="card card-7">
+        <div class="card-top">
+          <span class="card-badge badge-blue">리스크 ②</span>
+          <span class="card-num">7 / 10</span>
+        </div>
+        <div class="deco-num">7</div>
+        <div class="card-inner">
+          <p class="eyebrow">희토류 공급망 · 중위험</p>
+          <h2 class="headline hl-md">
+            한국 수입<br>
+            <span class="c-blue">76% 급락</span><br>
+            <span style="font-size:0.55em;font-weight:400;color:rgba(255,255,255,0.4);">2027년 DFARS가 진짜 시한폭탄</span>
+          </h2>
+          <div class="tl">
+            <div class="tl-item">
+              <div class="tl-date">2025.04</div>
+              <div class="tl-text">중국, 희토류 7종 허가제 전환 → <strong>수입 76% 급락</strong></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">2025.10</div>
+              <div class="tl-text">수출통제 전면 강화. 방산용 광물 <strong>최대 5배 급등</strong></div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">2026.02</div>
+              <div class="tl-text">한국 정부 <strong>1조 원 종합대책</strong> 발표. 17종 핵심광물 지정</div>
+            </div>
+            <div class="tl-item" style="margin-bottom:0;">
+              <div class="tl-date" style="color:#ff6b5b;">2027 ⚠</div>
+              <div class="tl-text"><strong>미국 DFARS 발효</strong> — 중국산 희토류 부품 사용 시 미국 계약 갱신 불가</div>
+            </div>
+          </div>
+          <div class="verdict-box vb-blue">LIG넥스원·한화시스템 협력사 <strong>공급망 점검 시급</strong>. 대체까지 수년~10년 소요 전망.</div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 8: 리스크 ③ 지정학 ─── -->
+      <div class="card card-8">
+        <div class="card-top">
+          <span class="card-badge badge-green">리스크 ③</span>
+          <span class="card-num">8 / 10</span>
+        </div>
+        <div class="deco-num">8</div>
+        <div class="card-inner">
+          <p class="eyebrow">지정학적 변동성 · 기회 우세</p>
+          <h2 class="headline hl-md">
+            러-우 종전 vs<br>
+            <span class="c-green">미-이란 전쟁</span><br>교차하다
+          </h2>
+          <div class="pro-con">
+            <div class="pc-card con">
+              <div class="pc-label">약화 요인</div>
+              <p class="pc-text">러-우 종전안 구체화<br>오늘 미-이란 2주 휴전<br>단기 모멘텀 일부 소진</p>
+            </div>
+            <div class="pc-card pro">
+              <div class="pc-label">강화 요인</div>
+              <p class="pc-text">중동 방공 수요 급증<br>천궁-Ⅱ 추가 수주 기대<br>다발성 분쟁 구조화</p>
+            </div>
+          </div>
+          <p class="card-body"><strong>휴전 ≠ 종전.</strong> 이란 종전 조건(호르무즈 통제권·미군 철수·제재 완화)은 미국이 수용하기 어렵다. 4.10 협상 결과에 따라 언제든 재점화 가능.</p>
+          <div class="verdict-box vb-green">지정학이 '일시적 이벤트'가 아닌 <strong>'구조적 상수'</strong>로 정착 — K방산에 복합 모멘텀.</div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 9: 리스크 ④ 유럽 재무장 ─── -->
+      <div class="card card-9">
+        <div class="card-top">
+          <span class="card-badge badge-purple">리스크 ④</span>
+          <span class="card-num">9 / 10</span>
+        </div>
+        <div class="deco-num">9</div>
+        <div class="card-inner">
+          <p class="eyebrow">유럽 재무장 경쟁 · 중장기 리스크</p>
+          <h2 class="headline hl-md">
+            단기 대체<br>
+            <span class="c-purple">구조적 불가능</span><br>
+            <span style="font-size:0.55em;font-weight:400;color:rgba(255,255,255,0.4);">K방산 골든타임 2~3년</span>
+          </h2>
+          <div class="pro-con">
+            <div class="pc-card con">
+              <div class="pc-label">유럽 한계</div>
+              <p class="pc-text">레오파르트 2A8<br><strong>납품 완료 2030년</strong><br>FCAS 전투기 사실상 중단<br>조달 사업 지연 속출</p>
+            </div>
+            <div class="pc-card pro">
+              <div class="pc-label">K방산 기회</div>
+              <p class="pc-text"><strong>유럽 2위 공급국</strong><br>폴란드 현지 생산 거점<br>루마니아·스페인 확장 중<br>빠른 납기가 경쟁력</p>
+            </div>
+          </div>
+          <div class="verdict-box vb-purple"><strong>2026~2028년은 공급 우위 기간.</strong> 2030년대 이후 경쟁 심화 시작 — 현지 생산 거점 선점이 관건.</div>
+        </div>
+      </div>
+
+      <!-- ─── CARD 10: 종합 투자 전략 ─── -->
+      <div class="card card-10">
+        <div class="card-top">
+          <span class="card-badge badge-white">투자 전략</span>
+          <span class="card-num">10 / 10</span>
+        </div>
+        <div class="deco-num">★</div>
+        <div class="card-inner">
+          <p class="eyebrow">종합 판단 · 2026년 4월</p>
+          <h2 class="headline hl-md">
+            추격 매수보다<br>
+            <span class="c-gold">선택과 집중</span>이<br>유효한 국면
+          </h2>
+          <ul class="strat-list">
+            <li>신규 매수는 과열 해소 또는 지정학 이슈 시 분할 접근</li>
+            <li>4월 말 1Q26 실적 발표가 다음 모멘텀 확인 포인트</li>
+            <li>2027년 전 희토류·DFARS 리스크 협력사 점검 필수</li>
+            <li>장기 보유자 — 유럽 현지 생산 계약 뉴스 주목</li>
+          </ul>
+          <div class="sched">
+            <div class="sched-item">
+              <span class="sched-date">2026년 1~2월</span>
+              <span class="sched-dot dot-done"></span>
+              <span class="sched-text">2025 연간 실적 발표</span>
+              <span class="sched-tag tag-done">완료</span>
+            </div>
+            <div class="sched-item">
+              <span class="sched-date">2026년 4월 말</span>
+              <span class="sched-dot dot-upcoming"></span>
+              <span class="sched-text">1Q26 실적 공시</span>
+              <span class="sched-tag tag-up">예정</span>
+            </div>
+            <div class="sched-item">
+              <span class="sched-date">2026년 6월</span>
+              <span class="sched-dot dot-upcoming"></span>
+              <span class="sched-text">ETF 정기 리밸런싱</span>
+              <span class="sched-tag tag-up">예정</span>
+            </div>
+            <div class="sched-item">
+              <span class="sched-date">2026년 12월</span>
+              <span class="sched-dot dot-upcoming"></span>
+              <span class="sched-text">ETF 연말 리밸런싱</span>
+              <span class="sched-tag tag-up">예정</span>
+            </div>
+          </div>
+          <p class="card-body" style="font-size:11px;border-top:1px solid rgba(255,255,255,0.08);padding-top:10px;">본 카드뉴스는 정보 제공 목적이며 투자 권유가 아닙니다. 금융투자상품은 원금 손실이 발생할 수 있습니다.</p>
+        </div>
+      </div>
+
+    </div><!-- /card-track -->
+  </div><!-- /card-track-outer -->
+
+  <!-- NAVIGATION -->
+  <div class="nav-btns">
+    <button class="nav-btn" id="btnPrev" aria-label="이전">‹</button>
+    <span class="nav-counter" id="counter">1 / 10</span>
+    <button class="nav-btn" id="btnNext" aria-label="다음">›</button>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+const TOTAL = 10;
+let current = 0;
+const track = document.getElementById('track');
+const counter = document.getElementById('counter');
+const btnPrev = document.getElementById('btnPrev');
+const btnNext = document.getElementById('btnNext');
+const progressBar = document.getElementById('progressBar');
+
+// Build progress dots
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'prog-dot' + (i === 0 ? ' active' : '');
+  d.addEventListener('click', () => goTo(i));
+  progressBar.appendChild(d);
+}
+
+function getCardWidth() {
+  return Math.min(420, window.innerWidth);
+}
+
+function render() {
+  const w = getCardWidth();
+  track.style.transform = `translateX(${-current * w}px)`;
+  counter.textContent = `${current + 1} / ${TOTAL}`;
+  btnPrev.disabled = current === 0;
+  btnNext.disabled = current === TOTAL - 1;
+  document.querySelectorAll('.prog-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === current);
+  });
+  document.querySelectorAll('.card-num').forEach((el, i) => {
+    el.textContent = `${i + 1} / ${TOTAL}`;
+  });
+}
+
+function goTo(idx) {
+  current = Math.max(0, Math.min(TOTAL - 1, idx));
+  render();
+}
+
+btnPrev.addEventListener('click', () => goTo(current - 1));
+btnNext.addEventListener('click', () => goTo(current + 1));
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current - 1);
+});
+
+// Touch swipe
+let startX = 0, startY = 0;
+const outer = document.querySelector('.card-track-outer');
+outer.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+}, { passive: true });
+outer.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - startX;
+  const dy = e.changedTouches[0].clientY - startY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    dx < 0 ? goTo(current + 1) : goTo(current - 1);
+  }
+}, { passive: true });
+
+// Resize
+window.addEventListener('resize', () => {
+  const w = getCardWidth();
+  document.documentElement.style.setProperty('--card-w', Math.min(420, w) + 'px');
+  track.style.transition = 'none';
+  track.style.transform = `translateX(${-current * w}px)`;
+  requestAnimationFrame(() => { track.style.transition = ''; });
+});
+
+render();
+</script>
+</body>
+</html>
