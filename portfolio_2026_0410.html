@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 주식 추천 포트폴리오 — 2026.04.10</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #111827;
+    --bg3: #1a2236;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0f4ff;
+    --text2: #8892a4;
+    --text3: #4f5a6e;
+    --blue: #3b82f6;
+    --blue-d: #1e40af;
+    --blue-l: #93c5fd;
+    --red: #ef4444;
+    --red-l: #fca5a5;
+    --green: #10b981;
+    --green-l: #6ee7b7;
+    --amber: #f59e0b;
+    --amber-l: #fcd34d;
+    --purple: #8b5cf6;
+    --purple-l: #c4b5fd;
+    --teal: #14b8a6;
+    --teal-l: #5eead4;
+    --accent: #3b82f6;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  /* HEADER */
+  .page-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2.5rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-family: 'DM Mono', monospace;
+  }
+  .header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .header-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--blue-l);
+  }
+  .meta-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 2.5rem; }
+
+  /* SUMMARY STRIP */
+  .summary-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+  .sum-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+  }
+  .sum-label { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .sum-value { font-size: 22px; font-weight: 700; color: var(--text); }
+  .sum-value.highlight { color: var(--green); }
+  .sum-note { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    font-family: 'DM Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* PORTFOLIO ALLOCATION CHART */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px;
+    margin-bottom: 2rem;
+    align-items: stretch;
+  }
+  .chart-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  .chart-box-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 1rem;
+  }
+  .legend-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 1rem; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text2); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* STOCK CARDS */
+  .stocks-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 2rem; }
+  .stock-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .stock-card:hover { border-color: var(--border2); }
+  .card-accent { height: 3px; }
+  .card-body { padding: 1.25rem 1.5rem; }
+  .card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 1rem; }
+  .stock-icon {
+    width: 46px; height: 46px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .card-info { flex: 1; }
+  .stock-name-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .stock-name { font-size: 16px; font-weight: 700; color: var(--text); }
+  .sector-tag {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+  .stock-code { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 2px; }
+  .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+  .badge-weight { background: rgba(59,130,246,0.12); color: var(--blue-l); border: 1px solid rgba(59,130,246,0.2); }
+  .badge-return { background: rgba(16,185,129,0.12); color: var(--green-l); border: 1px solid rgba(16,185,129,0.2); }
+  .badge-priority { background: rgba(245,158,11,0.12); color: var(--amber-l); border: 1px solid rgba(245,158,11,0.2); }
+
+  /* TWO COLUMN BODY */
+  .two-col { display: grid; grid-template-columns: 1fr 240px; gap: 16px; margin-top: 1rem; }
+
+  /* DETAIL ROWS */
+  .detail-section { }
+  .detail-title { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-family: 'DM Mono', monospace; }
+  .detail-text { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 1rem; }
+  .rationale-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+  .rationale-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12px; color: var(--text2);
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: 7px 10px;
+  }
+  .rationale-icon { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+  .risk-box {
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.15);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #fca5a5;
+  }
+  .risk-label { font-weight: 500; margin-bottom: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* MINI CHART PANEL */
+  .mini-chart-panel {
+    background: var(--bg3);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+  }
+  .mini-chart-title { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .mini-chart-wrap { position: relative; height: 110px; }
+
+  /* KPI ROW */
+  .kpi-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px; }
+  .kpi-item { background: var(--bg3); border-radius: 6px; padding: 8px 10px; }
+  .kpi-label { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; }
+  .kpi-value { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 2px; }
+  .kpi-value.up { color: var(--green); }
+  .kpi-value.neutral { color: var(--amber); }
+
+  /* WEIGHT BAR */
+  .weight-bar-wrap { margin-top: 10px; }
+  .weight-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-bottom: 4px; font-family: 'DM Mono', monospace; }
+  .weight-bar-track { height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+  .weight-bar-fill { height: 100%; border-radius: 3px; }
+
+  /* MACRO TABLE */
+  .macro-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 2rem;
+  }
+  .macro-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Mono', monospace;
+    border-bottom: 1px solid var(--border);
+  }
+  .macro-table td {
+    padding: 10px 12px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .macro-table tr:last-child td { border-bottom: none; }
+  .indicator-name { font-weight: 500; color: var(--text); }
+  .val-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .val-chip.up { background: rgba(16,185,129,0.12); color: var(--green-l); }
+  .val-chip.down { background: rgba(239,68,68,0.12); color: var(--red-l); }
+  .val-chip.neutral { background: rgba(245,158,11,0.12); color: var(--amber-l); }
+
+  /* DISCLAIMER */
+  .disclaimer {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  /* FOOTER */
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 1rem 1.25rem; }
+    .summary-strip { grid-template-columns: repeat(2, 1fr); }
+    .chart-row { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .page-header { padding: 1.25rem; }
+    .header-title { font-size: 20px; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-eyebrow">Morgan Stanley · 글로벌 매크로 기반 투자 분석</div>
+  <div class="header-title">한국 주식 추천 포트폴리오</div>
+  <div class="header-sub">미-이란 전쟁 · VIX · WTI · DXY · EWY 기반 종합 분석</div>
+  <div class="header-meta">
+    <div class="meta-pill"><div class="meta-dot"></div>기준일: 2026년 4월 10일</div>
+    <div class="meta-pill"><div class="meta-dot"></div>6개월 목표 수익률: +6.5 ~ 11%</div>
+    <div class="meta-pill"><div class="meta-dot"></div>전략: 분할 매수</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SUMMARY STRIP -->
+  <div class="summary-strip" style="margin-top: 1.5rem;">
+    <div class="sum-card">
+      <div class="sum-label">KOSPI (4/9)</div>
+      <div class="sum-value">5,778</div>
+      <div class="sum-note">전일 대비 -1.61%</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">VIX 공포지수</div>
+      <div class="sum-value neutral" style="color: var(--amber);">21.0</div>
+      <div class="sum-note">경계 구간 (20~25)</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">WTI 유가</div>
+      <div class="sum-value" style="color: var(--red);">$100</div>
+      <div class="sum-note">4/9 +6% 재급등</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">USD/KRW</div>
+      <div class="sum-value">1,478</div>
+      <div class="sum-note">52주 고점 1,538 대비 안정</div>
+    </div>
+  </div>
+
+  <!-- MACRO TABLE -->
+  <div class="section-title">글로벌 매크로 지표</div>
+  <table class="macro-table">
+    <thead>
+      <tr>
+        <th>지표</th>
+        <th>현재 수치</th>
+        <th>시그널</th>
+        <th>한국 증시 영향</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="indicator-name">S&amp;P 500</span></td>
+        <td><span class="val-chip up">6,783</span></td>
+        <td>긍정</td>
+        <td>미 반도체·기술주 랠리 → 삼성·SK하이닉스 선행 수혜</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">VIX 공포지수</span></td>
+        <td><span class="val-chip neutral">21.0</span></td>
+        <td>경계</td>
+        <td>고점 28 대비 완화, 25 돌파 시 외국인 이탈 경고</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">WTI 유가</span></td>
+        <td><span class="val-chip down">$100/bbl</span></td>
+        <td>주의</td>
+        <td>에너지 수입국 한국 → 무역수지 악화, 인플레 압박</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">DXY 달러지수</span></td>
+        <td><span class="val-chip up">98.9</span></td>
+        <td>긍정</td>
+        <td>약달러 → 원화 강세 → 외국인 자금 EM 복귀 기대</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">USD/KRW</span></td>
+        <td><span class="val-chip neutral">1,478</span></td>
+        <td>중립</td>
+        <td>52주 고점 1,538 대비 안정, 수출주 우호적 환경</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">US 10년 금리</span></td>
+        <td><span class="val-chip up">4.29%</span></td>
+        <td>긍정</td>
+        <td>고점 4.48% 대비 하락 → 성장주 밸류에이션 개선</td>
+      </tr>
+      <tr>
+        <td><span class="indicator-name">EWY (한국 ETF)</span></td>
+        <td><span class="val-chip up">$127</span></td>
+        <td>긍정</td>
+        <td>저점 $115 대비 +10% 회복, 외국인 저가 매집 신호</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- CHART ROW: PIE + BAR -->
+  <div class="section-title">포트폴리오 구성</div>
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-box-title">업종별 비중 배분</div>
+      <div style="position:relative; height: 200px;">
+        <canvas id="pieChart" role="img" aria-label="업종별 포트폴리오 비중 도넛 차트">반도체 55%, 방산 15%, 조선 15%, 금융 10%, 원전 5%</canvas>
+      </div>
+      <ul class="legend-list">
+        <li class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>반도체 — SK하이닉스 + 삼성전자 <strong style="color:var(--text);margin-left:auto">55%</strong></li>
+        <li class="legend-item"><span class="legend-dot" style="background:#ef4444"></span>방산 — 한화에어로스페이스 <strong style="color:var(--text);margin-left:auto">15%</strong></li>
+        <li class="legend-item"><span class="legend-dot" style="background:#10b981"></span>조선 — HD한국조선해양 <strong style="color:var(--text);margin-left:auto">15%</strong></li>
+        <li class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span>금융 — KB금융그룹 <strong style="color:var(--text);margin-left:auto">10%</strong></li>
+        <li class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span>원전 — 두산에너빌리티 <strong style="color:var(--text);margin-left:auto">5%</strong></li>
+      </ul>
+    </div>
+    <div class="chart-box">
+      <div class="chart-box-title">종목별 목표 수익률 범위 (6개월, %)</div>
+      <div style="position:relative; height: 280px;">
+        <canvas id="barChart" role="img" aria-label="종목별 목표 수익률 범위 막대 차트">SK하이닉스 8~15%, 삼성전자 5~10%, 한화에어로스페이스 7~12%, HD한국조선해양 6~10%, KB금융 4~7%, 두산에너빌리티 5~9%</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOCK CARDS -->
+  <div class="section-title">종목 상세 분석</div>
+  <div class="stocks-grid">
+
+    <!-- SK하이닉스 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(59,130,246,0.15); color: #93c5fd;">SKH</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">SK하이닉스</span>
+              <span class="sector-tag" style="background: rgba(59,130,246,0.12); color: #93c5fd;">반도체</span>
+              <span class="sector-tag" style="background: rgba(245,158,11,0.12); color: #fcd34d;">★ 최선호주</span>
+            </div>
+            <div class="stock-code">KOSPI · 000660</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 30%</span>
+            <span class="badge badge-return">+8 ~ 15%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">SK하이닉스는 AI 인프라 투자의 핵심 수혜주입니다. 엔비디아 H200·B200 시리즈에 HBM3E를 독점 공급하며, 글로벌 HBM 시장의 구조적 성장과 함께 2026년 영업이익이 전년 대비 2배 이상 증가할 것으로 전망됩니다. EWY(한국 ETF) 비중 약 6%로 외국인 자금 유입 시 직접 수혜를 받는 구조입니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>HBM3E 세계 시장점유율 1위 — 엔비디아 독점 공급 계약</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>2026년 HBM 매출 전년 대비 +100% 이상 성장 전망</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>빅테크 AI 데이터센터 투자 $7,000억+ → 메모리 수요 구조적 확대</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>4/8 미국 반도체지수(SOX) 5% 급등 — 익일 코스피 선행 효과</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>DXY 약달러 기조 → 달러 표시 수출 계약 환차익 수혜</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              구글 TurboQuant 등 AI 메모리 효율화 기술 등장 시 HBM 수요 전망 하향 가능. 중국 반도체 제재 변화에 따른 수출 제한 리스크 상존.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">분기별 영업이익 추이 (조원)</div>
+              <div class="mini-chart-wrap"><canvas id="skhChart" role="img" aria-label="SK하이닉스 분기별 영업이익">2025Q3 5.1조, 2025Q4 8.1조, 2026Q1 13.2조(예상)</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item">
+                <div class="kpi-label">포트폴리오 비중</div>
+                <div class="kpi-value up">30%</div>
+              </div>
+              <div class="kpi-item">
+                <div class="kpi-label">목표 수익률</div>
+                <div class="kpi-value up">+8~15%</div>
+              </div>
+              <div class="kpi-item">
+                <div class="kpi-label">시가총액 순위</div>
+                <div class="kpi-value neutral">코스피 2위</div>
+              </div>
+              <div class="kpi-item">
+                <div class="kpi-label">투자 기간</div>
+                <div class="kpi-value">6개월</div>
+              </div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>30%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:30%; background:#3b82f6;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 삼성전자 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #60a5fa, #93c5fd);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(96,165,250,0.15); color: #93c5fd;">SEC</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">삼성전자</span>
+              <span class="sector-tag" style="background: rgba(59,130,246,0.12); color: #93c5fd;">반도체·가전</span>
+            </div>
+            <div class="stock-code">KOSPI · 005930</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 25%</span>
+            <span class="badge badge-return">+5 ~ 10%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">삼성전자는 AI 관련 메모리 수요 폭증으로 2026년 1분기 영업이익이 사상 최대치를 경신했습니다. EWY 내 비중 1위(약 25%)로 외국인 자금이 한국 시장으로 복귀할 때 가장 직접적인 수혜를 받는 종목입니다. 파운드리 사업의 점진적 회복과 반도체·스마트폰·가전의 트리플 포트폴리오가 리스크를 분산합니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>2026년 1Q 영업이익 사상 최대 — AI 메모리 수요 견인</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>EWY 비중 1위 — 외국인 복귀 시 가장 먼저 매수되는 종목</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>HBM4 개발 본격화 — SK하이닉스와의 기술 격차 축소 기대</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>코스피 시가총액 1위 — 지수 상승 시 알파 + 베타 동시 수혜</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              파운드리 부문 회복 지연 가능성. HBM 시장에서 SK하이닉스 대비 기술 열위 지속 시 실적 눈높이 하향 위험.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">분기별 영업이익 추이 (조원)</div>
+              <div class="mini-chart-wrap"><canvas id="secChart" role="img" aria-label="삼성전자 분기별 영업이익">2025Q3 9.1조, 2025Q4 6.5조, 2026Q1 16.0조(예상)</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item"><div class="kpi-label">포트폴리오 비중</div><div class="kpi-value up">25%</div></div>
+              <div class="kpi-item"><div class="kpi-label">목표 수익률</div><div class="kpi-value up">+5~10%</div></div>
+              <div class="kpi-item"><div class="kpi-label">EWY 내 비중</div><div class="kpi-value neutral">~25%</div></div>
+              <div class="kpi-item"><div class="kpi-label">투자 기간</div><div class="kpi-value">6개월</div></div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>25%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:25%; background:#60a5fa;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 한화에어로스페이스 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #ef4444, #f87171);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(239,68,68,0.15); color: #fca5a5;">HWA</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">한화에어로스페이스</span>
+              <span class="sector-tag" style="background: rgba(239,68,68,0.12); color: #fca5a5;">방산</span>
+            </div>
+            <div class="stock-code">KOSPI · 012450</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 15%</span>
+            <span class="badge badge-return">+7 ~ 12%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">미-이란 전쟁 장기화와 글로벌 지정학적 긴장 고조는 한화에어로스페이스에 구조적 수혜를 제공합니다. 폴란드 K9 자주포, UAE·호주 방산 협력, 유럽 방산 수출 계약 등으로 수주 잔고가 역대 최고 수준입니다. 방산은 경기 사이클에 무관하게 안정적 실적이 보장되는 업종입니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>미-이란 전쟁 → NATO 방산 예산 확대 → K-방산 수출 직접 수혜</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>폴란드 K9 자주포 672문 + FA-50 경전투기 대규모 수출 계약</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>UAE 350억 달러 규모 방산 협력 계약 체결</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>항공엔진·헬기 등 민수 항공 사업으로 리스크 분산</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>4/7일 +5.86% 상승 — 방산 섹터 강세 선도</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              미-이란 휴전 완전 타결 시 방산주 단기 차익 실현 압력 가능. 이미 높은 밸류에이션(경쟁사 대비 프리미엄)이 부담 요인.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">수주 잔고 추이 (조원)</div>
+              <div class="mini-chart-wrap"><canvas id="hwaChart" role="img" aria-label="한화에어로스페이스 수주 잔고 추이">2024 28조, 2025 42조, 2026(예상) 58조</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item"><div class="kpi-label">포트폴리오 비중</div><div class="kpi-value up">15%</div></div>
+              <div class="kpi-item"><div class="kpi-label">목표 수익률</div><div class="kpi-value up">+7~12%</div></div>
+              <div class="kpi-item"><div class="kpi-label">수주 잔고</div><div class="kpi-value neutral">역대 최대</div></div>
+              <div class="kpi-item"><div class="kpi-label">배당성향</div><div class="kpi-value">확대 중</div></div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>15%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:15%; background:#ef4444;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HD한국조선해양 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #10b981, #34d399);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(16,185,129,0.15); color: #6ee7b7;">HHI</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">HD한국조선해양</span>
+              <span class="sector-tag" style="background: rgba(16,185,129,0.12); color: #6ee7b7;">조선</span>
+            </div>
+            <div class="stock-code">KOSPI · 009540</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 15%</span>
+            <span class="badge badge-return">+6 ~ 10%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">트럼프 행정부의 중국 조선업 제재 정책이 한국 조선업에 역대급 반사 이익을 제공하고 있습니다. 이란 전쟁으로 에너지 공급망이 재편되면서 LNG 운반선 발주가 폭증하고 있으며, 미 해군의 MRO(유지보수·수리·정비) 협력 기대까지 더해져 수주 잔고가 사상 최대 수준입니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>트럼프 중국 조선 제재 — 한국 야드 반사이익으로 수주 급증</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>LNG·암모니아 운반선 수주 잔고 역대 최대 수준</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>이란 전쟁 후 에너지 공급망 재편 → 선박 수요 구조적 증가</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>미 해군 MRO 협력 가능성 — 추가 수주 모멘텀</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>2026년 인도 스케줄 확정 물량 → 실적 가시성 높음</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              철강가·후판 가격 급등 시 원가 압박. 수주 후 인도까지 2~3년 시차 → 단기 실적 반영 제한. 원화 강세 지속 시 수출 채산성 악화.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">연간 수주 추이 (억 달러)</div>
+              <div class="mini-chart-wrap"><canvas id="hhiChart" role="img" aria-label="HD한국조선해양 연간 수주 추이">2024 142억달러, 2025 198억달러, 2026(예상) 240억달러</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item"><div class="kpi-label">포트폴리오 비중</div><div class="kpi-value up">15%</div></div>
+              <div class="kpi-item"><div class="kpi-label">목표 수익률</div><div class="kpi-value up">+6~10%</div></div>
+              <div class="kpi-item"><div class="kpi-label">수주 잔고</div><div class="kpi-value neutral">역대 최대</div></div>
+              <div class="kpi-item"><div class="kpi-label">PBR</div><div class="kpi-value">1.8배</div></div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>15%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:15%; background:#10b981;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KB금융 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(245,158,11,0.15); color: #fcd34d;">KB</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">KB금융그룹</span>
+              <span class="sector-tag" style="background: rgba(245,158,11,0.12); color: #fcd34d;">금융·은행</span>
+            </div>
+            <div class="stock-code">KOSPI · 105560</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 10%</span>
+            <span class="badge badge-return">+4 ~ 7%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">코리아 디스카운트 해소 정책과 저PBR 종목 리레이팅 수혜의 핵심 종목입니다. 이재명 정부의 주주환원 강화 정책(배당소득 분리과세, 자사주 소각 의무화)으로 은행주 재평가 흐름이 이어지고 있으며, KB금융은 업종 내 최상위 주주환원율을 유지하고 있습니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>PBR 0.7배 — 자산가치 대비 30% 이상 할인된 저평가 상태</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>배당수익률 4%+ — 고금리 환경에서도 경쟁력 있는 배당</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>자사주 소각 지속 — 주당 가치 상승 효과</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>코리아 디스카운트 해소 정책 → 은행주 벨류에이션 재평가 기대</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              금리 인하 지연 시 NIM(순이자마진) 방어는 가능하나, 경기침체 시 부실여신 증가 위험. 부동산 PF 부실 익스포저 모니터링 필요.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">ROE 추이 (%)</div>
+              <div class="mini-chart-wrap"><canvas id="kbChart" role="img" aria-label="KB금융 ROE 추이">2024 9.8%, 2025 10.2%, 2026(예상) 10.8%</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item"><div class="kpi-label">포트폴리오 비중</div><div class="kpi-value up">10%</div></div>
+              <div class="kpi-item"><div class="kpi-label">목표 수익률</div><div class="kpi-value up">+4~7%</div></div>
+              <div class="kpi-item"><div class="kpi-label">PBR</div><div class="kpi-value neutral">0.7배</div></div>
+              <div class="kpi-item"><div class="kpi-label">배당수익률</div><div class="kpi-value up">4%+</div></div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>10%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:10%; background:#f59e0b;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 두산에너빌리티 -->
+    <div class="stock-card">
+      <div class="card-accent" style="background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+      <div class="card-body">
+        <div class="card-header">
+          <div class="stock-icon" style="background: rgba(139,92,246,0.15); color: #c4b5fd;">DS</div>
+          <div class="card-info">
+            <div class="stock-name-row">
+              <span class="stock-name">두산에너빌리티</span>
+              <span class="sector-tag" style="background: rgba(139,92,246,0.12); color: #c4b5fd;">원전·에너지</span>
+            </div>
+            <div class="stock-code">KOSPI · 034020</div>
+          </div>
+          <div class="card-badges">
+            <span class="badge badge-weight">비중 5%</span>
+            <span class="badge badge-return">+5 ~ 9%</span>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="detail-section">
+            <div class="detail-title">투자 thesis</div>
+            <div class="detail-text">AI·데이터센터의 전력 수요 폭증이 원전 르네상스를 이끌고 있습니다. 두산에너빌리티는 원자로·증기발생기·터빈 등 핵심 원전 기자재를 국내 유일하게 생산하며, 체코·폴란드·UAE 원전 수주 가능성이 높습니다. 이재명 정부의 원전 중도론 채택으로 국내 정책 리스크도 완화됐습니다.</div>
+            <div class="detail-title">핵심 투자 근거</div>
+            <div class="rationale-list">
+              <div class="rationale-item"><span class="rationale-icon">▶</span>AI 데이터센터 전력 수요 폭증 → 원전 필요성 재부각</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>체코 두코바니 원전 수주 협상 진행 중 — 수조 원 규모</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>원전 핵심 기자재 국내 유일 생산 — 독점적 지위</div>
+              <div class="rationale-item"><span class="rationale-icon">▶</span>4/8일 +6.64% 상승 — 원전·에너지 섹터 강세 선도</div>
+            </div>
+            <div class="risk-box">
+              <div class="risk-label">주요 리스크</div>
+              원전 수주 지연·불발 시 주가 급락 가능. 중공업 부문 레거시 부채 부담. SMR(소형모듈원전) 경쟁 심화.
+            </div>
+          </div>
+          <div>
+            <div class="mini-chart-panel">
+              <div class="mini-chart-title">원전 수주 잔고 추이 (조원)</div>
+              <div class="mini-chart-wrap"><canvas id="dsChart" role="img" aria-label="두산에너빌리티 수주 잔고">2024 8조, 2025 12조, 2026(예상) 18조</canvas></div>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi-item"><div class="kpi-label">포트폴리오 비중</div><div class="kpi-value up">5%</div></div>
+              <div class="kpi-item"><div class="kpi-label">목표 수익률</div><div class="kpi-value up">+5~9%</div></div>
+              <div class="kpi-item"><div class="kpi-label">핵심 포지션</div><div class="kpi-value neutral">관심종목</div></div>
+              <div class="kpi-item"><div class="kpi-label">투자 기간</div><div class="kpi-value">6개월</div></div>
+            </div>
+            <div class="weight-bar-wrap" style="margin-top:10px;">
+              <div class="weight-bar-label"><span>비중</span><span>5%</span></div>
+              <div class="weight-bar-track"><div class="weight-bar-fill" style="width:5%; background:#8b5cf6;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong style="color: var(--text2);">면책 고지 (Disclaimer)</strong><br>
+    본 자료는 Morgan Stanley 15년 경력 전문가 시각을 바탕으로 작성된 투자 참고 목적의 정보이며, 특정 종목의 매수·매도를 권유하지 않습니다. 주식 투자는 원금 손실의 위험이 있으며, 최종 투자 결정과 그 결과에 대한 책임은 투자자 본인에게 있습니다. 과거 수익률은 미래 수익을 보장하지 않습니다. 데이터 출처: Reuters, Investing.com, Trading Economics, CNBC, Zacks.
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <span>2026.04.10 · 글로벌 매크로 투자 분석</span>
+  <span>데이터 기준: 2026년 4월 9일 종가</span>
+</div>
+
+<script>
+const FONT = "'Noto Sans KR', sans-serif";
+const MONO = "'DM Mono', monospace";
+Chart.defaults.color = '#8892a4';
+Chart.defaults.font.family = FONT;
+
+const gridColor = 'rgba(255,255,255,0.06)';
+
+new Chart(document.getElementById('pieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['SK하이닉스','삼성전자','한화에어로스페이스','HD한국조선해양','KB금융','두산에너빌리티'],
+    datasets: [{
+      data: [30, 25, 15, 15, 10, 5],
+      backgroundColor: ['#3b82f6','#60a5fa','#ef4444','#10b981','#f59e0b','#8b5cf6'],
+      borderWidth: 0,
+      hoverOffset: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: '65%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.label}: ${ctx.parsed}%`
+        }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
+  data: {
+    labels: ['SK하이닉스','삼성전자','한화에어로스페이스','HD한국조선해양','KB금융','두산에너빌리티'],
+    datasets: [
+      {
+        label: '최소',
+        data: [8, 5, 7, 6, 4, 5],
+        backgroundColor: 'rgba(59,130,246,0.25)',
+        borderColor: 'rgba(59,130,246,0.5)',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderSkipped: false
+      },
+      {
+        label: '최대',
+        data: [15, 10, 12, 10, 7, 9],
+        backgroundColor: ['rgba(59,130,246,0.7)','rgba(96,165,250,0.7)','rgba(239,68,68,0.7)','rgba(16,185,129,0.7)','rgba(245,158,11,0.7)','rgba(139,92,246,0.7)'],
+        borderWidth: 0,
+        borderRadius: 4,
+        borderSkipped: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: ctx => ctx[0].label,
+          label: ctx => ` ${ctx.dataset.label}: +${ctx.parsed.x}%`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { color: gridColor },
+        ticks: { callback: v => '+' + v + '%', font: { family: MONO, size: 11 } },
+        max: 18
+      },
+      y: {
+        grid: { display: false },
+        ticks: { font: { size: 11 } }
+      }
+    }
+  }
+});
+
+function miniBar(id, labels, data, color) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: color + '99',
+        borderColor: color,
+        borderWidth: 1,
+        borderRadius: 3,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10, family: MONO } } },
+        y: { grid: { color: gridColor }, ticks: { font: { size: 10, family: MONO }, maxTicksLimit: 4 } }
+      }
+    }
+  });
+}
+
+miniBar('skhChart', ['25Q2','25Q3','25Q4','26Q1E'], [3.8, 5.1, 8.1, 13.2], '#3b82f6');
+miniBar('secChart', ['25Q2','25Q3','25Q4','26Q1E'], [10.4, 9.1, 6.5, 16.0], '#60a5fa');
+miniBar('hwaChart', ['2023','2024','2025','2026E'], [18, 28, 42, 58], '#ef4444');
+miniBar('hhiChart', ['2023','2024','2025','2026E'], [98, 142, 198, 240], '#10b981');
+miniBar('kbChart', ['2023','2024','2025','2026E'], [9.2, 9.8, 10.2, 10.8], '#f59e0b');
+miniBar('dsChart', ['2023','2024','2025','2026E'], [5, 8, 12, 18], '#8b5cf6');
+</script>
+</body>
+</html>
