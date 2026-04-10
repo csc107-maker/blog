@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스(192400) — W패턴 완성 시 분할 매수 전략</title>
+<meta name="description" content="쿠쿠홀딩스 W패턴(이중바닥) 완성 시 투자 성향별 분할 매수 전략, 손익 시뮬레이션, 차트 기술적 분석 완전 가이드">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --ink: #12100a;
+  --paper: #f9f7f2;
+  --cream: #f0ece0;
+  --gold: #b8820f;
+  --gold-lt: #d4a82a;
+  --gold-pale: #fdf3d4;
+  --red: #b03020;
+  --red-pale: #fdf0ec;
+  --green: #1a6e3a;
+  --green-pale: #eaf5ef;
+  --blue: #1a4e8a;
+  --blue-pale: #eaf1fb;
+  --slate: #3d4554;
+  --muted: #78726a;
+  --border: #e0d8c8;
+  --shadow-sm: 0 1px 4px rgba(18,16,10,.06);
+  --shadow: 0 4px 16px rgba(18,16,10,.09);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.75; font-size: 15px; }
+
+/* ── TOPBAR ── */
+.topbar { background: var(--ink); color: var(--gold-lt); font-size: 11px; letter-spacing: 3px; text-align: center; padding: 10px; text-transform: uppercase; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  padding: 64px 24px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--gold) 50%, var(--green) 100%);
+}
+.hero-grid {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: start; gap: 32px;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 2px; color: var(--gold-lt);
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.hero-dot { width: 6px; height: 6px; background: var(--gold-lt); border-radius: 50%; }
+.hero h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(22px, 3.5vw, 34px);
+  font-weight: 700; color: #fff; line-height: 1.35;
+  margin-bottom: 14px;
+}
+.hero h1 em { color: var(--gold-lt); font-style: normal; }
+.hero-sub { color: rgba(255,255,255,.58); font-size: 14px; line-height: 1.8; }
+.hero-badge {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 18px 20px; text-align: center; min-width: 130px;
+}
+.hero-badge-label { font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: 1px; margin-bottom: 8px; }
+.hero-badge-val { font-family: 'DM Mono', monospace; font-size: 26px; color: var(--gold-lt); font-weight: 500; }
+.hero-badge-sub { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 4px; }
+
+/* ── CONTAINER ── */
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+/* ── KPI STRIP ── */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px; margin: 36px 0;
+}
+.kpi { background: #fff; border: 1px solid var(--border); border-top: 3px solid var(--gold); padding: 16px 14px; text-align: center; }
+.kpi-label { font-size: 11px; color: var(--muted); letter-spacing: .5px; margin-bottom: 6px; }
+.kpi-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; }
+.kpi-val.red { color: var(--red); }
+.kpi-val.green { color: var(--green); }
+.kpi-val.gold { color: var(--gold); }
+.kpi-val.blue { color: var(--blue); }
+.kpi-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+/* ── SECTION ── */
+.section { margin: 52px 0; }
+.sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+.sec-num {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--gold); background: var(--gold-pale);
+  border: 1px solid var(--gold); padding: 3px 10px; white-space: nowrap;
+}
+.sec-title { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 700; }
+.sec-hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+/* ── CARDS ── */
+.card { background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 22px 24px; margin: 16px 0; box-shadow: var(--shadow-sm); }
+.card h4 { font-family: 'Noto Serif KR', serif; font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+
+/* ── TIMELINE ── */
+.tl { margin: 20px 0; }
+.tl-item { display: flex; gap: 16px; padding: 13px 0; border-bottom: 1px dashed var(--border); }
+.tl-item:last-child { border-bottom: none; }
+.tl-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); min-width: 70px; padding-top: 2px; }
+.tl-body strong { display: block; font-size: 14px; margin-bottom: 3px; }
+.tl-body span { font-size: 13px; color: var(--muted); }
+
+/* ── DATA TABLE ── */
+.dtable { width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff; }
+.dtable th { background: var(--ink); color: var(--gold-lt); padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; font-weight: 500; }
+.dtable td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--slate); }
+.dtable tr:last-child td { border-bottom: none; }
+.dtable tr:hover td { background: var(--cream); }
+.dtable td.r { text-align: right; font-family: 'DM Mono', monospace; color: var(--ink); }
+.dtable td.up { color: var(--green); font-weight: 500; text-align: right; }
+.dtable td.dn { color: var(--red); font-weight: 500; text-align: right; }
+
+/* ── HIGHLIGHT BOX ── */
+.hl { border-left: 4px solid var(--gold); padding: 14px 18px; background: var(--gold-pale); margin: 16px 0; font-size: 14px; color: #5a3a00; border-radius: 0; }
+.hl.danger { border-color: var(--red); background: var(--red-pale); color: #6a1500; }
+.hl.success { border-color: var(--green); background: var(--green-pale); color: #0a3a1a; }
+.hl.info { border-color: var(--blue); background: var(--blue-pale); color: #0a2a5a; }
+
+/* ── W CHART ── */
+.chart-wrap { position: relative; width: 100%; height: 360px; background: #fff; border: 1px solid var(--border); padding: 16px; }
+
+/* ── PRICE RULER ── */
+.ruler { display: flex; flex-direction: column; gap: 0; margin: 20px 0; border: 1px solid var(--border); }
+.ruler-row {
+  display: flex; align-items: center;
+  padding: 11px 16px; border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.ruler-row:last-child { border-bottom: none; }
+.ruler-row:hover { background: var(--cream); }
+.ruler-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 14px; flex-shrink: 0; }
+.ruler-price { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; min-width: 80px; }
+.ruler-label { flex: 1; font-size: 13px; color: var(--slate); }
+.ruler-badge { font-size: 11px; padding: 3px 10px; border-radius: 2px; font-weight: 500; }
+
+/* ── STRATEGY TABS ── */
+.tab-btns { display: flex; gap: 0; border: 1px solid var(--border); margin-bottom: 0; }
+.tab-btn {
+  flex: 1; padding: 12px 8px; font-size: 13px; font-weight: 500;
+  background: var(--cream); color: var(--muted);
+  border: none; border-right: 1px solid var(--border);
+  cursor: pointer; transition: all .18s; font-family: 'Noto Sans KR', sans-serif;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn.active { background: var(--ink); color: var(--gold-lt); }
+.tab-btn:hover:not(.active) { background: var(--border); }
+
+/* ── STEP CARDS ── */
+.step-cards { display: flex; flex-direction: column; gap: 12px; }
+.step-card {
+  border: 1px solid var(--border); padding: 18px 20px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; flex-wrap: wrap; background: #fff;
+  border-left: 4px solid var(--gold);
+  transition: box-shadow .18s;
+}
+.step-card:hover { box-shadow: var(--shadow); }
+.step-card.s1 { border-left-color: var(--blue); }
+.step-card.s2 { border-left-color: var(--gold); }
+.step-card.s3 { border-left-color: var(--green); }
+.step-label { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.step-note { font-size: 12px; color: var(--muted); }
+.step-right { text-align: right; }
+.step-price { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; }
+.step-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* ── SLIDER ── */
+.slider-row { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; flex-wrap: wrap; }
+.slider-row label { font-size: 13px; color: var(--muted); white-space: nowrap; min-width: 70px; }
+.slider-row input[type=range] { flex: 1; min-width: 120px; accent-color: var(--gold); }
+.slider-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; min-width: 80px; text-align: right; }
+
+/* ── PNL GRID ── */
+.pnl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 16px; }
+.pnl-card { padding: 16px; text-align: center; border: 1px solid var(--border); }
+.pnl-scenario { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.pnl-price { font-family: 'DM Mono', monospace; font-size: 16px; font-weight: 500; }
+.pnl-amount { font-size: 14px; font-weight: 500; margin-top: 4px; }
+.pnl-pct { font-size: 12px; margin-top: 2px; }
+
+/* ── SHARE BARS ── */
+.share-item { margin: 14px 0; }
+.share-hd { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.share-name { font-size: 13px; font-weight: 500; }
+.share-pct { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--gold); }
+.share-bar { height: 8px; background: var(--cream); border-radius: 1px; overflow: hidden; }
+.share-fill { height: 100%; border-radius: 1px; transition: width 1s ease; }
+
+/* ── VERDICT ── */
+.verdict {
+  background: var(--ink); color: #fff; padding: 36px 32px; margin: 40px 0;
+  position: relative; overflow: hidden;
+}
+.verdict::before {
+  content: '"'; position: absolute; top: -20px; left: 18px;
+  font-size: 160px; color: rgba(184,130,15,.1); font-family: Georgia, serif; line-height: 1;
+}
+.verdict h3 { font-family: 'Noto Serif KR', serif; font-size: 18px; color: var(--gold-lt); margin-bottom: 16px; position: relative; }
+.verdict p { color: rgba(255,255,255,.8); position: relative; margin-bottom: 10px; font-size: 14px; }
+.verdict strong { color: #fff; }
+.rating-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.rating-item { text-align: center; background: rgba(255,255,255,.06); padding: 14px 18px; border: 1px solid rgba(184,130,15,.25); }
+.r-label { font-size: 10px; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.r-val { font-size: 26px; font-weight: 700; }
+.r-A { color: var(--gold-lt); }
+.r-B { color: #5dade2; }
+.r-C { color: #e67e22; }
+
+/* ── PRINCIPLE BOX ── */
+.principle { display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border); margin: 10px 0; background: #fff; }
+.principle-num { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--gold); min-width: 32px; }
+.principle-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.principle-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* ── TAGS ── */
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); }
+.tag { font-size: 11px; color: var(--muted); background: var(--cream); padding: 4px 10px; border: 1px solid var(--border); }
+
+/* ── FOOTER ── */
+footer { background: var(--ink); color: rgba(255,255,255,.4); text-align: center; padding: 32px 24px; font-size: 12px; line-height: 2; margin-top: 60px; }
+footer strong { color: var(--gold-lt); }
+
+/* ── ANIMATE ON SCROLL ── */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── DISCLAIMER ── */
+.disclaimer { background: var(--gold-pale); border: 1px solid var(--gold); padding: 14px 20px; font-size: 12px; color: #5a3a00; margin: 28px 0; }
+
+@media (max-width: 640px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-badge { display: none; }
+  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+  .wrap { padding: 0 16px; }
+  .verdict { padding: 24px 20px; }
+  .verdict::before { display: none; }
+  .tab-btn { font-size: 12px; padding: 10px 4px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">쿠쿠홀딩스 192400 · 전문가 투자전략 리포트 · 2026.04</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid wrap">
+    <div>
+      <div class="hero-eyebrow"><span class="hero-dot"></span>기술적 분석 · W패턴 완성 전략</div>
+      <h1>쿠쿠홀딩스(192400)<br><em>W패턴 완성 시</em><br>분할 매수 전략 완전 가이드</h1>
+      <p class="hero-sub">이중바닥 패턴 분석 / 투자 성향별 3단계 매수 / 손익 시뮬레이터 / 손절 원칙 / 주주 구성 분석까지 — 40대 이상 장기 투자자를 위한 실전 전략서</p>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-label">현재가</div>
+      <div class="hero-badge-val">27,700</div>
+      <div class="hero-badge-sub">원 · KRX</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="disclaimer">
+  ⚠️ <strong>면책 고지:</strong> 본 문서는 공개 자료 기반의 투자 참고 정보입니다. 특정 종목의 매수·매도를 권유하지 않으며, 투자에 따른 모든 손익의 책임은 투자자 본인에게 있습니다.
+</div>
+
+<!-- KPI -->
+<div class="kpi-strip reveal">
+  <div class="kpi">
+    <div class="kpi-label">52주 최고가</div>
+    <div class="kpi-val red">35,900</div>
+    <div class="kpi-sub">고점 대비 -22.84%</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">52주 최저가</div>
+    <div class="kpi-val green">25,500</div>
+    <div class="kpi-sub">핵심 지지선</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">넥라인 (패턴 완성)</div>
+    <div class="kpi-val gold">28,120</div>
+    <div class="kpi-sub">돌파 시 W패턴 완성</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">1차 목표가</div>
+    <div class="kpi-val green">30,700</div>
+    <div class="kpi-sub">기술적 목표</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">배당수익률</div>
+    <div class="kpi-val green">5.60%</div>
+    <div class="kpi-sub">현 주가 기준</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">PBR</div>
+    <div class="kpi-val blue">0.65배</div>
+    <div class="kpi-sub">BPS 42,527원</div>
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- SECTION 1 : W패턴 -->
+<div class="section reveal">
+  <div class="sec-head">
+    <div class="sec-num">SECTION 01</div>
+    <div class="sec-title">W패턴(이중바닥) 형성 과정</div>
+  </div>
+
+  <div class="hl">
+    이중바닥(W패턴)은 주가가 저점을 두 번 확인한 뒤 반등하는 강력한 추세 전환 신호입니다. 넥라인을 거래량과 함께 돌파하는 순간 패턴이 완성되며, 기술적 목표가가 산출됩니다.
+  </div>
+
+  <!-- W CHART -->
+  <div class="chart-wrap" style="margin: 20px 0;">
+    <canvas id="wPatternChart" role="img" aria-label="쿠쿠홀딩스 W패턴 차트. 35,900원 고점에서 25,500원 1차 저점, 29,200원 반등, 26,800원 2차 저점, 현재 27,700원 회복 중.">
+      고점 35,900 → 1차 저점 25,500 → 반등 29,200 → 2차 저점 26,800 → 현재 27,700
+    </canvas>
+  </div>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-date">25.10~11</div>
+      <div class="tl-body">
+        <strong>고점 35,900원 형성 — 거래량 급증 후 세력 이탈</strong>
+        <span>52주 최고가 달성. 차익 실현 매물 쏟아지며 급락 시작. 전형적인 분배 패턴.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">25.12</div>
+      <div class="tl-body">
+        <strong>1차 저점 25,500원 — 공포 매도 소진</strong>
+        <span>거래량 급감 속 저점 형성. 외국인·기관 7일 연속 순매수 포착. 낙폭과대 인식 시작.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">26.01~02</div>
+      <div class="tl-body">
+        <strong>1차 반등 29,200원 — 넥라인 형성</strong>
+        <span>빠른 반등으로 29,200원 도달. 이 고점이 넥라인(28,120원)의 기준이 됨. 매물 부담으로 재하락.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">26.03</div>
+      <div class="tl-body">
+        <strong>2차 저점 26,800원 — W의 오른쪽 바닥 완성</strong>
+        <span>1차 저점(25,500원)을 지키며 재반등 시작. 2차 저점이 1차보다 높아 상승 압력 우위 신호.</span>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">26.04</div>
+      <div class="tl-body">
+        <strong>현재 27,700원 — 넥라인 돌파 시도 중</strong>
+        <span>넥라인(28,120원)을 향해 상승 중. 거래량 동반 여부가 패턴 완성의 열쇠.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>W패턴 완성 조건과 목표가 산출</h4>
+    <table class="dtable">
+      <thead><tr><th>항목</th><th>수치</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td>넥라인</td><td class="r">28,120원</td><td>종가 기준 돌파 + 거래량 증가 필수</td></tr>
+        <tr><td>저점(평균)</td><td class="r">25,500원</td><td>W의 바닥 — 손절 기준선</td></tr>
+        <tr><td>패턴 폭</td><td class="r">2,620원</td><td>넥라인 - 저점</td></tr>
+        <tr><td>1차 목표가</td><td class="r up">30,740원</td><td>넥라인 + 패턴 폭 (기술적 산출)</td></tr>
+        <tr><td>2차 목표가</td><td class="r up">33,500원</td><td>전 저항대 + 120일선 수렴 구간</td></tr>
+        <tr><td>전 고점</td><td class="r up">35,900원</td><td>완전 회복 시 최종 목표</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- SECTION 2: 가격 구조 -->
+<div class="section reveal">
+  <div class="sec-head">
+    <div class="sec-num">SECTION 02</div>
+    <div class="sec-title">핵심 가격 구조 — 지지·저항·매수 구간</div>
+  </div>
+
+  <div class="ruler">
+    <div class="ruler-row">
+      <div class="ruler-dot" style="background:#c0392b;"></div>
+      <div class="ruler-price" style="color:#c0392b;">35,900</div>
+      <div class="ruler-label">52주 최고가 · 강력한 매물대</div>
+      <span class="ruler-badge" style="background:#fdf0ec;color:#c0392b;border:1px solid #f5c6cb;">저항③</span>
+    </div>
+    <div class="ruler-row">
+      <div class="ruler-dot" style="background:#c0392b;"></div>
+      <div class="ruler-price" style="color:#c0392b;">33,500</div>
+      <div class="ruler-label">2차 목표가 · 전 저항 구간</div>
+      <span class="ruler-badge" style="background:#fdf0ec;color:#c0392b;border:1px solid #f5c6cb;">저항②</span>
+    </div>
+    <div class="ruler-row">
+      <div class="ruler-dot" style="background:#e67e22;"></div>
+      <div class="ruler-price" style="color:#e67e22;">30,700</div>
+      <div class="ruler-label">1차 목표가 · W패턴 기술적 산출</div>
+      <span class="ruler-badge" style="background:#fff3cd;color:#856404;border:1px solid #ffc107;">목표①</span>
+    </div>
+    <div class="ruler-row" style="background:rgba(184,130,15,.05);">
+      <div class="ruler-dot" style="background:var(--gold);"></div>
+      <div class="ruler-price" style="color:var(--gold);">28,120</div>
+      <div class="ruler-label">넥라인 · 패턴 완성 기준 (핵심)</div>
+      <span class="ruler-badge" style="background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold);">넥라인</span>
+    </div>
+    <div class="ruler-row" style="background:rgba(26,78,138,.04);">
+      <div class="ruler-dot" style="background:#1a4e8a;"></div>
+      <div class="ruler-price" style="color:#1a4e8a;">27,700</div>
+      <div class="ruler-label">현재가 · 패턴 완성 대기 중</div>
+      <span class="ruler-badge" style="background:var(--blue-pale);color:#1a4e8a;border:1px solid #b5d4f4;">현재가</span>
+    </div>
+    <div class="ruler-row">
+      <div class="ruler-dot" style="background:#27ae60;"></div>
+      <div class="ruler-price" style="color:#27ae60;">26,800</div>
+      <div class="ruler-label">2차 저점 · W의 오른쪽 바닥</div>
+      <span class="ruler-badge" style="background:var(--green-pale);color:#1a6e3a;border:1px solid #c3e6cb;">지지①</span>
+    </div>
+    <div class="ruler-row">
+      <div class="ruler-dot" style="background:#c0392b;"></div>
+      <div class="ruler-price" style="color:#c0392b;">25,500</div>
+      <div class="ruler-label">52주 최저가 · 절대 손절선</div>
+      <span class="ruler-badge" style="background:#fdf0ec;color:#c0392b;border:1px solid #f5c6cb;">손절선</span>
+    </div>
+  </div>
+
+  <div class="hl danger">
+    <strong>절대 원칙:</strong> 25,500원 종가 기준 이탈 시 W패턴 실패 선언. 보유 전량 즉시 손절 후 재진입 기회 탐색. 손절 없는 물타기는 자산 파괴의 시작입니다.
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- SECTION 3: 매수 전략 시뮬레이터 -->
+<div class="section reveal">
+  <div class="sec-head">
+    <div class="sec-num">SECTION 03</div>
+    <div class="sec-title">투자 성향별 분할 매수 전략 + 손익 시뮬레이터</div>
+  </div>
+
+  <div style="margin-bottom: 16px;">
+    <div class="slider-row">
+      <label>총 투자금액</label>
+      <input type="range" id="totalAmt" min="100" max="5000" step="100" value="1000">
+      <span class="slider-val" id="totalOut">100만원</span>
+    </div>
+  </div>
+
+  <div class="tab-btns" id="tabBtns">
+    <button class="tab-btn active" onclick="setTab('cons')">안정형<br><span style="font-size:10px;opacity:.7;">넥라인 확인 후</span></button>
+    <button class="tab-btn" onclick="setTab('mod')">중립형<br><span style="font-size:10px;opacity:.7;">선취매 + 돌파</span></button>
+    <button class="tab-btn" onclick="setTab('agg')">공격형<br><span style="font-size:10px;opacity:.7;">저점 선취매</span></button>
+  </div>
+
+  <div class="card" style="border-top: none; border-radius: 0;">
+    <div id="stratDesc" style="font-size:13px; color:var(--muted); margin-bottom:16px; padding: 10px; background: var(--cream);"></div>
+    <div class="step-cards" id="stepCards"></div>
+
+    <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);">
+      <div style="font-size:14px; font-weight:500; margin-bottom:12px;">평균 매수단가 &amp; 예상 손익</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px;">
+        <div style="font-size:13px; color:var(--muted);">평균단가: <strong id="avgPrice" style="color:var(--ink);font-family:'DM Mono',monospace;"></strong></div>
+        <div style="font-size:13px; color:var(--muted);">예상 주수: <strong id="totalQty" style="color:var(--ink);font-family:'DM Mono',monospace;"></strong>주</div>
+        <div style="font-size:13px; color:var(--muted);">총 투입금: <strong id="totalInv" style="color:var(--ink);font-family:'DM Mono',monospace;"></strong></div>
+      </div>
+      <div class="pnl-grid" id="pnlGrid"></div>
+    </div>
+  </div>
+
+  <!-- PROFIT/LOSS CHART -->
+  <div style="position:relative; width:100%; height:220px; background:#fff; border:1px solid var(--border); border-top:none; padding:16px;">
+    <canvas id="pnlChart" role="img" aria-label="가격 시나리오별 손익 막대 차트. 손절 시 손실, 목표가 시 수익을 시각화.">가격 시나리오별 손익</canvas>
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- SECTION 4: 3대 원칙 -->
+<div class="section reveal">
+  <div class="sec-head">
+    <div class="sec-num">SECTION 04</div>
+    <div class="sec-title">성향 공통 — 반드시 지켜야 할 3대 원칙</div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-num">01</div>
+    <div>
+      <div class="principle-title">25,500원 종가 이탈 시 — 전량 손절</div>
+      <div class="principle-body">이 선이 무너지면 W패턴 자체가 실패입니다. 미련 없이 전량 손절하고 현금을 지키세요. 재진입 기회는 반드시 다시 옵니다. 물타기는 절대 금물.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="principle-num">02</div>
+    <div>
+      <div class="principle-title">30,700원(1차 목표가) 도달 시 — 절반 익절</div>
+      <div class="principle-body">보유 물량의 50%를 1차 목표가에서 반드시 익절합니다. 남은 50%는 손절선을 매수 평균단가 위로 이동 설정. 이후 33,500원(2차)과 35,900원(전고점) 회복을 노립니다.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <div class="principle-num">03</div>
+    <div>
+      <div class="principle-title">5월 18일 1분기 실적 발표 — 반드시 확인</div>
+      <div class="principle-body">어닝 서프라이즈 시 넥라인 돌파의 강력한 촉매. 실망 실적 시 재하락 가능성 증가. 실적 발표 전 포지션의 절반은 현금으로 유지하는 것이 안전합니다.</div>
+    </div>
+  </div>
+
+  <div class="hl success" style="margin-top:20px;">
+    <strong>40대 이상 투자자를 위한 추가 조언:</strong> 배당수익률 5.60%는 연간 확정 수익입니다. 주가 등락과 관계없이 매년 들어오는 배당금을 재투자하면, 10년 후 매수 단가가 크게 낮아지는 복리 효과를 누릴 수 있습니다.
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- SECTION 5: 주주 현황 -->
+<div class="section reveal">
+  <div class="sec-head">
+    <div class="sec-num">SECTION 05</div>
+    <div class="sec-title">투자 주체별 매매 동향 &amp; 주주 구성</div>
+  </div>
+
+  <div class="card">
+    <h4>주주 구성 현황 (추정, DART 공시 기반)</h4>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">오너 일가 (구자신·구본학)</span><span class="share-pct">~57%</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="57" style="background:linear-gradient(90deg,#b8820f,#d4a82a);width:0;"></div></div>
+    </div>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">자기주식 (자사주)</span><span class="share-pct">12.61%</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="12.61" style="background:linear-gradient(90deg,#3d4554,#6b7280);width:0;"></div></div>
+    </div>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">외국인 투자자</span><span class="share-pct">~10%</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="10" style="background:linear-gradient(90deg,#1a6e3a,#27ae60);width:0;"></div></div>
+    </div>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">국내 기관투자자</span><span class="share-pct">~8%</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="8" style="background:linear-gradient(90deg,#1a4e8a,#2980b9);width:0;"></div></div>
+    </div>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">밸류파트너스자산운용 (행동주의)</span><span class="share-pct">5%↑</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="5" style="background:linear-gradient(90deg,#6a1e8a,#9b59b6);width:0;"></div></div>
+    </div>
+    <div class="share-item">
+      <div class="share-hd"><span class="share-name">개인 소액주주</span><span class="share-pct">~8%</span></div>
+      <div class="share-bar"><div class="share-fill" data-w="8" style="background:linear-gradient(90deg,#e67e22,#f0a34e);width:0;"></div></div>
+    </div>
+  </div>
+
+  <table class="dtable" style="margin-top:16px;">
+    <thead><tr><th>주체</th><th>추정방향</th><th>최근 동향</th><th>주가 영향</th></tr></thead>
+    <tbody>
+      <tr><td><strong>외국인</strong></td><td class="up">순매수</td><td>7일 연속 순매수 포착(25.12)</td><td>저PBR·배당 매력 인지</td></tr>
+      <tr><td><strong>기관</strong></td><td class="up">소폭 매수</td><td>7일 연속 순매수(25.12)</td><td>ESG 제약으로 대규모 유입 제한</td></tr>
+      <tr><td><strong>연기금</strong></td><td>중립</td><td>5% 미만, 공시 없음</td><td>배당 목적 소규모 유지 추정</td></tr>
+      <tr><td><strong>행동주의</strong></td><td class="up">적극 매수</td><td>자사주 소각 요구 서신 발송</td><td>주주환원 촉매 역할</td></tr>
+      <tr><td><strong>개인</strong></td><td class="dn">혼조</td><td>고점 물량 손절·배당 목적 보유 혼재</td><td>수급 불안정 요인</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hl info" style="margin-top:16px;">
+    오너(57%) + 자사주(12.6%) = 실질 유통주식 약 30% 이하. 밸류파트너스의 자사주 소각 요구가 수용되면 주당 가치 상승과 기관 자금 유입이 동시에 기대됩니다.
+  </div>
+</div>
+
+<hr class="sec-hr">
+
+<!-- VERDICT -->
+<div class="verdict reveal">
+  <h3>전문가 종합 투자 의견</h3>
+  <p>쿠쿠홀딩스는 <strong>PBR 0.65배 + 배당수익률 5.60% + 자사주 12.61%</strong>라는 조합에서 보이듯, 코스피 전체를 통틀어 보기 드문 구조적 저평가 상태입니다.</p>
+  <p>W패턴 완성(28,120원 돌파)은 단순한 기술적 신호를 넘어, <strong>5월 18일 1분기 실적 발표 + 자사주 소각 결정</strong>이라는 펀더멘털 촉매와 결합될 경우 강력한 상승 모멘텀이 될 수 있습니다.</p>
+  <p>40대 이상 장기 투자자라면 — 밥솥에서 시작된 작은 신뢰처럼 — <strong>분할 매수 + 배당 재투자 + 인내</strong>라는 세 가지 원칙이 가장 강력한 무기입니다.</p>
+  <div class="rating-row">
+    <div class="rating-item"><div class="r-label">재무 건전성</div><div class="r-val r-A">A</div></div>
+    <div class="rating-item"><div class="r-label">성장성</div><div class="r-val r-B">B+</div></div>
+    <div class="rating-item"><div class="r-label">지배구조</div><div class="r-val r-C">C+</div></div>
+    <div class="rating-item"><div class="r-label">주주환원</div><div class="r-val r-B">B</div></div>
+    <div class="rating-item"><div class="r-label">밸류에이션</div><div class="r-val r-A">A+</div></div>
+    <div class="rating-item"><div class="r-label">기술적 신호</div><div class="r-val r-B">B+</div></div>
+  </div>
+</div>
+
+<div class="tags">
+  <span class="tag">#쿠쿠홀딩스</span><span class="tag">#192400</span>
+  <span class="tag">#W패턴</span><span class="tag">#이중바닥</span>
+  <span class="tag">#분할매수</span><span class="tag">#배당주</span>
+  <span class="tag">#저평가주</span><span class="tag">#PBR저평가</span>
+  <span class="tag">#배당수익률</span><span class="tag">#자사주소각</span>
+  <span class="tag">#밸류파트너스</span><span class="tag">#행동주의</span>
+  <span class="tag">#기술적분석</span><span class="tag">#손절원칙</span>
+  <span class="tag">#2026주식전망</span><span class="tag">#코스피배당주</span>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <p><strong>쿠쿠홀딩스(192400) W패턴 매수 전략 리포트</strong></p>
+  <p>작성 기준일: 2026년 4월 11일 · 참고: DART, 네이버금융, 씽크풀, NH투자증권 등 공개 자료</p>
+  <p style="margin-top:6px;">⚠️ 본 문서는 투자 참고 목적이며 특정 종목의 매수·매도를 권유하지 않습니다.<br>투자에 따른 모든 손익의 책임은 투자자 본인에게 있습니다.</p>
+</footer>
+
+<script>
+/* ── REVEAL ON SCROLL ── */
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+/* ── SHARE BARS ── */
+setTimeout(function(){
+  document.querySelectorAll('.share-fill').forEach(function(el){
+    el.style.width = el.dataset.w + '%';
+  });
+}, 600);
+
+/* ── W PATTERN CHART ── */
+(function(){
+  var months = ['25.07','25.08','25.09','25.10','25.11','25.12','26.01','26.02','26.03','26.04'];
+  var ohlc = [
+    [27800,30200,27500,29800],[29800,31500,29200,30500],[30500,33200,30000,32800],
+    [32800,35900,32000,34500],[34500,35500,30500,31000],[31000,31500,25500,26200],
+    [26200,28500,25800,27500],[27500,30100,27000,29200],[29200,29800,26000,26800],
+    [26800,28350,27700,27700]
+  ];
+  var ma5  = [null,null,null,null,32560,31700,28260,27680,28060,27890];
+  var ma20 = [null,null,null,null,null,null,null,null,29800,29100];
+  var ma60 = [null,null,null,null,null,null,null,null,null,30400];
+  var ma120= [null,null,null,null,null,null,null,null,null,29000];
+
+  var candlePlugin = {
+    id:'candle',
+    afterDatasetsDraw: function(chart){
+      var ctx = chart.ctx, x = chart.scales.x, y = chart.scales.y;
+      ohlc.forEach(function(d,i){
+        var xp = x.getPixelForValue(i);
+        var w  = Math.max((x.getPixelForValue(1)-x.getPixelForValue(0))*.52, 7);
+        var col = d[3]>=d[0]?'#c0392b':'#2980b9';
+        ctx.save();
+        ctx.strokeStyle=col; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(xp,y.getPixelForValue(d[1])); ctx.lineTo(xp,y.getPixelForValue(d[2])); ctx.stroke();
+        ctx.fillStyle=col;
+        var top=y.getPixelForValue(Math.max(d[0],d[3]));
+        var bot=y.getPixelForValue(Math.min(d[0],d[3]));
+        ctx.fillRect(xp-w/2, top, w, Math.max(bot-top,2));
+        ctx.restore();
+      });
+    }
+  };
+
+  var annotPlugin = {
+    id:'annot',
+    afterDatasetsDraw: function(chart){
+      var ctx=chart.ctx, x=chart.scales.x, y=chart.scales.y, W=chart.width;
+
+      var hline = function(price,color,dash,lbl){
+        var yp=y.getPixelForValue(price);
+        ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=1.2; ctx.setLineDash(dash||[]);
+        ctx.beginPath(); ctx.moveTo(55,yp); ctx.lineTo(W-8,yp); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle=color; ctx.font='11px sans-serif'; ctx.textAlign='right';
+        ctx.fillText(lbl, W-10, yp-4);
+        ctx.restore();
+      };
+
+      hline(35900,'#c0392b',[],'최고 35,900');
+      hline(28120,'#b8820f',[5,3],'넥라인 28,120');
+      hline(27700,'#1a4e8a',[3,2],'현재 27,700');
+      hline(25500,'#1a6e3a',[],'저점 25,500');
+
+      var wPath=[[3,35900],[5,26200],[7,29200],[8,26800],[9,27700]];
+      ctx.save(); ctx.strokeStyle='#b8820f'; ctx.lineWidth=2.5; ctx.setLineDash([6,4]);
+      ctx.beginPath();
+      wPath.forEach(function(p,i){
+        var xp=x.getPixelForValue(p[0]), yp=y.getPixelForValue(p[1]);
+        i===0?ctx.moveTo(xp,yp):ctx.lineTo(xp,yp);
+      });
+      ctx.stroke(); ctx.setLineDash([]);
+
+      var pts=[
+        [3,35900,'고점',-14,'#c0392b'],
+        [5,26200,'1차 저점',16,'#1a6e3a'],
+        [7,29200,'반등',  -14,'#b8820f'],
+        [8,26800,'2차 저점',16,'#1a6e3a'],
+        [9,27700,'현재',  -14,'#1a4e8a']
+      ];
+      pts.forEach(function(p){
+        ctx.save(); ctx.fillStyle=p[4]; ctx.font='500 11px sans-serif'; ctx.textAlign='center';
+        ctx.fillText(p[2], x.getPixelForValue(p[0]), y.getPixelForValue(p[1])+p[3]);
+        ctx.restore();
+      });
+
+      ctx.save(); ctx.fillStyle='#b8820f'; ctx.font='500 13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('W 이중바닥 패턴', x.getPixelForValue(6.2), y.getPixelForValue(28600));
+      ctx.restore();
+    }
+  };
+
+  new Chart(document.getElementById('wPatternChart'),{
+    type:'line', plugins:[candlePlugin,annotPlugin],
+    data:{ labels:months, datasets:[
+      {label:'5일선', data:ma5,  borderColor:'#27ae60',borderWidth:1.5,pointRadius:0,tension:.3},
+      {label:'20일선',data:ma20, borderColor:'#e67e22',borderWidth:1.5,pointRadius:0,tension:.3},
+      {label:'60일선',data:ma60, borderColor:'#e74c3c',borderWidth:1.5,pointRadius:0,tension:.3},
+      {label:'120일선',data:ma120,borderColor:'#9b59b6',borderWidth:1.5,pointRadius:0,tension:.3},
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false, animation:{duration:800},
+      plugins:{ legend:{display:false}, tooltip:{
+        callbacks:{
+          title:function(c){return months[c[0].dataIndex]+'월';},
+          label:function(c){var d=ohlc[c.dataIndex];return['시가 '+d[0].toLocaleString(),'고가 '+d[1].toLocaleString(),'저가 '+d[2].toLocaleString(),'종가 '+d[3].toLocaleString()];}
+        }
+      }},
+      scales:{
+        x:{grid:{color:'rgba(128,128,128,.08)'},ticks:{font:{size:11},color:'#78726a',autoSkip:false,maxRotation:0}},
+        y:{position:'right',min:23500,max:37500,grid:{color:'rgba(128,128,128,.08)'},
+           ticks:{font:{size:11},color:'#78726a',callback:function(v){return v.toLocaleString();}}}
+      }
+    }
+  });
+})();
+
+/* ── STRATEGY SIMULATOR ── */
+var curTab='cons';
+var pnlChart=null;
+var strategies={
+  cons:{
+    label:'안정형 — 넥라인 확인 후 진입',
+    desc:'넥라인(28,120원) 종가 돌파를 눈으로 확인한 후 단계적으로 진입합니다. 패턴 실패 리스크가 가장 낮고 원금 보전이 우선인 40~50대에게 적합합니다.',
+    steps:[
+      {label:'1차 — 넥라인 돌파 확인',price:28200,pct:30,note:'28,120원 종가 돌파 + 거래량 증가 확인 후 진입. 확실한 신호 대기.'},
+      {label:'2차 — 5일선 위 안착 확인',price:29500,pct:30,note:'5일선 위 안착 및 거래량 지속 확인 후 추가 진입.'},
+      {label:'3차 — 목표가 근접 비중 확대',price:30000,pct:40,note:'1차 목표가 근접 전 비중 확대. 일부 익절 병행 가능.'}
+    ]
+  },
+  mod:{
+    label:'중립형 — 선취매 + 돌파 병행',
+    desc:'현재 주가에서 소량 선취매하고, 넥라인 돌파 시 핵심 물량을 투입합니다. 리스크와 수익의 균형을 맞추는 전형적인 분할 매수 전략입니다.',
+    steps:[
+      {label:'1차 — 현재가 선취매',price:27700,pct:30,note:'현재 주가에서 30% 선취매. 패턴 완성 기대 포지션.'},
+      {label:'2차 — 넥라인 돌파 시 핵심 진입',price:28200,pct:40,note:'넥라인 돌파 확인 시 가장 많은 비중(40%) 투입. 핵심 매수.'},
+      {label:'3차 — 추세 강화 시 잔여 투입',price:29500,pct:30,note:'상승 추세 확인 후 마지막 30% 비중 추가.'}
+    ]
+  },
+  agg:{
+    label:'공격형 — 저점 적극 선취매',
+    desc:'2차 저점 구간(26,000~26,800원)에서 40%를 먼저 매수하는 적극적 전략입니다. 패턴 완성 시 가장 낮은 평균단가를 갖지만, 저점 이탈 시 손실이 먼저 납니다.',
+    steps:[
+      {label:'1차 — 2차 저점 구간 선취매',price:26500,pct:40,note:'2차 저점(26,000~26,800원) 적극 선취매. 가장 낮은 단가 목표.'},
+      {label:'2차 — 현재가 추가',price:27700,pct:35,note:'현재 주가에서 추가 매수. 평균단가 낮추기.'},
+      {label:'3차 — 넥라인 돌파 시 잔여 투입',price:28200,pct:25,note:'패턴 완성 확인 후 잔여 25% 투입.'}
+    ]
+  }
+};
+
+function setTab(t){
+  curTab=t;
+  document.querySelectorAll('.tab-btn').forEach(function(b,i){
+    b.classList.remove('active');
+    if(['cons','mod','agg'][i]===t) b.classList.add('active');
+  });
+  render();
+}
+
+function render(){
+  var totalMW=parseInt(document.getElementById('totalAmt').value);
+  var totalW=totalMW*1000*10;
+  document.getElementById('totalOut').textContent=(totalMW/100).toFixed(0)+'만원';
+  var s=strategies[curTab];
+  document.getElementById('stratDesc').textContent=s.desc;
+
+  var colors=['#1a4e8a','#b8820f','#1a6e3a'];
+  var bgs=['#eaf1fb','#fdf3d4','#eaf5ef'];
+  var txts=['#0c447c','#633806','#085041'];
+
+  var container=document.getElementById('stepCards');
+  container.innerHTML='';
+  var totalShares=0, totalInvested=0, wSum=0;
+
+  s.steps.forEach(function(step,i){
+    var amt=Math.round(totalW*step.pct/100);
+    var qty=Math.floor(amt/step.price);
+    var actual=qty*step.price;
+    totalShares+=qty; totalInvested+=actual;
+    wSum+=step.price*step.pct;
+
+    var div=document.createElement('div');
+    div.className='step-card s'+(i+1);
+    div.style.borderLeftColor=colors[i];
+    div.style.background=bgs[i];
+    div.innerHTML=
+      '<div><div class="step-label" style="color:'+txts[i]+';">'+step.label+'</div>'+
+      '<div class="step-note">'+step.note+'</div></div>'+
+      '<div class="step-right">'+
+        '<div class="step-price" style="color:'+txts[i]+';">'+step.price.toLocaleString()+'원</div>'+
+        '<div class="step-detail">'+step.pct+'% · '+qty+'주 · '+actual.toLocaleString()+'원</div>'+
+      '</div>';
+    container.appendChild(div);
+  });
+
+  var avg=Math.round(wSum/100);
+  document.getElementById('avgPrice').textContent=avg.toLocaleString()+'원';
+  document.getElementById('totalQty').textContent=totalShares.toLocaleString();
+  document.getElementById('totalInv').textContent=totalInvested.toLocaleString()+'원';
+
+  var scenes=[
+    {label:'손절 시',price:25500,bg:'#fdf0ec',col:'#c0392b',dark:'#7a1010'},
+    {label:'1차 목표',price:30700,bg:'#eaf5ef',col:'#1a6e3a',dark:'#0a3a1a'},
+    {label:'2차 목표',price:33500,bg:'#eaf1fb',col:'#1a4e8a',dark:'#0a2a5a'},
+    {label:'전 고점',price:35900,bg:'#fdf3d4',col:'#b8820f',dark:'#5a3800'}
+  ];
+  var grid=document.getElementById('pnlGrid');
+  grid.innerHTML='';
+  scenes.forEach(function(sc){
+    var pnl=Math.round((sc.price-avg)*totalShares);
+    var pct=((sc.price-avg)/avg*100).toFixed(1);
+    var sign=pnl>=0?'+':'';
+    var d=document.createElement('div');
+    d.className='pnl-card'; d.style.background=sc.bg;
+    d.innerHTML=
+      '<div class="pnl-scenario">'+sc.label+'</div>'+
+      '<div class="pnl-price" style="color:'+sc.dark+';">'+sc.price.toLocaleString()+'원</div>'+
+      '<div class="pnl-amount" style="color:'+sc.col+';">'+sign+pnl.toLocaleString()+'원</div>'+
+      '<div class="pnl-pct" style="color:'+sc.col+';">('+sign+pct+'%)</div>';
+    grid.appendChild(d);
+  });
+
+  var prices=[25500,26500,27000,avg,28120,29000,30700,33500,35900];
+  var pnls=prices.map(function(p){return Math.round((p-avg)*totalShares);});
+  var bgsBar=pnls.map(function(v){return v>=0?'#1a6e3a':'#c0392b';});
+
+  if(pnlChart){pnlChart.destroy();}
+  pnlChart=new Chart(document.getElementById('pnlChart'),{
+    type:'bar',
+    data:{
+      labels:prices.map(function(p){return p.toLocaleString();}),
+      datasets:[{label:'손익',data:pnls,backgroundColor:bgsBar,borderRadius:3,borderSkipped:false}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{
+        callbacks:{
+          title:function(c){return c[0].label+'원';},
+          label:function(c){var v=c.raw;return(v>=0?'+':'')+v.toLocaleString()+'원';}
+        }
+      }},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11},color:'#78726a',maxRotation:45,autoSkip:false}},
+        y:{grid:{color:'rgba(128,128,128,.08)'},ticks:{font:{size:11},color:'#78726a',
+          callback:function(v){
+            if(Math.abs(v)>=1000000)return(v/1000000).toFixed(1)+'백만';
+            if(Math.abs(v)>=10000)return(v/10000).toFixed(0)+'만';
+            return v.toLocaleString();
+          }
+        }}
+      }
+    }
+  });
+}
+
+document.getElementById('totalAmt').addEventListener('input',render);
+render();
+</script>
+</body>
+</html>
