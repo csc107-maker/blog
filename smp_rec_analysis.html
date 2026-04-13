@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMP & REC 실제 단가 분석 보고서 2022–2025</title>
+<style>
+  :root {
+    --navy:   #1E2761;
+    --mid:    #2E4080;
+    --gold:   #C8961E;
+    --gold-lt:#F5E6C0;
+    --ice:    #CADCFC;
+    --red:    #B91C1C;
+    --red-lt: #FEE2E2;
+    --green:  #15803D;
+    --grn-lt: #DCFCE7;
+    --amber:  #D97706;
+    --amb-lt: #FEF3C7;
+    --gray:   #64748B;
+    --lgray:  #F1F5F9;
+    --white:  #FFFFFF;
+    --text:   #1E293B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #F8FAFC;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 40px 48px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; left: 0; top: 0;
+    width: 8px; height: 100%;
+    background: var(--gold);
+  }
+  .header-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px; font-weight: 700;
+    padding: 4px 12px; border-radius: 4px;
+    margin-bottom: 14px; letter-spacing: .5px;
+  }
+  .header h1 {
+    font-size: 28px; font-weight: 800;
+    line-height: 1.3; margin-bottom: 10px;
+  }
+  .header p { font-size: 14px; color: var(--ice); }
+
+  /* ── Layout ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 36px 24px 60px; }
+
+  /* ── Section title ── */
+  .section-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; font-weight: 800;
+    color: var(--navy); margin: 36px 0 16px;
+  }
+  .section-title .num {
+    background: var(--navy); color: var(--white);
+    font-size: 12px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── Alert boxes ── */
+  .alert {
+    border-radius: 10px; padding: 16px 20px;
+    margin-bottom: 18px; display: flex; gap: 12px;
+    font-size: 14px; line-height: 1.6;
+  }
+  .alert-red   { background: var(--red-lt);  border-left: 4px solid var(--red); }
+  .alert-green { background: var(--grn-lt);  border-left: 4px solid var(--green); }
+  .alert-amber { background: var(--amb-lt);  border-left: 4px solid var(--amber); }
+  .alert-navy  { background: var(--ice);     border-left: 4px solid var(--navy); }
+  .alert-icon  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .alert strong { font-weight: 700; }
+
+  /* ── Tables ── */
+  .tbl-wrap { overflow-x: auto; margin-bottom: 10px; }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 14px; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  }
+  thead tr { background: var(--navy); color: var(--white); }
+  thead th { padding: 13px 16px; text-align: left; font-weight: 700; font-size: 13px; }
+  tbody tr { background: var(--white); border-bottom: 1px solid #E8EDF4; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--lgray); }
+  tbody td { padding: 12px 16px; }
+  .td-year { font-weight: 700; color: var(--navy); }
+  .td-up   { color: var(--red);   font-weight: 700; }
+  .td-dn   { color: var(--green); font-weight: 700; }
+  .td-mid  { color: var(--amber); font-weight: 700; }
+  .highlight-row td { background: #FFF8E8 !important; }
+  .avg-row td { background: var(--navy) !important; color: var(--white) !important; font-weight: 700; }
+
+  /* ── Card grid ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; margin: 18px 0; }
+  .card {
+    background: var(--white); border-radius: 12px;
+    padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    border-top: 4px solid var(--navy);
+  }
+  .card.gold  { border-top-color: var(--gold); }
+  .card.red   { border-top-color: var(--red); }
+  .card.green { border-top-color: var(--green); }
+  .card .card-label { font-size: 11px; font-weight: 700; color: var(--gray); letter-spacing: .5px; text-transform: uppercase; margin-bottom: 6px; }
+  .card .card-val   { font-size: 26px; font-weight: 800; color: var(--navy); line-height: 1.1; }
+  .card.gold .card-val  { color: var(--gold); }
+  .card.red  .card-val  { color: var(--red); }
+  .card.green .card-val { color: var(--green); }
+  .card .card-sub { font-size: 12px; color: var(--gray); margin-top: 6px; }
+
+  /* ── Formula box ── */
+  .formula {
+    background: #0F172A; color: #E2E8F0;
+    border-radius: 10px; padding: 20px 24px;
+    font-family: 'Courier New', monospace; font-size: 13.5px;
+    line-height: 2; margin: 14px 0;
+  }
+  .formula .comment { color: #64748B; }
+  .formula .val { color: #FCD34D; font-weight: 700; }
+  .formula .result { color: #6EE7B7; font-weight: 700; }
+  .formula .err { color: #FCA5A5; }
+
+  /* ── Compare table ── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .compare-box { border-radius: 10px; padding: 20px; }
+  .compare-box.before { background: var(--red-lt); border: 2px solid var(--red); }
+  .compare-box.after  { background: var(--grn-lt); border: 2px solid var(--green); }
+  .compare-box h4 { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+  .compare-box.before h4 { color: var(--red); }
+  .compare-box.after  h4 { color: var(--green); }
+  .compare-row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,.07); }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .lbl { color: var(--gray); }
+  .compare-row .val { font-weight: 700; }
+
+  /* ── Scenario strip ── */
+  .scenario-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0; }
+  .scenario-card { border-radius: 10px; padding: 18px; text-align: center; }
+  .scenario-card.cons  { background: var(--amb-lt); border: 2px solid var(--amber); }
+  .scenario-card.basic { background: var(--ice);    border: 2px solid var(--mid); }
+  .scenario-card.opt   { background: var(--grn-lt); border: 2px solid var(--green); }
+  .scenario-card .s-label { font-size: 11px; font-weight: 700; letter-spacing: .4px; margin-bottom: 8px; }
+  .scenario-card.cons  .s-label { color: var(--amber); }
+  .scenario-card.basic .s-label { color: var(--mid); }
+  .scenario-card.opt   .s-label { color: var(--green); }
+  .scenario-card .s-val { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .scenario-card .s-sub { font-size: 11px; color: var(--gray); }
+
+  /* ── Checklist ── */
+  .checklist { list-style: none; margin: 14px 0; }
+  .checklist li { display: flex; gap: 10px; padding: 8px 0; font-size: 14px; border-bottom: 1px solid #E8EDF4; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .ck-icon { flex-shrink: 0; font-size: 16px; }
+
+  /* ── Footer ── */
+  .footer {
+    background: var(--navy); color: var(--ice);
+    text-align: center; padding: 24px;
+    font-size: 12px; line-height: 1.8; margin-top: 48px;
+  }
+  .footer strong { color: var(--gold); }
+
+  /* ── Source note ── */
+  .source { font-size: 11px; color: var(--gray); margin-top: 6px; }
+
+  @media (max-width: 640px) {
+    .compare { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .header { padding: 28px 20px 22px; }
+    .header h1 { font-size: 20px; }
+    .container { padding: 24px 16px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════ -->
+<div class="header">
+  <div class="header-tag">☀ 태양광 수익 데이터 정밀 분석 보고서</div>
+  <h1>SMP & REC 실제 단가<br>2022–2025년 검증 및 Day 6 오류 수정</h1>
+  <p>전력거래소·엔라이튼·뉴밋 실측 데이터 기반 | 작성일: 2025년 4월</p>
+</div>
+
+<div class="container">
+
+  <!-- ══ 핵심 발견 ══════════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">핵심</span> 검토 결과 요약</div>
+
+  <div class="alert alert-red">
+    <span class="alert-icon">🚨</span>
+    <div>
+      <strong>Day 6 포스팅에 중대한 계산 오류 발견</strong><br>
+      REC 단가를 <strong>원/kWh</strong>로 잘못 적용하였습니다. REC 가격의 단위는 <strong>원/REC = 원/MWh = 원/1,000kWh</strong>입니다.
+      42원/kWh로 계산한 기존 방식은 실제 수익을 <strong>약 40~50% 과소 계상</strong>한 수치입니다.
+    </div>
+  </div>
+
+  <div class="alert alert-green">
+    <span class="alert-icon">✅</span>
+    <div>
+      <strong>올바른 REC kWh 환산 공식</strong><br>
+      kWh당 REC 수익 = REC 현물단가(원/REC) × 가중치 ÷ 1,000<br>
+      예) 70,000원/REC × 1.2 ÷ 1,000 = <strong>84원/kWh</strong>
+    </div>
+  </div>
+
+  <div class="alert alert-amber">
+    <span class="alert-icon">⚠️</span>
+    <div>
+      <strong>합산 단가 수정 필요</strong><br>
+      기존 포스팅 합산단가 160~180원/kWh → 수정 후 <strong>보수적 188원 / 기본 224원/kWh</strong>으로 상향 조정 필요
+    </div>
+  </div>
+
+
+  <!-- ══ SMP ══════════════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">01</span> SMP 연평균 실측 데이터 — 육지 기준</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>연도</th>
+          <th>연평균 SMP (원/kWh)</th>
+          <th>최고 월 단가</th>
+          <th>최저 월 단가</th>
+          <th>주요 변동 원인</th>
+          <th>평가</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-year">2022년</td>
+          <td class="td-up">약 180~200원</td>
+          <td>250원대 (상반기)</td>
+          <td>130원대</td>
+          <td>러-우 전쟁 → LNG·유가 급등</td>
+          <td class="td-up">역대 최고 수준</td>
+        </tr>
+        <tr>
+          <td class="td-year">2023년</td>
+          <td class="td-mid">약 140~160원</td>
+          <td>252.65원 (2월)</td>
+          <td>120원대 (11월)</td>
+          <td>유가 안정화, SMP 하한제 도입</td>
+          <td class="td-mid">급락 후 안정</td>
+        </tr>
+        <tr>
+          <td class="td-year">2024년</td>
+          <td class="td-dn">약 120~130원</td>
+          <td>140원대 (초반)</td>
+          <td>112.22원 (11월)</td>
+          <td>국제유가 안정, 3년래 최저</td>
+          <td class="td-dn">하락 추세</td>
+        </tr>
+        <tr>
+          <td class="td-year">2025년</td>
+          <td class="td-dn">약 90~120원</td>
+          <td>120원대</td>
+          <td>70원대 후반</td>
+          <td>공급과잉·유가 약세, 큰 편차</td>
+          <td class="td-dn">하락 지속</td>
+        </tr>
+        <tr class="avg-row">
+          <td>4개년 평균</td>
+          <td colspan="4">약 135~155원/kWh</td>
+          <td>보수적 기준 130원 적용 권장</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="source">※ 출처: 전력거래소 EPSIS 가중평균 SMP, 전기신문(2025.1.23), 엔라이튼 인사이트</p>
+
+  <div class="alert alert-navy" style="margin-top:14px;">
+    <span class="alert-icon">💡</span>
+    <div>
+      <strong>2023년 2월 SMP 252.65원은 '월평균'입니다.</strong>
+      연평균이 아니므로 주의. 2023년 연평균은 약 140~155원/kWh 수준이며,
+      11월에 2년 1개월 최저치를 기록한 뒤 등락을 반복했습니다.
+    </div>
+  </div>
+
+
+  <!-- ══ REC ══════════════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">02</span> REC 현물 단가 실측 데이터</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>연도</th>
+          <th>연평균 REC 현물가 (원/REC)</th>
+          <th>kWh 환산 (가중치 1.0)</th>
+          <th>kWh 환산 (가중치 1.2)</th>
+          <th>주요 변동 원인</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-year">2022년</td>
+          <td class="td-mid">약 57,000원</td>
+          <td>57원/kWh</td>
+          <td class="td-mid"><strong>68원/kWh</strong></td>
+          <td>거래액 7,810억원 ÷ 1,374만 REC 산출</td>
+        </tr>
+        <tr>
+          <td class="td-year">2023년</td>
+          <td class="td-up">72,843원</td>
+          <td>72.8원/kWh</td>
+          <td class="td-up"><strong>87원/kWh</strong></td>
+          <td>RE100 수요 증가, 신규 허가 감소</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="td-year">2024년</td>
+          <td class="td-up">76,179원</td>
+          <td>76.2원/kWh</td>
+          <td class="td-up"><strong>91원/kWh</strong></td>
+          <td>연평균 최고치 기록 (뉴밋 집계)</td>
+        </tr>
+        <tr>
+          <td class="td-year">2025년</td>
+          <td class="td-dn">약 60~70,000원</td>
+          <td>60~70원/kWh</td>
+          <td class="td-dn"><strong>72~84원/kWh</strong></td>
+          <td>국가REC 방출, 12월 67,054원 (육지)</td>
+        </tr>
+        <tr class="avg-row">
+          <td>4개년 평균</td>
+          <td colspan="2">약 68,000~70,000원/REC</td>
+          <td colspan="2">가중치 1.2 적용 시 약 82~84원/kWh</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="source">※ 출처: 엔라이튼 2023년 동향, 뉴밋 2024년 동향, 에너지경제신문(2025.1.15), 실측 현물거래 자료</p>
+
+
+  <!-- ══ REC 계산 오류 수정 ════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">03</span> REC 단가 계산 방법 — 오류 원인 분석</div>
+
+  <div class="alert alert-navy">
+    <span class="alert-icon">📐</span>
+    <div>
+      <strong>REC 기본 개념</strong><br>
+      1 REC = 발전량(MWh) × 가중치 → <strong>1,000 kWh 기준으로 발급</strong><br>
+      예) 가중치 1.2 발전소가 1,000 kWh 발전 → 1.2 REC 발급 (출처: 무한에너지, 아진솔라텍)
+    </div>
+  </div>
+
+  <div class="formula">
+<span class="comment">/* ❌ Day 6 기존 계산 (오류) */</span>
+REC 42원/kWh × 1.2 = <span class="err">50원/kWh</span>   ← 단위 오류. REC는 원/kWh가 아닌 원/REC(=원/MWh)
+
+<span class="comment">/* ✅ 올바른 계산 방법 */</span>
+kWh당 REC 수익 = REC 현물단가(원/REC) × 가중치 ÷ 1,000(kWh/MWh)
+
+<span class="comment">/* 2024년 기본 시나리오 */</span>
+= <span class="val">76,179</span>원/REC × <span class="val">1.2</span> ÷ <span class="val">1,000</span>
+= <span class="result">91원/kWh</span>
+
+<span class="comment">/* 보수적 시나리오 (2025년 하락 반영) */</span>
+= <span class="val">65,000</span>원/REC × <span class="val">1.2</span> ÷ <span class="val">1,000</span>
+= <span class="result">78원/kWh</span>
+  </div>
+
+  <div class="compare">
+    <div class="compare-box before">
+      <h4>❌ Day 6 기존 계산 (수정 전)</h4>
+      <div class="compare-row"><span class="lbl">SMP</span><span class="val">130원/kWh</span></div>
+      <div class="compare-row"><span class="lbl">REC (오류)</span><span class="val" style="color:var(--red)">42원/kWh × 1.2 = 50원</span></div>
+      <div class="compare-row"><span class="lbl">합산 단가</span><span class="val" style="color:var(--red)">180원/kWh</span></div>
+      <div class="compare-row"><span class="lbl">연간 수익 (119,462kWh)</span><span class="val" style="color:var(--red)">약 2,150만원</span></div>
+      <div class="compare-row"><span class="lbl">오류 내용</span><span class="val" style="color:var(--red)">단위 혼용</span></div>
+    </div>
+    <div class="compare-box after">
+      <h4>✅ 수정 후 올바른 계산</h4>
+      <div class="compare-row"><span class="lbl">SMP</span><span class="val">130원/kWh</span></div>
+      <div class="compare-row"><span class="lbl">REC (수정)</span><span class="val" style="color:var(--green)">70,000 × 1.2 ÷ 1,000 = 84원</span></div>
+      <div class="compare-row"><span class="lbl">합산 단가</span><span class="val" style="color:var(--green)">214원/kWh</span></div>
+      <div class="compare-row"><span class="lbl">연간 수익 (119,462kWh)</span><span class="val" style="color:var(--green)">약 2,557만원</span></div>
+      <div class="compare-row"><span class="lbl">차이</span><span class="val" style="color:var(--green)">+407만원/년 과소 계상</span></div>
+    </div>
+  </div>
+
+
+  <!-- ══ 시나리오별 수정 ════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">04</span> 수정된 합산 단가 — 3가지 시나리오</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>시나리오</th>
+          <th>SMP (원/kWh)</th>
+          <th>REC 현물가 (원/REC)</th>
+          <th>가중치 1.2 적용 kWh 환산</th>
+          <th>합산 단가 (원/kWh)</th>
+          <th>기준 연도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-mid"><strong>보수적</strong></td>
+          <td>110원</td>
+          <td>65,000원</td>
+          <td>78원</td>
+          <td class="td-mid"><strong>188원/kWh</strong></td>
+          <td>2025년 하락 반영</td>
+        </tr>
+        <tr class="highlight-row">
+          <td class="td-up"><strong>기본 (권장)</strong></td>
+          <td>130원</td>
+          <td>70,000원</td>
+          <td>84원</td>
+          <td class="td-up"><strong>214원/kWh</strong></td>
+          <td>2023~2024년 평균</td>
+        </tr>
+        <tr>
+          <td class="td-dn"><strong>낙관적</strong></td>
+          <td>155원</td>
+          <td>76,000원</td>
+          <td>91원</td>
+          <td class="td-dn"><strong>246원/kWh</strong></td>
+          <td>2022~2023 고점 반영</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card cons">
+      <div class="s-label">⚠ 보수적 시나리오</div>
+      <div class="s-val" style="color:var(--amber)">188원/kWh</div>
+      <div class="s-sub">SMP 110 + REC 78<br>2025년 하락 반영</div>
+    </div>
+    <div class="scenario-card basic">
+      <div class="s-label">✅ 기본 시나리오 (권장)</div>
+      <div class="s-val" style="color:var(--mid)">214원/kWh</div>
+      <div class="s-sub">SMP 130 + REC 84<br>2023~2024 평균 기준</div>
+    </div>
+    <div class="scenario-card opt">
+      <div class="s-label">📈 낙관적 시나리오</div>
+      <div class="s-val" style="color:var(--green)">246원/kWh</div>
+      <div class="s-sub">SMP 155 + REC 91<br>2022~2023 고점 기준</div>
+    </div>
+  </div>
+
+
+  <!-- ══ 수익 재계산 ════════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">05</span> Day 6 수익 재계산 — 99kW, 전라남도 기준</div>
+
+  <div class="formula">
+<span class="comment">/* 기본 조건: 99kW / 전라남도 / 일평균 3.8h / PR 0.87 */</span>
+연간 발전량 = 99kW × 3.8h × 365일 × 0.87 = <span class="result">119,462 kWh</span>
+
+<span class="comment">/* ─── 보수적 시나리오 (188원/kWh) ─── */</span>
+연간 발전 수익 = 119,462 × 188 = <span class="result">22,459,000원 (약 2,246만원)</span>
+연간 비용 합계 = <span class="val">10,280,000원</span> (이자+임대료+운영+보험+유지+세무+예비)
+연간 순수익   = <span class="result">약 1,218만원 → 월 약 101만원</span>
+
+<span class="comment">/* ─── 기본 시나리오 (214원/kWh) ─── */</span>
+연간 발전 수익 = 119,462 × 214 = <span class="result">25,565,000원 (약 2,557만원)</span>
+연간 비용 합계 = <span class="val">10,280,000원</span>
+연간 순수익   = <span class="result">약 1,528만원 → 월 약 127만원</span>
+
+<span class="comment">/* ─── 낙관적 시나리오 (246원/kWh) ─── */</span>
+연간 발전 수익 = 119,462 × 246 = <span class="result">29,388,000원 (약 2,939만원)</span>
+연간 비용 합계 = <span class="val">10,280,000원</span>
+연간 순수익   = <span class="result">약 1,911만원 → 월 약 159만원</span>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">보수적 — 월 순수익</div>
+      <div class="card-val">101만원</div>
+      <div class="card-sub">자기자본 8,000만원 기준<br>연 수익률 약 15.2%</div>
+    </div>
+    <div class="card gold">
+      <div class="card-label">기본 (권장) — 월 순수익</div>
+      <div class="card-val">127만원</div>
+      <div class="card-sub">자기자본 8,000만원 기준<br>연 수익률 약 19.1%</div>
+    </div>
+    <div class="card green">
+      <div class="card-label">낙관적 — 월 순수익</div>
+      <div class="card-val">159만원</div>
+      <div class="card-sub">자기자본 8,000만원 기준<br>연 수익률 약 23.9%</div>
+    </div>
+  </div>
+
+  <div class="alert alert-amber">
+    <span class="alert-icon">📌</span>
+    <div>
+      <strong>Day 6 수정 전 vs 수정 후 비교</strong><br>
+      기존 포스팅 월 순수익 93만원 → 수정 후 <strong>보수적 101만원 / 기본 127만원</strong>으로 상향됩니다.
+      블로그 포스팅의 수익 수치는 실제보다 낮게 제시되었으므로 독자에게 유리한 방향이나,
+      정확한 정보 제공을 위해 반드시 수정이 필요합니다.
+    </div>
+  </div>
+
+
+  <!-- ══ 주의사항 ════════════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">06</span> 2025년 현재 — 투자자가 반드시 알아야 할 리스크</div>
+
+  <ul class="checklist">
+    <li>
+      <span class="ck-icon">📉</span>
+      <div><strong>SMP 하락 추세 지속</strong> — 2025년 SMP는 70원대 후반에서 120원대까지 큰 편차를 보이고 있으며,
+      2022년 에너지 위기 이전(100원 미만) 수준으로 회귀 우려가 있습니다.
+      사업성 검토 시 <strong>보수적 기준 110원/kWh</strong> 적용을 권장합니다.</div>
+    </li>
+    <li>
+      <span class="ck-icon">📦</span>
+      <div><strong>국가 REC 방출로 REC 하락 위험</strong> — 2023년 11월 도입된 국가 REC 제도로
+      정부가 현물시장에 REC를 공급하면 가격이 급락합니다. 2025년 하반기에도 추가 방출 가능성이 있습니다.</div>
+    </li>
+    <li>
+      <span class="ck-icon">⚡</span>
+      <div><strong>태양광 공급 과잉</strong> — 태양광 신규 설치 용량이 원자력보다 100배 빠르게 증가하면서
+      SMP 형성에 불리한 구조가 만들어지고 있습니다. 이는 장기적 SMP 하락 압력 요인입니다.</div>
+    </li>
+    <li>
+      <span class="ck-icon">🌍</span>
+      <div><strong>국제유가 연동 리스크</strong> — SMP는 LNG 가격에 4~5개월 시차를 두고 연동됩니다.
+      유가 급락 시 SMP도 동반 하락합니다. 두바이유 동향을 주기적으로 모니터링해야 합니다.</div>
+    </li>
+    <li>
+      <span class="ck-icon">📊</span>
+      <div><strong>실시간 단가 확인 필수</strong> — 투자 결정 전 반드시 최신 단가를 직접 확인하세요.
+      확인 경로: <strong>전력거래소 EPSIS(epsis.kpx.or.kr)</strong> / 엔라이튼 시장동향 / 한전 월가중평균 SMP</div>
+    </li>
+  </ul>
+
+
+  <!-- ══ 최종 권장 기준 ════════════════════════════════════════════ -->
+  <div class="section-title"><span class="num">07</span> 블로그 포스팅 수정 권장 기준표</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>Day 6 기존 (오류)</th>
+          <th>수정 권장값 (보수적)</th>
+          <th>수정 권장값 (기본)</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMP 단가</strong></td>
+          <td class="td-up">130원/kWh</td>
+          <td class="td-mid">110원/kWh</td>
+          <td>130원/kWh</td>
+          <td>2025년 하락 추세 반영</td>
+        </tr>
+        <tr>
+          <td><strong>REC 현물가</strong></td>
+          <td class="td-up" style="color:var(--red)">42원/kWh ❌ (단위 오류)</td>
+          <td class="td-dn">65,000원/REC</td>
+          <td class="td-dn">70,000원/REC</td>
+          <td>원/REC 단위가 정확</td>
+        </tr>
+        <tr>
+          <td><strong>REC kWh 환산</strong></td>
+          <td class="td-up" style="color:var(--red)">50원/kWh ❌</td>
+          <td class="td-dn">78원/kWh ✅</td>
+          <td class="td-dn">84원/kWh ✅</td>
+          <td>= REC가격 × 1.2 ÷ 1,000</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>합산 단가</strong></td>
+          <td class="td-up">180원/kWh</td>
+          <td class="td-mid"><strong>188원/kWh</strong></td>
+          <td class="td-up"><strong>214원/kWh</strong></td>
+          <td>기존 대비 8~34원 상향</td>
+        </tr>
+        <tr>
+          <td><strong>연간 발전 수익</strong></td>
+          <td>약 2,150만원</td>
+          <td class="td-mid">약 2,246만원</td>
+          <td class="td-up">약 2,557만원</td>
+          <td>99kW / 전남 기준</td>
+        </tr>
+        <tr>
+          <td><strong>월 순수익</strong></td>
+          <td>약 93만원</td>
+          <td class="td-mid">약 101만원</td>
+          <td class="td-up">약 127만원</td>
+          <td>비용 1,028만원 차감 후</td>
+        </tr>
+        <tr>
+          <td><strong>자기자본 수익률</strong></td>
+          <td>약 14.0%</td>
+          <td class="td-mid">약 15.2%</td>
+          <td class="td-up">약 19.1%</td>
+          <td>자기자본 8,000만원 기준</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-green" style="margin-top:20px;">
+    <span class="alert-icon">✅</span>
+    <div>
+      <strong>결론 — 블로그 독자에게 유리한 방향으로 수정됩니다</strong><br>
+      기존 Day 6 포스팅은 REC 수익을 절반 이하로 과소 계상하여 실제보다 수익이 낮게 보였습니다.
+      수정 후에는 보수적 기준에서도 <strong>월 101만원, 연 수익률 15%</strong>로
+      더 현실적이고 신뢰도 높은 수치를 제공할 수 있습니다.
+      단, 2025년 SMP 하락 추세를 반드시 명시하여 독자가 리스크를 인지하도록 해야 합니다.
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <strong>☀ 태양광 수익 데이터 분석 보고서</strong><br>
+  출처: 전력거래소 EPSIS | 엔라이튼 인사이트 | 뉴밋 | 에너지경제신문 | 아진솔라텍 | 무한에너지<br>
+  ※ 본 자료의 수치는 공개 데이터 기반이며, 실제 투자 결정 전 전문가 상담 및 최신 단가 확인을 권장합니다.<br>
+  ※ SMP·REC는 시장 변동 요소로 과거 데이터가 미래 수익을 보장하지 않습니다.
+</div>
+
+</body>
+</html>
