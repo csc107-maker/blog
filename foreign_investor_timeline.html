@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외국인 수급 이동 역사 타임라인 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --navy:       #060E1F;
+  --navy-2:     #0D1B35;
+  --navy-3:     #142345;
+  --navy-4:     #1C2E58;
+  --gold:       #C8A84B;
+  --gold-lt:    #E3C97E;
+  --gold-dim:   rgba(200,168,75,0.18);
+  --green:      #00B87A;
+  --green-dim:  rgba(0,184,122,0.14);
+  --red:        #E5364E;
+  --red-dim:    rgba(229,54,78,0.14);
+  --blue:       #3A85F0;
+  --blue-dim:   rgba(58,133,240,0.14);
+  --amber:      #E89B25;
+  --amber-dim:  rgba(232,155,37,0.14);
+  --teal:       #00C4B4;
+  --teal-dim:   rgba(0,196,180,0.14);
+  --txt-1:      #EDF2FF;
+  --txt-2:      #7E9BC8;
+  --txt-3:      #3E5480;
+  --border:     rgba(255,255,255,0.07);
+  --border-2:   rgba(255,255,255,0.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--navy);
+  color:var(--txt-1);
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  line-height:1.65;
+  min-height:100vh;
+}
+
+/* ── HEADER ── */
+.hd{
+  background:var(--navy-2);
+  border-bottom:1px solid var(--border);
+  padding:28px 24px 20px;
+}
+
+.series-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--gold-dim);
+  border:1px solid var(--gold);
+  border-radius:4px;
+  padding:3px 10px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:500;
+  color:var(--gold);
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.series-pill::before{
+  content:'';width:5px;height:5px;
+  background:var(--gold);border-radius:50%;
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hd-title{
+  font-size:22px;font-weight:700;
+  letter-spacing:-.02em;
+  color:var(--txt-1);
+  line-height:1.3;
+  margin-bottom:6px;
+}
+.hd-sub{
+  font-size:13px;color:var(--txt-2);
+}
+
+/* ── LEGEND ── */
+.legend{
+  display:flex;flex-wrap:wrap;gap:8px 20px;
+  padding:14px 24px;
+  border-bottom:1px solid var(--border);
+  background:var(--navy-2);
+}
+.leg{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--txt-2);
+}
+.leg-dot{
+  width:8px;height:8px;border-radius:50%;
+  flex-shrink:0;
+}
+
+/* ── CHART SECTION ── */
+.chart-wrap{
+  padding:20px 24px 8px;
+  background:var(--navy-2);
+  border-bottom:1px solid var(--border);
+}
+.chart-label{
+  font-size:11px;
+  font-family:'DM Mono',monospace;
+  color:var(--txt-3);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin-bottom:10px;
+}
+.chart-box{
+  position:relative;
+  height:160px;
+}
+
+/* ── FLOW BAR ── */
+.flow-section{
+  padding:16px 24px;
+  border-bottom:1px solid var(--border);
+  background:var(--navy-2);
+}
+.flow-title{
+  font-size:11px;
+  font-family:'DM Mono',monospace;
+  color:var(--txt-3);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.flow-row{
+  display:grid;
+  grid-template-columns:repeat(20,1fr);
+  gap:3px;
+  margin-bottom:6px;
+}
+.flow-cell{
+  height:28px;border-radius:3px;
+  transition:transform .15s;
+  cursor:default;
+  position:relative;
+}
+.flow-cell:hover{transform:scaleY(1.12);}
+.flow-cell[title]:hover::after{
+  content:attr(title);
+  position:absolute;
+  bottom:calc(100% + 4px);
+  left:50%;transform:translateX(-50%);
+  background:var(--navy-4);
+  border:1px solid var(--border-2);
+  border-radius:4px;
+  padding:4px 8px;
+  font-size:11px;
+  color:var(--txt-1);
+  white-space:nowrap;
+  z-index:10;
+  pointer-events:none;
+}
+.flow-months{
+  display:grid;
+  grid-template-columns:repeat(20,1fr);
+  gap:3px;
+}
+.flow-mon{
+  font-size:9px;
+  font-family:'DM Mono',monospace;
+  color:var(--txt-3);
+  text-align:center;
+  letter-spacing:-.02em;
+}
+
+/* ── TIMELINE ── */
+.tl-section{
+  padding:24px 24px 40px;
+}
+.tl-head{
+  font-size:11px;
+  font-family:'DM Mono',monospace;
+  color:var(--txt-3);
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.tl{
+  position:relative;
+  padding-left:28px;
+}
+.tl::before{
+  content:'';
+  position:absolute;left:9px;top:8px;
+  width:1.5px;height:calc(100% - 8px);
+  background:linear-gradient(180deg,
+    var(--gold) 0%,
+    var(--blue) 30%,
+    var(--red) 58%,
+    var(--green) 80%,
+    var(--teal) 100%);
+  opacity:.5;
+}
+
+.tl-item{
+  position:relative;
+  margin-bottom:16px;
+  opacity:0;
+  transform:translateX(-12px);
+  transition:opacity .45s ease, transform .45s ease;
+}
+.tl-item.visible{
+  opacity:1;
+  transform:translateX(0);
+}
+
+.tl-marker{
+  position:absolute;
+  left:-24px;top:16px;
+  width:14px;height:14px;
+  border-radius:50%;
+  border:2px solid var(--navy);
+  z-index:2;
+  transition:transform .2s;
+}
+.tl-item:hover .tl-marker{transform:scale(1.25);}
+
+/* marker colors */
+.mk-gold  {background:var(--gold);}
+.mk-green {background:var(--green);}
+.mk-red   {background:var(--red);}
+.mk-blue  {background:var(--blue);}
+.mk-amber {background:var(--amber);}
+.mk-teal  {background:var(--teal);}
+
+.card{
+  background:var(--navy-3);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 18px;
+  transition:border-color .2s, background .2s;
+  cursor:default;
+}
+.card:hover{
+  border-color:var(--border-2);
+  background:var(--navy-4);
+}
+
+/* left accent bar */
+.card.buy   {border-left:3px solid var(--green);}
+.card.sell  {border-left:3px solid var(--red);}
+.card.pivot {border-left:3px solid var(--amber);}
+.card.shift {border-left:3px solid var(--blue);}
+.card.now   {border-left:3px solid var(--teal);}
+.card.surge {border-left:3px solid var(--gold);}
+
+.card-meta{
+  display:flex;align-items:center;
+  flex-wrap:wrap;gap:6px;
+  margin-bottom:8px;
+}
+.date-tag{
+  font-family:'DM Mono',monospace;
+  font-size:10px;font-weight:500;
+  color:var(--gold);
+  background:var(--gold-dim);
+  padding:2px 7px;border-radius:3px;
+}
+.badge{
+  font-size:10px;font-weight:700;
+  padding:2px 7px;border-radius:3px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.b-buy   {background:var(--green-dim);color:var(--green);}
+.b-sell  {background:var(--red-dim);  color:var(--red);}
+.b-pivot {background:var(--amber-dim);color:var(--amber);}
+.b-shift {background:var(--blue-dim); color:var(--blue);}
+.b-now   {background:var(--teal-dim); color:var(--teal);}
+.b-surge {background:var(--gold-dim); color:var(--gold);}
+
+.card-title{
+  font-size:15px;font-weight:700;
+  color:var(--txt-1);
+  letter-spacing:-.015em;
+  line-height:1.35;
+  margin-bottom:7px;
+}
+.card-desc{
+  font-size:12.5px;
+  color:var(--txt-2);
+  line-height:1.65;
+  margin-bottom:10px;
+}
+.card-nums{
+  display:flex;flex-wrap:wrap;gap:8px 20px;
+}
+.num-chip{
+  display:flex;flex-direction:column;gap:1px;
+}
+.num-val{
+  font-family:'DM Mono',monospace;
+  font-size:17px;font-weight:500;
+}
+.num-val.up   {color:var(--green);}
+.num-val.dn   {color:var(--red);}
+.num-val.gold {color:var(--gold);}
+.num-val.bl   {color:var(--blue);}
+.num-val.tl   {color:var(--teal);}
+.num-val.am   {color:var(--amber);}
+.num-lbl{
+  font-size:10px;color:var(--txt-3);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.03em;
+}
+
+.stocks{
+  display:flex;flex-wrap:wrap;gap:5px;
+  margin-top:8px;
+}
+.stock-tag{
+  font-size:11px;font-weight:500;
+  padding:2px 8px;border-radius:12px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--txt-1);
+}
+
+/* ── SUMMARY FOOTER ── */
+.summary{
+  margin:0 24px 32px;
+  border:1px solid rgba(200,168,75,.25);
+  border-radius:10px;
+  background:linear-gradient(135deg,rgba(200,168,75,.07),rgba(58,133,240,.05));
+  padding:18px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.summary-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.summary-body{font-size:13px;line-height:1.7;color:var(--txt-2);}
+.summary-body strong{color:var(--gold);font-weight:700;}
+
+.disc{
+  margin:0 24px 24px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.02);
+  border-left:2px solid var(--txt-3);
+  border-radius:0 5px 5px 0;
+  font-size:11px;color:var(--txt-3);line-height:1.7;
+}
+
+@media(max-width:540px){
+  .hd-title{font-size:18px;}
+  .flow-row,.flow-months{grid-template-columns:repeat(10,1fr);}
+  .card-nums{gap:8px 14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hd">
+  <div class="series-pill">코스피 수급 권력 이동 · 시리즈 타임라인</div>
+  <div class="hd-title">외국인 수급 이동 역사 타임라인<br>2025년 → 2026년 4월</div>
+  <div class="hd-sub">18개월간 코스피 외국인 자금 흐름 전체 복기 · 데이터 기반 분석</div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="leg"><span class="leg-dot" style="background:var(--green)"></span>대규모 순매수</div>
+  <div class="leg"><span class="leg-dot" style="background:var(--red)"></span>대규모 순매도</div>
+  <div class="leg"><span class="leg-dot" style="background:var(--amber)"></span>섹터 이동</div>
+  <div class="leg"><span class="leg-dot" style="background:var(--blue)"></span>지수 이정표</div>
+  <div class="leg"><span class="leg-dot" style="background:var(--gold)"></span>역사적 사건</div>
+  <div class="leg"><span class="leg-dot" style="background:var(--teal)"></span>현재 진행</div>
+</div>
+
+<!-- KOSPI CHART -->
+<div class="chart-wrap">
+  <div class="chart-label">KOSPI 지수 흐름 — 2025년 1월 → 2026년 4월</div>
+  <div class="chart-box">
+    <canvas id="kospiChart" role="img" aria-label="코스피 지수 2025년부터 2026년 4월까지 흐름. 3900에서 시작해 6000까지 상승 후 5800선 유지.">코스피는 2025년 초 3900에서 출발해 반도체 상승으로 6000을 돌파했다가 이란 전쟁 충격으로 5100까지 급락, 이후 반등해 5800선을 유지 중.</canvas>
+  </div>
+</div>
+
+<!-- FLOW BAR -->
+<div class="flow-section">
+  <div class="flow-title">월별 외국인 순매수 강도 (녹색=순매수 / 적색=순매도)</div>
+  <div class="flow-row" id="flowBar"></div>
+  <div class="flow-months" id="flowMonths"></div>
+</div>
+
+<!-- TIMELINE -->
+<div class="tl-section">
+  <div class="tl-head">이벤트 타임라인 — 18개월 전체 상세 복기</div>
+  <div class="tl" id="tlContainer"></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary">
+  <div class="summary-icon">📊</div>
+  <div class="summary-body">
+    <strong>18개월 수급 흐름 핵심 요약:</strong>
+    2025년 반도체 슈퍼사이클로 외국인이 코스피를 3,900→6,000으로 이끌었고, 2026년 이란 전쟁·터보퀀트 충격으로 <strong>51조 원</strong>을 순매도했습니다.
+    이후 삼성전자 역대급 실적과 미·이란 휴전을 계기로 외국인이 귀환했고, 지금은 <strong>방산·원전·조선·금융</strong>으로 수급 지형이 재편 중입니다.
+    국민연금(1,540조) 비중 확대와 리밸런싱 유예가 하방을 지지하며 코스피 6,000 재탈환을 노리고 있습니다.
+  </div>
+</div>
+<div class="disc">
+  ※ 본 자료는 공개된 언론 보도와 시장 데이터를 기반으로 작성된 참고 콘텐츠입니다. 투자 권유가 아니며, 모든 투자 판단과 손익의 책임은 투자자 본인에게 있습니다.
+</div>
+
+<script>
+/* ── 1. FLOW BAR DATA ── */
+const months = [
+  {m:'25.01',v:+1.5,lbl:'25년 1월'},
+  {m:'25.02',v:+2.1,lbl:'25년 2월'},
+  {m:'25.03',v:+3.0,lbl:'25년 3월'},
+  {m:'25.04',v:+6.2,lbl:'25년 4월'},
+  {m:'25.05',v:+5.4,lbl:'25년 5월'},
+  {m:'25.06',v:+4.8,lbl:'25년 6월'},
+  {m:'25.07',v:+3.2,lbl:'25년 7월'},
+  {m:'25.08',v:+2.5,lbl:'25년 8월'},
+  {m:'25.09',v:+1.8,lbl:'25년 9월'},
+  {m:'25.10',v:+1.2,lbl:'25년 10월'},
+  {m:'25.11',v:-14.7,lbl:'25년 11월 -14.7조'},
+  {m:'25.12',v:+2.5,lbl:'25년 12월 +2.5조'},
+  {m:'26.01',v:+3.8,lbl:'26년 1월'},
+  {m:'26.02',v:-21.0,lbl:'26년 2월 -21조'},
+  {m:'26.03',v:-35.9,lbl:'26년 3월 -35.9조'},
+  {m:'26.04A',v:+4.5,lbl:'26년 4월초 +4.5조'},
+  {m:'',v:0,lbl:''},
+  {m:'',v:0,lbl:''},
+  {m:'',v:0,lbl:''},
+  {m:'',v:0,lbl:''},
+];
+
+const maxV = Math.max(...months.map(d=>Math.abs(d.v)));
+const flowBar = document.getElementById('flowBar');
+const flowMon = document.getElementById('flowMonths');
+
+months.forEach(d=>{
+  const cell = document.createElement('div');
+  cell.className = 'flow-cell';
+  const pct = d.v===0 ? 0 : Math.max(20, Math.round((Math.abs(d.v)/maxV)*100));
+  const color = d.v>=0 ? `rgba(0,184,122,${0.25+0.7*(Math.abs(d.v)/maxV)})` : `rgba(229,54,78,${0.25+0.7*(Math.abs(d.v)/maxV)})`;
+  cell.style.background = d.v===0 ? 'rgba(255,255,255,0.04)' : color;
+  if(d.lbl) cell.title = d.lbl;
+  flowBar.appendChild(cell);
+
+  const mon = document.createElement('div');
+  mon.className='flow-mon';
+  mon.textContent = d.m;
+  flowMon.appendChild(mon);
+});
+
+/* ── 2. KOSPI CHART ── */
+const kospiLabels = ['25.1','25.2','25.3','25.4','25.5','25.6','25.7','25.8','25.9','25.10','25.11','25.12','26.1','26.2','26.3','26.4'];
+const kospiData   = [3900, 3980, 4100, 4350, 4520, 4700, 4850, 4980, 5080, 5150, 4820, 4120, 5200, 5900, 5400, 5820];
+
+new Chart(document.getElementById('kospiChart'),{
+  type:'line',
+  data:{
+    labels:kospiLabels,
+    datasets:[{
+      label:'KOSPI',
+      data:kospiData,
+      borderColor:'#C8A84B',
+      borderWidth:2,
+      pointRadius:3,
+      pointBackgroundColor:ctx=>{
+        const v=ctx.raw;
+        if(v>=5900)return'#00B87A';
+        if(v<=4120)return'#E5364E';
+        return'#C8A84B';
+      },
+      pointBorderColor:'transparent',
+      fill:true,
+      backgroundColor:'rgba(200,168,75,0.06)',
+      tension:0.35,
+    }]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#142345',
+        borderColor:'rgba(255,255,255,0.12)',
+        borderWidth:1,
+        titleColor:'#7E9BC8',
+        bodyColor:'#EDF2FF',
+        padding:10,
+        callbacks:{
+          label:ctx=>`KOSPI ${ctx.raw.toLocaleString()}pt`
+        }
+      }
+    },
+    scales:{
+      x:{
+        grid:{color:'rgba(255,255,255,0.04)',drawBorder:false},
+        ticks:{color:'#3E5480',font:{size:10,family:"'DM Mono',monospace"},maxRotation:0}
+      },
+      y:{
+        grid:{color:'rgba(255,255,255,0.05)',drawBorder:false},
+        ticks:{
+          color:'#3E5480',
+          font:{size:10,family:"'DM Mono',monospace"},
+          callback:v=>v>=1000?`${(v/1000).toFixed(1)}k`:v
+        },
+        min:3600,
+      }
+    }
+  }
+});
+
+/* ── 3. TIMELINE DATA ── */
+const events = [
+  {
+    date:'2025년 1분기',
+    badge:'b-buy',badgeTxt:'순매수 기조',mk:'mk-green',cardType:'buy',
+    title:'반도체·자동차 중심 외국인 순매수 재개 — 코스피 4,000선 돌파',
+    desc:'2024년 조정 이후 외국인이 반도체(삼성전자·SK하이닉스)와 자동차(현대차·기아)를 중심으로 순매수를 재개했습니다. AI 반도체 수요 급증 기대감이 글로벌 메모리 반도체 업종에 대한 재평가를 이끌었습니다.',
+    nums:[
+      {v:'+2~3조',cls:'up',lbl:'월평균 순매수'},
+      {v:'4,100pt',cls:'bl',lbl:'코스피 도달'},
+    ],
+    stocks:['삼성전자','SK하이닉스','현대차','기아']
+  },
+  {
+    date:'2025년 4~10월',
+    badge:'b-buy',badgeTxt:'대규모 순매수',mk:'mk-green',cardType:'buy',
+    title:'외국인 23조 원 베팅 — 반도체 슈퍼사이클 본격화',
+    desc:'외국인이 약 6개월간 약 23조 원을 순매수하며 코스피를 이끌었습니다. AI 데이터센터 확장, HBM 수요 급증이 삼성전자·SK하이닉스 주가를 동반 견인했습니다. 코스피 시가총액 3,500조 돌파.',
+    nums:[
+      {v:'+23조',cls:'up',lbl:'6개월 누적 순매수'},
+      {v:'5,150pt',cls:'bl',lbl:'코스피 고점'},
+      {v:'3,500조',cls:'gold',lbl:'시가총액 돌파'},
+    ],
+    stocks:['삼성전자','SK하이닉스','에코프로','한화오션']
+  },
+  {
+    date:'2025년 11월',
+    badge:'b-sell',badgeTxt:'대규모 순매도',mk:'mk-red',cardType:'sell',
+    title:'첫 번째 대규모 이탈 — 14.7조 순매도, 차익 실현 러시',
+    desc:'지수 고점 부담과 글로벌 금리 불안이 겹치며 외국인이 11월 한 달에만 14.7조 원을 순매도했습니다. 코스피는 5,150선에서 4,800선으로 하락했습니다.',
+    nums:[
+      {v:'-14.7조',cls:'dn',lbl:'11월 순매도'},
+      {v:'4,800pt',cls:'dn',lbl:'코스피 하락'},
+    ],
+    stocks:['삼성전자','SK하이닉스']
+  },
+  {
+    date:'2025년 12월',
+    badge:'b-buy',badgeTxt:'산타랠리 복귀',mk:'mk-green',cardType:'buy',
+    title:'산타랠리 — 외국인 귀환, SK하이닉스·현대차 최대 순매수',
+    desc:'연말 실적 모멘텀과 AI 산업 낙관론에 외국인이 복귀했습니다. SK하이닉스(1.33조)와 삼성전자(5,791억)를 최대 순매수했습니다. 원화 약세에도 이익 모멘텀 베팅이 우세했습니다.',
+    nums:[
+      {v:'+2.5조',cls:'up',lbl:'12월 순매수'},
+      {v:'+4.64%',cls:'up',lbl:'코스피 월간 상승'},
+    ],
+    stocks:['SK하이닉스','삼성전자','현대차','에코프로']
+  },
+  {
+    date:'2026년 1월~2월 24일',
+    badge:'b-surge',badgeTxt:'역사적 랠리',mk:'mk-gold',cardType:'surge',
+    title:'코스피 사상 첫 6,000 돌파 — 외국인·개인 예탁금 동반 최고',
+    desc:'외국인과 개인 자금이 동시에 유입되며 코스피가 2026년 2월 25일 사상 처음으로 6,000선을 종가 기준 돌파했습니다. 개인 예탁금은 132조 원으로 역대 최고치를 기록했고, 신용융자 잔고도 32조를 웃돌았습니다.',
+    nums:[
+      {v:'6,000pt',cls:'gold',lbl:'코스피 사상 첫 돌파'},
+      {v:'132조',cls:'up',lbl:'개인 예탁금 최고'},
+      {v:'32조+',cls:'am',lbl:'신용융자 잔고'},
+    ],
+    stocks:['삼성전자','SK하이닉스','한화오션','HD현대중공업']
+  },
+  {
+    date:'2026년 2월 28일',
+    badge:'b-pivot',badgeTxt:'충격 이벤트',mk:'mk-amber',cardType:'pivot',
+    title:'미·이란 전쟁 발발 — 외국인 투자심리 급냉각',
+    desc:'미국과 이란 간 전쟁이 발발하면서 외국인의 투자심리가 급격히 냉각됩니다. 지정학적 불확실성 회피 심리가 한국·대만 등 이머징마켓 대형 기관 자금을 빠르게 이탈시켰습니다.',
+    nums:[
+      {v:'이란전쟁',cls:'dn',lbl:'전쟁 발발'},
+      {v:'급락',cls:'dn',lbl:'코스피 반응'},
+    ],
+    stocks:['방산주 급등','반도체주 급락']
+  },
+  {
+    date:'2026년 2월 순매도',
+    badge:'b-sell',badgeTxt:'1차 대규모 매도',mk:'mk-red',cardType:'sell',
+    title:'2월 21조 순매도 — 반도체 집중 이탈 1라운드',
+    desc:'전쟁 발발 직후 외국인이 2월에만 21조 730억 원을 순매도했습니다. 삼성전자 지분율이 51%에서 50% 아래로 하락하기 시작했습니다.',
+    nums:[
+      {v:'-21조',cls:'dn',lbl:'2월 순매도'},
+      {v:'50%↓',cls:'dn',lbl:'삼성전자 외인지분'},
+    ],
+    stocks:['삼성전자','SK하이닉스']
+  },
+  {
+    date:'2026년 3월',
+    badge:'b-sell',badgeTxt:'최대 규모 매도',mk:'mk-red',cardType:'sell',
+    title:'역대급 35.9조 순매도 — 터보퀀트 악재 가중, 삼성 지분율 12년 최저',
+    desc:'3월에는 이란 전쟁 장기화에 구글 터보퀀트(동일 메모리로 6배 처리) 악재가 겹쳐 메모리 수요 감소 우려가 폭발했습니다. 외국인이 3월 한 달에만 35.9조를 순매도했습니다. 삼성전자 외국인 지분율은 48.9%로 2013년 10월 이후 12년 6개월 만의 최저치를 기록했습니다.',
+    nums:[
+      {v:'-35.9조',cls:'dn',lbl:'3월 순매도'},
+      {v:'48.9%',cls:'dn',lbl:'삼성전자 외인 지분율'},
+      {v:'-51.4조',cls:'dn',lbl:'2월 이후 누적'},
+    ],
+    stocks:['삼성전자 -15.5조','SK하이닉스 -8.1조']
+  },
+  {
+    date:'2026년 4월 3일',
+    badge:'b-shift',badgeTxt:'섹터 이동 신호',mk:'mk-blue',cardType:'shift',
+    title:'방산·원전·조선 외국인 매수 포착 — 수급 지형 재편 첫 신호',
+    desc:'3월 공포 장세에서 4월 3일 외국인이 12거래일 만에 순매수로 전환했습니다. 주목할 것은 반도체가 아닌 방산(한화에어로스페이스, 현대로템)·원전(두산에너빌리티)·조선(HD현대중공업 +9.2%)에 집중 매수세가 유입됐다는 점입니다.',
+    nums:[
+      {v:'+8,146억',cls:'up',lbl:'4월 3일 순매수'},
+      {v:'12거래일',cls:'bl',lbl:'만의 순매수 전환'},
+    ],
+    stocks:['한화에어로스페이스','두산에너빌리티','HD현대중공업']
+  },
+  {
+    date:'2026년 4월 7일',
+    badge:'b-pivot',badgeTxt:'실적 이벤트',mk:'mk-amber',cardType:'pivot',
+    title:'삼성전자 역대 최고 실적 — 외국인은 또 SK하이닉스로 갔다',
+    desc:'삼성전자가 2026년 1분기 매출 133조·영업이익 57.2조(YoY +755%)를 발표했습니다. 시장 예상치 40조를 40% 상회하는 어닝 서프라이즈. 그러나 외국인은 당일 삼성전자를 5,490억 순매도하고 SK하이닉스를 2조 1,485억 집중 매수했습니다. SK하이닉스 10일 만에 +28.45%.',
+    nums:[
+      {v:'57.2조',cls:'gold',lbl:'삼성 1Q 영업이익'},
+      {v:'+755%',cls:'up',lbl:'전년 동기 대비'},
+      {v:'+28%',cls:'up',lbl:'SK하이닉스 10일'},
+    ],
+    stocks:['SK하이닉스 +2.1조 매수','삼성전자 -5,490억']
+  },
+  {
+    date:'2026년 4월 8~9일',
+    badge:'b-buy',badgeTxt:'안도 랠리',mk:'mk-green',cardType:'buy',
+    title:'미·이란 2주 휴전 합의 — 코스피 역대 5위 하루 상승 +6.87%',
+    desc:'미국과 이란이 2주간 휴전에 합의하면서 외국인이 공격적으로 귀환했습니다. 코스피는 하루 +6.87%(377.56pt 상승)라는 역대 5번째 하루 상승률을 기록했습니다. 외국인은 4거래일 연속 순매수로 전환했습니다.',
+    nums:[
+      {v:'+6.87%',cls:'up',lbl:'하루 상승률'},
+      {v:'5,872pt',cls:'up',lbl:'코스피 반등'},
+      {v:'4연속',cls:'bl',lbl:'외인 순매수 일수'},
+    ],
+    stocks:['삼성전자','SK하이닉스','현대차','한화에어로스페이스']
+  },
+  {
+    date:'2026년 4월 13일 이후',
+    badge:'b-now',badgeTxt:'현재 진행 중',mk:'mk-teal',cardType:'now',
+    title:'▶ NOW — 방산·원전·조선·금융 순환매, 코스피 6,000 재도전',
+    desc:'외국인이 삼성전자·SK하이닉스 반도체를 넘어 방산·원전·조선·금융 4개 섹터로 수급을 분산하고 있습니다. 4월 1일~13일 외국인 코스피 순매수는 약 4.5조로 집계됐으며, 그 중 삼성전자(2.35조)·SK하이닉스(1.55조)에 집중됐습니다. 국민연금 1,540조 비중 확대와 리밸런싱 유예가 하방을 지지하는 구조입니다.',
+    nums:[
+      {v:'+4.5조',cls:'tl',lbl:'4월 1~13일 순매수'},
+      {v:'5,809pt',cls:'tl',lbl:'코스피 (4/13 기준)'},
+      {v:'4개 섹터',cls:'tl',lbl:'수급 분산 중'},
+    ],
+    stocks:['방산','원전','조선','금융지주','반도체 병행']
+  },
+];
+
+const container = document.getElementById('tlContainer');
+
+events.forEach((e,i)=>{
+  const item = document.createElement('div');
+  item.className='tl-item';
+
+  const marker=`<div class="tl-marker ${e.mk}"></div>`;
+  const badge=`<span class="badge ${e.badge}">${e.badgeTxt}</span>`;
+  const nums=e.nums.map(n=>`<div class="num-chip"><span class="num-val ${n.cls}">${n.v}</span><span class="num-lbl">${n.lbl}</span></div>`).join('');
+  const stocks=e.stocks.map(s=>`<span class="stock-tag">${s}</span>`).join('');
+
+  item.innerHTML=`
+    ${marker}
+    <div class="card ${e.cardType}">
+      <div class="card-meta">
+        <span class="date-tag">${e.date}</span>
+        ${badge}
+      </div>
+      <div class="card-title">${e.title}</div>
+      <div class="card-desc">${e.desc}</div>
+      <div class="card-nums">${nums}</div>
+      <div class="stocks">${stocks}</div>
+    </div>`;
+
+  container.appendChild(item);
+});
+
+/* ── 4. INTERSECTION OBSERVER ── */
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx=[...document.querySelectorAll('.tl-item')].indexOf(e.target);
+      setTimeout(()=>e.target.classList.add('visible'), idx*55);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.08});
+
+document.querySelectorAll('.tl-item').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
