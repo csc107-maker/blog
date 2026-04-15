@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 2026년 1분기 실적 프리뷰 [팩트체크 완료]</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --bg0:#050B18;--bg1:#090F22;--bg2:#0F1630;--bg3:#161D3C;
+  --red:#E83E55;--red-dim:rgba(232,62,85,.12);
+  --org:#F5920A;--org-dim:rgba(245,146,10,.12);
+  --green:#00CC86;--green-dim:rgba(0,204,134,.12);
+  --blue:#3D8FFF;--blue-dim:rgba(61,143,255,.12);
+  --gold:#C8A442;--gold-dim:rgba(200,164,66,.12);
+  --teal:#00CCB8;--teal-dim:rgba(0,204,184,.12);
+  --txt1:#EDF2FF;--txt2:#6E8AC0;--txt3:#2C4272;
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg0);color:var(--txt1);font-family:'Noto Sans KR',sans-serif}
+
+/* HEADER */
+.ph{padding:26px 22px 20px;background:var(--bg1);border-bottom:1px solid var(--bdr);
+  background:linear-gradient(180deg,rgba(232,62,85,.07) 0%,transparent 100%)}
+.tag-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.d-tag{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(232,62,85,.15);border:1px solid var(--red);
+  border-radius:4px;padding:3px 10px;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:var(--red);letter-spacing:.1em;text-transform:uppercase}
+.d-tag::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%;
+  animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.verified-tag{display:inline-flex;align-items:center;gap:5px;
+  background:var(--green-dim);border:1px solid rgba(0,204,134,.3);
+  border-radius:4px;padding:3px 9px;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:var(--green);letter-spacing:.08em;text-transform:uppercase}
+.ph-title{font-size:21px;font-weight:700;letter-spacing:-.025em;line-height:1.25;margin-bottom:5px}
+.ph-sub{font-size:12px;color:var(--txt2)}
+
+/* FACT CHECK BANNER */
+.fc-banner{background:rgba(200,164,66,.08);border-left:3px solid var(--gold);
+  padding:12px 16px;margin:0;border-bottom:1px solid var(--bdr)}
+.fc-title{font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px;
+  display:flex;align-items:center;gap:6px}
+.fc-items{display:flex;flex-direction:column;gap:4px}
+.fc-item{font-size:11px;color:var(--txt2);display:flex;align-items:flex-start;gap:7px}
+.fc-ok{color:var(--green);font-weight:700;flex-shrink:0}
+.fc-fix{color:var(--red);font-weight:700;flex-shrink:0}
+
+/* COUNTDOWN */
+.cd-bar{background:var(--bg1);border-bottom:1px solid var(--bdr);
+  padding:12px 22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cd-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--txt3)}
+.cd-units{display:flex;gap:7px}
+.cu{background:var(--bg3);border:1px solid var(--bdr);border-radius:7px;
+  padding:7px 12px;text-align:center;min-width:48px}
+.cu-num{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--red);line-height:1}
+.cu-lbl{font-size:9px;color:var(--txt3);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.cd-date{font-size:11px;color:var(--gold);font-weight:500;
+  background:var(--gold-dim);padding:3px 8px;border-radius:4px;
+  font-family:'DM Mono',monospace}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:var(--bdr);border-bottom:1px solid var(--bdr)}
+.kc{background:var(--bg1);padding:14px 12px;transition:background .2s}
+.kc:hover{background:var(--bg2)}
+.kc-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--txt3);margin-bottom:4px}
+.kc-val{font-family:'DM Mono',monospace;font-size:17px;font-weight:500;line-height:1.1;margin-bottom:3px}
+.kc-note{font-size:10px;color:var(--txt3);margin-bottom:3px}
+.delta{display:inline-flex;align-items:center;gap:2px;font-size:10px;
+  font-family:'DM Mono',monospace;font-weight:500;padding:1px 5px;border-radius:3px}
+.d-up{background:var(--green-dim);color:var(--green)}
+.d-nt{background:var(--blue-dim);color:var(--blue)}
+.kv-red{color:var(--red)}.kv-org{color:var(--org)}.kv-green{color:var(--green)}
+.kv-blue{color:var(--blue)}.kv-gold{color:var(--gold)}.kv-teal{color:var(--teal)}
+.kv-wh{color:var(--txt1)}
+
+/* SECTION */
+.sec{padding:18px 22px}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;flex-wrap:wrap;gap:6px}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--txt3);display:flex;align-items:center;gap:6px}
+.sec-lbl::before{content:'';width:7px;height:1.5px;background:var(--txt3)}
+.sbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;
+  text-transform:uppercase;letter-spacing:.03em}
+.sb-r{background:var(--red-dim);color:var(--red);border:1px solid rgba(232,62,85,.25)}
+.sb-g{background:var(--green-dim);color:var(--green)}
+.sb-go{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(200,164,66,.25)}
+hr.div{border:none;height:1px;background:var(--bdr)}
+
+/* CHART */
+.chart-card{background:var(--bg1);border:1px solid var(--bdr);border-radius:10px;padding:16px}
+.chart-leg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--txt2)}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.cw{position:relative;height:210px}
+
+/* SOURCE NOTE */
+.src-note{font-size:10px;color:var(--txt3);margin-top:8px;font-style:italic}
+
+/* ASP CARDS */
+.asp-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.asp-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:9px;
+  padding:15px;position:relative;overflow:hidden;transition:border-color .2s}
+.asp-card:hover{border-color:var(--bdr2)}
+.asp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
+.ac-dram::before{background:var(--red)}
+.ac-nand::before{background:var(--blue)}
+.ac-hbm::before{background:var(--green)}
+.asp-icon{font-size:20px;margin-bottom:8px}
+.asp-label{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--txt2);margin-bottom:10px}
+.asp-num{font-family:'DM Mono',monospace;font-size:28px;font-weight:500;line-height:1;margin-bottom:4px}
+.asp-src{font-size:10px;color:var(--txt3);margin-bottom:10px;
+  background:var(--bg3);padding:3px 7px;border-radius:4px;display:inline-block}
+.asp-items{display:flex;flex-direction:column;gap:5px}
+.ai{font-size:11.5px;color:var(--txt2);display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.ai-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* TARGET PRICE TABLE */
+.tp-wrap{overflow-x:auto;border-radius:9px;border:1px solid var(--bdr)}
+table.tp{width:100%;border-collapse:collapse;background:var(--bg1);min-width:580px}
+table.tp thead{background:var(--bg2);border-bottom:1px solid var(--bdr)}
+table.tp th{padding:10px 13px;text-align:left;font-size:9.5px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);white-space:nowrap}
+table.tp td{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:12px;color:var(--txt2);vertical-align:middle}
+table.tp tbody tr:last-child td{border-bottom:none}
+table.tp tbody tr:hover td{background:rgba(61,143,255,.04)}
+.firm{color:var(--txt1);font-weight:600}
+.tp-v{font-family:'DM Mono',monospace;font-weight:500}
+.bar-mini{display:flex;align-items:center;gap:6px}
+.bm-track{height:4px;background:rgba(255,255,255,.05);border-radius:2px;flex:1;overflow:hidden}
+.bm-fill{height:100%;border-radius:2px}
+.op-pill{display:inline-block;padding:2px 8px;border-radius:9px;font-size:10px;font-weight:700}
+.op-b{background:var(--green-dim);color:var(--green)}
+
+/* SCENARIO GRID */
+.sce-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sc-card{background:var(--bg2);border:1px solid var(--bdr);border-radius:9px;
+  padding:15px;position:relative;overflow:hidden;transition:border-color .2s}
+.sc-card:hover{border-color:var(--bdr2)}
+.sc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
+.sca::before{background:var(--green)}
+.scb::before{background:var(--blue)}
+.scc::before{background:var(--red)}
+.sc-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;
+  display:inline-block;margin-bottom:9px;letter-spacing:.03em}
+.st-a{background:var(--green-dim);color:var(--green)}
+.st-b{background:var(--blue-dim);color:var(--blue)}
+.st-c{background:var(--red-dim);color:var(--red)}
+.sc-title{font-size:13.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+.sc-items{display:flex;flex-direction:column;gap:5px}
+.si{font-size:11.5px;color:var(--txt2);display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+.si-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* WATCH GRID */
+.wg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wc{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:13px}
+.wc-lbl{font-size:9px;font-family:'DM Mono',monospace;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--txt3);margin-bottom:4px}
+.wc-val{font-size:13px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.wc-desc{font-size:11px;color:var(--txt3);line-height:1.55}
+
+/* SUMMARY / DISC */
+.sum{margin:0 22px 20px;background:linear-gradient(135deg,rgba(232,62,85,.07),rgba(245,146,10,.05));
+  border:1px solid rgba(232,62,85,.2);border-radius:10px;padding:16px 18px;
+  display:flex;gap:12px}
+.s-ico{font-size:19px;flex-shrink:0;margin-top:2px}
+.s-body{font-size:12.5px;line-height:1.75;color:var(--txt2)}
+.s-body strong{color:var(--red);font-weight:700}
+.disc{margin:0 22px 28px;padding:11px 14px;background:rgba(255,255,255,.02);
+  border-left:2px solid var(--txt3);border-radius:0 4px 4px 0;
+  font-size:11px;color:var(--txt3);line-height:1.75}
+
+@media(max-width:620px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .asp-grid,.sce-grid{grid-template-columns:1fr}
+  .wg{grid-template-columns:repeat(2,1fr)}
+  .cu-num{font-size:17px}.cu{min-width:42px;padding:5px 9px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="ph">
+  <div class="tag-row">
+    <div class="d-tag">D-8 · 잠정실적 · 4월 23일</div>
+    <div class="verified-tag">✓ 팩트체크 완료</div>
+  </div>
+  <div class="ph-title">SK하이닉스 2026년 1분기<br>실적 프리뷰 [검증본]</div>
+  <div class="ph-sub">000660 · KRX · 잠정실적 발표 4월 23일 오전 | 모건스탠리 출신 투자 분석 | 2026년 4월 15일</div>
+</div>
+
+<!-- FACT CHECK BANNER -->
+<div class="fc-banner">
+  <div class="fc-title">📋 주요 팩트체크 결과 — 이전 버전 오류 수정 내용</div>
+  <div class="fc-items">
+    <div class="fc-item"><span class="fc-fix">❌ 수정</span>발표일 "4월 29일" → 공식 공시 기준 <strong style="color:var(--green)">4월 23일 오전</strong> (잠정실적)</div>
+    <div class="fc-item"><span class="fc-fix">❌ 수정</span>D램 ASP "+94~101%" → 출처별 차이 존재. 헤럴드경제 보도 기준 <strong style="color:var(--green)">+65%</strong>, 키움 리포트 기준 범용 D램 스팟 94% (blended 55%)</div>
+    <div class="fc-item"><span class="fc-fix">❌ 수정</span>연간 영업이익 "226조/288조/251조" 혼용 → <strong style="color:var(--green)">KB 251조, 키움 226조</strong> 출처 구분 명기</div>
+    <div class="fc-item"><span class="fc-fix">❌ 수정</span>ADR 발행 기정사실화 → <strong style="color:var(--green)">증권사 분석 기반 가능성 언급</strong>임을 명시 (미확정)</div>
+    <div class="fc-item"><span class="fc-ok">✅ 확인</span>1Q 영업이익 컨센서스 38.5조, 일부 40조+ 전망 | 키움·흥국·KB 40조+ | YoY +418% — 공식 확인</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN (4월 23일 기준) -->
+<div class="cd-bar">
+  <div class="cd-label">잠정실적까지</div>
+  <div class="cd-units">
+    <div class="cu"><div class="cu-num" id="cd-d">08</div><div class="cu-lbl">일</div></div>
+    <div class="cu"><div class="cu-num" id="cd-h">00</div><div class="cu-lbl">시간</div></div>
+    <div class="cu"><div class="cu-num" id="cd-m">00</div><div class="cu-lbl">분</div></div>
+    <div class="cu"><div class="cu-num" id="cd-s">00</div><div class="cu-lbl">초</div></div>
+  </div>
+  <div class="cd-date">📅 2026년 4월 23일 오전 (공식 공시 확인)</div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kc">
+    <div class="kc-lbl">1Q26 영업이익 컨센서스</div>
+    <div class="kc-val kv-red">38.5조원</div>
+    <div class="kc-note">연합인포맥스 집계 기준</div>
+    <div class="delta d-up">▲ YoY +418%</div>
+  </div>
+  <div class="kc">
+    <div class="kc-lbl">40조+ 전망 증권사</div>
+    <div class="kc-val kv-org">3곳</div>
+    <div class="kc-note">키움 40.28조 · 흥국 40.09조 · KB 40.08조</div>
+    <div class="delta d-up">▲ 컨센서스 초과</div>
+  </div>
+  <div class="kc">
+    <div class="kc-lbl">전년 동기 영업이익</div>
+    <div class="kc-val kv-teal">7.44조원</div>
+    <div class="kc-note">2025년 1Q 실제값</div>
+    <div class="delta d-nt">비교 기저</div>
+  </div>
+  <div class="kc">
+    <div class="kc-lbl">현재 주가 (4/14)</div>
+    <div class="kc-val kv-blue">111.5만원</div>
+    <div class="kc-note">전일 대비 +7.21%</div>
+    <div class="delta d-up">▲ 52주 고점 시도</div>
+  </div>
+  <div class="kc">
+    <div class="kc-lbl">KB 연간 영업이익 전망</div>
+    <div class="kc-val kv-gold">251조원</div>
+    <div class="kc-note">KB증권 · 2026년 기준</div>
+    <div class="delta d-up">▲ YoY 대폭 증가</div>
+  </div>
+</div>
+
+<!-- EARNINGS TREND CHART -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-lbl">SK하이닉스 분기별 영업이익 추이 및 전망</div>
+    <div class="sbadge sb-r">단위: 조 원 | 전망치는 증권사 추정</div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-leg">
+      <div class="leg"><span class="leg-sq" style="background:var(--red)"></span>실제 영업이익 (확정)</div>
+      <div class="leg"><span class="leg-sq" style="background:var(--org);opacity:.8"></span>전망치 (증권사 추정)</div>
+    </div>
+    <div class="cw">
+      <canvas id="opChart" role="img" aria-label="SK하이닉스 분기별 영업이익 추이. 2025년 1분기 7.4조에서 4분기 19.2조까지 성장, 2026년 1분기 38~40조 전망.">
+        2025년 1분기 7.4조에서 4분기 19.2조로 성장, 2026년 1분기 38~40조 전망.
+      </canvas>
+    </div>
+    <div class="src-note">출처: 연합인포맥스(컨센서스), 각 증권사 리포트 | 2026년 1분기 이후는 추정치이며 실제와 다를 수 있습니다</div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ASP PRICE CARDS -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-lbl">가격 드라이버 분석 — 출처별 수치 구분 제시</div>
+    <div class="sbadge sb-go">증권사별 추정 편차 존재</div>
+  </div>
+  <div class="asp-grid">
+
+    <!-- DRAM -->
+    <div class="asp-card ac-dram">
+      <div class="asp-icon">💿</div>
+      <div class="asp-label" style="color:var(--red)">DRAM ASP 상승률</div>
+      <div class="asp-num kv-red">+65%</div>
+      <div class="asp-src">출처: 헤럴드경제 보도</div>
+      <div class="asp-num" style="font-size:18px;color:var(--org);margin-bottom:4px">+94% (범용 스팟)</div>
+      <div class="asp-src">출처: 키움증권 리포트 범용 기준</div>
+      <div class="asp-items">
+        <div class="ai"><span class="ai-dot" style="background:var(--red)"></span>blended(HBM 포함) 기준은 +55% QoQ (키움)</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--red)"></span>AI 서버 수요가 계절 수요를 압도</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--red)"></span>D램 영업이익률 80% 수준 관측 (KB)</div>
+      </div>
+    </div>
+
+    <!-- NAND -->
+    <div class="asp-card ac-nand">
+      <div class="asp-icon">💾</div>
+      <div class="asp-label" style="color:var(--blue)">NAND ASP 상승률</div>
+      <div class="asp-num kv-blue">+78%</div>
+      <div class="asp-src">출처: 헤럴드경제 보도</div>
+      <div class="asp-num" style="font-size:18px;color:var(--teal);margin-bottom:4px">+81% (blended)</div>
+      <div class="asp-src">출처: 키움증권 리포트</div>
+      <div class="asp-items">
+        <div class="ai"><span class="ai-dot" style="background:var(--blue)"></span>eSSD(기업용 SSD) 수요 급증 효과</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--blue)"></span>낸드 영업이익률 40~60%대 회복 전망</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--blue)"></span>Solidigm 서버 QLC 시장 주도</div>
+      </div>
+    </div>
+
+    <!-- HBM -->
+    <div class="asp-card ac-hbm">
+      <div class="asp-icon">🧠</div>
+      <div class="asp-label" style="color:var(--green)">HBM 2026년 매출 전망</div>
+      <div class="asp-num kv-green">41.2조</div>
+      <div class="asp-src">출처: 언론 보도 추정치</div>
+      <div class="asp-items">
+        <div class="ai"><span class="ai-dot" style="background:var(--green)"></span>엔비디아 HBM3E 내 71% 점유율 (대신증권)</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--green)"></span>HBM4: SK하이닉스 55%, 삼성 28%, 마이크론 17% 전망</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--green)"></span>HBM4 가격: 업계 추정 단위당 약 70만원 수준</div>
+        <div class="ai"><span class="ai-dot" style="background:var(--teal)"></span>⚠️ HBM4 가격은 공식 공개 가격 아닌 추정치</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- TARGET PRICE TABLE -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-lbl">증권사 목표주가 최신 현황</div>
+    <div class="sbadge sb-r">공개 리포트 확인 기준 | 4월 14일 전후</div>
+  </div>
+  <div class="tp-wrap">
+    <table class="tp">
+      <thead>
+        <tr>
+          <th>증권사</th>
+          <th>목표주가</th>
+          <th>현재가(111.5만) 대비</th>
+          <th>의견</th>
+          <th>이전 목표</th>
+          <th>핵심 논거</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="firm">SK증권</td>
+          <td><span class="tp-v kv-red">200만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:79%;background:var(--red)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--red)">+79%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">160만원</td>
+          <td>메모리 가격 상승 + 장기계약 가시화</td>
+        </tr>
+        <tr>
+          <td class="firm">KB증권</td>
+          <td><span class="tp-v kv-green">190만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:70%;background:var(--green)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--green)">+70%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">170만원</td>
+          <td>연간 영업이익 251조 전망, 생존 조건 메모리</td>
+        </tr>
+        <tr>
+          <td class="firm">한국투자증권</td>
+          <td><span class="tp-v kv-blue">180만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:61%;background:var(--blue)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--blue)">+61%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">150만원</td>
+          <td>2026 OPM 73.2% 역대 최고 전망</td>
+        </tr>
+        <tr>
+          <td class="firm">흥국증권</td>
+          <td><span class="tp-v kv-gold">140만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:26%;background:var(--gold)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--gold)">+26%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">125만원</td>
+          <td>LTA 확대, 가격 하방 지지</td>
+        </tr>
+        <tr>
+          <td class="firm">DS투자증권</td>
+          <td><span class="tp-v kv-wh">130만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:17%;background:var(--txt2)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--txt2)">+17%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">97만원</td>
+          <td>계약가격 상승 사이클 4Q26까지 지속</td>
+        </tr>
+        <tr>
+          <td class="firm">키움증권</td>
+          <td><span class="tp-v kv-wh">130만원</span></td>
+          <td>
+            <div class="bar-mini">
+              <div class="bm-track"><div class="bm-fill" style="width:17%;background:var(--txt2)"></div></div>
+              <span class="tp-v" style="font-size:11px;color:var(--txt2)">+17%</span>
+            </div>
+          </td>
+          <td><span class="op-pill op-b">BUY</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3)">130만원 유지</td>
+          <td>1Q 40.3조 예상, HBM4e 2027 기대</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="src-note" style="padding:8px 12px">출처: 각 증권사 공개 리포트 (2026년 4월 기준) | 목표주가는 투자 권유가 아닌 참고 정보입니다</div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- SCENARIO -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-lbl">4월 23일 이후 시나리오 분석</div>
+  </div>
+  <div class="sce-grid">
+    <div class="sc-card sca">
+      <div class="sc-tag st-a">시나리오 A</div>
+      <div class="sc-title">40조+ 달성<br>+ HBM4 일정 확인</div>
+      <div class="sc-items">
+        <div class="si"><span class="si-dot" style="background:var(--green)"></span>컨센서스(38.5조) 큰 폭 상회</div>
+        <div class="si"><span class="si-dot" style="background:var(--green)"></span>HBM4 2분기 공급 일정 확인</div>
+        <div class="si"><span class="si-dot" style="background:var(--green)"></span>외국인 반도체 수급 재집중</div>
+        <div class="si"><span class="si-dot" style="background:var(--green)"></span>코스피 반도체 섹터 주도 상승</div>
+      </div>
+    </div>
+    <div class="sc-card scb">
+      <div class="sc-tag st-b">시나리오 B</div>
+      <div class="sc-title">38~39조 달성<br>가이던스 안정</div>
+      <div class="sc-items">
+        <div class="si"><span class="si-dot" style="background:var(--blue)"></span>컨센서스 수준 달성</div>
+        <div class="si"><span class="si-dot" style="background:var(--blue)"></span>2분기 가이던스 현 수준 유지</div>
+        <div class="si"><span class="si-dot" style="background:var(--blue)"></span>단기 차익실현 후 안정</div>
+        <div class="si"><span class="si-dot" style="background:var(--blue)"></span>방산·원전 순환매 병행</div>
+      </div>
+    </div>
+    <div class="sc-card scc">
+      <div class="sc-tag st-c">시나리오 C</div>
+      <div class="sc-title">HBM4 지연 언급<br>또는 가이던스 하향</div>
+      <div class="sc-items">
+        <div class="si"><span class="si-dot" style="background:var(--red)"></span>단기 10~20% 조정 가능</div>
+        <div class="si"><span class="si-dot" style="background:var(--red)"></span>반도체 섹터 단기 약세</div>
+        <div class="si"><span class="si-dot" style="background:var(--red)"></span>중장기 분할 매수 기회</div>
+        <div class="si"><span class="si-dot" style="background:var(--red)"></span>구조적 성장 테제 미훼손</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- WATCH LIST -->
+<div class="sec">
+  <div class="sec-hd">
+    <div class="sec-lbl">4월 23일 실적 핵심 체크포인트</div>
+    <div class="sbadge sb-g">WATCH LIST</div>
+  </div>
+  <div class="wg">
+    <div class="wc">
+      <div class="wc-lbl">① 영업이익 수준</div>
+      <div class="wc-val kv-red">40조 돌파?</div>
+      <div class="wc-desc">컨센서스 38.5조 초과 여부 + 서프라이즈 폭이 주가 반응 강도 결정</div>
+    </div>
+    <div class="wc">
+      <div class="wc-lbl">② HBM4 공급 일정</div>
+      <div class="wc-val kv-green">2Q26 확인?</div>
+      <div class="wc-desc">HBM4 12단 인증 완료 여부 + 2분기 본격 공급 일정 경영진 언급</div>
+    </div>
+    <div class="wc">
+      <div class="wc-lbl">③ LTA 계약 현황</div>
+      <div class="wc-val kv-blue">확대 중?</div>
+      <div class="wc-desc">장기공급계약 비중 확대 언급 시 가격 하방 지지력 확인 가능</div>
+    </div>
+    <div class="wc">
+      <div class="wc-lbl">④ 2분기 가이던스</div>
+      <div class="wc-val kv-gold">성장 지속?</div>
+      <div class="wc-desc">하반기 포함 연간 가이던스 방향성 — 상향 여부가 관건</div>
+    </div>
+    <div class="wc">
+      <div class="wc-lbl">⑤ NAND 개선세</div>
+      <div class="wc-val kv-teal">흑자 확대?</div>
+      <div class="wc-desc">낸드 영업이익률 상승 확인 + eSSD 매출 기여도 언급 여부</div>
+    </div>
+    <div class="wc">
+      <div class="wc-lbl">⑥ 리스크 언급</div>
+      <div class="wc-val kv-org">중국 경쟁?</div>
+      <div class="wc-desc">중국 CXMT 등 경쟁사 위협에 대한 경영진 인식 수위 파악</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sum">
+  <div class="s-ico">🔬</div>
+  <div class="s-body">
+    <strong>검증 후 핵심 결론:</strong>
+    ① 발표일은 <strong>4월 23일 오전</strong>(공시 확인) ② 컨센서스 38.5조, 일부 증권사 <strong>40조+ 예상</strong>
+    ③ D램 ASP +65~94%(출처별 차이), NAND +78~81% ④ HBM3E 엔비디아 내 <strong>71% 점유</strong>
+    ⑤ 목표주가 최고 200만(SK증권)~130만(키움·DS) — 격차 크므로 참고용
+    ⑥ 4월 23일 실적에서 볼 것: 숫자보다 <strong>HBM4 공급 일정 + LTA 확대 + 2Q 가이던스</strong>
+  </div>
+</div>
+<div class="disc">
+  ※ 이 자료는 공식 공시, 공개 언론 보도, 증권사 리포트를 교차 검증하여 작성했습니다.
+  투자 권유가 아니며, 목표주가·영업이익 전망치는 증권사 추정값으로 실제와 다를 수 있습니다.
+  모든 투자 판단과 손익의 책임은 투자자 본인에게 있습니다.
+</div>
+
+<script>
+/* COUNTDOWN — 4월 23일 기준 */
+function tick(){
+  const t=new Date('2026-04-23T09:00:00+09:00')-new Date();
+  if(t<=0){['cd-d','cd-h','cd-m','cd-s'].forEach(id=>document.getElementById(id).textContent='00');return}
+  const d=Math.floor(t/86400000),h=Math.floor(t%86400000/3600000),
+    m=Math.floor(t%3600000/60000),s=Math.floor(t%60000/1000);
+  document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+/* CHART */
+new Chart(document.getElementById('opChart'),{
+  type:'bar',
+  data:{
+    labels:['25.1Q','25.2Q','25.3Q','25.4Q','26.1Q\n전망','26.2Q\n전망'],
+    datasets:[
+      {label:'확정 영업이익',data:[7.4,12.1,19.2,19.2,null,null],
+        backgroundColor:'rgba(232,62,85,.75)',borderColor:'#E83E55',borderWidth:1,borderRadius:4},
+      {label:'전망치(증권사)',data:[null,null,null,null,38.5,55],
+        backgroundColor:'rgba(245,146,10,.7)',borderColor:'#F5920A',borderWidth:1,borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#161D3C',borderColor:'rgba(255,255,255,.14)',borderWidth:1,
+        titleColor:'#6E8AC0',bodyColor:'#EDF2FF',padding:10,
+        callbacks:{label:ctx=>`${ctx.raw}조원 (${ctx.dataset.label})`}
+      }
+    },
+    scales:{
+      x:{grid:{color:'rgba(255,255,255,.04)'},
+        ticks:{color:'#2C4272',font:{size:10,family:"'DM Mono',monospace"},maxRotation:0}},
+      y:{grid:{color:'rgba(255,255,255,.05)'},
+        ticks:{color:'#2C4272',font:{size:10,family:"'DM Mono',monospace"},callback:v=>`${v}조`},min:0}
+    }
+  }
+});
+</script>
+</body>
+</html>
