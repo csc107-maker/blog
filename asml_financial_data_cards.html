@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASML 핵심 재무 지표 + 삼성·SK하이닉스 연결 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --bg0:#040B18;--bg1:#081220;--bg2:#0E1B30;--bg3:#152540;--bg4:#1C2F50;
+  --gold:#C8A842;--gold-lt:#E5C870;--gold-dim:rgba(200,168,66,.14);
+  --blue:#3D8BFF;--blue-lt:#7DB3FF;--blue-dim:rgba(61,139,255,.12);
+  --green:#00C882;--green-dim:rgba(0,200,130,.12);
+  --red:#FF3E5C;--red-dim:rgba(255,62,92,.12);
+  --teal:#00CCB8;--teal-dim:rgba(0,204,184,.12);
+  --orange:#F59000;--orange-dim:rgba(245,144,0,.12);
+  --purple:#8B7FFF;--purple-dim:rgba(139,127,255,.12);
+  --txt1:#ECF1FF;--txt2:#6E88B8;--txt3:#2E4468;
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg0);color:var(--txt1);font-family:'Noto Sans KR',sans-serif;min-height:100vh}
+img{display:block}
+
+/* ══════════ HEADER ══════════ */
+.page-header{
+  background:linear-gradient(180deg,rgba(61,139,255,.08) 0%,transparent 100%);
+  border-bottom:1px solid var(--bdr);
+  padding:30px 24px 22px;
+}
+.live-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(255,62,92,.15);border:1px solid var(--red);
+  border-radius:4px;padding:3px 10px;
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;
+}
+.live-tag::before{
+  content:'';width:6px;height:6px;background:var(--red);border-radius:50%;
+  animation:live-pulse 1.4s infinite;
+}
+@keyframes live-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.4}}
+.ph-title{font-size:23px;font-weight:700;letter-spacing:-.025em;line-height:1.25;margin-bottom:6px}
+.ph-sub{font-size:13px;color:var(--txt2);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ph-dot{width:4px;height:4px;border-radius:50%;background:var(--txt3)}
+.asml-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--blue-dim);border:1px solid rgba(61,139,255,.3);
+  border-radius:20px;padding:2px 10px;font-size:11px;color:var(--blue);font-weight:500;
+}
+
+/* ══════════ KPI STRIP ══════════ */
+.kpi-strip{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--bdr);border-bottom:1px solid var(--bdr);
+}
+.kpi-cell{
+  background:var(--bg1);padding:16px 14px;
+  transition:background .2s;
+}
+.kpi-cell:hover{background:var(--bg2)}
+.kc-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:5px}
+.kc-val{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;line-height:1;margin-bottom:4px}
+.kc-note{font-size:10px;color:var(--txt3)}
+.kc-delta{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:10px;font-family:'DM Mono',monospace;font-weight:500;
+  padding:1px 6px;border-radius:3px;margin-top:3px;
+}
+.d-up{background:var(--green-dim);color:var(--green)}
+.d-dn{background:var(--red-dim);color:var(--red)}
+.d-nu{background:var(--blue-dim);color:var(--blue)}
+
+.kv-gold{color:var(--gold)}.kv-blue{color:var(--blue)}.kv-green{color:var(--green)}
+.kv-teal{color:var(--teal)}.kv-orange{color:var(--orange)}.kv-red{color:var(--red)}
+.kv-purple{color:var(--purple)}.kv-white{color:var(--txt1)}
+
+/* ══════════ SECTION COMMON ══════════ */
+.section{padding:22px 24px}
+.sec-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:8px;
+}
+.sec-label{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--txt3);
+  display:flex;align-items:center;gap:7px;
+}
+.sec-label::before{content:'';width:8px;height:1px;background:var(--txt3)}
+.sec-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;
+  letter-spacing:.04em;text-transform:uppercase;
+}
+.sb-gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(200,168,66,.25)}
+.sb-blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(61,139,255,.25)}
+.sb-green{background:var(--green-dim);color:var(--green)}
+
+hr.div{border:none;height:1px;background:var(--bdr)}
+
+/* ══════════ CHART ══════════ */
+.chart-card{background:var(--bg1);border:1px solid var(--bdr);border-radius:10px;padding:18px}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--txt2)}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.chart-canvas-wrap{position:relative;height:220px}
+
+/* ══════════ KOREA SECTION ══════════ */
+.korea-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ko-card{
+  border-radius:10px;border:1px solid var(--bdr);
+  overflow:hidden;
+}
+.ko-header{
+  padding:16px 18px 14px;
+  display:flex;align-items:center;gap:12px;
+}
+.ko-flag{font-size:24px;line-height:1}
+.ko-meta{flex:1}
+.ko-company{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);margin-bottom:2px}
+.ko-name{font-size:17px;font-weight:700;letter-spacing:-.015em}
+.ko-ticker{
+  font-family:'DM Mono',monospace;font-size:11px;
+  background:var(--bg3);border:1px solid var(--bdr2);
+  border-radius:4px;padding:1px 7px;color:var(--txt2);
+}
+.ko-body{padding:0 18px 16px}
+.ko-highlight{
+  background:var(--bg2);border-radius:8px;padding:14px;margin-bottom:12px;
+  border:1px solid var(--bdr);
+}
+.koh-label{font-size:10px;color:var(--txt3);margin-bottom:3px;font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase}
+.koh-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;margin-bottom:2px}
+.koh-note{font-size:11px;color:var(--txt2);line-height:1.5}
+.ko-items{display:flex;flex-direction:column;gap:7px}
+.ko-item{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12.5px;color:var(--txt2);line-height:1.55;
+}
+.ki-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.ko-divider{height:1px;background:var(--bdr);margin:12px 0}
+.ko-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ks{background:var(--bg3);border-radius:6px;padding:10px}
+.ks-label{font-size:9px;color:var(--txt3);font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.ks-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500}
+
+/* Samsung accent */
+.ko-card.samsung .ko-header{background:linear-gradient(135deg,rgba(61,139,255,.08),transparent)}
+.ko-card.samsung .ko-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--teal))}
+.ko-card.samsung{position:relative}
+/* SK accent */
+.ko-card.sk .ko-header{background:linear-gradient(135deg,rgba(255,62,92,.08),transparent)}
+.ko-card.sk .ko-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--orange))}
+.ko-card.sk{position:relative}
+
+/* ══════════ GLOBAL CUSTOMER TABLE ══════════ */
+.cust-table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--bdr)}
+table.cust{width:100%;border-collapse:collapse;background:var(--bg1);min-width:680px}
+table.cust thead{background:var(--bg2);border-bottom:1px solid var(--bdr)}
+table.cust th{
+  padding:11px 14px;text-align:left;font-size:9.5px;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--txt3);white-space:nowrap;
+}
+table.cust td{
+  padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);
+  color:var(--txt2);font-size:12px;vertical-align:middle;
+}
+table.cust tbody tr:last-child td{border-bottom:none}
+table.cust tbody tr:hover td{background:rgba(61,139,255,.04)}
+.cust-name{display:flex;align-items:center;gap:8px;color:var(--txt1);font-weight:600;font-size:13px}
+.cust-flag{font-size:16px}
+.bar-mini{height:5px;border-radius:3px;background:rgba(255,255,255,.06);overflow:hidden;min-width:60px}
+.bm-fill{height:100%;border-radius:3px}
+.imp-pill{
+  display:inline-block;padding:2px 8px;border-radius:10px;
+  font-size:10px;font-weight:700;
+}
+.ip-critical{background:rgba(255,62,92,.15);color:var(--red)}
+.ip-major{background:rgba(61,139,255,.15);color:var(--blue)}
+.ip-significant{background:rgba(0,200,130,.15);color:var(--green)}
+.ip-growing{background:rgba(200,168,66,.15);color:var(--gold)}
+
+/* ══════════ CHINA RISK ══════════ */
+.risk-panel{
+  background:var(--bg1);border:1px solid rgba(255,62,92,.2);
+  border-radius:10px;padding:18px;
+}
+.risk-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.risk-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.risk-title{font-size:16px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em}
+.risk-desc{font-size:12.5px;color:var(--txt2);line-height:1.65}
+.risk-gauge{margin-bottom:14px}
+.rg-row{display:flex;justify-content:space-between;font-size:11px;color:var(--txt2);margin-bottom:5px}
+.rg-track{height:10px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden;position:relative}
+.rg-fill-old{height:100%;width:33%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:5px}
+.rg-fill-new{height:100%;width:20%;background:linear-gradient(90deg,var(--orange),var(--gold));border-radius:5px;position:absolute;top:0;left:0}
+.risk-items{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ri{background:var(--bg2);border-radius:7px;padding:11px;border:1px solid var(--bdr)}
+.ri-label{font-size:9px;color:var(--txt3);font-family:'DM Mono',monospace;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.ri-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+
+/* ══════════ ROADMAP ══════════ */
+.roadmap{display:flex;align-items:stretch;gap:0;position:relative}
+.roadmap::before{
+  content:'';position:absolute;
+  top:24px;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--bg3),var(--gold) 40%,var(--green) 100%);
+  z-index:0;
+}
+.rm-node{
+  flex:1;min-width:0;
+  padding:0 8px;
+  position:relative;z-index:1;
+}
+.rm-dot{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--bg0);
+  margin:0 auto 10px;
+  position:relative;z-index:2;
+  transition:transform .2s;
+}
+.rm-node:hover .rm-dot{transform:scale(1.3)}
+.rm-card{
+  background:var(--bg2);border:1px solid var(--bdr);
+  border-radius:8px;padding:11px 9px;
+  text-align:center;
+  transition:border-color .2s,background .2s;
+}
+.rm-node:hover .rm-card{border-color:var(--bdr2);background:var(--bg3)}
+.rm-node.current .rm-card{border-color:var(--gold);background:var(--bg3)}
+.rm-year{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);margin-bottom:3px}
+.rm-rev{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;margin-bottom:3px}
+.rm-desc{font-size:10px;color:var(--txt3);line-height:1.5}
+.rm-now-badge{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#000;font-size:8px;font-weight:700;
+  padding:2px 6px;border-radius:3px;white-space:nowrap;letter-spacing:.06em;
+}
+
+/* ══════════ INVESTMENT THESIS ══════════ */
+.thesis-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.th-card{
+  background:var(--bg2);border:1px solid var(--bdr);
+  border-radius:9px;padding:16px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s;
+}
+.th-card:hover{border-color:var(--bdr2)}
+.th-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.thc-bull::before{background:var(--green)}
+.thc-bear::before{background:var(--red)}
+.thc-ms::before{background:var(--gold)}
+.th-icon{font-size:20px;margin-bottom:8px}
+.th-title{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+.th-items{display:flex;flex-direction:column;gap:6px}
+.th-item{
+  display:flex;align-items:flex-start;gap:6px;
+  font-size:12px;color:var(--txt2);line-height:1.55;
+}
+.ti-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* ══════════ SUMMARY ══════════ */
+.summary-box{
+  margin:0 24px 24px;
+  background:linear-gradient(135deg,rgba(200,168,66,.08),rgba(61,139,255,.06));
+  border:1px solid rgba(200,168,66,.22);
+  border-radius:10px;padding:18px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.sb-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.sb-body{font-size:13px;line-height:1.75;color:var(--txt2)}
+.sb-body strong{color:var(--gold);font-weight:700}
+
+.disclaimer{
+  margin:0 24px 28px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.02);
+  border-left:2px solid var(--txt3);
+  border-radius:0 5px 5px 0;
+  font-size:11px;color:var(--txt3);line-height:1.75;
+}
+
+@media(max-width:640px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .korea-grid{grid-template-columns:1fr}
+  .thesis-grid{grid-template-columns:1fr}
+  .roadmap{flex-direction:column;gap:8px}
+  .roadmap::before{display:none}
+  .rm-node{padding:0}
+  .rm-dot{margin-bottom:6px}
+}
+</style>
+</head>
+<body>
+
+<!-- ━━━━━ HEADER ━━━━━ -->
+<div class="page-header">
+  <div class="live-tag">LIVE · 2026.04.15 · 실적 발표일</div>
+  <div class="ph-title">ASML 핵심 재무 지표<br>+ 삼성전자·SK하이닉스 연결 분석</div>
+  <div class="ph-sub">
+    <span class="asml-pill">ASML · NASDAQ / AMS</span>
+    <span class="ph-dot"></span>
+    <span>2026년 1분기 실적 당일 심층 분석</span>
+    <span class="ph-dot"></span>
+    <span>모건스탠리 출신 투자 관점</span>
+  </div>
+</div>
+
+<!-- ━━━━━ KPI STRIP ━━━━━ -->
+<div class="kpi-strip">
+  <div class="kpi-cell">
+    <div class="kc-label">Q1 2026 가이던스</div>
+    <div class="kc-val kv-gold">€8.2~8.9B</div>
+    <div class="kc-note">총 순매출 (억 유로)</div>
+    <div class="kc-delta d-up">▲ YoY +9~15%</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kc-label">2025 연간 매출</div>
+    <div class="kc-val kv-blue">€32.7B</div>
+    <div class="kc-note">역대 최대 · 순이익 €9.6B</div>
+    <div class="kc-delta d-up">▲ YoY +16%</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kc-label">수주잔고 (Backlog)</div>
+    <div class="kc-val kv-teal">€38.8B</div>
+    <div class="kc-note">1년+ 매출 사전 확보</div>
+    <div class="kc-delta d-up">▲ 역대 최대</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kc-label">2026 연간 목표</div>
+    <div class="kc-val kv-green">€34~39B</div>
+    <div class="kc-note">중간값 YoY +12%</div>
+    <div class="kc-delta d-nu">컨센서스 €37.6B</div>
+  </div>
+  <div class="kpi-cell">
+    <div class="kc-label">주가 YTD 수익률</div>
+    <div class="kc-val kv-orange">+40%</div>
+    <div class="kc-note">약 $1,500 근처 · 52주 고점 $1,547</div>
+    <div class="kc-delta d-up">▲ 2026 급등</div>
+  </div>
+</div>
+
+<!-- ━━━━━ REVENUE TREND CHART ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">ASML 연간 매출 추이 및 중장기 목표</div>
+    <div class="sec-badge sb-gold">단위: 억 유로</div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-legend">
+      <div class="leg"><span class="leg-sq" style="background:var(--blue)"></span>실제 매출</div>
+      <div class="leg"><span class="leg-sq" style="background:var(--gold);opacity:.7"></span>가이던스 / 목표</div>
+      <div class="leg"><span class="leg-sq" style="background:rgba(200,168,66,.2);border:1px dashed var(--gold)"></span>2030 목표 범위</div>
+    </div>
+    <div class="chart-canvas-wrap">
+      <canvas id="revChart" role="img" aria-label="ASML 연간 매출 2021년 186억 유로에서 2025년 327억 유로로 성장, 2026년 340~390억 가이던스, 2030년 440~600억 목표">
+        ASML 매출은 2021년 186억에서 2025년 327억으로 성장하여 2030년 440~600억을 목표로 한다.
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ━━━━━ KOREA: SAMSUNG + SK ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">한국 고객사 연결 분석 — ASML 실적의 진짜 의미</div>
+    <div class="sec-badge sb-blue">삼성전자 + SK하이닉스</div>
+  </div>
+  <div class="korea-grid">
+
+    <!-- SAMSUNG -->
+    <div class="ko-card samsung">
+      <div class="ko-header">
+        <span class="ko-flag">🇰🇷</span>
+        <div class="ko-meta">
+          <div class="ko-company">Korea · KRX · 005930</div>
+          <div class="ko-name">삼성전자</div>
+        </div>
+        <span class="ko-ticker">005930</span>
+      </div>
+      <div class="ko-body">
+        <div class="ko-highlight">
+          <div class="koh-label">ASML EUV 발주 규모</div>
+          <div class="koh-val" style="color:var(--blue)">평택 P5 팹 · EUV 약 20대</div>
+          <div class="koh-note">총 약 $4~5B(한화 약 5.8~7.3조) 규모 · 3nm 이하 공정 전용 팹</div>
+        </div>
+        <div class="ko-items">
+          <div class="ko-item"><span class="ki-icon">⚡</span>2026 1Q 영업이익 <strong>57.2조원</strong> — 역대 최고 실적 (YoY +755%)</div>
+          <div class="ko-item"><span class="ki-icon">🏭</span>P5 팹: AI 파운드리 TSMC 격차 좁히기 핵심 전략 거점</div>
+          <div class="ko-item"><span class="ki-icon">💎</span>EUV 1대 = 약 5,000억 원 → 20대 총 약 10조 투자 여력</div>
+          <div class="ko-item"><span class="ki-icon">📊</span>ASML 실적 경영진 코멘트에서 삼성 수주 언급 여부가 주가 촉매</div>
+        </div>
+        <div class="ko-divider"></div>
+        <div class="ko-stats">
+          <div class="ks">
+            <div class="ks-label">1Q26 매출</div>
+            <div class="ks-val" style="color:var(--blue)">133조</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">1Q26 영업이익</div>
+            <div class="ks-val" style="color:var(--green)">57.2조</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">외인 지분율</div>
+            <div class="ks-val" style="color:var(--red)">48.9%</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">YTD 주가</div>
+            <div class="ks-val" style="color:var(--orange)">+100%+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SK HYNIX -->
+    <div class="ko-card sk">
+      <div class="ko-header">
+        <span class="ko-flag">🇰🇷</span>
+        <div class="ko-meta">
+          <div class="ko-company">Korea · KRX · 000660</div>
+          <div class="ko-name">SK하이닉스</div>
+        </div>
+        <span class="ko-ticker">000660</span>
+      </div>
+      <div class="ko-body">
+        <div class="ko-highlight">
+          <div class="koh-label">ASML EUV 투자 계획</div>
+          <div class="koh-val" style="color:var(--orange)">EUV 장비 $8B 투자 약정</div>
+          <div class="koh-note">한화 약 11.5조 · HBM4(6세대) 생산 필수 · 국내 기업 단일 장비 최대</div>
+        </div>
+        <div class="ko-items">
+          <div class="ko-item"><span class="ki-icon">🧠</span>HBM3E 엔비디아 독점 공급 → EUV로 HBM4 기술 우위 유지 목표</div>
+          <div class="ko-item"><span class="ki-icon">📅</span>4월 29일 1분기 실적 발표 예정 · 컨센서스 34조 · 일부 40조+ 전망</div>
+          <div class="ko-item"><span class="ki-icon">📈</span>주가 3월 31일 80.7만 → 4월 10일 103.6만 (+28.45%, 10일 만에)</div>
+          <div class="ko-item"><span class="ki-icon">💰</span>외국인이 4월 8일 하루에만 2.1조 집중 매수 (삼성 실적 이후 이동)</div>
+        </div>
+        <div class="ko-divider"></div>
+        <div class="ko-stats">
+          <div class="ks">
+            <div class="ks-label">1Q26 EPS 컨센서스</div>
+            <div class="ks-val" style="color:var(--orange)">39,592</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">1Q26 영업익 전망</div>
+            <div class="ks-val" style="color:var(--green)">~34조+</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">HBM 시장점유율</div>
+            <div class="ks-val" style="color:var(--teal)">#1</div>
+          </div>
+          <div class="ks">
+            <div class="ks-label">10일 주가 수익률</div>
+            <div class="ks-val" style="color:var(--green)">+28.4%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ━━━━━ GLOBAL CUSTOMER TABLE ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">ASML 글로벌 주요 고객사 현황</div>
+    <div class="sec-badge sb-gold">2026년 기준</div>
+  </div>
+  <div class="cust-table-wrap">
+    <table class="cust">
+      <thead>
+        <tr>
+          <th>고객사</th>
+          <th>국가</th>
+          <th>EUV 유형</th>
+          <th>ASML 매출 기여</th>
+          <th>2026년 주요 투자</th>
+          <th>비중</th>
+          <th>중요도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="cust-name"><span class="cust-flag">🇹🇼</span>TSMC</div></td>
+          <td style="color:var(--txt2)">대만</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--blue)">EUV + High-NA</td>
+          <td>
+            <div class="bar-mini"><div class="bm-fill" style="width:38%;background:var(--blue)"></div></div>
+          </td>
+          <td style="font-size:11px;color:var(--txt2)">2nm 양산 · A16 공정 · High-NA 수요 계획 공개 예정</td>
+          <td style="font-family:'DM Mono',monospace;color:var(--blue)">~35~38%</td>
+          <td><span class="imp-pill ip-critical">최대 고객</span></td>
+        </tr>
+        <tr>
+          <td><div class="cust-name"><span class="cust-flag">🇰🇷</span>삼성전자</div></td>
+          <td style="color:var(--txt2)">한국</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--blue)">EUV 다수</td>
+          <td>
+            <div class="bar-mini"><div class="bm-fill" style="width:25%;background:var(--green)"></div></div>
+          </td>
+          <td style="font-size:11px;color:var(--txt2)">평택 P5 팹 EUV 20대 · $4~5B 투자 약정</td>
+          <td style="font-family:'DM Mono',monospace;color:var(--green)">~20~25%</td>
+          <td><span class="imp-pill ip-major">핵심 고객</span></td>
+        </tr>
+        <tr>
+          <td><div class="cust-name"><span class="cust-flag">🇰🇷</span>SK하이닉스</div></td>
+          <td style="color:var(--txt2)">한국</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--orange)">EUV (HBM)</td>
+          <td>
+            <div class="bar-mini"><div class="bm-fill" style="width:18%;background:var(--orange)"></div></div>
+          </td>
+          <td style="font-size:11px;color:var(--txt2)">EUV 장비 $8B 투자 · HBM4 생산 라인 구축</td>
+          <td style="font-family:'DM Mono',monospace;color:var(--orange)">~15~18%</td>
+          <td><span class="imp-pill ip-major">핵심 고객</span></td>
+        </tr>
+        <tr>
+          <td><div class="cust-name"><span class="cust-flag">🇺🇸</span>Intel Foundry</div></td>
+          <td style="color:var(--txt2)">미국</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold)">High-NA EUV</td>
+          <td>
+            <div class="bar-mini"><div class="bm-fill" style="width:8%;background:var(--gold)"></div></div>
+          </td>
+          <td style="font-size:11px;color:var(--txt2)">EXE:5200 HVM 수용 첫 사례 · 파운드리 부활 전략</td>
+          <td style="font-family:'DM Mono',monospace;color:var(--gold)">~5~8%</td>
+          <td><span class="imp-pill ip-significant">성장 고객</span></td>
+        </tr>
+        <tr>
+          <td><div class="cust-name"><span class="cust-flag">🇨🇳</span>중국 고객사</div></td>
+          <td style="color:var(--txt2)">중국</td>
+          <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--red)">DUV 구형만</td>
+          <td>
+            <div class="bar-mini"><div class="bm-fill" style="width:20%;background:var(--red)"></div></div>
+          </td>
+          <td style="font-size:11px;color:var(--txt2)">EUV 수출 금지 · DUV 일부 규제 · 매출 정상화 20%</td>
+          <td style="font-family:'DM Mono',monospace;color:var(--red)">~20% (↓33%)</td>
+          <td><span class="imp-pill ip-growing">리스크 주의</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ━━━━━ CHINA RISK ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">중국 리스크 게이지 — ASML의 아킬레스건</div>
+  </div>
+  <div class="risk-panel">
+    <div class="risk-header">
+      <div class="risk-icon">⚠️</div>
+      <div>
+        <div class="risk-title">중국 매출 비중 — 33% → 20% 정상화</div>
+        <div class="risk-desc">미국의 대중국 반도체 수출 규제 강화로 ASML은 EUV 장비의 중국 수출이 금지됐습니다. 2025년 전체 매출의 33%를 차지하던 중국 비중이 2026년 약 20%로 하락할 전망입니다. 그러나 한국(삼성·SK)과 TSMC의 대규모 투자가 이 공백을 충분히 메우고 있습니다.</div>
+      </div>
+    </div>
+    <div class="risk-gauge">
+      <div class="rg-row">
+        <span>2025년 중국 비중 (33%)</span>
+        <span style="color:var(--red)">▼ 규제 강화</span>
+        <span>2026E 목표 (20%)</span>
+      </div>
+      <div class="rg-track" style="height:12px;border-radius:6px">
+        <div style="position:relative;width:100%;height:100%">
+          <div style="position:absolute;left:0;top:0;width:33%;height:100%;background:rgba(255,62,92,.3);border-radius:6px;border:1px solid rgba(255,62,92,.4)"></div>
+          <div style="position:absolute;left:0;top:0;width:20%;height:100%;background:linear-gradient(90deg,var(--orange),var(--gold));border-radius:6px"></div>
+          <div style="position:absolute;left:20%;top:-2px;font-size:9px;color:var(--gold);font-family:'DM Mono',monospace;padding-left:4px;white-space:nowrap">20% 목표</div>
+        </div>
+      </div>
+    </div>
+    <div class="risk-items">
+      <div class="ri">
+        <div class="ri-label">2025 중국 매출 비중</div>
+        <div class="ri-val" style="color:var(--red)">~33%</div>
+      </div>
+      <div class="ri">
+        <div class="ri-label">2026E 정상화 비중</div>
+        <div class="ri-val" style="color:var(--gold)">~20%</div>
+      </div>
+      <div class="ri">
+        <div class="ri-label">중국 대체: 한국 양사</div>
+        <div class="ri-val" style="color:var(--green)">+$12B+</div>
+      </div>
+      <div class="ri">
+        <div class="ri-label">EUV 중국 수출</div>
+        <div class="ri-val" style="color:var(--red)">금지</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ━━━━━ ROADMAP ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">ASML 매출 로드맵 2021 → 2030</div>
+    <div class="sec-badge sb-green">중장기 비전</div>
+  </div>
+  <div class="roadmap">
+    <div class="rm-node">
+      <div class="rm-dot" style="background:var(--txt3)"></div>
+      <div class="rm-card">
+        <div class="rm-year">2021</div>
+        <div class="rm-rev kv-white">€186억</div>
+        <div class="rm-desc">DUV 중심 · EUV 초기</div>
+      </div>
+    </div>
+    <div class="rm-node">
+      <div class="rm-dot" style="background:var(--txt3)"></div>
+      <div class="rm-card">
+        <div class="rm-year">2022~24</div>
+        <div class="rm-rev kv-white">€212~282억</div>
+        <div class="rm-desc">EUV 확산 · 중국 수요 고점</div>
+      </div>
+    </div>
+    <div class="rm-node">
+      <div class="rm-dot" style="background:var(--blue)"></div>
+      <div class="rm-card">
+        <div class="rm-year">2025 FY</div>
+        <div class="rm-rev kv-blue">€327억</div>
+        <div class="rm-desc">역대 최대 · High-NA 5대 출하</div>
+      </div>
+    </div>
+    <div class="rm-node current">
+      <div style="position:relative">
+        <div class="rm-now-badge">TODAY</div>
+      </div>
+      <div class="rm-dot" style="background:var(--gold);box-shadow:0 0 8px rgba(200,168,66,.5)"></div>
+      <div class="rm-card">
+        <div class="rm-year">2026 Q1</div>
+        <div class="rm-rev kv-gold">€82~89억</div>
+        <div class="rm-desc">실적 발표 당일 · 삼성·SK 코멘트 주목</div>
+      </div>
+    </div>
+    <div class="rm-node">
+      <div class="rm-dot" style="background:var(--gold);opacity:.5"></div>
+      <div class="rm-card">
+        <div class="rm-year">2026 FY</div>
+        <div class="rm-rev kv-gold">€340~390억</div>
+        <div class="rm-desc">컨센서스 €376억 · +12%</div>
+      </div>
+    </div>
+    <div class="rm-node">
+      <div class="rm-dot" style="background:var(--green)"></div>
+      <div class="rm-card">
+        <div class="rm-year">2030 TARGET</div>
+        <div class="rm-rev kv-green">€440~600억</div>
+        <div class="rm-desc">마진 56~60% · High-NA 주도</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="div">
+
+<!-- ━━━━━ INVESTMENT THESIS ━━━━━ -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-label">투자 논거 3각 분석 — Bull / Bear / MS관점</div>
+  </div>
+  <div class="thesis-grid">
+    <div class="th-card thc-bull">
+      <div class="th-icon">🐂</div>
+      <div class="th-title" style="color:var(--green)">Bull Case</div>
+      <div class="th-items">
+        <div class="th-item"><span class="ti-dot" style="background:var(--green)"></span>수주잔고 €38.8B — 1년치 매출 선확보, 업황 하락 완충</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--green)"></span>삼성 P5 + SK하이닉스 HBM4 투자 → 한국발 $12B+ 수요</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--green)"></span>High-NA EUV 양산 전환 → 대당 가격 2배+ 상승</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--green)"></span>AI 수요 구조적 성장 → TSMC 연간 설비투자 사상 최대</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--green)"></span>분기 배당 $1.88 → $3.18 대폭 인상 (5월 5일 지급)</div>
+      </div>
+    </div>
+    <div class="th-card thc-bear">
+      <div class="th-icon">🐻</div>
+      <div class="th-title" style="color:var(--red)">Bear Case</div>
+      <div class="th-items">
+        <div class="th-item"><span class="ti-dot" style="background:var(--red)"></span>중국 매출 33% → 20% 구조적 감소 — 단기 매출 압박</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--red)"></span>수주 데이터 공시 중단 — 분기별 수요 불투명성 증가</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--red)"></span>이란 전쟁·지정학 리스크 → 고객사 설비투자 일정 지연</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--red)"></span>Forward P/E 37배 — 하이밸류에이션 주가 하락 리스크</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--red)"></span>총마진 54% → 51~53% 소폭 하락 (제품 믹스 변화)</div>
+      </div>
+    </div>
+    <div class="th-card thc-ms">
+      <div class="th-icon">🏦</div>
+      <div class="th-title" style="color:var(--gold)">모건스탠리 관점</div>
+      <div class="th-items">
+        <div class="th-item"><span class="ti-dot" style="background:var(--gold)"></span>승자가 누구든 ASML 장비가 필요 — 독점 인프라 공급자</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--gold)"></span>숫자보다 언어 — 경영진의 삼성·SK 코멘트 톤이 주가 결정</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--gold)"></span>수주 공시 중단 = 분기 변동성 완화 + 장기 계약 자신감 표현</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--gold)"></span>하락 구간마다 분할 매수 — 반도체 사이클 내 최안전 포지션</div>
+        <div class="th-item"><span class="ti-dot" style="background:var(--gold)"></span>한국 반도체 투자자: ASML 실적 = 삼성·SK 실적과 동급 중요도</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━━━━ SUMMARY ━━━━━ -->
+<div class="summary-box">
+  <div class="sb-icon">🔭</div>
+  <div class="sb-body">
+    <strong>핵심 결론:</strong>
+    ASML 오늘 실적에서 주목할 것은 €8.2~8.9B 가이던스 달성 여부뿐 아니라,
+    <strong>삼성전자 P5 팹 EUV 20대·SK하이닉스 $8B 투자</strong>에 대한 경영진 코멘트입니다.
+    이 두 가지 한국발 수주가 긍정적으로 언급되면 삼성·SK 주가에 즉각 호재,
+    수주잔고 €38.8B + 2030 €44~60B 로드맵은 장기 투자자에게 <strong>최고 수준의 실적 가시성</strong>을 제공합니다.
+    한국 반도체 투자자라면 ASML은 단순한 외국 장비주가 아니라 <strong>삼성·SK의 미래를 먼저 보여주는 선행지표</strong>입니다.
+  </div>
+</div>
+<div class="disclaimer">
+  ※ 본 자료는 공개된 시장 데이터와 언론 보도를 기반으로 한 투자 참고 콘텐츠입니다. 투자 권유가 아니며, 모든 투자 판단과 손익의 책임은 투자자 본인에게 있습니다. 실제 투자 전 반드시 공식 공시 자료 및 전문가 의견을 확인하십시오.
+</div>
+
+<!-- ━━━━━ SCRIPTS ━━━━━ -->
+<script>
+/* Revenue Trend Chart */
+const ctx=document.getElementById('revChart').getContext('2d');
+new Chart(ctx,{
+  type:'bar',
+  data:{
+    labels:['2021','2022','2023','2024','2025 FY','2026E\n(중간값)','2030E\n(중간값)'],
+    datasets:[
+      {
+        label:'실제 / 가이던스 매출',
+        data:[186,212,276,282,327,365,520],
+        backgroundColor:ctx2=>{
+          const i=ctx2.dataIndex;
+          if(i<=4)return'rgba(61,139,255,0.75)';
+          if(i===5)return'rgba(200,168,66,0.75)';
+          return'rgba(0,200,130,0.75)';
+        },
+        borderColor:ctx2=>{
+          const i=ctx2.dataIndex;
+          if(i<=4)return'#3D8BFF';
+          if(i===5)return'#C8A842';
+          return'#00C882';
+        },
+        borderWidth:1,
+        borderRadius:5,
+        borderSkipped:false,
+      },
+      {
+        label:'2030 목표 범위 상단',
+        data:[null,null,null,null,null,null,600],
+        type:'bar',
+        backgroundColor:'rgba(200,168,66,0.15)',
+        borderColor:'rgba(200,168,66,0.4)',
+        borderWidth:1,
+        borderDash:[4,4],
+        borderRadius:5,
+      }
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#152540',
+        borderColor:'rgba(255,255,255,.14)',borderWidth:1,
+        titleColor:'#6E88B8',bodyColor:'#ECF1FF',padding:10,
+        callbacks:{
+          label:ctx2=>`€${ctx2.raw?.toLocaleString()}억 유로`,
+          title:arr=>{
+            const map={'2026E\n(중간값)':'2026E (중간값)','2030E\n(중간값)':'2030E (중간값)'};
+            return map[arr[0].label]||arr[0].label;
+          }
+        }
+      },
+      annotation:{annotations:{}}
+    },
+    scales:{
+      x:{
+        grid:{color:'rgba(255,255,255,.04)',drawBorder:false},
+        ticks:{color:'#2E4468',font:{size:10,family:"'DM Mono',monospace"},maxRotation:0}
+      },
+      y:{
+        grid:{color:'rgba(255,255,255,.05)',drawBorder:false},
+        ticks:{
+          color:'#2E4468',font:{size:10,family:"'DM Mono',monospace"},
+          callback:v=>`€${v}억`
+        },
+        min:0,
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
