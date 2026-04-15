@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[오전장] 2026년 4월 16일 코스피 전망 — 나스닥 2%·TSMC 역대 최대·이란 협상 완전 분석</title>
+<meta name="description" content="4월 16일 코스피 오전장 전망. 4월 15일 미국 나스닥 +1.96%, 필라델피아반도체 +2.04%, TSMC 역대 최대 매출. 초보자도 이해하는 원 그래프 시각 분석.">
+<meta name="keywords" content="코스피 오늘 전망, 나스닥 마감, 필라델피아반도체, TSMC 컨퍼런스콜, 이란 협상, 반도체 주식 오늘, 코스피 6000 안착">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0d1b35; --navy2:#162849;
+    --gold:#c8922a; --gold-lt:#e8b84b;
+    --cream:#faf7f2; --warm:#f4efe6;
+    --text:#1e2433; --muted:#5a6278;
+    --border:#d8cfc0;
+    --up:#d63232; --dn:#1a5fc8;
+    --green:#1a7a3c;
+    --tag-bg:#eef3fb; --tag-c:#1a4a8a;
+    /* 차트 색상 */
+    --c1:#d63232; --c2:#e17a00; --c3:#1a5fc8; --c4:#7c3aed; --c5:#1a7a3c; --c6:#c8922a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--cream);color:var(--text);font-size:17px;line-height:1.9;}
+
+  /* HEADER */
+  .site-header{background:var(--navy);padding:12px 0;text-align:center;}
+  .brand{color:var(--gold-lt);font-family:'Noto Serif KR',serif;font-size:13px;font-weight:600;letter-spacing:.07em;}
+  .stag{display:inline-block;background:var(--c2);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:2px;margin-left:10px;}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0a1628 0%,var(--navy2) 55%,#1a2e50 100%);color:#fff;padding:48px 24px 40px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(60deg,transparent,transparent 40px,rgba(232,184,75,.04) 40px,rgba(232,184,75,.04) 41px);}
+  .hero-date{display:inline-block;border:1px solid var(--gold);color:var(--gold-lt);font-size:12px;letter-spacing:.1em;padding:4px 18px;border-radius:2px;margin-bottom:18px;position:relative;}
+  .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(19px,4vw,30px);font-weight:900;line-height:1.45;margin-bottom:14px;position:relative;}
+  .hero h1 em{color:var(--gold-lt);font-style:normal;}
+  .hero-sub{color:rgba(255,255,255,.74);font-size:15px;max-width:560px;margin:0 auto;line-height:1.75;position:relative;}
+  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,50,50,.18);border:1px solid var(--up);color:#ffaaaa;font-size:13px;font-weight:700;padding:7px 18px;border-radius:4px;margin-bottom:20px;position:relative;}
+
+  /* TICKER */
+  .ticker-bar{background:var(--warm);border-top:3px solid var(--c2);border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;justify-content:center;}
+  .t-item{padding:13px 20px;border-right:1px solid var(--border);text-align:center;min-width:118px;}
+  .t-item:last-child{border-right:none;}
+  .t-name{font-size:11px;color:var(--muted);letter-spacing:.06em;font-weight:600;margin-bottom:3px;}
+  .t-val{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;line-height:1.2;}
+  .t-chg{font-size:12px;font-weight:700;margin-top:2px;}
+  .t-note{font-size:10px;color:var(--muted);margin-top:2px;}
+  .up{color:var(--up);}.dn{color:var(--dn);}.neu{color:var(--muted);}.gold{color:var(--gold);}
+
+  /* LAYOUT */
+  .wrap{max-width:820px;margin:0 auto;padding:0 20px;}
+  section{padding:38px 0 30px;border-bottom:1px solid var(--border);}
+  section:last-of-type{border-bottom:none;}
+  p{margin-bottom:16px;} p:last-child{margin-bottom:0;}
+
+  /* SEC HEAD */
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .sec-num{background:var(--navy);color:var(--gold-lt);font-family:'Noto Serif KR',serif;font-size:13px;font-weight:700;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .sec-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:var(--navy);border-left:4px solid var(--c2);padding-left:14px;line-height:1.3;}
+
+  /* ===== 원(도넛) 그래프 영역 ===== */
+  .charts-section{background:#fff;border:1px solid var(--border);border-radius:8px;padding:28px 24px;margin:20px 0;}
+  .charts-section h3{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+  .charts-section .chart-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6;}
+  .charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;}
+  .chart-box{text-align:center;}
+  .chart-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;line-height:1.4;}
+  .donut-wrap{position:relative;width:160px;height:160px;margin:0 auto 14px;}
+  .donut-wrap svg{width:100%;height:100%;}
+  .donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
+  .donut-center .val{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;line-height:1.1;display:block;}
+  .donut-center .lbl{font-size:10px;color:var(--muted);margin-top:2px;display:block;}
+  .legend{display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin:0 auto;max-width:170px;}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .chart-note{font-size:11px;color:var(--muted);margin-top:8px;text-align:center;line-height:1.5;}
+
+  /* TABLES */
+  .dt{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;}
+  .dt th{background:var(--navy);color:var(--gold-lt);font-weight:600;padding:9px 13px;text-align:center;font-size:13px;}
+  .dt td{padding:10px 13px;text-align:center;border-bottom:1px solid var(--border);background:#fff;}
+  .dt tr:nth-child(even) td{background:var(--warm);}
+  .dt .dl{text-align:left;font-weight:600;color:var(--navy);}
+  .dt .src{font-size:11px;color:var(--muted);}
+  .dt .hl{background:#fff3f3!important;font-weight:700;color:var(--up);}
+
+  /* SCENARIO CARDS */
+  .sc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:16px 0;}
+  .sc-card{border-radius:5px;overflow:hidden;}
+  .sc-head{padding:12px 16px;}
+  .sc-head.a{background:#fff3e0;}
+  .sc-head.b{background:#eef3fb;}
+  .sc-head.c{background:#f0fff4;}
+  .sc-label{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;margin-bottom:4px;}
+  .sc-label.a{color:#8a4500;}
+  .sc-label.b{color:#1a4a8a;}
+  .sc-label.c{color:#145a14;}
+  .sc-cond{font-size:12px;color:var(--muted);}
+  .sc-body{background:#fff;border:1px solid var(--border);border-top:none;padding:12px 16px;font-size:13px;line-height:1.75;}
+  .sc-action{margin-top:8px;padding-top:7px;border-top:1px dashed var(--border);font-size:12px;color:var(--navy);font-weight:600;}
+
+  /* CHECKLIST */
+  .cl-box{background:#fff;border:1px solid var(--border);border-radius:5px;padding:18px 20px;margin:14px 0;}
+  .cl-box h4{font-family:'Noto Serif KR',serif;font-size:15px;color:var(--navy);margin-bottom:11px;}
+  .cl-row{display:flex;gap:9px;align-items:flex-start;margin-bottom:8px;font-size:14px;line-height:1.7;}
+  .cl-icon{flex-shrink:0;color:var(--c2);font-size:14px;margin-top:3px;}
+
+  /* HL */
+  .hl{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:6px;padding:22px 24px;margin:18px 0;}
+  .hl h3{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--gold-lt);margin-bottom:11px;}
+  .hl p{font-size:14px;line-height:1.85;color:rgba(255,255,255,.9);margin-bottom:9px;}
+  .hl p:last-child{margin-bottom:0;}
+
+  /* ALERT */
+  .alert{background:#fff8f0;border:1px solid #f0c878;border-left:4px solid var(--c2);border-radius:4px;padding:14px 16px;margin:14px 0;font-size:14px;line-height:1.8;}
+  .alert strong{color:#9a5500;display:block;margin-bottom:3px;font-size:13px;}
+
+  /* QUOTE */
+  .quote{background:var(--navy);color:#fff;border-radius:6px;padding:20px 24px;margin:20px 0;text-align:center;}
+  .quote q{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;color:var(--gold-lt);line-height:1.6;display:block;margin-bottom:7px;}
+  .quote p{font-size:13px;color:rgba(255,255,255,.6);}
+
+  /* HASHTAGS */
+  .hashtags{display:flex;flex-wrap:wrap;gap:7px;padding:20px 0 6px;}
+  .hashtags a{background:var(--tag-bg);color:var(--tag-c);border:1px solid #c7d8f5;font-size:13px;font-weight:500;padding:4px 13px;border-radius:20px;text-decoration:none;}
+
+  .post-footer{background:var(--navy);color:rgba(255,255,255,.6);font-size:13px;padding:22px;text-align:center;line-height:1.9;}
+  .post-footer strong{color:var(--gold-lt);}
+  .disclaimer{background:var(--warm);border-top:1px solid var(--border);padding:14px 22px;font-size:12px;color:var(--muted);text-align:center;line-height:1.8;}
+
+  @media(max-width:600px){
+    .t-item{min-width:100px;padding:10px 10px;}
+    .t-val{font-size:16px;}
+    section{padding:26px 0 20px;}
+    .charts-grid{grid-template-columns:1fr 1fr;}
+    .donut-wrap{width:130px;height:130px;}
+    .donut-center .val{font-size:15px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">📊 한국 증시 연재 분석 · Daily Market Insight <span class="stag">4/16 오전장</span></div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-date">2026년 4월 16일 목요일 · 오전장 분석 보고서</div>
+    <div class="hero-badge">🌏 나스닥 +1.96% · 필반 +2.04% · TSMC 역대 최대</div>
+    <h1>어젯밤 미국이 달렸다 —<br>오늘 코스피 <em>6,100</em> 돌파 시도할 수 있을까?</h1>
+    <p class="hero-sub">초보자도 쉽게 이해하는 차트와 함께<br>오늘 오전장 흐름을 미리 준비합니다.</p>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="t-item"><div class="t-name">나스닥 (4/15 마감)</div><div class="t-val up">23,639.08</div><div class="t-chg up">▲ +1.96%</div><div class="t-note">✅ 확인</div></div>
+  <div class="t-item"><div class="t-name">필라델피아반도체</div><div class="t-val up">9,224.12</div><div class="t-chg up">▲ +2.04%</div><div class="t-note">✅ 확인</div></div>
+  <div class="t-item"><div class="t-name">S&P 500</div><div class="t-val up">6,967.38</div><div class="t-chg up">▲ +1.18%</div><div class="t-note">✅ 확인</div></div>
+  <div class="t-item"><div class="t-name">TSMC 1Q 매출</div><div class="t-val up">$352~357억</div><div class="t-chg up">▲ +35% 역대최대</div><div class="t-note">✅ 확인</div></div>
+  <div class="t-item"><div class="t-name">어제 코스피 종가</div><div class="t-val up">6,091.39</div><div class="t-chg up">▲ +2.07%</div><div class="t-note">✅ KRX 공식</div></div>
+</div>
+
+<main class="wrap">
+
+  <!-- 섹션 1: 미국 증시 -->
+  <section>
+    <div class="sec-head"><div class="sec-num">1</div><h2 class="sec-title">어젯밤 미국 증시 — 숫자로 보는 완전 분석</h2></div>
+
+    <table class="dt">
+      <thead><tr><th>지수</th><th>종가</th><th>등락률</th><th>한국 오전장 영향</th></tr></thead>
+      <tbody>
+        <tr><td class="dl">다우존스</td><td>48,535.99</td><td class="up">+0.66%</td><td class="src">안정적 기반</td></tr>
+        <tr><td class="dl hl">나스닥</td><td class="hl">23,639.08</td><td class="up hl">+1.96%</td><td class="src">기술주·반도체 강세 신호 🔴</td></tr>
+        <tr><td class="dl hl">필라델피아반도체</td><td class="hl">9,224.12</td><td class="up hl">+2.04%</td><td class="src">SK하이닉스·삼성전자 직결 🔴🔴</td></tr>
+        <tr><td class="dl">S&P 500</td><td>6,967.38</td><td class="up">+1.18%</td><td class="src">2월 2일 이후 최고치</td></tr>
+      </tbody>
+    </table>
+
+    <div class="hl">
+      <h3>📌 왜 필라델피아 반도체 지수가 중요한가요?</h3>
+      <p>처음 주식을 시작하신 분들께 드리는 설명입니다. 필라델피아 반도체 지수는 엔비디아·인텔·마이크론 등 미국 반도체 회사들의 주가를 모아놓은 지수입니다. 이 지수가 오르면 다음 날 한국의 삼성전자·SK하이닉스도 같은 방향으로 움직이는 경우가 많습니다. 왜냐하면 같은 글로벌 반도체 사이클을 공유하기 때문입니다. 어제 이 지수가 +2.04% 올랐으니, 오늘 한국 반도체주도 기대해볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== 원 그래프 섹션 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">2</div><h2 class="sec-title">📊 한눈에 보는 차트 — 초보자도 쉽게</h2></div>
+
+    <div class="charts-section">
+      <h3>어젯밤 미국 지수와 어제 한국 수급을 원 그래프로 확인하세요</h3>
+      <p class="chart-desc">숫자가 어렵게 느껴지셨나요? 원 그래프로 보면 한눈에 이해됩니다. 원이 클수록, 색이 붉을수록 상승 강도가 강합니다.</p>
+
+      <div class="charts-grid">
+
+        <!-- 차트 1: 미국 지수 상승률 비교 -->
+        <div class="chart-box">
+          <div class="chart-title">📈 미국 주요 지수 상승률 비교<br><small style="font-weight:400;color:var(--muted);">(4월 15일 마감 기준)</small></div>
+          <div class="donut-wrap">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <!-- 배경 원 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#f0ebe2" stroke-width="22"/>
+              <!-- 필반 2.04% → 가장 큰 비율 강조 표현 -->
+              <!-- 4개 지수를 각도로 분할: 필반 2.04, 나스닥 1.96, S&P 1.18, 다우 0.66 = 합계 5.84 -->
+              <!-- 필반: 2.04/5.84*360 = 125.8° / 나스닥: 1.96/5.84*360 = 120.8° / S&P: 1.18/5.84*360 = 72.7° / 다우: 0.66/5.84*360 = 40.7° -->
+              <!-- stroke-dasharray: 원둘레=2π×60≈376.99 -->
+              <!-- 필반 시작 0°(-90°): dasharray=125.8/360*376.99=131.8 offset=0 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#d63232" stroke-width="22"
+                stroke-dasharray="131.8 245.2" stroke-dashoffset="94.25" stroke-linecap="butt"/>
+              <!-- 나스닥 시작 125.8°: offset=376.99-94.25-131.8=-(-94.25-131.8)... let me recalc -->
+              <!-- offset = circumference/4 - cumulative_length_before -->
+              <!-- 0° start = dashoffset=circumference/4=94.25 -->
+              <!-- 필반: starts at 0°, dashoffset=94.25 -->
+              <!-- 나스닥: starts at 125.8°, dashoffset=94.25-131.8=-37.55 → 376.99-37.55=339.44 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#e17a00" stroke-width="22"
+                stroke-dasharray="126.6 250.4" stroke-dashoffset="339.44" stroke-linecap="butt"/>
+              <!-- S&P: starts at 125.8+120.8=246.6°, dashoffset=339.44-126.6=212.84 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#1a5fc8" stroke-width="22"
+                stroke-dasharray="76.2 300.8" stroke-dashoffset="212.84" stroke-linecap="butt"/>
+              <!-- 다우: starts at 319.3°, dashoffset=212.84-76.2=136.64 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#1a7a3c" stroke-width="22"
+                stroke-dasharray="42.6 334.4" stroke-dashoffset="136.64" stroke-linecap="butt"/>
+              <!-- 내부 원 (도넛 구멍) -->
+              <circle cx="80" cy="80" r="49" fill="white"/>
+            </svg>
+            <div class="donut-center">
+              <span class="val up" style="font-size:15px;">+2.04%</span>
+              <span class="lbl">필반 최강</span>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#d63232;"></div><span><b>필라델피아반도체</b> +2.04%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e17a00;"></div><span><b>나스닥</b> +1.96%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a5fc8;"></div><span><b>S&P 500</b> +1.18%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a7a3c;"></div><span><b>다우존스</b> +0.66%</span></div>
+          </div>
+          <p class="chart-note">반도체 관련 지수(붉은색)가<br>가장 강하게 올랐습니다</p>
+        </div>
+
+        <!-- 차트 2: 4/14 한국 수급 구조 -->
+        <div class="chart-box">
+          <div class="chart-title">💰 4월 14일 한국 수급 구조<br><small style="font-weight:400;color:var(--muted);">(최종 집계 기준)</small></div>
+          <div class="donut-wrap">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#f0ebe2" stroke-width="22"/>
+              <!-- 외국인 8374, 기관 12543, 개인매도 23915 합계 44832 -->
+              <!-- 외국인매수: 8374/44832*376.99=70.4 ; 기관매수: 12543/44832*105.5 ; 개인매도: 23915*376.99/44832=201.1 -->
+              <!-- 외국인(매수): 70.4 dashoffset=94.25 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#d63232" stroke-width="22"
+                stroke-dasharray="70.4 306.6" stroke-dashoffset="94.25" stroke-linecap="butt"/>
+              <!-- 기관(매수): 105.5 dashoffset=94.25-70.4=23.85 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#e17a00" stroke-width="22"
+                stroke-dasharray="105.5 271.5" stroke-dashoffset="23.85" stroke-linecap="butt"/>
+              <!-- 개인(매도): 201.1 dashoffset=23.85-105.5=-81.65→376.99-81.65=295.34 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#1a5fc8" stroke-width="22"
+                stroke-dasharray="201.1 175.9" stroke-dashoffset="295.34" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="49" fill="white"/>
+            </svg>
+            <div class="donut-center">
+              <span class="val up" style="font-size:13px;">외·기관</span>
+              <span class="lbl">동반 매수</span>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#d63232;"></div><span><b>외국인 매수</b> +8,374억</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e17a00;"></div><span><b>기관 매수</b> +1조2,543억</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a5fc8;"></div><span><b>개인 매도</b> -2조3,915억</span></div>
+          </div>
+          <p class="chart-note">기관이 가장 많이 샀고,<br>개인은 차익을 실현했습니다</p>
+        </div>
+
+        <!-- 차트 3: TSMC 실적 -->
+        <div class="chart-box">
+          <div class="chart-title">🏭 TSMC 1분기 매출 성장<br><small style="font-weight:400;color:var(--muted);">(전년 대비 증가율)</small></div>
+          <div class="donut-wrap">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#f0ebe2" stroke-width="22"/>
+              <!-- 성장분 35%와 기존 65%의 비율 -->
+              <!-- 성장: 35/100*376.99=131.9 / 기존 65/100*376.99=245.1 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#d63232" stroke-width="22"
+                stroke-dasharray="131.9 245.1" stroke-dashoffset="94.25" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#e8d8b0" stroke-width="22"
+                stroke-dasharray="245.1 131.9" stroke-dashoffset="-37.65" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="49" fill="white"/>
+            </svg>
+            <div class="donut-center">
+              <span class="val up">+35%</span>
+              <span class="lbl">전년 대비</span>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#d63232;"></div><span><b>매출 증가분</b> +35%</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#e8d8b0;"></div><span><b>기존 매출 기반</b> 65%</span></div>
+          </div>
+          <p class="chart-note">역대 최대 분기 매출 달성<br>AI 칩 수요가 주도했습니다</p>
+        </div>
+
+        <!-- 차트 4: 오늘 코스피 시나리오 방향 (주관적 의견) -->
+        <div class="chart-box">
+          <div class="chart-title">🎯 오늘 오전장 시나리오<br><small style="font-weight:400;color:var(--muted);">(⚠ 분석 의견, 통계 아님)</small></div>
+          <div class="donut-wrap">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#f0ebe2" stroke-width="22"/>
+              <!-- A 강세지속 60%, B 차익조정 30%, C 협상타결급등 10% -->
+              <!-- A: 60/100*376.99=226.2 / B: 30/100*376.99=113.1 / C: 10/100*376.99=37.7 -->
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#d63232" stroke-width="22"
+                stroke-dasharray="226.2 150.8" stroke-dashoffset="94.25" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#1a5fc8" stroke-width="22"
+                stroke-dasharray="113.1 263.9" stroke-dashoffset="-131.95" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="60" fill="none" stroke="#1a7a3c" stroke-width="22"
+                stroke-dasharray="37.7 339.3" stroke-dashoffset="-245.05" stroke-linecap="butt"/>
+              <circle cx="80" cy="80" r="49" fill="white"/>
+            </svg>
+            <div class="donut-center">
+              <span class="val up" style="font-size:14px;">강세</span>
+              <span class="lbl">주요 방향</span>
+            </div>
+          </div>
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#d63232;"></div><span><b>A. 강세 지속</b> 6,100선 도전</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a5fc8;"></div><span><b>B. 차익 조정</b> 박스권</span></div>
+            <div class="legend-item"><div class="legend-dot" style="background:#1a7a3c;"></div><span><b>C. 협상 타결</b> 폭등</span></div>
+          </div>
+          <p class="chart-note">⚠ 이 차트는 분석적 의견입니다<br>통계적 확률이 아닙니다</p>
+        </div>
+
+      </div><!-- /.charts-grid -->
+    </div><!-- /.charts-section -->
+
+    <div class="alert">
+      <strong>📌 차트를 보는 방법 (초보자 안내)</strong>
+      원 그래프(도넛 차트)에서 색이 차지하는 면적이 클수록 그 비중이 크다는 의미입니다. 붉은색은 '강한 상승', 파란색은 '조정', 초록색은 '특별 이벤트'를 나타냅니다.
+    </div>
+  </section>
+
+  <!-- 섹션 3: TSMC 컨퍼런스콜 -->
+  <section>
+    <div class="sec-head"><div class="sec-num">3</div><h2 class="sec-title">TSMC 컨퍼런스콜 — 오늘 오전 최대 이벤트</h2></div>
+
+    <p>TSMC는 이미 1분기 매출이 역대 최대($352~357억, +35%)임을 공개했습니다. 오늘 컨퍼런스콜에서 추가로 나올 내용이 오전장 방향을 결정합니다.</p>
+
+    <table class="dt">
+      <thead><tr><th>확인 항목</th><th>내용</th><th>중요도</th></tr></thead>
+      <tbody>
+        <tr><td class="dl">1분기 매출 (확정)</td><td class="up">$352~357억 (+35%)</td><td class="src">✅ 이미 확인 — 역대 최대</td></tr>
+        <tr><td class="dl">영업이익률</td><td class="up">55%</td><td class="src">✅ 확인</td></tr>
+        <tr><td class="dl">총이익률</td><td class="up">64%</td><td class="src">✅ 확인</td></tr>
+        <tr><td class="dl hl">1분기 순이익 (컨콜 확정)</td><td class="hl">~$171억 예상 (+50%)</td><td class="src">⚠ 오늘 발표</td></tr>
+        <tr><td class="dl hl">2분기 가이던스 (컨콜)</td><td class="hl">추가 성장 예상</td><td class="src">⚠ 오늘 발표 — 핵심</td></tr>
+        <tr><td class="dl hl">CAPEX 계획 (컨콜)</td><td class="hl">투자 확대 여부</td><td class="src">⚠ 오늘 발표 — 소부장 영향</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 섹션 4: 시나리오 -->
+  <section>
+    <div class="sec-head"><div class="sec-num">4</div><h2 class="sec-title">오늘 코스피 3가지 시나리오</h2></div>
+
+    <div class="sc-grid">
+      <div class="sc-card">
+        <div class="sc-head a">
+          <div class="sc-label a">🟡 A. 강세 지속</div>
+          <div class="sc-cond">TSMC 무난 + 나스닥 훈풍 반영</div>
+        </div>
+        <div class="sc-body">
+          코스피 6,100~6,150선 도전. 반도체 주도 상승. 필반 +2% 효과가 SK하이닉스·삼성전자를 끌어올립니다.
+          <div class="sc-action">→ 반도체 보유 유지. 소부장 관심.</div>
+        </div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-head b">
+          <div class="sc-label b">🔵 B. 차익 조정</div>
+          <div class="sc-cond">4일 연속 피로감 + 선반영</div>
+        </div>
+        <div class="sc-body">
+          코스피 5,980~6,050 박스권. 3일 연속 급등 후 숨 고르기. TSMC 발표 후 방향 재결정.
+          <div class="sc-action">→ 추격 매수 자제. 결과 확인 후 대응.</div>
+        </div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-head c">
+          <div class="sc-label c">🟢 C. 협상 타결 급등</div>
+          <div class="sc-cond">이란 2차 협상 실제 합의 시</div>
+        </div>
+        <div class="sc-body">
+          코스피 6,200 이상. 사이드카 가능성. 오늘 이슬라마바드 협상 개최 가능성 있음.
+          <div class="sc-action">→ 보유 유지. 급등 초반 분할 매수.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert">
+      <strong>⚠ 분석적 의견 안내</strong>
+      위 시나리오는 확인된 데이터를 바탕으로 한 분석적 방향 의견입니다. 통계적 확률이 아니며 실제 시장은 예측과 다를 수 있습니다. 투자 판단은 본인의 책임입니다.
+    </div>
+  </section>
+
+  <!-- 섹션 5: 체크리스트 -->
+  <section>
+    <div class="sec-head"><div class="sec-num">5</div><h2 class="sec-title">오늘 오전 체크리스트 — 3번만 확인하세요</h2></div>
+
+    <div class="cl-box">
+      <h4>✅ 오전 9시 10분 — 개장 방향</h4>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>코스피 시가 <strong>6,100 이상</strong> → 강세 지속 신호</span></div>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>코스피 시가 <strong>5,980 미만</strong> → 차익 실현 압력</span></div>
+    </div>
+    <div class="cl-box">
+      <h4>✅ 오전 10시 — 외국인 수급</h4>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>외국인 순매수 유지 → 3일 연속. 6,000대 안착 강화</span></div>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>외국인 순매도 전환 → 단기 조정 신호</span></div>
+    </div>
+    <div class="cl-box">
+      <h4>⭐ 오전 중 — TSMC 컨퍼런스콜 결과</h4>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>2분기 가이던스 강하면 → 반도체주 추가 상승</span></div>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>가이던스 애매하면 → 오후 차익 실현 패턴 주의</span></div>
+      <div class="cl-row"><span class="cl-icon">◆</span><span>이란 협상 뉴스 → 수시 확인 (타결 시 즉각 반응)</span></div>
+    </div>
+  </section>
+
+  <!-- 마무리 -->
+  <section style="border-bottom:none;">
+    <div class="quote">
+      <q>"어젯밤 미국이 달렸습니다. 오늘 한국도 달릴 조건은 갖춰졌습니다.<br>다만 TSMC 콜 결과를 확인하며 속도를 조절하세요."</q>
+      <p>TSMC 결과 확인 후 긴급 업데이트 드리겠습니다.</p>
+    </div>
+
+    <div class="hashtags">
+      <a href="#">#코스피오늘전망</a><a href="#">#나스닥마감</a><a href="#">#필라델피아반도체</a>
+      <a href="#">#TSMC컨퍼런스콜</a><a href="#">#이란협상오늘</a><a href="#">#반도체주식오늘</a>
+      <a href="#">#SK하이닉스전망</a><a href="#">#삼성전자오늘</a><a href="#">#코스피6000</a>
+      <a href="#">#증시연재</a><a href="#">#주식초보</a><a href="#">#투자전략</a>
+    </div>
+  </section>
+
+</main>
+
+<div class="post-footer">
+  <p><strong>📌 연재 안내 | 한국 증시 오전·오후·마감 분석</strong></p>
+  <p>다음 글: <strong>「4월 16일 오후장 — TSMC 결과·이란 협상 속보·코스피 대응 전략」</strong></p>
+</div>
+<div class="disclaimer">
+  ※ 미국 지수 데이터는 4월 15일 마감 기준 공식 확인 수치입니다. TSMC 매출은 공개 발표 기준.<br>
+  시나리오 차트는 분석적 의견이며 통계적 확률이 아닙니다. 투자 판단은 본인 책임입니다.
+</div>
+
+</body>
+</html>
