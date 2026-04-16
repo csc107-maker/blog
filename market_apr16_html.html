@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSMC 실적 이후 시장 분석 — 2026년 4월 16일</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root{
+  --bg:#0b0f1a;
+  --card:#111827;
+  --card2:#141d2e;
+  --border:rgba(99,179,237,.15);
+  --blue:#63b3ed;
+  --cyan:#00d4ff;
+  --green:#48bb78;
+  --red:#fc8181;
+  --gold:#f6c90e;
+  --orange:#f6ad55;
+  --text:#e2e8f0;
+  --text2:#94a3b8;
+  --text3:#475569;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.65;}
+
+/* ─ HEADER ─ */
+.hdr{background:linear-gradient(135deg,#050c1a 0%,#0d1b3a 60%,#071528 100%);padding:36px 28px 28px;border-bottom:2px solid rgba(99,179,237,.2);position:relative;overflow:hidden;}
+.hdr::before{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(99,179,237,.06),transparent 70%);pointer-events:none;}
+.date-badge{display:inline-block;background:rgba(99,179,237,.1);border:1px solid rgba(99,179,237,.3);color:var(--blue);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:12px;}
+.hdr h1{font-size:clamp(18px,3.5vw,28px);font-weight:900;line-height:1.25;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.hdr-sub{font-size:12px;color:var(--text2);}
+
+/* ─ INDEX ─ */
+.index-strip{background:var(--card);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;flex-wrap:wrap;gap:20px;}
+.idx-item{display:flex;align-items:center;gap:10px;}
+.idx-name{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);letter-spacing:.5px;}
+.idx-val{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;}
+.idx-chg{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:2px 7px;border-radius:3px;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+.chg-up{color:var(--green);background:rgba(72,187,120,.1);}
+.chg-dn{color:var(--red);background:rgba(252,129,129,.1);}
+.chg-flat{color:var(--gold);background:rgba(246,201,14,.08);}
+
+/* ─ LAYOUT ─ */
+.body{padding:20px 24px 32px;}
+.sec{margin-bottom:32px;}
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sec-num{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:2px 8px;border-radius:2px;}
+.sec-title{font-size:15px;font-weight:700;color:#fff;}
+
+/* ─ TIMELINE ─ */
+.timeline{position:relative;padding-left:24px;}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--cyan),var(--green),rgba(0,0,0,0));}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-item::before{content:'';position:absolute;left:-20px;top:5px;width:8px;height:8px;border-radius:50%;border:2px solid var(--cyan);background:var(--bg);}
+.tl-item.event::before{background:var(--cyan);border-color:var(--cyan);}
+.tl-item.warn::before{background:var(--gold);border-color:var(--gold);}
+.tl-item.up-ev::before{background:var(--green);border-color:var(--green);}
+.tl-time{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.tl-item.warn .tl-time{color:var(--gold);}
+.tl-item.up-ev .tl-time{color:var(--green);}
+.tl-title{font-weight:700;font-size:13px;color:#fff;margin-bottom:3px;}
+.tl-body{font-size:12px;color:var(--text2);}
+
+/* ─ CARDS GRID ─ */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+.card:hover{border-color:rgba(99,179,237,.35);transform:translateY(-2px);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.card.c-blue::before{background:linear-gradient(90deg,var(--cyan),transparent);}
+.card.c-green::before{background:linear-gradient(90deg,var(--green),transparent);}
+.card.c-gold::before{background:linear-gradient(90deg,var(--gold),transparent);}
+.card.c-red::before{background:linear-gradient(90deg,var(--red),transparent);}
+.card.c-orange::before{background:linear-gradient(90deg,var(--orange),transparent);}
+.card-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+.card-val{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.card-val.g{color:var(--green);}
+.card-val.r{color:var(--red);}
+.card-val.gd{color:var(--gold);}
+.card-note{font-size:11px;color:var(--text2);}
+.card-chg{font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;}
+
+/* ─ TABLE ─ */
+.tw{overflow-x:auto;margin:10px 0;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{background:rgba(99,179,237,.08);border-bottom:1px solid var(--border);padding:8px 12px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);font-weight:700;}
+thead th:not(:first-child){text-align:right;}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);}
+tbody tr:hover{background:rgba(99,179,237,.04);}
+td{padding:8px 12px;color:var(--text);}
+td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:11.5px;}
+td.g{color:var(--green);font-weight:600;}
+td.r{color:var(--red);}
+td.gd{color:var(--gold);font-weight:600;}
+td.t2{color:var(--text2);}
+td.bold{font-weight:700;color:#fff;}
+
+/* ─ FLOW CHART ─ */
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:14px 0;}
+.flow-box{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:9px 14px;font-size:11.5px;text-align:center;font-weight:600;min-width:100px;}
+.flow-box.hl{background:rgba(0,212,255,.08);border-color:rgba(0,212,255,.3);color:var(--cyan);}
+.flow-box.hg{background:rgba(72,187,120,.08);border-color:rgba(72,187,120,.3);color:var(--green);}
+.flow-arrow{color:var(--text3);font-size:16px;font-weight:700;}
+
+/* ─ BAR CHART ─ */
+.bar-chart{margin:14px 0;}
+.bc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bc-lbl{font-size:11px;color:var(--text2);min-width:100px;text-align:right;flex-shrink:0;}
+.bc-track{flex:1;height:18px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.bc-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700;color:rgba(0,0,0,.7);}
+.bc-val{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;min-width:50px;}
+
+/* ─ ALERT BOX ─ */
+.alert{border-radius:6px;padding:12px 16px;margin:14px 0;font-size:12.5px;line-height:1.75;}
+.alert.blue{background:rgba(99,179,237,.07);border-left:3px solid var(--blue);color:var(--text);}
+.alert.green{background:rgba(72,187,120,.07);border-left:3px solid var(--green);}
+.alert.warn{background:rgba(246,201,14,.07);border-left:3px solid var(--gold);}
+.alert.red{background:rgba(252,129,129,.07);border-left:3px solid var(--red);}
+.alert strong{color:#fff;}
+
+/* ─ DIVIDER ─ */
+hr{border:none;border-top:1px solid rgba(255,255,255,.05);margin:22px 0;}
+
+/* ─ SECTOR BADGES ─ */
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+.badge{font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:4px 10px;border-radius:3px;border:1px solid;}
+.badge-g{color:var(--green);border-color:rgba(72,187,120,.3);background:rgba(72,187,120,.07);}
+.badge-r{color:var(--red);border-color:rgba(252,129,129,.3);background:rgba(252,129,129,.07);}
+.badge-b{color:var(--cyan);border-color:rgba(0,212,255,.3);background:rgba(0,212,255,.07);}
+.badge-o{color:var(--orange);border-color:rgba(246,173,85,.3);background:rgba(246,173,85,.07);}
+
+/* ─ STOCK MINI ─ */
+.stock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0;}
+.stock-mini{background:var(--card2);border:1px solid var(--border);border-radius:6px;padding:12px 14px;transition:border-color .2s;}
+.stock-mini:hover{border-color:rgba(99,179,237,.3);}
+.sm-name{font-weight:700;font-size:12.5px;color:#fff;margin-bottom:2px;}
+.sm-code{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-bottom:8px;}
+.sm-chg{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;}
+.sm-theme{font-size:9px;color:var(--text2);margin-top:4px;}
+
+/* ─ DISC ─ */
+.disc{background:rgba(252,129,129,.05);border:1px solid rgba(252,129,129,.15);border-radius:6px;padding:10px 14px;margin-top:20px;font-size:10.5px;color:var(--text3);line-height:1.7;}
+
+@media(max-width:540px){
+  .index-strip{gap:12px;}
+  .body{padding:16px 14px 24px;}
+  .flow{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<div class="hdr">
+  <div class="date-badge">📊 시황 분석 · 2026.04.16 오후</div>
+  <h1>TSMC 실적 발표 이후<br>한국 증시 오후 장 완전 분석</h1>
+  <p class="hdr-sub">반도체 숨고르기 · 순환매 장세 · 소부장 수혜 종목 점검 | 코스피 6,149 기록</p>
+</div>
+
+<!-- ─── INDEX STRIP ─── -->
+<div class="index-strip">
+  <div class="idx-item">
+    <div>
+      <div class="idx-name">KOSPI</div>
+      <div class="idx-val">6,149</div>
+    </div>
+    <span class="idx-chg chg-up">▲ +0.95%</span>
+  </div>
+  <div class="idx-item">
+    <div>
+      <div class="idx-name">KOSDAQ</div>
+      <div class="idx-val">1,162</div>
+    </div>
+    <span class="idx-chg chg-up">▲ +0.88%</span>
+  </div>
+  <div class="idx-item">
+    <div>
+      <div class="idx-name">달러/원</div>
+      <div class="idx-val">1,473.6</div>
+    </div>
+    <span class="idx-chg chg-up">▼ -0.6</span>
+  </div>
+  <div class="idx-item">
+    <div>
+      <div class="idx-name">TSMC (TSM)</div>
+      <div class="idx-val">$369+</div>
+    </div>
+    <span class="idx-chg chg-up">▲ +2.3%</span>
+  </div>
+  <div class="idx-item">
+    <div>
+      <div class="idx-name">필라델피아 반도체</div>
+      <div class="idx-val">+11거래일 연속</div>
+    </div>
+    <span class="idx-chg chg-up">▲ 4월 +20%</span>
+  </div>
+</div>
+
+<!-- ─── BODY ─── -->
+<div class="body">
+
+<!-- ① 오늘 핵심 요약 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">01</span><span class="sec-title">오늘의 3줄 요약</span></div>
+
+  <div class="card-grid">
+    <div class="card c-blue">
+      <div class="card-lbl">시장 핵심 흐름</div>
+      <div class="card-val" style="font-size:16px;line-height:1.4;">반도체<br>숨고르기</div>
+      <div class="card-note">ASML 가이던스 소폭 부담. 자동차·방산으로 순환매</div>
+    </div>
+    <div class="card c-gold">
+      <div class="card-lbl">TSMC 오후 발표</div>
+      <div class="card-val" style="font-size:16px;line-height:1.4;">컨퍼런스콜<br>2PM(대만)</div>
+      <div class="card-note">GPM 64%, OPM 55% 확인. 2Q 가이던스 주목</div>
+    </div>
+    <div class="card c-green">
+      <div class="card-lbl">코스피 위치</div>
+      <div class="card-val">6,149</div>
+      <div class="card-note">역고점 6,307까지 -2.6% 남아</div>
+    </div>
+  </div>
+
+  <div class="alert blue" style="margin-top:12px;">
+    <strong>📌 분석가 코멘트:</strong> TSMC 1Q26 실적 서프라이즈($35.7B, +35.1% YoY)는 이미 주가에 선반영됐습니다. 오후 컨퍼런스콜의 <strong>2분기 가이던스와 CAPEX 추가 확대 여부</strong>가 내일 방향을 결정하는 진짜 변수입니다.
+  </div>
+</div>
+
+<!-- ② 타임라인 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">02</span><span class="sec-title">4월 15~16일 시장 타임라인</span></div>
+
+  <div class="timeline">
+    <div class="tl-item up-ev">
+      <div class="tl-time">4월 15일 (어제) 마감</div>
+      <div class="tl-title">코스피 +2.07% · 코스닥 +2.72% — 6,000 돌파</div>
+      <div class="tl-body">미·이란 종전 협상 기대 + 유가 -8.1% 급락. 반도체·반도체장비 <strong>+3.92%</strong> 상승 주도. 외국인 2209억·기관 1767억 순매수. 코스피 4월 누적 +20.5%.</div>
+    </div>
+    <div class="tl-item event">
+      <div class="tl-time">4월 15일 밤 — ASML 실적 발표</div>
+      <div class="tl-title">ASML 2Q 가이던스 "기대 부합" — 초과는 아님</div>
+      <div class="tl-body">ASML 실적 자체는 양호했으나 2분기 가이던스가 컨센서스 수준에 그쳐 반도체주 단기 부담 요인으로 작용. 내일 반도체 숨고르기 예고.</div>
+    </div>
+    <div class="tl-item event">
+      <div class="tl-time">4월 16일 오전 9시 — 개장</div>
+      <div class="tl-title">코스피 +0.95%로 출발 · 반도체 소폭 상승 그쳐</div>
+      <div class="tl-body">현대차 <strong>+5.51%</strong>가 가장 눈에 띄는 오전 강세. SK하이닉스 +0.70%, 삼성전자 +0.71%로 반도체 대형주는 상승 제한. 한화에어로스페이스 +2.45%, 기아 +3.30%, 두산에너빌리티 +4.22%.</div>
+    </div>
+    <div class="tl-item warn">
+      <div class="tl-time">4월 16일 오후 1시 (한국) — 핵심 이벤트</div>
+      <div class="tl-title">TSMC 1Q26 실적 컨퍼런스콜 — 2Q 가이던스 & CAPEX 발표</div>
+      <div class="tl-body">영업이익률 55%, GPM 64% 확인. 주목 포인트: ① 2Q 매출 가이던스(컨센 $38B+?), ② 2026 CAPEX 유지·확대 여부($52~56B), ③ 2nm 수율·가격 정책. 발표 내용에 따라 오후 반도체주 방향 결정.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-time">4월 17일 (내일) 개장 전망</div>
+      <div class="tl-title">가이던스 서프라이즈 시 반도체 재상승 · 부합 시 순환매 지속</div>
+      <div class="tl-body">맥쿼리 "2Q 가이던스 더 높아질 것" 전망. 4월 말~5월 초 미국 빅테크(MS·구글·아마존·메타) 실적 시즌으로 무게 이동. 실적주 중심 포트폴리오 전략 유효.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ TSMC 핵심 지표 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">03</span><span class="sec-title">TSMC 1Q26 핵심 재무 지표 — 한국 증시와의 연결</span></div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>지표</th><th>1Q26 실적</th><th>YoY</th><th>시장 기대</th><th>한국 반도체 영향</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">매출 (USD)</td><td class="gd">$35.7B</td><td class="g">+35.1%</td><td>$34.6~35.8B</td><td class="g">상단 달성 → 긍정</td></tr>
+        <tr><td class="bold">매출총이익률</td><td class="gd">64%</td><td class="g">+11pp</td><td>63~65%</td><td class="g">N2 공정 믹스 개선</td></tr>
+        <tr><td class="bold">영업이익률</td><td class="gd">55%</td><td class="g">+12pp</td><td>54~56%</td><td class="g">수익성 최고 수준</td></tr>
+        <tr><td class="bold">2026 CAPEX</td><td class="gd">$52~56B</td><td class="g">+27~37%</td><td>유지 확인</td><td class="g">소부장 수주 후행 수혜</td></tr>
+        <tr><td class="bold">3월 단월 매출 (TWD)</td><td class="gd">NT$415.2B</td><td class="g">+45.2% YoY</td><td>— </td><td class="g">N2 공정 본격 가동 확인</td></tr>
+        <tr><td class="bold">2Q 가이던스</td><td class="t2">발표 예정</td><td class="t2">—</td><td>$38B+ 예상</td><td class="t2">오후 장 핵심 변수</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:10.5px;color:var(--text3);margin-top:5px;">* 2Q 가이던스는 오후 컨퍼런스콜 결과 반영 예정</p>
+
+  <hr>
+
+  <!-- TSMC → 한국 연결 흐름 -->
+  <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">▶ TSMC 실적 → 한국 반도체 연동 구조</p>
+  <div class="flow">
+    <div class="flow-box hl">TSMC<br>$35.7B 서프라이즈</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box hl">AI 칩 수요<br>공급 초과 확인</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box hg">HBM 수요<br>구조적 지속</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box hg">SK하이닉스<br>삼성전자 수혜</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-box" style="background:rgba(246,201,14,.07);border-color:rgba(246,201,14,.3);color:var(--gold);">소부장<br>수주 확대</div>
+  </div>
+</div>
+
+<!-- ④ 업종별 등락 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">04</span><span class="sec-title">오늘 업종별 등락 — 어디서 돈이 움직였나</span></div>
+
+  <div class="bar-chart">
+    <div class="bc-row">
+      <span class="bc-lbl">자동차</span>
+      <div class="bc-track"><div class="bc-fill" style="width:80%;background:var(--green);">현대차 +5.51% / 기아 +3.30%</div></div>
+      <span class="bc-val g">+4~5%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">방산·에너지</span>
+      <div class="bc-track"><div class="bc-fill" style="width:55%;background:#68d391;">한화에어로 +2.45% / 두산에너빌리티 +4.22%</div></div>
+      <span class="bc-val g">+2~4%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">반도체 대형주</span>
+      <div class="bc-track"><div class="bc-fill" style="width:20%;background:#90cdf4;">삼성전자 +0.71% / SK하이닉스 +0.70%</div></div>
+      <span class="bc-val" style="color:var(--blue);">+0.7%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">바이오·제약</span>
+      <div class="bc-track"><div class="bc-fill" style="width:22%;background:#90cdf4;">삼성바이오 +0.81%</div></div>
+      <span class="bc-val" style="color:var(--blue);">+0.8%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">지난주 건설 랠리</span>
+      <div class="bc-track"><div class="bc-fill" style="width:92%;background:var(--gold);">대우건설 +44.56% / GS건설 +38.17%</div></div>
+      <span class="bc-val gd">+20~44%</span>
+    </div>
+  </div>
+
+  <div class="alert warn">
+    <strong>⚡ 순환매 구조 핵심:</strong> "지수 펀더멘털은 반도체가 지탱하고, 초과 수익은 순환매 섹터에서 나온다." 지난주 건설주가 20~44% 폭등한 것이 대표 사례. 현재 자동차·방산이 다음 순환매 후보로 부상 중.
+  </div>
+
+  <hr>
+
+  <!-- 주요 종목 등락 -->
+  <p style="font-size:12px;color:var(--text2);margin-bottom:10px;">▶ 개장 기준 주요 종목 변동 (4월 16일 오전 9시)</p>
+  <div class="stock-grid">
+    <div class="stock-mini">
+      <div class="sm-name">현대차</div>
+      <div class="sm-code">005380</div>
+      <div class="sm-chg g">+5.51%</div>
+      <div class="sm-theme">자동차 · 순환매 대장</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">두산에너빌리티</div>
+      <div class="sm-code">034020</div>
+      <div class="sm-chg g">+4.22%</div>
+      <div class="sm-theme">에너지 · 원전 테마</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">기아</div>
+      <div class="sm-code">000270</div>
+      <div class="sm-chg g">+3.30%</div>
+      <div class="sm-theme">자동차 · 수출주</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">한화에어로스페이스</div>
+      <div class="sm-code">012450</div>
+      <div class="sm-chg g">+2.45%</div>
+      <div class="sm-theme">방산 · 종전 기대</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">SK하이닉스</div>
+      <div class="sm-code">000660</div>
+      <div class="sm-chg" style="color:var(--blue);">+0.70%</div>
+      <div class="sm-theme">HBM · 반도체 숨고르기</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">삼성전자</div>
+      <div class="sm-code">005930</div>
+      <div class="sm-chg" style="color:var(--blue);">+0.71%</div>
+      <div class="sm-theme">메모리 · 파운드리</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">LG에너지솔루션</div>
+      <div class="sm-code">373220</div>
+      <div class="sm-chg g">+1.10%</div>
+      <div class="sm-theme">배터리 · ESS 수혜</div>
+    </div>
+    <div class="stock-mini">
+      <div class="sm-name">SK스퀘어</div>
+      <div class="sm-code">402340</div>
+      <div class="sm-chg g">+1.20%</div>
+      <div class="sm-theme">반도체 지주 · SK하이닉스 연동</div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ 소부장 수혜 분석 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">05</span><span class="sec-title">TSMC CAPEX→소부장 수혜 연결 구조 & 주목 종목</span></div>
+
+  <div class="alert green">
+    <strong>핵심 연동 공식:</strong> TSMC 2026 CAPEX $52~56B → 전공정 비중 70% → 약 $37~39B 전공정 장비 발주 → HPSP 독점 수혜. 2nm 양산 확대 → CoWoS 패키징 확대 → 피에스케이홀딩스·코미코 수혜.
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>업종</th><th>수혜 채널</th><th>주목 종목</th><th>특징</th><th>타이밍</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="bold">전공정 장비</td>
+          <td class="t2">TSMC 2nm 확대</td>
+          <td class="gd bold">HPSP (403870)</td>
+          <td class="g">HPA 글로벌 독점</td>
+          <td class="t2">즉시·6M 후행</td>
+        </tr>
+        <tr>
+          <td class="bold">광통신 장비</td>
+          <td class="t2">AI 데이터센터</td>
+          <td class="gd bold">우리넷·티엠씨·라이콤</td>
+          <td class="g">연일 급등 중</td>
+          <td class="t2">단기 테마</td>
+        </tr>
+        <tr>
+          <td class="bold">후공정·세정</td>
+          <td class="t2">CoWoS 확대</td>
+          <td>피에스케이홀딩스</td>
+          <td class="t2">스트리퍼 국내 1위</td>
+          <td class="t2">3~6M</td>
+        </tr>
+        <tr>
+          <td class="bold">소재·코팅</td>
+          <td class="t2">HBM4 공정</td>
+          <td>코미코</td>
+          <td class="t2">세정·코팅 소재</td>
+          <td class="t2">3~6M</td>
+        </tr>
+        <tr>
+          <td class="bold">기판 (PCB)</td>
+          <td class="t2">반도체 생산량 증가</td>
+          <td>대덕전자</td>
+          <td class="t2">고부가 기판 전문</td>
+          <td class="t2">중후반 사이클</td>
+        </tr>
+        <tr>
+          <td class="bold">테스트 소켓</td>
+          <td class="t2">AI 칩 테스트 수요</td>
+          <td>티에스이</td>
+          <td class="t2">국내 점유율 1위</td>
+          <td class="t2">중기</td>
+        </tr>
+        <tr>
+          <td class="bold">광반도체</td>
+          <td class="t2">실리콘 포토닉스</td>
+          <td>인텍플러스</td>
+          <td class="t2">CPO 2027~28 상용화</td>
+          <td class="t2">중장기 테마</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge badge-g">✅ 즉시 수혜: HPSP · 광통신</span>
+    <span class="badge badge-b">🔵 3~6M: 피에스케이·코미코</span>
+    <span class="badge badge-o">🟡 중기: 대덕·티에스이</span>
+    <span class="badge badge-r">⏳ 중장기: 인텍플러스</span>
+  </div>
+</div>
+
+<!-- ⑥ D램 가격 전망 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">06</span><span class="sec-title">D램 가격 전망 — 슈퍼사이클의 체력은?</span></div>
+
+  <div class="card-grid">
+    <div class="card c-green">
+      <div class="card-lbl">1Q26 D램 가격 인상</div>
+      <div class="card-val g">+70%+</div>
+      <div class="card-note">시그마인텔 추정 · 역대 최고 인상률</div>
+    </div>
+    <div class="card c-gold">
+      <div class="card-lbl">2Q26 추가 상승 (트렌드포스)</div>
+      <div class="card-val gd">+50~60%</div>
+      <div class="card-note">공급 부족 구조 지속</div>
+    </div>
+    <div class="card c-orange">
+      <div class="card-lbl">2Q 상승 (시그마인텔)</div>
+      <div class="card-val" style="color:var(--orange);">+30~50%</div>
+      <div class="card-note">다소 보수적 전망</div>
+    </div>
+    <div class="card c-red">
+      <div class="card-lbl">하반기 D램 가격</div>
+      <div class="card-val r">+5~20%</div>
+      <div class="card-note">⚠️ 상승률 둔화 경고</div>
+    </div>
+  </div>
+
+  <div class="alert warn" style="margin-top:12px;">
+    <strong>⚠️ 투자자 유의:</strong> 슈퍼사이클은 유효하지만 <strong>가격 상승률의 피크는 1~2분기</strong>로 보입니다. 하반기 5~20% 둔화 시나리오가 맞다면 하반기 반도체 주가는 '이익 성장'이 아닌 '이익 증가율 둔화'에 직면할 수 있습니다. 비중 조절 타이밍을 미리 고려하세요.
+  </div>
+</div>
+
+<!-- ⑦ 투자 전략 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">07</span><span class="sec-title">오늘 이후 투자 전략 체크포인트</span></div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>체크 포인트</th><th>확인 방법</th><th>긍정 시나리오</th><th>부정 시나리오</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">TSMC 2Q 가이던스</td><td class="t2">컨퍼런스콜</td><td class="g">$38B+ 서프라이즈</td><td class="r">$36B 이하 하향</td></tr>
+        <tr><td class="bold">CAPEX 추가 상향</td><td class="t2">CEO 발언</td><td class="g">$60B 상향 발표</td><td class="r">유지 or 하향</td></tr>
+        <tr><td class="bold">미·이란 협상</td><td class="t2">실시간 뉴스</td><td class="g">타결 → 유가·환율 안정</td><td class="r">결렬 → 리스크 오프</td></tr>
+        <tr><td class="bold">4월 말 빅테크 실적</td><td class="t2">MS·구글·아마존</td><td class="g">CAPEX 확대 재확인</td><td class="r">AI 투자 축소 신호</td></tr>
+        <tr><td class="bold">코스피 6,307 돌파</td><td class="t2">일중 고점</td><td class="g">역고점 돌파 → 신고가</td><td class="r">저항선 반락</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="disc">
+  ⚠️ 본 자료는 공개 정보를 기반으로 한 참고용 시황 분석입니다. 투자 권유가 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 주식 투자는 원금 손실이 발생할 수 있습니다.<br>
+  <strong>Data Sources:</strong> 뉴스핌 · 글로벌이코노믹 · 인포스탁데일리 · TSMC IR · 키움증권·KB증권 시황 보고서 · 트렌드포스 · 시그마인텔 (2026.04.16 기준)
+</div>
+
+</div><!-- /body -->
+
+<div style="background:#060c18;color:rgba(255,255,255,.25);text-align:center;padding:12px 20px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">
+  시황 분석 리포트 | 2026.04.16 오후 | 정보 제공용 · 투자 권유 아님
+</div>
+
+</body>
+</html>
