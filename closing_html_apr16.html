@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4월 16일 장 마감 시황 — 코스피 6,226 완전 분석</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root{
+  --bg:#07101f;
+  --card:#0f1c2e;
+  --card2:#131f32;
+  --bdr:rgba(56,189,248,.13);
+  --bdr2:rgba(56,189,248,.25);
+  --blue:#38bdf8;
+  --cyan:#22d3ee;
+  --green:#4ade80;
+  --red:#f87171;
+  --gold:#fbbf24;
+  --orange:#fb923c;
+  --purple:#a78bfa;
+  --txt:#e2e8f0;
+  --txt2:#94a3b8;
+  --txt3:#475569;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans KR',sans-serif;font-size:13.5px;line-height:1.7;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#03071a 0%,#0a1628 45%,#05102a 100%);
+  border-bottom:2px solid rgba(56,189,248,.2);
+  padding:44px 32px 36px;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:'6226';position:absolute;right:-20px;top:-10px;font-size:160px;font-weight:900;font-family:'JetBrains Mono',monospace;color:rgba(56,189,248,.04);line-height:1;pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.25);color:var(--blue);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;padding:4px 12px;border-radius:3px;margin-bottom:14px;}
+.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero h1{font-size:clamp(20px,4vw,32px);font-weight:900;line-height:1.25;background:linear-gradient(120deg,#fff 30%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;}
+.hero-sub{font-size:12.5px;color:var(--txt2);margin-bottom:26px;}
+
+/* index strip */
+.idx-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:6px;}
+.idx-box{flex:1;min-width:110px;padding:12px 16px;border:1px solid var(--bdr);background:rgba(56,189,248,.04);}
+.idx-box:first-child{border-radius:6px 0 0 6px;}
+.idx-box:last-child{border-radius:0 6px 6px 0;}
+.ib-lbl{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:5px;}
+.ib-val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.ib-chg{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:2px 7px;border-radius:3px;}
+.up-bg{background:rgba(74,222,128,.12);color:var(--green);}
+.dn-bg{background:rgba(248,113,113,.12);color:var(--red);}
+.flat-bg{background:rgba(251,191,36,.1);color:var(--gold);}
+
+/* ── WRAP ── */
+.wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+
+/* ── SECTION ── */
+.sec{padding:32px 0 26px;border-bottom:1px solid rgba(255,255,255,.05);}
+.sec:last-child{border:none;}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--cyan);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:2px 9px;border-radius:2px;}
+.st{font-size:16px;font-weight:700;color:#fff;}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:11px;margin:16px 0;}
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:15px 16px;position:relative;overflow:hidden;transition:.2s;}
+.kpi:hover{border-color:var(--bdr2);transform:translateY(-2px);}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.k-bl::after{background:linear-gradient(90deg,var(--blue),transparent);}
+.k-gn::after{background:linear-gradient(90deg,var(--green),transparent);}
+.k-gd::after{background:linear-gradient(90deg,var(--gold),transparent);}
+.k-rd::after{background:linear-gradient(90deg,var(--red),transparent);}
+.k-pu::after{background:linear-gradient(90deg,var(--purple),transparent);}
+.k-or::after{background:linear-gradient(90deg,var(--orange),transparent);}
+.kl{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:7px;}
+.kv{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.kv.g{color:var(--green);}
+.kv.r{color:var(--red);}
+.kv.gd{color:var(--gold);}
+.kv.pu{color:var(--purple);}
+.kn{font-size:11px;color:var(--txt2);}
+
+/* ── TABLE ── */
+.tw{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead th{background:rgba(56,189,248,.07);border-bottom:1px solid var(--bdr);padding:8px 13px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);font-weight:700;}
+thead th:not(:first-child){text-align:right;}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);}
+tbody tr:hover{background:rgba(56,189,248,.04);}
+td{padding:9px 13px;color:var(--txt);}
+td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;}
+td.g{color:var(--green);font-weight:700;}
+td.r{color:var(--red);}
+td.gd{color:var(--gold);font-weight:600;}
+td.t2{color:var(--txt2);}
+td.w{color:#fff;font-weight:700;}
+td.pu{color:var(--purple);font-weight:600;}
+
+/* ── STOCK CARDS ── */
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.sc{background:var(--card2);border:1px solid var(--bdr);border-radius:7px;padding:13px 14px;transition:.2s;}
+.sc:hover{border-color:var(--bdr2);}
+.sc-name{font-weight:700;font-size:13px;color:#fff;margin-bottom:2px;}
+.sc-code{font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--txt3);margin-bottom:9px;}
+.sc-pct{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;margin-bottom:3px;}
+.sc-price{font-size:11px;color:var(--txt2);}
+.sc-tag{display:inline-block;font-size:9px;font-family:'JetBrains Mono',monospace;padding:2px 7px;border-radius:2px;margin-top:6px;}
+.tag-gn{background:rgba(74,222,128,.1);color:var(--green);border:1px solid rgba(74,222,128,.25);}
+.tag-bl{background:rgba(56,189,248,.1);color:var(--blue);border:1px solid rgba(56,189,248,.2);}
+.tag-gd{background:rgba(251,191,36,.1);color:var(--gold);border:1px solid rgba(251,191,36,.2);}
+.tag-pu{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
+
+/* ── TIMELINE ── */
+.tl{position:relative;padding-left:26px;margin:14px 0;}
+.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--cyan),var(--green) 50%,transparent);}
+.tl-it{position:relative;margin-bottom:20px;}
+.tl-it::before{content:'';position:absolute;left:-22px;top:5px;width:9px;height:9px;border-radius:50%;border:2px solid var(--cyan);background:var(--bg);}
+.tl-it.ev::before{background:var(--cyan);}
+.tl-it.hi::before{background:var(--green);border-color:var(--green);}
+.tl-it.warn::before{background:var(--gold);border-color:var(--gold);}
+.tl-time{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.tl-it .tl-time{color:var(--cyan);}
+.tl-it.hi .tl-time{color:var(--green);}
+.tl-it.warn .tl-time{color:var(--gold);}
+.tl-title{font-weight:700;font-size:13.5px;color:#fff;margin-bottom:4px;}
+.tl-body{font-size:12px;color:var(--txt2);line-height:1.7;}
+.tl-body strong{color:var(--txt);}
+
+/* ── BAR CHART ── */
+.bc{margin:14px 0;}
+.bc-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.bc-lbl{font-size:11.5px;color:var(--txt2);min-width:120px;text-align:right;flex-shrink:0;}
+.bc-track{flex:1;height:22px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.bc-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:9.5px;font-family:'JetBrains Mono',monospace;font-weight:700;color:rgba(0,0,0,.75);white-space:nowrap;overflow:hidden;}
+.bc-val{font-size:11.5px;font-family:'JetBrains Mono',monospace;font-weight:700;min-width:65px;}
+
+/* ── SUPPLY FLOW ── */
+.flow{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:16px 0;}
+.fb{background:var(--card2);border:1px solid var(--bdr);border-radius:6px;padding:10px 14px;font-size:12px;text-align:center;font-weight:600;min-width:95px;}
+.fb.hl-b{background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.3);color:var(--cyan);}
+.fb.hl-g{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.3);color:var(--green);}
+.fb.hl-gd{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.3);color:var(--gold);}
+.arrow{color:var(--txt3);font-size:18px;font-weight:700;}
+
+/* ── ALERT ── */
+.al{border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;}
+.al-bl{background:rgba(56,189,248,.07);border-left:3px solid var(--blue);}
+.al-gn{background:rgba(74,222,128,.07);border-left:3px solid var(--green);}
+.al-gd{background:rgba(251,191,36,.07);border-left:3px solid var(--gold);}
+.al-rd{background:rgba(248,113,113,.07);border-left:3px solid var(--red);}
+.al strong{color:#fff;}
+
+/* ── SUPPLY BOX ── */
+.supply-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+.sp-box{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:15px 16px;text-align:center;}
+.sp-who{font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:7px;}
+.sp-val{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;margin-bottom:4px;}
+.sp-note{font-size:10.5px;color:var(--txt2);}
+
+/* ── SCENARIO ── */
+.sc-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.sc-box{border-radius:8px;padding:18px 16px;border:1px solid;}
+.sc-box.bear{background:rgba(248,113,113,.05);border-color:rgba(248,113,113,.25);}
+.sc-box.base{background:rgba(56,189,248,.05);border-color:rgba(56,189,248,.25);}
+.sc-box.bull{background:rgba(74,222,128,.05);border-color:rgba(74,222,128,.25);}
+.sc-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+.sc-box.bear .sc-lbl{color:var(--red);}
+.sc-box.base .sc-lbl{color:var(--blue);}
+.sc-box.bull .sc-lbl{color:var(--green);}
+.sc-price{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:#fff;margin-bottom:4px;}
+.sc-up{font-size:12.5px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:9px;}
+.sc-box.bear .sc-up{color:var(--red);}
+.sc-box.base .sc-up{color:var(--blue);}
+.sc-box.bull .sc-up{color:var(--green);}
+.sc-desc{font-size:11.5px;color:var(--txt2);line-height:1.65;}
+
+/* ── DISC ── */
+.disc{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.15);border-radius:6px;padding:11px 15px;margin-top:22px;font-size:10.5px;color:var(--txt3);line-height:1.75;}
+
+hr{border:none;border-top:1px solid rgba(255,255,255,.05);margin:18px 0;}
+
+@media(max-width:600px){
+  .hero{padding:30px 18px 26px;}
+  .wrap{padding:0 14px;}
+  .supply-grid{grid-template-columns:repeat(3,1fr);}
+  .sc-wrap{grid-template-columns:1fr;}
+  .idx-strip{gap:0;}
+  .idx-box{min-width:90px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-badge"><span class="dot"></span> 장 마감 · 2026.04.16</div>
+    <h1>코스피 6,226 마감<br>TSMC가 쏘아올린 '반도체 화약'</h1>
+    <p class="hero-sub">33거래일 만에 6,200 돌파 · SK하이닉스 이틀 연속 사상 최고가 · 외국인 오후 전환 · 전고점 81p</p>
+    <div class="idx-strip">
+      <div class="idx-box">
+        <div class="ib-lbl">KOSPI</div>
+        <div class="ib-val">6,226</div>
+        <div class="ib-chg up-bg">▲ +2.21%</div>
+      </div>
+      <div class="idx-box">
+        <div class="ib-lbl">KOSDAQ</div>
+        <div class="ib-val">1,162</div>
+        <div class="ib-chg up-bg">▲ +0.91%</div>
+      </div>
+      <div class="idx-box">
+        <div class="ib-lbl">달러/원</div>
+        <div class="ib-val">1,474</div>
+        <div class="ib-chg flat-bg">± +0.4</div>
+      </div>
+      <div class="idx-box">
+        <div class="ib-lbl">시총</div>
+        <div class="ib-val">5,100조</div>
+        <div class="ib-chg up-bg">전쟁前 회복</div>
+      </div>
+      <div class="idx-box">
+        <div class="ib-lbl">전고점까지</div>
+        <div class="ib-val">81p</div>
+        <div class="ib-chg up-bg">6,307 목전</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ① 오늘 장 핵심 지표 -->
+<div class="sec">
+  <div class="sh"><span class="sn">01</span><span class="st">오늘 장 핵심 지표 — 숫자로 보는 4월 16일</span></div>
+
+  <div class="kpi-grid">
+    <div class="kpi k-gn">
+      <div class="kl">코스피 종가</div>
+      <div class="kv g">6,226</div>
+      <div class="kn">▲ +134.66p (+2.21%)</div>
+    </div>
+    <div class="kpi k-bl">
+      <div class="kl">코스닥 종가</div>
+      <div class="kv" style="color:var(--blue);">1,162</div>
+      <div class="kn">▲ +10.54p (+0.91%)</div>
+    </div>
+    <div class="kpi k-pu">
+      <div class="kl">SK하이닉스</div>
+      <div class="kv pu">115.4만</div>
+      <div class="kn">이틀 연속 사상 최고가 ★</div>
+    </div>
+    <div class="kpi k-gd">
+      <div class="kl">삼성전자</div>
+      <div class="kv gd">21.75만</div>
+      <div class="kn">전고점 21.8만까지 -500원</div>
+    </div>
+    <div class="kpi k-or">
+      <div class="kl">코스피 시총</div>
+      <div class="kv" style="color:var(--orange);">5,100조</div>
+      <div class="kn">전쟁 前 수준 완전 회복</div>
+    </div>
+    <div class="kpi k-rd">
+      <div class="kl">전고점 잔여</div>
+      <div class="kv r">81p</div>
+      <div class="kn">종가 기준 6,307까지</div>
+    </div>
+  </div>
+
+  <div class="al al-gn">
+    <strong>📌 오늘의 핵심:</strong> TSMC 컨퍼런스콜 실적 서프라이즈가 오후 장 상승 촉매로 작용했습니다. 외국인이 오전 순매도에서 <strong>오후 4,643억 원 순매수</strong>로 전환하며 6,200 돌파를 이끌었습니다. 코스피가 6,200을 종가 기준으로 넘은 것은 2월 27일 이후 <strong>33거래일 만</strong>입니다.
+  </div>
+</div>
+
+<!-- ② 타임라인 -->
+<div class="sec">
+  <div class="sh"><span class="sn">02</span><span class="st">오늘 시장 흐름 타임라인</span></div>
+
+  <div class="tl">
+    <div class="tl-it hi">
+      <div class="tl-time">오전 9:00 — 개장</div>
+      <div class="tl-title">코스피 6,149 출발 (+0.95%) · 반도체 숨고르기</div>
+      <div class="tl-body">미·이란 종전 기대 + 나스닥 신고가 효과로 갭 상승 출발. 그러나 ASML 2Q 가이던스가 기대 수준에 그쳐 <strong>삼성전자(+0.71%), SK하이닉스(+0.70%)</strong> 소폭 상승에 그침. 반면 현대차(+5.51%)·기아(+3.30%)·두산에너빌리티(+4.22%) 강세.</div>
+    </div>
+    <div class="tl-it ev">
+      <div class="tl-time">오후 1:00 — 핵심 이벤트</div>
+      <div class="tl-title">TSMC 1Q26 컨퍼런스콜 — 실적 서프라이즈 전해져</div>
+      <div class="tl-body">GPM 64%, OPM 55% 공식 확인. 2분기 매출 가이던스 상향 기대 + CAPEX $52~56B 유지 확인. <strong>반도체 소부장 피에스케이홀딩스·티씨케이 강세폭 확대.</strong></div>
+    </div>
+    <div class="tl-it warn">
+      <div class="tl-time">오후 — 외국인 방향 전환</div>
+      <div class="tl-title">외국인 오전 순매도 → 오후 4,643억 순매수 전환</div>
+      <div class="tl-body">오후 들어 외국인 매수세 유입으로 지수 가파른 상승. <strong>삼성전자 3.08%, SK하이닉스 1.67%, SK스퀘어 3.76%</strong>로 상승폭 확대. 자동차·방산·금융주로 순환매 확산.</div>
+    </div>
+    <div class="tl-it hi">
+      <div class="tl-time">오후 3:30 — 마감</div>
+      <div class="tl-title">코스피 6,226.05 (+2.21%) · 코스닥 1,162.97 (+0.91%) 마감</div>
+      <div class="tl-body">SK하이닉스 <strong>사상 최고가 경신(115만 4,000원)</strong>. 삼성전자 500원 아쉬움. 두산에너빌리티 +6.33% 등 방산·에너지 강세. 코스닥 상한가 18개(양자컴퓨터 2종목 이틀 연속).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 주요 종목 등락 -->
+<div class="sec">
+  <div class="sh"><span class="sn">03</span><span class="st">오늘 주요 종목 등락 — 승자와 패자</span></div>
+
+  <p style="font-size:11.5px;color:var(--txt2);margin-bottom:12px;">▶ 시가총액 상위 주요 종목 마감 현황</p>
+  <div class="sc-grid">
+    <div class="sc">
+      <div class="sc-name">두산에너빌리티</div>
+      <div class="sc-code">034020</div>
+      <div class="sc-pct g">+6.33%</div>
+      <div class="sc-price">방산·에너지</div>
+      <div class="sc-tag tag-gn">오늘의 MVP</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">현대차</div>
+      <div class="sc-code">005380</div>
+      <div class="sc-pct g">+5.12%</div>
+      <div class="sc-price">현대위아 방산 매각 기대</div>
+      <div class="sc-tag tag-gn">자동차 대장</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">기아</div>
+      <div class="sc-code">000270</div>
+      <div class="sc-pct g">+4.22%</div>
+      <div class="sc-price">그룹 전반 순환매</div>
+      <div class="sc-tag tag-gn">자동차</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">한화오션</div>
+      <div class="sc-code">042660</div>
+      <div class="sc-pct g">+4.85%</div>
+      <div class="sc-price">방산·조선</div>
+      <div class="sc-tag tag-gn">방산</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">HD현대중공업</div>
+      <div class="sc-code">329180</div>
+      <div class="sc-pct g">+4.00%</div>
+      <div class="sc-price">조선·방산</div>
+      <div class="sc-tag tag-bl">방산·조선</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">SK스퀘어</div>
+      <div class="sc-code">402340</div>
+      <div class="sc-pct g">+3.76%</div>
+      <div class="sc-price">SK하이닉스 지주</div>
+      <div class="sc-tag tag-gn">반도체 연동</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">삼성전자</div>
+      <div class="sc-code">005930</div>
+      <div class="sc-pct g">+3.08%</div>
+      <div class="sc-price">21만 7,500원 — 500원 아쉬움</div>
+      <div class="sc-tag tag-gd">전고점 -500원</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">SK이노베이션</div>
+      <div class="sc-code">096770</div>
+      <div class="sc-pct g">+4.03%</div>
+      <div class="sc-price">에너지 전환</div>
+      <div class="sc-tag tag-gn">에너지</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">KB금융</div>
+      <div class="sc-code">105560</div>
+      <div class="sc-pct g">+2.59%</div>
+      <div class="sc-price">밸류업 수혜</div>
+      <div class="sc-tag tag-bl">금융</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">SK하이닉스</div>
+      <div class="sc-code">000660</div>
+      <div class="sc-pct pu">+1.67%</div>
+      <div class="sc-price">115만 4,000원</div>
+      <div class="sc-tag tag-pu">★사상최고가</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">LG에너지솔루션</div>
+      <div class="sc-code">373220</div>
+      <div class="sc-pct g">+1.96%</div>
+      <div class="sc-price">배터리</div>
+      <div class="sc-tag tag-bl">배터리</div>
+    </div>
+    <div class="sc">
+      <div class="sc-name">현대모비스</div>
+      <div class="sc-code">012330</div>
+      <div class="sc-pct g">+2.65%</div>
+      <div class="sc-price">자율주행 부품</div>
+      <div class="sc-tag tag-gn">자동차 부품</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 업종별 등락 바 차트 -->
+  <p style="font-size:11.5px;color:var(--txt2);margin-bottom:12px;">▶ 업종별 등락 비교 (코스피 기준)</p>
+  <div class="bc">
+    <div class="bc-row">
+      <span class="bc-lbl">종이·목재</span>
+      <div class="bc-track"><div class="bc-fill" style="width:76%;background:#4ade80;">+4%↑</div></div>
+      <span class="bc-val g">+4%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">IT서비스</span>
+      <div class="bc-track"><div class="bc-fill" style="width:72%;background:#4ade80;">+3%+</div></div>
+      <span class="bc-val g">+3%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">운송장비·부품</span>
+      <div class="bc-track"><div class="bc-fill" style="width:68%;background:#4ade80;">현대차·기아·방산</div></div>
+      <span class="bc-val g">+3%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">기계·장비</span>
+      <div class="bc-track"><div class="bc-fill" style="width:65%;background:#4ade80;">+3%+</div></div>
+      <span class="bc-val g">+3%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">전기·전자(반도체)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:56%;background:#38bdf8;">삼성전자·SK하이닉스</div></div>
+      <span class="bc-val" style="color:var(--blue);">+2%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">금융</span>
+      <div class="bc-track"><div class="bc-fill" style="width:48%;background:#38bdf8;">밸류업 수혜</div></div>
+      <span class="bc-val" style="color:var(--blue);">+2%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">건설</span>
+      <div class="bc-track"><div class="bc-fill" style="width:12%;background:#f87171;">차익실현</div></div>
+      <span class="bc-val r">약세</span>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 수급 분석 -->
+<div class="sec">
+  <div class="sh"><span class="sn">04</span><span class="st">수급 분석 — 외국인이 오후에 180도 바뀐 이유</span></div>
+
+  <div class="supply-grid">
+    <div class="sp-box" style="border-color:rgba(74,222,128,.2);">
+      <div class="sp-who">기관</div>
+      <div class="sp-val g">+1조975억</div>
+      <div class="sp-note">지수 상승 주도</div>
+    </div>
+    <div class="sp-box" style="border-color:rgba(56,189,248,.2);">
+      <div class="sp-who">외국인 (오후)</div>
+      <div class="sp-val" style="color:var(--blue);">+4,643억</div>
+      <div class="sp-note">오전 매도→오후 전환</div>
+    </div>
+    <div class="sp-box" style="border-color:rgba(248,113,113,.2);">
+      <div class="sp-who">개인</div>
+      <div class="sp-val r">-1조8,006억</div>
+      <div class="sp-note">차익 실현</div>
+    </div>
+  </div>
+
+  <div class="al al-bl">
+    <strong>🔑 수급 핵심:</strong> 외국인이 오전에는 매도하다가 <strong>TSMC 서프라이즈 확인 이후 오후에 순매수로 전환</strong>한 것이 오늘 장의 결정적 흐름이었습니다. 4월 누적 외국인 순매수는 <strong>6조 3,884억 원</strong>에 달합니다.
+  </div>
+
+  <hr>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>외국인 순매수</th><th>기관 순매수</th><th>비고</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="w">삼성전자</td><td class="g">↑ 상위</td><td class="g">↑ 상위</td><td class="t2">외기 쌍끌이</td></tr>
+        <tr><td class="w">두산에너빌리티</td><td class="g">↑ 상위</td><td class="g">↑ 상위</td><td class="t2">방산·에너지 강세</td></tr>
+        <tr><td class="w">삼성전자우</td><td class="g">↑ 상위</td><td class="t2">—</td><td class="t2">우선주 동반</td></tr>
+        <tr><td class="w">현대차</td><td class="g">↑ 상위</td><td class="g">↑ 상위</td><td class="t2">그룹주 랠리</td></tr>
+        <tr><td class="w">한화오션</td><td class="g">↑ 상위</td><td class="g">↑ 상위</td><td class="t2">방산 동반</td></tr>
+        <tr><td>SK하이닉스</td><td class="r">↓ 순매도</td><td class="g">↑ 상위</td><td class="t2">외인 차익실현</td></tr>
+        <tr><td>대우건설</td><td class="r">↓ 순매도</td><td class="r">↓ 순매도</td><td class="t2">건설 차익실현</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ⑤ TSMC → 한국 연동 -->
+<div class="sec">
+  <div class="sh"><span class="sn">05</span><span class="st">TSMC 실적 → 한국 증시 연동 구조</span></div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>TSMC 지표</th><th>수치</th><th>YoY</th><th>한국 수혜 채널</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="w">1Q26 매출</td><td class="g">$35.7B</td><td class="g">+35.1%</td><td class="t2">AI 칩 수요 재확인 → HBM 수요 지속</td></tr>
+        <tr><td class="w">매출총이익률</td><td class="g">64%</td><td class="g">+11pp</td><td class="t2">N2 공정 믹스 개선 → 단가 상승</td></tr>
+        <tr><td class="w">영업이익률</td><td class="g">55%</td><td class="g">+12pp</td><td class="t2">첨단 공정 수익성 → 소부장 발주 확대</td></tr>
+        <tr><td class="w">2026 CAPEX</td><td class="g">$52~56B</td><td class="g">+27~37%</td><td class="t2">전공정 70% → 한국 장비·소재 수주</td></tr>
+        <tr><td class="w">3월 매출 YoY</td><td class="g">+45.2%</td><td class="g">역대 최강 3월</td><td class="t2">N2 양산 본격화 → 계절성 소멸</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flow">
+    <div class="fb hl-b">TSMC<br>$35.7B 서프라이즈</div>
+    <span class="arrow">→</span>
+    <div class="fb hl-b">AI 칩 수요<br>공급 초과 재확인</div>
+    <span class="arrow">→</span>
+    <div class="fb hl-g">HBM·메모리<br>수요 구조 지속</div>
+    <span class="arrow">→</span>
+    <div class="fb hl-g">SK하이닉스<br>삼성전자 ↑</div>
+    <span class="arrow">→</span>
+    <div class="fb hl-gd">소부장<br>발주 확대</div>
+  </div>
+</div>
+
+<!-- ⑥ 코스닥 특징 -->
+<div class="sec">
+  <div class="sh"><span class="sn">06</span><span class="st">코스닥 특징 — 상한가 18개, 양자컴퓨터 이틀 연속</span></div>
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr));">
+    <div class="kpi k-pu">
+      <div class="kl">코스닥 종가</div>
+      <div class="kv pu">1,162.97</div>
+      <div class="kn">▲ +0.91%</div>
+    </div>
+    <div class="kpi k-gd">
+      <div class="kl">상한가 종목</div>
+      <div class="kv gd">18개</div>
+      <div class="kn">활발한 테마 장세</div>
+    </div>
+    <div class="kpi k-gn">
+      <div class="kl">양자컴퓨터 2종</div>
+      <div class="kv g">이틀 연속</div>
+      <div class="kn">케이씨에스·라온시큐어</div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>테마</th><th>대표 종목</th><th>특징</th><th>배경</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="w">양자컴퓨터</td><td class="gd">케이씨에스·라온시큐어</td><td class="g">이틀 연속 상한가</td><td class="t2">엔비디아 훈풍 확산</td></tr>
+        <tr><td class="w">광통신·통신장비</td><td class="g">우리넷·티엠씨·라이콤</td><td class="g">연일 급등</td><td class="t2">AI 인프라 병목 → 光전송 수요</td></tr>
+        <tr><td class="w">반도체 소부장</td><td class="g">피에스케이홀딩스·티씨케이</td><td class="g">강세폭 확대</td><td class="t2">TSMC CoWoS 확대 수혜</td></tr>
+        <tr><td>건설</td><td class="t2">대우건설·GS건설</td><td class="r">차익실현</td><td class="t2">지난주 40%+ 급등 후 조정</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="al al-gd">
+    <strong>💡 코스닥 포인트:</strong> IT서비스에서 <strong>국민성장펀드 2차 프로젝트 첨단산업 50조 원 투입 기대감</strong>이 상방 압력으로 작용하며 삼성SDS, 네이버, 카카오 등이 동반 상승했습니다. 정책 수혜 테마는 아직 끝나지 않았습니다.
+  </div>
+</div>
+
+<!-- ⑦ 전고점 시나리오 -->
+<div class="sec">
+  <div class="sh"><span class="sn">07</span><span class="st">전고점 6,307까지 — 3가지 시나리오</span></div>
+
+  <div class="sc-wrap">
+    <div class="sc-box bear">
+      <div class="sc-lbl">🐻 Bear — 조정</div>
+      <div class="sc-price">6,100~6,150</div>
+      <div class="sc-up">▼ -1~-2%</div>
+      <div class="sc-desc">① SK하이닉스 실적 '셀온뉴스'<br>② 미이란 협상 결렬 재발<br>③ 트럼프 수출 규제 강화<br>④ D램 가격 피크아웃 우려</div>
+    </div>
+    <div class="sc-box base">
+      <div class="sc-lbl">⚖️ Base — 완만 상승</div>
+      <div class="sc-price">6,250~6,307</div>
+      <div class="sc-up">▲ +0.4~+1.3%</div>
+      <div class="sc-desc">① SK하이닉스 4월 23일 실적 컨센 부합<br>② 미국 빅테크 AI CAPEX 유지<br>③ 종전 협상 낙관론 지속<br>④ 외국인 순매수 유지</div>
+    </div>
+    <div class="sc-box bull">
+      <div class="sc-lbl">🐂 Bull — 신고가</div>
+      <div class="sc-price">6,347+</div>
+      <div class="sc-up">▲ +2%+</div>
+      <div class="sc-desc">① SK하이닉스 서프라이즈 (+40조↑)<br>② 미이란 종전 공식 합의<br>③ TSMC 2Q 가이던스 대폭 상향<br>④ 외국인 누적 7조+ 순매수</div>
+    </div>
+  </div>
+
+  <div class="al al-bl">
+    <strong>📌 다음 주 핵심 이벤트:</strong> ① <strong>4월 23일 SK하이닉스 실적 발표</strong> (영업이익 40조원 확인 여부) ② 4월 말 <strong>미국 빅테크 실적 시즌</strong> (MS·구글·아마존·메타 AI CAPEX) ③ <strong>미·이란 협상</strong> 추가 진전 여부. 이 세 가지가 코스피 전고점 돌파의 열쇠입니다.
+  </div>
+</div>
+
+<!-- ⑧ 오늘의 교훈 -->
+<div class="sec">
+  <div class="sh"><span class="sn">08</span><span class="st">오늘 장이 주는 투자 교훈 3가지</span></div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>교훈</th><th>오늘 사례</th><th>적용 전략</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="w">① 오후가 진짜다</td>
+          <td class="t2">오전 반도체 숨고르기 → TSMC 서프라이즈 이후 오후 급등</td>
+          <td class="g">오전 약세에 성급한 매도 금물</td>
+        </tr>
+        <tr>
+          <td class="w">② 외국인 방향이 답이다</td>
+          <td class="t2">외국인 오후 순매수 전환이 6,200 돌파 결정타</td>
+          <td class="g">외국인 수급 오후 흐름 실시간 확인</td>
+        </tr>
+        <tr>
+          <td class="w">③ 초과수익은 순환매에서</td>
+          <td class="t2">반도체 +1~3% vs 두산에너빌리티 +6%, 현대차 +5%</td>
+          <td class="gd">지수 지탱 업종 + 모멘텀 업종 분리 전략</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="disc">
+    ⚠️ 본 자료는 공개 데이터를 기반으로 한 장 마감 시황 분석입니다. 투자 권유가 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 주식 투자는 원금 손실이 발생할 수 있습니다.<br>
+    <strong>Sources:</strong> 뉴스핌 · 서울경제 · 이데일리 · 이투데이 · TSMC IR | 2026.04.16 장 마감 확정치 기준
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<div style="background:#03071a;color:rgba(255,255,255,.25);text-align:center;padding:13px 20px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">
+  장 마감 시황 분석 | 코스피 6,226 · 코스닥 1,162 | 2026.04.16 | 정보 제공용 — 투자 권유 아님
+</div>
+
+</body>
+</html>
