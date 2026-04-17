@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전략 정보 보고서 — 스타링크 장애와 펜타곤의 스페이스X 의존 문제</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+  --navy:  #0d1f3c;
+  --navy2: #142848;
+  --blue:  #1a56a0;
+  --sky:   #2d7dd2;
+  --gold:  #c49a2e;
+  --gold2: #e8b84b;
+  --red:   #b91c1c;
+  --amber: #b45309;
+  --green: #166534;
+  --bg:    #f7f8fc;
+  --bg2:   #eef1f8;
+  --card:  #ffffff;
+  --bdr:   #d0d9e8;
+  --txt:   #0f172a;
+  --txt2:  #374151;
+  --txt3:  #6b7280;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--txt); font-family: 'Noto Sans KR', sans-serif; font-size: 13.5px; line-height: 1.75; }
+
+/* ── 표지 ── */
+.cover {
+  background: linear-gradient(160deg, #050f22 0%, #0d1f3c 45%, #0a1730 100%);
+  color: #fff;
+  padding: 52px 48px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  right: -80px; top: -80px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,154,46,.07), transparent 65%);
+  pointer-events: none;
+}
+.cover::before {
+  content: '기밀';
+  position: absolute;
+  bottom: -20px; left: -10px;
+  font-size: 120px;
+  font-weight: 900;
+  font-family: 'Noto Serif KR', serif;
+  color: rgba(255,255,255,.025);
+  pointer-events: none;
+  letter-spacing: 8px;
+}
+.cover-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(196,154,46,.15);
+  border: 1px solid rgba(196,154,46,.4);
+  color: var(--gold2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 2px;
+  margin-bottom: 18px;
+}
+.cover-agency {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+.cover h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff 40%, var(--gold2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cover-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,.6);
+  font-style: italic;
+  margin-bottom: 28px;
+}
+.cover-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.cm-label { font-size: 9px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: 3px; }
+.cm-val { font-size: 13px; color: rgba(255,255,255,.85); font-weight: 600; }
+
+/* ── 등급 띠 ── */
+.classif {
+  background: var(--red);
+  color: #fff;
+  text-align: center;
+  padding: 7px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* ── 목차 ── */
+.toc {
+  background: var(--navy2);
+  color: #fff;
+  padding: 22px 48px 18px;
+  border-bottom: 3px solid var(--gold);
+}
+.toc-title {
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 10px;
+}
+.toc-items { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none; }
+.toc-items li { font-size: 12.5px; color: rgba(255,255,255,.65); }
+.toc-items li span { color: var(--gold2); font-family: 'JetBrains Mono', monospace; font-size: 10px; margin-right: 6px; }
+
+/* ── 레이아웃 ── */
+.page { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+.sec { padding: 38px 0 30px; border-bottom: 1px solid var(--bdr); }
+.sec:last-child { border: none; }
+.sec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: #ddeafc;
+  border: 1px solid #aac4f0;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+.sec-badge.red   { color: var(--red);   background: #fde8e8; border-color: #f5b3af; }
+.sec-badge.gold  { color: var(--amber); background: #fef3c7; border-color: #fcd34d; }
+.sec-badge.green { color: var(--green); background: #dcfce7; border-color: #86efac; }
+
+.sec h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.sec-sub { font-size: 12px; color: var(--txt3); margin-bottom: 22px; }
+
+/* ── 핵심 요약 박스 ── */
+.exec-box {
+  background: var(--navy);
+  color: #fff;
+  border-left: 5px solid var(--gold);
+  padding: 24px 28px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 24px;
+}
+.exec-box p { font-size: 13.5px; line-height: 1.85; color: rgba(255,255,255,.88); }
+.exec-box strong { color: #fff; }
+.exec-label { font-size: 9px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; color: var(--gold2); margin-bottom: 10px; display: block; }
+
+/* ── 사건 박스 ── */
+.incident {
+  background: #fef9ec;
+  border: 1px solid #f5d87a;
+  border-left: 4px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 22px;
+  margin: 16px 0;
+}
+.incident-hdr { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.incident p { font-size: 13px; color: var(--txt2); line-height: 1.75; }
+.incident p strong { color: var(--txt); }
+
+/* ── 알림 ── */
+.alert { border-radius: 6px; padding: 14px 18px; margin: 16px 0; font-size: 13px; line-height: 1.85; }
+.alert-red   { background: #fef2f2; border-left: 4px solid var(--red);   color: #7f1d1d; }
+.alert-red strong   { color: var(--red); }
+.alert-blue  { background: #eff6ff; border-left: 4px solid var(--sky);   color: #1e3a5f; }
+.alert-blue strong  { color: var(--blue); }
+.alert-gold  { background: #fefce8; border-left: 4px solid var(--gold);  color: #713f12; }
+.alert-gold strong  { color: var(--amber); }
+.alert-green { background: #f0fdf4; border-left: 4px solid #16a34a;      color: #14532d; }
+.alert-green strong { color: var(--green); }
+
+/* ── KPI 그리드 ── */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 18px 0; }
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: 7px;
+  padding: 16px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.kpi.kv-navy::before  { background: var(--navy); }
+.kpi.kv-red::before   { background: var(--red); }
+.kpi.kv-gold::before  { background: var(--gold); }
+.kpi.kv-blue::before  { background: var(--sky); }
+.kpi.kv-green::before { background: var(--green); }
+.kpi-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt3); margin-bottom: 7px; }
+.kpi-val { font-family: 'Noto Serif KR', serif; font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 4px; }
+.kpi-val.r { color: var(--red); }
+.kpi-val.g { color: var(--green); }
+.kpi-val.gd { color: var(--amber); }
+.kpi-note { font-size: 11.5px; color: var(--txt3); }
+
+/* ── 표 ── */
+.tw { overflow-x: auto; margin: 16px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  background: var(--navy);
+  color: #fff;
+  padding: 9px 14px;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+thead th:not(:first-child) { text-align: center; }
+tbody tr { border-bottom: 1px solid var(--bdr); }
+tbody tr:nth-child(even) { background: var(--bg2); }
+tbody tr:hover { background: #ddeafc; }
+td { padding: 9px 14px; color: var(--txt); }
+td:not(:first-child) { text-align: center; font-size: 12.5px; }
+td.bold { font-weight: 700; color: var(--navy); }
+td.r  { color: var(--red);   font-weight: 600; }
+td.g  { color: var(--green); font-weight: 600; }
+td.gd { color: var(--amber); font-weight: 600; }
+td.gr { color: var(--txt3); }
+tfoot td { background: var(--bg2); font-weight: 700; border-top: 2px solid var(--navy); color: var(--navy); font-size: 12.5px; }
+
+/* ── 위험 매트릭스 ── */
+.risk-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0; }
+.rm-box { border-radius: 8px; padding: 18px 18px 14px; border: 1px solid; }
+.rm-box.critical { background: #fef2f2; border-color: #fca5a5; }
+.rm-box.high     { background: #fff7ed; border-color: #fed7aa; }
+.rm-box.medium   { background: #fefce8; border-color: #fef08a; }
+.rm-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+.rm-box.critical .rm-lbl { color: var(--red); }
+.rm-box.high     .rm-lbl { color: var(--amber); }
+.rm-box.medium   .rm-lbl { color: #854d0e; }
+.rm-title { font-weight: 700; font-size: 13.5px; color: var(--navy); margin-bottom: 6px; }
+.rm-body  { font-size: 12.5px; color: var(--txt2); line-height: 1.7; }
+
+/* ── 타임라인 ── */
+.tl { position: relative; padding-left: 28px; margin: 18px 0; }
+.tl::before { content: ''; position: absolute; left: 9px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--sky), var(--navy), rgba(0,0,0,.05)); }
+.tl-item { position: relative; margin-bottom: 22px; }
+.tl-item::before { content: ''; position: absolute; left: -23px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--sky); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--sky); }
+.tl-item.red-dot::before  { background: var(--red);  box-shadow: 0 0 0 2px var(--red); }
+.tl-item.gold-dot::before { background: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+.tl-date  { font-size: 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; color: var(--txt3); margin-bottom: 3px; }
+.tl-title { font-weight: 700; font-size: 13.5px; color: var(--navy); margin-bottom: 4px; }
+.tl-body  { font-size: 12.5px; color: var(--txt2); line-height: 1.75; }
+.tl-body strong { color: var(--txt); }
+
+/* ── 비교 박스 ── */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+.comp-box { background: var(--card); border: 1px solid var(--bdr); border-radius: 8px; padding: 18px 20px; }
+.comp-box h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.comp-box h4 .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.comp-row { display: flex; justify-content: space-between; font-size: 12.5px; padding: 5px 0; border-bottom: 1px solid var(--bg2); }
+.comp-row:last-child { border: none; }
+.comp-row .lbl { color: var(--txt3); }
+.comp-row .val { font-weight: 600; }
+
+/* ── 최종 평가 ── */
+.verdict {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px 34px;
+  margin: 22px 0;
+  position: relative;
+  overflow: hidden;
+}
+.verdict::before { content: '"'; position: absolute; top: -10px; left: 18px; font-size: 110px; font-family: 'Noto Serif KR', serif; color: rgba(255,255,255,.04); }
+.verdict-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; color: var(--gold2); margin-bottom: 12px; }
+.verdict-text { font-family: 'Noto Serif KR', serif; font-size: 14.5px; line-height: 1.95; color: rgba(255,255,255,.88); }
+.verdict-text strong { color: #fff; }
+.verdict-sig { margin-top: 16px; font-size: 10.5px; color: rgba(255,255,255,.35); font-family: 'JetBrains Mono', monospace; }
+
+/* ── 권고사항 ── */
+.rec-list { list-style: none; margin: 14px 0; }
+.rec-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--bdr); font-size: 13px; }
+.rec-item:last-child { border: none; }
+.rec-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #fff; background: var(--navy); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.rec-title { font-weight: 700; color: var(--navy); margin-bottom: 3px; }
+.rec-body  { color: var(--txt2); font-size: 12.5px; line-height: 1.7; }
+.rec-priority { font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding: 2px 7px; border-radius: 2px; margin-left: auto; flex-shrink: 0; align-self: flex-start; margin-top: 2px; }
+.rp-high { background: #fde8e8; color: var(--red);   border: 1px solid #fca5a5; }
+.rp-med  { background: #fff7ed; color: var(--amber); border: 1px solid #fed7aa; }
+.rp-low  { background: #f0fdf4; color: var(--green); border: 1px solid #86efac; }
+
+/* ── 막대 차트 ── */
+.bar-wrap { margin: 16px 0; }
+.bar-row  { margin-bottom: 10px; }
+.bar-hdr  { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.bar-lbl  { font-size: 12.5px; color: var(--txt2); }
+.bar-val  { font-size: 12px; font-weight: 700; }
+.bar-track { height: 20px; background: var(--bg2); border-radius: 3px; overflow: hidden; border: 1px solid var(--bdr); }
+.bar-fill  { height: 100%; border-radius: 2px; display: flex; align-items: center; padding-left: 8px; font-size: 9.5px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #fff; }
+
+hr { border: none; border-top: 1px solid var(--bdr); margin: 20px 0; }
+
+.disc { background: var(--bg2); border: 1px solid var(--bdr); border-radius: 6px; padding: 12px 16px; margin-top: 24px; font-size: 11.5px; color: var(--txt3); line-height: 1.8; }
+.disc strong { color: var(--red); }
+
+@media(max-width: 640px) {
+  .cover { padding: 34px 20px 28px; }
+  .risk-matrix { grid-template-columns: 1fr; }
+  .comp-grid { grid-template-columns: 1fr; }
+  .page { padding: 0 14px; }
+  .sec { padding: 26px 0 20px; }
+  .toc { padding: 18px 20px 14px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 등급 -->
+<div class="classif">공개용 — 비밀해제 // 전략 정보 보고서</div>
+
+<!-- 표지 -->
+<div class="cover">
+  <div class="cover-agency">전략기술·방위 분석팀 (Strategic Technology & Defense Analysis Unit)</div>
+  <div class="cover-flag">정보 분석 보고서</div>
+  <h1>스타링크 장애가 드론 테스트를 중단시켰다<br>— 펜타곤의 스페이스X 의존 실태 폭로</h1>
+  <p class="cover-sub">드론 테스트 중단 사건을 통해 드러난 국가 안보 인프라의 단일 공급업체 취약성</p>
+  <div class="cover-meta-row">
+    <div class="cm-item"><div class="cm-label">보고서 일자</div><div class="cm-val">2026년 4월 16일</div></div>
+    <div class="cm-item"><div class="cm-label">원 출처</div><div class="cm-val">Reuters / News.az</div></div>
+    <div class="cm-item"><div class="cm-label">보안 등급</div><div class="cm-val">비밀해제</div></div>
+    <div class="cm-item"><div class="cm-label">위험 수준</div><div class="cm-val" style="color:#f87171;">위급 (CRITICAL)</div></div>
+    <div class="cm-item"><div class="cm-label">분야</div><div class="cm-val">국방 · 우주 · 기술정책</div></div>
+    <div class="cm-item"><div class="cm-label">보고서 유형</div><div class="cm-val">전략 분석</div></div>
+  </div>
+</div>
+
+<!-- 목차 -->
+<div class="toc">
+  <div class="toc-title">목차 (Table of Contents)</div>
+  <ul class="toc-items">
+    <li><span>01</span>최고경영진 요약</li>
+    <li><span>02</span>사건 상세 내용</li>
+    <li><span>03</span>펜타곤의 스페이스X 의존 규모</li>
+    <li><span>04</span>전략적 위험 평가</li>
+    <li><span>05</span>"머스크 스택" 문제</li>
+    <li><span>06</span>경쟁 환경 분석</li>
+    <li><span>07</span>주요 사건 타임라인</li>
+    <li><span>08</span>정책 권고사항</li>
+    <li><span>09</span>분석가 최종 평가</li>
+  </ul>
+</div>
+
+<div class="page">
+
+<!-- 01 최고경영진 요약 -->
+<div class="sec">
+  <span class="sec-badge red">01 · 최고경영진 요약</span>
+  <h2>대낮에 숨어있던 단일 실패 지점</h2>
+  <p class="sec-sub">로이터 탐사 보도의 핵심 발견 — 2026년 4월 16일 공개</p>
+
+  <div class="exec-box">
+    <span class="exec-label">분석가 종합 평가</span>
+    <p>로이터가 검토한 펜타곤 내부 문서에 따르면, <strong>지난해 8월 발생한 스타링크 전지구적 장애</strong>로 인해 <strong>캘리포니아 해안에서 진행 중이던 미 해군의 무인 수상함(USV) 약 24척이 거의 1시간 동안 통신 두절</strong> 상태에 빠졌다. 이것은 고립된 사고가 아니다 — <strong>미군이 임무 핵심 통신 인프라를 단일 민간 업체인 스페이스X에 얼마나 위험할 정도로 구조적으로 의존하고 있는지를 경고하는 신호</strong>다.</p>
+    <br>
+    <p>펜타곤이 공식적으로 "복수의 시스템을 통한 복원력"을 유지한다고 주장하고 있음에도, 내부 문서·계약 데이터·작전 기록이 보여주는 실제 그림은 전혀 다르다. <strong>스페이스X는 현재 증식 저궤도(pLEO) 위성 과업 명령의 97%를 독점</strong>하고 있으며, 2036년까지 국방부 발사 계약 대부분을 보유하고 있다. 그리고 스타링크 위성 네트워크는 미국의 무인 전쟁 독트린을 연결하는 핵심 인프라가 됐다 — 신뢰할 수 있는 대안도 없이.</p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi kv-red">
+      <div class="kpi-lbl">피해 무인함 수</div>
+      <div class="kpi-val r">~24척</div>
+      <div class="kpi-note">테스트 중 통신 두절된 무인 수상함</div>
+    </div>
+    <div class="kpi kv-gold">
+      <div class="kpi-lbl">장애 지속 시간</div>
+      <div class="kpi-val gd">~1시간</div>
+      <div class="kpi-note">캘리포니아 해안 작전 전면 중단</div>
+    </div>
+    <div class="kpi kv-navy">
+      <div class="kpi-lbl">스페이스X pLEO 점유율</div>
+      <div class="kpi-val">97%</div>
+      <div class="kpi-note">130억 달러 프로그램 과업 명령 중</div>
+    </div>
+    <div class="kpi kv-blue">
+      <div class="kpi-lbl">스페이스X pLEO 금액</div>
+      <div class="kpi-val">6.3억 달러</div>
+      <div class="kpi-note">40건의 과업 명령 / 우크라이나 계약만 5.37억</div>
+    </div>
+    <div class="kpi kv-red">
+      <div class="kpi-lbl">발사 계약 기한</div>
+      <div class="kpi-val r">2036년</div>
+      <div class="kpi-note">미 군 발사 계약 대부분 독점 보유</div>
+    </div>
+    <div class="kpi kv-green">
+      <div class="kpi-lbl">전체 pLEO IDIQ 규모</div>
+      <div class="kpi-val g">130억 달러</div>
+      <div class="kpi-note">전체 계약 풀 — 스페이스X 절대 지배</div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 사건 상세 내용 -->
+<div class="sec">
+  <span class="sec-badge gold">02 · 사건 보고</span>
+  <h2>캘리포니아 드론 테스트 중단 — 무슨 일이 있었나</h2>
+  <p class="sec-sub">1차 사건과 펜타곤 내부 문서에 기록된 연관 장애 패턴</p>
+
+  <div class="incident">
+    <div class="incident-hdr">⚠ 1차 사건 — 2025년 8월</div>
+    <p><strong>2025년 8월 캘리포니아 해안</strong>에서 계획된 해군 훈련 도중, 전 세계적인 스타링크 장애로 무인 수상함 약 <strong>24척이 운용 통제관과의 통신이 끊겼다.</strong> 작전은 <strong>거의 1시간</strong> 동안 중단됐다. 미 해군이 수년째 구축하려는 자율 해상 드론 전력의 핵심인 이 함정들이 장애 시간 동안 사실상 무력화됐다. 테스트 당시에는 실제 위협 환경이 없었지만, 실전 전투 상황에서 이 같은 장애가 발생한다면 임무 전체가 와해될 수 있다는 점이 실증됐다.</p>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>반복되는 실패 패턴:</strong> 로이터가 검토한 내부 문서에 따르면, 이것은 단발 사건이 아니었다. 이전 테스트에서도 <strong>간헐적 연결 장애와 다수의 무인 시스템을 동시 운용할 때의 네트워크 처리 한계</strong>가 드러났다. 이는 미국의 대(對)중국 태평양 분쟁 독트린의 핵심인 드론 군집(swarm) 작전 능력이 구조적으로 스타링크에 의존한다는 심각한 우려를 제기한다.
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>내용</th>
+          <th>시사점</th>
+          <th>위험도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">발생 위치</td><td>캘리포니아 해안(태평양)</td><td>대중국 억제 훈련의 핵심 해역</td><td class="r">높음</td></tr>
+        <tr><td class="bold">장애 원인</td><td>전지구적 스타링크 장애(비표적)</td><td>적국이 유사 장애를 악용·복제 가능</td><td class="r">위급</td></tr>
+        <tr><td class="bold">지속 시간</td><td>~1시간 통신 완전 두절</td><td>실전 시 임무 실패·함정 손실 가능</td><td class="r">위급</td></tr>
+        <tr><td class="bold">피해 함정</td><td>~24척(동시 전체)</td><td>분산 이중화 없음 — 한 바구니에 계란 전부</td><td class="r">위급</td></tr>
+        <tr><td class="bold">부차 문제</td><td>다중 시스템 처리 용량 한계</td><td>군집 작전 자체의 근본적 취약성 확인</td><td class="gd">높음</td></tr>
+        <tr><td class="bold">백업 통신</td><td>대체 링크 미작동</td><td>복원력 있는 이중화 프로토콜 부재 확인</td><td class="r">위급</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-gold">
+    <strong>배경 맥락:</strong> 이 보고서는 미군이 이란에 대한 <strong>"에픽 퓨리 작전(Operation Epic Fury)"</strong>의 일환으로 이미 글로벌 자율 정찰정(GARC) 무인 수상함을 실전 투입한 이후 나온 것이다 — 미국 역사상 최초로 무인 수상함이 실제 전투에서 확인된 첫 사례. 스타링크 신뢰성의 실전 비용은 이제 이론적 수준을 벗어났다.
+  </div>
+</div>
+
+<!-- 03 의존도 분석 -->
+<div class="sec">
+  <span class="sec-badge">03 · 의존도 분석</span>
+  <h2>펜타곤의 스페이스X 의존 전체 규모</h2>
+  <p class="sec-sub">계약 데이터, 작전 통합 현황, 영역별 구조적 잠금(Lock-in) 실태</p>
+
+  <div class="bar-wrap">
+    <p style="font-size:12px;color:var(--txt3);margin-bottom:14px;">▶ 주요 국방 위성·우주 프로그램에서 스페이스X의 점유율</p>
+    <div class="bar-row">
+      <div class="bar-hdr"><span class="bar-lbl">pLEO IDIQ 과업 명령 점유율 (130억 달러 프로그램)</span><span class="bar-val" style="color:var(--red);">97%</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:97%;background:var(--red);">40건의 과업 명령 — 6.31억 달러</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-hdr"><span class="bar-lbl">미 군 발사 계약 점유율 (2036년까지)</span><span class="bar-val" style="color:var(--navy);">압도적 다수</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--navy);">약 60억 달러 규모 계약</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-hdr"><span class="bar-lbl">저궤도(LEO) 운용 위성 수 (전 세계 기준)</span><span class="bar-val" style="color:var(--sky);">7,000기 이상</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:75%;background:var(--sky);">스타링크 군집이 전 세계 저궤도 지배</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-hdr"><span class="bar-lbl">우크라이나 군 통신에서 스타링크 비중</span><span class="bar-val" style="color:var(--amber);">핵심 기반</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--amber);">5.37억 달러 계약 (단독 공급)</div></div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>분야</th>
+          <th>스페이스X 역할</th>
+          <th>대안 공급자</th>
+          <th>대체 가능성</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">드론·무인함(USV) 통신</td><td>1차 통신 계층</td><td>실전 규모 대안 없음</td><td class="r">없음</td></tr>
+        <tr><td class="bold">위성 발사</td><td>2036년까지 지배적 공급자</td><td>ULA, 아리안스페이스(용량 제한)</td><td class="gd">부분적</td></tr>
+        <tr><td class="bold">정보·감시·정찰(ISR)</td><td>NRO 18억 달러 군집 계약</td><td>기밀 분류 대안</td><td class="gd">부분적</td></tr>
+        <tr><td class="bold">우크라이나 전장</td><td>유일한 전술 통신 기반</td><td>확인된 대안 없음</td><td class="r">없음</td></tr>
+        <tr><td class="bold">AI 통합(xAI)</td><td>성장하는 "머스크 스택" 통합</td><td>팔란티어 등 신흥 업체</td><td class="gd">잠재적 가능</td></tr>
+        <tr><td class="bold">미사일 추적</td><td>저궤도 추적 통합</td><td>SBIRS, 구형 시스템</td><td class="gd">제한적</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td>종합 평가</td><td colspan="3">스페이스X는 다수의 핵심 국방 기능에서 구조적 잠금(lock-in)을 달성했으며, 즉각 투입 가능한 대체재가 없는 상태임</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- 04 위험 평가 -->
+<div class="sec">
+  <span class="sec-badge red">04 · 전략적 위험 평가</span>
+  <h2>전략 위험 매트릭스 — 3가지 핵심 위험 차원</h2>
+  <p class="sec-sub">단일 공급업체 의존이 국가 안보 규모에서 만들어내는 위협 경로</p>
+
+  <div class="risk-matrix">
+    <div class="rm-box critical">
+      <div class="rm-lbl">🔴 위급 위험</div>
+      <div class="rm-title">적국의 취약점 악용</div>
+      <div class="rm-body">정교한 적국(중국, 러시아, 이란)이 캘리포니아 사건을 통해 스타링크 장애 패턴을 파악할 수 있다. 스페이스X 지상 기지에 대한 표적 전파 방해(jamming), 스푸핑, 사이버 공격은 실전 중 유사 장애를 재현하거나 더 심각한 결과를 초래할 수 있다 — 백업 없이 수십 대의 무인 플랫폼이 동시에 시야에서 사라질 수 있다.</div>
+    </div>
+    <div class="rm-box critical">
+      <div class="rm-lbl">🔴 위급 위험</div>
+      <div class="rm-title">CEO 거버넌스 레버리지</div>
+      <div class="rm-body">스페이스X와 스타링크의 CEO 일론 머스크는 이미 서비스를 일방적으로 제한한 전례가 있다 — 가장 대표적으로 크림반도 인근 우크라이나 드론 공격에 스타링크 범위를 확장하기를 거부한 사례. 펜타곤은 유사한 결정이 미군 작전에 영향을 미치는 것을 막을 계약상 권한을 갖추지 못했다. <em>"고위 국방 관리들은 민간 기업에 레버리지를 갖지 못하는 상황이 낯설었다."</em></div>
+    </div>
+    <div class="rm-box high">
+      <div class="rm-lbl">🟠 높은 위험</div>
+      <div class="rm-title">군집 작전의 연쇄 실패</div>
+      <div class="rm-body">내부 문서에 따르면 스타링크는 다중 시스템 부하 상황에서 대역폭에 어려움을 겪는다. 태평양 분쟁 독트린은 수백 대의 USV와 무인항공기(UAV)가 동시 운용되는 드론 군집 작전에 의존한다. 네트워크 포화 사태는 최악의 순간 전체 자율 전투 체계를 붕괴시킬 수 있다.</div>
+    </div>
+    <div class="rm-box critical">
+      <div class="rm-lbl">🔴 위급 위험</div>
+      <div class="rm-title">인프라 단일 실패 지점</div>
+      <div class="rm-body">"머스크 스택" — 스페이스X(발사), 스타링크(통신), xAI(분석 AI) — 은 단일 벤더의 수직 통합형 슈퍼 원청업체를 만들어냈다. 한 기업이 발사대, 위성, 통신 링크, 분석 엔진을 모두 통제한다. 20세기 국방 조달 독트린은 이 수준의 집중이 단일 민간 기업에서 발생하는 상황을 예상하지 못했다.</div>
+    </div>
+    <div class="rm-box high">
+      <div class="rm-lbl">🟠 높은 위험</div>
+      <div class="rm-title">정치적 결탁 위험</div>
+      <div class="rm-body">머스크의 이중 역할 — 트럼프 행정부 DOGE 자문과 펜타곤 최대 상업 공급업체 CEO — 은 전례 없는 이해충돌을 만들어낸다. 민주당 상원의원들은 공식적으로 "머스크의 행위는 국가 안보에 심각한 위험을 초래할 수 있다"는 우려를 제기했다. 그러나 펜타곤은 이에 대해 의미 있는 대응을 거부했다.</div>
+    </div>
+    <div class="rm-box medium">
+      <div class="rm-lbl">🟡 중간 위험</div>
+      <div class="rm-title">계약 레버리지 역전</div>
+      <div class="rm-body">역사적으로 국방부가 가격과 서비스 수준에서 계약업체에 대한 레버리지를 보유해왔다. 그러나 스페이스X와의 관계에서 이 구조는 역전됐다. 군이 스페이스X를 필요로 하는 정도가 스페이스X가 군을 필요로 하는 정도를 크게 초과한다. 이 구조적 변화가 정부의 행동 준수 확보 수단을 무력화한다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 머스크 스택 -->
+<div class="sec">
+  <span class="sec-badge red">05 · "머스크 스택" 문제</span>
+  <h2>전략적 취약성으로서의 수직 통합</h2>
+  <p class="sec-sub">한 기업이 미국 국방을 위한 발사·연결성·정보·AI를 모두 장악하게 된 경위</p>
+
+  <div class="alert alert-red">
+    <strong>분석가 핵심 발견:</strong> 20세기에는 비행기를 만든 회사가 연료, 활주로, 조종사의 지도까지 소유하지 않았다. 오늘날 단일 민간 기업 — "머스크 스택" — 이 발사대(팰컨9/스타십), 위성군(스타링크/스타쉴드), 그리고 갈수록 분석 엔진(xAI)까지 통제하고 있다. 국방부는 사실상 <strong>정보 우위 유지를 위한 입장권으로 벤더 잠금(vendor lock-in)을 수용</strong>했다. 이것은 명확한 출구 전략이 없는 파우스트적 거래다.
+  </div>
+
+  <div class="comp-grid">
+    <div class="comp-box">
+      <h4><span class="dot" style="background:var(--sky);"></span>펜타곤이 얻은 것</h4>
+      <div class="comp-row"><span class="lbl">전 세계 커버리지</span><span class="val g">7,000기 이상 저궤도 위성</span></div>
+      <div class="comp-row"><span class="lbl">발사 주기</span><span class="val g">타의 추종 불허 (팰컨9)</span></div>
+      <div class="comp-row"><span class="lbl">비용 효율</span><span class="val g">구형 대비 상대적 저비용</span></div>
+      <div class="comp-row"><span class="lbl">배치 속도</span><span class="val g">수년이 아닌 수주 내</span></div>
+      <div class="comp-row"><span class="lbl">실전 검증</span><span class="val g">우크라이나, 이란(에픽 퓨리)</span></div>
+    </div>
+    <div class="comp-box">
+      <h4><span class="dot" style="background:var(--red);"></span>펜타곤이 포기한 것</h4>
+      <div class="comp-row"><span class="lbl">서비스 통제권</span><span class="val r">없음 (계약 공백)</span></div>
+      <div class="comp-row"><span class="lbl">공급업체 레버리지</span><span class="val r">역전 — 국방부가 스페이스X 필요</span></div>
+      <div class="comp-row"><span class="lbl">대안 공급자</span><span class="val r">실전 가능 대안 없음</span></div>
+      <div class="comp-row"><span class="lbl">CEO 정치적 중립성</span><span class="val r">훼손 (DOGE 이중 역할)</span></div>
+      <div class="comp-row"><span class="lbl">공급 다각화</span><span class="val r">97% 집중 위험</span></div>
+    </div>
+  </div>
+
+  <div class="alert alert-blue">
+    <strong>역사적 선례 — 우크라이나 교훈:</strong> 스페이스X는 러시아 흑해 함대를 향한 우크라이나 드론 공격을 위해 크림반도 인근 스타링크 범위를 확장하는 것을 거부했다 — 미국 정부 계약을 체결하고 있었음에도 펜타곤과 협의 없이 자체 판단으로. <strong>"고위 국방 관리들은 여러 차례 회의를 통해 문제를 해결하려 했지만, 민간 기업에 레버리지를 갖지 못하는 상황이 낯설었다."</strong> 지금 이 같은 역학 관계가 미군 작전에도 그대로 적용된다.
+  </div>
+</div>
+
+<!-- 06 경쟁 환경 -->
+<div class="sec">
+  <span class="sec-badge green">06 · 경쟁 환경 분석</span>
+  <h2>대안·경쟁자·다각화 경로</h2>
+  <p class="sec-sub">현재 신뢰할 수 있는 대체재가 없는 이유 — 그리고 무엇이 부상하고 있나</p>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>공급자</th>
+          <th>기술</th>
+          <th>현황</th>
+          <th>군사 준비도</th>
+          <th>가용 시점</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="bold">아마존 카이퍼</td><td>저궤도 위성 인터넷</td><td>초기 위성 발사 완료, 확장 중</td><td class="gd">부분적</td><td class="gd">2026~2028</td></tr>
+        <tr><td class="bold">중국 (위성 통신)</td><td>각 1만기 이상 군집 2개</td><td>급속 배치 중</td><td class="r">적대국</td><td class="r">현재 위협</td></tr>
+        <tr><td class="bold">원웹 / 유텔샛</td><td>저궤도 광대역</td><td>제한된 군집</td><td class="gr">불가</td><td class="gr">불명확</td></tr>
+        <tr><td class="bold">ULA (벌컨)</td><td>대형 발사체</td><td>인증 완료; 발사 주기 제한</td><td class="gd">가능(부분)</td><td class="gd">현재</td></tr>
+        <tr><td class="bold">아리안스페이스</td><td>유럽 발사체</td><td>아리안6 지연</td><td class="gr">제한적</td><td class="gr">2027년 이후</td></tr>
+        <tr><td class="bold">이리듐 넥스트</td><td>전 세계 위성통신(LEO)</td><td>운용 중; 군 인증 완료</td><td class="g">가능</td><td class="g">현재</td></tr>
+        <tr><td class="bold">AEHF / 밀스타</td><td>군 소유 정지궤도 위성통신</td><td>운용 중; 대역폭 제한</td><td class="g">가능</td><td class="gd">노후 시스템 한계</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-green">
+    <strong>단기 기회:</strong> 아마존 카이퍼가 최근 스타링크에 맞서기 위해 글로벌스타 인수 협상을 진행 중이다. 카이퍼가 군 인증을 획득한다면, 2027~2028년까지 저궤도 통신 분야에서 펜타곤에 실질적인 대안을 제공할 수 있다 — 스타링크 군사 독점에 대한 최초의 실질적 경쟁 압력. 그러나 이 시간표는 미군이 최소 2~3년간은 대안 없이 노출 상태에 있음을 의미한다.
+  </div>
+</div>
+
+<!-- 07 타임라인 -->
+<div class="sec">
+  <span class="sec-badge">07 · 사건 타임라인</span>
+  <h2>주요 사건 타임라인 — 우크라이나 선례에서 캘리포니아 사건까지</h2>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-date">2022년 — 우크라이나 전쟁 발발</div>
+      <div class="tl-title">스타링크의 전장 인터넷 등장 — 그리고 첫 번째 경고</div>
+      <div class="tl-body">스페이스X가 우크라이나에 스타링크를 무상 제공. 우크라이나 군은 이를 드론 제어에 신속히 활용. 스페이스X가 <strong>러시아 흑해 함대 드론 공격을 막기 위해 크림반도 인근 커버리지를 일방적으로 제한</strong> — 펜타곤과 협의 없이. 서비스 파라미터를 실제로 통제하는 것이 국방부가 아닌 스페이스X임을 처음으로 보여준 사례.</div>
+    </div>
+    <div class="tl-item red-dot">
+      <div class="tl-date">2022~2023년 — 펜타곤의 계약 협상</div>
+      <div class="tl-title">국방부, 계약 통제권 확보 시도 — 스페이스X가 협상 주도권 쥐어</div>
+      <div class="tl-body"><strong>"펜타곤은 스페이스X가 독자적으로 우크라이나 스타링크 서비스를 중단하지 못하도록 막는 계약 조항을 마련하려 했다."</strong> 협상은 불리한 위치에서 진행됐다. 스페이스X의 pLEO 과업 명령 점유율은 130억 달러 프로그램의 97%로 확대됐다.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025년 8월</div>
+      <div class="tl-title">캘리포니아 드론 테스트 통신 두절 — 사건 발생</div>
+      <div class="tl-body">전 세계적 스타링크 장애로 캘리포니아 해안 해군 테스트 중 USV 약 24척이 거의 1시간 동안 무력화. 내부 문서에는 이전 테스트에서도 <strong>간헐적 연결 장애와 다중 시스템 대역폭 한계</strong>가 있었다고 기록. 펜타곤은 공개 공시를 억제했다.</div>
+    </div>
+    <div class="tl-item gold-dot">
+      <div class="tl-date">2025년 9월</div>
+      <div class="tl-title">또 다른 전 세계 스타링크 장애</div>
+      <div class="tl-body">약 30분간의 별도 전 세계 장애를 우크라이나 드론 부대 사령관이 보고. 스페이스X는 공지 게시물을 올렸다가 장애 해소 후 삭제. 신뢰성 문제의 패턴이 더욱 가시화됐다.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024년 11월 ~ 2025년 2월</div>
+      <div class="tl-title">정치적 결탁 우려 제기</div>
+      <div class="tl-body">머스크가 트럼프 행정부 DOGE 자문으로 합류. 민주당 의원들이 머스크의 이중 역할에 대한 국가 안보 우려를 공식 제기. <strong>펜타곤은 의미 있는 대응을 거부</strong>하며 사업 관계의 가치를 언급. 이해충돌 구조는 해소되지 않은 채 유지됐다.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026년 3월 26일</div>
+      <div class="tl-title">에픽 퓨리 작전 — 무인 수상함 최초 실전 투입</div>
+      <div class="tl-body">펜타곤이 이란을 상대로 GARC 무인 수상함을 배치 확인 — <strong>미국 역사상 무인 수상함이 실제 전투에서 처음으로 사용된 사례.</strong> 이 함정들은 스타링크에 의존한다. GARC 1척은 추가 테스트 중 작동 불능 상태가 됐다. 스타링크 신뢰성의 실전 비용이 존재론적 수준에 달했다.</div>
+    </div>
+    <div class="tl-item red-dot">
+      <div class="tl-date">2026년 4월 16일</div>
+      <div class="tl-title">로이터 탐사 보도 공개 — 캘리포니아 사건 폭로</div>
+      <div class="tl-body">로이터가 2025년 8월 장애의 드론 테스트 영향을 담은 펜타곤 내부 문서를 공개. <strong>국방 커뮤니티가 단일 공급업체 의존 문제에 직면.</strong> 보고서 발표 시점 기준 구체적인 개선 계획은 발표되지 않았다.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 권고사항 -->
+<div class="sec">
+  <span class="sec-badge green">08 · 정책 권고사항</span>
+  <h2>전략적 해법 — 펜타곤이 지금 당장 해야 할 일</h2>
+
+  <ul class="rec-list">
+    <li class="rec-item">
+      <div class="rec-num">1</div>
+      <div>
+        <div class="rec-title">모든 무인 시스템에 이중 통신 체계 의무화</div>
+        <div class="rec-body">미군의 모든 무인 플랫폼 — USV, UAV, 미래 로봇 시스템 — 은 최소 두 개의 독립된 통신 경로를 갖도록 설계돼야 한다. 스타링크를 1차 통신으로, 이리듐 넥스트 또는 AEHF를 자동 전환 백업으로 사용. FY2027 계약부터는 선택 사항이 아닌 조달 요구사항으로 강제해야 한다.</div>
+      </div>
+      <span class="rec-priority rp-high">긴급</span>
+    </li>
+    <li class="rec-item">
+      <div class="rec-num">2</div>
+      <div>
+        <div class="rec-title">일방적 서비스 중단 방지 조항이 포함된 SLA 재협상</div>
+        <div class="rec-body">현행 계약은 스페이스X가 미군 작전 중 서비스를 일방적으로 제한하는 것을 막는 조항이 없다. 국방부는 pLEO IDIQ 조건을 재협상해 구속력 있는 서비스 연속성 보장, 지정 군 훈련 중 장애 시 재정 제재, 서비스 파라미터 변경 시 사전 고지 의무 기간 등을 포함해야 한다.</div>
+      </div>
+      <span class="rec-priority rp-high">긴급</span>
+    </li>
+    <li class="rec-item">
+      <div class="rec-num">3</div>
+      <div>
+        <div class="rec-title">아마존 카이퍼 군 인증 절차 신속 추진</div>
+        <div class="rec-body">펜타곤은 카이퍼의 보안 허가 절차를 신속히 진행하고 공동 개발 인센티브를 제공해 2028년 이전 실질적 경쟁 대안을 확보해야 한다. 아마존의 글로벌스타 인수 협상은 단기적 기회의 창이다. 인증된 두 번째 저궤도 공급자가 생기면 스페이스X의 레버리지는 즉시 감소하고 가격·서비스 수준에 경쟁 압력이 생긴다.</div>
+      </div>
+      <span class="rec-priority rp-high">높음</span>
+    </li>
+    <li class="rec-item">
+      <div class="rec-num">4</div>
+      <div>
+        <div class="rec-title">임무 핵심 계약에서 단일 공급업체 비중 60% 상한 설정</div>
+        <div class="rec-body">pLEO 과업 명령에서 스페이스X의 97% 집중도는 국방 조달 역사상 선례가 없으며 용납할 수 없는 구조적 위험이다. 의회는 어떤 단일 공급업체도 핵심 통신·발사 프로그램에서 60% 이상의 과업 명령을 보유할 수 없도록 의무화해야 한다. 스페이스X가 공정하게 경쟁하면서도 다각화를 강제하는 전환 일정이 필요하다.</div>
+      </div>
+      <span class="rec-priority rp-high">높음</span>
+    </li>
+    <li class="rec-item">
+      <div class="rec-num">5</div>
+      <div>
+        <div class="rec-title">"머스크 스택" 통합에 대한 전면 취약성 평가 실시</div>
+        <div class="rec-body">스페이스X(발사), 스타링크(통신), xAI(분석 AI)가 단일 공급업체 방위 아키텍처로 수렴되는 것은 공식적으로 평가돼야 한다. 국방부 감찰관과 NSA가 합동 기밀 검토를 실시해 기술적 장애, 정치적 분쟁, 법적 조치 등으로 스페이스X가 24시간, 72시간, 168시간 동안 불가용한 경우 미국의 작전 능력에 어떤 일이 벌어지는지 평가해야 한다.</div>
+      </div>
+      <span class="rec-priority rp-med">중간</span>
+    </li>
+    <li class="rec-item">
+      <div class="rec-num">6</div>
+      <div>
+        <div class="rec-title">독립 군용 저궤도 군집 구축 (장기 목표)</div>
+        <div class="rec-body">NRO의 18억 달러 스페이스X 군집 계약은 정부 소유 자산을 향한 첫걸음이지만, 여전히 스페이스X가 운용한다. 장기적으로 펜타곤은 상업적 공급업체 결정에 영향받지 않는 GPS와 유사한 주권적 군용 운용 저궤도 통신 군집에 투자해야 한다. 8~12년의 시간이 필요하지만 지금 당장 계획을 시작해야 한다.</div>
+      </div>
+      <span class="rec-priority rp-low">장기</span>
+    </li>
+  </ul>
+</div>
+
+<!-- 09 분석가 최종 평가 -->
+<div class="sec">
+  <span class="sec-badge red">09 · 분석가 최종 평가</span>
+  <h2>평가와 전략적 전망</h2>
+
+  <div class="verdict">
+    <div class="verdict-lbl">전략 정보 평가 — 2026년 4월 16일</div>
+    <div class="verdict-text">
+      캘리포니아 스타링크 장애는 위성망이 한 시간 다운된 이야기가 아니다. 이것은 <strong>세계 최강의 군대가 어떻게 자신의 무인 전쟁 독트린 전체를 단일 민간 기업에 내맡기게 됐는가에 관한 이야기다</strong> — 그 기업은 대통령 자문 역할을 동시에 맡은 인물이 이끌고 있고, 계약상 안전장치도, 신뢰할 수 있는 백업도, 이 상황에서 벗어날 명확한 계획도 없이.<br><br>
+
+      펜타곤은 계산된 거래를 했다. 속도, 커버리지, 비용 절감을 구조적 의존성과 전통적 공급업체 레버리지 상실과 맞바꾼 것이다. 평시에, 그리고 이란 전쟁 같은 저강도 작전에서는 이 거래가 수용 가능할 수도 있다. 그러나 태평양에서 중국을 상대로 하는 미국의 전력 태세의 핵심 독트린은 <strong>대규모 자율 군집 작전</strong>에 달려있다 — 수백 대의 USV와 UAV가 동시에 운용되는, 그 모두가 캘리포니아 해안 24척짜리 테스트에서 한 시간 동안 블랙아웃된 것과 동일한 네트워크에 의존하는.<br><br>
+
+      <strong>로이터 탐사 보도에서 가장 위험한 문장은 장애 자체가 아니라 이것이다. "고위 국방 관리들은 민간 기업에 레버리지를 갖지 못하는 상황이 낯설었다."</strong> 이 불편함이 바로 시스템적 진단이다. 해법은 기술적이지 않다 — 구조적이고, 계약적이며, 정치적이다. 이 취약성을 실전에서 테스트하기 전에 행동할 수 있는 기회의 창이 좁아지고 있다.
+    </div>
+    <div class="verdict-sig">전략기술·방위 분석팀 | 보고서 #STDA-2026-0416 | 비밀해제 | 2026.04.16</div>
+  </div>
+
+  <div class="disc">
+    <strong>⚠ 면책 공시:</strong> 본 보고서는 로이터(2026년 4월 16일), News.az, SatNews, Military.com, Arms Control Association, NavyTimes, DefenseScoop, NewSpaceEconomy 등 공개 정보를 기반으로 한 독립적 분석 평가입니다. 미국 정부의 공식 정책이나 기밀 정보 평가를 대표하지 않습니다. 모든 인용 자료는 원 출처를 표기했으며 공정 이용 원칙에 따라 재구성됐습니다. 본 보고서는 정보 제공 및 분석 목적으로만 작성됐습니다.
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="classif">보고서 종료 — 공개용 — 비밀해제</div>
+
+</body>
+</html>
