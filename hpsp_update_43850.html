@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 재분석 — ₩43,850 기준 | 독립 리서치 업데이트</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
+:root{--navy:#001f5b;--blue:#003da6;--sky:#0055b3;--gold:#c8a84b;--amber:#d97706;--green:#1a7a45;--red:#c0392b;--warn:#e85d04;--bg:#f8f9fc;--card:#ffffff;--alt:#eef2f8;--bdr:#cdd5e0;--txt:#1a2333;--txt2:#445566;--txt3:#7a8fa6;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;font-size:13.5px;background:var(--bg);color:var(--txt);line-height:1.65;}
+.alert-banner{background:linear-gradient(90deg,#7b0000,#c0392b);color:#fff;padding:14px 32px;display:flex;align-items:center;gap:14px;font-weight:600;font-size:13px;}
+.alert-icon{font-size:22px;flex-shrink:0;}
+.alert-text span{font-family:'JetBrains Mono',monospace;background:rgba(255,255,255,0.18);padding:2px 8px;border-radius:3px;margin:0 4px;}
+.cover{background:linear-gradient(135deg,var(--navy) 0%,#00276b 55%,#001845 100%);color:#fff;padding:44px 48px 36px;position:relative;overflow:hidden;}
+.cover::before{content:'UPDATE';position:absolute;right:-30px;top:28px;font-size:80px;font-weight:900;font-family:'Playfair Display',serif;color:rgba(255,255,255,0.04);letter-spacing:8px;pointer-events:none;}
+.cover-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;}
+.firm-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;letter-spacing:2px;}
+.firm-logo span{color:var(--gold);}
+.cover-date{font-size:10px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.45);text-align:right;line-height:1.9;}
+.report-type{display:inline-block;background:var(--red);color:#fff;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;padding:4px 10px;border-radius:2px;margin-bottom:12px;font-weight:700;}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,38px);font-weight:900;line-height:1.2;margin-bottom:6px;}
+.cover-sub{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:28px;}
+.price-compare{display:flex;gap:0;margin:20px 0;}
+.price-box{flex:1;padding:16px 20px;text-align:center;}
+.price-box.old{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);}
+.price-box.now{background:rgba(200,168,75,0.15);border:1px solid rgba(200,168,75,0.4);}
+.price-box.target{background:rgba(26,122,69,0.15);border:1px solid rgba(26,122,69,0.4);}
+.price-box-arrow{display:flex;align-items:center;justify-content:center;padding:0 8px;font-size:20px;color:rgba(255,255,255,0.4);}
+.pb-label{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:5px;}
+.pb-val{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;}
+.pb-val.now{color:var(--gold);}
+.pb-val.up{color:#4ade80;}
+.pb-note{font-size:10px;color:rgba(255,255,255,0.45);margin-top:3px;}
+.rating-strip{display:flex;flex-wrap:wrap;gap:14px;padding:16px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;margin-top:12px;}
+.rs-item{text-align:center;}
+.rs-label{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+.rs-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;}
+.rs-val.buy{color:#4ade80;}.rs-val.hold{color:var(--gold);}.rs-val.w{color:#fff;}.rs-val.up{color:#4ade80;}.rs-val.dn{color:#f87171;}
+.nav{background:var(--navy);display:flex;overflow-x:auto;border-bottom:2px solid var(--gold);}
+.nav a{padding:10px 18px;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;white-space:nowrap;font-family:'JetBrains Mono',monospace;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.18s;}
+.nav a:hover,.nav a.act{color:#fff;border-bottom-color:var(--gold);}
+.page{max-width:1040px;margin:0 auto;padding:0 22px;}
+.sec{padding:36px 0 28px;border-bottom:1px solid var(--bdr);}
+.sec:last-child{border:none;}
+.sec-tag{display:inline-block;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--blue);background:#ddeafc;border:1px solid #aac4f0;padding:3px 9px;border-radius:2px;margin-bottom:9px;}
+.sec-tag.warn{color:var(--red);background:#fdecea;border-color:#f5b3af;}
+.sec-tag.amber{color:var(--warn);background:#fff3e0;border-color:#ffc87a;}
+.sec h2{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.sec-sub{font-size:11.5px;color:var(--txt3);margin-bottom:20px;}
+.ibox{background:var(--alt);border-left:4px solid var(--blue);padding:14px 18px;border-radius:0 5px 5px 0;margin-bottom:18px;font-size:13px;line-height:1.8;color:var(--txt2);}
+.ibox strong{color:var(--navy);}
+.ibox.warn{border-color:var(--red);background:#fdecea;}.ibox.warn strong{color:var(--red);}
+.ibox.amber{border-color:var(--amber);background:#fff8e7;}.ibox.amber strong{color:var(--amber);}
+.ibox.green{border-color:var(--green);background:#e8f5ee;}.ibox.green strong{color:var(--green);}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:11px;margin:18px 0;}
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:6px;padding:15px 16px;position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.nv::before{background:var(--navy);}.kpi.bl::before{background:var(--sky);}.kpi.gn::before{background:var(--green);}.kpi.gd::before{background:var(--gold);}.kpi.rd::before{background:var(--red);}.kpi.am::before{background:var(--amber);}
+.kpi-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:5px;}
+.kpi-val{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:3px;}
+.kpi-val.g{color:var(--green);}.kpi-val.r{color:var(--red);}.kpi-val.gd{color:var(--gold);}.kpi-val.am{color:var(--amber);}
+.kpi-note{font-size:10.5px;color:var(--txt3);}
+.tw{overflow-x:auto;margin:14px 0;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead th{background:var(--navy);color:#fff;padding:8px 13px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;font-weight:700;}
+thead th:not(:first-child){text-align:right;}
+tbody tr{border-bottom:1px solid var(--bdr);}
+tbody tr:nth-child(even){background:var(--alt);}
+tbody tr:hover{background:#ddeafc;}
+td{padding:8px 13px;color:var(--txt);}
+td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;}
+td.bold{font-weight:700;color:var(--navy);}
+td.up{color:var(--green);font-weight:600;}
+td.dn{color:var(--red);}
+td.gd{color:var(--gold);font-weight:600;}
+td.am{color:var(--amber);font-weight:600;}
+td.gr{color:var(--txt3);}
+tr.ours td{background:#e8f0fc;font-weight:700;color:var(--navy);}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0;}
+.sc{border-radius:8px;padding:18px 18px 14px;border:1px solid;}
+.sc.bear{background:#fdecea;border-color:#f5b3af;}.sc.base{background:#e8f0fc;border-color:#aac4f0;}.sc.bull{background:#e8f5ee;border-color:#a3d9b8;}
+.sc-label{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;}
+.sc.bear .sc-label{color:var(--red);}.sc.base .sc-label{color:var(--blue);}.sc.bull .sc-label{color:var(--green);}
+.sc-price{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.sc-upside{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-bottom:10px;}
+.sc.bear .sc-upside{color:var(--red);}.sc.base .sc-upside{color:var(--blue);}.sc.bull .sc-upside{color:var(--green);}
+.sc-desc{font-size:11.5px;color:var(--txt2);line-height:1.65;}
+.sc-assume{margin-top:8px;font-size:10.5px;color:var(--txt3);border-top:1px solid rgba(0,0,0,0.08);padding-top:8px;}
+.gauge-wrap{margin:20px 0;}
+.gauge-track{height:28px;background:linear-gradient(90deg,#fdecea 0%,#fff8e7 40%,#e8f0fc 65%,#e8f5ee 100%);border-radius:14px;position:relative;border:1px solid var(--bdr);}
+.gauge-marker{position:absolute;top:-8px;transform:translateX(-50%);}
+.gauge-marker .line{width:2px;height:44px;background:var(--navy);margin:0 auto;}
+.gauge-marker .label{background:var(--navy);color:#fff;font-size:9px;font-family:'JetBrains Mono',monospace;padding:3px 7px;border-radius:3px;white-space:nowrap;margin-top:3px;}
+.gauge-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--txt3);}
+.risk-row{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid var(--bdr);font-size:12.5px;}
+.risk-row:last-child{border:none;}
+.risk-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.dot-r{background:var(--red);}.dot-a{background:var(--amber);}.dot-g{background:var(--green);}
+.risk-name{font-weight:700;color:var(--navy);min-width:160px;}
+.risk-body{color:var(--txt2);flex:1;}
+.risk-impact{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;min-width:60px;text-align:right;}
+.opinion{background:var(--navy);color:#fff;border-radius:8px;padding:26px 30px;margin:18px 0;position:relative;overflow:hidden;}
+.opinion::before{content:'"';position:absolute;top:-14px;left:16px;font-size:110px;font-family:'Playfair Display',serif;color:rgba(255,255,255,0.03);}
+.op-tag{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.op-text{font-size:13.5px;line-height:1.82;color:rgba(255,255,255,0.88);}
+.op-text strong{color:#fff;}
+.op-sig{margin-top:14px;font-size:10px;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,0.35);}
+.pbar-wrap{margin:16px 0;}
+.pbar-row{margin-bottom:10px;}
+.pbar-hdr{display:flex;justify-content:space-between;margin-bottom:4px;}
+.pbar-lbl{font-size:11.5px;color:var(--txt2);}
+.pbar-val{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;}
+.pbar-track{height:20px;background:var(--alt);border-radius:3px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff;}
+.chk-list{list-style:none;margin:14px 0;}
+.chk-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-bottom:1px solid var(--bdr);font-size:12.5px;}
+.chk-item:last-child{border:none;}
+.chk-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.chk-name{font-weight:700;color:var(--navy);min-width:170px;}
+.chk-body{color:var(--txt2);flex:1;}
+.chk-verdict{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;min-width:80px;text-align:right;}
+.chk-verdict.ok{color:var(--green);}.chk-verdict.warn{color:var(--amber);}.chk-verdict.risk{color:var(--red);}
+.disc{background:var(--alt);border:1px solid var(--bdr);border-radius:5px;padding:12px 16px;margin-top:20px;font-size:10.5px;color:var(--txt3);line-height:1.75;}
+.disc strong{color:var(--red);}
+hr{border:none;border-top:1px solid var(--bdr);margin:18px 0;}
+@media(max-width:640px){.cover{padding:30px 20px 26px;}.scenario-grid{grid-template-columns:1fr;}.price-compare{flex-direction:column;}.price-box-arrow{display:none;}.page{padding:0 14px;}}
+</style>
+</head>
+<body>
+
+<div class="alert-banner">
+  <span class="alert-icon">⚠️</span>
+  <div class="alert-text">
+    긴급 업데이트 — 현재 주가<span>₩43,850</span>으로 전 보고서 대비<span>+39.2% 급등</span>.
+    기존 목표주가 ₩45,000 거의 달성. 투자 판단 전면 재검토 필요.
+  </div>
+</div>
+
+<div class="cover">
+  <div class="cover-hdr">
+    <div class="firm-logo">반도체<span>리서치</span></div>
+    <div class="cover-date">EQUITY RESEARCH UPDATE<br>Korea · Semi Equipment<br>2026. 04. 16</div>
+  </div>
+  <div class="report-type">🔄 PRICE TARGET REVISION · URGENT UPDATE</div>
+  <h1>HPSP 재분석 리포트</h1>
+  <p class="cover-sub">₩43,850 기준 — 전 보고서 목표주가 근접 달성 이후 투자 판단 전면 재평가</p>
+  <div class="price-compare">
+    <div class="price-box old"><div class="pb-label">이전 보고서 기준가</div><div class="pb-val">₩31,500</div><div class="pb-note">이전 목표 ₩45,000</div></div>
+    <div class="price-box-arrow">→</div>
+    <div class="price-box now"><div class="pb-label">현재 주가 (기준)</div><div class="pb-val now">₩43,850</div><div class="pb-note">+39.2% 상승</div></div>
+    <div class="price-box-arrow">→</div>
+    <div class="price-box target"><div class="pb-label">신규 목표주가 (12M)</div><div class="pb-val up">₩55,000</div><div class="pb-note">상승여력 +25.4%</div></div>
+  </div>
+  <div class="rating-strip">
+    <div class="rs-item"><div class="rs-label">투자의견</div><div class="rs-val hold">HOLD → BUY</div></div>
+    <div class="rs-item"><div class="rs-label">신규 목표주가</div><div class="rs-val w">₩55,000</div></div>
+    <div class="rs-item"><div class="rs-label">현재 주가</div><div class="rs-val w">₩43,850</div></div>
+    <div class="rs-item"><div class="rs-label">상승여력</div><div class="rs-val up">+25.4%</div></div>
+    <div class="rs-item"><div class="rs-label">Bull 목표</div><div class="rs-val up">₩65,000</div></div>
+    <div class="rs-item"><div class="rs-label">Bear 케이스</div><div class="rs-val dn">₩35,000</div></div>
+    <div class="rs-item"><div class="rs-label">52주 범위</div><div class="rs-val w">21,150~53,900</div></div>
+    <div class="rs-item"><div class="rs-label">컨센 목표 평균</div><div class="rs-val w">₩46,875</div></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#change" class="act">핵심 변화</a>
+  <a href="#valuation">재밸류에이션</a>
+  <a href="#per">현재 PER 점검</a>
+  <a href="#scenario">시나리오</a>
+  <a href="#risk">리스크 재평가</a>
+  <a href="#consensus">컨센서스 갭</a>
+  <a href="#decision">투자 의사결정</a>
+</nav>
+
+<div class="page">
+
+<!-- 1. 핵심 변화 -->
+<div class="sec" id="change">
+  <span class="sec-tag warn">WHAT HAS CHANGED</span>
+  <h2>무엇이 달라졌나 — 전 보고서 대비 핵심 변수 점검</h2>
+  <p class="sec-sub">기준가 ₩31,500 → 현재 ₩43,850 (+39.2%) · 목표 ₩45,000 거의 달성</p>
+  <div class="ibox warn">
+    <strong>📌 핵심 포인트:</strong> 이전 보고서(기준가 ₩31,500, 목표 ₩45,000)의 투자 아이디어는 사실상 <strong>실현됐습니다.</strong> 주가가 +39.2% 상승해 목표주가에 거의 도달한 시점에서 <strong>단순히 "여전히 좋다"는 결론은 무책임합니다.</strong> 목표주가·리스크/리워드 구조·밸류에이션 배수 모두 재계산이 필요합니다.
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>변수</th><th>이전 보고서 (기준가 기준)</th><th>현재 (₩43,850 기준)</th><th>변화 방향</th><th>투자 판단 영향</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">주가</td><td>₩31,500</td><td class="am bold">₩43,850</td><td class="up">+39.2%</td><td class="dn">리스크/리워드 축소</td></tr>
+        <tr><td class="bold">목표주가 달성률</td><td>0% (미달성)</td><td class="am bold">~97.4% 달성</td><td class="up">거의 달성</td><td class="dn">신규 목표 재설정 필요</td></tr>
+        <tr><td class="bold">컨센서스 평균 목표 대비</td><td>₩31,500 vs avg ₩40,400 (-22%)</td><td class="am bold">₩43,850 vs ₩46,875 (-6.4%)</td><td class="dn">컨센 목표에 근접</td><td class="dn">상승여력 감소</td></tr>
+        <tr><td class="bold">2026E PER</td><td>~24.2배 (매력적)</td><td class="am bold">~33.7배 (보통)</td><td class="dn">밸류 부담 증가</td><td class="dn">추가 상승 근거 필요</td></tr>
+        <tr><td class="bold">TSMC 1Q26 실적</td><td>기대치 (발표 전)</td><td class="up bold">$35.7B 서프라이즈 (+35.1%)</td><td class="up">예상 초과 달성</td><td class="up">2026 수주 가시성 ↑</td></tr>
+        <tr>
+          <td class="bold">TSMC CAPEX 방침</td>
+          <td>가이던스 $52~56B (발표 전)</td>
+          <td class="up bold">Q1 2026 콘퍼런스콜에서 상단($56B) 집행 방침 공식 확인 <br><span style="font-size:10px;font-family:sans-serif;color:var(--green);">(CEO C.C. Wei: "demand robust → toward high end")</span></td>
+          <td class="up">상단 집행 공식화</td>
+          <td class="up">HPSP 수주 후행 수혜</td>
+        </tr>
+        <tr><td class="bold">SK하이닉스 실적</td><td>1Q26 ~40조 전망</td><td class="up bold">40조 달성 (확인)</td><td class="up">예상 부합</td><td class="up">HBM4 발주 현실화</td></tr>
+        <tr><td class="bold">52주 고점 대비</td><td>₩31,500 (고점 대비 -41%)</td><td class="gd bold">₩43,850 (고점 ₩53,900 대비 -18.6%)</td><td class="up">고점 재도전 국면</td><td class="am">고점 돌파 여부 핵심</td></tr>
+        <tr><td class="bold">글로벌 애널리스트 의견</td><td>매수 100%</td><td class="up bold">Strong Buy (8명), avg ₩46,875, HIGH ₩65,000</td><td class="up">컨센 상향</td><td class="up">목표주가 상향 흐름</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--txt3);margin-top:4px;">* 컨센서스 평균 ₩46,875: Investing.com 기준 (2026.03.27 최신). 전 보고서 기재 ₩48,313에서 수정.</p>
+  <hr>
+  <p style="font-size:12px;color:var(--txt3);margin-bottom:14px;">▶ 현재 주가 위치 — 52주 밴드 내 포지셔닝</p>
+  <div class="gauge-wrap">
+    <div class="gauge-track" style="position:relative;">
+      <div class="gauge-marker" style="left:31.5%;"><div class="line" style="height:34px;background:var(--red);opacity:.7;"></div><div class="label" style="background:var(--red);font-size:8px;">Bear ₩35,000</div></div>
+      <div class="gauge-marker" style="left:51.9%;top:-12px;"><div class="line" style="height:52px;background:var(--navy);width:3px;"></div><div class="label" style="font-size:9px;white-space:nowrap;">現 ₩43,850</div></div>
+      <div class="gauge-marker" style="left:59.5%;"><div class="line" style="height:34px;background:var(--amber);opacity:.8;"></div><div class="label" style="background:var(--amber);font-size:8px;">컨센 ₩46,875</div></div>
+      <div class="gauge-marker" style="left:77.3%;"><div class="line" style="height:34px;background:var(--green);opacity:.8;"></div><div class="label" style="background:var(--green);font-size:8px;">분석팀 TP ₩55,000</div></div>
+    </div>
+    <div class="gauge-labels"><span>52주 저점<br>₩21,150</span><span style="text-align:center;">← BEAR&nbsp;&nbsp;&nbsp;현재&nbsp;&nbsp;&nbsp;BULL →</span><span style="text-align:right;">52주 고점<br>₩53,900</span></div>
+  </div>
+</div>
+
+<!-- 2. 재밸류에이션 -->
+<div class="sec" id="valuation">
+  <span class="sec-tag amber">REVISED VALUATION</span>
+  <h2>목표주가 재산출 — ₩43,850 기준 신규 적정가</h2>
+  <p class="sec-sub">TSMC 1Q26 실적 서프라이즈 반영 + 수주 가시성 상향 + 컨센서스 업데이트</p>
+  <div class="ibox amber">
+    <strong>목표주가 상향 근거:</strong> TSMC 1Q26 매출 $35.7B 서프라이즈 달성, CAPEX 상단($56B) 집행 방침 공식화로 HPSP 2026~2027년 수주 가시성이 이전 대비 의미 있게 높아졌습니다. <strong>2026E EPS 추정 상향 + ASML 프리미엄 P/E 34~38배 적용 → 목표주가 ₩55,000 상향.</strong> 단, 현 주가에서의 리스크/리워드는 이전보다 크게 좁아졌음을 명확히 합니다.
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>밸류에이션 방법</th><th>EPS/지표</th><th>배수 적용</th><th>산출 목표가</th><th>가중치</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">PER — 2026E 기준</td><td>~₩1,300 (순이익 ~1,050억)</td><td>P/E 36배</td><td class="up bold">₩46,800</td><td class="gr">30%</td><td class="gr">과거 평균 32.7배 + TSMC 수혜 프리미엄</td></tr>
+        <tr><td class="bold">PER — 2027E 기준</td><td>~₩1,740 (순이익 ~1,430억)</td><td>P/E 33배</td><td class="up bold">₩57,420</td><td class="gr">35%</td><td class="gr">성장 가속 반영</td></tr>
+        <tr><td class="bold">ASML 비교 멀티플</td><td>2026E OPM 53%</td><td>P/E 34~38배</td><td class="up bold">₩44,200~49,400</td><td class="gr">20%</td><td class="gr">삼성증권 방법론 유지</td></tr>
+        <tr><td class="bold">DCF (WACC 7%, g 2.9%)</td><td>FCF 성장 반영</td><td>—</td><td class="up bold">~₩50,000</td><td class="gr">15%</td><td class="gr">KB증권 방법론 + 수주 가시성 반영</td></tr>
+        <tr class="ours"><td class="bold">독립 분석 종합 목표주가</td><td colspan="2" style="text-align:center;font-weight:700;">가중평균</td><td class="up bold">₩55,000</td><td class="gr">100%</td><td class="up">이전 ₩45,000 → 신규 ₩55,000 (+22.2%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--txt3);margin-top:5px;">* 2027E EPS는 자체 추정치. 2026E는 한화투자증권·DS증권 컨센서스 기반.</p>
+  <hr>
+  <h3 style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px;">📊 증권사별 최신 목표주가 현황</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>증권사</th><th>투자의견</th><th>목표주가</th><th>현재가 대비</th><th>발표 시점</th><th>Key 근거</th></tr></thead>
+      <tbody>
+        <tr><td>컨센서스 최고</td><td class="up">매수</td><td class="up bold">₩65,000</td><td class="up">+48.2%</td><td class="gr">2026 최신</td><td class="gr">강세 시나리오 기준</td></tr>
+        <tr><td>삼성증권</td><td class="up">매수</td><td class="bold">₩45,000</td><td class="gd">+2.6%</td><td class="gr">2025.10</td><td class="gr">ASML P/E 34배 적용</td></tr>
+        <tr><td>대신증권</td><td class="up">매수</td><td class="bold">₩42,000</td><td class="dn">-4.2%</td><td class="gr">2025.10</td><td class="gr">2026 성장 기대</td></tr>
+        <tr><td>한국투자증권</td><td class="up">매수</td><td class="bold">₩42,000</td><td class="dn">-4.2%</td><td class="gr">2025.10</td><td class="gr">+11% 상향 후 목표</td></tr>
+        <tr><td>KB증권</td><td class="up">매수</td><td class="bold">₩43,800</td><td class="gd">-0.1%</td><td class="gr">2025.05</td><td class="gr">DCF 기준</td></tr>
+        <tr><td>NH투자증권</td><td class="up">매수</td><td class="bold">₩40,000</td><td class="dn">-8.8%</td><td class="gr">2025.11</td><td class="gr">EPS×PER 32.7배</td></tr>
+        <tr><td>한화투자증권</td><td class="up">Buy</td><td class="bold">₩38,000</td><td class="dn">-13.3%</td><td class="gr">2025.11</td><td class="gr">P/E 31배</td></tr>
+        <tr><td>BNK투자증권</td><td class="up">매수</td><td class="bold">₩35,000</td><td class="dn">-20.2%</td><td class="gr">2025.08</td><td class="gr">보수적 추정</td></tr>
+        <tr><td class="bold">컨센서스 평균 (Investing.com)</td><td class="up bold">Strong Buy</td><td class="gd bold">₩46,875</td><td class="up">+6.9%</td><td class="gr">2026.03 최신</td><td class="gr">8명 전원 매수</td></tr>
+        <tr class="ours"><td class="bold">독립 분석 (본 보고서)</td><td class="up bold">OVERWEIGHT</td><td class="up bold">₩55,000</td><td class="up bold">+25.4%</td><td class="gr">2026.04.16</td><td class="gr">TSMC 수혜 강도 반영 상향</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ibox warn" style="margin-top:12px;">
+    <strong>⚠️ 주목:</strong> 다수 국내 증권사 목표주가(₩38,000~₩45,000)가 현재 주가(₩43,850) 이하 또는 비슷한 수준입니다. 이는 단기 기준으로 시장이 <strong>일부 목표가를 이미 선반영했음을 의미</strong>합니다. 추가 상승을 위해서는 <strong>목표가 상향 조정</strong>(특히 TSMC 실적 반영 후 업데이트)이 선행되어야 합니다.
+  </div>
+</div>
+
+<!-- 3. 현재 PER 점검 -->
+<div class="sec" id="per">
+  <span class="sec-tag">VALUATION MULTIPLES CHECK</span>
+  <h2>현재 주가 ₩43,850에서의 밸류에이션 수준은?</h2>
+  <p class="sec-sub">PER · PSR · EV/EBIT — 고평가인가, 정당한 프리미엄인가</p>
+  <div class="kpi-grid">
+    <div class="kpi am"><div class="kpi-lbl">현재 PER (2025E)</div><div class="kpi-val am">~56배</div><div class="kpi-note">2025 정체 실적 기준 고평가</div></div>
+    <div class="kpi nv"><div class="kpi-lbl">선행 PER (2026E)</div><div class="kpi-val">~33.7배</div><div class="kpi-note">성장 반영 시 합리적</div></div>
+    <div class="kpi gn"><div class="kpi-lbl">선행 PER (2027E)</div><div class="kpi-val g">~25.2배</div><div class="kpi-note">장기 투자자에겐 매력적</div></div>
+    <div class="kpi bl"><div class="kpi-lbl">시가총액</div><div class="kpi-val">~3.6조</div><div class="kpi-note">발행주식 ~82.3M주 기준</div></div>
+    <div class="kpi gd"><div class="kpi-lbl">EV/EBIT (2026E)</div><div class="kpi-val gd">~29배</div><div class="kpi-note">ASML 25배 대비 소폭 프리미엄</div></div>
+    <div class="kpi rd"><div class="kpi-lbl">52주 고점 대비</div><div class="kpi-val r">-18.6%</div><div class="kpi-note">₩53,900 고점 미도달</div></div>
+  </div>
+  <div class="pbar-wrap">
+    <p style="font-size:12px;color:var(--txt3);margin-bottom:12px;">▶ 피어(Peer) 그룹 P/E 비교 — ₩43,850 기준 HPSP 2026E PER 33.7배</p>
+    <div class="pbar-row"><div class="pbar-hdr"><span class="pbar-lbl">HPSP (현재가 기준, 2026E)</span><span class="pbar-val" style="color:var(--amber);">33.7배</span></div><div class="pbar-track"><div class="pbar-fill" style="width:67%;background:var(--amber);">33.7x</div></div></div>
+    <div class="pbar-row"><div class="pbar-hdr"><span class="pbar-lbl">ASML (글로벌 독점, 참조)</span><span class="pbar-val" style="color:var(--navy);">34배</span></div><div class="pbar-track"><div class="pbar-fill" style="width:68%;background:var(--navy);">34x</div></div></div>
+    <div class="pbar-row"><div class="pbar-hdr"><span class="pbar-lbl">한미반도체 (2026E)</span><span class="pbar-val" style="color:var(--blue);">~25배</span></div><div class="pbar-track"><div class="pbar-fill" style="width:50%;background:var(--blue);">~25x</div></div></div>
+    <div class="pbar-row"><div class="pbar-hdr"><span class="pbar-lbl">원익IPS (2026E)</span><span class="pbar-val" style="color:var(--txt3);">~18배</span></div><div class="pbar-track"><div class="pbar-fill" style="width:36%;background:var(--txt3);">~18x</div></div></div>
+  </div>
+  <div class="ibox green">
+    <strong>분석가 결론:</strong> ₩43,850에서 2026E P/E 33.7배는 ASML의 34배와 사실상 동일한 수준입니다. HPSP가 ASML과 동일한 "글로벌 유일 독점" 지위를 인정받는다면 <strong>현재 밸류에이션은 정당합니다.</strong> 단, 2025년 실적 정체(P/E 56배)라는 분모 약세가 부담이며, 2026 실적이 컨센서스를 초과 달성해야만 현 멀티플이 유지될 수 있습니다.
+  </div>
+</div>
+
+<!-- 4. 시나리오 -->
+<div class="sec" id="scenario">
+  <span class="sec-tag">PRICE SCENARIOS</span>
+  <h2>3가지 가격 시나리오 — Bull / Base / Bear</h2>
+  <p class="sec-sub">각 시나리오별 핵심 가정 · 12개월 목표주가 · 상승/하락여력</p>
+  <div class="scenario-grid">
+    <div class="sc bear">
+      <div class="sc-label">🐻 Bear Case</div>
+      <div class="sc-price">₩35,000</div>
+      <div class="sc-upside">▼ -20.2%</div>
+      <div class="sc-desc">① TSMC 2Q26 발주 속도 예상 하회<br>② HPO 신장비 퀄 테스트 실패/연기<br>③ 중국 고객 수출 규제 강화<br>④ SK하이닉스 HBM4 양산 연기<br>⑤ 2026 매출 +10~15% 수준 그쳐</div>
+      <div class="sc-assume">P/E 가정: 2026E × 27배 | 매출 ~1,950억</div>
+    </div>
+    <div class="sc base">
+      <div class="sc-label">⚖️ Base Case (목표)</div>
+      <div class="sc-price">₩55,000</div>
+      <div class="sc-upside">▲ +25.4%</div>
+      <div class="sc-desc">① TSMC CAPEX 상단 집행 → HPSP 수주 확대<br>② HPO 신장비 1~2개사 납품 시작<br>③ SK하이닉스 하이브리드 본딩 수혜 개시<br>④ 중국 매출 안정적 성장<br>⑤ 2026 매출 2,341억(+33%) 달성</div>
+      <div class="sc-assume">P/E 가정: 2026E × 36배 + 2027E 성장 반영</div>
+    </div>
+    <div class="sc bull">
+      <div class="sc-label">🐂 Bull Case</div>
+      <div class="sc-price">₩65,000</div>
+      <div class="sc-upside">▲ +48.2%</div>
+      <div class="sc-desc">① TSMC 2nm 추가 확대 발주<br>② HPO·하이브리드 본딩 납품 가속<br>③ 삼성전자 파운드리 HPA 도입 가속화<br>④ 컨센서스 최고 목표(₩65,000) 반영<br>⑤ 2026 매출 2,800억+ 달성</div>
+      <div class="sc-assume">P/E 가정: 2027E × 38배 | 시장 최고 TP</div>
+    </div>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>시나리오</th><th>주가 목표</th><th>현가 대비</th><th>2026E 매출</th><th>OPM</th><th>핵심 트리거</th><th>확률(추정)</th></tr></thead>
+      <tbody>
+        <tr><td class="dn bold">Bear</td><td class="dn">₩35,000</td><td class="dn">-20.2%</td><td>~1,950억</td><td>~48%</td><td class="gr">CAPEX 하향·HPO 실패·중국 규제</td><td class="gr">20%</td></tr>
+        <tr><td class="am bold">Base</td><td class="am">₩55,000</td><td class="up">+25.4%</td><td>~2,341억</td><td>~53%</td><td class="gr">TSMC 수혜+HPO 납품+HBM4</td><td class="gr">55%</td></tr>
+        <tr><td class="up bold">Bull</td><td class="up">₩65,000</td><td class="up">+48.2%</td><td>~2,800억+</td><td>~55%</td><td class="gr">전방위 수주 가속+신장비 성공</td><td class="gr">25%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:10.5px;color:var(--txt3);margin-top:5px;">* 기대값(EV): 35,000×0.20 + 55,000×0.55 + 65,000×0.25 = <strong style="color:var(--navy);">₩54,500</strong> → 목표주가 ₩55,000 정당화</p>
+</div>
+
+<!-- 5. 리스크 -->
+<div class="sec" id="risk">
+  <span class="sec-tag warn">RISK RE-ASSESSMENT</span>
+  <h2>₩43,850 기준 리스크 재평가 — 주가 상승 이후 변한 것들</h2>
+  <div class="ibox warn">
+    <strong>투자자 유의:</strong> 주가가 +39% 오른 후 리스크 구조는 변합니다. 이전에는 "저평가 → 상승 여력"이 리스크를 상쇄했지만, 지금은 <strong>밸류에이션 부담이 새로운 리스크 레이어로 추가됩니다.</strong>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--bdr);border-radius:6px;overflow:hidden;">
+    <div class="risk-row"><div class="risk-dot dot-r"></div><div class="risk-name">밸류에이션 부담 (신규)</div><div class="risk-body">현재 P/E 33.7배(2026E)는 과거 평균과 유사하나, <strong>2026 실적이 컨센서스를 하회하면 P/E가 급등해 주가 하방 압력</strong>이 발생. 이전 보고서(P/E 24.2배)와 달리 밸류 안전마진이 없음.</div><div class="risk-impact" style="color:var(--red);">HIGH</div></div>
+    <div class="risk-row"><div class="risk-dot dot-r"></div><div class="risk-name">컨센서스 목표주가 하회</div><div class="risk-body">국내 다수 증권사 목표주가(₩38,000~₩45,000)가 현재 주가를 이미 하회. <strong>목표가 상향 없이는 추가 수급 모멘텀 창출이 어려운 구간.</strong></div><div class="risk-impact" style="color:var(--red);">HIGH</div></div>
+    <div class="risk-row"><div class="risk-dot dot-a"></div><div class="risk-name">미국 대중 수출 규제</div><div class="risk-body">중국 고객 매출이 2025 성장의 핵심. 반도체 수출 통제 강화 시 직접 영향. HPA 장비가 규제 대상에 포함될 경우 단기 실적 하향 불가피.</div><div class="risk-impact" style="color:var(--amber);">MED-HIGH</div></div>
+    <div class="risk-row"><div class="risk-dot dot-a"></div><div class="risk-name">52주 고점 저항 (₩53,900)</div><div class="risk-body">현재 주가 기준 고점까지 +22.9% 남아있어 기술적 저항. 고점 돌파를 위해서는 <strong>실적 서프라이즈 또는 신장비 납품 확인이 필요</strong>한 구간.</div><div class="risk-impact" style="color:var(--amber);">MEDIUM</div></div>
+    <div class="risk-row"><div class="risk-dot dot-a"></div><div class="risk-name">HPO 신장비 퀄 테스트 지연</div><div class="risk-body">현재 4개사 데모 진행 중. 납품 지연 시 2026 상반기 성장 스토리 약화. 단, 기존 HPA 매출에는 영향 없어 하방 제한적.</div><div class="risk-impact" style="color:var(--amber);">MEDIUM</div></div>
+    <div class="risk-row"><div class="risk-dot dot-a"></div><div class="risk-name">TSMC 지정학 리스크</div><div class="risk-body">대만 긴장 고조 시 신규 발주 지연 가능. 단, 미국·일본 팹 다변화로 장기적으로는 완화 방향. 단기 이벤트 리스크로 분류.</div><div class="risk-impact" style="color:var(--amber);">MEDIUM</div></div>
+    <div class="risk-row"><div class="risk-dot dot-g"></div><div class="risk-name">경쟁자 기술 추격</div><div class="risk-body">특허 소송 승소 완료. 신장비 개발 주기(2~3년)로 경쟁사 진입 장벽 지속 유지. 핵심 리스크 아님.</div><div class="risk-impact" style="color:var(--green);">LOW</div></div>
+    <div class="risk-row"><div class="risk-dot dot-g"></div><div class="risk-name">고객 이탈 리스크</div><div class="risk-body">HPA 장비는 기술 대체가 불가능한 구조. TSMC·SK하이닉스·삼성전자 모두 공정 필수 장비로 채용 중. 사실상 리스크 없음.</div><div class="risk-impact" style="color:var(--green);">NEGLIGIBLE</div></div>
+  </div>
+</div>
+
+<!-- 6. 컨센서스 갭 -->
+<div class="sec" id="consensus">
+  <span class="sec-tag">CONSENSUS GAP ANALYSIS</span>
+  <h2>컨센서스와의 격차 — 어디서 추가 상승여력이 나오나</h2>
+  <div class="tw">
+    <table>
+      <thead><tr><th>항목</th><th>현재 컨센서스</th><th>독립 분석 추정 (상향)</th><th>업사이드 근거</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">2026E 매출</td><td>2,341억원</td><td class="up bold">2,500~2,700억원</td><td class="gr">TSMC CAPEX 상단($56B) 공식화 + HPO 납품 + 중국 확대</td></tr>
+        <tr><td class="bold">2026E OPM</td><td>~53.2%</td><td class="up bold">53~55%</td><td class="gr">해외 ASP 높은 고객 비중 증가</td></tr>
+        <tr><td class="bold">2026E EPS</td><td>~₩1,300</td><td class="up bold">₩1,400~1,550</td><td class="gr">매출 상향 + 영업 레버리지</td></tr>
+        <tr><td class="bold">2027E 매출</td><td>~3,200억+</td><td class="up bold">3,500~4,000억</td><td class="gr">삼성전자 파운드리+후공정 본격화</td></tr>
+        <tr><td class="bold">목표주가 평균</td><td>₩46,875</td><td class="up bold">₩55,000</td><td class="gr">TSMC 서프라이즈 + 신장비 미반영 → 컨센서스 업데이트 필요</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ibox green">
+    <strong>업사이드 핵심 근거:</strong> 대부분의 국내 증권사 목표주가(₩38,000~₩45,000)는 <strong>2025년 10~11월에 발표된 것으로, TSMC 1Q26 실적 서프라이즈($35.7B, +35.1%)와 CAPEX 상단($56B) 집행 방침이 반영되지 않았습니다.</strong> 이 두 사건이 HPSP의 2026~2027 수주 가시성을 의미 있게 높였으므로, 향후 증권사 리포트 업데이트에서 목표주가 상향 가능성이 높습니다.
+  </div>
+</div>
+
+<!-- 7. 최종 의사결정 -->
+<div class="sec" id="decision">
+  <span class="sec-tag amber">INVESTMENT DECISION</span>
+  <h2>최종 투자 의사결정 — 43,850원에서 어떻게 해야 하나</h2>
+  <ul class="chk-list">
+    <li class="chk-item"><span class="chk-icon">✅</span><span class="chk-name">기술 독점성</span><span class="chk-body">HPA 글로벌 유일 공급, 특허 방어 완료, 경쟁자 진입 불가</span><span class="chk-verdict ok">이상 없음</span></li>
+    <li class="chk-item"><span class="chk-icon">✅</span><span class="chk-name">TSMC 수혜 가시성</span><span class="chk-body">Q1 2026 콘퍼런스콜에서 CAPEX 상단($56B) 집행 방침 공식 확인, 전공정 70% = 직접 수혜</span><span class="chk-verdict ok">강화됨</span></li>
+    <li class="chk-item"><span class="chk-icon">✅</span><span class="chk-name">SK하이닉스 HBM4</span><span class="chk-body">1Q26 ~40조 달성, HBM4 양산 시작, 하이브리드 본딩 수혜</span><span class="chk-verdict ok">강화됨</span></li>
+    <li class="chk-item"><span class="chk-icon">⚠️</span><span class="chk-name">밸류에이션 (2026E)</span><span class="chk-body">P/E 33.7배 — ASML 동급, 성장 전제 충족 시 정당, 미충족 시 조정</span><span class="chk-verdict warn">조건부 OK</span></li>
+    <li class="chk-item"><span class="chk-icon">⚠️</span><span class="chk-name">컨센서스 목표 초과</span><span class="chk-body">다수 증권사 TP 이미 하회. 신규 리포트 업데이트 전까지 단기 수급 공백</span><span class="chk-verdict warn">모니터링</span></li>
+    <li class="chk-item"><span class="chk-icon">⚠️</span><span class="chk-name">HPO 신장비 퀄 완료</span><span class="chk-body">4개사 테스트 중, 아직 납품 미확인 — 확인 시 주가 재평가 트리거</span><span class="chk-verdict warn">진행 중</span></li>
+    <li class="chk-item"><span class="chk-icon">🔴</span><span class="chk-name">중국 수출 규제 리스크</span><span class="chk-body">반도체 수출 규제 강화 시 중국 매출 차질 가능</span><span class="chk-verdict risk">주시 필요</span></li>
+    <li class="chk-item"><span class="chk-icon">🔴</span><span class="chk-name">52주 고점 저항선</span><span class="chk-body">₩53,900 고점 돌파 위한 실적 서프라이즈 또는 신장비 카탈리스트 필요</span><span class="chk-verdict risk">기술적 저항</span></li>
+  </ul>
+  <hr>
+  <div class="opinion">
+    <div class="op-tag">담당 분석가 최종 평가</div>
+    <div class="op-text">
+      솔직하게 말씀드리겠습니다. <strong>₩31,500에서 매수했다면 이미 +39%의 수익을 올렸습니다 — 그것은 잘한 결정이었습니다.</strong> 이제 ₩43,850에서 신규 진입을 고려하시는 분들에게 드리는 분석은 다릅니다.<br><br>
+      <strong>결론부터: 여전히 OVERWEIGHT이지만, 성격이 달라졌습니다.</strong> ₩31,500 때는 "싸게 사는" 전략이었습니다. ₩43,850 현재는 "성장을 사는" 전략입니다. 투자 근거는 여전히 강합니다 — TSMC CAPEX 상단($56B) 공식화, SK하이닉스 HBM4 양산, HPO 신장비 가시화. 그러나 리스크/리워드 비율이 바뀌었습니다. 이전엔 상승여력 +42.9%에 Bear 케이스 -7%였다면, 지금은 상승여력 +25.4%에 Bear 케이스 -20.2%입니다.<br><br>
+      <strong>신규 투자자를 위한 구체적 전략:</strong> ① 현 주가(₩43,850)에서 소량 선취매(포트폴리오의 3~5%) → ② 조정 시(₩40,000~42,000) 추가 매수(7~10%) → ③ HPO 납품 확인 후 포지션 확대. 풀 포지션을 지금 당장 잡는 것은 비효율적입니다. 증권사 목표주가 업데이트 이벤트(2026 1분기 실적 발표 이후)를 활용하는 전략이 현명합니다.<br><br>
+      <strong>기존 보유자에게:</strong> Hold and accumulate on dips. 52주 고점 ₩53,900 돌파 시 Bull 케이스(₩65,000) 시나리오가 작동합니다. 그 전까지는 분할 매도보다 보유가 더 나은 전략입니다. <strong>투자 기간을 최소 2026년 하반기(HPO 납품 + HBM4 수혜 가시화 시점)까지 유지하는 것을 권고합니다.</strong>
+    </div>
+    <div class="op-sig">반도체 장비 독립 리서치팀 | HPSP 403870 | 기준가: ₩43,850 | 2026.04.16<br>⚠️ 본 의견은 참고용이며, 실제 투자 손익에 대한 책임을 지지 않습니다.</div>
+  </div>
+  <div class="disc">
+    <strong>⚠️ 투자 위험 고지 및 면책:</strong> 본 보고서는 공개 데이터 및 증권사 리서치를 기반으로 한 참고용 독립 분석 자료입니다. 특정 금융투자업자가 발행한 공식 보고서가 아닙니다. 투자 권유가 아니며, 주식 투자 시 원금 손실이 발생할 수 있습니다. 모든 투자 결정은 공인 금융투자업자 상담 후 본인 판단으로 하시기 바랍니다.<br><br>
+    <strong>정보 출처 (2026.04.16 기준):</strong> Investing.com (52주 범위 21,150~53,900 · 컨센서스 avg ₩46,875 · 8명 전원 매수), KB증권·NH투자증권·한화투자증권·한국투자증권·대신증권·삼성증권·BNK투자증권 리서치, TSMC IR Q1 2026 컨퍼런스콜 (CEO C.C. Wei: CAPEX 상단 집행 방침), SK하이닉스 IR, 와이즈리포트, 씽크풀<br><br>
+    <strong>전 보고서 대비 수정 사항:</strong> ① 컨센서스 평균 TP ₩48,313 → <strong>₩46,875</strong> (Investing.com 2026.03 최신치 반영) ② TSMC CAPEX 표현: "1Q 조기집행 $45B 확정" → <strong>"Q1 2026 콘퍼런스콜에서 CAPEX 상단($56B) 집행 방침 공식 확인"</strong> (실제 CEO 발언 기반 정정)
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,0.35);text-align:center;padding:14px 20px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">
+  HPSP (403870) 독립 리서치 업데이트 | 기준가 ₩43,850 | 2026.04.16 | 참고용 — 투자 권유 아님
+</div>
+
+</body>
+</html>
