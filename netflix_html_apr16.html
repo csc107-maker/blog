@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>넷플릭스 Q1 2026 실적 분석 — 블로그 삽입용 HTML</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root{
+  --bg:#0d0d0d;
+  --card:#161616;
+  --card2:#1e1e1e;
+  --red:#e50914;
+  --red2:#ff4757;
+  --gold:#f5c518;
+  --green:#2ed573;
+  --blue:#1e90ff;
+  --gray:#8892a4;
+  --bdr:rgba(229,9,20,.2);
+  --txt:#f0f0f0;
+  --txt2:#a0aab8;
+  --txt3:#555f6e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.7;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#0d0d0d 0%,#1a0000 50%,#0d0d0d 100%);
+  border-bottom:2px solid var(--red);
+  padding:36px 28px 28px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'N';
+  position:absolute;right:-20px;top:-20px;
+  font-size:200px;font-weight:900;
+  color:rgba(229,9,20,.06);
+  font-family:'JetBrains Mono',monospace;
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-block;
+  background:var(--red);
+  color:#fff;
+  font-size:9px;font-family:'JetBrains Mono',monospace;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:3px 11px;border-radius:2px;margin-bottom:12px;font-weight:700;
+}
+.hero h1{
+  font-size:clamp(20px,4vw,30px);font-weight:900;line-height:1.25;
+  background:linear-gradient(120deg,#fff,var(--red2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:6px;
+}
+.hero-sub{font-size:12px;color:var(--txt2);}
+
+/* ── INDEX STRIP ── */
+.idx-strip{
+  display:flex;flex-wrap:wrap;gap:0;
+  padding:14px 28px;background:rgba(229,9,20,.06);
+  border-bottom:1px solid var(--bdr);
+}
+.idx-box{flex:1;min-width:100px;padding:10px 14px;}
+.ib-lbl{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:4px;}
+.ib-val{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.ib-chg{font-size:10.5px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:2px 7px;border-radius:3px;}
+.up-b{background:rgba(46,213,115,.12);color:var(--green);}
+.dn-b{background:rgba(255,71,87,.12);color:var(--red2);}
+.nt-b{background:rgba(245,197,24,.1);color:var(--gold);}
+
+/* ── LAYOUT ── */
+.body{padding:22px 24px 32px;}
+.sec{margin-bottom:32px;}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sn{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;color:var(--red2);background:rgba(229,9,20,.12);border:1px solid rgba(229,9,20,.25);padding:2px 8px;border-radius:2px;}
+.st{font-size:15px;font-weight:700;color:#fff;}
+
+/* ── KPI ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:11px;margin:14px 0;}
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:15px 16px;position:relative;overflow:hidden;transition:.2s;}
+.kpi:hover{border-color:rgba(229,9,20,.4);}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.k-r::after{background:linear-gradient(90deg,var(--red),transparent);}
+.k-g::after{background:linear-gradient(90deg,var(--green),transparent);}
+.k-b::after{background:linear-gradient(90deg,var(--blue),transparent);}
+.k-gd::after{background:linear-gradient(90deg,var(--gold),transparent);}
+.kl{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;}
+.kv{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.kv.r{color:var(--red2);}
+.kv.g{color:var(--green);}
+.kv.gd{color:var(--gold);}
+.kv.b{color:var(--blue);}
+.kn{font-size:11px;color:var(--txt2);}
+
+/* ── TABLE ── */
+.tw{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead th{background:rgba(229,9,20,.12);border-bottom:1px solid var(--bdr);padding:8px 13px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red2);font-weight:700;}
+thead th:not(:first-child){text-align:right;}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);}
+tbody tr:hover{background:rgba(229,9,20,.04);}
+td{padding:8px 13px;color:var(--txt);}
+td:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace;font-size:12px;}
+td.g{color:var(--green);font-weight:600;}
+td.r{color:var(--red2);}
+td.gd{color:var(--gold);font-weight:600;}
+td.gr{color:var(--txt2);}
+td.w{color:#fff;font-weight:700;}
+
+/* ── BAR CHART ── */
+.bc{margin:16px 0;}
+.bc-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.bc-lbl{font-size:11.5px;color:var(--txt2);min-width:110px;text-align:right;flex-shrink:0;}
+.bc-track{flex:1;height:20px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden;}
+.bc-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:7px;font-size:9px;font-family:'JetBrains Mono',monospace;font-weight:700;color:rgba(0,0,0,.8);}
+.bc-val{font-size:11.5px;font-family:'JetBrains Mono',monospace;font-weight:700;min-width:55px;}
+
+/* ── SCENARIO ── */
+.sc-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+.sc-box{border-radius:8px;padding:18px 16px;border:1px solid;}
+.sc-box.bear{background:rgba(255,71,87,.06);border-color:rgba(255,71,87,.3);}
+.sc-box.base{background:rgba(30,144,255,.06);border-color:rgba(30,144,255,.25);}
+.sc-box.bull{background:rgba(46,213,115,.06);border-color:rgba(46,213,115,.25);}
+.sc-lbl{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:7px;}
+.sc-box.bear .sc-lbl{color:var(--red2);}
+.sc-box.base .sc-lbl{color:var(--blue);}
+.sc-box.bull .sc-lbl{color:var(--green);}
+.sc-move{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700;color:#fff;margin-bottom:4px;}
+.sc-sub{font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:700;margin-bottom:9px;}
+.sc-box.bear .sc-sub{color:var(--red2);}
+.sc-box.base .sc-sub{color:var(--blue);}
+.sc-box.bull .sc-sub{color:var(--green);}
+.sc-desc{font-size:11.5px;color:var(--txt2);line-height:1.65;}
+
+/* ── ANALYST TARGETS ── */
+.target-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;margin:14px 0;}
+.tg{background:var(--card2);border:1px solid var(--bdr);border-radius:6px;padding:11px 13px;transition:.2s;}
+.tg:hover{border-color:rgba(229,9,20,.3);}
+.tg-firm{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;color:var(--txt3);margin-bottom:4px;}
+.tg-rating{font-size:10px;font-weight:700;margin-bottom:4px;}
+.tg-rating.buy{color:var(--green);}
+.tg-rating.hold{color:var(--gold);}
+.tg-tp{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#fff;}
+
+/* ── STOCK IMPACT ── */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+.imp-box{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:14px 16px;}
+.imp-box h4{font-size:12px;font-weight:700;color:#fff;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.imp-item{display:flex;justify-content:space-between;font-size:11.5px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.imp-item:last-child{border:none;}
+.imp-name{color:var(--txt2);}
+.imp-val{font-family:'JetBrains Mono',monospace;font-weight:600;}
+
+/* ── ALERT ── */
+.al{border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12.5px;line-height:1.8;}
+.al-r{background:rgba(255,71,87,.07);border-left:3px solid var(--red2);}
+.al-g{background:rgba(46,213,115,.07);border-left:3px solid var(--green);}
+.al-b{background:rgba(30,144,255,.07);border-left:3px solid var(--blue);}
+.al-gd{background:rgba(245,197,24,.07);border-left:3px solid var(--gold);}
+.al strong{color:#fff;}
+
+hr{border:none;border-top:1px solid rgba(255,255,255,.05);margin:18px 0;}
+
+.disc{background:rgba(255,71,87,.05);border:1px solid rgba(255,71,87,.15);border-radius:5px;padding:10px 14px;margin-top:18px;font-size:10.5px;color:var(--txt3);line-height:1.75;}
+
+@media(max-width:600px){
+  .hero{padding:28px 16px 22px;}
+  .body{padding:16px 14px 24px;}
+  .sc-wrap{grid-template-columns:1fr;}
+  .impact-grid{grid-template-columns:1fr;}
+  .idx-strip{padding:12px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-badge">📊 실적 분석 · 2026.04.16 장 마감 후</div>
+  <h1>넷플릭스 Q1 2026 실적 발표<br>시장 완전 분석 리포트</h1>
+  <p class="hero-sub">컨센서스 비교 · 3가지 시나리오 · 애널리스트 목표주가 · 연관 종목 영향</p>
+</div>
+
+<!-- ── 핵심 지표 ── -->
+<div class="idx-strip">
+  <div class="idx-box">
+    <div class="ib-lbl">NFLX 종가 (4/15)</div>
+    <div class="ib-val">$107.71</div>
+    <div class="ib-chg up-b">▲ +1.4%</div>
+  </div>
+  <div class="idx-box">
+    <div class="ib-lbl">YTD 상승률</div>
+    <div class="ib-val">+10~18%</div>
+    <div class="ib-chg up-b">연초 대비</div>
+  </div>
+  <div class="idx-box">
+    <div class="ib-lbl">52주 범위</div>
+    <div class="ib-val">$75~134</div>
+    <div class="ib-chg nt-b">저점서 +43%</div>
+  </div>
+  <div class="idx-box">
+    <div class="ib-lbl">예상 주가 변동</div>
+    <div class="ib-val">±6.54%</div>
+    <div class="ib-chg nt-b">옵션 시장 기준</div>
+  </div>
+  <div class="idx-box">
+    <div class="ib-lbl">애널리스트 컨센</div>
+    <div class="ib-val">Strong Buy</div>
+    <div class="ib-chg up-b">30 Buy / 10 Hold</div>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- ① 핵심 KPI -->
+<div class="sec">
+  <div class="sh"><span class="sn">01</span><span class="st">Q1 2026 핵심 예상 vs 실제 비교</span></div>
+
+  <div class="kpi-grid">
+    <div class="kpi k-r">
+      <div class="kl">Q1 매출 컨센서스</div>
+      <div class="kv r">$121.7B</div>
+      <div class="kn">+15.5% YoY 성장 예상</div>
+    </div>
+    <div class="kpi k-gd">
+      <div class="kl">EPS 컨센서스</div>
+      <div class="kv gd">$0.76~0.79</div>
+      <div class="kn">전년 $0.66 → +15%</div>
+    </div>
+    <div class="kpi k-g">
+      <div class="kl">영업이익률 가이던스</div>
+      <div class="kv g">32.1%</div>
+      <div class="kn">전년 31.7% 대비 +40bp</div>
+    </div>
+    <div class="kpi k-b">
+      <div class="kl">가입자 예상 (컨센)</div>
+      <div class="kv b">3.31억명</div>
+      <div class="kn">전분기 3.25억명 돌파</div>
+    </div>
+    <div class="kpi k-r">
+      <div class="kl">광고 매출 연간 목표</div>
+      <div class="kv r">$3B</div>
+      <div class="kn">2025년 $1.5B → 2배</div>
+    </div>
+    <div class="kpi k-gd">
+      <div class="kl">2026 연간 매출 가이던스</div>
+      <div class="kv gd">$50.7~51.7B</div>
+      <div class="kn">4Q25 발표 기준</div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr>
+          <th>지표</th>
+          <th>Q1 2025 실제</th>
+          <th>Q4 2025 실제</th>
+          <th>Q1 2026 컨센서스</th>
+          <th>YoY 성장률</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="w">매출</td>
+          <td>$10.54B</td>
+          <td>$12.05B</td>
+          <td class="gd">$12.16~12.20B</td>
+          <td class="g">+15.5%</td>
+        </tr>
+        <tr>
+          <td class="w">EPS (희석)</td>
+          <td>$0.66</td>
+          <td>$0.56</td>
+          <td class="gd">$0.76~0.79</td>
+          <td class="g">+15~20%</td>
+        </tr>
+        <tr>
+          <td class="w">영업이익률</td>
+          <td>31.7%</td>
+          <td>~22%</td>
+          <td class="gd">32.1%</td>
+          <td class="g">+40bp YoY</td>
+        </tr>
+        <tr>
+          <td class="w">유료 가입자</td>
+          <td>2.77억명</td>
+          <td>3.25억명</td>
+          <td class="gd">3.31억명</td>
+          <td class="g">+19.5%</td>
+        </tr>
+        <tr>
+          <td class="w">광고 매출 (연간)</td>
+          <td>—</td>
+          <td>$1.5B (2025 연간)</td>
+          <td class="gd">~$3B (2026E)</td>
+          <td class="g">+100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="al al-gd">
+    <strong>📌 서프라이즈 이력:</strong> 넷플릭스는 최근 4분기 중 3분기에 EPS 컨센서스를 상회했습니다. Q4 2025에는 EPS $0.56으로 컨센($0.55) 소폭 상회, 매출 $12.05B으로 컨센($11.97B) 상회. 단, 내부 중장기 목표에 못 미쳐 시간 외 4% 하락했던 선례가 있습니다.
+  </div>
+</div>
+
+<!-- ② 광고 매출 성장 -->
+<div class="sec">
+  <div class="sh"><span class="sn">02</span><span class="st">광고 매출 성장 추이 — 넥스트 성장 엔진</span></div>
+
+  <div class="bc">
+    <div class="bc-row">
+      <span class="bc-lbl">2023 광고 매출</span>
+      <div class="bc-track"><div class="bc-fill" style="width:15%;background:#555;">~$0.5B</div></div>
+      <span class="bc-val" style="color:var(--txt2);">~$0.5B</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">2024 광고 매출</span>
+      <div class="bc-track"><div class="bc-fill" style="width:25%;background:#888;">~$1.0B</div></div>
+      <span class="bc-val" style="color:var(--txt2);">~$1.0B</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">2025 광고 매출</span>
+      <div class="bc-track"><div class="bc-fill" style="width:50%;background:var(--red2);">$1.5B (+2.5x)</div></div>
+      <span class="bc-val" style="color:var(--red2);">$1.5B</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">2026E 광고 매출</span>
+      <div class="bc-track"><div class="bc-fill" style="width:100%;background:linear-gradient(90deg,var(--red),var(--red2));">$3.0B 목표 (+100% YoY)</div></div>
+      <span class="bc-val" style="color:var(--green);">$3.0B</span>
+    </div>
+  </div>
+
+  <div class="al al-r">
+    <strong>광고 vs 구독 마진 구조:</strong> 광고는 현재 전체 매출의 6% 미만이지만, 영업 마진이 구독보다 높습니다. 광고 비율이 높아질수록 전체 영업이익률이 개선되는 구조예요. BTS 서울 콘서트 (1,840만 뷰), 2026 WBC 역대 최다 시청 등 고관여 라이브 콘텐츠가 광고 단가(CPM) 상승 핵심 수단입니다.
+  </div>
+</div>
+
+<!-- ③ 애널리스트 목표주가 -->
+<div class="sec">
+  <div class="sh"><span class="sn">03</span><span class="st">애널리스트 목표주가 현황 (2026년 4월 기준)</span></div>
+
+  <div class="target-grid">
+    <div class="tg">
+      <div class="tg-firm">구겐하임</div>
+      <div class="tg-rating buy">Buy</div>
+      <div class="tg-tp">$130</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">모펫너선슨</div>
+      <div class="tg-rating buy">Buy</div>
+      <div class="tg-tp">$120</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">웨드부시</div>
+      <div class="tg-rating buy">Buy</div>
+      <div class="tg-tp">$118</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">에버코어</div>
+      <div class="tg-rating buy">Buy</div>
+      <div class="tg-tp">$115</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">키뱅크</div>
+      <div class="tg-rating buy">Overweight</div>
+      <div class="tg-tp">$115</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">키코프</div>
+      <div class="tg-rating buy">Overweight</div>
+      <div class="tg-tp">$110</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">루프 캐피털</div>
+      <div class="tg-rating buy">Buy</div>
+      <div class="tg-tp">$104</div>
+    </div>
+    <div class="tg">
+      <div class="tg-firm">도이치뱅크</div>
+      <div class="tg-rating hold">Hold</div>
+      <div class="tg-tp">$100</div>
+    </div>
+    <div class="tg" style="border-color:rgba(46,213,115,.3);background:rgba(46,213,115,.05);">
+      <div class="tg-firm">컨센서스 평균</div>
+      <div class="tg-rating buy">Strong Buy</div>
+      <div class="tg-tp" style="color:var(--green);">$115~118</div>
+    </div>
+  </div>
+
+  <div class="al al-g">
+    <strong>투자의견 분포 (커버리지 40명):</strong> Buy 30명 · Hold 10명 · Sell 0명. 골드만삭스가 최근 중립→매수로 등급 상향. 현재 주가($107.71) 대비 컨센 목표 기준 약 7~10% 상승여력.
+  </div>
+</div>
+
+<!-- ④ 3가지 시나리오 -->
+<div class="sec">
+  <div class="sh"><span class="sn">04</span><span class="st">실적 발표 후 3가지 시나리오</span></div>
+
+  <div class="sc-wrap">
+    <div class="sc-box bear">
+      <div class="sc-lbl">🐻 Bear Case</div>
+      <div class="sc-move">-7~10%</div>
+      <div class="sc-sub">시간 외 급락</div>
+      <div class="sc-desc">
+        ① 가격 인상 후 구독자 이탈 증가<br>
+        ② 연간 가이던스 하향 또는 신중한 코멘트<br>
+        ③ 광고 매출 성장 예상 하회<br>
+        ④ Q4 2025 패턴 재현 (소폭 상회 → 내부 목표 미달)<br>
+        ⑤ 나스닥 기술주 전반 부담
+      </div>
+    </div>
+    <div class="sc-box base">
+      <div class="sc-lbl">⚖️ Base Case</div>
+      <div class="sc-move">-3~+3%</div>
+      <div class="sc-sub">제한적 반응</div>
+      <div class="sc-desc">
+        ① 컨센서스 부합 (EPS $0.76~0.79)<br>
+        ② 가입자 3.31억명 수준 달성<br>
+        ③ 연간 가이던스 유지<br>
+        ④ 광고 성장세 확인 (구체 수치 미공개)<br>
+        ⑤ 단기 차익 실현 후 횡보
+      </div>
+    </div>
+    <div class="sc-box bull">
+      <div class="sc-lbl">🐂 Bull Case</div>
+      <div class="sc-move">+7~10%</div>
+      <div class="sc-sub">강세 반응</div>
+      <div class="sc-desc">
+        ① EPS $0.82+ 서프라이즈<br>
+        ② 연간 가이던스 상향 조정<br>
+        ③ 광고 매출 1분기 $7~8억 확인<br>
+        ④ 가입자 3.35억명 이상 서프라이즈<br>
+        ⑤ 나스닥 기술주 전반 동반 상승
+      </div>
+    </div>
+  </div>
+
+  <div class="al al-b">
+    <strong>📌 핵심 포인트:</strong> 시장에서 진짜 중요한 것은 <strong>연간 가이던스와 광고 매출 코멘트</strong>입니다. 단순 컨센서스 부합만으로는 주가 상승을 이끌기 어려운 구조. 주가가 YTD 이미 10~18% 오른 상태이기 때문에 '명확한 업사이드 신호'가 없으면 차익 실현 압력이 나올 수 있습니다.
+  </div>
+</div>
+
+<!-- ⑤ 연관 종목 영향 -->
+<div class="sec">
+  <div class="sh"><span class="sn">05</span><span class="st">넷플릭스 실적이 움직이는 연관 종목·업종</span></div>
+
+  <div class="impact-grid">
+    <div class="imp-box">
+      <h4>📈 서프라이즈 시 수혜 가능</h4>
+      <div class="imp-item"><span class="imp-name">국내 K-콘텐츠 제작사</span><span class="imp-val" style="color:var(--green);">직접 수혜</span></div>
+      <div class="imp-item"><span class="imp-name">알파벳 (GOOGL)</span><span class="imp-val" style="color:var(--green);">광고 심리 개선</span></div>
+      <div class="imp-item"><span class="imp-name">메타 (META)</span><span class="imp-val" style="color:var(--green);">광고 섹터 온기</span></div>
+      <div class="imp-item"><span class="imp-name">디즈니+ (DIS)</span><span class="imp-val" style="color:var(--green);">스트리밍 업황 확인</span></div>
+      <div class="imp-item"><span class="imp-name">나스닥 기술주 전반</span><span class="imp-val" style="color:var(--green);">실적시즌 기대 ↑</span></div>
+    </div>
+    <div class="imp-box">
+      <h4>📉 실망 시 부담 가능</h4>
+      <div class="imp-item"><span class="imp-name">스트리밍 경쟁사 전반</span><span class="imp-val" style="color:var(--red2);">업황 우려 확산</span></div>
+      <div class="imp-item"><span class="imp-name">나스닥 미디어 섹터</span><span class="imp-val" style="color:var(--red2);">업종 동반 하락</span></div>
+      <div class="imp-item"><span class="imp-name">광고·마케팅주</span><span class="imp-val" style="color:var(--red2);">디지털 지출 우려</span></div>
+      <div class="imp-item"><span class="imp-name">MS·구글 실적 기대</span><span class="imp-val" style="color:var(--red2);">선행 지표 약화</span></div>
+      <div class="imp-item"><span class="imp-name">고PER 성장주 전반</span><span class="imp-val" style="color:var(--red2);">밸류에이션 부담</span></div>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>구분</th><th>종목·업종</th><th>영향 방향</th><th>강도</th><th>비고</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="w">K-콘텐츠 제작</td><td>국내 드라마·영화 제작사</td><td class="g">▲ 수혜</td><td class="g">직접</td><td class="gr">Netflix 투자 확대 시</td></tr>
+        <tr><td class="w">광고 플랫폼</td><td>알파벳(GOOGL), 메타</td><td class="g">▲ 간접</td><td>중간</td><td class="gr">디지털 광고 심리 개선</td></tr>
+        <tr><td class="w">스트리밍 경쟁</td><td>디즈니(DIS), 애플(AAPL)</td><td>중립~간접</td><td>낮음</td><td class="gr">업황 확인 신호</td></tr>
+        <tr><td class="w">나스닥 기술주</td><td>M7 전반</td><td class="g">▲ 간접</td><td>중간</td><td class="gr">실적시즌 선도 지표</td></tr>
+        <tr><td class="w">엔터·미디어</td><td>국내 엔터주</td><td class="g">▲ 간접</td><td>낮음</td><td class="gr">K-콘텐츠 가치 확인</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="disc">
+  ⚠️ 본 자료는 공개된 정보와 컨센서스 데이터를 기반으로 한 참고용 분석입니다. 투자 권유가 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 해외 주식 투자는 환율 리스크를 포함한 원금 손실이 발생할 수 있습니다.<br>
+  <strong>Sources:</strong> Reuters · FactSet · Zacks · Seeking Alpha · Benzinga · Blockonomi · XTB · IG · TipRanks | 2026.04.16 기준
+</div>
+
+</div><!-- /body -->
+
+<div style="background:#0a0a0a;color:rgba(255,255,255,.2);text-align:center;padding:12px 20px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">
+  넷플릭스 Q1 2026 실적 분석 | 2026.04.16 장 마감 후 | 정보 제공용 — 투자 권유 아님
+</div>
+</body>
+</html>
