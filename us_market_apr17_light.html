@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4월 17일 미국 시장 분석 — KPI · 타임라인 · 업종별 등락</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap');
+:root{
+  --bg:#f4f7ff;
+  --bg2:#eaf0fb;
+  --card:#ffffff;
+  --card2:#f0f4fd;
+  --navy:#0f2a6b;
+  --blue:#1d4ed8;
+  --sky:#2563eb;
+  --cyan:#0891b2;
+  --green:#15803d;
+  --red:#b91c1c;
+  --gold:#b45309;
+  --orange:#c2410c;
+  --bdr:#ccd9f0;
+  --bdr2:#93b4e8;
+  --txt:#0f172a;
+  --txt2:#334155;
+  --txt3:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'Noto Sans KR',sans-serif;font-size:13.5px;line-height:1.7;}
+
+/* ── HEADER ── */
+.hdr{
+  background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 55%,#0c4a6e 100%);
+  color:#fff;padding:36px 28px 28px;position:relative;overflow:hidden;
+}
+.hdr::before{content:'US';position:absolute;right:-15px;top:-15px;font-size:160px;font-weight:900;font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.05);pointer-events:none;}
+.hdr-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#bfdbfe;font-size:9.5px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;padding:3px 11px;border-radius:2px;margin-bottom:12px;}
+.hdr-badge .dot{width:6px;height:6px;border-radius:50%;background:#4ade80;}
+.hdr h1{font-size:clamp(18px,3.5vw,28px);font-weight:900;line-height:1.25;color:#fff;margin-bottom:6px;}
+.hdr-sub{font-size:12px;color:rgba(255,255,255,.65);}
+
+/* ── INDEX STRIP ── */
+.idx-strip{display:flex;flex-wrap:wrap;gap:0;background:#fff;border-bottom:2px solid var(--bdr);}
+.ib{flex:1;min-width:90px;padding:13px 16px;border-right:1px solid var(--bdr);}
+.ib:last-child{border-right:none;}
+.ib-l{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:4px;}
+.ib-v{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:3px;}
+.ib-c{font-size:10px;font-family:'JetBrains Mono',monospace;font-weight:700;padding:2px 7px;border-radius:3px;}
+.up{background:#dcfce7;color:var(--green);}
+.dn{background:#fee2e2;color:var(--red);}
+.nt{background:#fef3c7;color:var(--gold);}
+
+/* ── BODY ── */
+.body{padding:24px 24px 36px;}
+.sec{margin-bottom:32px;}
+.sh{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sn{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;color:var(--blue);background:#dbeafe;border:1px solid #93c5fd;padding:2px 8px;border-radius:2px;}
+.st{font-size:15px;font-weight:700;color:var(--navy);}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:11px;margin:14px 0;}
+.kpi{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:15px 16px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:.2s;}
+.kpi:hover{border-color:var(--bdr2);box-shadow:0 3px 10px rgba(29,78,216,.1);}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.k-gn::before{background:linear-gradient(90deg,var(--green),transparent);}
+.k-bl::before{background:linear-gradient(90deg,var(--blue),transparent);}
+.k-rd::before{background:linear-gradient(90deg,var(--red),transparent);}
+.k-gd::before{background:linear-gradient(90deg,var(--gold),transparent);}
+.k-or::before{background:linear-gradient(90deg,var(--orange),transparent);}
+.k-cy::before{background:linear-gradient(90deg,var(--cyan),transparent);}
+.kl{font-size:8.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;}
+.kv{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px;}
+.kv.g{color:var(--green);}
+.kv.r{color:var(--red);}
+.kv.gd{color:var(--gold);}
+.kv.b{color:var(--blue);}
+.kn{font-size:11.5px;color:var(--txt3);}
+
+/* ── TIMELINE ── */
+.tl{position:relative;padding-left:28px;margin:14px 0;}
+.tl::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--sky),var(--green),rgba(0,0,0,.05));}
+.tl-it{position:relative;margin-bottom:20px;}
+.tl-it::before{content:'';position:absolute;left:-23px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--sky);border:2px solid #fff;box-shadow:0 0 0 2px var(--sky);}
+.tl-it.gn::before{background:var(--green);box-shadow:0 0 0 2px var(--green);}
+.tl-it.rd::before{background:var(--red);box-shadow:0 0 0 2px var(--red);}
+.tl-it.gd::before{background:var(--gold);box-shadow:0 0 0 2px var(--gold);}
+.tl-time{font-size:9.5px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;color:var(--txt3);margin-bottom:2px;}
+.tl-title{font-weight:700;font-size:13.5px;color:var(--navy);margin-bottom:3px;}
+.tl-body{font-size:12.5px;color:var(--txt2);line-height:1.7;}
+.tl-body strong{color:var(--navy);}
+
+/* ── BAR CHART ── */
+.bc{margin:14px 0;}
+.bc-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.bc-lbl{font-size:11.5px;color:var(--txt2);min-width:110px;text-align:right;flex-shrink:0;}
+.bc-track{flex:1;height:22px;background:var(--bg2);border-radius:4px;overflow:hidden;border:1px solid var(--bdr);}
+.bc-fill{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:9.5px;font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;}
+.bc-val{font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:700;min-width:55px;}
+
+/* ── SUPPLY BOX ── */
+.supply-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+.sp{background:var(--card);border:1px solid var(--bdr);border-radius:8px;padding:15px 16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.sp-who{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:7px;}
+.sp-val{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;margin-bottom:4px;}
+.sp-note{font-size:11px;color:var(--txt3);}
+
+/* ── ALERT BOX ── */
+.al{border-radius:7px;padding:14px 18px;margin:12px 0;font-size:13px;line-height:1.85;}
+.al-bl{background:#eff6ff;border-left:4px solid var(--sky);}
+.al-gn{background:#f0fdf4;border-left:4px solid var(--green);}
+.al-rd{background:#fef2f2;border-left:4px solid var(--red);}
+.al-gd{background:#fffbeb;border-left:4px solid var(--gold);}
+.al strong{color:var(--navy);}
+
+hr{border:none;border-top:1px solid var(--bdr);margin:20px 0;}
+
+/* ── HIGHLIGHT ROW ── */
+.highlight-box{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);color:#fff;border-radius:8px;padding:20px 22px;margin:14px 0;}
+.hb-label{font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:#93c5fd;margin-bottom:10px;}
+.hb-text{font-size:13.5px;line-height:1.85;color:rgba(255,255,255,.88);}
+.hb-text strong{color:#fff;}
+
+/* ── WEEKLY TABLE ── */
+.tw{overflow-x:auto;margin:12px 0;}
+table{width:100%;border-collapse:collapse;font-size:12.5px;}
+thead th{background:var(--navy);color:#fff;padding:9px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+thead th:not(:first-child){text-align:center;}
+tbody tr{border-bottom:1px solid var(--bdr);}
+tbody tr:nth-child(even){background:var(--bg2);}
+tbody tr:hover{background:#dbeafe;}
+td{padding:9px 14px;color:var(--txt);}
+td:not(:first-child){text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;}
+td.g{color:var(--green);font-weight:600;}
+td.r{color:var(--red);font-weight:600;}
+td.gd{color:var(--gold);font-weight:600;}
+td.gr{color:var(--txt3);}
+td.w{font-weight:700;color:var(--navy);}
+
+.disc{background:var(--bg2);border:1px solid var(--bdr);border-radius:6px;padding:11px 15px;margin-top:18px;font-size:10.5px;color:var(--txt3);line-height:1.75;}
+
+@media(max-width:560px){
+  .hdr{padding:26px 16px 22px;}
+  .body{padding:16px 14px 24px;}
+  .supply-grid{grid-template-columns:repeat(3,1fr);}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-badge"><span class="dot"></span> 미국 시장 분석 · 2026.04.17</div>
+  <h1>나스닥 13연속 신고가 — 1992년 이후 34년 만의 기록<br>호르무즈 개방·유가 급락이 부른 역대급 랠리</h1>
+  <p class="hdr-sub">S&P 500 7,126 · 나스닥 24,468 · 다우 49,447 | 주간 3연속 상승</p>
+</div>
+
+<!-- INDEX -->
+<div class="idx-strip">
+  <div class="ib"><div class="ib-l">S&P 500</div><div class="ib-v">7,126</div><div class="ib-c up">▲ +1.20%</div></div>
+  <div class="ib"><div class="ib-l">나스닥</div><div class="ib-v">24,468</div><div class="ib-c up">▲ +1.52%</div></div>
+  <div class="ib"><div class="ib-l">다우존스</div><div class="ib-v">49,447</div><div class="ib-c up">▲ +1.79%</div></div>
+  <div class="ib"><div class="ib-l">러셀 2000</div><div class="ib-v">신고가</div><div class="ib-c up">▲ +2%+</div></div>
+  <div class="ib"><div class="ib-l">WTI 유가</div><div class="ib-v">$83.85</div><div class="ib-c dn">▼ -11.45%</div></div>
+  <div class="ib"><div class="ib-l">나스닥 연속 상승</div><div class="ib-v">13거래일</div><div class="ib-c up">1992년 이후 최장</div></div>
+</div>
+
+<div class="body">
+
+<!-- 01 KPI -->
+<div class="sec">
+  <div class="sh"><span class="sn">01</span><span class="st">핵심 KPI — 4월 17일 미국 시장 성과</span></div>
+
+  <div class="kpi-grid">
+    <div class="kpi k-gn">
+      <div class="kl">S&P 500 종가</div>
+      <div class="kv g">7,126.06</div>
+      <div class="kn">7,100선 사상 첫 돌파</div>
+    </div>
+    <div class="kpi k-bl">
+      <div class="kl">나스닥 종가</div>
+      <div class="kv b">24,468.48</div>
+      <div class="kn">13연속 — 1992년 1월 이후 최장</div>
+    </div>
+    <div class="kpi k-gd">
+      <div class="kl">다우존스 상승폭</div>
+      <div class="kv gd">+868.71p</div>
+      <div class="kn">50,000 목전</div>
+    </div>
+    <div class="kpi k-rd">
+      <div class="kl">WTI 원유</div>
+      <div class="kv r">$83.85</div>
+      <div class="kn">-11.45% 폭락 (호르무즈 개방)</div>
+    </div>
+    <div class="kpi k-gn">
+      <div class="kl">나스닥 주간 상승</div>
+      <div class="kv g">+6.8%</div>
+      <div class="kn">S&P +4.5% / 다우 +3.2%</div>
+    </div>
+    <div class="kpi k-cy">
+      <div class="kl">크루즈 3종 평균</div>
+      <div class="kv" style="color:var(--cyan);">+9%+</div>
+      <div class="kn">로열캐리비안·노르웨이지안·카니발</div>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <div class="hb-label">핵심 상승 촉매</div>
+    <div class="hb-text">
+      이란 외무장관 아라그치가 SNS에 <strong>"이스라엘-레바논 휴전에 맞춰 호르무즈 해협을 상업 선박에 완전 개방한다"</strong>고 발표. 유가가 하루 만에 -11.45% 폭락하며 에너지 비용 급감 기대가 확산됐고, 소비재·금융·여행·기술 업종 전반에 매수세가 쏟아졌습니다. 트럼프 대통령도 "이란과의 평화 협상이 매우 가까워졌다"고 화답하며 투자 심리를 강화했습니다.
+    </div>
+  </div>
+</div>
+
+<!-- 02 타임라인 -->
+<div class="sec">
+  <div class="sh"><span class="sn">02</span><span class="st">4월 17일 미국 시장 타임라인</span></div>
+
+  <div class="tl">
+    <div class="tl-it gn">
+      <div class="tl-time">개장 전 — 이란 외무장관 포스팅</div>
+      <div class="tl-title">호르무즈 해협 상업 선박 완전 개방 선언</div>
+      <div class="tl-body">WTI 유가 -12% 폭락. 크루즈·항공·여행 선물 급등. 러셀2000 신고가 예고.</div>
+    </div>
+    <div class="tl-it gn">
+      <div class="tl-time">개장 (ET 9:30)</div>
+      <div class="tl-title">다우 +515p, S&P +0.6%, 나스닥 +0.9%로 출발</div>
+      <div class="tl-body"><strong>로열캐리비안·노르웨이지안·카니발 +9%+ 폭등.</strong> 러셀2000 사상 최고가 2,750 돌파. 보잉 +4.28%, 홈디포 +3.62%, 셔윈-윌리엄스 +3.83%.</div>
+    </div>
+    <div class="tl-it">
+      <div class="tl-time">장 중</div>
+      <div class="tl-title">트럼프 "이란 평화 협상 매우 가깝다" + 러셀2000 신고가 확인</div>
+      <div class="tl-body">소형주·경기소비재 중심 강세 확산. 애플 +1.4% (중국 아이폰 출하 +20% 보도). 아마존·마이크로소프트·엔비디아·테슬라 모두 1%+ 상승. 넷플릭스는 전날 시간외 급락 지속 -9.3%.</div>
+    </div>
+    <div class="tl-it gn">
+      <div class="tl-time">마감 (ET 16:00)</div>
+      <div class="tl-title">S&P 7,126 / 나스닥 24,468 / 다우 49,447 — 삼중 신고가</div>
+      <div class="tl-body">3주 연속 상승 달성. S&P <strong>주간 +4.5%</strong>, 나스닥 <strong>+6.8%</strong>, 다우 +3.2%. "쉬운 랠리의 끝 — 이제부터는 실적이 증명해야 한다" — 전문가 경고.</div>
+    </div>
+    <div class="tl-it gd">
+      <div class="tl-time">마감 후 — 트럼프 추가 발언</div>
+      <div class="tl-title">"이란 항구 봉쇄, 평화 협정 전까지 유지"</div>
+      <div class="tl-body">강경 발언이 이란의 다음 날 재봉쇄 빌미로 작용. 다음 날(토) 이란 군부 "호르무즈 이전 상태 복귀" 선언.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 업종별 등락 -->
+<div class="sec">
+  <div class="sh"><span class="sn">03</span><span class="st">업종·종목별 등락 — 왜 이 종목들이 움직였나</span></div>
+
+  <p style="font-size:12px;color:var(--txt3);margin-bottom:12px;">▶ 주요 종목 등락 (막대가 길수록 변화율 큼)</p>
+  <div class="bc">
+    <div class="bc-row">
+      <span class="bc-lbl">크루즈 3종 평균</span>
+      <div class="bc-track"><div class="bc-fill" style="width:90%;background:var(--green);">로열캐리비안·노르웨이지안·카니발 — 유가↓ = 연료비↓ = 마진↑</div></div>
+      <span class="bc-val g">+9%+</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">보잉 (BA)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:43%;background:#16a34a;">지정학 위험 완화 기대</div></div>
+      <span class="bc-val g">+4.28%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">셔윈-윌리엄스</span>
+      <div class="bc-track"><div class="bc-fill" style="width:38%;background:#16a34a;">소비 회복 기대</div></div>
+      <span class="bc-val g">+3.83%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">홈디포 (HD)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:36%;background:#16a34a;">건설·인테리어 소비↑</div></div>
+      <span class="bc-val g">+3.62%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">머크 (MRK)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:31%;background:#0891b2;">금리 하락 기대 헬스케어</div></div>
+      <span class="bc-val g">+3.13%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">애플 (AAPL)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:14%;background:var(--blue);">중국 아이폰 출하 +20%</div></div>
+      <span class="bc-val b">+1.4%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">엔비디아·MS·테슬라</span>
+      <div class="bc-track"><div class="bc-fill" style="width:12%;background:var(--blue);">AI 리스크온 지속</div></div>
+      <span class="bc-val b">+1~2%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">오라클 (ORCL)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:6%;background:var(--red);">차익 실현</div></div>
+      <span class="bc-val r">-3%</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-lbl">넷플릭스 (NFLX)</span>
+      <div class="bc-track"><div class="bc-fill" style="width:18%;background:var(--red);">2Q 가이던스 실망 · 헤이스팅스 탈퇴</div></div>
+      <span class="bc-val r">-9.3%</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- 주간 성과 비교표 -->
+  <p style="font-size:12px;color:var(--txt3);margin-bottom:12px;">▶ 2026년 4월 주요 지수 주간 성과 비교</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>지수</th><th>주간 등락</th><th>월간 (4월)</th><th>전쟁 후 저점 대비</th><th>비고</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="w">S&P 500</td><td class="g">+4.5%</td><td class="g">3주 연속 상승</td><td class="g">+7%+</td><td class="gr">7,100 첫 돌파</td></tr>
+        <tr><td class="w">나스닥</td><td class="g">+6.8%</td><td class="g">4월 최강</td><td class="g">+10%+</td><td class="gr">13연속 — 1992년 이후 최장</td></tr>
+        <tr><td class="w">다우존스</td><td class="g">+3.2%</td><td class="g">3주 연속</td><td class="g">+6%</td><td class="gr">50,000 목전</td></tr>
+        <tr><td class="w">러셀 2000</td><td class="g">+2%+</td><td class="g">신고가</td><td class="g">+14%</td><td class="gr">1월 22일 고점 돌파</td></tr>
+        <tr><td class="w">WTI 유가</td><td class="r">-11.45%</td><td class="r">최대 2주 낙폭</td><td class="r">-24.8%</td><td class="gr">2020년 4월 이후 최대 2주 낙폭</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 04 한국 금요일 수급 -->
+<div class="sec">
+  <div class="sh"><span class="sn">04</span><span class="st">금요일 한국 장 수급 — 외국인 2조 순매도 이유</span></div>
+
+  <div class="supply-grid">
+    <div class="sp" style="border-color:#fca5a5;">
+      <div class="sp-who">외국인</div>
+      <div class="sp-val r">-2조 26억</div>
+      <div class="sp-note">코스피 대규모 순매도</div>
+    </div>
+    <div class="sp" style="border-color:#86efac;">
+      <div class="sp-who">기관</div>
+      <div class="sp-val g">+1,502억</div>
+      <div class="sp-note">일부 받아내기</div>
+    </div>
+    <div class="sp" style="border-color:#93c5fd;">
+      <div class="sp-who">개인</div>
+      <div class="sp-val b">+1조 4,459억</div>
+      <div class="sp-note">저가 매수 유입</div>
+    </div>
+  </div>
+
+  <div class="al al-gd">
+    <strong>외국인 2조 순매도 핵심 이유 3가지:</strong><br>
+    ① <strong>차익 실현</strong> — 4월 코스피 누적 +20%↑, 외국인 4월 순매수 누적 6조원↑. 호르무즈 개방이라는 최고의 호재가 나왔을 때 차익 실현이 합리적.<br>
+    ② <strong>달러/원 환율 요인</strong> — 원화 강세 구간 = 달러 기준 수익 실현 기회.<br>
+    ③ <strong>미국으로 자금 로테이션</strong> — S&P 신고가 → 미국 대형주 매력↑ → 신흥시장 자금 이탈.
+  </div>
+
+  <div class="disc">
+    ⚠️ 본 자료는 2026년 4월 17일 공개 시장 데이터를 기반으로 한 참고용 시황 분석입니다. 투자 권유가 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다.<br>
+    <strong>Sources:</strong> CNBC · Schwab Market Update · Trading Economics · Asia Business Daily | 2026.04.17 기준
+  </div>
+</div>
+
+</div><!-- /body -->
+
+<div style="background:var(--navy);color:rgba(255,255,255,.4);text-align:center;padding:12px 20px;font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">
+  미국 시장 분석 리포트 HTML ① | 2026.04.17 | 참고용 — 투자 권유 아님
+</div>
+</body>
+</html>
