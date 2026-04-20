@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전쟁 50일 타임라인 & 리스크 매트릭스 — 2026.04.20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface2: #F4F3EF;
+    --border: rgba(0,0,0,0.07);
+    --border-md: rgba(0,0,0,0.12);
+    --text-primary: #1A1A18;
+    --text-secondary: #6B6B66;
+    --text-muted: #ABABAB;
+    --blue: #1757C2;
+    --blue-light: #EDF2FB;
+    --green: #1A7A3F;
+    --green-light: #EBF6F0;
+    --red: #C0251A;
+    --red-light: #FDF0EF;
+    --amber: #8A5C00;
+    --amber-light: #FDF6E3;
+    --teal: #0F6E7A;
+    --teal-light: #E6F5F7;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Noto Sans KR', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    padding: 0; margin: 0;
+  }
+
+  .widget {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 24px 28px;
+  }
+
+  /* ── 헤더 ── */
+  .hdr {
+    margin-bottom: 28px;
+  }
+  .hdr-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hdr h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .hdr-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .hdr-line {
+    width: 48px; height: 3px;
+    background: var(--blue);
+    border-radius: 2px;
+    margin-top: 12px;
+  }
+
+  /* ── 섹션 타이틀 ── */
+  .sec-title {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-title::after { content:''; flex:1; height:0.5px; background:var(--border-md); }
+  .sec-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: #fff;
+    font-size: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── 타임라인 ── */
+  .timeline { position: relative; margin-bottom: 32px; padding-left: 28px; }
+  .tl-track {
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--red), var(--amber), var(--blue), var(--green));
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 22px;
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: tl-in 0.4s ease forwards;
+  }
+  .tl-item:nth-child(2) { animation-delay: 0.05s; }
+  .tl-item:nth-child(3) { animation-delay: 0.1s; }
+  .tl-item:nth-child(4) { animation-delay: 0.15s; }
+  .tl-item:nth-child(5) { animation-delay: 0.2s; }
+  .tl-item:nth-child(6) { animation-delay: 0.25s; }
+  @keyframes tl-in {
+    to { opacity:1; transform:translateX(0); }
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -25px; top: 3px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1.5px currentColor;
+  }
+  .tl-dot.red { background: var(--red); color: var(--red); }
+  .tl-dot.amber { background: var(--amber); color: var(--amber); }
+  .tl-dot.blue { background: var(--blue); color: var(--blue); }
+  .tl-dot.teal { background: var(--teal); color: var(--teal); }
+  .tl-dot.green { background: var(--green); color: var(--green); }
+  .tl-dot.today {
+    width: 14px; height: 14px;
+    left: -26px; top: 2px;
+    background: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 0 3px rgba(26,122,63,0.2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 3px rgba(26,122,63,0.2); }
+    50% { box-shadow: 0 0 0 6px rgba(26,122,63,0.1); }
+  }
+
+  .tl-period {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+  .tl-headline {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .tl-body {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .tl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-top: 5px;
+  }
+  .chip-red { background: var(--red-light); color: var(--red); }
+  .chip-amber { background: var(--amber-light); color: var(--amber); }
+  .chip-blue { background: var(--blue-light); color: var(--blue); }
+  .chip-green { background: var(--green-light); color: var(--green); }
+  .chip-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── 코스피 내성 지수 바 ── */
+  .resilience-section { margin-bottom: 32px; }
+  .res-bar-group { display: flex; flex-direction: column; gap: 12px; }
+  .res-row { display: grid; grid-template-columns: 140px 1fr 60px; align-items: center; gap: 12px; }
+  .res-label { font-size: 12px; color: var(--text-secondary); }
+  .res-track {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .res-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: bar-grow 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    width: 0 !important;
+  }
+  @keyframes bar-grow {
+    from { width: 0 !important; }
+    to { width: var(--target-w); }
+  }
+  .res-pct { font-family: var(--mono); font-size: 11px; color: var(--text-secondary); text-align: right; }
+  .res-fill.vix   { --target-w: 72%; width: var(--target-w); background: #1757C2; }
+  .res-fill.ext   { --target-w: 65%; width: var(--target-w); background: #3FB950; }
+  .res-fill.for   { --target-w: 80%; width: var(--target-w); background: #0F6E7A; }
+  .res-fill.earn  { --target-w: 88%; width: var(--target-w); background: #8A5C00; }
+  .res-fill.fx    { --target-w: 70%; width: var(--target-w); background: #7C3AED; }
+
+  /* ── 리스크 / 기회 매트릭스 ── */
+  .matrix-section { margin-bottom: 28px; }
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 500px) {
+    .matrix-grid { grid-template-columns: 1fr; }
+    .res-row { grid-template-columns: 120px 1fr 50px; }
+  }
+
+  .matrix-card {
+    border-radius: 10px;
+    padding: 16px;
+    border: 0.5px solid var(--border-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .matrix-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .matrix-card.opp { background: var(--green-light); }
+  .matrix-card.opp::before { background: var(--green); }
+  .matrix-card.risk { background: var(--red-light); }
+  .matrix-card.risk::before { background: var(--red); }
+  .matrix-card.watch { background: var(--teal-light); }
+  .matrix-card.watch::before { background: var(--teal); }
+  .matrix-card.neutral-c { background: var(--amber-light); }
+  .matrix-card.neutral-c::before { background: var(--amber); }
+
+  .mc-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .mc-icon { font-size: 14px; }
+  .mc-title { font-size: 12px; font-weight: 500; }
+  .mc-title.green { color: var(--green); }
+  .mc-title.red { color: var(--red); }
+  .mc-title.teal { color: var(--teal); }
+  .mc-title.amber { color: var(--amber); }
+
+  .mc-list { list-style: none; }
+  .mc-list li {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    border-bottom: 0.5px solid rgba(0,0,0,0.05);
+    line-height: 1.5;
+    display: flex;
+    gap: 6px;
+  }
+  .mc-list li:last-child { border-bottom: none; }
+  .mc-list li::before { flex-shrink: 0; margin-top: 2px; }
+  .mc-list.opp li::before { content: '↑'; color: var(--green); font-family: var(--mono); font-size: 10px; }
+  .mc-list.risk li::before { content: '↓'; color: var(--red); font-family: var(--mono); font-size: 10px; }
+  .mc-list.watch li::before { content: '→'; color: var(--teal); font-family: var(--mono); font-size: 10px; }
+  .mc-list.neutral li::before { content: '◆'; color: var(--amber); font-family: var(--mono); font-size: 8px; }
+
+  /* ── 전략 요약 배너 ── */
+  .strategy-banner {
+    background: var(--text-primary);
+    color: #fff;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .sb-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .sb-title { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.5); margin-bottom: 3px; font-family: var(--mono); letter-spacing: 0.06em; }
+  .sb-body { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.85); }
+  .sb-body strong { color: #fff; font-weight: 500; }
+
+  /* ── 푸터 ── */
+  .footer {
+    border-top: 0.5px solid var(--border-md);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .footer p {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-family: var(--mono);
+  }
+  .footer-brand {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+
+  <!-- 헤더 -->
+  <div class="hdr">
+    <div class="hdr-eyebrow">Market Deep Dive · 2026.04.20</div>
+    <h1>코스피 내성(耐性) 형성 근거<br>타임라인 & 리스크 매트릭스</h1>
+    <div class="hdr-sub">미·이란 전쟁 50일 차 — 왜 악재에도 시장이 버티는가</div>
+    <div class="hdr-line"></div>
+  </div>
+
+  <!-- ① 전쟁 50일 타임라인 -->
+  <div class="sec-title"><span class="sec-num">1</span>전쟁 50일 코스피 반응 타임라인</div>
+  <div class="timeline">
+    <div class="tl-track"></div>
+
+    <div class="tl-item">
+      <div class="tl-dot red"></div>
+      <div class="tl-period">D+1 ~ D+7 · 전쟁 발발 직후</div>
+      <div class="tl-headline">패닉 급락 — 코스피 -18%, 코스닥 698 붕괴</div>
+      <div class="tl-body">외국인 대탈출, VIX 55~65 폭등. 전 상장 종목 10개 중 7개 하락. 호르무즈 봉쇄에 유가 100달러 돌파.</div>
+      <span class="tl-chip chip-red">최대 위기</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot amber"></div>
+      <div class="tl-period">D+8 ~ D+28 · 1차 호르무즈 봉쇄기</div>
+      <div class="tl-headline">고통의 횡보 — 정부 추경 26조원 편성</div>
+      <div class="tl-body">유가 고공행진 속 석유 최고가격제 시행. 코스피 저점 모색 불안정 횡보. 개인 저가 매수 유입 시작.</div>
+      <span class="tl-chip chip-amber">불안 횡보</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot blue"></div>
+      <div class="tl-period">D+29 ~ D+35 · 1차 미·이란 휴전 합의</div>
+      <div class="tl-headline">코스피 하루 +7% 폭등 — 5,800선 회복</div>
+      <div class="tl-body">2주 휴전 합의 소식에 외국인 5,522억 순매수. 유가 급락 + 금리 하락 동반. 반도체·방산 동시 급등.</div>
+      <span class="tl-chip chip-blue">전환점</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot teal"></div>
+      <div class="tl-period">D+36 ~ D+49 · 실적 시즌 기대 + 협상 불확실성</div>
+      <div class="tl-headline">코스피 6,000→6,226→6,192 — 숨고르기</div>
+      <div class="tl-body">이란 호르무즈 재봉쇄 번복에 변동성 재확대. 그러나 외국인 4월 누적 6조원 순매수로 하방 지지. SK하이닉스 신고가 경신.</div>
+      <span class="tl-chip chip-teal">실적 기대 전환</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot today"></div>
+      <div class="tl-period">D+50 · 오늘 2026.04.20 (월)</div>
+      <div class="tl-headline">이란 2차 협상 거부 + 선박 나포 → 코스피 +1.14%</div>
+      <div class="tl-body">악재 2중 충격에도 장중 6,262 강세. VIX 17.48 안정. 기관 4,424억 순매수. SK하이닉스 +3.9%. "내성" 완성.</div>
+      <span class="tl-chip chip-green">내성 확인</span>
+    </div>
+
+  </div>
+
+  <!-- ② 내성 강도 측정 바 -->
+  <div class="resilience-section">
+    <div class="sec-title"><span class="sec-num">2</span>코스피 내성 형성 5대 요인 강도</div>
+    <div class="res-bar-group">
+      <div class="res-row">
+        <span class="res-label">VIX 공포 정상화</span>
+        <div class="res-track"><div class="res-fill vix"></div></div>
+        <span class="res-pct">72%</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">외국인 순매수 기조</span>
+        <div class="res-track"><div class="res-fill for"></div></div>
+        <span class="res-pct">80%</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">실적 기대감</span>
+        <div class="res-track"><div class="res-fill earn"></div></div>
+        <span class="res-pct">88%</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">원·달러 환율 안정</span>
+        <div class="res-track"><div class="res-fill fx"></div></div>
+        <span class="res-pct">70%</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label">전쟁 리스크 프라이싱</span>
+        <div class="res-track"><div class="res-fill ext"></div></div>
+        <span class="res-pct">65%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ③ 리스크·기회 매트릭스 -->
+  <div class="matrix-section">
+    <div class="sec-title"><span class="sec-num">3</span>이번 주 리스크·기회 매트릭스</div>
+    <div class="matrix-grid">
+
+      <div class="matrix-card opp">
+        <div class="mc-header">
+          <span class="mc-icon">↑</span>
+          <span class="mc-title green">기회 요인</span>
+        </div>
+        <ul class="mc-list opp">
+          <li>SK하이닉스 1Q 깜짝 실적 기대 (4/23 발표)</li>
+          <li>외국인 4월 누적 6조원 순매수 기조</li>
+          <li>VIX 17 안정 + 달러 약세</li>
+          <li>코스피 이익 컨센서스 상향 지속</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card risk">
+        <div class="mc-header">
+          <span class="mc-icon">↓</span>
+          <span class="mc-title red">리스크 요인</span>
+        </div>
+        <ul class="mc-list risk">
+          <li>이·이란 협상 완전 결렬 → 유가 100달러 재돌파</li>
+          <li>호르무즈 해협 재봉쇄 시 물류·제조업 충격</li>
+          <li>외국인 순매도 전환 시 5,950선 테스트</li>
+          <li>석유류 물가 9.9% 급등 인플레 압력</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card watch">
+        <div class="mc-header">
+          <span class="mc-icon">→</span>
+          <span class="mc-title teal">핵심 모니터링</span>
+        </div>
+        <ul class="mc-list watch">
+          <li>4/20 이슬라마바드 2차 협상 개최 여부</li>
+          <li>이란 이슬람혁명수비대 보복 행동 여부</li>
+          <li>4/23 SK하이닉스 실적 발표</li>
+        </ul>
+      </div>
+
+      <div class="matrix-card neutral-c">
+        <div class="mc-header">
+          <span class="mc-icon">◆</span>
+          <span class="mc-title amber">중립 체크포인트</span>
+        </div>
+        <ul class="mc-list neutral">
+          <li>WTI $90 유지 시 한국 추경 효과 지속 여부</li>
+          <li>DXY 98 하회 시 신흥국 자금 추가 유입</li>
+          <li>코스피 주간 밴드: 5,950 ~ 6,450pt</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 전략 요약 배너 -->
+  <div class="strategy-banner">
+    <div class="sb-icon">⚡</div>
+    <div>
+      <div class="sb-title">ANALYST STRATEGY · 2026.04.20</div>
+      <div class="sb-body">
+        주초 <strong>방어적 접근</strong>으로 전쟁 뉴스 확인 후, 주중 <strong>SK하이닉스·반도체 실적주 선별 대응</strong>.
+        협상 결렬 시 코스피 5,950 지지 여부가 핵심 — 깨지지 않는다면 <strong>비중 확대 기회</strong>로 전환.
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <div class="footer">
+    <p>* 분석은 장중 데이터 기준 (오후 1:08 KST) 및 공개 언론 보도 기반.<br>
+    * 투자 권유 아님. 모든 투자 판단·책임은 투자자 본인에게 있습니다.</p>
+    <div class="footer-brand">출처: 뉴스핌·이투데이·파이낸셜뉴스<br>Compiled by Claude AI</div>
+  </div>
+
+</div>
+</body>
+</html>
