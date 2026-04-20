@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 3대 지수 + NXT 선물 현황</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#07080f;
+  padding:32px 20px 40px;
+}
+
+/* ── 헤더 ── */
+.section-header{
+  max-width:860px;
+  margin:0 auto 28px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  padding-bottom:16px;
+  border-bottom:1px solid #151c30;
+}
+.sh-left{}
+.sh-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#3a6090;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.sh-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(26px,5vw,40px);
+  letter-spacing:2px;
+  color:#ddeeff;
+  line-height:1;
+}
+.sh-title span{ color:#00e5a0; }
+.sh-right{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#283a55;
+  text-align:right;
+  line-height:1.7;
+}
+
+/* ── 탭 구분선 ── */
+.tab-line{
+  max-width:860px;
+  margin:0 auto 22px;
+  display:flex;
+  gap:0;
+}
+.tab-item{
+  padding:8px 18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:1px;
+  color:#283a55;
+  border-bottom:2px solid #151c30;
+  cursor:default;
+}
+.tab-item.active{
+  color:#00e5a0;
+  border-bottom:2px solid #00e5a0;
+}
+
+/* ── 지수 메인 카드 ── */
+.index-grid{
+  max-width:860px;
+  margin:0 auto 24px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+@media(max-width:640px){ .index-grid{ grid-template-columns:repeat(2,1fr); } }
+
+.idx-card{
+  background:#0a0f1e;
+  border:1px solid #151c30;
+  border-radius:10px;
+  padding:18px 16px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .25s, transform .2s;
+}
+.idx-card:hover{ transform:translateY(-2px); border-color:#00b4ff; }
+.idx-card::after{
+  content:'';
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--bar),transparent);
+}
+
+.idx-name{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:#283a55;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.idx-price{
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(18px,3.5vw,24px);
+  font-weight:700;
+  color:#ddeeff;
+  margin-bottom:4px;
+  letter-spacing:-0.5px;
+}
+.idx-chg{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+}
+.up{ color:#00e5a0; }
+.down{ color:#ff4b6a; }
+.idx-pts{
+  font-size:11px;
+  color:#283a55;
+  margin-top:4px;
+}
+.idx-bar{
+  height:2px;
+  background:#151c30;
+  border-radius:1px;
+  margin-top:12px;
+  overflow:hidden;
+}
+.idx-bar-fill{
+  height:100%;
+  background:var(--bar);
+  border-radius:1px;
+}
+.idx-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  padding:2px 7px;
+  border-radius:3px;
+  margin-top:8px;
+  color:var(--bar);
+  background:rgba(0,0,0,.4);
+  border:1px solid var(--bar);
+}
+
+/* ── 주간 성과 바 ── */
+.weekly-section{
+  max-width:860px;
+  margin:0 auto 24px;
+  background:#0a0f1e;
+  border:1px solid #151c30;
+  border-radius:10px;
+  padding:22px 24px;
+}
+.ws-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#283a55;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+.wrow{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:14px;
+}
+.wrow:last-child{ margin-bottom:0; }
+.wlabel{
+  font-size:13px;
+  font-weight:700;
+  color:#8aa8c8;
+  width:72px;
+  flex-shrink:0;
+}
+.wbar-bg{
+  flex:1;
+  height:8px;
+  background:#151c30;
+  border-radius:4px;
+  overflow:hidden;
+}
+.wbar-fill{
+  height:100%;
+  border-radius:4px;
+  position:relative;
+}
+.wbar-fill::after{
+  content:'';
+  position:absolute;
+  right:-1px; top:50%;
+  transform:translateY(-50%);
+  width:12px; height:12px;
+  border-radius:50%;
+  background:inherit;
+  box-shadow:0 0 10px currentColor;
+}
+.wpct{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  font-weight:700;
+  width:52px;
+  text-align:right;
+  color:#00e5a0;
+}
+.wbadge{
+  font-size:10px;
+  color:#3a6090;
+  white-space:nowrap;
+}
+
+/* ── NXT 선물 테이블 ── */
+.futures-section{
+  max-width:860px;
+  margin:0 auto 24px;
+}
+.futures-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+.fut-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#3a6090;
+  text-transform:uppercase;
+}
+.live-dot{
+  width:7px; height:7px;
+  border-radius:50%;
+  background:#ff4b6a;
+  animation:blink 1.5s infinite;
+}
+@keyframes blink{ 0%,100%{opacity:1} 50%{opacity:.2} }
+.fut-note{
+  font-size:11px;
+  color:#283a55;
+  margin-left:auto;
+}
+.fut-table{
+  width:100%;
+  border-collapse:collapse;
+}
+.fut-table thead th{
+  padding:10px 14px;
+  background:#0a0f1e;
+  border-bottom:1px solid #1a2a45;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:#283a55;
+  text-transform:uppercase;
+  text-align:left;
+  font-weight:400;
+}
+.fut-table tbody td{
+  padding:13px 14px;
+  border-bottom:1px solid #0d1525;
+  font-size:13px;
+  color:#8aa8c8;
+  transition:background .2s;
+}
+.fut-table tbody tr:hover td{ background:rgba(0,180,255,.03); }
+.fut-table .fname{ font-weight:700; color:#ddeeff; font-size:14px; }
+.fut-table .fval{
+  font-family:'JetBrains Mono',monospace;
+  font-size:14px;
+  font-weight:700;
+  color:#ddeeff;
+}
+.fut-table .fdelta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+}
+.mini-bar{ height:4px; background:#151c30; border-radius:2px; width:100%; margin-top:5px; overflow:hidden; }
+.mini-bar-fill{ height:100%; border-radius:2px; background:#ff4b6a; }
+
+.signal-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 10px;
+  border-radius:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  font-weight:700;
+}
+.chip-caution{ color:#ffd166; background:rgba(255,209,102,.1); border:1px solid rgba(255,209,102,.3); }
+.chip-watch  { color:#ff4b6a; background:rgba(255,75,106,.1); border:1px solid rgba(255,75,106,.3); }
+
+/* ── 해석 박스 ── */
+.insight-box{
+  max-width:860px;
+  margin:0 auto;
+  padding:16px 20px;
+  background:linear-gradient(135deg,#080f1e 0%,#0a1425 100%);
+  border-left:3px solid #00b4ff;
+  border-radius:0 8px 8px 0;
+}
+.ib-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:3px;
+  color:#3a6090;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.ib-text{
+  font-size:13px;
+  color:#7aa0c0;
+  line-height:1.7;
+}
+.ib-text strong{ color:#00b4ff; font-weight:700; }
+
+/* 애니메이션 */
+@keyframes fadeUp{ from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.index-grid,.weekly-section,.futures-section,.insight-box{ animation:fadeUp .5s ease both; }
+.weekly-section{ animation-delay:.1s }
+.futures-section{ animation-delay:.15s }
+.insight-box{ animation-delay:.2s }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="section-header">
+  <div class="sh-left">
+    <div class="sh-tag">US MARKETS · NYSE CLOSE</div>
+    <div class="sh-title">뉴욕 <span>3대 지수</span> &amp; NXT <span>선물</span></div>
+  </div>
+  <div class="sh-right">
+    기준일: 2026.04.17 (금) 마감<br>
+    NXT: 2026.04.20 KST 오전 기준
+  </div>
+</div>
+
+<!-- 탭 -->
+<div class="tab-line">
+  <div class="tab-item active">당일 마감</div>
+  <div class="tab-item">주간 성과</div>
+  <div class="tab-item">NXT 선물</div>
+</div>
+
+<!-- 지수 4개 카드 -->
+<div class="index-grid">
+
+  <div class="idx-card" style="--bar:#00e5a0">
+    <div class="idx-name">S&amp;P 500</div>
+    <div class="idx-price">7,126.06</div>
+    <div class="idx-chg up">▲ +1.20%</div>
+    <div class="idx-pts">+84.78 pt</div>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:82%"></div></div>
+    <div class="idx-badge">사상 첫 7100선 돌파</div>
+  </div>
+
+  <div class="idx-card" style="--bar:#00b4ff">
+    <div class="idx-name">다우 존스</div>
+    <div class="idx-price">49,447</div>
+    <div class="idx-chg up">▲ +1.79%</div>
+    <div class="idx-pts">+868.71 pt</div>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:88%"></div></div>
+    <div class="idx-badge">금융·소비재 주도</div>
+  </div>
+
+  <div class="idx-card" style="--bar:#a78bfa">
+    <div class="idx-name">나스닥</div>
+    <div class="idx-price">24,468</div>
+    <div class="idx-chg up">▲ +1.52%</div>
+    <div class="idx-pts">+365.78 pt</div>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:78%"></div></div>
+    <div class="idx-badge">13일 연속↑ (1992년 이후 최장)</div>
+  </div>
+
+  <div class="idx-card" style="--bar:#ffd166">
+    <div class="idx-name">러셀 2000</div>
+    <div class="idx-price">2,776</div>
+    <div class="idx-chg up">▲ +2.11%</div>
+    <div class="idx-pts">+57.30 pt</div>
+    <div class="idx-bar"><div class="idx-bar-fill" style="width:92%"></div></div>
+    <div class="idx-badge">소형주 신고점</div>
+  </div>
+
+</div>
+
+<!-- 주간 성과 -->
+<div class="weekly-section">
+  <div class="ws-title">주간 누적 수익률 (Apr 13–17) · 3주 연속 상승</div>
+
+  <div class="wrow">
+    <div class="wlabel">나스닥</div>
+    <div class="wbar-bg">
+      <div class="wbar-fill" style="width:68%; background:linear-gradient(90deg,#a78bfa,#6d48e5)"></div>
+    </div>
+    <div class="wpct">+6.8%</div>
+    <div class="wbadge">최강 섹터</div>
+  </div>
+
+  <div class="wrow">
+    <div class="wlabel">S&amp;P 500</div>
+    <div class="wbar-bg">
+      <div class="wbar-fill" style="width:45%; background:linear-gradient(90deg,#00e5a0,#00a870)"></div>
+    </div>
+    <div class="wpct">+4.5%</div>
+    <div class="wbadge">신고점 경신</div>
+  </div>
+
+  <div class="wrow">
+    <div class="wlabel">다우존스</div>
+    <div class="wbar-bg">
+      <div class="wbar-fill" style="width:32%; background:linear-gradient(90deg,#00b4ff,#0077cc)"></div>
+    </div>
+    <div class="wpct">+3.2%</div>
+    <div class="wbadge">경기민감주 주도</div>
+  </div>
+
+</div>
+
+<!-- NXT 선물 -->
+<div class="futures-section">
+  <div class="futures-header">
+    <div class="live-dot"></div>
+    <div class="fut-title">NXT 선물 · 주말 프리마켓</div>
+    <div class="fut-note">이익실현 매물 출현 중</div>
+  </div>
+
+  <table class="fut-table">
+    <thead>
+      <tr>
+        <th>선물 종목</th>
+        <th>현재 가격</th>
+        <th>등락</th>
+        <th>신호</th>
+        <th>강도</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="fname">S&amp;P 500 선물</span></td>
+        <td><span class="fval">7,106.50</span></td>
+        <td class="fdelta down">▼ −0.77%</td>
+        <td><span class="signal-chip chip-caution">⚠ 주의</span></td>
+        <td>
+          <div class="mini-bar"><div class="mini-bar-fill" style="width:77%"></div></div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">다우 선물</span></td>
+        <td><span class="fval">49,196</span></td>
+        <td class="fdelta down">▼ −0.90%</td>
+        <td><span class="signal-chip chip-caution">⚠ 주의</span></td>
+        <td>
+          <div class="mini-bar"><div class="mini-bar-fill" style="width:90%"></div></div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">나스닥 선물</span></td>
+        <td><span class="fval">하락 중</span></td>
+        <td class="fdelta down">▼ −0.65%</td>
+        <td><span class="signal-chip chip-caution">⚠ 주의</span></td>
+        <td>
+          <div class="mini-bar"><div class="mini-bar-fill" style="width:65%"></div></div>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="fname">러셀 2000 선물</span></td>
+        <td><span class="fval">2,758.70</span></td>
+        <td class="fdelta down">▼ −1.08%</td>
+        <td><span class="signal-chip chip-watch">🔴 경계</span></td>
+        <td>
+          <div class="mini-bar"><div class="mini-bar-fill" style="width:100%"></div></div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 해석 -->
+<div class="insight-box">
+  <div class="ib-label">📌 전문가 해석</div>
+  <div class="ib-text">
+    NXT 선물의 소폭 하락은 <strong>이익실현 매물</strong>로 해석됩니다. 나스닥 +6.8%, S&amp;P +4.5%라는 강력한 주간 상승 후 주말 차익 실현은 자연스러운 현상입니다. <strong>구조적 매크로 환경(VIX 안정·달러 약세·유가 하락)은 유효</strong>하므로, 선물 하락이 한국 증시 추세 전환을 의미하지는 않습니다. 코스피 오전장 초반 소폭 갭 하락 후 낙폭 축소 흐름을 예상합니다.
+  </div>
+</div>
+
+</body>
+</html>
