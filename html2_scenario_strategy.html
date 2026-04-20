@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>휴전 만료 시나리오 & 한국 증시 전략 — 2026.04.21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FAFAF7;
+  --s1:#FFFFFF;
+  --s2:#F3F1EC;
+  --s3:#EAE7E0;
+  --line:rgba(0,0,0,0.07);
+  --line2:rgba(0,0,0,0.12);
+  --line3:rgba(0,0,0,0.22);
+  --t1:#111419;
+  --t2:#3B4350;
+  --t3:#7A8394;
+  --t4:#C0C8D4;
+  --green:#0B6E3E;
+  --green-l:#EAF6EF;
+  --green-b:rgba(11,110,62,.12);
+  --red:#B82020;
+  --red-l:#FAEAEA;
+  --red-b:rgba(184,32,32,.10);
+  --amber:#7A4E00;
+  --amber-l:#FBF5E6;
+  --amber-b:rgba(122,78,0,.10);
+  --blue:#1245A0;
+  --blue-l:#EBF0FB;
+  --blue-b:rgba(18,69,160,.10);
+  --teal:#0A6572;
+  --teal-l:#E8F5F7;
+  --mono:'Roboto Mono',monospace;
+  --sans:'Noto Sans KR',sans-serif;
+  --r:8px;--r2:12px;
+}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;padding:0;margin:0}
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 36px}
+
+/* ─── HEADER ─── */
+.hdr{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:3px solid var(--t1);border-bottom:1px solid var(--line2);
+  padding:14px 0;margin-bottom:22px;
+  opacity:0;animation:up .4s ease .02s forwards;
+}
+.hdr-l{}
+.hdr-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--t3);text-transform:uppercase;margin-bottom:4px}
+.hdr-title{font-size:18px;font-weight:900;letter-spacing:-.03em;color:var(--t1);line-height:1.2}
+.hdr-r{text-align:right}
+.war-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--red);color:#fff;
+  font-family:var(--mono);font-size:9px;padding:3px 8px;border-radius:2px;
+  letter-spacing:.08em;margin-bottom:4px;
+}
+.war-chip::before{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:blink 1.3s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr-date{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.05em}
+
+/* ─── SECTION LABEL ─── */
+.slabel{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.slabel::after{content:'';flex:1;height:1px;background:var(--line2)}
+.snum{
+  background:var(--t1);color:#fff;
+  width:17px;height:17px;border-radius:50%;
+  font-size:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ─── 시나리오 3종 ─── */
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px}
+@media(max-width:580px){.sc-grid{grid-template-columns:1fr}}
+.sc{
+  border:1px solid var(--line2);background:var(--s1);
+  padding:16px 15px;position:relative;overflow:hidden;
+  opacity:0;animation:up .42s ease forwards;
+}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sc.bull::before{background:var(--green)}
+.sc.mid::before{background:var(--amber)}
+.sc.bear::before{background:var(--red)}
+.sc:nth-child(1){animation-delay:.08s}
+.sc:nth-child(2){animation-delay:.14s}
+.sc:nth-child(3){animation-delay:.20s}
+
+.sc-pct{
+  font-family:var(--mono);font-size:28px;font-weight:600;
+  letter-spacing:-.05em;line-height:1;margin-bottom:5px;
+}
+.sc.bull .sc-pct{color:var(--green)}
+.sc.mid .sc-pct{color:var(--amber)}
+.sc.bear .sc-pct{color:var(--red)}
+.sc-label{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:10px}
+.sc-ul{list-style:none}
+.sc-ul li{
+  font-size:11px;color:var(--t2);
+  padding:3px 0;border-bottom:1px solid var(--line);
+  line-height:1.5;display:flex;gap:5px;
+}
+.sc-ul li:last-child{border-bottom:none}
+.sc-ul li::before{flex-shrink:0;margin-top:1px;font-family:var(--mono);font-size:9px}
+.sc.bull .sc-ul li::before{content:'↑';color:var(--green)}
+.sc.mid  .sc-ul li::before{content:'→';color:var(--amber)}
+.sc.bear .sc-ul li::before{content:'↓';color:var(--red)}
+.sc-bottom{
+  margin-top:10px;padding:6px 8px;
+  font-family:var(--mono);font-size:10px;color:var(--t2);
+}
+.sc.bull .sc-bottom{background:var(--green-l)}
+.sc.mid  .sc-bottom{background:var(--amber-l)}
+.sc.bear .sc-bottom{background:var(--red-l)}
+
+/* ─── 이벤트 타임라인 ─── */
+.tl-wrap{margin-bottom:24px;opacity:0;animation:up .42s ease .26s forwards}
+.tl-row{
+  display:grid;grid-template-columns:70px 14px 1fr;
+  gap:0 12px;margin-bottom:10px;align-items:start;
+}
+.tl-date{
+  font-family:var(--mono);font-size:9px;letter-spacing:.04em;
+  color:var(--t3);padding-top:1px;text-align:right;
+}
+.tl-mid{display:flex;flex-direction:column;align-items:center;padding-top:2px}
+.tl-dot{
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid;flex-shrink:0;
+}
+.tl-dot.hot{background:var(--red);border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(184,32,32,.15);animation:pls 2s infinite}
+@keyframes pls{0%,100%{box-shadow:0 0 0 3px rgba(184,32,32,.15)}50%{box-shadow:0 0 0 6px rgba(184,32,32,.06)}}
+.tl-dot.key{background:var(--blue);border-color:var(--blue)}
+.tl-dot.norm{background:var(--bg);border-color:var(--line3)}
+.tl-vert{flex:1;width:1px;background:var(--line2);min-height:14px;margin-top:2px}
+.tl-box{background:var(--s1);border:1px solid var(--line);padding:10px 12px;border-radius:var(--r)}
+.tl-box.hot-box{border-color:rgba(184,32,32,.25);background:var(--red-l)}
+.tl-box.key-box{border-color:rgba(18,69,160,.20);background:var(--blue-l)}
+.tl-ttl{font-size:12px;font-weight:600;color:var(--t1);margin-bottom:3px}
+.tl-desc{font-size:11px;color:var(--t3);line-height:1.5}
+
+/* ─── 한국 업종·종목 추천 ─── */
+.sector-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;margin-bottom:24px;
+}
+@media(max-width:500px){.sector-grid{grid-template-columns:1fr}}
+.sec-card{
+  border:1px solid var(--line2);background:var(--s1);
+  padding:14px 15px;
+  opacity:0;animation:up .42s ease forwards;
+}
+.sec-card:nth-child(1){animation-delay:.30s}
+.sec-card:nth-child(2){animation-delay:.35s}
+.sec-card:nth-child(3){animation-delay:.40s}
+.sec-card:nth-child(4){animation-delay:.45s}
+.sec-card:nth-child(5){animation-delay:.50s}
+.sec-wide{grid-column:1/-1}
+.sec-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sec-rank{
+  width:22px;height:22px;background:var(--t1);color:#fff;
+  border-radius:50%;font-family:var(--mono);font-size:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.sec-name{font-size:13px;font-weight:700;color:var(--t1)}
+.sec-tag{
+  margin-left:auto;font-family:var(--mono);font-size:9px;
+  padding:2px 6px;border-radius:2px;
+}
+.t-g{background:var(--green-l);color:var(--green)}
+.t-r{background:var(--red-l);color:var(--red)}
+.t-b{background:var(--blue-l);color:var(--blue)}
+.t-a{background:var(--amber-l);color:var(--amber)}
+.t-t{background:var(--teal-l);color:var(--teal)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.chip{
+  font-family:var(--mono);font-size:10px;padding:3px 7px;
+  border-radius:2px;border:1px solid var(--line2);background:var(--s2);color:var(--t2);
+}
+.sec-reason{font-size:11px;color:var(--t3);line-height:1.6}
+
+/* ─── 전략 배너 ─── */
+.strategy{
+  background:var(--t1);padding:18px 20px;margin-bottom:8px;
+  display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start;
+  opacity:0;animation:up .42s ease .54s forwards;
+}
+.st-ico{
+  width:42px;height:42px;background:rgba(255,255,255,.10);
+  border-radius:var(--r);display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.st-label{font-family:var(--mono);font-size:9px;letter-spacing:.10em;color:rgba(250,250,247,.35);text-transform:uppercase;margin-bottom:5px}
+.st-body{font-size:13px;color:rgba(250,250,247,.80);line-height:1.75}
+.st-body strong{color:#fff;font-weight:500}
+
+/* ─── 체크리스트 ─── */
+.check-row{
+  display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;
+  opacity:0;animation:up .42s ease .60s forwards;
+}
+.chk{
+  flex:1;min-width:180px;background:var(--s1);
+  border:1px solid var(--line2);padding:11px 13px;border-radius:var(--r);
+}
+.chk-q{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--t3);margin-bottom:4px;text-transform:uppercase}
+.chk-v{font-size:12px;font-weight:600;color:var(--t1)}
+.chk-sub{font-size:10px;color:var(--t3);margin-top:2px}
+
+/* ─── FOOTER ─── */
+.footer{
+  border-top:2px solid var(--t1);padding-top:12px;margin-top:20px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;
+  opacity:0;animation:up .42s ease .66s forwards;
+}
+.fn{font-family:var(--mono);font-size:9px;color:var(--t3);line-height:1.9;letter-spacing:.02em}
+.fb{font-family:var(--mono);font-size:9px;color:var(--t4);text-align:right;letter-spacing:.05em}
+
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-l">
+      <div class="hdr-eyebrow">Scenario & Korea Strategy · HTML ②</div>
+      <div class="hdr-title">휴전 만료 시나리오<br>& 한국 증시 전략</div>
+    </div>
+    <div class="hdr-r">
+      <div class="war-chip">D+51 · 모레 4/22 만료</div>
+      <div class="hdr-date">작성: 2026.04.21 KST</div>
+    </div>
+  </div>
+
+  <!-- ① 모레 휴전 만료 시나리오 3종 -->
+  <div class="slabel"><span class="snum">1</span>4/22 휴전 만료 — 3대 시나리오 확률</div>
+  <div class="sc-grid">
+    <div class="sc bull">
+      <div class="sc-pct">35%</div>
+      <div class="sc-label">협상 타결</div>
+      <ul class="sc-ul">
+        <li>유가 $70대 급락</li>
+        <li>S&P500 +2~3% 갭업</li>
+        <li>달러 추가 약세</li>
+        <li>반도체·이차전지 랠리</li>
+        <li>방산·에너지 차익실현</li>
+      </ul>
+      <div class="sc-bottom">코스피 → 6,400+ 돌파 시도</div>
+    </div>
+    <div class="sc mid">
+      <div class="sc-pct">40%</div>
+      <div class="sc-label">휴전 연장</div>
+      <ul class="sc-ul">
+        <li>현상 유지·변동성 소강</li>
+        <li>실적 장세로 무게 이동</li>
+        <li>유가 $85~$92 박스</li>
+        <li>SK하이닉스 실적이 변수</li>
+        <li>4월 말 협상 재도전</li>
+      </ul>
+      <div class="sc-bottom">코스피 → 6,100~6,400 박스</div>
+    </div>
+    <div class="sc bear">
+      <div class="sc-pct">25%</div>
+      <div class="sc-label">협상 결렬</div>
+      <ul class="sc-ul">
+        <li>유가 $100 재돌파</li>
+        <li>VIX 30 이상 급등</li>
+        <li>달러 강세 전환</li>
+        <li>외국인 순매도 전환</li>
+        <li>방산주만 단기 급등</li>
+      </ul>
+      <div class="sc-bottom">코스피 → 5,900~6,050 → 분할 매수 기회</div>
+    </div>
+  </div>
+
+  <!-- ② 이번 주 핵심 이벤트 타임라인 -->
+  <div class="slabel" style="opacity:0;animation:up .4s ease .24s forwards"><span class="snum">2</span>이번 주 핵심 이벤트 타임라인</div>
+  <div class="tl-wrap">
+
+    <div class="tl-row">
+      <div class="tl-date">4/21 오늘</div>
+      <div class="tl-mid"><div class="tl-dot key"></div><div class="tl-vert"></div></div>
+      <div class="tl-box key-box">
+        <div class="tl-ttl">케빈 워시 연준 의장 후보 인사청문회</div>
+        <div class="tl-desc">통화정책 독립성·매파 발언 여부 → 미 국채금리·달러 방향 결정. 기술주에 즉각 영향.</div>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-date">4/22 내일</div>
+      <div class="tl-mid"><div class="tl-dot hot"></div><div class="tl-vert"></div></div>
+      <div class="tl-box hot-box">
+        <div class="tl-ttl">🔥 휴전 만료 D-DAY + 테슬라 실적 (장 마감 후)</div>
+        <div class="tl-desc">이번 주 최대 변수. 협상 결과와 테슬라 스페이스X 언급 여부가 동시 충격. EV·AI 투자 방향 확정.</div>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-date">4/23 목</div>
+      <div class="tl-mid"><div class="tl-dot hot"></div><div class="tl-vert"></div></div>
+      <div class="tl-box hot-box">
+        <div class="tl-ttl">🔥 SK하이닉스 1Q 실적 + 아마존·인텔·IBM</div>
+        <div class="tl-desc">SK하이닉스 HBM 깜짝 실적 기대. 아마존 AWS 결과 = AI 인프라 수요 바로미터 → 코스피 방향 결정.</div>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-date">4/24</div>
+      <div class="tl-mid"><div class="tl-dot norm"></div><div class="tl-vert"></div></div>
+      <div class="tl-box">
+        <div class="tl-ttl">알파벳(구글) 실적 + 이란 2차 협상 마감 시한</div>
+        <div class="tl-desc">클라우드·광고 강세 여부. 이란 협상 2차 타진 데드라인 → 지정학 노이즈 극대화 가능.</div>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-date">4/27~30</div>
+      <div class="tl-mid"><div class="tl-dot key"></div></div>
+      <div class="tl-box key-box">
+        <div class="tl-ttl">찰스 3세 영국 국왕 미국 방문</div>
+        <div class="tl-desc">트럼프 왕실 방문 전 이란 협상 타결 의욕 — 정치적 모멘텀으로 협상 재개 기대 ↑.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ③ 한국 수혜 업종·종목 추천 -->
+  <div class="slabel" style="opacity:0;animation:up .4s ease .28s forwards"><span class="snum">3</span>한국 증시 수혜 업종 & 주목 종목</div>
+  <div class="sector-grid">
+
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <div class="sec-rank">1</div>
+        <div class="sec-name">반도체</div>
+        <span class="sec-tag t-g">최우선</span>
+      </div>
+      <div class="chips">
+        <span class="chip">SK하이닉스</span>
+        <span class="chip">삼성전자</span>
+      </div>
+      <div class="sec-reason">AWS·테슬라 AI 수요 직결. 4/23 깜짝 실적 기대. 달러 약세 + 금리 하락 이중 수혜.</div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <div class="sec-rank">2</div>
+        <div class="sec-name">방산</div>
+        <span class="sec-tag t-r">결렬 헤지</span>
+      </div>
+      <div class="chips">
+        <span class="chip">한화에어로스페이스</span>
+        <span class="chip">현대로템</span>
+        <span class="chip">LIG넥스원</span>
+      </div>
+      <div class="sec-reason">협상 결렬 시나리오 헤지. 사우디 천궁-II 조기 인도 문의. 중동 긴장 장기화 구조 수혜.</div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <div class="sec-rank">3</div>
+        <div class="sec-name">이차전지</div>
+        <span class="sec-tag t-b">모멘텀 회복</span>
+      </div>
+      <div class="chips">
+        <span class="chip">LG에너지솔루션</span>
+        <span class="chip">삼성SDI</span>
+      </div>
+      <div class="sec-reason">테슬라 4/22 실적 직결. ESS 수요 확대. 삼성SDI 메르세데스-벤츠 수주로 유럽 재공략.</div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-hdr">
+        <div class="sec-rank">4</div>
+        <div class="sec-name">조선·에너지</div>
+        <span class="sec-tag t-a">유가 연동</span>
+      </div>
+      <div class="chips">
+        <span class="chip">HD현대중공업</span>
+        <span class="chip">한화오션</span>
+        <span class="chip">S-Oil</span>
+      </div>
+      <div class="sec-reason">WTI $90 유지 시 직접 수혜. LNG 선박 수주 모멘텀. 에너지 수급 재편 장기 수요.</div>
+    </div>
+
+    <div class="sec-card sec-wide">
+      <div class="sec-hdr">
+        <div class="sec-rank">5</div>
+        <div class="sec-name">금융·증권 (주주환원 테마)</div>
+        <span class="sec-tag t-t">안정 배당</span>
+      </div>
+      <div class="chips">
+        <span class="chip">KB금융</span>
+        <span class="chip">삼성생명</span>
+        <span class="chip">미래에셋증권</span>
+        <span class="chip">한국투자증권</span>
+      </div>
+      <div class="sec-reason">외국인 4월 6조 순매수 수혜. 상법 개정·주주환원 강화로 PBR 리레이팅 진행 중. 협상 결과 무관하게 안정적 배당 메리트 유지.</div>
+    </div>
+
+  </div>
+
+  <!-- ④ 전략 배너 -->
+  <div class="strategy">
+    <div class="st-ico">⚡</div>
+    <div>
+      <div class="st-label">Analyst Strategy · 2026.04.21</div>
+      <div class="st-body">
+        오늘 한국장 확인 포인트 3가지 →
+        <strong>①외국인 순매수 유지</strong> &nbsp;
+        <strong>②WTI $90 수성</strong> &nbsp;
+        <strong>③코스피 6,200 지지</strong>.
+        세 가지 유지 시 모레 결과 전까지 포지션 유지 가능.
+        외국인 <strong>5,000억+ 순매도 전환</strong> 시 비중 10~20% 축소.
+        결렬 시 코스피 5,900~6,000은 <strong>강력한 분할 매수 구간</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ⑤ 오늘 체크 리스트 -->
+  <div class="check-row">
+    <div class="chk">
+      <div class="chk-q">CHECK ①</div>
+      <div class="chk-v">외국인 수급</div>
+      <div class="chk-sub">순매수 유지 여부 실시간 확인</div>
+    </div>
+    <div class="chk">
+      <div class="chk-q">CHECK ②</div>
+      <div class="chk-v">WTI $90 수성</div>
+      <div class="chk-sub">$90 이탈 시 협상 기대 상승</div>
+    </div>
+    <div class="chk">
+      <div class="chk-q">CHECK ③</div>
+      <div class="chk-v">코스피 6,200</div>
+      <div class="chk-sub">이탈 여부가 포지션 기준선</div>
+    </div>
+    <div class="chk">
+      <div class="chk-q">CHECK ④</div>
+      <div class="chk-v">워시 청문회 발언</div>
+      <div class="chk-sub">매파 발언 시 기술주 즉각 반응</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="fn">* 시나리오 확률은 시장 컨센서스 기반 추정치이며 실제와 다를 수 있습니다.<br>* 투자 권유 아님. 모든 투자 판단·책임은 투자자 본인에게 있습니다.</div>
+    <div class="fb">DATA: 뉴스핌 · 이투데이 · 인포스탁데일리<br>COMPILED BY CLAUDE AI · 2026.04.21</div>
+  </div>
+
+</div>
+</body>
+</html>
