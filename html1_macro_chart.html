@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미국 증시 6대 매크로 지표 — 2026.04.20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#09111C;
+  --s1:#0F1A28;
+  --s2:#162030;
+  --s3:#1C2A3E;
+  --line:rgba(255,255,255,0.055);
+  --line2:rgba(255,255,255,0.10);
+  --line3:rgba(255,255,255,0.20);
+  --t1:#DDE6F0;
+  --t2:#8A9BB0;
+  --t3:#4A5A6E;
+  --t4:#2A3A4E;
+  --green:#00D98A;
+  --green-b:rgba(0,217,138,.12);
+  --green-bd:rgba(0,217,138,.25);
+  --red:#FF4D4A;
+  --red-b:rgba(255,77,74,.10);
+  --red-bd:rgba(255,77,74,.25);
+  --amber:#FFBE3A;
+  --amber-b:rgba(255,190,58,.10);
+  --amber-bd:rgba(255,190,58,.25);
+  --blue:#4B9EFF;
+  --blue-b:rgba(75,158,255,.10);
+  --blue-bd:rgba(75,158,255,.25);
+  --teal:#00D4E0;
+  --teal-b:rgba(0,212,224,.10);
+  --teal-bd:rgba(0,212,224,.25);
+  --mono:'Roboto Mono',monospace;
+  --sans:'Noto Sans KR',sans-serif;
+  --r:8px;
+  --r2:12px;
+}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;padding:0;margin:0}
+
+.wrap{max-width:800px;margin:0 auto;padding:28px 20px 32px}
+
+/* ─── HEADER BAR ─── */
+.header{
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--line2);
+  padding-bottom:14px;margin-bottom:22px;
+  opacity:0;animation:up .4s ease .02s forwards;
+}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 0 0 var(--red);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,77,74,.6)}70%{box-shadow:0 0 0 8px rgba(255,77,74,0)}100%{box-shadow:0 0 0 0 rgba(255,77,74,0)}}
+.hdr-badge{font-family:var(--mono);font-size:10px;letter-spacing:.10em;color:var(--red);text-transform:uppercase}
+.hdr-right{font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:.06em;text-align:right;line-height:1.8}
+
+/* ─── SECTION LABEL ─── */
+.slabel{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--t3);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.slabel::after{content:'';flex:1;height:1px;background:var(--line)}
+.snum{
+  background:var(--t1);color:var(--bg);
+  width:17px;height:17px;border-radius:50%;
+  font-size:9px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ─── 3대 지수 카드 ─── */
+.index-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:22px}
+@media(max-width:540px){.index-grid{grid-template-columns:1fr 1fr}}
+.idx-card{
+  background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);
+  padding:14px 15px 12px;position:relative;overflow:hidden;
+  opacity:0;animation:up .42s ease forwards;
+  transition:border-color .2s,transform .2s;
+}
+.idx-card:hover{border-color:var(--line3);transform:translateY(-2px)}
+.idx-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--r2) var(--r2) 0 0;background:var(--accent,#2A3A4E)}
+.idx-card.r{--accent:var(--red)}
+.idx-card.g{--accent:var(--green)}
+.idx-card.n{--accent:var(--t3)}
+.idx-card:nth-child(1){animation-delay:.08s}
+.idx-card:nth-child(2){animation-delay:.13s}
+.idx-card:nth-child(3){animation-delay:.18s}
+.idx-ticker{font-family:var(--mono);font-size:9px;letter-spacing:.10em;color:var(--t3);margin-bottom:8px;text-transform:uppercase}
+.idx-val{font-family:var(--mono);font-size:23px;font-weight:600;letter-spacing:-.04em;color:var(--t1);line-height:1;margin-bottom:5px}
+.idx-chg{font-family:var(--mono);font-size:11px}
+.idx-chg.down{color:var(--red)}
+.idx-chg.up{color:var(--green)}
+.idx-chg.flat{color:var(--t3)}
+.idx-note{font-size:10px;color:var(--t3);margin-top:6px;line-height:1.5}
+
+/* ─── 종합 신호 배너 ─── */
+.signal{
+  background:var(--s2);border:1px solid var(--line2);border-left:3px solid var(--blue);
+  border-radius:0 var(--r) var(--r) 0;padding:13px 16px;margin-bottom:22px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:up .42s ease .22s forwards;
+}
+.sig-dots{display:flex;gap:4px;flex-shrink:0}
+.sd{
+  width:22px;height:22px;border-radius:50%;
+  font-family:var(--mono);font-size:9px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;border:1px solid;
+}
+.sd.g{background:var(--green-b);color:var(--green);border-color:var(--green-bd)}
+.sd.a{background:var(--amber-b);color:var(--amber);border-color:var(--amber-bd)}
+.sig-txt{font-size:12px;color:var(--t2);line-height:1.6;flex:1;min-width:160px}
+.sig-txt strong{color:var(--t1);font-weight:500}
+
+/* ─── 6대 지표 테이블 ─── */
+.table-wrap{margin-bottom:22px;overflow-x:auto;opacity:0;animation:up .42s ease .26s forwards}
+.mtable{width:100%;border-collapse:collapse;font-size:12px;min-width:560px}
+.mtable thead tr{border-top:2px solid var(--line3);border-bottom:1px solid var(--line2)}
+.mtable th{
+  padding:8px 11px;text-align:left;
+  font-family:var(--mono);font-size:9px;letter-spacing:.10em;text-transform:uppercase;
+  color:var(--t3);background:var(--s2);white-space:nowrap;
+}
+.mtable td{
+  padding:9px 11px;border-bottom:1px solid var(--line);
+  vertical-align:middle;color:var(--t2);
+}
+.mtable td:first-child{color:var(--t1);font-weight:500}
+.mtable td.val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--t1)}
+.mtable td.up{font-family:var(--mono);font-size:12px;color:var(--green)}
+.mtable td.down{font-family:var(--mono);font-size:12px;color:var(--red)}
+.mtable tr:hover td{background:rgba(255,255,255,.02)}
+.chip{
+  display:inline-block;font-family:var(--mono);font-size:9px;
+  padding:2px 6px;border-radius:3px;border:1px solid;
+}
+.c-g{background:var(--green-b);color:var(--green);border-color:var(--green-bd)}
+.c-r{background:var(--red-b);color:var(--red);border-color:var(--red-bd)}
+.c-a{background:var(--amber-b);color:var(--amber);border-color:var(--amber-bd)}
+.c-b{background:var(--blue-b);color:var(--blue);border-color:var(--blue-bd)}
+.c-t{background:var(--teal-b);color:var(--teal);border-color:var(--teal-bd)}
+
+/* ─── 차트 ─── */
+.chart-box{
+  background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);
+  padding:20px 20px 16px;
+  opacity:0;animation:up .42s ease .32s forwards;
+}
+.ch-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.ch-title h3{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:3px;letter-spacing:-.01em}
+.ch-title p{font-size:11px;color:var(--t3)}
+.ch-legend{display:flex;gap:14px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10px;color:var(--t3)}
+.leg-sq{width:10px;height:10px;border-radius:2px}
+.chart-wrap{position:relative;width:100%;height:210px}
+
+/* ─── 인사이트 박스 ─── */
+.insight{
+  background:var(--s2);border:1px solid var(--line2);border-left:3px solid var(--green);
+  border-radius:0 var(--r) var(--r) 0;padding:13px 16px;margin-top:22px;
+  opacity:0;animation:up .42s ease .4s forwards;
+}
+.ins-label{font-family:var(--mono);font-size:9px;letter-spacing:.10em;color:var(--green);margin-bottom:5px;text-transform:uppercase}
+.ins-txt{font-size:12px;color:var(--t2);line-height:1.7}
+.ins-txt strong{color:var(--t1);font-weight:500}
+
+/* ─── FOOTER ─── */
+.footer{
+  border-top:1px solid var(--line);padding-top:12px;margin-top:20px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;
+  opacity:0;animation:up .42s ease .46s forwards;
+}
+.fn{font-family:var(--mono);font-size:9px;color:var(--t3);line-height:1.8;letter-spacing:.02em}
+.fb{font-family:var(--mono);font-size:9px;color:var(--t4);text-align:right;letter-spacing:.05em}
+
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hdr-left">
+      <div class="pulse"></div>
+      <span class="hdr-badge">글로벌 매크로 분석 · HTML ①</span>
+    </div>
+    <div class="hdr-right">NYSE 마감 2026.04.20<br>미·이란 D+51 · 모레 휴전 만료</div>
+  </div>
+
+  <!-- 3대 지수 -->
+  <div class="slabel"><span class="snum">1</span>뉴욕 3대 지수 마감</div>
+  <div class="index-grid">
+    <div class="idx-card r">
+      <div class="idx-ticker">Dow Jones</div>
+      <div class="idx-val">49,442</div>
+      <div class="idx-chg down">▼ –4.87pt (–0.01%)</div>
+      <div class="idx-note">사실상 보합 — 공포 부재 확인</div>
+    </div>
+    <div class="idx-card r">
+      <div class="idx-ticker">S&amp;P 500</div>
+      <div class="idx-val">7,109</div>
+      <div class="idx-chg down">▼ –16.92pt (–0.24%)</div>
+      <div class="idx-note">전쟁 손실 99% 회복 완료</div>
+    </div>
+    <div class="idx-card r">
+      <div class="idx-ticker">Nasdaq</div>
+      <div class="idx-val">24,404</div>
+      <div class="idx-chg down">▼ –64.09pt (–0.26%)</div>
+      <div class="idx-note">9거래일 연속 상승 후 숨고르기</div>
+    </div>
+  </div>
+
+  <!-- 종합 신호 -->
+  <div class="signal">
+    <div class="sig-dots">
+      <div class="sd g">G</div><div class="sd g">G</div><div class="sd g">G</div>
+      <div class="sd a">W</div><div class="sd a">W</div><div class="sd g">G</div>
+    </div>
+    <div class="sig-txt">
+      6대 지표 <strong>4개 긍정 · 2개 주의</strong>.
+      VIX 17.48 안정 + DXY 약세 + 환율 안정 + 금리 하락 → 증시 하방 견고.
+      WTI 급등·협상 불확실성은 단기 변동성 요인으로 상존.
+    </div>
+  </div>
+
+  <!-- 6대 매크로 지표 테이블 -->
+  <div class="slabel" style="opacity:0;animation:up .4s ease .24s forwards"><span class="snum">2</span>6대 글로벌 매크로 지표 종합</div>
+  <div class="table-wrap">
+    <table class="mtable">
+      <thead>
+        <tr>
+          <th>지표</th><th>수치</th><th>전일비</th>
+          <th>미국 증시 영향</th><th>한국 증시 영향</th><th>신호</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>VIX 공포지수</td>
+          <td class="val">17.48</td>
+          <td class="up">▼ 안정권</td>
+          <td>패닉 없음 → 낙폭 제한</td>
+          <td>외국인 이탈 방어</td>
+          <td><span class="chip c-g">긍정</span></td>
+        </tr>
+        <tr>
+          <td>WTI 유가 ($/bbl)</td>
+          <td class="val">90.01</td>
+          <td class="down">▲ +7.35%</td>
+          <td>에너지주 강세, 소비 부담</td>
+          <td>정유 수혜 / 수입 비용 ↑</td>
+          <td><span class="chip c-a">주의</span></td>
+        </tr>
+        <tr>
+          <td>브렌트유 ($/bbl)</td>
+          <td class="val">95.93</td>
+          <td class="down">▲ +6.14%</td>
+          <td>항공·운송 비용 압박</td>
+          <td>호르무즈 공급 차질 우려</td>
+          <td><span class="chip c-a">주의</span></td>
+        </tr>
+        <tr>
+          <td>DXY 달러인덱스</td>
+          <td class="val">98.23</td>
+          <td class="up">▼ 약달러</td>
+          <td>신흥국 자금 유입 촉진</td>
+          <td>외국인 원화 매력 ↑</td>
+          <td><span class="chip c-g">긍정</span></td>
+        </tr>
+        <tr>
+          <td>USD / KRW</td>
+          <td class="val">1,474원</td>
+          <td class="up">— 안정</td>
+          <td>—</td>
+          <td>수입물가 급등 방지</td>
+          <td><span class="chip c-g">긍정</span></td>
+        </tr>
+        <tr>
+          <td>미 10년 국채금리</td>
+          <td class="val">하락세</td>
+          <td class="up">▼ 금리↓</td>
+          <td>성장주·빅테크 밸류 지지</td>
+          <td>반도체 DCF 할인율 ↓</td>
+          <td><span class="chip c-g">긍정</span></td>
+        </tr>
+        <tr>
+          <td>EWY 한국 ETF</td>
+          <td class="val">↑ 동행</td>
+          <td class="up">강보합</td>
+          <td>글로벌 매니저 한국 유지</td>
+          <td>4월 누적 외국인 +6조</td>
+          <td><span class="chip c-t">관찰</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- S&P500 vs VIX 차트 -->
+  <div class="slabel" style="opacity:0;animation:up .4s ease .30s forwards"><span class="snum">3</span>S&P500 반등 vs VIX 공포지수 역전 — D+50일 동향</div>
+  <div class="chart-box">
+    <div class="ch-hdr">
+      <div class="ch-title">
+        <h3>전쟁 발발 이후 S&P500 vs VIX 50일 추이</h3>
+        <p>공포지수(빨간 점선) 급등 후 정상화, 지수 완전 회복</p>
+      </div>
+      <div class="ch-legend">
+        <div class="leg"><div class="leg-sq" style="background:#4B9EFF"></div>S&amp;P500 (좌축)</div>
+        <div class="leg"><div class="leg-sq" style="background:rgba(255,77,74,.7)"></div>VIX (우축, 점선)</div>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="chart1" role="img" aria-label="S&P500과 VIX 50일 이중축 차트. S&P500 6100에서 5050 저점 후 7109로 완전 회복. VIX 22에서 62 폭등 후 17.5로 정상화.">S&P500: 6100→5050→7109 / VIX: 22→62→17.5</canvas>
+    </div>
+  </div>
+
+  <!-- 인사이트 박스 -->
+  <div class="insight">
+    <div class="ins-label">Wall Street Analyst Insight</div>
+    <div class="ins-txt">
+      3중 악재(유가 7% 급등 · 이란 선박 나포 · 협상 거부)에도 S&P500이 <strong>–0.24% 하락</strong>에 그쳤다.
+      VIX 17대는 시장이 "이건 협상 전술"로 읽고 있다는 증거. 기관이 대규모 헤지를 걷어들이기 시작하면
+      <strong>주가는 오른다</strong>. 모레 결과 전까지 포지션 유지 가능 구간.
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="fn">* NYSE 마감 기준 (2026.04.20 현지) · WTI/브렌트 4/19 기준 · DXY·환율 4/17 종가<br>* 투자 권유 아님. 모든 투자 판단·책임은 투자자 본인에게 있습니다.</div>
+    <div class="fb">DATA: 뉴스핌 · Investing.com<br>COMPILED BY CLAUDE AI · 2026.04.21</div>
+  </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const L = ['D+1\n발발','D+7','D+14\n저점','D+21','D+29\n휴전','D+35\n6000','D+42\n신고가','D+49','D+50\n어제'];
+const SP = [6100,5350,5050,5450,5830,6150,7046,7126,7109];
+const VX = [22,45,62,50,28,20,17,16,17.5];
+
+new Chart(document.getElementById('chart1'),{
+  type:'line',
+  data:{labels:L,datasets:[
+    {
+      label:'S&P500',data:SP,yAxisID:'y',
+      borderColor:'#4B9EFF',backgroundColor:'rgba(75,158,255,0.06)',
+      fill:true,tension:0.42,borderWidth:2.5,
+      pointRadius:SP.map((_,i)=>i===8?7:i===2?6:4),
+      pointBackgroundColor:SP.map((_,i)=>i===8?'#00D98A':i===2?'#FF4D4A':'#4B9EFF'),
+      pointBorderColor:'#09111C',pointBorderWidth:2,
+    },{
+      label:'VIX',data:VX,yAxisID:'y2',
+      borderColor:'rgba(255,77,74,.70)',fill:false,
+      tension:0.42,borderWidth:1.8,borderDash:[5,4],
+      pointRadius:3,
+      pointBackgroundColor:'rgba(255,77,74,.7)',
+      pointBorderColor:'#09111C',pointBorderWidth:1.5,
+    }
+  ]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        backgroundColor:'#0F1A28',borderColor:'rgba(255,255,255,.12)',borderWidth:1,
+        titleColor:'#DDE6F0',bodyColor:'#8A9BB0',padding:10,
+        titleFont:{family:'Roboto Mono',size:10},bodyFont:{family:'Roboto Mono',size:11},
+        callbacks:{
+          title:i=>i[0].label.replace('\n',' '),
+          label:c=>c.datasetIndex===0
+            ?'  S&P500  '+c.parsed.y.toLocaleString()+'pt'
+            :'  VIX    '+c.parsed.y.toFixed(1)
+        }
+      }
+    },
+    scales:{
+      x:{
+        ticks:{color:'#4A5A6E',font:{size:9,family:'Roboto Mono'},maxRotation:0,
+          callback:(v,i)=>L[i].split('\n')},
+        grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.08)'}
+      },
+      y:{
+        position:'left',min:4500,max:7800,
+        ticks:{color:'#4B9EFF',font:{size:10,family:'Roboto Mono'},
+          callback:v=>v>=1000?(v/1000).toFixed(1)+'K':v},
+        grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(75,158,255,0.2)'}
+      },
+      y2:{
+        position:'right',min:0,max:85,
+        ticks:{color:'rgba(255,77,74,.65)',font:{size:10,family:'Roboto Mono'}},
+        grid:{display:false},border:{color:'rgba(255,77,74,0.2)'}
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
