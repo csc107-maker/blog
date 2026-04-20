@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이벤트 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#06040f;
+  padding:36px 20px 44px;
+}
+
+/* ── 헤더 ── */
+.tl-header{
+  max-width:760px;
+  margin:0 auto 34px;
+  text-align:center;
+}
+.tl-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#6b48c8;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.tl-title{
+  font-size:clamp(20px,4vw,28px);
+  font-weight:900;
+  color:#e0d8f8;
+  margin-bottom:6px;
+}
+.tl-title em{ color:#a78bfa; font-style:normal; }
+.tl-sub{
+  font-size:12px;
+  color:#3d2e60;
+}
+
+/* ── 타임라인 컨테이너 ── */
+.timeline-wrap{
+  max-width:760px;
+  margin:0 auto;
+  position:relative;
+  padding-left:0;
+}
+
+/* 중앙 수직선 */
+.timeline-wrap::before{
+  content:'';
+  position:absolute;
+  left:32px; top:0; bottom:0;
+  width:2px;
+  background:linear-gradient(to bottom,
+    #a78bfa 0%,
+    #6b48c8 30%,
+    #00b4ff 60%,
+    #00e5a0 85%,
+    transparent 100%
+  );
+}
+
+/* ── 아이템 ── */
+.tl-item{
+  position:relative;
+  margin-bottom:28px;
+  padding-left:72px;
+  animation:fadeLeft .5s ease both;
+}
+.tl-item:nth-child(1){ animation-delay:.04s }
+.tl-item:nth-child(2){ animation-delay:.10s }
+.tl-item:nth-child(3){ animation-delay:.16s }
+.tl-item:nth-child(4){ animation-delay:.22s }
+.tl-item:nth-child(5){ animation-delay:.28s }
+.tl-item:nth-child(6){ animation-delay:.34s }
+
+@keyframes fadeLeft{
+  from{ opacity:0; transform:translateX(-12px) }
+  to  { opacity:1; transform:translateX(0) }
+}
+
+/* 날짜 스탬프 */
+.tl-stamp{
+  position:absolute;
+  left:0;
+  top:22px;
+  width:62px;
+  text-align:right;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;
+  color:#4d3d75;
+  line-height:1.4;
+  padding-right:8px;
+}
+
+/* 원형 마커 */
+.tl-dot{
+  position:absolute;
+  left:24px; top:22px;
+  width:16px; height:16px;
+  border-radius:50%;
+  border:2px solid var(--dot-color, #6b48c8);
+  background:#06040f;
+  transform:translate(-50%,-50%);
+  z-index:1;
+  transition:box-shadow .3s;
+}
+.tl-item:hover .tl-dot{
+  box-shadow:0 0 14px var(--dot-color, #6b48c8);
+}
+
+/* ── 카드 ── */
+.tl-card{
+  background:#0c0820;
+  border:1px solid #1e1540;
+  border-radius:10px;
+  padding:18px 20px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .25s, transform .2s;
+}
+.tl-item:hover .tl-card{
+  border-color:var(--dot-color,#6b48c8);
+  transform:translateX(4px);
+}
+
+/* 상단 컬러선 */
+.tl-card::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--dot-color,#6b48c8),transparent);
+}
+
+/* 카드 상단 행 */
+.card-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.card-date{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--dot-color,#6b48c8);
+  letter-spacing:1px;
+  flex-shrink:0;
+}
+.card-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;
+  padding:2px 9px;
+  border-radius:3px;
+  font-weight:600;
+}
+.tag-pos{ color:#00e5a0; background:rgba(0,229,160,.1); border:1px solid rgba(0,229,160,.25); }
+.tag-neg{ color:#ff4b6a; background:rgba(255,75,106,.1); border:1px solid rgba(255,75,106,.25); }
+.tag-neu{ color:#ffd166; background:rgba(255,209,102,.1); border:1px solid rgba(255,209,102,.25); }
+.tag-key{ color:#a78bfa; background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.4); }
+
+/* 오늘 배지 */
+.today-badge{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  padding:2px 9px;
+  border-radius:3px;
+  color:#00e5a0;
+  background:rgba(0,229,160,.08);
+  border:1px solid rgba(0,229,160,.3);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* 이벤트명 */
+.card-event{
+  font-size:15px;
+  font-weight:700;
+  color:#ddd8f0;
+  margin-bottom:8px;
+  line-height:1.4;
+}
+
+/* 설명 */
+.card-desc{
+  font-size:12.5px;
+  color:#5a4e80;
+  line-height:1.7;
+}
+
+/* 수치 행 */
+.card-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px solid #1e1540;
+}
+.stat-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  padding:3px 10px;
+  border-radius:4px;
+  background:#100e20;
+  color:#8070b0;
+  border:1px solid #2a1e50;
+}
+.stat-pill strong{ color:#ddd8f0; }
+
+/* ── 하단 요약 ── */
+.summary-bar{
+  max-width:760px;
+  margin:28px auto 0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media(max-width:500px){ .summary-bar{ grid-template-columns:1fr; } }
+.sum-card{
+  background:#0c0820;
+  border:1px solid #1e1540;
+  border-radius:8px;
+  padding:14px 16px;
+  text-align:center;
+}
+.sum-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:22px;
+  font-weight:700;
+  color:#a78bfa;
+  margin-bottom:4px;
+}
+.sum-label{
+  font-size:11px;
+  color:#4d3d75;
+}
+</style>
+</head>
+<body>
+
+<div class="tl-header">
+  <div class="tl-eyebrow">EVENT TIMELINE · 4월 2주차</div>
+  <div class="tl-title">시장을 흔든 <em>핵심 이벤트</em> 흐름</div>
+  <div class="tl-sub">2026.04.13 (월) → 2026.04.20 (월) 오늘</div>
+</div>
+
+<div class="timeline-wrap">
+
+  <!-- Day 1 -->
+  <div class="tl-item" style="--dot-color:#ff4b6a">
+    <div class="tl-stamp">04/13<br>월</div>
+    <div class="tl-dot"></div>
+    <div class="tl-card">
+      <div class="card-top">
+        <span class="card-date">2026.04.13</span>
+        <span class="card-tag tag-neg">리스크 확대</span>
+      </div>
+      <div class="card-event">🔴 이스라엘-이란 분쟁 격화 · 호르무즈 위기 고조</div>
+      <div class="card-desc">
+        호르무즈 해협 통제 가능성이 부각되며 에너지 공급 위기 우려가 최고조에 달함. VIX가 30선을 상회하고 달러 강세·원화 약세가 심화됨.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">VIX <strong>30+</strong></span>
+        <span class="stat-pill">USD/KRW <strong>1,497원</strong></span>
+        <span class="stat-pill">WTI <strong>고점 급등</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="tl-item" style="--dot-color:#ffd166">
+    <div class="tl-stamp">04/14<br>화</div>
+    <div class="tl-dot"></div>
+    <div class="tl-card">
+      <div class="card-top">
+        <span class="card-date">2026.04.14</span>
+        <span class="card-tag tag-pos">인플레 완화</span>
+      </div>
+      <div class="card-event">📉 미국 3월 PPI 예상치 하회 · 채권 금리 하락 시작</div>
+      <div class="card-desc">
+        생산자물가지수(PPI)가 시장 예상을 하회하며 추가 금리 인상 부담이 소폭 완화됨. 국채 금리 하락세 시작, 위험자산 선호 서서히 회복.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">10Y 금리 <strong>하락 시작</strong></span>
+        <span class="stat-pill">PPI <strong>예상 하회</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="tl-item" style="--dot-color:#00b4ff">
+    <div class="tl-stamp">04/15<br>수</div>
+    <div class="tl-dot"></div>
+    <div class="tl-card">
+      <div class="card-top">
+        <span class="card-date">2026.04.15</span>
+        <span class="card-tag tag-pos">지정학 완화 기대</span>
+      </div>
+      <div class="card-event">🕊️ 이스라엘-레바논 평화 협상 가동 · 트럼프 언급</div>
+      <div class="card-desc">
+        트럼프 대통령이 레바논과의 휴전 협상 진행 상황을 공개 언급. 시장에 지정학 완화 기대감이 형성되며 주요 지수 상승 탄력 확보.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">VIX <strong>하락세 전환</strong></span>
+        <span class="stat-pill">DXY <strong>달러 약세 시작</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="tl-item" style="--dot-color:#00b4ff">
+    <div class="tl-stamp">04/16<br>목</div>
+    <div class="tl-dot"></div>
+    <div class="tl-card">
+      <div class="card-top">
+        <span class="card-date">2026.04.16</span>
+        <span class="card-tag tag-pos">어닝 서프라이즈</span>
+      </div>
+      <div class="card-event">🏦 JP모건 등 미국 금융주 어닝 서프라이즈 · 연준 불확실성 완화</div>
+      <div class="card-desc">
+        JP모건 등 주요 금융기관의 강력한 1분기 실적 발표. 트럼프가 파월 연준 의장 재임명 의지를 재확인하며 통화정책 불확실성이 완화됨.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">JP모건 <strong>실적↑</strong></span>
+        <span class="stat-pill">파월 <strong>재임명 시사</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 5 - KEY -->
+  <div class="tl-item" style="--dot-color:#a78bfa">
+    <div class="tl-stamp">04/17<br>금</div>
+    <div class="tl-dot" style="width:20px;height:20px;left:23px;border-width:3px;box-shadow:0 0 16px #a78bfa"></div>
+    <div class="tl-card" style="border-color:rgba(167,139,250,.4)">
+      <div class="card-top">
+        <span class="card-date">2026.04.17</span>
+        <span class="card-tag tag-key">⭐ 핵심 분수령</span>
+      </div>
+      <div class="card-event">🕊️ 이란, 호르무즈 해협 전면 개방 선언 · 이스라엘-레바논 휴전 발효</div>
+      <div class="card-desc">
+        이란 외무장관이 모든 상업 선박에 호르무즈 해협 개방을 공식 선언. 트럼프 "이란 평화 협상 매우 임박". WTI 유가 하루 만에 -9~11% 폭락. S&P 500 사상 첫 7,100선 돌파, 나스닥 1992년 이후 최장 연속 상승(13일) 기록.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">S&P <strong>7,126 신고점</strong></span>
+        <span class="stat-pill">WTI <strong>−9.41%</strong></span>
+        <span class="stat-pill">VIX <strong>17.48↓</strong></span>
+        <span class="stat-pill">나스닥 <strong>13일 연속↑</strong></span>
+        <span class="stat-pill">USD/KRW <strong>1,459원</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 6 - 오늘 -->
+  <div class="tl-item" style="--dot-color:#00e5a0">
+    <div class="tl-stamp">04/20<br>월</div>
+    <div class="tl-dot" style="background:#00e5a0;border-color:#00e5a0"></div>
+    <div class="tl-card">
+      <div class="card-top">
+        <span class="card-date">2026.04.20</span>
+        <span class="card-tag tag-neu">관망 권장</span>
+        <span class="today-badge">TODAY</span>
+      </div>
+      <div class="card-event">📊 한국 코스피·코스닥 오전장 개장 — NXT 선물 소폭 하락</div>
+      <div class="card-desc">
+        NXT 선물 -0.65~-1.08% 소폭 하락. 이익실현 매물 출현 중. 매크로 환경(VIX 안정·달러 약세·유가 하락)은 여전히 우호적. 외국인 수급 방향이 오전장 핵심 변수.
+      </div>
+      <div class="card-stats">
+        <span class="stat-pill">S&P 선물 <strong>−0.77%</strong></span>
+        <span class="stat-pill">다우 선물 <strong>−0.90%</strong></span>
+        <span class="stat-pill">FOMC <strong>4/29 동결 유력</strong></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 하단 요약 수치 -->
+<div class="summary-bar">
+  <div class="sum-card">
+    <div class="sum-num">6일</div>
+    <div class="sum-label">연속 지정학 완화 흐름</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-num">−9.4%</div>
+    <div class="sum-label">WTI 유가 단일 일간 낙폭</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-num">7,126</div>
+    <div class="sum-label">S&amp;P 500 사상 최고 종가</div>
+  </div>
+</div>
+
+</body>
+</html>
