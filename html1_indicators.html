@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6대 핵심 지표 카드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Noto Sans KR',sans-serif;
+  background:#030d1a;
+  padding:32px 20px 40px;
+  min-height:100vh;
+}
+
+/* ── 헤더 ── */
+.block-header {
+  text-align:center;
+  margin-bottom:28px;
+}
+.block-eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#4a9eca;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.block-eyebrow::before,
+.block-eyebrow::after {
+  content:'';
+  width:32px; height:1px;
+  background:linear-gradient(90deg,transparent,#4a9eca);
+}
+.block-eyebrow::after { transform:scaleX(-1); }
+.block-title {
+  font-size:clamp(18px,3vw,24px);
+  font-weight:900;
+  color:#e8f2ff;
+  letter-spacing:-0.5px;
+}
+.block-title em { color:#00e5a0; font-style:normal; }
+.block-date {
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#3d6180;
+  margin-top:6px;
+}
+
+/* ── 그리드 ── */
+.cards-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:860px;
+  margin:0 auto;
+}
+@media(max-width:660px){ .cards-grid{ grid-template-columns:repeat(2,1fr); gap:10px; } }
+@media(max-width:400px){ .cards-grid{ grid-template-columns:1fr; } }
+
+/* ── 카드 ── */
+.card {
+  position:relative;
+  background:#071525;
+  border:1px solid #0f2a40;
+  border-radius:12px;
+  padding:20px 18px 18px;
+  overflow:hidden;
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+  cursor:default;
+}
+.card:hover {
+  transform:translateY(-3px);
+}
+
+/* 컬러 테마 */
+.c-green  { --accent:#00e5a0; --glow:rgba(0,229,160,.18); }
+.c-red    { --accent:#ff4b6a; --glow:rgba(255,75,106,.18); }
+.c-sky    { --accent:#00b4ff; --glow:rgba(0,180,255,.18); }
+.c-amber  { --accent:#ffd166; --glow:rgba(255,209,102,.18); }
+.c-purple { --accent:#a78bfa; --glow:rgba(167,139,250,.18); }
+
+.card:hover { border-color:var(--accent); box-shadow:0 0 28px var(--glow); }
+
+/* 상단 강조선 */
+.card::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--accent) 0%,transparent 100%);
+}
+
+/* 배경 원형 glow */
+.card-glow {
+  position:absolute;
+  top:-30px; right:-30px;
+  width:120px; height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle, var(--glow) 0%, transparent 70%);
+  pointer-events:none;
+}
+
+/* 아이콘 */
+.card-icon {
+  width:38px; height:38px;
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  margin-bottom:14px;
+}
+
+/* 라벨 */
+.card-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;
+  letter-spacing:2.5px;
+  color:#3d6180;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+/* 수치 */
+.card-value {
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(22px,4vw,30px);
+  font-weight:700;
+  color:#fff;
+  line-height:1;
+  margin-bottom:8px;
+  letter-spacing:-1px;
+}
+
+/* 변동 배지 */
+.card-delta {
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:4px;
+  margin-bottom:12px;
+}
+.delta-up   { color:#00e5a0; background:rgba(0,229,160,.1); border:1px solid rgba(0,229,160,.25); }
+.delta-down { color:#ff4b6a; background:rgba(255,75,106,.1); border:1px solid rgba(255,75,106,.25); }
+.delta-pos  { color:#a78bfa; background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.25); }
+
+/* 설명 */
+.card-desc {
+  font-size:11.5px;
+  color:#5a7a96;
+  line-height:1.65;
+  border-top:1px solid #0f2a40;
+  padding-top:10px;
+  margin-top:4px;
+}
+
+/* 신호 바 */
+.signal-bar {
+  height:3px;
+  background:#0f2a40;
+  border-radius:2px;
+  margin-top:12px;
+  overflow:hidden;
+}
+.signal-bar-fill {
+  height:100%;
+  border-radius:2px;
+  background:var(--accent);
+  position:relative;
+}
+.signal-bar-fill::after {
+  content:'';
+  position:absolute;
+  right:0; top:-2px;
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+}
+
+/* ── 종합 판정 배너 ── */
+.verdict-banner {
+  max-width:860px;
+  margin:20px auto 0;
+  padding:18px 24px;
+  background:linear-gradient(135deg,#071a10 0%,#071525 100%);
+  border:1px solid rgba(0,229,160,.25);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.verdict-icon { font-size:28px; flex-shrink:0; }
+.verdict-text .vt-label {
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:3px;
+  color:#3d8060;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+.verdict-text .vt-body {
+  font-size:14px;
+  font-weight:700;
+  color:#00e5a0;
+  line-height:1.4;
+}
+.verdict-text .vt-sub {
+  font-size:11px;
+  color:#4a6a58;
+  margin-top:3px;
+}
+
+/* fade-in */
+@keyframes fadeUp {
+  from{ opacity:0; transform:translateY(14px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+.card { animation:fadeUp .5s ease both; }
+.card:nth-child(1){ animation-delay:.05s }
+.card:nth-child(2){ animation-delay:.10s }
+.card:nth-child(3){ animation-delay:.15s }
+.card:nth-child(4){ animation-delay:.20s }
+.card:nth-child(5){ animation-delay:.25s }
+.card:nth-child(6){ animation-delay:.30s }
+.verdict-banner{ animation:fadeUp .5s .35s ease both; }
+</style>
+</head>
+<body>
+
+<div class="block-header">
+  <div class="block-eyebrow">MACRO INDICATORS</div>
+  <div class="block-title">4월 17일 마감 기준 <em>6대 핵심 지표</em></div>
+  <div class="block-date">2026.04.17 NYSE CLOSE → 2026.04.20 KST 오전장 영향</div>
+</div>
+
+<div class="cards-grid">
+
+  <!-- VIX -->
+  <div class="card c-green">
+    <div class="card-glow"></div>
+    <div class="card-icon">😌</div>
+    <div class="card-label">VIX · 공포지수</div>
+    <div class="card-value">17.48</div>
+    <span class="card-delta delta-down">▼ −2.56%</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:82%"></div></div>
+    <div class="card-desc">안정 구간(15~20) 진입. 극도의 공포 해소 완료. 신흥국 자금 유입 여건 조성.</div>
+  </div>
+
+  <!-- WTI -->
+  <div class="card c-red">
+    <div class="card-glow"></div>
+    <div class="card-icon">🛢️</div>
+    <div class="card-label">WTI · 유가 (배럴)</div>
+    <div class="card-value">$82.59</div>
+    <span class="card-delta delta-down">▼ −9.41%</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:90%"></div></div>
+    <div class="card-desc">호르무즈 해협 개방 선언. 에너지 공급 우려 해소. 항공·화학 직접 수혜.</div>
+  </div>
+
+  <!-- DXY -->
+  <div class="card c-sky">
+    <div class="card-glow"></div>
+    <div class="card-icon">💵</div>
+    <div class="card-label">DXY · 달러인덱스</div>
+    <div class="card-value">97.90</div>
+    <span class="card-delta delta-down">▼ −0.13%</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:72%"></div></div>
+    <div class="card-desc">달러 약세 지속 — 3년래 최저 수준. 이머징 마켓(EM) 자산 매력도 상승.</div>
+  </div>
+
+  <!-- USD/KRW -->
+  <div class="card c-amber">
+    <div class="card-glow"></div>
+    <div class="card-icon">💱</div>
+    <div class="card-label">USD / KRW · 환율</div>
+    <div class="card-value">1,459<small style="font-size:14px;font-weight:400">원</small></div>
+    <span class="card-delta delta-pos">원화 강세 ↑</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:68%"></div></div>
+    <div class="card-desc">주중 저점 기록. 달러 약세 연동 원화 강세. 외국인 원화 자산 매수 유인 강화.</div>
+  </div>
+
+  <!-- 10년 금리 -->
+  <div class="card c-sky">
+    <div class="card-glow"></div>
+    <div class="card-icon">📉</div>
+    <div class="card-label">미국 10년 국채금리</div>
+    <div class="card-value">4.26%</div>
+    <span class="card-delta delta-down">▼ 주간 −22bp</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:74%"></div></div>
+    <div class="card-desc">2년물 3.71% · 스프레드 +55bp 정상화. FOMC 4/29 동결 확실시. 위험자산 선호 환경.</div>
+  </div>
+
+  <!-- EWY -->
+  <div class="card c-purple">
+    <div class="card-glow"></div>
+    <div class="card-icon">🇰🇷</div>
+    <div class="card-label">EWY · 한국 ETF</div>
+    <div class="card-value">긍정적</div>
+    <span class="card-delta delta-pos">외국인 복귀 ↑</span>
+    <div class="signal-bar"><div class="signal-bar-fill" style="width:78%"></div></div>
+    <div class="card-desc">삼성전자 1Q 사상 최대 영업이익. 외국인 한국 비중 재확대 흐름 포착.</div>
+  </div>
+
+</div>
+
+<!-- 종합 판정 -->
+<div class="verdict-banner">
+  <div class="verdict-icon">📡</div>
+  <div class="verdict-text">
+    <div class="vt-label">전문가 종합 판정 · EXPERT VERDICT</div>
+    <div class="vt-body">매크로 6개 지표 모두 한국 증시에 우호적으로 정렬</div>
+    <div class="vt-sub">단, NXT 선물 소폭 하락(-0.77%) — 초반 10분 관망 후 외국인 수급 방향 확인 권장</div>
+  </div>
+</div>
+
+</body>
+</html>
