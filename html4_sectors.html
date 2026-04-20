@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업종별 전망 + 시나리오</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:#04080e;
+  padding:32px 20px 44px;
+}
+
+/* ── 헤더 ── */
+.page-header{
+  max-width:860px;
+  margin:0 auto 30px;
+  display:flex;
+  align-items:center;
+  gap:0;
+  border-bottom:1px solid #0e1f35;
+  padding-bottom:20px;
+}
+.header-left{ flex:1; }
+.header-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#2a6050;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.header-title{
+  font-size:clamp(20px,4vw,26px);
+  font-weight:900;
+  color:#d8eede;
+  line-height:1.2;
+}
+.header-title em{ color:#00e5a0; font-style:normal; }
+.header-right{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#1a3828;
+  text-align:right;
+  line-height:1.8;
+}
+
+/* ── 섹터 행 ── */
+.sector-list{
+  max-width:860px;
+  margin:0 auto 32px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.sector-row{
+  background:#070d18;
+  border:1px solid #0e1f35;
+  border-radius:10px;
+  padding:18px 20px;
+  display:grid;
+  grid-template-columns:200px 1fr auto auto;
+  align-items:center;
+  gap:16px;
+  transition:border-color .25s, background .2s, transform .2s;
+  position:relative;
+  overflow:hidden;
+}
+.sector-row::before{
+  content:'';
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:3px;
+  background:var(--color,#00e5a0);
+}
+.sector-row:hover{
+  border-color:var(--color,#00e5a0);
+  background:#080f1e;
+  transform:translateX(4px);
+}
+
+@media(max-width:640px){
+  .sector-row{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto auto;
+  }
+  .sector-name-block{ grid-column:1/-1; }
+  .sector-bar-block{ grid-column:1/-1; }
+}
+
+/* 왼쪽: 아이콘 + 이름 */
+.sector-name-block{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.sector-emoji{
+  font-size:24px;
+  width:44px; height:44px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+}
+.sector-info{}
+.sector-name{
+  font-size:14px;
+  font-weight:700;
+  color:#c8dce8;
+  margin-bottom:3px;
+}
+.sector-stocks{
+  font-size:11px;
+  color:#2a4460;
+}
+
+/* 가운데: 설명 + 바 */
+.sector-bar-block{ flex:1; }
+.sector-reason{
+  font-size:12px;
+  color:#3a5570;
+  line-height:1.5;
+  margin-bottom:8px;
+}
+.bar-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.bar-bg{
+  flex:1;
+  height:5px;
+  background:#0e1f35;
+  border-radius:3px;
+  overflow:hidden;
+}
+.bar-fill{
+  height:100%;
+  border-radius:3px;
+  background:var(--color,#00e5a0);
+  position:relative;
+}
+.bar-fill::after{
+  content:'';
+  position:absolute;
+  right:0; top:50%;
+  transform:translateY(-50%);
+  width:8px; height:8px;
+  border-radius:50%;
+  background:var(--color,#00e5a0);
+  box-shadow:0 0 8px var(--color,#00e5a0);
+}
+.bar-val{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--color,#00e5a0);
+  font-weight:700;
+  width:36px;
+  text-align:right;
+  flex-shrink:0;
+}
+
+/* 별점 */
+.star-col{
+  font-size:14px;
+  letter-spacing:1px;
+  color:#ffd166;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.star-empty{ color:#1a2e45; }
+
+/* 전망 배지 */
+.outlook-col{ flex-shrink:0; }
+.outlook-badge{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:5px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.5px;
+  white-space:nowrap;
+}
+.ob-strong  { color:#00e5a0; background:rgba(0,229,160,.12); border:1px solid rgba(0,229,160,.35); }
+.ob-pos     { color:#00b4ff; background:rgba(0,180,255,.12); border:1px solid rgba(0,180,255,.35); }
+.ob-neutral { color:#ffd166; background:rgba(255,209,102,.12); border:1px solid rgba(255,209,102,.35); }
+.ob-caution { color:#ff4b6a; background:rgba(255,75,106,.12); border:1px solid rgba(255,75,106,.35); }
+
+/* ── 오늘 한줄 전략 박스 ── */
+.strategy-box{
+  max-width:860px;
+  margin:0 auto 32px;
+  background:#060c16;
+  border:1px solid #0e2035;
+  border-radius:10px;
+  overflow:hidden;
+}
+.strategy-top{
+  background:linear-gradient(135deg,#0a1a10 0%,#071528 100%);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #0e2035;
+}
+.strategy-top-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#2a6050;
+  text-transform:uppercase;
+}
+.strategy-body{
+  padding:18px 20px;
+}
+.strategy-tip{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid #0e2035;
+}
+.strategy-tip:last-child{ border-bottom:none; padding-bottom:0; }
+.tip-num{
+  width:26px; height:26px;
+  border-radius:6px;
+  background:rgba(0,229,160,.08);
+  border:1px solid rgba(0,229,160,.2);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  color:#00e5a0;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.tip-text{
+  font-size:13px;
+  color:#5a7a96;
+  line-height:1.65;
+}
+.tip-text strong{ color:#c8dce8; font-weight:700; }
+
+/* ── 시나리오 섹션 ── */
+.scenario-header{
+  max-width:860px;
+  margin:0 auto 16px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.sc-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  color:#3a5070;
+  text-transform:uppercase;
+}
+.sc-line{ flex:1; height:1px; background:#0e1f35; }
+
+.scenario-grid{
+  max-width:860px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media(max-width:560px){ .scenario-grid{ grid-template-columns:1fr; } }
+
+.sc-card{
+  background:#070d18;
+  border:1px solid #0e1f35;
+  border-radius:10px;
+  padding:20px 18px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color .25s, transform .2s;
+}
+.sc-card:hover{ transform:translateY(-3px); }
+.sc-card::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:var(--sc-color);
+}
+.sc-card:hover{ border-color:var(--sc-color); }
+
+.sc-icon-wrap{
+  width:40px; height:40px;
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+  margin-bottom:12px;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.05);
+}
+.sc-type{
+  font-size:14px;
+  font-weight:700;
+  color:#c8dce8;
+  margin-bottom:4px;
+}
+.sc-prob{
+  font-family:'JetBrains Mono',monospace;
+  font-size:26px;
+  font-weight:700;
+  color:var(--sc-color);
+  margin-bottom:10px;
+  line-height:1;
+}
+.sc-prob small{ font-size:13px; color:#3a5070; margin-left:2px; }
+.sc-body{
+  font-size:12px;
+  color:#3a5570;
+  line-height:1.65;
+}
+.sc-trigger{
+  margin-top:12px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.03);
+  border-radius:5px;
+  font-size:11px;
+  color:#2a4460;
+}
+.sc-trigger strong{ color:#5a7a96; }
+
+/* 애니메이션 */
+@keyframes fadeUp{ from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+.sector-row{ animation:fadeUp .4s ease both; }
+.sector-row:nth-child(1){ animation-delay:.04s }
+.sector-row:nth-child(2){ animation-delay:.09s }
+.sector-row:nth-child(3){ animation-delay:.14s }
+.sector-row:nth-child(4){ animation-delay:.19s }
+.sector-row:nth-child(5){ animation-delay:.24s }
+.sector-row:nth-child(6){ animation-delay:.29s }
+.strategy-box{ animation:fadeUp .4s .32s ease both; }
+.scenario-grid{ animation:fadeUp .4s .38s ease both; }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="page-header">
+  <div class="header-left">
+    <div class="header-tag">SECTOR OUTLOOK · 2026.04.20 AM</div>
+    <div class="header-title">오전장 <em>주목 업종</em> 분석 &amp; 투자 시나리오</div>
+  </div>
+  <div class="header-right">
+    WTI −9.4% · VIX 17.48<br>
+    DXY 97.90 · 원화 1,459
+  </div>
+</div>
+
+<!-- 섹터 리스트 -->
+<div class="sector-list">
+
+  <div class="sector-row" style="--color:#00e5a0">
+    <div class="sector-name-block">
+      <div class="sector-emoji">✈️</div>
+      <div class="sector-info">
+        <div class="sector-name">항공 · 운송</div>
+        <div class="sector-stocks">대한항공 · 제주항공 · 아시아나</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">WTI -9.4% 폭락. 연료비(원가 30~40%) 직접 절감. 가장 즉각적·확실한 수혜 업종.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:95%"></div></div>
+        <div class="bar-val">95</div>
+      </div>
+    </div>
+    <div class="star-col">★★★★★</div>
+    <div class="outlook-col"><span class="outlook-badge ob-strong">STRONG BUY</span></div>
+  </div>
+
+  <div class="sector-row" style="--color:#00b4ff">
+    <div class="sector-name-block">
+      <div class="sector-emoji">⚗️</div>
+      <div class="sector-info">
+        <div class="sector-name">석유화학 · 정유</div>
+        <div class="sector-stocks">LG화학 · 롯데케미칼 · SK이노</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">원재료 비용 감소, 정제마진 개선 기대. 단, 제품 가격과 유가 연동 부분 확인 필요.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:78%"></div></div>
+        <div class="bar-val">78</div>
+      </div>
+    </div>
+    <div class="star-col">★★★★<span class="star-empty">★</span></div>
+    <div class="outlook-col"><span class="outlook-badge ob-pos">POSITIVE</span></div>
+  </div>
+
+  <div class="sector-row" style="--color:#00b4ff">
+    <div class="sector-name-block">
+      <div class="sector-emoji">💾</div>
+      <div class="sector-info">
+        <div class="sector-name">반도체</div>
+        <div class="sector-stocks">삼성전자 · SK하이닉스</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">1Q 사상 최대 영업이익 + 외국인 수급 유입 기대. 원화 강세는 단기 부담이나 중장기 외인 매수 우위.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:74%"></div></div>
+        <div class="bar-val">74</div>
+      </div>
+    </div>
+    <div class="star-col">★★★★<span class="star-empty">★</span></div>
+    <div class="outlook-col"><span class="outlook-badge ob-pos">POSITIVE</span></div>
+  </div>
+
+  <div class="sector-row" style="--color:#ffd166">
+    <div class="sector-name-block">
+      <div class="sector-emoji">🛒</div>
+      <div class="sector-info">
+        <div class="sector-name">소비재 · 유통</div>
+        <div class="sector-stocks">CJ · 이마트 · 롯데쇼핑</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">유가 하락 → 물가 안정 → 소비 심리 회복 기대. 단기 실적 직결성 낮음. 중기 테마 수혜.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:55%"></div></div>
+        <div class="bar-val">55</div>
+      </div>
+    </div>
+    <div class="star-col">★★★<span class="star-empty">★★</span></div>
+    <div class="outlook-col"><span class="outlook-badge ob-neutral">NEUTRAL</span></div>
+  </div>
+
+  <div class="sector-row" style="--color:#ffd166">
+    <div class="sector-name-block">
+      <div class="sector-emoji">🚢</div>
+      <div class="sector-info">
+        <div class="sector-name">조선 · 기계</div>
+        <div class="sector-stocks">HD현대중공업 · 삼성중공업</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">수주 잔량 양호하나 원화 강세로 달러 수주 마진 압박. 장기 경쟁력은 여전히 유효.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:50%"></div></div>
+        <div class="bar-val">50</div>
+      </div>
+    </div>
+    <div class="star-col">★★★<span class="star-empty">★★</span></div>
+    <div class="outlook-col"><span class="outlook-badge ob-neutral">NEUTRAL</span></div>
+  </div>
+
+  <div class="sector-row" style="--color:#ff4b6a">
+    <div class="sector-name-block">
+      <div class="sector-emoji">🛡️</div>
+      <div class="sector-info">
+        <div class="sector-name">방산</div>
+        <div class="sector-stocks">한화에어로 · LIG넥스원</div>
+      </div>
+    </div>
+    <div class="sector-bar-block">
+      <div class="sector-reason">중동 긴장 완화 → 단기 수요 우려 부각. EU·동유럽 수주는 별개. 중장기 호재 유효 중장기 보유 유지.</div>
+      <div class="bar-wrap">
+        <div class="bar-bg"><div class="bar-fill" style="width:32%"></div></div>
+        <div class="bar-val">32</div>
+      </div>
+    </div>
+    <div class="star-col">★★<span class="star-empty">★★★</span></div>
+    <div class="outlook-col"><span class="outlook-badge ob-caution">주의</span></div>
+  </div>
+
+</div>
+
+<!-- 오늘 한줄 전략 -->
+<div class="strategy-box">
+  <div class="strategy-top">
+    <span style="font-size:16px">🎯</span>
+    <span class="strategy-top-label">TODAY'S ACTION GUIDE · 오전장 대응 전략</span>
+  </div>
+  <div class="strategy-body">
+    <div class="strategy-tip">
+      <div class="tip-num">01</div>
+      <div class="tip-text"><strong>초반 10분 관망</strong> — 선물 하락(-0.77~-1.08%)에 의한 갭 하락 출발 가능. 외국인 방향 확인 후 진입.</div>
+    </div>
+    <div class="strategy-tip">
+      <div class="tip-num">02</div>
+      <div class="tip-text"><strong>항공주는 오전 빠른 반응</strong> — 유가 폭락 재료는 시장 전원이 알고 있음. 전날 선반영 여부 먼저 확인.</div>
+    </div>
+    <div class="strategy-tip">
+      <div class="tip-num">03</div>
+      <div class="tip-text"><strong>외국인 순매수 방향 실시간 모니터링</strong> — 달러 약세·원화 강세 환경에서 외국인 유입이 지수 상승의 핵심 동력.</div>
+    </div>
+    <div class="strategy-tip">
+      <div class="tip-num">04</div>
+      <div class="tip-text"><strong>코스닥보다 코스피 대형주 우선</strong> — 외국인 자금은 코스피 반도체·항공·자동차 위주로 유입. 코스닥은 이후 시차 확인.</div>
+    </div>
+    <div class="strategy-tip">
+      <div class="tip-num">05</div>
+      <div class="tip-text"><strong>현금 30~40% 보유 유지</strong> — 중동 돌발 변수 가능성 상존. 포지션 전부 올인은 지양.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 시나리오 -->
+<div class="scenario-header">
+  <div class="sc-label">SCENARIO ANALYSIS</div>
+  <div class="sc-line"></div>
+</div>
+
+<div class="scenario-grid">
+
+  <div class="sc-card" style="--sc-color:#00e5a0">
+    <div class="sc-icon-wrap">📈</div>
+    <div class="sc-type">낙관 시나리오</div>
+    <div class="sc-prob">35<small>%</small></div>
+    <div class="sc-body">외국인 강한 순매수 유입. 항공·반도체 주도 플러스 출발. 코스피 2,680선 상향 시도.</div>
+    <div class="sc-trigger"><strong>발동 조건:</strong> 외국인 오전 500억+ 순매수, 원화 1,450원대 추가 강세</div>
+  </div>
+
+  <div class="sc-card" style="--sc-color:#ffd166">
+    <div class="sc-icon-wrap">📊</div>
+    <div class="sc-type">기본 시나리오</div>
+    <div class="sc-prob">50<small>%</small></div>
+    <div class="sc-body">선물 하락분 소화 후 보합권. 소규모 외국인 순매수. 업종 간 차별화 장세.</div>
+    <div class="sc-trigger"><strong>발동 조건:</strong> 외국인 100~500억 순매수, 지수 ±0.5% 범위 내 등락</div>
+  </div>
+
+  <div class="sc-card" style="--sc-color:#ff4b6a">
+    <div class="sc-icon-wrap">⚠️</div>
+    <div class="sc-type">주의 시나리오</div>
+    <div class="sc-prob">15<small>%</small></div>
+    <div class="sc-body">중동 돌발 악재 또는 북한 지정학 이슈 발생 시 변동성 급등. 선물 추가 하락 동반.</div>
+    <div class="sc-trigger"><strong>발동 조건:</strong> 외국인 순매도 전환, VIX 20선 재돌파</div>
+  </div>
+
+</div>
+
+</body>
+</html>
