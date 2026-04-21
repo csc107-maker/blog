@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주택 vs 베란다 태양광 비교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFFBF2;
+    padding: 28px 16px;
+  }
+
+  .wrapper {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: #FF6B2B;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1A1A2E;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #6B7280;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    transition: transform 0.2s;
+  }
+
+  .card:hover { transform: translateY(-4px); }
+
+  .card.house {
+    border-color: #3B82F6;
+    background: linear-gradient(145deg, #EFF6FF, #fff);
+  }
+
+  .card.balcony {
+    border-color: #10B981;
+    background: linear-gradient(145deg, #ECFDF5, #fff);
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-type {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .house .card-type { color: #3B82F6; }
+  .balcony .card-type { color: #10B981; }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid #F3F4F6;
+    font-size: 13px;
+  }
+
+  .spec-row:last-child { border-bottom: none; }
+
+  .spec-label { color: #6B7280; font-weight: 600; flex-shrink: 0; width: 80px; }
+  .spec-value { color: #111827; font-weight: 700; text-align: right; line-height: 1.4; }
+
+  .house .spec-value { color: #1D4ED8; }
+  .balcony .spec-value { color: #059669; }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .house .badge {
+    background: #DBEAFE;
+    color: #1D4ED8;
+  }
+
+  .balcony .badge {
+    background: #D1FAE5;
+    color: #065F46;
+  }
+
+  /* Comparison Table */
+  .compare-table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .compare-table-title {
+    background: #1A1A2E;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 14px 20px;
+    letter-spacing: 0.3px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead {
+    background: #F8FAFC;
+  }
+
+  th {
+    padding: 12px 14px;
+    text-align: center;
+    font-weight: 700;
+    color: #374151;
+    border-bottom: 2px solid #E5E7EB;
+  }
+
+  th:first-child { text-align: left; width: 28%; }
+
+  td {
+    padding: 12px 14px;
+    text-align: center;
+    border-bottom: 1px solid #F3F4F6;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #6B7280;
+    background: #FAFAFA;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #F9FAFB; }
+  tr:hover td:first-child { background: #F3F4F6; }
+
+  .good { color: #059669; font-weight: 700; }
+  .mid { color: #D97706; font-weight: 700; }
+  .bad { color: #DC2626; font-weight: 700; }
+
+  .source-note {
+    font-size: 11px;
+    color: #9CA3AF;
+    margin-top: 14px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 500px) {
+    .cards { grid-template-columns: 1fr; }
+    h2 { font-size: 18px; }
+    .card { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <span class="section-label">📊 실제 비교 분석</span>
+  <h2>주택 태양광 vs 베란다 미니태양광<br>어떤 게 우리 집에 맞을까?</h2>
+  <p class="subtitle">설치 조건·비용·발전량·실제 후기 기반 데이터 비교 | 2025년 기준</p>
+
+  <div class="cards">
+    <!-- House Card -->
+    <div class="card house">
+      <span class="card-icon">🏠</span>
+      <div class="card-type">HOUSE TYPE</div>
+      <div class="card-title">주택 지붕형<br>태양광</div>
+      <div class="spec-row">
+        <span class="spec-label">설치 용량</span>
+        <span class="spec-value">3~10kW</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">설치 비용</span>
+        <span class="spec-value">700만~1,500만원<br><small style="font-weight:400;color:#6B7280;">(보조금 후 실부담)</small></span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">하루 발전</span>
+        <span class="spec-value">15~31kWh</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">투자 회수</span>
+        <span class="spec-value">5~7년</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">보조금</span>
+        <span class="spec-value">최대 450만원<br><small style="font-weight:400;color:#6B7280;">(kW당 약 50만원)</small></span>
+      </div>
+      <div class="badge-row">
+        <span class="badge">상계거래 가능</span>
+        <span class="badge">25년 보증</span>
+        <span class="badge">전기요금 70~90% 절감</span>
+      </div>
+    </div>
+
+    <!-- Balcony Card -->
+    <div class="card balcony">
+      <span class="card-icon">🪟</span>
+      <div class="card-type">BALCONY TYPE</div>
+      <div class="card-title">베란다 미니<br>태양광</div>
+      <div class="spec-row">
+        <span class="spec-label">설치 용량</span>
+        <span class="spec-value">200~1,000W</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">설치 비용</span>
+        <span class="spec-value">10만~50만원<br><small style="font-weight:400;color:#6B7280;">(자부담 기준)</small></span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">하루 발전</span>
+        <span class="spec-value">0.5~2kWh</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">투자 회수</span>
+        <span class="spec-value">2~4년</span>
+      </div>
+      <div class="spec-row">
+        <span class="spec-label">보조금</span>
+        <span class="spec-value">설치비의 80%<br><small style="font-weight:400;color:#6B7280;">(지자체별 상이)</small></span>
+      </div>
+      <div class="badge-row">
+        <span class="badge">아파트 가능</span>
+        <span class="badge">즉시 전기 절감</span>
+        <span class="badge">관리소 허가 필수</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="compare-table-wrap">
+    <div class="compare-table-title">📋 항목별 상세 비교표</div>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>🏠 주택 지붕형</th>
+          <th>🪟 베란다 미니형</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>설치 용이성</td>
+          <td class="mid">전문 시공 필요</td>
+          <td class="good">DIY 가능</td>
+        </tr>
+        <tr>
+          <td>아파트 설치</td>
+          <td class="bad">불가</td>
+          <td class="good">조건부 가능</td>
+        </tr>
+        <tr>
+          <td>발전 효율</td>
+          <td class="good">높음 (남향 최적)</td>
+          <td class="mid">중간 (방향 제한)</td>
+        </tr>
+        <tr>
+          <td>전기요금 절감</td>
+          <td class="good">70~90%</td>
+          <td class="mid">10~30%</td>
+        </tr>
+        <tr>
+          <td>앱 모니터링</td>
+          <td class="good">전용 앱 완비</td>
+          <td class="mid">간이 모니터링</td>
+        </tr>
+        <tr>
+          <td>유지보수</td>
+          <td class="mid">연 1~2회 청소</td>
+          <td class="good">간단 청소 OK</td>
+        </tr>
+        <tr>
+          <td>기후변화 영향</td>
+          <td class="mid">발전량 예측 어려움</td>
+          <td class="mid">동일하게 영향받음</td>
+        </tr>
+        <tr>
+          <td>초기 진입장벽</td>
+          <td class="bad">높음</td>
+          <td class="good">낮음</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="source-note">* 발전량·비용 데이터는 실제 사용자 후기 및 2025년 정부 보조금 기준 추정치입니다.<br>설치 환경·지역·업체에 따라 달라질 수 있습니다.</p>
+</div>
+</body>
+</html>
