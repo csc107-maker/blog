@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>계절별 태양광 발전량 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F0F9FF;
+    padding: 28px 16px;
+  }
+
+  .wrapper { max-width: 720px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    background: #0EA5E9;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0C4A6E;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #64748B;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Season Cards */
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .season-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 12px 16px;
+    text-align: center;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .season-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .spring::before { background: linear-gradient(90deg, #84CC16, #22D3EE); }
+  .summer::before { background: linear-gradient(90deg, #F59E0B, #EF4444); }
+  .autumn::before { background: linear-gradient(90deg, #F97316, #EAB308); }
+  .winter::before { background: linear-gradient(90deg, #93C5FD, #818CF8); }
+
+  .season-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+
+  .season-name {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    color: #1E293B;
+  }
+
+  /* Bar Chart */
+  .bar-container {
+    background: #F1F5F9;
+    border-radius: 6px;
+    height: 100px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 6px 8px 0;
+    position: relative;
+  }
+
+  .bar {
+    border-radius: 4px 4px 0 0;
+    width: 38px;
+    transition: height 0.6s ease;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .bar-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    padding-top: 3px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .spring .bar { background: linear-gradient(180deg, #84CC16, #65A30D); height: 82px; }
+  .summer .bar { background: linear-gradient(180deg, #F59E0B, #D97706); height: 72px; }
+  .autumn .bar { background: linear-gradient(180deg, #F97316, #C2410C); height: 78px; }
+  .winter .bar { background: linear-gradient(180deg, #93C5FD, #3B82F6); height: 44px; }
+
+  .gen-range {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 4px;
+  }
+
+  .gen-unit { font-size: 10px; color: #94A3B8; }
+
+  .warning-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 6px;
+  }
+
+  .spring .warning-badge { background: #DCFCE7; color: #15803D; }
+  .summer .warning-badge { background: #FEF3C7; color: #92400E; }
+  .autumn .warning-badge { background: #FFF7ED; color: #C2410C; }
+  .winter .warning-badge { background: #EFF6FF; color: #1D4ED8; }
+
+  /* Climate Change Timeline */
+  .timeline-wrap {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .timeline-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #0C4A6E;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(180deg, #0EA5E9, #7C3AED);
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .tl-item:last-child { margin-bottom: 0; }
+
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+  }
+
+  .tl-item.rain .tl-dot { color: #0EA5E9; background: #E0F2FE; }
+  .tl-item.dust .tl-dot { color: #D97706; background: #FEF3C7; }
+  .tl-item.heat .tl-dot { color: #DC2626; background: #FEE2E2; }
+  .tl-item.snow .tl-dot { color: #7C3AED; background: #EDE9FE; }
+
+  .tl-season-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .rain .tl-season-tag { background: #E0F2FE; color: #0369A1; }
+  .dust .tl-season-tag { background: #FEF3C7; color: #92400E; }
+  .heat .tl-season-tag { background: #FEE2E2; color: #B91C1C; }
+  .snow .tl-season-tag { background: #EDE9FE; color: #6D28D9; }
+
+  .tl-headline {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1E293B;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 12px;
+    color: #64748B;
+    line-height: 1.6;
+  }
+
+  .tl-impact {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #F1F5F9;
+    color: #475569;
+  }
+
+  /* Analyst Box */
+  .analyst-box {
+    background: linear-gradient(135deg, #0F172A, #1E3A5F);
+    border-radius: 14px;
+    padding: 20px;
+    color: #fff;
+  }
+
+  .analyst-head {
+    font-size: 12px;
+    font-weight: 700;
+    color: #7DD3FC;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .analyst-text {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #CBD5E1;
+  }
+
+  .analyst-text strong { color: #FDE68A; }
+
+  @media (max-width: 500px) {
+    .season-grid { grid-template-columns: repeat(2, 1fr); }
+    h2 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <span class="section-label">☀️ 데이터 분석</span>
+  <h2>계절별 태양광 발전량 — 기후변화 시대의 새로운 변수</h2>
+  <p class="subtitle">한국 평균 3kW 시스템 기준 | 기후변화 영향 반영 분석 | 2025년</p>
+
+  <!-- Season Cards with Bar Chart -->
+  <div class="season-grid">
+    <div class="season-card spring">
+      <span class="season-icon">🌸</span>
+      <div class="season-name">봄 (3~5월)</div>
+      <div class="bar-container">
+        <div class="bar">
+          <span class="bar-label">효율<br>최상</span>
+        </div>
+      </div>
+      <div class="gen-range">280~320<span class="gen-unit"> kWh/월</span></div>
+      <span class="warning-badge">⚠ 황사·꽃가루</span>
+    </div>
+
+    <div class="season-card summer">
+      <span class="season-icon">☀️</span>
+      <div class="season-name">여름 (6~8월)</div>
+      <div class="bar-container">
+        <div class="bar">
+          <span class="bar-label">장마<br>변수</span>
+        </div>
+      </div>
+      <div class="gen-range">250~300<span class="gen-unit"> kWh/월</span></div>
+      <span class="warning-badge">⚠ 장마·고온</span>
+    </div>
+
+    <div class="season-card autumn">
+      <span class="season-icon">🍂</span>
+      <div class="season-name">가을 (9~11월)</div>
+      <div class="bar-container">
+        <div class="bar">
+          <span class="bar-label">맑은날<br>多</span>
+        </div>
+      </div>
+      <div class="gen-range">260~310<span class="gen-unit"> kWh/월</span></div>
+      <span class="warning-badge">★ 발전 최적기</span>
+    </div>
+
+    <div class="season-card winter">
+      <span class="season-icon">❄️</span>
+      <div class="season-name">겨울 (12~2월)</div>
+      <div class="bar-container">
+        <div class="bar">
+          <span class="bar-label">일조<br>감소</span>
+        </div>
+      </div>
+      <div class="gen-range">150~200<span class="gen-unit"> kWh/월</span></div>
+      <span class="warning-badge">⚠ 적설 주의</span>
+    </div>
+  </div>
+
+  <!-- Climate Change Timeline -->
+  <div class="timeline-wrap">
+    <div class="timeline-title">🌡️ 기후변화가 발전량 예측을 흔드는 4가지 방식</div>
+    <div class="timeline">
+      <div class="tl-item rain">
+        <div class="tl-dot">💧</div>
+        <span class="tl-season-tag">여름 · 가을</span>
+        <div class="tl-headline">장마·집중호우 패턴의 불규칙화</div>
+        <p class="tl-desc">과거 6월 말~7월 중순이던 장마가 8월까지 연장되고, 9월 태풍·집중호우 빈도가 증가했습니다. 실제 후기에서도 "9월에 태풍 3번"이 발전량을 20% 끌어내렸습니다.</p>
+        <span class="tl-impact">📉 여름 발전량 예측 오차 ↑</span>
+      </div>
+
+      <div class="tl-item dust">
+        <div class="tl-dot">🌫</div>
+        <span class="tl-season-tag">봄</span>
+        <div class="tl-headline">황사·미세먼지 심화로 패널 오염 가속</div>
+        <p class="tl-desc">패널 표면 오염은 발전 효율을 최대 15~20% 낮춥니다. 황사 발생 빈도와 강도가 증가하면서 봄철 청소 주기를 기존보다 1회 더 늘려야 하는 상황이 됐습니다.</p>
+        <span class="tl-impact">📉 봄 발전 효율 -10~20%</span>
+      </div>
+
+      <div class="tl-item heat">
+        <div class="tl-dot">🌡</div>
+        <span class="tl-season-tag">여름 (6~9월)</span>
+        <div class="tl-headline">폭염 장기화 → 인버터 효율 저하 구간 연장</div>
+        <p class="tl-desc">패널은 고온에서 출력이 떨어지고, 인버터도 열에 취약합니다. 폭염이 6월부터 9월까지 이어지면서 여름철 실제 발전량이 이론값보다 낮게 나오는 기간이 길어졌습니다.</p>
+        <span class="tl-impact">📉 인버터 효율 최대 -8%</span>
+      </div>
+
+      <div class="tl-item snow">
+        <div class="tl-dot">❄</div>
+        <span class="tl-season-tag">겨울</span>
+        <div class="tl-headline">갑작스러운 기록적 폭설 → 발전 완전 중단</div>
+        <p class="tl-desc">눈이 패널을 덮으면 발전이 거의 멈춥니다. 예전엔 지역별 적설량이 예측 가능했으나, 이상기후로 예상치 못한 폭설이 증가했습니다. 경사형 설치로 자연 제설이 되도록 하는 것이 중요합니다.</p>
+        <span class="tl-impact">📉 적설 시 발전량 ≈ 0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analyst Comment -->
+  <div class="analyst-box">
+    <div class="analyst-head">🔍 에너지 분석가 코멘트</div>
+    <p class="analyst-text">
+      2025년 기준, <strong>단순 평균 일사량 데이터만으로 연간 발전량을 예측하는 방식은 이미 한계</strong>에 도달했습니다. 기후변화로 인한 기상 변동성이 커지면서 실제 발전량과 예측치의 오차가 늘고 있습니다. <strong>AI 기반 날씨 연동 예측 시스템</strong>을 갖춘 스마트 인버터나 모니터링 앱을 함께 사용하는 것이 현재로서는 가장 현실적인 대안입니다. 과거 데이터에만 의존하지 말고, 앱으로 매달 실측치를 쌓아가는 것이 장기적으로 유리합니다.
+    </p>
+  </div>
+</div>
+</body>
+</html>
