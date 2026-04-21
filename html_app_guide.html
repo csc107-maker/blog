@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스마트 에너지 앱 활용 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FFF8F0;
+    padding: 28px 16px;
+  }
+
+  .wrapper { max-width: 720px; margin: 0 auto; }
+
+  .section-label {
+    display: inline-block;
+    background: #7C3AED;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #2D1B69;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #6B7280;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* App Cards */
+  .app-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .app-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    border-top: 4px solid;
+    transition: transform 0.2s;
+  }
+
+  .app-card:hover { transform: translateY(-3px); }
+
+  .app-card.lasee { border-color: #0EA5E9; }
+  .app-card.iammeter { border-color: #10B981; }
+  .app-card.solarplay { border-color: #F59E0B; }
+  .app-card.deye { border-color: #EF4444; }
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .app-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .lasee .app-icon { background: #E0F2FE; }
+  .iammeter .app-icon { background: #DCFCE7; }
+  .solarplay .app-icon { background: #FEF3C7; }
+  .deye .app-icon { background: #FEE2E2; }
+
+  .app-name {
+    font-size: 15px;
+    font-weight: 900;
+    color: #111827;
+    line-height: 1.2;
+  }
+
+  .app-tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: #9CA3AF;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+
+  .feature-list li {
+    font-size: 12px;
+    color: #374151;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.5;
+  }
+
+  .feature-list li::before {
+    content: '✓';
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .lasee .feature-list li::before { color: #0EA5E9; }
+  .iammeter .feature-list li::before { color: #10B981; }
+  .solarplay .feature-list li::before { color: #F59E0B; }
+  .deye .feature-list li::before { color: #EF4444; }
+
+  .who-for {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+  }
+
+  .lasee .who-for { background: #E0F2FE; color: #0369A1; }
+  .iammeter .who-for { background: #DCFCE7; color: #065F46; }
+  .solarplay .who-for { background: #FEF3C7; color: #92400E; }
+  .deye .who-for { background: #FEE2E2; color: #991B1B; }
+
+  /* 3-Step Roadmap */
+  .roadmap-wrap {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+
+  .roadmap-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #2D1B69;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 28px;
+    position: relative;
+  }
+
+  .step:last-child { padding-bottom: 0; }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+  }
+
+  .step:nth-child(1) .step-num { background: linear-gradient(135deg, #7C3AED, #9333EA); }
+  .step:nth-child(2) .step-num { background: linear-gradient(135deg, #0EA5E9, #0284C7); }
+  .step:nth-child(3) .step-num { background: linear-gradient(135deg, #10B981, #059669); }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: #E5E7EB;
+    margin-top: 4px;
+  }
+
+  .step:last-child .step-line { display: none; }
+
+  .step-content { flex: 1; }
+
+  .step-period {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+
+  .step:nth-child(1) .step-period { background: #F3E8FF; color: #7C3AED; }
+  .step:nth-child(2) .step-period { background: #E0F2FE; color: #0369A1; }
+  .step:nth-child(3) .step-period { background: #DCFCE7; color: #065F46; }
+
+  .step-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: #4B5563;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .step-action {
+    background: #F9FAFB;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.6;
+    border-left: 3px solid;
+  }
+
+  .step:nth-child(1) .step-action { border-color: #7C3AED; }
+  .step:nth-child(2) .step-action { border-color: #0EA5E9; }
+  .step:nth-child(3) .step-action { border-color: #10B981; }
+
+  /* Tip Box */
+  .tip-box {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .tip-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+
+  .tip-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: #78350F;
+    margin-bottom: 5px;
+  }
+
+  .tip-text {
+    font-size: 12px;
+    color: #92400E;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 500px) {
+    .app-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 18px; }
+    .app-card { padding: 14px 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <span class="section-label">📱 앱 활용 완전 가이드</span>
+  <h2>스마트 에너지 관리 앱 — 처음 쓰는 분도 바로 이해되는 완전 설명서</h2>
+  <p class="subtitle">주요 앱 비교 + 3단계 시작 로드맵 | 일반인 눈높이 맞춤</p>
+
+  <!-- App Cards -->
+  <div class="app-grid">
+    <div class="app-card lasee">
+      <div class="app-header">
+        <div class="app-icon">📡</div>
+        <div>
+          <div class="app-name">LASEE<br>라씨</div>
+          <div class="app-tag">국내 설치형</div>
+        </div>
+      </div>
+      <ul class="feature-list">
+        <li>발전 정지·정전 즉시 푸시 알림</li>
+        <li>시간/일/월/연별 발전량 그래프</li>
+        <li>iOS · Android 지원</li>
+        <li>업체 연동 로그인으로 바로 사용</li>
+      </ul>
+      <span class="who-for">👤 태양광 설치 초보자에게 추천</span>
+    </div>
+
+    <div class="app-card iammeter">
+      <div class="app-header">
+        <div class="app-icon">🤖</div>
+        <div>
+          <div class="app-name">IAMMETER</div>
+          <div class="app-tag">글로벌 AI 플랫폼</div>
+        </div>
+      </div>
+      <ul class="feature-list">
+        <li>AI 기반 발전량 예측 + 고장 사전 감지</li>
+        <li>가전제품별 부하 자동 제어</li>
+        <li>홈 어시스턴트 연동 가능</li>
+        <li>모든 인버터 브랜드와 호환</li>
+      </ul>
+      <span class="who-for">👤 스마트홈 연동에 관심 있는 분</span>
+    </div>
+
+    <div class="app-card solarplay">
+      <div class="app-header">
+        <div class="app-icon">⚡</div>
+        <div>
+          <div class="app-name">솔라플레이</div>
+          <div class="app-tag">국내 발전소 전문</div>
+        </div>
+      </div>
+      <ul class="feature-list">
+        <li>고저압반 보호계전기 실시간 감시</li>
+        <li>환경센서·접속반 이상 유무 알림</li>
+        <li>시간/일/월/연 발전량 그래프</li>
+        <li>국내 신재생에너지 전문기업 운영</li>
+      </ul>
+      <span class="who-for">👤 발전소 장비 모니터링이 필요한 분</span>
+    </div>
+
+    <div class="app-card deye">
+      <div class="app-header">
+        <div class="app-icon">🔋</div>
+        <div>
+          <div class="app-name">Deye Cloud</div>
+          <div class="app-tag">배터리·EV 통합</div>
+        </div>
+      </div>
+      <ul class="feature-list">
+        <li>에너지 흐름 지도로 한눈에 시각화</li>
+        <li>EV 충전 모드 제어 (태양광만 사용)</li>
+        <li>24시간 AI 어시스턴트 지원</li>
+        <li>배터리·발전기 통합 관리</li>
+      </ul>
+      <span class="who-for">👤 ESS·전기차 함께 운영하는 분</span>
+    </div>
+  </div>
+
+  <!-- 3-Step Roadmap -->
+  <div class="roadmap-wrap">
+    <div class="roadmap-title">🗺️ 앱 3단계 시작 로드맵 — 처음이어도 괜찮습니다</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">1</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <span class="step-period">첫 1주일</span>
+          <div class="step-title">발전량 패턴 눈으로 익히기</div>
+          <p class="step-desc">매일 앱을 열어 오늘의 발전량 그래프를 확인하세요. 맑은 날, 흐린 날, 비 오는 날의 차이를 몸으로 느끼는 단계입니다. 숫자보다 봉우리 모양을 먼저 봐주세요.</p>
+          <div class="step-action">
+            🎯 <strong>할 일</strong>: 앱 홈 화면에서 '오늘 발전량' 그래프의 피크 시간(오전 10시~오후 2시)을 확인하고, 날씨와 비교해보기
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">2</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <span class="step-period">2~4주</span>
+          <div class="step-title">소비 패턴 바꾸기 — 낮에 쓰는 습관</div>
+          <p class="step-desc">발전이 가장 많은 낮 시간대에 세탁기·식기세척기·건조기 가동을 집중시킵니다. 한 가구는 이 방법만으로 자가소비율을 50%에서 75%로 올리고 연 50만 원을 추가 절약했습니다.</p>
+          <div class="step-action">
+            🎯 <strong>할 일</strong>: 앱에서 '실시간 발전량'이 최고일 때 세탁기 타이머 예약. 앱 알림으로 발전 피크 시간 체크
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-left">
+          <div class="step-num">3</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="step-content">
+          <span class="step-period">1개월 후</span>
+          <div class="step-title">월별 리포트로 투자 수익 계산</div>
+          <p class="step-desc">앱의 월별 발전량 리포트를 전기요금 청구서와 나란히 놓고 비교해 보세요. 상계거래 절감액을 직접 확인하면서 내 태양광의 월별 '수익'을 눈으로 볼 수 있습니다.</p>
+          <div class="step-action">
+            🎯 <strong>할 일</strong>: 앱 → '월간 리포트' → 발전량(kWh) × 전기요금 단가 = 절감액 계산. 12개월 누적하면 투자 회수 시점 예측 가능
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tip Box -->
+  <div class="tip-box">
+    <div class="tip-icon">💡</div>
+    <div>
+      <div class="tip-title">처음 앱 쓰는 분을 위한 핵심 TIP</div>
+      <p class="tip-text">처음에는 숫자보다 <strong>그래프를 먼저</strong> 보세요. 봉우리(발전 피크)가 언제 어느 높이로 서는지만 봐도 내 시스템이 정상인지 확인할 수 있습니다. 갑자기 봉우리가 낮아졌다면 패널 오염이나 고장 신호일 수 있어요. 숫자는 나중에 자연스럽게 익숙해집니다.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
