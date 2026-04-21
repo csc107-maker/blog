@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글로벌 금융시장 종합 분석 | 2026.04.21</title>
+  <style>
+    /* ─── 기본 리셋 & 폰트 ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* ─── 메인 래퍼 ─── */
+    .report-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 0 12px 60px;
+    }
+
+    /* ─── 헤더 배너 ─── */
+    .report-header {
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #16213e 100%);
+      border-radius: 0 0 24px 24px;
+      padding: 36px 28px 32px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(99,179,237,0.08);
+    }
+    .report-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; left: 60px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: rgba(236,72,153,0.06);
+    }
+    .report-date {
+      font-size: 12px;
+      color: #63b3ed;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .report-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .report-subtitle {
+      font-size: 13px;
+      color: #a0aec0;
+    }
+    .report-badge {
+      display: inline-block;
+      background: rgba(236,72,153,0.25);
+      color: #f687b3;
+      border: 1px solid rgba(236,72,153,0.4);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── 섹션 제목 ─── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #718096;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    /* ─── 대시보드 카드 그리드 ─── */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 600px) {
+      .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 380px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    .metric-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 16px 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      border-top: 3px solid #4299e1;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .metric-card.danger  { border-top-color: #f56565; }
+    .metric-card.warning { border-top-color: #ed8936; }
+    .metric-card.success { border-top-color: #48bb78; }
+    .metric-card.info    { border-top-color: #4299e1; }
+    .metric-card.purple  { border-top-color: #9f7aea; }
+    .metric-card.teal    { border-top-color: #38b2ac; }
+
+    .metric-icon { font-size: 22px; margin-bottom: 8px; }
+    .metric-label { font-size: 11px; color: #718096; font-weight: 600; letter-spacing: 0.5px; }
+    .metric-value { font-size: 24px; font-weight: 800; color: #1a202c; margin: 4px 0; line-height: 1; }
+    .metric-change {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .change-up   { color: #c53030; background: #fff5f5; }
+    .change-down { color: #276749; background: #f0fff4; }
+    .change-flat { color: #4a5568; background: #edf2f7; }
+    .metric-desc { font-size: 11px; color: #a0aec0; margin-top: 6px; }
+
+    /* ─── 경보 배너 ─── */
+    .alert-banner {
+      background: linear-gradient(135deg, #fff5f5, #fff);
+      border: 1px solid #fc8181;
+      border-left: 4px solid #e53e3e;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .alert-icon { font-size: 24px; flex-shrink: 0; }
+    .alert-title { font-size: 14px; font-weight: 700; color: #c53030; margin-bottom: 4px; }
+    .alert-body  { font-size: 13px; color: #4a5568; line-height: 1.6; }
+    .alert-body strong { color: #c53030; }
+
+    /* ─── 타임라인 ─── */
+    .timeline { position: relative; padding-left: 28px; margin-bottom: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #4299e1, #9f7aea, #ed8936);
+    }
+    .tl-item { position: relative; margin-bottom: 20px; }
+    .tl-dot {
+      position: absolute;
+      left: -23px;
+      top: 4px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: #4299e1;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #4299e1;
+    }
+    .tl-dot.red    { background: #f56565; box-shadow: 0 0 0 2px #f56565; }
+    .tl-dot.orange { background: #ed8936; box-shadow: 0 0 0 2px #ed8936; }
+    .tl-dot.green  { background: #48bb78; box-shadow: 0 0 0 2px #48bb78; }
+    .tl-dot.purple { background: #9f7aea; box-shadow: 0 0 0 2px #9f7aea; }
+    .tl-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tl-date { font-size: 11px; color: #a0aec0; font-weight: 600; margin-bottom: 3px; }
+    .tl-event { font-size: 13px; font-weight: 700; color: #2d3748; margin-bottom: 3px; }
+    .tl-detail { font-size: 12px; color: #718096; }
+
+    /* ─── 분석 테이블 ─── */
+    .analysis-table-wrap {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .analysis-table-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .analysis-table-wrap thead {
+      background: linear-gradient(90deg, #1b2838, #2d3748);
+    }
+    .analysis-table-wrap thead th {
+      color: #a0aec0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 14px 16px;
+      text-align: left;
+    }
+    .analysis-table-wrap tbody tr {
+      border-bottom: 1px solid #f0f4f8;
+      transition: background 0.15s;
+    }
+    .analysis-table-wrap tbody tr:last-child { border-bottom: none; }
+    .analysis-table-wrap tbody tr:hover { background: #f7fafc; }
+    .analysis-table-wrap tbody td {
+      padding: 13px 16px;
+      font-size: 13px;
+      color: #2d3748;
+      vertical-align: middle;
+    }
+    .indicator-name { font-weight: 700; font-size: 14px; }
+    .indicator-sub  { font-size: 11px; color: #a0aec0; font-weight: 400; }
+    .val-big { font-size: 15px; font-weight: 800; }
+    .tag {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .tag-danger  { background: #fff5f5; color: #c53030; border: 1px solid #fc8181; }
+    .tag-success { background: #f0fff4; color: #276749; border: 1px solid #68d391; }
+    .tag-warning { background: #fffaf0; color: #c05621; border: 1px solid #fbd38d; }
+    .tag-info    { background: #ebf8ff; color: #2b6cb0; border: 1px solid #90cdf4; }
+    .tag-neutral { background: #f7fafc; color: #4a5568; border: 1px solid #e2e8f0; }
+
+    /* ─── 시나리오 카드 ─── */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 560px) { .scenario-grid { grid-template-columns: 1fr; } }
+    .scenario-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .scenario-card.bull { border-top: 3px solid #48bb78; }
+    .scenario-card.bear { border-top: 3px solid #f56565; }
+    .scenario-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .scenario-title.bull { color: #276749; }
+    .scenario-title.bear { color: #c53030; }
+    .scenario-item {
+      font-size: 12px;
+      color: #4a5568;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f4f8;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .scenario-item:last-child { border-bottom: none; }
+    .scenario-item::before { flex-shrink: 0; margin-top: 1px; }
+    .scenario-card.bull .scenario-item::before { content: '▲'; color: #48bb78; font-size: 10px; }
+    .scenario-card.bear .scenario-item::before { content: '▼'; color: #f56565; font-size: 10px; }
+
+    /* ─── 체크리스트 카드 ─── */
+    .checklist-card {
+      background: linear-gradient(135deg, #1b2838, #2d3748);
+      border-radius: 16px;
+      padding: 22px 24px;
+      margin-bottom: 28px;
+      color: #fff;
+    }
+    .checklist-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      color: #a0aec0;
+    }
+    .checklist-item .check-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 2px solid #4299e1;
+      background: rgba(66,153,225,0.15);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #63b3ed;
+      margin-top: 1px;
+    }
+
+    /* ─── 출처 배너 ─── */
+    .source-bar {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .source-label { font-size: 11px; color: #a0aec0; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .source-tag {
+      font-size: 11px;
+      background: #edf2f7;
+      color: #4a5568;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    /* ─── 면책 고지 ─── */
+    .disclaimer {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      border-left: 4px solid #e2e8f0;
+      font-size: 11px;
+      color: #a0aec0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<div class="report-wrap">
+
+  <!-- ══════════════════════════════════════════
+       ① 헤더 배너
+       [블로그 삽입 위치: 본문 최상단 — 제목·날짜·인트로 바로 아래]
+  ══════════════════════════════════════════ -->
+  <div class="report-header">
+    <div class="report-date">📅 2026. 04. 21 — Global Market Report</div>
+    <div class="report-title">글로벌 금융시장 종합 분석<br>VIX · WTI · 환율 · DXY · 10Y금리 · EWY</div>
+    <div class="report-subtitle">Investing.com · Reuters · Bloomberg · Naver 증권 교차 검증 데이터</div>
+    <div class="report-badge">⚡ 호르무즈 위기 특별 리포트</div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ② 긴급 경보 배너
+       [블로그 삽입 위치: 헤더 직후 — 독자 주목도 최대화]
+  ══════════════════════════════════════════ -->
+  <div class="alert-banner">
+    <div class="alert-icon">🚨</div>
+    <div>
+      <div class="alert-title">이란-미국 호르무즈 해협 봉쇄 위기 진행 중</div>
+      <div class="alert-body">
+        4월 18일 이란의 호르무즈 해협 재봉쇄 선언 이후 WTI 유가가 <strong>하루 7% 이상 급등</strong>했습니다.
+        미국-이란 휴전 협정이 <strong>4월 말 만료 예정</strong>으로, 유가·VIX·환율 변동성이 당분간 지속될 전망입니다.
+        한국은 전체 원유 수입의 70% 이상을 중동에서 조달하고 있어 직접적 영향권입니다.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ③ 핵심 지표 대시보드 카드
+       [블로그 삽입 위치: 경보 배너 바로 아래 — "오늘의 핵심 숫자" 섹션]
+  ══════════════════════════════════════════ -->
+  <div class="section-label">📊 오늘의 핵심 지표 대시보드</div>
+  <div class="dashboard-grid">
+
+    <div class="metric-card warning">
+      <div class="metric-icon">😰</div>
+      <div class="metric-label">VIX 공포지수</div>
+      <div class="metric-value">19.08</div>
+      <div><span class="metric-change change-up">▲ +9.15%</span></div>
+      <div class="metric-desc">안도 → 경계 전환<br>정상 범위 상단</div>
+    </div>
+
+    <div class="metric-card danger">
+      <div class="metric-icon">🛢️</div>
+      <div class="metric-label">WTI 유가 ($/bbl)</div>
+      <div class="metric-value">$86.65</div>
+      <div><span class="metric-change change-down">▼ 소폭 조정</span></div>
+      <div class="metric-desc">호르무즈 위기<br>고점 $89.61 기록</div>
+    </div>
+
+    <div class="metric-card info">
+      <div class="metric-icon">💱</div>
+      <div class="metric-label">USD/KRW 환율</div>
+      <div class="metric-value">1,474</div>
+      <div><span class="metric-change change-flat">→ 박스권</span></div>
+      <div class="metric-desc">1개월 원화 +1.01%<br>단기 강세 유지</div>
+    </div>
+
+    <div class="metric-card purple">
+      <div class="metric-icon">💵</div>
+      <div class="metric-label">DXY 달러인덱스</div>
+      <div class="metric-value">98.26</div>
+      <div><span class="metric-change change-down">▼ -0.03%</span></div>
+      <div class="metric-desc">100 하회 → 달러 약세<br>신흥국 자금 유입 우호</div>
+    </div>
+
+    <div class="metric-card teal">
+      <div class="metric-icon">🏦</div>
+      <div class="metric-label">미국 10년물 금리</div>
+      <div class="metric-value">4.25%</div>
+      <div><span class="metric-change change-flat">→ 안정</span></div>
+      <div class="metric-desc">인하 기대 유지<br>고유가 재연 변수</div>
+    </div>
+
+    <div class="metric-card success">
+      <div class="metric-icon">🇰🇷</div>
+      <div class="metric-label">EWY 한국 ETF ($)</div>
+      <div class="metric-value">$152.33</div>
+      <div><span class="metric-change change-up">▲ YTD +51.8%</span></div>
+      <div class="metric-desc">52주 고점 $154.99<br>코스피 6,219p</div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ④ 4월 주요 사건 타임라인
+       [블로그 삽입 위치: 각 지표 설명 섹션 모두 끝난 뒤, 종합 분석 섹션 시작 전]
+  ══════════════════════════════════════════ -->
+  <div class="section-label">🕐 4월 글로벌 시장 타임라인</div>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot green"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 8일</div>
+        <div class="tl-event">VIX 10.2 → 7년 만의 최저치</div>
+        <div class="tl-detail">시장 극도의 안도 국면. 코스피 AI 반도체 주도 강세 지속</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot green"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 13일</div>
+        <div class="tl-event">골드만삭스, 코스피 목표가 8,000p 제시</div>
+        <div class="tl-detail">기존 7,000p → 8,000p 대폭 상향. 외국인 매수 가속</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot green"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 15일</div>
+        <div class="tl-event">코스피 6,000p 공식 탈환</div>
+        <div class="tl-detail">반도체 수출 +180%, 전체 수출 +49.4% — 역사적 고점</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot red"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 18일</div>
+        <div class="tl-event">이란, 호르무즈 해협 봉쇄 재선언</div>
+        <div class="tl-detail">미국-이란 상선 공격. 유가 급등 시작. VIX 상승 반전</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot orange"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 19일</div>
+        <div class="tl-event">WTI 유가 $89.61 — 단일일 +7% 폭등</div>
+        <div class="tl-detail">브렌트유 $95.48. 에너지 충격 → 인플레 재연 우려 대두</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot orange"></div>
+      <div class="tl-card">
+        <div class="tl-date">4월 21일 (현재)</div>
+        <div class="tl-event">VIX 19.08 · WTI $86.65 · EWY $152.33</div>
+        <div class="tl-detail">코스피 6,200선 유지. 4월 말 휴전 만료 → 최대 변수</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ⑤ 지표 종합 분석 테이블
+       [블로그 삽입 위치: 타임라인 직후 — 전문성 강조 구간]
+  ══════════════════════════════════════════ -->
+  <div class="section-label">📋 지표별 종합 평가표</div>
+  <div class="analysis-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>지표</th>
+          <th>현재값</th>
+          <th>추세</th>
+          <th>리스크</th>
+          <th>시사점</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="indicator-name">😰 VIX</div>
+            <div class="indicator-sub">CBOE 변동성지수</div>
+          </td>
+          <td><span class="val-big">19.08</span></td>
+          <td><span class="tag tag-warning">↑ 상승 전환</span></td>
+          <td><span class="tag tag-warning">중간</span></td>
+          <td>20 돌파 시 기관 포지션 조정 시작</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="indicator-name">🛢️ WTI 유가</div>
+            <div class="indicator-sub">서부텍사스산 중질유</div>
+          </td>
+          <td><span class="val-big">$86.65</span></td>
+          <td><span class="tag tag-danger">↑ 불안정</span></td>
+          <td><span class="tag tag-danger">높음</span></td>
+          <td>$90 재돌파 시 인플레 압력 재점화</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="indicator-name">💱 USD/KRW</div>
+            <div class="indicator-sub">원/달러 환율</div>
+          </td>
+          <td><span class="val-big">1,474원</span></td>
+          <td><span class="tag tag-info">→ 박스권</span></td>
+          <td><span class="tag tag-info">중저</span></td>
+          <td>유사시 1,500원 돌파 가능성 주시</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="indicator-name">💵 DXY</div>
+            <div class="indicator-sub">달러인덱스</div>
+          </td>
+          <td><span class="val-big">98.26</span></td>
+          <td><span class="tag tag-success">↓ 달러 약세</span></td>
+          <td><span class="tag tag-success">낮음</span></td>
+          <td>신흥국 자금 유입 지속 우호 환경</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="indicator-name">🏦 미국 10Y</div>
+            <div class="indicator-sub">10년물 국채금리</div>
+          </td>
+          <td><span class="val-big">4.25%</span></td>
+          <td><span class="tag tag-neutral">→ 안정</span></td>
+          <td><span class="tag tag-info">중간</span></td>
+          <td>고유가 인플레 시 인하 속도 조절 위험</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="indicator-name">🇰🇷 EWY</div>
+            <div class="indicator-sub">iShares 한국 ETF</div>
+          </td>
+          <td><span class="val-big">$152.33</span></td>
+          <td><span class="tag tag-success">↑ 강한 상승</span></td>
+          <td><span class="tag tag-warning">중간</span></td>
+          <td>YTD +51.8%, 52주 고점 $154.99 근접</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ⑥ 시나리오 분석 카드
+       [블로그 삽입 위치: 결론 섹션 직전 — 독자 행동 유도 구간]
+  ══════════════════════════════════════════ -->
+  <div class="section-label">🎯 향후 시나리오 분석</div>
+  <div class="scenario-grid">
+    <div class="scenario-card bull">
+      <div class="scenario-title bull">🟢 낙관 시나리오 (Bull)</div>
+      <div class="scenario-item">이란-미국 휴전 연장 → 유가 $80 이하 안정</div>
+      <div class="scenario-item">반도체 수출 모멘텀 유지 → 코스피 6,500 → EWY $170</div>
+      <div class="scenario-item">연준 금리 인하 가속 → 달러 약세 심화</div>
+      <div class="scenario-item">DXY 95 이하 → 신흥국 추가 자금 유입</div>
+      <div class="scenario-item">VIX 12~15 하락 → 안전 투자 재개</div>
+    </div>
+    <div class="scenario-card bear">
+      <div class="scenario-title bear">🔴 경계 시나리오 (Bear)</div>
+      <div class="scenario-item">호르무즈 전면 봉쇄 → WTI $100+ 돌파</div>
+      <div class="scenario-item">고유가 인플레 재연 → 연준 금리 동결</div>
+      <div class="scenario-item">달러 강세 반전 → 외국인 신흥국 이탈</div>
+      <div class="scenario-item">VIX 30 돌파 → 코스피 5~10% 단기 조정</div>
+      <div class="scenario-item">한국 에너지 수입 비용 급증 → 무역수지 악화</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ⑦ 지금 당장 체크리스트
+       [블로그 삽입 위치: 시나리오 카드 바로 아래]
+  ══════════════════════════════════════════ -->
+  <div class="checklist-card">
+    <div class="checklist-title">✅ 지금 당장 모니터링해야 할 핵심 변수</div>
+    <div class="checklist-item">
+      <div class="check-box">→</div>
+      <span><strong style="color:#63b3ed;">4월 말</strong> 이란-미국 휴전 협정 만료 — 연장 여부가 유가·VIX 향방 결정</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box">→</div>
+      <span><strong style="color:#63b3ed;">5월 FOMC</strong> 연준 금리 결정 — 인하 지속 vs. 동결 전환 시나리오</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box">→</div>
+      <span><strong style="color:#63b3ed;">삼성전자·SK하이닉스</strong> 1분기 실적 발표 — 반도체 모멘텀 지속 여부 확인</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box">→</div>
+      <span><strong style="color:#63b3ed;">DXY 95 이탈</strong> 여부 — 강한 달러 약세 신호, 신흥국 자금 유입 가속</span>
+    </div>
+    <div class="checklist-item">
+      <div class="check-box">→</div>
+      <span><strong style="color:#63b3ed;">VIX 20선</strong> 돌파 여부 — 기관 포지션 조정 트리거, 단기 변동성 급확대 신호</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       ⑧ 출처 & 면책 고지
+  ══════════════════════════════════════════ -->
+  <div class="source-bar">
+    <span class="source-label">📌 출처</span>
+    <span class="source-tag">Investing.com</span>
+    <span class="source-tag">Bloomberg</span>
+    <span class="source-tag">Reuters</span>
+    <span class="source-tag">CNBC</span>
+    <span class="source-tag">Yahoo Finance</span>
+    <span class="source-tag">OilpriceAPI</span>
+    <span class="source-tag">Naver 증권</span>
+    <span class="source-tag">DS투자증권</span>
+    <span class="source-tag">Goldman Sachs</span>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ 본 리포트는 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 모든 투자 결정은 개인의 판단과 책임 하에 이루어져야 합니다. 금융 데이터는 미국 동부시간 기준이며 실시간 값과 다를 수 있습니다.
+  </div>
+
+</div>
+</body>
+</html>
