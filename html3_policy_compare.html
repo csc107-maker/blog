@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정부별 재생에너지·ESS 정책 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 28px 16px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #1565c0;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    min-width: 560px;
+  }
+
+  thead tr {
+    background: #1a237e;
+  }
+
+  thead th {
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  thead th:first-child {
+    text-align: left;
+    background: #0d1b6e;
+    width: 160px;
+  }
+
+  .col-moon   { background: #283593; }
+  .col-yoon   { background: #1a237e; }
+  .col-lee    { background: #0d47a1; }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.15s;
+  }
+
+  tbody tr:hover {
+    background: #f5f7ff;
+  }
+
+  tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  td {
+    padding: 13px 16px;
+    font-size: 12.5px;
+    color: #333;
+    text-align: center;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  td:first-child {
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
+    color: #444;
+    background: #f8f9fe;
+    border-right: 2px solid #e8eaf6;
+  }
+
+  .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .chip.up    { background: #e8f5e9; color: #2e7d32; }
+  .chip.down  { background: #ffebee; color: #c62828; }
+  .chip.mid   { background: #fff8e1; color: #e65100; }
+  .chip.new   { background: #e3f2fd; color: #1565c0; }
+
+  .section-row td {
+    background: #e8eaf6;
+    font-size: 11px;
+    font-weight: 800;
+    color: #3949ab;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .summary-strip {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .summary-card {
+    background: white;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+
+  .summary-card .gov {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .summary-card .rating {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .summary-card.moon .rating { color: #3949ab; }
+  .summary-card.yoon .rating { color: #b71c1c; }
+  .summary-card.lee  .rating { color: #1565c0; }
+
+  .summary-card p {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">🏛️ 정책 비교 분석</div>
+    <h2>역대 정부별 재생에너지·ESS 정책 비교</h2>
+    <p>문재인 → 윤석열 → 이재명 정부 정책 방향 & ESS 산업 영향</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th class="col-moon">🟦 문재인 정부<br><span style="font-weight:400;font-size:10px">2017~2022</span></th>
+          <th class="col-yoon">🟥 윤석열 정부<br><span style="font-weight:400;font-size:10px">2022~2025</span></th>
+          <th class="col-lee">🟩 이재명 정부<br><span style="font-weight:400;font-size:10px">2025~</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-row">
+          <td colspan="4">▶ 에너지 기본 방향</td>
+        </tr>
+        <tr>
+          <td>재생에너지 비중 목표</td>
+          <td>2030년 30~35%<br><span class="chip up">적극 추진</span></td>
+          <td>2030년 21.6%<br><span class="chip down">목표 하향</span></td>
+          <td>2030년 30%+<br><span class="chip up">재상향 검토</span></td>
+        </tr>
+        <tr>
+          <td>원전 정책</td>
+          <td>탈원전 추진<br><span class="chip mid">단계 감축</span></td>
+          <td>원전 확대 전환<br><span class="chip new">적극 투자</span></td>
+          <td>원전 유지 + 재생<br><span class="chip mid">병행 기조</span></td>
+        </tr>
+
+        <tr class="section-row">
+          <td colspan="4">▶ ESS 관련 정책</td>
+        </tr>
+        <tr>
+          <td>ESS 연계 REC 가중치</td>
+          <td>최대 5.0 부여<br><span class="chip up">업계 호황</span></td>
+          <td>3.5로 유지/동결<br><span class="chip down">지원 축소</span></td>
+          <td>재설계 논의 중<br><span class="chip new">개선 기대</span></td>
+        </tr>
+        <tr>
+          <td>ESS 안전 대책</td>
+          <td>화재 후 사후 대응<br><span class="chip mid">미흡</span></td>
+          <td>안전기준 강화<br><span class="chip mid">부분 정비</span></td>
+          <td>인증체계 일원화<br><span class="chip new">추진 예정</span></td>
+        </tr>
+        <tr>
+          <td>ESS 보험 지원</td>
+          <td>별도 지원 없음<br><span class="chip down">방치</span></td>
+          <td>별도 지원 없음<br><span class="chip down">방치</span></td>
+          <td>공적 재보험 검토<br><span class="chip new">논의 단계</span></td>
+        </tr>
+
+        <tr class="section-row">
+          <td colspan="4">▶ 금융·시장 제도</td>
+        </tr>
+        <tr>
+          <td>전력시장 개혁</td>
+          <td>소극적<br><span class="chip mid">현상 유지</span></td>
+          <td>소극적<br><span class="chip mid">현상 유지</span></td>
+          <td>PPA 확대, 용량시장<br><span class="chip new">적극 추진</span></td>
+        </tr>
+        <tr>
+          <td>정책금융 지원</td>
+          <td>녹색금융 기초 도입<br><span class="chip mid">제한적</span></td>
+          <td>재생에너지 축소<br><span class="chip down">후퇴</span></td>
+          <td>산은·기은 전면 투입<br><span class="chip up">확대 방침</span></td>
+        </tr>
+        <tr>
+          <td>전기요금 현실화</td>
+          <td>낮은 요금 유지<br><span class="chip down">미진행</span></td>
+          <td>일부 인상<br><span class="chip mid">부분 진행</span></td>
+          <td>TOU 확대 검토<br><span class="chip new">논의 중</span></td>
+        </tr>
+
+        <tr class="section-row">
+          <td colspan="4">▶ 계통 인프라</td>
+        </tr>
+        <tr>
+          <td>계통 투자 방향</td>
+          <td>재생에너지 접속 확대<br><span class="chip up">투자 의지</span></td>
+          <td>한전 적자로 지연<br><span class="chip down">투자 부족</span></td>
+          <td>배전망 지능화<br><span class="chip new">중장기 계획</span></td>
+        </tr>
+        <tr>
+          <td>ESS의 계통 역할</td>
+          <td>REC 수익 수단<br><span class="chip mid">단편적</span></td>
+          <td>거의 미정의<br><span class="chip down">무관심</span></td>
+          <td>계통 완충 자산 인정<br><span class="chip new">제도화 추진</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="summary-strip">
+    <div class="summary-card moon">
+      <div class="gov">🟦 문재인 정부</div>
+      <div class="rating">B+</div>
+      <p>의지는 있었지만<br>화재 대응 실패로<br>신뢰 하락</p>
+    </div>
+    <div class="summary-card yoon">
+      <div class="gov">🟥 윤석열 정부</div>
+      <div class="rating">D</div>
+      <p>재생에너지 후퇴<br>ESS 지원 공백<br>시장 동결</p>
+    </div>
+    <div class="summary-card lee">
+      <div class="gov">🟩 이재명 정부</div>
+      <div class="rating">B?</div>
+      <p>방향성은 우수<br>실행력이 관건<br>지켜봐야 함</p>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 현장 전문가 평가 기준 | 이재명 정부 항목은 2025~2026년 정책 방향 기반 예측 포함</div>
+</div>
+</body>
+</html>
