@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>외국인 수급 분석 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 28px 16px;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 36px rgba(0,0,0,0.10);
+  }
+
+  .top-bar {
+    background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+    padding: 24px 28px 20px;
+    color: #fff;
+  }
+
+  .top-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.30);
+    color: #a7f3d0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .top-bar h2 {
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  .top-bar p {
+    font-size: 12.5px;
+    color: #6ee7b7;
+  }
+
+  /* KPI 카드 */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  @media (max-width: 560px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .kpi-item {
+    padding: 16px 18px;
+    border-right: 1px solid #e2e8f0;
+    text-align: center;
+  }
+
+  .kpi-item:last-child { border-right: none; }
+
+  .kpi-label {
+    font-size: 10.5px;
+    color: #94a3b8;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+
+  .kpi-value.red   { color: #ef4444; }
+  .kpi-value.green { color: #059669; }
+  .kpi-value.blue  { color: #2563a8; }
+  .kpi-value.orange{ color: #f97316; }
+
+  .kpi-sub {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 3px;
+  }
+
+  /* 섹션 */
+  .section {
+    padding: 24px 28px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+
+  /* 테이블 */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .data-table thead tr {
+    background: #f8fafc;
+  }
+
+  .data-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .data-table th:not(:first-child) { text-align: right; }
+
+  .data-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+    vertical-align: middle;
+  }
+
+  .data-table td:not(:first-child) { text-align: right; font-weight: 600; }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table tbody tr:hover { background: #fafbfc; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .tag-buy  { background: #dcfce7; color: #166534; }
+  .tag-sell { background: #fee2e2; color: #991b1b; }
+  .tag-hold { background: #fef9c3; color: #854d0e; }
+
+  .sell-val { color: #dc2626; }
+  .buy-val  { color: #059669; }
+
+  /* 막대 시각화 */
+  .bar-section { padding: 20px 28px 24px; }
+
+  .bar-item {
+    margin-bottom: 16px;
+  }
+
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .bar-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .bar-amount {
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  .bar-track {
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+  }
+
+  .bar-buy  { background: linear-gradient(90deg, #10b981, #059669); }
+  .bar-sell { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+  /* 인사이트 박스 */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 0 28px 24px;
+  }
+
+  @media (max-width: 560px) {
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+
+  .insight-box {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 14px 16px;
+    border-left: 4px solid #94a3b8;
+  }
+
+  .insight-box.positive { border-left-color: #10b981; background: #f0fdf8; }
+  .insight-box.negative { border-left-color: #ef4444; background: #fff5f5; }
+  .insight-box.neutral  { border-left-color: #f59e0b; background: #fffdf0; }
+
+  .insight-icon { font-size: 18px; margin-bottom: 4px; }
+  .insight-title { font-size: 12.5px; font-weight: 900; color: #1e293b; margin-bottom: 4px; }
+  .insight-text  { font-size: 12px; color: #475569; line-height: 1.65; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    padding: 14px 28px 18px;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div class="top-badge">📈 외국인 수급 분석</div>
+    <h2>외국인 투자자, 정말 돌아오고 있나?<br>수급 데이터로 보는 진짜 신호</h2>
+    <p>2026년 1~4월 외국인 매매 동향 분석 | 주요 종목 집중 해부</p>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi-item">
+      <div class="kpi-label">외국인 지분율 최고</div>
+      <div class="kpi-value blue">37.18%</div>
+      <div class="kpi-sub">2026.01.07 (5년9개월 最高)</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">삼성전자 외국인 지분</div>
+      <div class="kpi-value orange">48.9%</div>
+      <div class="kpi-sub">12년6개월만 최저</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">4월 SK하이닉스 하루 최대 매수</div>
+      <div class="kpi-value green">2.1조</div>
+      <div class="kpi-sub">2026.04.08 (연 2위)</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">외국인 수급 집중도</div>
+      <div class="kpi-value red">75%</div>
+      <div class="kpi-sub">반도체 2종목 집중</div>
+    </div>
+  </div>
+
+  <!-- 주요 매매 테이블 -->
+  <div class="section">
+    <div class="section-label">🗓 시기별 외국인 주요 매매 내역</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>시기 / 이벤트</th>
+          <th>삼성전자</th>
+          <th>SK하이닉스</th>
+          <th>시장 상황</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>2026년 1월</strong><br><small style="color:#94a3b8">외국인 지분율 최고점</small></td>
+          <td class="buy-val">순매수↑</td>
+          <td class="buy-val">강세 유지</td>
+          <td>코스피 강세<br><span class="tag tag-buy">Risk-On</span></td>
+        </tr>
+        <tr>
+          <td><strong>2026년 2월</strong><br><small style="color:#94a3b8">전쟁 발발 직전·직후</small></td>
+          <td class="sell-val">매도 전환↓</td>
+          <td class="sell-val">대규모 매도</td>
+          <td>코스피 변동성<br><span class="tag tag-sell">Risk-Off</span></td>
+        </tr>
+        <tr>
+          <td><strong>2026년 3월 초</strong><br><small style="color:#94a3b8">호르무즈 봉쇄</small></td>
+          <td class="sell-val">-1.24조</td>
+          <td class="sell-val">-2.72조</td>
+          <td>사이드카 발동<br><span class="tag tag-sell">패닉 셀링</span></td>
+        </tr>
+        <tr>
+          <td><strong>2026년 3월 말</strong><br><small style="color:#94a3b8">저점(5,052) 도달</small></td>
+          <td style="color:#f97316">관망</td>
+          <td class="sell-val">지속 매도</td>
+          <td>개인이 방어<br><span class="tag tag-hold">관망</span></td>
+        </tr>
+        <tr>
+          <td><strong>2026년 4월 초</strong><br><small style="color:#94a3b8">삼성 어닝 서프라이즈</small></td>
+          <td class="buy-val">+1.63조 순매수</td>
+          <td class="buy-val">+2.15조 (1일)</td>
+          <td>반도체 주도 반등<br><span class="tag tag-buy">복귀 시작</span></td>
+        </tr>
+        <tr>
+          <td><strong>2026년 4월 17일</strong><br><small style="color:#94a3b8">휴전·6200 회복</small></td>
+          <td style="color:#f97316">차익실현</td>
+          <td class="buy-val">순매수 지속</td>
+          <td>코스피 6,226<br><span class="tag tag-buy">전고점 도전</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 섹터별 외국인 선호도 막대 -->
+  <div class="bar-section">
+    <div class="section-label">📊 외국인 수급 재유입 섹터 비중 (4월 기준)</div>
+
+    <div class="bar-item">
+      <div class="bar-label-row">
+        <span class="bar-name">반도체 (삼성전자·SK하이닉스)</span>
+        <span class="bar-amount buy-val">+3.0조원 (75%)</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bar-buy" style="width:75%"></div></div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bar-label-row">
+        <span class="bar-name">방산 (한화에어로·한화시스템)</span>
+        <span class="bar-amount buy-val">+5,360억원 (13%)</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bar-buy" style="width:13%"></div></div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bar-label-row">
+        <span class="bar-name">에너지·원전 (두산에너빌리티)</span>
+        <span class="bar-amount buy-val">+4,210억원 (10%)</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bar-buy" style="width:10%"></div></div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bar-label-row">
+        <span class="bar-name">자동차 (현대차·기아)</span>
+        <span class="bar-amount sell-val">-3,291억원 매도</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bar-sell" style="width:20%"></div></div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bar-label-row">
+        <span class="bar-name">바이오 (삼성바이오·셀트리온)</span>
+        <span class="bar-amount sell-val">-1,240억원 매도</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill bar-sell" style="width:8%"></div></div>
+    </div>
+  </div>
+
+  <!-- 인사이트 -->
+  <div class="insight-grid">
+    <div class="insight-box positive">
+      <div class="insight-icon">✅</div>
+      <div class="insight-title">복귀 신호 확인됨</div>
+      <div class="insight-text">외국인 현물+선물 동시 매수. 지정학 리스크로 이탈했던 자금이 실적 확인 후 재유입. 패시브 자금 중심 비중확대 진행 중.</div>
+    </div>
+    <div class="insight-box negative">
+      <div class="insight-icon">⚠️</div>
+      <div class="insight-title">완전 복귀는 아직</div>
+      <div class="insight-text">삼성전자 외국인 지분율 48.9%로 12년 최저. 환율 1,460~1,495원 수준 부담. 호르무즈 재봉쇄 시 즉각 이탈 가능성 존재.</div>
+    </div>
+    <div class="insight-box neutral">
+      <div class="insight-icon">🎯</div>
+      <div class="insight-title">핵심 트리거</div>
+      <div class="insight-text">SK하이닉스 1분기 실적 + 미·이란 종전 협상 타결 = 외국인 대규모 복귀 가능. 두 변수 동시 달성 시 코스피 신고가 경신 기대.</div>
+    </div>
+    <div class="insight-box positive">
+      <div class="insight-icon">💡</div>
+      <div class="insight-title">역사적 교훈</div>
+      <div class="insight-text">러·우 전쟁, 이스라엘·하마스 전쟁 당시에도 코스피는 1주일 내 낙폭 회복. 지정학 충격은 단기 노이즈, 실적이 중심.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ※ 본 데이터는 한국거래소, NH투자증권, 대신증권 리서치 등을 기반으로 작성된 참고 자료입니다. 투자 손실에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+</body>
+</html>
