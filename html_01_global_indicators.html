@@ -1,0 +1,184 @@
+<!-- [삽입 위치] VIX 분석 섹션 직후, "WTI 유가 분석" 섹션 시작 전 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>글로벌 지표 카드 | 2026.04.23</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      background: #f0f6ff;
+      padding: 24px 16px;
+    }
+    .report-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .report-header h2 {
+      font-size: 1.3rem;
+      color: #1e3a5f;
+      font-weight: 700;
+    }
+    .report-header p {
+      font-size: 0.82rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 18px 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      text-align: center;
+      border-top: 4px solid var(--accent);
+    }
+    .card .label {
+      font-size: 0.72rem;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .card .icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .card .value {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #1e293b;
+      line-height: 1.2;
+    }
+    .card .unit { font-size: 0.78rem; color: #6b7280; margin-top: 2px; }
+    .card .change {
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .up      { background: #dcfce7; color: #16a34a; }
+    .down    { background: #fee2e2; color: #dc2626; }
+    .neutral { background: #f1f5f9; color: #475569; }
+    .desc { font-size: 0.7rem; color: #94a3b8; margin-top: 8px; line-height: 1.4; }
+
+    .c-vix { --accent: #f59e0b; }
+    .c-wti { --accent: #ef4444; }
+    .c-krw { --accent: #8b5cf6; }
+    .c-dxy { --accent: #3b82f6; }
+    .c-t10 { --accent: #10b981; }
+    .c-ewy { --accent: #0ea5e9; }
+
+    .signal-bar {
+      max-width: 860px;
+      margin: 18px auto 0;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .signal-bar .badge {
+      font-size: 0.78rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+    .badge-green  { background: #dcfce7; color: #15803d; }
+    .badge-yellow { background: #fef9c3; color: #a16207; }
+    .badge-red    { background: #fee2e2; color: #b91c1c; }
+    .signal-text  { font-size: 0.82rem; color: #374151; font-weight: 600; }
+
+    .disclaimer {
+      text-align: center;
+      font-size: 0.67rem;
+      color: #9ca3af;
+      margin-top: 14px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="report-header">
+    <h2>📊 글로벌 시장 지표 — 2026.04.23</h2>
+    <p>한국 증시 개장 전 꼭 확인해야 할 6대 핵심 지표</p>
+  </div>
+
+  <div class="grid">
+    <div class="card c-vix">
+      <div class="label">VIX 공포지수</div>
+      <div class="icon">😰</div>
+      <div class="value">19.50</div>
+      <div class="unit">pts</div>
+      <div class="change up">▲ +3.34%</div>
+      <div class="desc">20 이하 = 안정권<br>경계심 소폭 상승</div>
+    </div>
+    <div class="card c-wti">
+      <div class="label">WTI 유가</div>
+      <div class="icon">🛢️</div>
+      <div class="value">$89.80</div>
+      <div class="unit">/ bbl</div>
+      <div class="change up">▲ 상승 추세</div>
+      <div class="desc">미-이란 협상 결렬<br>호르무즈 해협 차질</div>
+    </div>
+    <div class="card c-krw">
+      <div class="label">USD/KRW</div>
+      <div class="icon">💱</div>
+      <div class="value">1,486</div>
+      <div class="unit">원 / $1</div>
+      <div class="change down">▼ −0.23%</div>
+      <div class="desc">원화 소폭 약세<br>수출기업 환차익 기대</div>
+    </div>
+    <div class="card c-dxy">
+      <div class="label">DXY 달러인덱스</div>
+      <div class="icon">💵</div>
+      <div class="value">98.35</div>
+      <div class="unit">pts</div>
+      <div class="change down">▼ −0.03%</div>
+      <div class="desc">100 이하 유지<br>신흥국 자금 유입 우호</div>
+    </div>
+    <div class="card c-t10">
+      <div class="label">미국 10년물 금리</div>
+      <div class="icon">📈</div>
+      <div class="value">4.296%</div>
+      <div class="unit">연 수익률</div>
+      <div class="change neutral">→ 보합</div>
+      <div class="desc">4.3% 이하 안정<br>성장주 밸류에 우호적</div>
+    </div>
+    <div class="card c-ewy">
+      <div class="label">EWY 한국ETF</div>
+      <div class="icon">🇰🇷</div>
+      <div class="value">$154.99</div>
+      <div class="unit">USD</div>
+      <div class="change up">▲ 강세</div>
+      <div class="desc">52주 최고권 유지<br>외국인 한국 주식 선호</div>
+    </div>
+  </div>
+
+  <div class="signal-bar">
+    <span class="signal-text">종합 신호:</span>
+    <span class="badge badge-green">VIX 안정</span>
+    <span class="badge badge-yellow">WTI 경계</span>
+    <span class="badge badge-green">DXY 약세 (신흥국↑)</span>
+    <span class="badge badge-green">금리 안정</span>
+    <span class="badge badge-green">EWY 강세</span>
+  </div>
+
+  <p class="disclaimer">※ 데이터 기준: 2026년 4월 22일 종가 및 최신 시장 데이터 | 본 내용은 투자 정보 제공 목적이며 투자 권유가 아닙니다.</p>
+
+</body>
+</html>
