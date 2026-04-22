@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시나리오별 투자 체크리스트</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 28px 16px;
+  }
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #292524 0%, #44403c 100%);
+    border-radius: 18px 18px 0 0;
+    padding: 24px 28px 20px;
+    color: #fff;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: rgba(251,191,36,0.25);
+    border: 1px solid rgba(251,191,36,0.5);
+    color: #fcd34d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 5px;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #a8a29e;
+  }
+
+  /* 시나리오 카드 */
+  .scenario-grid {
+    background: #fff;
+    padding: 24px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  @media (max-width: 600px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+  }
+
+  .scenario-card {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .scenario-top {
+    padding: 16px 16px 12px;
+    color: #fff;
+  }
+
+  .s-a .scenario-top { background: linear-gradient(135deg, #059669, #047857); }
+  .s-b .scenario-top { background: linear-gradient(135deg, #d97706, #b45309); }
+  .s-c .scenario-top { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+  .scenario-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    opacity: 0.75;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .scenario-name {
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .scenario-subtitle {
+    font-size: 11.5px;
+    opacity: 0.85;
+    line-height: 1.5;
+  }
+
+  .scenario-body {
+    background: #fafafa;
+    padding: 14px 16px 16px;
+  }
+
+  .scenario-prob {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .prob-label {
+    font-size: 10.5px;
+    color: #94a3b8;
+    font-weight: 700;
+  }
+
+  .prob-bar {
+    flex: 1;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .prob-fill {
+    height: 100%;
+    border-radius: 6px;
+  }
+
+  .s-a .prob-fill { background: #059669; width: 55%; }
+  .s-b .prob-fill { background: #d97706; width: 35%; }
+  .s-c .prob-fill { background: #dc2626; width: 20%; }
+
+  .prob-pct {
+    font-size: 12px;
+    font-weight: 900;
+    min-width: 28px;
+    text-align: right;
+  }
+
+  .s-a .prob-pct { color: #059669; }
+  .s-b .prob-pct { color: #d97706; }
+  .s-c .prob-pct { color: #dc2626; }
+
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .check-list li {
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.5;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .check-icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .expect-box {
+    padding: 10px 12px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .s-a .expect-box { background: #dcfce7; color: #166534; }
+  .s-b .expect-box { background: #fef9c3; color: #92400e; }
+  .s-c .expect-box { background: #fee2e2; color: #991b1b; }
+
+  /* 체크리스트 하단 */
+  .checklist-section {
+    background: #fff;
+    padding: 22px 28px 24px;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .cl-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1e293b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cl-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 560px) {
+    .cl-grid { grid-template-columns: 1fr; }
+  }
+
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border-radius: 10px;
+  }
+
+  .cl-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .cl-check.watch   { background: #dbeafe; color: #1d4ed8; }
+  .cl-check.buy     { background: #dcfce7; color: #166534; }
+  .cl-check.caution { background: #fef9c3; color: #92400e; }
+  .cl-check.risk    { background: #fee2e2; color: #991b1b; }
+
+  .cl-text { font-size: 12px; color: #374151; line-height: 1.65; font-weight: 500; }
+  .cl-text strong { color: #1e293b; font-weight: 700; }
+
+  .footer {
+    background: #f8fafc;
+    border-radius: 0 0 18px 18px;
+    padding: 14px 28px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-badge">⚡ 시나리오 분석</div>
+    <h2>호르무즈 해협 변수 × 코스피<br>시나리오 3가지와 투자 체크리스트</h2>
+    <p>대신증권·NH투자증권·미래에셋증권 분석 종합 | 2026.04 기준</p>
+  </div>
+
+  <div class="scenario-grid">
+
+    <!-- A: 빠른 종전 -->
+    <div class="scenario-card s-a">
+      <div class="scenario-top">
+        <div class="scenario-label">시나리오 A</div>
+        <div class="scenario-name">🟢 빠른 종전<br>1~2개월 내</div>
+        <div class="scenario-subtitle">미·이란 합의 타결<br>호르무즈 완전 개방</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-prob">
+          <div class="prob-label">가능성</div>
+          <div class="prob-bar"><div class="prob-fill"></div></div>
+          <div class="prob-pct">55%</div>
+        </div>
+        <ul class="check-list">
+          <li><span class="check-icon">✅</span>코스피 전고점(6,307) 경신 시도</li>
+          <li><span class="check-icon">✅</span>외국인 대규모 복귀, 반도체 주도</li>
+          <li><span class="check-icon">✅</span>원·달러 환율 1,400원대로 안정</li>
+          <li><span class="check-icon">✅</span>조선·자동차·2차전지 동반 상승</li>
+          <li><span class="check-icon">✅</span>유가 80달러대로 하락 안정</li>
+        </ul>
+        <div class="expect-box">코스피 신고가 경신<br>반도체·조선·자동차 강세</div>
+      </div>
+    </div>
+
+    <!-- B: 장기화 -->
+    <div class="scenario-card s-b">
+      <div class="scenario-top">
+        <div class="scenario-label">시나리오 B</div>
+        <div class="scenario-name">🟡 협상 장기화<br>3~6개월 소요</div>
+        <div class="scenario-subtitle">간헐적 휴전·재개 반복<br>협상 노이즈 지속</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-prob">
+          <div class="prob-label">가능성</div>
+          <div class="prob-bar"><div class="prob-fill"></div></div>
+          <div class="prob-pct">35%</div>
+        </div>
+        <ul class="check-list">
+          <li><span class="check-icon">⚠️</span>코스피 5,800~6,300 박스권</li>
+          <li><span class="check-icon">⚠️</span>외국인 부분 복귀, 변동성 유지</li>
+          <li><span class="check-icon">✅</span>방산주·원전주 강세 지속</li>
+          <li><span class="check-icon">⚠️</span>반도체는 실적으로만 방어 가능</li>
+          <li><span class="check-icon">⚠️</span>유가 90~100달러 고공 유지</li>
+        </ul>
+        <div class="expect-box">박스권 등락 지속<br>방산·에너지 중심 선별 투자</div>
+      </div>
+    </div>
+
+    <!-- C: 재확전 -->
+    <div class="scenario-card s-c">
+      <div class="scenario-top">
+        <div class="scenario-label">시나리오 C</div>
+        <div class="scenario-name">🔴 재확전<br>호르무즈 재봉쇄</div>
+        <div class="scenario-subtitle">협상 완전 결렬<br>이란 강경 노선 복귀</div>
+      </div>
+      <div class="scenario-body">
+        <div class="scenario-prob">
+          <div class="prob-label">가능성</div>
+          <div class="prob-bar"><div class="prob-fill"></div></div>
+          <div class="prob-pct">20%</div>
+        </div>
+        <ul class="check-list">
+          <li><span class="check-icon">❌</span>코스피 단기 5,000선 재이탈 위험</li>
+          <li><span class="check-icon">❌</span>외국인 이탈 재개, 환율 급등</li>
+          <li><span class="check-icon">❌</span>국제유가 100달러 이상 급등</li>
+          <li><span class="check-icon">❌</span>물가 상승 → 금리 인상 압력</li>
+          <li><span class="check-icon">✅</span>방산주만 단기 강세 가능</li>
+        </ul>
+        <div class="expect-box">단기 급락 — 현금 비중 확대<br>방산 헤지 전략 유효</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 투자 관찰 체크리스트 -->
+  <div class="checklist-section">
+    <div class="cl-title">📋 지금 당장 확인해야 할 투자 관찰 포인트</div>
+    <div class="cl-grid">
+      <div class="cl-item">
+        <div class="cl-check buy">📊</div>
+        <div class="cl-text"><strong>SK하이닉스 1분기 실적 발표</strong><br>영업이익 34조 상회 여부, HBM4 공급 계약 확대, 고객사 다변화 공시 확인</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-check watch">🌊</div>
+        <div class="cl-text"><strong>호르무즈 해협 통항 상황</strong><br>이란의 선박 나포·봉쇄 동향이 유가와 외국인 수급에 직결. 트럼프 SNS 발언 주시</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-check watch">💱</div>
+        <div class="cl-text"><strong>원·달러 환율 1,460원 기준선</strong><br>1,460원 하향 돌파 시 외국인 매수 유인. 1,500원 재돌파 시 이탈 신호로 판단</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-check buy">🏗️</div>
+        <div class="cl-text"><strong>엔비디아·빅테크 AI 투자 규모</strong><br>미국 데이터센터 투자 확대 여부가 HBM 수요의 근본 동력. 엔비디아 실적 주시</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-check caution">🤝</div>
+        <div class="cl-text"><strong>미·이란 종전 협상 진행 속도</strong><br>이슬라마바드 마라톤 협상 결렬 이후 3차 협상 일정. 합의 시 즉각 안도랠리</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-check risk">⛽</div>
+        <div class="cl-text"><strong>국제유가 100달러 돌파 여부</strong><br>100달러 재돌파 시 한국 경상수지 악화·물가 상승 우려로 외국인 이탈 가속</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ※ 시나리오 확률은 대신증권·NH투자증권·미래에셋증권 분석을 참고한 전망치이며 실제와 다를 수 있습니다.<br>
+    본 자료는 투자 참고용으로, 특정 종목 매매를 권유하지 않습니다. 투자 판단의 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+</body>
+</html>
