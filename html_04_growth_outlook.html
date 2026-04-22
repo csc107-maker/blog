@@ -1,0 +1,268 @@
+<!-- [삽입 위치] "지속성장 근거 4가지" 섹션 직후, "리스크 정리" 섹션 시작 전 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>성장 전망 카드 | SK하이닉스 | 2026.04.23</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      background: #fffbf0;
+      padding: 24px 16px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    .header h2 { font-size: 1.25rem; color: #78350f; font-weight: 700; }
+    .header p  { font-size: 0.8rem; color: #6b7280; margin-top: 4px; }
+
+    .container { max-width: 820px; margin: 0 auto; }
+
+    /* Growth reason cards */
+    .growth-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .g-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border-top: 4px solid var(--color);
+    }
+    .g-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--color);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .g-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .g-body { font-size: 0.77rem; color: #4b5563; line-height: 1.55; }
+    .g-keyword {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      font-weight: 700;
+      background: color-mix(in srgb, var(--color) 15%, white);
+      color: var(--color);
+    }
+
+    .gc1 { --color: #f59e0b; }
+    .gc2 { --color: #10b981; }
+    .gc3 { --color: #3b82f6; }
+    .gc4 { --color: #8b5cf6; }
+
+    /* Earnings forecast table */
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #78350f;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #fed7aa;
+    }
+    .forecast-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin-bottom: 16px;
+      font-size: 0.84rem;
+    }
+    .forecast-table th {
+      background: #fff7ed;
+      color: #92400e;
+      font-weight: 700;
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .forecast-table td {
+      padding: 10px 14px;
+      border-top: 1px solid #fff7ed;
+      text-align: center;
+      color: #374151;
+    }
+    .forecast-table .year-col { font-weight: 700; color: #1e293b; text-align: left; }
+    .forecast-table tr.highlight td { background: #fffbeb; font-weight: 700; }
+    .forecast-table .num-up { color: #16a34a; font-weight: 800; }
+    .bar-cell { padding: 8px 14px; }
+    .mini-bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+    /* Conclusion box */
+    .conclusion {
+      background: linear-gradient(135deg, #1e3a5f 0%, #1e40af 100%);
+      border-radius: 16px;
+      padding: 22px 24px;
+      color: white;
+      box-shadow: 0 4px 16px rgba(30,58,95,0.25);
+    }
+    .conclusion h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .conclusion p { font-size: 0.83rem; line-height: 1.65; opacity: 0.92; margin-bottom: 12px; }
+    .verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .verdict-item {
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .verdict-label { font-size: 0.7rem; opacity: 0.75; margin-bottom: 4px; }
+    .verdict-value { font-size: 1rem; font-weight: 800; }
+
+    .disclaimer {
+      text-align: center;
+      font-size: 0.67rem;
+      color: #9ca3af;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h2>🚀 SK하이닉스 지속성장 4대 근거 — 2026.04.23</h2>
+    <p>왜 지금도 SK하이닉스를 주목해야 하는가?</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Growth Cards -->
+    <div class="growth-grid">
+
+      <div class="g-card gc1">
+        <div class="g-num">①</div>
+        <div class="g-title">HBM4 독점 공급 구조<br>엔비디아 100% 독점</div>
+        <div class="g-body">엔비디아 H200·B200·Rubin GPU에 들어가는 HBM 전량을 공급합니다. HBM4 세대에서도 기술 격차 1~2세대 이상 유지 중. 안정적 장기 매출이 보장된 구조입니다.</div>
+        <span class="g-keyword">HBM4 독점</span>
+      </div>
+
+      <div class="g-card gc2">
+        <div class="g-num">②</div>
+        <div class="g-title">AI 서버 수요 폭발<br>메모리 슈퍼사이클</div>
+        <div class="g-body">MS·Google·Amazon·Meta의 AI 인프라 투자가 2026년 수십조원 규모로 집행 중입니다. AI 모델이 커질수록 HBM 수요는 더 늘어납니다. 수요 둔화 시점이 2027년 이전에는 보이지 않습니다.</div>
+        <span class="g-keyword">AI 슈퍼사이클</span>
+      </div>
+
+      <div class="g-card gc3">
+        <div class="g-num">③</div>
+        <div class="g-title">DRAM·eSSD 동반 호황<br>다각화된 수익 기반</div>
+        <div class="g-body">HBM에만 의존하지 않습니다. 일반 DRAM과 기업용 SSD(eSSD)도 어닝 서프라이즈 중. 데이터센터 확장에 따른 스토리지 수요 증가가 배경으로, 이익 창출 안정성이 높습니다.</div>
+        <span class="g-keyword">DRAM·eSSD 호황</span>
+      </div>
+
+      <div class="g-card gc4">
+        <div class="g-num">④</div>
+        <div class="g-title">영업이익률 70%<br>TSMC도 넘는 수익성</div>
+        <div class="g-body">분기 영업이익률 70% 돌파가 예상됩니다. TSMC(~45%)를 뛰어넘는 역대급 수익성. 높은 이익률은 R&D 재투자 → 기술 격차 유지 → 독점력 강화의 선순환으로 이어집니다.</div>
+        <span class="g-keyword">70% 영업이익률</span>
+      </div>
+
+    </div>
+
+    <!-- Earnings Forecast Table -->
+    <div class="section-title">📅 연도별 이익 전망 (SK하이닉스 추정)</div>
+    <table class="forecast-table">
+      <thead>
+        <tr>
+          <th style="text-align:left">연도</th>
+          <th>매출 (조원)</th>
+          <th>영업이익 (조원)</th>
+          <th>영업이익률</th>
+          <th>YoY 성장</th>
+          <th>그래프</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="year-col">2024 (실적)</td>
+          <td>66</td>
+          <td>23</td>
+          <td>35%</td>
+          <td>—</td>
+          <td class="bar-cell"><div class="mini-bar" style="width:30%"></div></td>
+        </tr>
+        <tr>
+          <td class="year-col">2025 (실적)</td>
+          <td>98</td>
+          <td>87</td>
+          <td>~55%</td>
+          <td class="num-up">+278%</td>
+          <td class="bar-cell"><div class="mini-bar" style="width:65%"></div></td>
+        </tr>
+        <tr class="highlight">
+          <td class="year-col">2026E (당해)</td>
+          <td>200↑</td>
+          <td>160~170</td>
+          <td>70%↑</td>
+          <td class="num-up">+84%~95%</td>
+          <td class="bar-cell"><div class="mini-bar" style="width:100%"></div></td>
+        </tr>
+        <tr>
+          <td class="year-col">2027E (전망)</td>
+          <td>240↑</td>
+          <td>190↑</td>
+          <td>70%+</td>
+          <td class="num-up">+12%~20%</td>
+          <td class="bar-cell"><div class="mini-bar" style="width:90%"></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Conclusion Box -->
+    <div class="conclusion">
+      <h3>🎯 투자 결론</h3>
+      <p>SK하이닉스는 오늘 실적 발표를 통해 분기 영업이익 역대 최대를 경신할 가능성이 높습니다. PER 17배로 업종 평균(23배) 대비 저평가 상태이며, HBM4 독점 공급이라는 구조적 해자(Moat)가 견고합니다. 단기적으로는 실적 발표 직후 변동성이 있을 수 있으나, 중장기 관점에서 AI 메모리 슈퍼사이클의 핵심 수혜주로서 포트폴리오 핵심 보유 전략이 유효합니다.</p>
+      <div class="verdict-grid">
+        <div class="verdict-item">
+          <div class="verdict-label">단기 전망</div>
+          <div class="verdict-value">🟢 강세</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-label">중기 전망</div>
+          <div class="verdict-value">🟢 지속 상승</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-label">밸류에이션</div>
+          <div class="verdict-value">🟢 저평가</div>
+        </div>
+        <div class="verdict-item">
+          <div class="verdict-label">핵심 리스크</div>
+          <div class="verdict-value">🟡 지정학</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="disclaimer">※ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다. | 2026.04.23</p>
+
+</body>
+</html>
