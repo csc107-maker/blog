@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS 화재 사고 & 정책 대응 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fafafa;
+    padding: 28px 20px;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #b71c1c;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #777;
+    margin-top: 6px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #e53935, #fb8c00, #1e88e5, #43a047);
+    border-radius: 3px;
+  }
+
+  .item {
+    position: relative;
+    margin-bottom: 18px;
+  }
+
+  .dot {
+    position: absolute;
+    left: -25px;
+    top: 14px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+
+  .item.fire .dot   { background: #e53935; color: #e53935; }
+  .item.policy .dot { background: #1e88e5; color: #1e88e5; }
+  .item.good .dot   { background: #43a047; color: #43a047; }
+  .item.warn .dot   { background: #fb8c00; color: #fb8c00; }
+
+  .card {
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-left: 4px solid;
+  }
+
+  .item.fire .card   { border-color: #e53935; }
+  .item.policy .card { border-color: #1e88e5; }
+  .item.good .card   { border-color: #43a047; }
+  .item.warn .card   { border-color: #fb8c00; }
+
+  .year {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  .item.fire .year   { color: #e53935; }
+  .item.policy .year { color: #1e88e5; }
+  .item.good .year   { color: #43a047; }
+  .item.warn .year   { color: #fb8c00; }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 5px;
+  }
+
+  .card p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+
+  .item.fire .tag   { background: #ffebee; color: #c62828; }
+  .item.policy .tag { background: #e3f2fd; color: #1565c0; }
+  .item.good .tag   { background: #e8f5e9; color: #2e7d32; }
+  .item.warn .tag   { background: #fff3e0; color: #e65100; }
+
+  .summary-box {
+    background: #fff8e1;
+    border: 1.5px solid #ffd54f;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .summary-box h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #e65100;
+    margin-bottom: 8px;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: #c62828;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 3px;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">🔥 화재 사고 연대기</div>
+    <h2>ESS 화재 사고 & 정부 정책 대응 타임라인</h2>
+    <p>2017~2026년 ESS 산업의 굴곡진 역사</p>
+  </div>
+
+  <div class="timeline">
+
+    <div class="item fire">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">🔥 화재 발생</span>
+        <div class="year">2017. 08</div>
+        <h3>고창 ESS 최초 화재 — 경보 시작</h3>
+        <p>국내 최초 대규모 ESS 화재 발생. 초기에는 단순 사고로 인식되었으나, 이후 유사 사고가 연속 발생하며 업계 전체에 경고등이 켜짐.</p>
+      </div>
+    </div>
+
+    <div class="item fire">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">🔥 연쇄 화재</span>
+        <div class="year">2018~2019</div>
+        <h3>ESS 화재 30건+ 연속 발생 — 업계 패닉</h3>
+        <p>LG화학, 삼성SDI 배터리 적용 현장 모두에서 화재 발생. 원인 규명 실패. 정부, ESS 가동 중단 권고 발령. 보험사 인수 거절 시작.</p>
+      </div>
+    </div>
+
+    <div class="item policy">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">📋 정책 변화</span>
+        <div class="year">2019. 06</div>
+        <h3>정부 ESS 안전관리 강화 대책 발표</h3>
+        <p>산업부·소방청 합동 조사 결과 발표. 배터리 셀 결함, BMS 오류, 시공 불량 복합 원인 제시. ESS 안전 기준 강화 고시. 그러나 업계 신뢰는 회복 불가.</p>
+      </div>
+    </div>
+
+    <div class="item warn">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">⚠️ 수익 악화</span>
+        <div class="year">2020~2021</div>
+        <h3>REC 가중치 5.0→3.5 단계 인하 — 수익 모델 붕괴</h3>
+        <p>ESS 연계 태양광 REC 가중치 대폭 삭감. REC 현물 가격도 동반 하락. 사업계획서 기준 IRR 10% → 5% 이하로 급락. PF 불발 속출.</p>
+      </div>
+    </div>
+
+    <div class="item policy">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">🏛️ 정권 교체</span>
+        <div class="year">2022~2024</div>
+        <h3>윤석열 정부 — 원전 중심 전환, 재생에너지 둔화</h3>
+        <p>탈원전 정책 폐기, 원전 확대 기조로 전환. 재생에너지 보급 목표 하향 조정. ESS 지원 정책 소극적. 계통 투자 지연.</p>
+      </div>
+    </div>
+
+    <div class="item warn">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">⚠️ 시장 침체</span>
+        <div class="year">2023~2024</div>
+        <h3>보험 인수 사실상 전면 거절 — 금융 조달 완전 차단</h3>
+        <p>국내 손보사 ESS 화재보험 할증률 300%+ 또는 인수 거절. 화재보험 없이는 PF 불가. 신규 ESS 사업 착공 건수 급감. 시장 사실상 동결.</p>
+      </div>
+    </div>
+
+    <div class="item good">
+      <div class="dot"></div>
+      <div class="card">
+        <span class="tag">✅ 정책 재전환</span>
+        <div class="year">2025~2026</div>
+        <h3>이재명 정부 출범 — 재생에너지 드라이브 재점화</h3>
+        <p>재생에너지 비중 30%+ 목표 재설정. ESS 연계 태양광 지원 재설계 검토. 정책금융 투입 확대. 전력시장 개혁 로드맵 수립. 업계 기대감 회복 중.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="summary-box">
+    <h4>📊 ESS 화재 피해 현황 요약 (2017~2023)</h4>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-num">33+</div>
+        <div class="stat-label">총 화재 건수</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">수백억</div>
+        <div class="stat-label">보험사 손해액</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5.0→3.5</div>
+        <div class="stat-label">REC 가중치 변동</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">300%+</div>
+        <div class="stat-label">보험 할증률</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 공개 자료 및 현장 경험 기반 | 업계 15년 전문가 정리</div>
+</div>
+</body>
+</html>
