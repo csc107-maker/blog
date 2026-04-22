@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 vs SK하이닉스 외국인 수급 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 32px 16px;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .section-badge {
+    display: inline-block;
+    background: #1e3a5f;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1e293b;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 560px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  .company-card {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.10);
+  }
+
+  .card-header {
+    padding: 20px 22px 16px;
+    color: #fff;
+  }
+
+  .samsung-header { background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%); }
+  .hynix-header   { background: linear-gradient(135deg, #B71C1C 0%, #7B1FA2 100%); }
+
+  .card-ticker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+
+  .card-name {
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  .card-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .card-price {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+
+  .card-price-unit {
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .card-body {
+    background: #fff;
+    padding: 18px 22px 20px;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .metric-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+
+  .metric-value.up   { color: #dc2626; }
+  .metric-value.down { color: #2563a8; }
+  .metric-value.buy  { color: #059669; }
+
+  .verdict-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .verdict-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    border-top: 4px solid;
+  }
+
+  .verdict-samsung { border-top-color: #1565C0; }
+  .verdict-hynix   { border-top-color: #B71C1C; }
+
+  .verdict-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .verdict-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1e293b;
+    margin-bottom: 6px;
+  }
+
+  .verdict-desc {
+    font-size: 12px;
+    color: #475569;
+    line-height: 1.65;
+  }
+
+  .summary-box {
+    background: linear-gradient(135deg, #f0f7ff, #faf0ff);
+    border-radius: 14px;
+    padding: 18px 22px;
+    border: 1px solid #c7d7f5;
+  }
+
+  .summary-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: #1e293b;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .summary-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .summary-list li {
+    font-size: 12.5px;
+    color: #374151;
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .summary-list li::before {
+    content: "→";
+    color: #6366f1;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .note {
+    text-align: center;
+    font-size: 10.5px;
+    color: #94a3b8;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="section-header">
+    <div class="section-badge">🔍 외국인 수급 비교</div>
+    <div class="section-title">삼성전자 vs SK하이닉스<br>외국인은 어디에 베팅했나?</div>
+    <div class="section-sub">2026년 4월 기준 외국인 매매 동향 및 투자 포인트</div>
+  </div>
+
+  <div class="compare-grid">
+    <!-- 삼성전자 -->
+    <div class="company-card">
+      <div class="card-header samsung-header">
+        <div class="card-ticker">KRX: 005930</div>
+        <div class="card-name">삼성전자</div>
+        <div class="card-price-row">
+          <div class="card-price">208,500</div>
+          <div class="card-price-unit">원 (+7.53%)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="metric-row">
+          <div class="metric-label">외국인 지분율</div>
+          <div class="metric-value down">48.9% ↓</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">4월 외국인 동향</div>
+          <div class="metric-value buy">순매수 전환</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">이달 주가 상승률</div>
+          <div class="metric-value up">+29.2%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">어닝 서프라이즈</div>
+          <div class="metric-value buy">✓ 시장 기대 상회</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">PBR</div>
+          <div class="metric-value">1.64배 (저평가)</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">HBM4 경쟁력</div>
+          <div class="metric-value buy">양산 출하 시작</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">골드만삭스 의견</div>
+          <div class="metric-value buy">매수 (Buy)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SK하이닉스 -->
+    <div class="company-card">
+      <div class="card-header hynix-header">
+        <div class="card-ticker">KRX: 000660</div>
+        <div class="card-name">SK하이닉스</div>
+        <div class="card-price-row">
+          <div class="card-price">103만원↑</div>
+          <div class="card-price-unit">원 (~+28.4%)</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="metric-row">
+          <div class="metric-label">외국인 지분율</div>
+          <div class="metric-value buy">53~54% 견고 유지</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">4월 외국인 동향</div>
+          <div class="metric-value buy">대규모 순매수 재개</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">이달 주가 상승률</div>
+          <div class="metric-value up">+39.8%</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">1분기 영업이익 전망</div>
+          <div class="metric-value up">34~40조원</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">PBR</div>
+          <div class="metric-value up">4.86배 (고평가 우려)</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">HBM 시장 지위</div>
+          <div class="metric-value buy">글로벌 1위</div>
+        </div>
+        <div class="metric-row">
+          <div class="metric-label">KB증권 목표주가</div>
+          <div class="metric-value up">190만원</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="verdict-row">
+    <div class="verdict-card verdict-samsung">
+      <div class="verdict-label">삼성전자 핵심 강점</div>
+      <div class="verdict-title">🔵 저평가 매력 + 실적 반전</div>
+      <div class="verdict-desc">범용 메모리 비중이 높아 업황 개선 시 이익 증가폭이 가장 큼. HBM4 양산 시작으로 점유율 확대 기대. 외국인 지분율 바닥권에서 재매수 가능성.</div>
+    </div>
+    <div class="verdict-card verdict-hynix">
+      <div class="verdict-label">SK하이닉스 핵심 강점</div>
+      <div class="verdict-title">🔴 AI 수요 직결 + 실적 모멘텀</div>
+      <div class="verdict-desc">엔비디아 HBM 독점 공급. 1분기 영업이익 40조원 가능성. AI 반도체 수요 초강세 직수혜. ADR 상장 추진으로 글로벌 밸류에이션 재평가 기대.</div>
+    </div>
+  </div>
+
+  <div class="summary-box">
+    <div class="summary-title">💡 전문가 분석 요약</div>
+    <ul class="summary-list">
+      <li>삼성전자 어닝 서프라이즈 → 반도체 슈퍼사이클 재확인 → 외국인 자금이 SK하이닉스로 이동</li>
+      <li>D램 가격 전년 대비 +170%, 낸드 +190% 상승 전망 (KB증권)</li>
+      <li>메모리 수요의 60%는 미국 데이터센터 발생 → 전쟁 영향 제한적</li>
+      <li>외국인은 단기 차익실현이 아닌 AI 인프라 중장기 성장에 베팅 중</li>
+      <li>코스피 12개월 선행 PER은 오히려 낮아져 밸류에이션 매력 지속</li>
+    </ul>
+  </div>
+
+  <div class="note">※ 본 자료는 투자 참고용이며 특정 종목 매매를 권유하지 않습니다. 2026년 4월 기준 데이터.</div>
+
+</div>
+</body>
+</html>
