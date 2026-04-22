@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS 금융 조달 문제 & 해결책</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fafbff;
+    padding: 28px 16px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #01579b;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  /* Problem → Solution rows */
+  .phase-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px 8px 0 0;
+    display: inline-block;
+    margin-bottom: 0;
+  }
+
+  .phase.short .phase-label { background: #c62828; }
+  .phase.mid   .phase-label { background: #1565c0; }
+  .phase.long  .phase-label { background: #2e7d32; }
+
+  .phase {
+    margin-bottom: 18px;
+  }
+
+  .phase-card {
+    background: white;
+    border-radius: 0 14px 14px 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+
+  .phase.short .phase-card { border-top: 3px solid #c62828; }
+  .phase.mid   .phase-card { border-top: 3px solid #1565c0; }
+  .phase.long  .phase-card { border-top: 3px solid #2e7d32; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 500px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .col-problem {
+    padding: 18px;
+    background: #fff5f5;
+    border-right: 1px solid #f8e8e8;
+  }
+
+  .col-solution {
+    padding: 18px;
+    background: #f5faf5;
+  }
+
+  .col-header {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .col-problem .col-header { color: #c62828; border-color: #ffcdd2; }
+  .col-solution .col-header { color: #2e7d32; border-color: #c8e6c9; }
+
+  .item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+
+  .item:last-child { margin-bottom: 0; }
+
+  .item-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .col-problem .item-icon { background: #ffebee; }
+  .col-solution .item-icon { background: #e8f5e9; }
+
+  .item-text h4 {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 3px;
+  }
+
+  .item-text p {
+    font-size: 11.5px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* World model comparison */
+  .world-compare {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    margin-bottom: 18px;
+  }
+
+  .world-compare h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8eaf6;
+  }
+
+  .world-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .world-grid { grid-template-columns: 1fr; }
+  }
+
+  .world-card {
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .world-card.ger { background: #fff8e1; border: 1.5px solid #ffe082; }
+  .world-card.usa { background: #e3f2fd; border: 1.5px solid #90caf9; }
+  .world-card.kor { background: #fce4ec; border: 1.5px solid #f48fb1; }
+
+  .world-flag { font-size: 22px; margin-bottom: 4px; }
+  .world-name { font-size: 11px; font-weight: 800; color: #333; margin-bottom: 6px; }
+  .world-model { font-size: 11px; color: #555; line-height: 1.6; }
+  .world-result {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 8px;
+  }
+
+  .world-card.ger .world-result { background: #f57f17; color: white; }
+  .world-card.usa .world-result { background: #1565c0; color: white; }
+  .world-card.kor .world-result { background: #c62828; color: white; }
+
+  /* KPI summary */
+  .kpi-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .kpi-strip { grid-template-columns: 1fr 1fr; }
+  }
+
+  .kpi-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  }
+
+  .kpi-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a237e;
+    line-height: 1;
+  }
+
+  .kpi-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">💰 금융 조달 분석</div>
+    <h2>태양광+ESS 금융 조달 — 문제점과 단계별 해결책</h2>
+    <p>단기(1~2년) → 중기(2~5년) → 장기(5년+) 3단계 접근법</p>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi-card">
+      <div class="kpi-num">10~15%</div>
+      <div class="kpi-label">2018년<br>기대 IRR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">4~5%</div>
+      <div class="kpi-label">2023년<br>실제 IRR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">300%+</div>
+      <div class="kpi-label">보험<br>할증률</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">5억+</div>
+      <div class="kpi-label">ESS 1MWh<br>설치비</div>
+    </div>
+  </div>
+
+  <!-- 단기 -->
+  <div class="phase short">
+    <div class="phase-label">⚡ 단기 (1~2년) — 정책금융 전면 투입</div>
+    <div class="phase-card">
+      <div class="two-col">
+        <div class="col-problem">
+          <div class="col-header">❌ 현재 문제점</div>
+          <div class="item">
+            <div class="item-icon">🏦</div>
+            <div class="item-text">
+              <h4>시중은행 ESS PF 거절</h4>
+              <p>화재 리스크 + 보험 불가 + 정책 불확실성으로 시중은행 ESS 대출 사실상 전면 중단.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">📉</div>
+            <div class="item-text">
+              <h4>담보 가치 급락 문제</h4>
+              <p>배터리는 매년 감가상각 → 10년 후 담보 가치 거의 0 → 은행이 장기 대출 거절.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">💸</div>
+            <div class="item-text">
+              <h4>고금리 리스크 프리미엄</h4>
+              <p>불확실한 현금 흐름으로 대출 금리 8~10% 요구 → 사업 수익성 역전.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-solution">
+          <div class="col-header">✅ 단기 해결책</div>
+          <div class="item">
+            <div class="item-icon">🏛️</div>
+            <div class="item-text">
+              <h4>산업은행·기업은행 전용 상품</h4>
+              <p>ESS 연계 태양광 전용 연 3~4%대 고정금리 장기대출 상품 신설. 정부 이자 보전 지원.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">🇩🇪</div>
+            <div class="item-text">
+              <h4>독일 KfW 모델 도입</h4>
+              <p>정부가 이자 보전액의 일부를 직접 지원. 금리를 시장보다 2~3%p 낮춰 사업성 확보.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">📋</div>
+            <div class="item-text">
+              <h4>ESS 전용 보증 상품</h4>
+              <p>신용보증기금·기술보증기금의 ESS 특별 보증으로 담보 부족 문제 해소.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 중기 -->
+  <div class="phase mid">
+    <div class="phase-label">📈 중기 (2~5년) — ESS 채권 시장 육성</div>
+    <div class="phase-card">
+      <div class="two-col">
+        <div class="col-problem">
+          <div class="col-header">❌ 현재 문제점</div>
+          <div class="item">
+            <div class="item-icon">🔒</div>
+            <div class="item-text">
+              <h4>기관 투자자 접근 통로 부재</h4>
+              <p>연기금·보험사 등 대형 기관 투자자가 ESS 프로젝트에 투자할 표준화된 금융 수단 없음.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">🏗️</div>
+            <div class="item-text">
+              <h4>개별 PF의 한계</h4>
+              <p>프로젝트별 개별 PF는 거래 비용이 높고, 소규모 사업은 금융 구조화가 현실적으로 불가.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-solution">
+          <div class="col-header">✅ 중기 해결책</div>
+          <div class="item">
+            <div class="item-icon">💚</div>
+            <div class="item-text">
+              <h4>ESS 전용 녹색채권 (Green Bond)</h4>
+              <p>복수 ESS 프로젝트 묶음을 ABS(자산유동화)로 녹색채권 발행. 국민연금·보험사 투자 유인 마련.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">🏦</div>
+            <div class="item-text">
+              <h4>ESS 리츠(RE-REITs) 도입</h4>
+              <p>부동산 리츠처럼 ESS 발전소를 리츠로 묶어 일반 투자자도 소액 투자 가능한 구조 도입.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 장기 -->
+  <div class="phase long">
+    <div class="phase-label">🌱 장기 (5년+) — 전력시장 개혁</div>
+    <div class="phase-card">
+      <div class="two-col">
+        <div class="col-problem">
+          <div class="col-header">❌ 현재 문제점</div>
+          <div class="item">
+            <div class="item-icon">⚡</div>
+            <div class="item-text">
+              <h4>단일 수익원 (REC+SMP) 의존</h4>
+              <p>ESS가 제공하는 주파수조정, 용량, 예비력 등 다양한 계통 서비스에 대한 보상 체계 없음.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">📊</div>
+            <div class="item-text">
+              <h4>전력시장 폐쇄성</h4>
+              <p>한전 독점 구조에서 ESS의 다면 시장 참여 불가. 수익 다각화 원천 봉쇄.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-solution">
+          <div class="col-header">✅ 장기 해결책</div>
+          <div class="item">
+            <div class="item-icon">🇺🇸</div>
+            <div class="item-text">
+              <h4>미국 FERC Order 841 모델 도입</h4>
+              <p>ESS가 에너지·용량·보조 서비스 시장에 동시 참여 허용. 수익원 3~4개로 다각화 → 금융 안정성 확보.</p>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-icon">📝</div>
+            <div class="item-text">
+              <h4>장기 PPA + 용량시장 도입</h4>
+              <p>10~15년 장기 전력구매계약(PPA) 표준화, 용량시장 신설로 예측 가능한 안정 수익 보장.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 해외 비교 -->
+  <div class="world-compare">
+    <h3>🌍 해외 ESS 금융 조달 성공 모델 비교</h3>
+    <div class="world-grid">
+      <div class="world-card ger">
+        <div class="world-flag">🇩🇪</div>
+        <div class="world-name">독일</div>
+        <div class="world-model">KfW 정책은행 저금리 장기 대출 + 연방 보조금 병행. 이자 보전으로 실질 금리 1~2%대.</div>
+        <div class="world-result">ESS 보급 성공</div>
+      </div>
+      <div class="world-card usa">
+        <div class="world-flag">🇺🇸</div>
+        <div class="world-name">미국</div>
+        <div class="world-model">FERC Order 841로 전력시장 개방. ITC 세액공제 30%. 다면 수익으로 IRR 안정화.</div>
+        <div class="world-result">시장 주도 성장</div>
+      </div>
+      <div class="world-card kor">
+        <div class="world-flag">🇰🇷</div>
+        <div class="world-name">한국 (현재)</div>
+        <div class="world-model">REC 단일 수익 의존. 보험 불가. 시중은행 PF 거절. 정책금융 소극적.</div>
+        <div class="world-result">시장 사실상 동결</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 태양광 업계 15년 전문가 분석 | 2025~2026년 기준 | 정책은 변동될 수 있음</div>
+</div>
+</body>
+</html>
