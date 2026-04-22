@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코스피 하락 원인 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fef9f0;
+    padding: 24px 16px;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    border-radius: 18px 18px 0 0;
+    padding: 20px 28px;
+  }
+
+  .section-header h2 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .section-header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .causes-list {
+    background: #fff;
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+  }
+
+  .cause-item {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #f3f4f6;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .cause-item:last-child { border-bottom: none; }
+  .cause-item:hover { background: #faf9ff; }
+
+  .cause-number {
+    width: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f3ff;
+    border-right: 1px solid #ede9fe;
+    padding: 22px 12px;
+  }
+
+  .num-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #5b21b6);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cause-content {
+    flex: 1;
+    padding: 20px 22px;
+  }
+
+  .cause-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cause-icon {
+    font-size: 18px;
+  }
+
+  .cause-desc {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .cause-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .tag-war { background: #fef2f2; color: #dc2626; }
+  .tag-profit { background: #fffbeb; color: #d97706; }
+  .tag-supply { background: #eff6ff; color: #2563eb; }
+  .tag-us { background: #f0fdf4; color: #16a34a; }
+
+  .impact-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .impact-label {
+    font-size: 11px;
+    color: #9ca3af;
+    font-weight: 600;
+    width: 52px;
+    flex-shrink: 0;
+  }
+
+  .impact-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .impact-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  }
+
+  .impact-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7c3aed;
+    width: 30px;
+    text-align: right;
+  }
+
+  .footer-note {
+    background: #f5f3ff;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 12px;
+    color: #5b21b6;
+    font-weight: 500;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .footer-note .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .source-note {
+    text-align: center;
+    font-size: 10px;
+    color: #b0b8c8;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="section-header">
+    <h2>🔍 코스피 오전장 하락 원인 분석</h2>
+    <p>2026.04.22 | 4가지 핵심 원인을 파악해 보세요</p>
+  </div>
+
+  <div class="causes-list">
+
+    <div class="cause-item">
+      <div class="cause-number"><div class="num-circle">1</div></div>
+      <div class="cause-content">
+        <div class="cause-title">
+          <span class="cause-icon">💣</span>
+          미·이란 휴전 협상 불확실성
+        </div>
+        <div class="cause-desc">
+          트럼프 대통령이 기존 휴전 시한 연장 가능성이 낮다고 밝혔고, 이란 측도 협상 수용을 거부하며 강경한 입장을 유지하고 있습니다. 양국 모두 압박 수위를 높이는 가운데 호르무즈 해협 봉쇄 이슈가 지속되며 시장 불안을 자극하고 있습니다.
+        </div>
+        <div class="cause-tag-row">
+          <span class="tag tag-war">지정학 리스크</span>
+          <span class="tag tag-war">전쟁 노이즈</span>
+          <span class="tag tag-war">호르무즈 봉쇄</span>
+        </div>
+        <div class="impact-bar-wrap">
+          <span class="impact-label">영향도</span>
+          <div class="impact-bar-bg"><div class="impact-fill" style="width:85%"></div></div>
+          <span class="impact-pct">높음</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cause-item">
+      <div class="cause-number"><div class="num-circle">2</div></div>
+      <div class="cause-content">
+        <div class="cause-title">
+          <span class="cause-icon">💰</span>
+          연속 랠리 후 단기 차익 실현
+        </div>
+        <div class="cause-desc">
+          전날(21일) 코스피가 2.72% 급등하며 사상 최고치를 경신했습니다. 이틀 연속 역대 신고가를 기록한 뒤 단기 이익을 확정짓는 물량이 쏟아지는 것은 자연스러운 패턴입니다. 장중 6,400을 돌파했다가 다시 밀리는 흐름이 대표적입니다.
+        </div>
+        <div class="cause-tag-row">
+          <span class="tag tag-profit">차익 실현</span>
+          <span class="tag tag-profit">단기 피로감</span>
+          <span class="tag tag-profit">고점 부담</span>
+        </div>
+        <div class="impact-bar-wrap">
+          <span class="impact-label">영향도</span>
+          <div class="impact-bar-bg"><div class="impact-fill" style="width:75%"></div></div>
+          <span class="impact-pct">높음</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cause-item">
+      <div class="cause-number"><div class="num-circle">3</div></div>
+      <div class="cause-content">
+        <div class="cause-title">
+          <span class="cause-icon">🏦</span>
+          외국인·기관 동반 순매도 전환
+        </div>
+        <div class="cause-desc">
+          오전장 기준 외국인 3,097억 원, 기관 6,488억 원 순매도를 기록 중입니다. 특히 기관은 7거래일 만에 '팔자'로 돌아섰습니다. 개인이 9,656억 원을 매수해 지수를 지지하고 있지만, 외국인·기관의 매도 압력이 지수 상단을 제한하고 있습니다.
+        </div>
+        <div class="cause-tag-row">
+          <span class="tag tag-supply">외국인 매도</span>
+          <span class="tag tag-supply">기관 매도</span>
+          <span class="tag tag-supply">수급 불균형</span>
+        </div>
+        <div class="impact-bar-wrap">
+          <span class="impact-label">영향도</span>
+          <div class="impact-bar-bg"><div class="impact-fill" style="width:70%"></div></div>
+          <span class="impact-pct">중간</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cause-item">
+      <div class="cause-number"><div class="num-circle">4</div></div>
+      <div class="cause-content">
+        <div class="cause-title">
+          <span class="cause-icon">🇺🇸</span>
+          미국 증시 하락 여파
+        </div>
+        <div class="cause-desc">
+          간밤 뉴욕증시는 미·이란 2차 협상 관련 불확실성이 커지면서 3대 지수가 일제히 하락했습니다. 다우존스 -0.59%, S&P500·나스닥도 동반 하락했고, 엔비디아(-1.08%), ASML(-1.19%) 등 기술주가 약세를 보였습니다.
+        </div>
+        <div class="cause-tag-row">
+          <span class="tag tag-us">뉴욕 하락</span>
+          <span class="tag tag-us">기술주 약세</span>
+          <span class="tag tag-us">글로벌 동조화</span>
+        </div>
+        <div class="impact-bar-wrap">
+          <span class="impact-label">영향도</span>
+          <div class="impact-bar-bg"><div class="impact-fill" style="width:55%"></div></div>
+          <span class="impact-pct">중간</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <span class="icon">💡</span>
+    <span>전문가 시각: 키움증권 한지영 연구원은 "주식시장이 전쟁 리스크에 갈수록 덜 민감하게 반응하고 있다"며, 4월 23일 SK하이닉스 실적·한국 1분기 GDP 발표 이후 시장 무게중심이 실적 시즌으로 이동할 가능성이 높다고 분석했습니다.</span>
+  </div>
+
+</div>
+<p class="source-note">출처: 키움증권, 파이낸셜뉴스, 연합뉴스 | 2026.04.22 기준 | 투자 권유 목적 아님</p>
+</body>
+</html>
