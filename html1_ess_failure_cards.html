@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS 사업 좌초 원인 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f6f0;
+    padding: 28px 20px;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #d32f2f;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.4;
+  }
+
+  .header p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 520px) {
+    .grid { grid-template-columns: 1fr; }
+    .header h2 { font-size: 18px; }
+  }
+
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.11);
+  }
+
+  .card.fire   { border-color: #e53935; }
+  .card.rec    { border-color: #fb8c00; }
+  .card.smp    { border-color: #8e24aa; }
+  .card.grid   { border-color: #1e88e5; }
+  .card.cost   { border-color: #43a047; }
+  .card.policy { border-color: #00acc1; }
+
+  .card-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-num {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #aaa;
+    margin-bottom: 4px;
+  }
+
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .card p {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .impact-bar {
+    margin-top: 12px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .impact-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .impact-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .card.fire .impact-fill   { background: #e53935; width: 95%; }
+  .card.rec .impact-fill    { background: #fb8c00; width: 85%; }
+  .card.smp .impact-fill    { background: #8e24aa; width: 65%; }
+  .card.grid .impact-fill   { background: #1e88e5; width: 75%; }
+  .card.cost .impact-fill   { background: #43a047; width: 60%; }
+  .card.policy .impact-fill { background: #00acc1; width: 80%; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin-top: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">📋 현장 전문가 분석</div>
+    <h2>태양광+ESS 사업이 좌초된 6가지 원인</h2>
+    <p>2017년 붐(Boom)에서 2020년 좌초까지 — 무엇이 잘못됐나?</p>
+  </div>
+
+  <div class="grid">
+    <div class="card fire">
+      <span class="card-icon">🔥</span>
+      <div class="card-num">CAUSE 01</div>
+      <h3>ESS 연쇄 화재<br>— 신뢰의 붕괴</h3>
+      <p>2017~2020년 국내 ESS 화재 30건+ 발생. 원인 불명확, 정부 가동 중단 권고로 투자 심리 완전 냉각.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●●●</div>
+    </div>
+
+    <div class="card rec">
+      <span class="card-icon">📉</span>
+      <div class="card-num">CAUSE 02</div>
+      <h3>REC 가중치 급락<br>— 수익 모델 붕괴</h3>
+      <p>ESS 연계 REC 가중치 5.0 → 3.5로 인하. REC 현물가격 7만원 → 2만원대 폭락. 사업 IRR 절반으로 감소.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●●○</div>
+    </div>
+
+    <div class="card smp">
+      <span class="card-icon">〽️</span>
+      <div class="card-num">CAUSE 03</div>
+      <h3>SMP 극심한 변동성<br>— 예측 불가 수익</h3>
+      <p>LNG 연동 SMP가 국제 에너지 시장에 따라 급등락. 장기 사업 수익 예측 불가, 금융기관 리스크 회피.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●○○</div>
+    </div>
+
+    <div class="card grid">
+      <span class="card-icon">🔌</span>
+      <div class="card-num">CAUSE 04</div>
+      <h3>계통 접속 지연<br>— 사업 원천 불가</h3>
+      <p>계통 포화로 접속 승인 수년 지연. 토지 확보 후에도 사업 진행 불가한 현장 전국 속출.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●●○</div>
+    </div>
+
+    <div class="card cost">
+      <span class="card-icon">💰</span>
+      <div class="card-num">CAUSE 05</div>
+      <h3>배터리 원가 급등<br>— 초기 투자 부담</h3>
+      <p>리튬·코발트 가격 급등으로 ESS 1MWh당 설치비 5억원 돌파. 수익성 역전 현상 발생.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●○○</div>
+    </div>
+
+    <div class="card policy">
+      <span class="card-icon">📋</span>
+      <div class="card-num">CAUSE 06</div>
+      <h3>정책 일관성 부재<br>— 투자자 신뢰 상실</h3>
+      <p>정권 교체마다 달라지는 재생에너지 기조. REC 제도 수시 변경으로 장기 투자 계획 수립 불가.</p>
+      <div class="impact-bar"><div class="impact-fill"></div></div>
+      <div class="impact-label">피해 심각도 ●●●●○</div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 태양광 업계 15년 현장 전문가 분석 | 2024~2025년 기준</div>
+</div>
+</body>
+</html>
