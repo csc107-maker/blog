@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESS 사업 활성화 선제조건</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #e8f5e9 0%, #f0f4ff 100%);
+    padding: 28px 16px;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #2e7d32;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  .progress-bar {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #444;
+    white-space: nowrap;
+  }
+
+  .bar-wrap {
+    flex: 1;
+    background: #f0f0f0;
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, #e53935, #fb8c00);
+    border-radius: 10px;
+    width: 20%;
+  }
+
+  .progress-pct {
+    font-size: 12px;
+    font-weight: 800;
+    color: #e53935;
+    white-space: nowrap;
+  }
+
+  .condition {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border-left: 5px solid;
+    transition: transform 0.2s;
+  }
+
+  .condition:hover {
+    transform: translateX(4px);
+  }
+
+  .condition.c1 { border-color: #e53935; }
+  .condition.c2 { border-color: #fb8c00; }
+  .condition.c3 { border-color: #8e24aa; }
+  .condition.c4 { border-color: #1e88e5; }
+  .condition.c5 { border-color: #43a047; }
+
+  .cond-num {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: white;
+    flex-shrink: 0;
+    font-family: 'Georgia', serif;
+  }
+
+  .condition.c1 .cond-num { background: #e53935; }
+  .condition.c2 .cond-num { background: #fb8c00; }
+  .condition.c3 .cond-num { background: #8e24aa; }
+  .condition.c4 .cond-num { background: #1e88e5; }
+  .condition.c5 .cond-num { background: #43a047; }
+
+  .cond-body { flex: 1; }
+
+  .cond-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .cond-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .urgency {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .condition.c1 .urgency { background: #ffebee; color: #c62828; }
+  .condition.c2 .urgency { background: #fff3e0; color: #e65100; }
+  .condition.c3 .urgency { background: #f3e5f5; color: #6a1b9a; }
+  .condition.c4 .urgency { background: #e3f2fd; color: #1565c0; }
+  .condition.c5 .urgency { background: #e8f5e9; color: #2e7d32; }
+
+  .who {
+    font-size: 10px;
+    color: #999;
+    font-weight: 600;
+  }
+
+  .cond-desc {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .action-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .action-chip {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: #f5f5f5;
+    color: #555;
+    border: 1px solid #e8e8e8;
+  }
+
+  .status-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 500px) {
+    .status-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  .status-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  }
+
+  .status-icon { font-size: 18px; margin-bottom: 4px; }
+  .status-label { font-size: 10px; font-weight: 700; color: #555; }
+  .status-val { font-size: 11px; color: #999; margin-top: 2px; }
+
+  .footer-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="badge">✅ 활성화 로드맵</div>
+    <h2>태양광+ESS 사업 활성화 선제조건 5가지</h2>
+    <p>이 5가지가 갖춰져야 ESS 사업이 다시 살아난다</p>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-label">현재 충족률</div>
+    <div class="bar-wrap"><div class="bar-fill"></div></div>
+    <div class="progress-pct">1/5 (20%) — 아직 갈 길이 멀다</div>
+  </div>
+
+  <div class="condition c1">
+    <div class="cond-num">1</div>
+    <div class="cond-body">
+      <div class="cond-meta">
+        <div class="cond-title">🔬 ESS 배터리 통합 안전 인증 의무화</div>
+        <span class="urgency">🚨 최우선</span>
+        <span class="who">담당: 산업부·국표원</span>
+      </div>
+      <p class="cond-desc">셀→BMS→설치공법까지 일원화된 안전 인증 체계 구축. 중국산 저가 배터리 우회 차단. 인증 기준이 명확해야 보험사가 인수 가능. 모든 문제의 출발점.</p>
+      <div class="action-items">
+        <span class="action-chip">KS/KC 인증 통합</span>
+        <span class="action-chip">중국산 BMS 규정 강화</span>
+        <span class="action-chip">설치 공법 표준화</span>
+        <span class="action-chip">정기 안전 점검 의무화</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="condition c2">
+    <div class="cond-num">2</div>
+    <div class="cond-body">
+      <div class="cond-meta">
+        <div class="cond-title">🛡️ ESS 전용 공적 재보험 제도 신설</div>
+        <span class="urgency">🔥 긴급</span>
+        <span class="who">담당: 금융위·산업부</span>
+      </div>
+      <p class="cond-desc">보험사 단독으로는 ESS 리스크 인수 불가. 정부 재보험 역할 필수. 농업재해보험 모델처럼 초과 손해를 정부가 보전하는 구조. 이것 없이는 PF도 없다.</p>
+      <div class="action-items">
+        <span class="action-chip">공적 재보험 기금 조성</span>
+        <span class="action-chip">손보사 인수 유인 제공</span>
+        <span class="action-chip">화재 손해 데이터베이스 구축</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="condition c3">
+    <div class="cond-num">3</div>
+    <div class="cond-body">
+      <div class="cond-meta">
+        <div class="cond-title">📊 REC 가중치 10년 장기 고정 고시</div>
+        <span class="urgency">⚡ 필수</span>
+        <span class="who">담당: 산업부·에너지공단</span>
+      </div>
+      <p class="cond-desc">투자자가 원하는 건 높은 수익률이 아니라 예측 가능성. 최소 10년간 ESS 연계 REC 가중치를 확정 고시. 기존 사업자 가중치 변경 불소급 원칙 법제화.</p>
+      <div class="action-items">
+        <span class="action-chip">장기 가중치 확정 고시</span>
+        <span class="action-chip">소급 불적용 원칙 법제화</span>
+        <span class="action-chip">SMP 변동 완충 장치</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="condition c4">
+    <div class="cond-num">4</div>
+    <div class="cond-body">
+      <div class="cond-meta">
+        <div class="cond-title">🔌 계통 접속 우선권 & 배전망 지능화 투자</div>
+        <span class="urgency">⚠️ 중요</span>
+        <span class="who">담당: 한전·산업부</span>
+      </div>
+      <p class="cond-desc">ESS 설치 조건부 계통 접속 우선권 부여. 계통 혼잡 비용 분담 제도 도입. 한전의 배전망 지능화(AMI·SCADA) 투자를 위한 정부 출자 지원 확대.</p>
+      <div class="action-items">
+        <span class="action-chip">ESS 접속 우선권</span>
+        <span class="action-chip">혼잡 비용 분담</span>
+        <span class="action-chip">배전망 지능화 투자</span>
+        <span class="action-chip">접속 대기 기간 단축</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="condition c5">
+    <div class="cond-num">5</div>
+    <div class="cond-body">
+      <div class="cond-meta">
+        <div class="cond-title">💡 산업용 전기요금 TOU 확대 & 피크 요금 현실화</div>
+        <span class="urgency">🔑 근본 과제</span>
+        <span class="who">담당: 산업부·한전·기재부</span>
+      </div>
+      <p class="cond-desc">전기요금이 싸면 ESS 피크 저감 수익 모델이 작동 안 함. OECD 최하위 수준의 한국 전기요금 현실화 없이 ESS 사업 수익성 확보 불가. 가장 근본적이지만 가장 정치적인 과제.</p>
+      <div class="action-items">
+        <span class="action-chip">산업용 TOU 요금 확대</span>
+        <span class="action-chip">피크 요금 현실화</span>
+        <span class="action-chip">전기요금 단계적 인상</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-row">
+    <div class="status-card">
+      <div class="status-icon">🔬</div>
+      <div class="status-label">안전인증</div>
+      <div class="status-val">추진 중</div>
+    </div>
+    <div class="status-card">
+      <div class="status-icon">🛡️</div>
+      <div class="status-label">공적재보험</div>
+      <div class="status-val">논의 단계</div>
+    </div>
+    <div class="status-card">
+      <div class="status-icon">📊</div>
+      <div class="status-label">REC 안정화</div>
+      <div class="status-val">미해결</div>
+    </div>
+    <div class="status-card">
+      <div class="status-icon">🔌</div>
+      <div class="status-label">계통 접속</div>
+      <div class="status-val">부분 진행</div>
+    </div>
+    <div class="status-card">
+      <div class="status-icon">💡</div>
+      <div class="status-label">요금 현실화</div>
+      <div class="status-val">미해결</div>
+    </div>
+  </div>
+
+  <div class="footer-note">※ 2026년 현재 기준 충족 현황 평가 | 태양광 업계 15년 전문가 분석</div>
+</div>
+</body>
+</html>
