@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하락장 속 상승 업종·종목</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fff4;
+    padding: 24px 16px;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .header {
+    background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+    border-radius: 18px 18px 0 0;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header h2 { color: #fff; font-size: 16px; font-weight: 700; }
+  .header p { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 4px; }
+
+  .header-badge {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+
+  .sector-tabs {
+    display: flex;
+    background: #fff;
+    border-bottom: 2px solid #d1fae5;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #9ca3af;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    color: #059669;
+    border-bottom-color: #059669;
+    background: #f0fff8;
+  }
+
+  .stocks-table {
+    background: #fff;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .stocks-table thead tr {
+    background: #f0fff8;
+  }
+
+  .stocks-table th {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    padding: 12px 18px;
+    text-align: left;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #d1fae5;
+  }
+
+  .stocks-table th:last-child { text-align: right; }
+  .stocks-table th:nth-child(3), .stocks-table th:nth-child(4) { text-align: right; }
+
+  .stocks-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: top;
+  }
+
+  .stocks-table tr:last-child td { border-bottom: none; }
+  .stocks-table tr:hover { background: #f9fffe; }
+
+  .stock-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .stock-code {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+  }
+
+  .sector-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 10px;
+  }
+
+  .badge-battery { background: #ecfdf5; color: #059669; }
+  .badge-defense { background: #eff6ff; color: #2563eb; }
+  .badge-parts { background: #fff7ed; color: #ea580c; }
+  .badge-semi { background: #fdf4ff; color: #9333ea; }
+
+  .rate-cell {
+    text-align: right;
+  }
+
+  .rate-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #dc2626;
+  }
+
+  .rate-bar-wrap {
+    margin-top: 4px;
+    height: 5px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 80px;
+    margin-left: auto;
+  }
+
+  .rate-bar {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #059669, #34d399);
+  }
+
+  .reason-cell {
+    font-size: 12px;
+    color: #4b5563;
+    line-height: 1.6;
+    max-width: 220px;
+  }
+
+  .reason-cell strong { color: #059669; }
+
+  .falling-section {
+    background: #fff;
+    border-top: 2px solid #fee2e2;
+    padding: 16px 18px;
+  }
+
+  .falling-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .falling-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .falling-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fef2f2;
+    border-radius: 10px;
+    padding: 6px 12px;
+  }
+
+  .falling-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+  }
+
+  .falling-rate {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563eb;
+  }
+
+  .summary-box {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-radius: 0 0 18px 18px;
+    padding: 16px 22px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: #065f46;
+    font-weight: 500;
+    line-height: 1.7;
+    border-top: 1px solid #a7f3d0;
+  }
+
+  .summary-box .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .source-note {
+    text-align: center;
+    font-size: 10px;
+    color: #b0b8c8;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <h2>📈 하락장에서도 오르는 종목은?</h2>
+      <p>2026.04.22 오전장 | 강세 업종·종목 분석</p>
+    </div>
+    <div class="header-badge">상승 종목</div>
+  </div>
+
+  <table class="stocks-table">
+    <thead>
+      <tr>
+        <th>종목</th>
+        <th>업종</th>
+        <th style="text-align:right">등락률</th>
+        <th>상승 이유</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="stock-name">삼성SDI</div>
+          <div class="stock-code">006400 · 코스피</div>
+        </td>
+        <td><span class="sector-badge badge-battery">이차전지</span></td>
+        <td class="rate-cell">
+          <div class="rate-val">+4.96%</div>
+          <div class="rate-bar-wrap"><div class="rate-bar" style="width:90%"></div></div>
+        </td>
+        <td class="reason-cell">
+          <strong>메르세데스-벤츠 배터리 빅딜</strong> 체결 (추산 10조원). 독일 프리미엄 3사 (BMW·아우디·벤츠) 모두 고객 확보. 이재용 회장 5개월 세일즈 결실
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="stock-name">삼성전기</div>
+          <div class="stock-code">009150 · 코스피</div>
+        </td>
+        <td><span class="sector-badge badge-parts">전자부품</span></td>
+        <td class="rate-cell">
+          <div class="rate-val">+4.92%</div>
+          <div class="rate-bar-wrap"><div class="rate-bar" style="width:89%"></div></div>
+        </td>
+        <td class="reason-cell">
+          <strong>MLCC 업황 개선 기대감</strong>. TSMC 실적 발표 이후 국내 반도체 소재·부품주로 긍정적 해석 확산
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="stock-name">한화에어로스페이스</div>
+          <div class="stock-code">012450 · 코스피</div>
+        </td>
+        <td><span class="sector-badge badge-defense">방산</span></td>
+        <td class="rate-cell">
+          <div class="rate-val">+1.58%</div>
+          <div class="rate-bar-wrap"><div class="rate-bar" style="width:45%"></div></div>
+        </td>
+        <td class="reason-cell">
+          <strong>전쟁 장기화 우려·방산 수출 확대</strong> 기대. 유럽 방산 공급 부족 지속, K9 자주포 미국 시장 진입 본격화
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="stock-name">LG에너지솔루션</div>
+          <div class="stock-code">373220 · 코스피</div>
+        </td>
+        <td><span class="sector-badge badge-battery">이차전지</span></td>
+        <td class="rate-cell">
+          <div class="rate-val">+0.73%</div>
+          <div class="rate-bar-wrap"><div class="rate-bar" style="width:22%"></div></div>
+        </td>
+        <td class="reason-cell">
+          <strong>벤츠와 25조원 파트너십 재확인</strong>. 삼성SDI 빅딜 수혜 동반 상승, LFP 배터리 공급 전략 강화
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="stock-name">삼성전자</div>
+          <div class="stock-code">005930 · 코스피</div>
+        </td>
+        <td><span class="sector-badge badge-semi">반도체</span></td>
+        <td class="rate-cell">
+          <div class="rate-val">+0.34%</div>
+          <div class="rate-bar-wrap"><div class="rate-bar" style="width:10%"></div></div>
+        </td>
+        <td class="reason-cell">
+          <strong>지수 하단 지지 역할</strong>. 1분기 어닝 서프라이즈(57조원) 소화 후 저가 매수세 유입
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="falling-section">
+    <div class="falling-title">⬇ 하락 중인 주요 대형주 (차익 실현)</div>
+    <div class="falling-row">
+      <div class="falling-chip">
+        <span class="falling-name">SK하이닉스</span>
+        <span class="falling-rate">-1.39%</span>
+      </div>
+      <div class="falling-chip">
+        <span class="falling-name">현대차</span>
+        <span class="falling-rate">-1.47%</span>
+      </div>
+      <div class="falling-chip">
+        <span class="falling-name">기아</span>
+        <span class="falling-rate">-0.97%</span>
+      </div>
+      <div class="falling-chip">
+        <span class="falling-name">HD현대중공업</span>
+        <span class="falling-rate">-1.74%</span>
+      </div>
+      <div class="falling-chip">
+        <span class="falling-name">두산에너빌리티</span>
+        <span class="falling-rate">-0.95%</span>
+      </div>
+      <div class="falling-chip">
+        <span class="falling-name">삼성바이오로직스</span>
+        <span class="falling-rate">-0.57%</span>
+      </div>
+    </div>
+    <div style="margin-top:10px; font-size:11px; color:#9ca3af;">※ 전날 급등에 따른 차익 실현 물량 출회 | 4/23 SK하이닉스 실적 발표 대기 심리도 작용</div>
+  </div>
+
+  <div class="summary-box">
+    <span class="icon">🔑</span>
+    <span>오늘의 핵심 키워드는 <strong>'K-배터리 빅딜 + 방산'</strong>입니다. 삼성SDI-벤츠 배터리 계약(~10조원)이 이차전지 업종 전체에 활기를 불어넣는 가운데, 미·이란 협상 불확실성은 방산주에 지속적인 매수 동력을 제공하고 있습니다. 차익 실현 매물이 나오는 반도체·자동차주와 달리, 새로운 모멘텀이 붙은 종목들은 독자적인 강세를 이어가는 '종목 장세'가 전개되고 있습니다.</span>
+  </div>
+
+</div>
+<p class="source-note">출처: 파이낸셜뉴스, 머니투데이, 연합뉴스 | 2026.04.22 오전장 기준 | 투자 권유 목적 아님</p>
+</body>
+</html>
