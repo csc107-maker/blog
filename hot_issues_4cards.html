@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 핫이슈 4대 요약 카드 — 2026.04.23</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Noto Sans KR',sans-serif;
+    background:#f0f4fa;
+    color:#1a1a2e;
+    padding:32px 20px;
+  }
+  .container{max-width:860px;margin:0 auto;}
+
+  /* ── 상단 날짜 헤더 ── */
+  .top-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+    padding:0 4px;
+  }
+  .top-bar .title{font-size:18px;font-weight:900;color:#1a1a2e;letter-spacing:-0.02em;}
+  .top-bar .date{
+    font-size:12px;font-weight:500;
+    color:#64748b;
+    background:#fff;
+    border:1px solid #e2eaf5;
+    border-radius:20px;
+    padding:5px 14px;
+    font-family:'DM Mono',monospace;
+  }
+
+  /* ── 카드 그리드 ── */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+
+  /* ── 카드 공통 ── */
+  .card{
+    border-radius:20px;
+    padding:26px 28px;
+    position:relative;
+    overflow:hidden;
+    transition:transform 0.25s,box-shadow 0.25s;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 40px rgba(0,0,0,0.10);
+  }
+  .card::before{
+    content:'';
+    position:absolute;
+    top:-40px;right:-40px;
+    width:160px;height:160px;
+    border-radius:50%;
+    opacity:0.12;
+  }
+
+  /* ── 카드 1 : 경제 (파란 계열) ── */
+  .card-eco{background:linear-gradient(140deg,#dbeafe,#eff6ff);border:1.5px solid #bfdbfe;}
+  .card-eco::before{background:#2563eb;}
+  .card-eco .card-num{color:#1d4ed8;}
+  .card-eco .card-title{color:#1e3a8a;}
+  .card-eco .card-desc{color:#334155;}
+  .card-eco .badge{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+
+  /* ── 카드 2 : 방송/스포츠 (초록 계열) ── */
+  .card-media{background:linear-gradient(140deg,#dcfce7,#f0fdf4);border:1.5px solid #bbf7d0;}
+  .card-media::before{background:#16a34a;}
+  .card-media .card-num{color:#15803d;}
+  .card-media .card-title{color:#14532d;}
+  .card-media .card-desc{color:#334155;}
+  .card-media .badge{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;}
+
+  /* ── 카드 3 : 정치/법 (붉은 계열) ── */
+  .card-law{background:linear-gradient(140deg,#ffe4e6,#fff1f2);border:1.5px solid #fecdd3;}
+  .card-law::before{background:#e11d48;}
+  .card-law .card-num{color:#be123c;}
+  .card-law .card-title{color:#881337;}
+  .card-law .card-desc{color:#334155;}
+  .card-law .badge{background:#ffe4e6;color:#be123c;border:1px solid #fecdd3;}
+
+  /* ── 카드 4 : 생활/경제 (보라 계열) ── */
+  .card-life{background:linear-gradient(140deg,#ede9fe,#f5f3ff);border:1.5px solid #ddd6fe;}
+  .card-life::before{background:#7c3aed;}
+  .card-life .card-num{color:#6d28d9;}
+  .card-life .card-title{color:#4c1d95;}
+  .card-life .card-desc{color:#334155;}
+  .card-life .badge{background:#ede9fe;color:#6d28d9;border:1px solid #ddd6fe;}
+
+  /* ── 카드 내부 요소 ── */
+  .card-num{
+    font-size:11px;font-weight:700;
+    letter-spacing:0.07em;
+    margin-bottom:10px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .card-num .dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:currentColor;
+    display:inline-block;
+  }
+  .card-title{
+    font-size:16px;font-weight:900;
+    line-height:1.4;
+    margin-bottom:10px;
+    letter-spacing:-0.01em;
+  }
+  .card-desc{
+    font-size:12.5px;
+    line-height:1.75;
+    margin-bottom:16px;
+    font-weight:400;
+  }
+  .card-footer{display:flex;align-items:center;justify-content:space-between;}
+  .badge{
+    font-size:11px;font-weight:700;
+    padding:4px 12px;
+    border-radius:20px;
+  }
+  .heat{
+    display:flex;gap:3px;align-items:center;
+  }
+  .heat-dot{
+    width:7px;height:7px;border-radius:50%;
+  }
+  .heat-dot.on{opacity:1;}
+  .heat-dot.off{opacity:0.2;}
+
+  /* 열기 버튼 (링크 보조 요소) */
+  .read-more{
+    font-size:11px;font-weight:700;
+    opacity:0.6;letter-spacing:0.04em;
+  }
+
+  /* ── 하단 메모 ── */
+  .footer-note{
+    margin-top:18px;
+    font-size:11px;color:#94a3b8;
+    text-align:center;
+    background:#fff;
+    border-radius:12px;
+    padding:10px 16px;
+    border:1px solid #e2eaf5;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="top-bar">
+    <div class="title">오늘의 핫이슈 TOP 4</div>
+    <div class="date">2026.04.23 THU</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 카드 1 : SK하이닉스 실적 -->
+    <div class="card card-eco">
+      <div class="card-num">
+        <span class="dot"></span>ISSUE 01 &nbsp;·&nbsp; 경제 / 반도체
+      </div>
+      <div class="card-title">SK하이닉스<br>1Q 실적 발표 D-DAY</div>
+      <div class="card-desc">
+        오늘 오후 분기 영업이익 발표.<br>
+        컨센서스 34.9조 → 최상단 40.3조 전망.<br>
+        영업이익률 70%대로 TSMC 추월 예상.<br>
+        AI·HBM 슈퍼사이클 공식 확인 무대.
+      </div>
+      <div class="card-footer">
+        <span class="badge">📊 실시간 주목</span>
+        <div class="heat">
+          <div class="heat-dot on" style="background:#2563eb;"></div>
+          <div class="heat-dot on" style="background:#2563eb;"></div>
+          <div class="heat-dot on" style="background:#2563eb;"></div>
+          <div class="heat-dot on" style="background:#2563eb;"></div>
+          <div class="heat-dot on" style="background:#2563eb;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카드 2 : 월드컵 중계권 -->
+    <div class="card card-media">
+      <div class="card-num">
+        <span class="dot"></span>ISSUE 02 &nbsp;·&nbsp; 방송 / 스포츠
+      </div>
+      <div class="card-title">2026 북중미 월드컵<br>JTBC·KBS 단독 중계 확정</div>
+      <div class="card-desc">
+        MBC·SBS 협상 결렬 공식 발표.<br>
+        JTBC+KBS 140억 원에 타결.<br>
+        6월 11일 개막, 사상 첫 104경기 규모.<br>
+        '보편적 시청권' 논란 불씨 여전히 남아.
+      </div>
+      <div class="card-footer">
+        <span class="badge">⚽ 관심 폭발</span>
+        <div class="heat">
+          <div class="heat-dot on" style="background:#16a34a;"></div>
+          <div class="heat-dot on" style="background:#16a34a;"></div>
+          <div class="heat-dot on" style="background:#16a34a;"></div>
+          <div class="heat-dot on" style="background:#16a34a;"></div>
+          <div class="heat-dot off" style="background:#16a34a;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카드 3 : 이상민 재판 -->
+    <div class="card card-law">
+      <div class="card-num">
+        <span class="dot"></span>ISSUE 03 &nbsp;·&nbsp; 정치 / 법원
+      </div>
+      <div class="card-title">이상민 전 장관<br>항소심 징역 15년 재구형</div>
+      <div class="card-desc">
+        12·3 비상계엄 내란 가담 혐의 항소심.<br>
+        조은석 특검, 1심에 이어 동일 구형.<br>
+        언론사 단전·단수 지시 혐의 핵심 쟁점.<br>
+        계엄 관련 재판 줄줄이 이어지는 중.
+      </div>
+      <div class="card-footer">
+        <span class="badge">⚖️ 재판 진행 중</span>
+        <div class="heat">
+          <div class="heat-dot on" style="background:#be123c;"></div>
+          <div class="heat-dot on" style="background:#be123c;"></div>
+          <div class="heat-dot on" style="background:#be123c;"></div>
+          <div class="heat-dot on" style="background:#be123c;"></div>
+          <div class="heat-dot off" style="background:#be123c;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카드 4 : 석유 최고가격 고시 -->
+    <div class="card card-life">
+      <div class="card-num">
+        <span class="dot"></span>ISSUE 04 &nbsp;·&nbsp; 생활 / 경제
+      </div>
+      <div class="card-title">석유 최고가격<br>4차 고시 오늘 발표</div>
+      <div class="card-desc">
+        정부, 24일 시행분 4차 고시 발표 예정.<br>
+        최근 2주 국제유가 하락에도 불구하고<br>
+        기존 누적 인상요인으로 큰 폭 인하 어려워.<br>
+        운전자·소상공인 기름값 변화 촉각.
+      </div>
+      <div class="card-footer">
+        <span class="badge">⛽ 생활 밀착</span>
+        <div class="heat">
+          <div class="heat-dot on" style="background:#6d28d9;"></div>
+          <div class="heat-dot on" style="background:#6d28d9;"></div>
+          <div class="heat-dot on" style="background:#6d28d9;"></div>
+          <div class="heat-dot off" style="background:#6d28d9;"></div>
+          <div class="heat-dot off" style="background:#6d28d9;"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /grid -->
+
+  <div class="footer-note">
+    ● 점(Heat) 5개 = 관심도 최고 &nbsp;|&nbsp; 정보 출처: 네이트·조선·헤럴드·YTN 등 종합 &nbsp;|&nbsp; 2026.04.23 기준
+  </div>
+
+</div>
+</body>
+</html>
