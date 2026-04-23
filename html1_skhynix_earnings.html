@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SK하이닉스 2026 1Q 실적 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f0f4fa;color:#1a1a2e;padding:24px 16px;}
+  .container{max-width:820px;margin:0 auto;}
+
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#0a1628 0%,#1a3a6b 60%,#0d2d5a 100%);border-radius:18px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(59,130,246,0.3) 0%,transparent 70%);border-radius:50%;}
+  .header-tag{display:inline-block;background:rgba(59,130,246,0.25);color:#93c5fd;font-size:11px;font-weight:700;letter-spacing:0.1em;padding:4px 12px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(59,130,246,0.3);}
+  .header h1{font-size:22px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:6px;}
+  .header .sub{font-size:13px;color:#94a3b8;font-weight:400;}
+  .header .date-badge{position:absolute;top:28px;right:28px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:8px 14px;text-align:center;}
+  .header .date-badge .d{font-size:11px;color:#94a3b8;}
+  .header .date-badge .v{font-size:14px;font-weight:700;color:#60a5fa;font-family:'DM Mono',monospace;}
+
+  /* METRIC GRID */
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+  .metric-card{background:#fff;border-radius:14px;padding:18px 16px;border:1px solid #e2eaf5;text-align:center;transition:transform 0.2s;}
+  .metric-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,58,107,0.1);}
+  .metric-card.highlight{background:linear-gradient(135deg,#1a3a6b,#2563eb);border-color:#2563eb;}
+  .metric-card.highlight .m-label{color:#93c5fd;}
+  .metric-card.highlight .m-val{color:#fff;}
+  .metric-card.highlight .m-change{color:#bfdbfe;}
+  .m-label{font-size:11px;color:#64748b;font-weight:500;margin-bottom:6px;letter-spacing:0.03em;}
+  .m-val{font-size:22px;font-weight:900;color:#1a3a6b;font-family:'DM Mono',monospace;line-height:1.1;}
+  .m-change{font-size:11px;margin-top:4px;font-weight:600;}
+  .up{color:#16a34a;} .down{color:#dc2626;}
+
+  /* SECTION TITLE */
+  .section-title{font-size:13px;font-weight:700;color:#475569;letter-spacing:0.05em;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .section-title::before{content:'';display:block;width:4px;height:16px;background:#2563eb;border-radius:2px;}
+
+  /* BAR CHART */
+  .bar-section{background:#fff;border-radius:14px;padding:22px 24px;border:1px solid #e2eaf5;margin-bottom:20px;}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .bar-row:last-child{margin-bottom:0;}
+  .bar-label{font-size:12px;color:#475569;min-width:80px;text-align:right;font-weight:500;}
+  .bar-track{flex:1;background:#f0f4fa;border-radius:6px;height:30px;position:relative;overflow:visible;}
+  .bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;transition:width 1s ease;}
+  .bar-num{font-size:12px;font-weight:700;color:#1a3a6b;min-width:55px;font-family:'DM Mono',monospace;}
+  .bar-badge{font-size:10px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;border-radius:10px;padding:2px 8px;font-weight:700;margin-left:4px;}
+  .bar-badge.new{background:#eff6ff;color:#2563eb;border-color:#bfdbfe;}
+
+  /* TWO COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .info-card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e2eaf5;}
+  .info-card h3{font-size:13px;font-weight:700;color:#1a3a6b;margin-bottom:14px;display:flex;align-items:center;gap:6px;}
+  .info-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f0f4fa;}
+  .info-item:last-child{border-bottom:none;}
+  .info-key{font-size:12px;color:#64748b;}
+  .info-val{font-size:12px;font-weight:700;color:#1a3a6b;font-family:'DM Mono',monospace;}
+
+  /* RISK/OPPORTUNITY */
+  .ro-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .ro-card{border-radius:14px;padding:18px 20px;}
+  .ro-card.opp{background:#f0fdf4;border:1px solid #bbf7d0;}
+  .ro-card.risk{background:#fff7f0;border:1px solid #fed7aa;}
+  .ro-card h3{font-size:12px;font-weight:700;margin-bottom:10px;}
+  .ro-card.opp h3{color:#15803d;}
+  .ro-card.risk h3{color:#c2410c;}
+  .ro-item{font-size:12px;color:#334155;padding:4px 0;padding-left:14px;position:relative;line-height:1.5;}
+  .ro-item::before{content:'›';position:absolute;left:0;font-weight:700;}
+  .ro-card.opp .ro-item::before{color:#16a34a;}
+  .ro-card.risk .ro-item::before{color:#ea580c;}
+
+  /* CONSENSUS */
+  .consensus-bar{background:#fff;border-radius:14px;padding:20px 24px;border:1px solid #e2eaf5;margin-bottom:20px;}
+  .cs-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .cs-label{font-size:11px;color:#64748b;min-width:90px;font-weight:500;}
+  .cs-track{flex:1;background:#f0f4fa;border-radius:4px;height:10px;position:relative;}
+  .cs-fill{height:100%;border-radius:4px;}
+  .cs-tag{font-size:11px;font-weight:700;min-width:50px;text-align:right;font-family:'DM Mono',monospace;}
+
+  /* FOOTER NOTE */
+  .note{font-size:11px;color:#94a3b8;background:#f8fafc;border-radius:10px;padding:12px 16px;border-left:3px solid #cbd5e1;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-tag">📊 실적 심층 분석 · 2026.04.23</div>
+    <h1>SK하이닉스 2026년 1분기<br>역대 최대 실적 분석 리포트</h1>
+    <p class="sub">HBM 슈퍼사이클 공식 확인 — 영업이익률 70%대 TSMC 초월</p>
+    <div class="date-badge">
+      <div class="d">발표일</div>
+      <div class="v">4월 23일</div>
+    </div>
+  </div>
+
+  <!-- KEY METRICS -->
+  <div class="metric-grid">
+    <div class="metric-card highlight">
+      <div class="m-label">1Q 영업이익 (최상단 전망)</div>
+      <div class="m-val">40.3조</div>
+      <div class="m-change">전년比 +368%</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">1Q 매출 (컨센서스)</div>
+      <div class="m-val">53.1조</div>
+      <div class="m-change up">전분기比 +62%</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">영업이익률 전망</div>
+      <div class="m-val">70%+</div>
+      <div class="m-change up">TSMC(58%) 초월</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">2026 연간 전망 (KB)</div>
+      <div class="m-val">251조</div>
+      <div class="m-change up">MS·구글 상회</div>
+    </div>
+  </div>
+
+  <!-- BAR CHART: 영업이익 추이 -->
+  <div class="bar-section">
+    <div class="section-title">분기별 영업이익 추이 및 전망</div>
+    <div class="bar-row">
+      <div class="bar-label">2025 4Q</div>
+      <div class="bar-track"><div class="bar-fill" style="width:24%;background:#94a3b8;">19.2조</div></div>
+      <div class="bar-num">19.2조</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2026 1Q ★</div>
+      <div class="bar-track"><div class="bar-fill" style="width:52%;background:#2563eb;">~40.3조</div></div>
+      <div class="bar-num">40.3조 <span class="bar-badge new">발표일</span></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2026 2Q E</div>
+      <div class="bar-track"><div class="bar-fill" style="width:79%;background:#1d4ed8;">61.4조 (예상)</div></div>
+      <div class="bar-num">61.4조</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2026 3Q E</div>
+      <div class="bar-track"><div class="bar-fill" style="width:93%;background:#1e40af;">72.1조 (예상)</div></div>
+      <div class="bar-num">72.1조</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">2026 4Q E</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:#1e3a8a;">78.4조 (예상)</div></div>
+      <div class="bar-num">78.4조</div>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:12px;">* E = Estimate(메리츠증권 전망치 기준) / 1Q 수치는 키움증권 최상단 전망치</p>
+  </div>
+
+  <!-- TWO COL: 부문별 분석 + 가격 상승률 -->
+  <div class="two-col">
+    <div class="info-card">
+      <h3>🔵 부문별 영업이익 분석</h3>
+      <div class="info-item"><span class="info-key">DRAM 영업이익</span><span class="info-val">30.9조</span></div>
+      <div class="info-item"><span class="info-key">NAND 영업이익</span><span class="info-val">9.4조</span></div>
+      <div class="info-item"><span class="info-key">DRAM 영업이익률</span><span class="info-val">74%</span></div>
+      <div class="info-item"><span class="info-key">커머디티 DRAM OPM</span><span class="info-val">84%</span></div>
+      <div class="info-item"><span class="info-key">NAND 영업이익률</span><span class="info-val">40~60%</span></div>
+      <div class="info-item"><span class="info-key">DRAM 매출 비중</span><span class="info-val">76%</span></div>
+    </div>
+    <div class="info-card">
+      <h3>📈 제품별 가격 상승률 (QoQ)</h3>
+      <div class="info-item"><span class="info-key">서버 DRAM ASP</span><span class="info-val up">+94~101%</span></div>
+      <div class="info-item"><span class="info-key">DRAM blended ASP</span><span class="info-val up">+55%</span></div>
+      <div class="info-item"><span class="info-key">NAND blended ASP</span><span class="info-val up">+81%</span></div>
+      <div class="info-item"><span class="info-key">eSSD 가격</span><span class="info-val up">급등</span></div>
+      <div class="info-item"><span class="info-key">HBM3E 점유율</span><span class="info-val">70%+</span></div>
+      <div class="info-item"><span class="info-key">HBM4 예상 점유율</span><span class="info-val">60%+</span></div>
+    </div>
+  </div>
+
+  <!-- CONSENSUS GAUGE -->
+  <div class="consensus-bar">
+    <div class="section-title">증권사 컨센서스 분포 (영업이익 기준)</div>
+    <div class="cs-row">
+      <div class="cs-label">FnGuide 컨센서스</div>
+      <div class="cs-track"><div class="cs-fill" style="width:87%;background:#64748b;"></div></div>
+      <div class="cs-tag" style="color:#64748b;">34.9조</div>
+    </div>
+    <div class="cs-row">
+      <div class="cs-label">메리츠증권</div>
+      <div class="cs-track"><div class="cs-fill" style="width:93%;background:#3b82f6;"></div></div>
+      <div class="cs-tag" style="color:#3b82f6;">37.5조</div>
+    </div>
+    <div class="cs-row">
+      <div class="cs-label">키움증권 (최상단)</div>
+      <div class="cs-track"><div class="cs-fill" style="width:100%;background:#1d4ed8;"></div></div>
+      <div class="cs-tag" style="color:#1d4ed8;">40.0조</div>
+    </div>
+    <div class="cs-row">
+      <div class="cs-label">유안타증권</div>
+      <div class="cs-track"><div class="cs-fill" style="width:100%;background:#1e40af;"></div></div>
+      <div class="cs-tag" style="color:#1e40af;">40.4조</div>
+    </div>
+  </div>
+
+  <!-- RISK / OPPORTUNITY -->
+  <div class="ro-grid">
+    <div class="ro-card opp">
+      <h3>🟢 투자 기회 요인</h3>
+      <div class="ro-item">AI 서버 수요 폭발 — 메모리 쇼티지 지속</div>
+      <div class="ro-item">엔비디아 베라 루빈 HBM4 물량 70% 확보</div>
+      <div class="ro-item">MS·구글 등 빅테크와 3년 장기공급계약 협의 중</div>
+      <div class="ro-item">낸드 영업이익률 20년 만에 최고 — HBM 추월 전망</div>
+      <div class="ro-item">부채비율 60%→24% 재무건전성 극적 개선</div>
+      <div class="ro-item">2026 연간 영업이익 251조 (KB증권) — 세계 톱5</div>
+    </div>
+    <div class="ro-card risk">
+      <h3>🟠 리스크 요인</h3>
+      <div class="ro-item">美·이란 종전 협상 결과에 따른 환율 변동성</div>
+      <div class="ro-item">호실적 발표 후 '재료 소멸' 차익실현 가능성</div>
+      <div class="ro-item">2026년 하반기 HBM 가격 조정 가능성 제기</div>
+      <div class="ro-item">삼성·마이크론 HBM4 추격 — 경쟁 심화</div>
+      <div class="ro-item">지정학적 리스크 — 공급망 불안정 변수</div>
+      <div class="ro-item">미국 반도체 수출 규제 추가 확대 가능성</div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ 본 내용은 공개된 증권사 리포트와 언론 보도를 바탕으로 정리한 참고용 분석이며, 투자 권유가 아닙니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+</body>
+</html>
