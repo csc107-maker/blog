@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반도체 소부장 핵심 종목 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f5f7f0;color:#1a2410;padding:24px 16px;}
+  .container{max-width:860px;margin:0 auto;}
+
+  .header{background:linear-gradient(135deg,#14532d,#166534,#15803d);border-radius:18px;padding:26px 32px;margin-bottom:20px;position:relative;overflow:hidden;}
+  .header::after{content:'소부장';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:80px;font-weight:900;color:rgba(255,255,255,0.04);letter-spacing:-2px;pointer-events:none;}
+  .header-tag{display:inline-block;background:rgba(134,239,172,0.2);color:#86efac;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 12px;border-radius:20px;margin-bottom:10px;border:1px solid rgba(134,239,172,0.3);}
+  .header h1{font-size:20px;font-weight:900;color:#fff;margin-bottom:6px;}
+  .header .sub{font-size:12px;color:#86efac;opacity:0.85;}
+
+  /* INTRO CARDS */
+  .intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+  .intro-card{background:#fff;border-radius:12px;padding:16px;border:1px solid #d1fae5;text-align:center;}
+  .intro-card .ic-num{font-size:24px;font-weight:900;color:#15803d;font-family:'IBM Plex Mono',monospace;}
+  .intro-card .ic-label{font-size:11px;color:#64748b;margin-top:4px;}
+
+  /* TABLE */
+  .table-wrap{background:#fff;border-radius:16px;border:1px solid #d1fae5;overflow:hidden;margin-bottom:20px;}
+  .table-header{background:#14532d;padding:14px 20px;display:flex;align-items:center;gap:8px;}
+  .table-header span{font-size:13px;font-weight:700;color:#86efac;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  thead tr th{background:#f0fdf4;color:#166534;font-weight:700;padding:10px 14px;text-align:center;border-bottom:2px solid #d1fae5;font-size:11px;letter-spacing:0.03em;}
+  thead tr th:first-child{text-align:left;}
+  tbody tr td{padding:11px 14px;border-bottom:1px solid #f0fdf4;vertical-align:middle;text-align:center;color:#1a2410;}
+  tbody tr td:first-child{text-align:left;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover td{background:#f0fdf4;}
+  .stock-name{font-weight:700;font-size:13px;color:#14532d;}
+  .stock-code{font-size:10px;color:#94a3b8;font-family:'IBM Plex Mono',monospace;}
+  .theme-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap;}
+  .t1{background:#eff6ff;color:#1d4ed8;}
+  .t2{background:#fdf4ff;color:#7e22ce;}
+  .t3{background:#fff7ed;color:#c2410c;}
+  .t4{background:#f0fdf4;color:#15803d;}
+  .t5{background:#fef9c3;color:#854d0e;}
+  .t6{background:#fce7f3;color:#9d174d;}
+  .per-val{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;}
+  .per-high{color:#dc2626;}
+  .per-mid{color:#d97706;}
+  .per-ok{color:#16a34a;}
+  .per-low{color:#2563eb;}
+  .per-bar-wrap{width:60px;height:6px;background:#f0f4fa;border-radius:3px;display:inline-block;vertical-align:middle;margin-left:4px;}
+  .per-bar{height:100%;border-radius:3px;}
+  .star{color:#f59e0b;font-size:12px;}
+  .verdict{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;}
+  .v-buy{background:#dcfce7;color:#15803d;}
+  .v-hold{background:#fef3c7;color:#92400e;}
+  .v-watch{background:#eff6ff;color:#1d4ed8;}
+
+  /* ANALYSIS BOX */
+  .analysis{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #d1fae5;margin-bottom:20px;}
+  .ana-title{font-size:13px;font-weight:700;color:#14532d;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .ana-title::before{content:'';width:4px;height:16px;background:#16a34a;border-radius:2px;display:block;}
+  .ana-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .ana-item{background:#f0fdf4;border-radius:10px;padding:14px 16px;border:1px solid #bbf7d0;}
+  .ana-item .ai-head{font-size:12px;font-weight:700;color:#14532d;margin-bottom:6px;}
+  .ana-item .ai-body{font-size:12px;color:#334155;line-height:1.6;}
+
+  .note{font-size:11px;color:#94a3b8;background:#f8fafc;border-radius:10px;padding:12px 16px;border-left:3px solid #bbf7d0;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-tag">💹 소재·부품·장비 분석 · 2026.04</div>
+    <h1>SK하이닉스 HBM 수혜 소부장 종목<br>PER·PBR 종합 밸류에이션 분석</h1>
+    <p class="sub">HBM4 슈퍼사이클 낙수효과 — 장비·소재·기판 핵심 수혜주 집중 해부</p>
+  </div>
+
+  <div class="intro-grid">
+    <div class="intro-card">
+      <div class="ic-num">9</div>
+      <div class="ic-label">분석 대상 소부장 종목 수</div>
+    </div>
+    <div class="intro-card">
+      <div class="ic-num">HBM4</div>
+      <div class="ic-label">핵심 수혜 제품군</div>
+    </div>
+    <div class="intro-card">
+      <div class="ic-num">2026</div>
+      <div class="ic-label">장비 업계 "퀀텀 점프의 해"</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <span>📋 핵심 소부장 종목 PER·PBR 밸류에이션 비교표 (2026 추정치 기준)</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:18%">종목명</th>
+          <th style="width:12%">테마</th>
+          <th style="width:10%">2026E PER</th>
+          <th style="width:10%">PBR</th>
+          <th style="width:10%">ROE</th>
+          <th style="width:25%">투자 포인트 (핵심)</th>
+          <th style="width:8%">리스크</th>
+          <th style="width:7%">평가</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="stock-name">한미반도체</div><div class="stock-code">042700</div></td>
+          <td><span class="theme-badge t1">HBM 장비</span></td>
+          <td><span class="per-val per-high">67배</span><div class="per-bar-wrap"><div class="per-bar" style="width:90%;background:#dc2626;"></div></div></td>
+          <td><span class="per-val per-high">18배</span></td>
+          <td><span class="per-val per-ok">27%</span></td>
+          <td style="text-align:left;font-size:11px;">TC 본더 세계 1위. HBM4 생산 증설 → 수주 직결. '대장주급 소부장' 위상.</td>
+          <td style="font-size:11px;color:#dc2626;">고평가</td>
+          <td><span class="verdict v-hold">HOLD</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">이수페타시스</div><div class="stock-code">007660</div></td>
+          <td><span class="theme-badge t2">AI 기판</span></td>
+          <td><span class="per-val per-mid">38배</span><div class="per-bar-wrap"><div class="per-bar" style="width:55%;background:#d97706;"></div></div></td>
+          <td><span class="per-val per-mid">9배</span></td>
+          <td><span class="per-val per-ok">24%</span></td>
+          <td style="text-align:left;font-size:11px;">AI 서버용 고다층 PCB 국내 1위. 빅테크 데이터센터 투자 직접 수혜. 12% 급등 기록.</td>
+          <td style="font-size:11px;color:#d97706;">중</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">HPSP</div><div class="stock-code">403870</div></td>
+          <td><span class="theme-badge t3">공정 장비</span></td>
+          <td><span class="per-val per-mid">41배</span><div class="per-bar-wrap"><div class="per-bar" style="width:60%;background:#d97706;"></div></div></td>
+          <td><span class="per-val per-mid">11배</span></td>
+          <td><span class="per-val per-ok">27%</span></td>
+          <td style="text-align:left;font-size:11px;">고압 수소 어닐링 장비 전 세계 유일 공급. HBM4 생산 필수 공정 독점 지위.</td>
+          <td style="font-size:11px;color:#16a34a;">저</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">피에스케이</div><div class="stock-code">319660</div></td>
+          <td><span class="theme-badge t3">세정 장비</span></td>
+          <td><span class="per-val per-ok">29배</span><div class="per-bar-wrap"><div class="per-bar" style="width:42%;background:#16a34a;"></div></div></td>
+          <td><span class="per-val per-ok">7배</span></td>
+          <td><span class="per-val per-ok">24%</span></td>
+          <td style="text-align:left;font-size:11px;">포토레지스트 제거 장비 국내 1위. SK하이닉스·삼성 동시 고객사. 이중 수혜.</td>
+          <td style="font-size:11px;color:#16a34a;">저</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">에스앤에스텍</div><div class="stock-code">101490</div></td>
+          <td><span class="theme-badge t4">반도체 소재</span></td>
+          <td><span class="per-val per-ok">25배</span><div class="per-bar-wrap"><div class="per-bar" style="width:36%;background:#16a34a;"></div></div></td>
+          <td><span class="per-val per-ok">6배</span></td>
+          <td><span class="per-val per-ok">24%</span></td>
+          <td style="text-align:left;font-size:11px;">블랭크 마스크 국산화 성공. 美 대중 수출규제로 국산 소재 선호 가속화 수혜.</td>
+          <td style="font-size:11px;color:#2563eb;">낮음</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">원익IPS</div><div class="stock-code">240810</div></td>
+          <td><span class="theme-badge t1">증착·식각</span></td>
+          <td><span class="per-val per-ok">32배</span><div class="per-bar-wrap"><div class="per-bar" style="width:46%;background:#16a34a;"></div></div></td>
+          <td><span class="per-val per-ok">6배</span></td>
+          <td><span class="per-val per-ok">19%</span></td>
+          <td style="text-align:left;font-size:11px;">SK하이닉스 CVD 증착·식각 핵심 장비 공급. HBM4 생산라인 증설 수주 잔고 증가.</td>
+          <td style="font-size:11px;color:#d97706;">중</td>
+          <td><span class="verdict v-watch">WATCH</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">SK스퀘어</div><div class="stock-code">402340</div></td>
+          <td><span class="theme-badge t5">지주사</span></td>
+          <td><span class="per-val per-low">15배</span><div class="per-bar-wrap"><div class="per-bar" style="width:22%;background:#2563eb;"></div></div></td>
+          <td><span class="per-val per-low">2.4배</span></td>
+          <td><span class="per-val per-mid">16%</span></td>
+          <td style="text-align:left;font-size:11px;">SK하이닉스 지분 20% 보유. 주가 동반 강세 + 지주사 할인율 축소 기대감.</td>
+          <td style="font-size:11px;color:#16a34a;">낮음</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">리노공업</div><div class="stock-code">058470</div></td>
+          <td><span class="theme-badge t6">테스트 소켓</span></td>
+          <td><span class="per-val per-mid">35배</span><div class="per-bar-wrap"><div class="per-bar" style="width:51%;background:#d97706;"></div></div></td>
+          <td><span class="per-val per-mid">9배</span></td>
+          <td><span class="per-val per-ok">26%</span></td>
+          <td style="text-align:left;font-size:11px;">반도체 테스트 소켓 국내 1위. AI칩·HBM 테스트 수요 급증. 고마진 사업 구조.</td>
+          <td style="font-size:11px;color:#d97706;">중</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+        <tr>
+          <td><div class="stock-name">SK하이닉스</div><div class="stock-code">000660</div></td>
+          <td><span class="theme-badge t1">대장주</span></td>
+          <td><span class="per-val per-low">10배</span><div class="per-bar-wrap"><div class="per-bar" style="width:15%;background:#2563eb;"></div></div></td>
+          <td><span class="per-val per-low">3.0배</span></td>
+          <td><span class="per-val per-ok">30%+</span></td>
+          <td style="text-align:left;font-size:11px;">HBM 독점. 2026E 영업이익 251조 목표. BofA 슈퍼사이클 톱픽. 목표주가 130만원.</td>
+          <td style="font-size:11px;color:#16a34a;">낮음</td>
+          <td><span class="verdict v-buy">BUY</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="analysis">
+    <div class="ana-title">핵심 투자 관점 분석</div>
+    <div class="ana-grid">
+      <div class="ana-item">
+        <div class="ai-head">⚡ 한미반도체 — 고평가 vs 독점 기술</div>
+        <div class="ai-body">PER 67배는 부담스러운 수준이나, TC 본더 세계 1위 독점 지위와 HBM4 증설 수주 직결 구조는 프리미엄 정당화 논거. 단기 차익실현 후 재진입 전략이 유효.</div>
+      </div>
+      <div class="ana-item">
+        <div class="ai-head">💎 HPSP — 진짜 숨은 보석</div>
+        <div class="ai-body">고압 수소 어닐링 장비 전 세계 유일 공급사. PER 41배지만 실질 독점 리스크 프리미엄 고려 시 합리적. 2026년 HBM4 생산 확대에 직접 연동.</div>
+      </div>
+      <div class="ana-item">
+        <div class="ai-head">📊 SK스퀘어 — 저평가 할인 해소 기대</div>
+        <div class="ai-body">PER 15배·PBR 2.4배로 소부장 중 가장 저평가. SK하이닉스 주가 급등 시 지주사 할인율 축소 → 주가 동반 강세 구조. 안전마진 높은 간접 투자.</div>
+      </div>
+      <div class="ana-item">
+        <div class="ai-head">🌐 이수페타시스 — AI PCB 선두주자</div>
+        <div class="ai-body">고다층 PCB 수요는 AI 서버 증설과 직접 연동. 빅테크 데이터센터 투자 사이클이 지속되는 한 구조적 성장 담보. 12% 급등 기록으로 시장 신뢰 확인.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ PER·PBR 수치는 2026년 증권사 추정치 기준이며, 실적에 따라 변동됩니다. 본 내용은 참고용 정보이며 투자 권유가 아닙니다. 투자 결정은 반드시 개인의 판단과 책임 하에 이루어져야 합니다.
+  </div>
+</div>
+</body>
+</html>
