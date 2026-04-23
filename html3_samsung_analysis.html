@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 2026 실적·호재 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#fafaf5;color:#1a1a0e;padding:24px 16px;}
+  .container{max-width:840px;margin:0 auto;}
+
+  .header{background:linear-gradient(135deg,#1c1917,#292524,#44403c);border-radius:18px;padding:28px 32px;margin-bottom:20px;position:relative;overflow:hidden;}
+  .header::before{content:'SAMSUNG';position:absolute;bottom:-10px;right:16px;font-size:60px;font-weight:900;color:rgba(255,255,255,0.04);letter-spacing:-3px;pointer-events:none;}
+  .header-tag{display:inline-block;background:rgba(251,191,36,0.2);color:#fbbf24;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 12px;border-radius:20px;margin-bottom:10px;border:1px solid rgba(251,191,36,0.3);}
+  .header h1{font-size:21px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:6px;}
+  .header .sub{font-size:12px;color:#a8a29e;}
+  .header .stamp{position:absolute;top:24px;right:28px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.4);border-radius:12px;padding:8px 16px;text-align:center;}
+  .header .stamp .sv{font-size:20px;font-weight:900;color:#fbbf24;font-family:'Space Mono',monospace;}
+  .header .stamp .sl{font-size:10px;color:#d6d3d1;}
+
+  /* METRICS */
+  .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+  .metric-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #e7e5e4;text-align:center;}
+  .metric-card.gold{background:linear-gradient(135deg,#78350f,#92400e);border-color:#92400e;}
+  .metric-card.gold .m-label{color:#fcd34d;}
+  .metric-card.gold .m-val{color:#fff;}
+  .metric-card.gold .m-tag{color:#fde68a;}
+  .m-label{font-size:11px;color:#78716c;font-weight:500;margin-bottom:5px;}
+  .m-val{font-size:21px;font-weight:900;color:#1c1917;font-family:'Space Mono',monospace;line-height:1.1;}
+  .m-tag{font-size:10px;color:#78716c;margin-top:4px;font-weight:600;}
+  .up{color:#16a34a;} .down{color:#dc2626;}
+
+  .section-title{font-size:13px;font-weight:700;color:#57534e;letter-spacing:0.04em;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .section-title::before{content:'';display:block;width:4px;height:16px;background:#f59e0b;border-radius:2px;}
+
+  /* EVENT TIMELINE */
+  .timeline{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e7e5e4;margin-bottom:20px;}
+  .tl-item{display:flex;gap:16px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid #f5f5f4;}
+  .tl-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+  .tl-dot-col{display:flex;flex-direction:column;align-items:center;min-width:32px;}
+  .tl-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+  .tl-line{width:2px;flex:1;background:#f5f5f4;margin-top:4px;}
+  .tl-content{flex:1;}
+  .tl-date{font-size:11px;color:#a8a29e;font-family:'Space Mono',monospace;margin-bottom:4px;}
+  .tl-title{font-size:13px;font-weight:700;color:#1c1917;margin-bottom:4px;}
+  .tl-body{font-size:12px;color:#57534e;line-height:1.6;}
+  .impact-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;margin-top:4px;}
+  .i-mega{background:#fef2f2;color:#b91c1c;}
+  .i-high{background:#fefce8;color:#854d0e;}
+  .i-med{background:#eff6ff;color:#1d4ed8;}
+
+  /* TWO COL */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  .info-card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e7e5e4;}
+  .info-card h3{font-size:13px;font-weight:700;color:#1c1917;margin-bottom:12px;}
+  .info-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f5f5f4;}
+  .info-item:last-child{border-bottom:none;}
+  .info-key{font-size:12px;color:#78716c;}
+  .info-val{font-size:12px;font-weight:700;color:#1c1917;font-family:'Space Mono',monospace;}
+
+  /* FORECAST TABLE */
+  .forecast{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e7e5e4;margin-bottom:20px;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{background:#fafaf5;color:#57534e;font-weight:700;padding:9px 14px;text-align:center;border-bottom:1.5px solid #e7e5e4;}
+  th:first-child{text-align:left;}
+  td{padding:9px 14px;border-bottom:1px solid #f5f5f4;text-align:center;vertical-align:middle;}
+  td:first-child{text-align:left;font-weight:700;color:#1c1917;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:#fafaf5;}
+  .num-pos{color:#16a34a;font-family:'Space Mono',monospace;font-weight:700;}
+  .num-big{color:#f59e0b;font-family:'Space Mono',monospace;font-weight:700;font-size:13px;}
+
+  /* CATALYST CARDS */
+  .catalyst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+  .cat-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #e7e5e4;}
+  .cat-icon{font-size:22px;margin-bottom:8px;}
+  .cat-title{font-size:12px;font-weight:700;color:#1c1917;margin-bottom:6px;}
+  .cat-body{font-size:11px;color:#57534e;line-height:1.6;}
+  .cat-card.featured{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#fcd34d;}
+
+  .note{font-size:11px;color:#a8a29e;background:#fafaf5;border-radius:10px;padding:12px 16px;border-left:3px solid #d6d3d1;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-tag">🏆 삼성전자 분석 · 2026.04</div>
+    <h1>삼성전자 2026년 1분기 실적 &amp;<br>매출 영향 이벤트 종합 분석</h1>
+    <p class="sub">분기 영업이익 57.2조 돌파 — HBM4 세계 최초 양산 · 슈퍼사이클 진입 공식 선언</p>
+    <div class="stamp">
+      <div class="sv">57.2조</div>
+      <div class="sl">1Q 2026 영업이익</div>
+    </div>
+  </div>
+
+  <!-- KEY METRICS -->
+  <div class="metric-grid">
+    <div class="metric-card gold">
+      <div class="m-label">1Q 영업이익</div>
+      <div class="m-val">57.2조</div>
+      <div class="m-tag">전년比 +755%</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">1Q 매출</div>
+      <div class="m-val">133조</div>
+      <div class="m-tag up">전년比 +68%</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">영업이익률</div>
+      <div class="m-val">43%</div>
+      <div class="m-tag">역대 최고 수준</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">2026 연간 전망</div>
+      <div class="m-val">302조</div>
+      <div class="m-tag">(한국투자증권)</div>
+    </div>
+  </div>
+
+  <!-- TIMELINE: KEY EVENTS -->
+  <div class="timeline">
+    <div class="section-title">2026년 삼성전자 매출 영향 핵심 이벤트</div>
+
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#f59e0b;"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-date">2026.02</div>
+        <div class="tl-title">HBM4 세계 최초 양산·엔비디아 공급 개시</div>
+        <div class="tl-body">업계 최초 6세대 HBM4 양산 출하. 최대 13Gbps 속도·3.3TB/s 대역폭. 1c(10nm급) 공정 + 4nm 파운드리 베이스다이 적용. 기술 리더십 완전 회복.</div>
+        <span class="impact-tag i-mega">MEGA 호재</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#f59e0b;"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-date">2026.02</div>
+        <div class="tl-title">AMD HBM4 우선 공급업체 선정</div>
+        <div class="tl-body">엔비디아에 이어 AMD 차세대 AI 가속기용 HBM4 우선 공급업체로 확정. 엔비디아 루빈 + AMD 미포스 동시 공급 체계 구축. 빅테크 고객사 다변화.</div>
+        <span class="impact-tag i-mega">MEGA 호재</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#f59e0b;"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-date">2026.03 GTC</div>
+        <div class="tl-title">엔비디아 GTC 2026 — 베라 루빈 SSD 'PM1763' 선공개</div>
+        <div class="tl-body">엔비디아 주최 GTC 2026에서 차세대 AI 슈퍼칩 '베라 루빈' 메인 스토리지 PCIe 6세대 서버용 SSD PM1763 전시. 낸드 SSD 매출 급증 예고.</div>
+        <span class="impact-tag i-high">HIGH 호재</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#3b82f6;"></div><div class="tl-line"></div></div>
+      <div class="tl-content">
+        <div class="tl-date">2026.01</div>
+        <div class="tl-title">갤럭시 S26 시리즈 출시 — MX 부문 '더블 호재'</div>
+        <div class="tl-body">갤럭시 S26 글로벌 출시 효과 + 메모리 가격 상승이 동시에 작용. MX 부문 스마트폰 출하 증가와 반도체 단가 상승의 '1석 2조' 수혜 구조.</div>
+        <span class="impact-tag i-high">HIGH 호재</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot-col"><div class="tl-dot" style="background:#3b82f6;"></div></div>
+      <div class="tl-content">
+        <div class="tl-date">2026 상반기</div>
+        <div class="tl-title">그로크(Groq) 등 AI 전용 칩셋 파운드리 수주</div>
+        <div class="tl-body">AI 추론 전용 칩 스타트업 그로크 등으로부터 파운드리 수주 확보. 비메모리 파운드리 부문 흑자 전환 가시화. 시스템 반도체 포트폴리오 확대.</div>
+        <span class="impact-tag i-med">MED 호재</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORECAST TABLE -->
+  <div class="forecast">
+    <div class="section-title">증권사별 연간 영업이익 전망 비교</div>
+    <table>
+      <thead>
+        <tr>
+          <th>증권사</th>
+          <th>2026E 영업이익</th>
+          <th>2027E 영업이익</th>
+          <th>핵심 근거</th>
+          <th>신용등급</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>한국투자증권</td>
+          <td><span class="num-big">302조</span></td>
+          <td><span class="num-pos">392조</span></td>
+          <td style="font-size:11px;text-align:left;">HBM4 점유율 확대 + 낸드 248% 가격 상승</td>
+          <td style="font-size:11px;">BUY</td>
+        </tr>
+        <tr>
+          <td>맥쿼리</td>
+          <td><span class="num-big">301조</span></td>
+          <td><span class="num-pos">476조</span></td>
+          <td style="font-size:11px;text-align:left;">AI 슈퍼사이클 패러다임 전환 전망</td>
+          <td style="font-size:11px;">BUY</td>
+        </tr>
+        <tr>
+          <td>피치(Fitch)</td>
+          <td colspan="2" style="font-size:11px;">영업이익률 37% 개선 전망</td>
+          <td style="font-size:11px;text-align:left;">매출 +24% 성장 예상</td>
+          <td style="font-size:11px;">AA- Stable</td>
+        </tr>
+        <tr>
+          <td>시장 컨센서스</td>
+          <td><span class="num-big">~250조+</span></td>
+          <td><span class="num-pos">300조+</span></td>
+          <td style="font-size:11px;text-align:left;">DS 부문 54조 1Q 영업이익 추정</td>
+          <td style="font-size:11px;">BUY 다수</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TWO COL -->
+  <div class="two-col">
+    <div class="info-card">
+      <h3>🔥 낸드 부활 — 20년 만의 최고 이익률</h3>
+      <div class="info-item"><span class="info-key">삼성 낸드 가격 상승률 전망</span><span class="info-val up">+248%</span></div>
+      <div class="info-item"><span class="info-key">낸드 예상 영업이익률</span><span class="info-val">66.4%</span></div>
+      <div class="info-item"><span class="info-key">SK하이닉스 낸드 OPM</span><span class="info-val">61%</span></div>
+      <div class="info-item"><span class="info-key">낸드 연간 영업이익 전망</span><span class="info-val">40~80조</span></div>
+      <div class="info-item"><span class="info-key">D램 가격 상승률(1Q)</span><span class="info-val up">+93~98%</span></div>
+      <div class="info-item"><span class="info-key">낸드 가격 상승률(1Q)</span><span class="info-val up">+85~90%</span></div>
+    </div>
+    <div class="info-card">
+      <h3>📌 기업 기초 체력 지표</h3>
+      <div class="info-item"><span class="info-key">하루 벌어들이는 영업이익</span><span class="info-val">약 6,400억</span></div>
+      <div class="info-item"><span class="info-key">EPS 전년比 증가율 전망</span><span class="info-val up">+455%+</span></div>
+      <div class="info-item"><span class="info-key">PER (외국인 매수 유입 근거)</span><span class="info-val">저평가 구간</span></div>
+      <div class="info-item"><span class="info-key">분기 매출 역대 최초 돌파</span><span class="info-val">100조↑</span></div>
+      <div class="info-item"><span class="info-key">특별 배당 기대 여부</span><span class="info-val">HIGH</span></div>
+      <div class="info-item"><span class="info-key">주주환원 확대 가능성</span><span class="info-val">HIGH</span></div>
+    </div>
+  </div>
+
+  <!-- CATALYST GRID -->
+  <div style="margin-bottom:12px;"><div class="section-title">향후 주목할 추가 촉매(Catalyst)</div></div>
+  <div class="catalyst-grid">
+    <div class="cat-card featured">
+      <div class="cat-icon">🚀</div>
+      <div class="cat-title">HBF (고대역폭 플래시) 상용화</div>
+      <div class="cat-body">2027년 상용화 예정. 2038년 HBM 시장 추월 전망. 차세대 낸드-DRAM 융합 시장 선점 기회.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🏭</div>
+      <div class="cat-title">평택 P4-4 준공 앞당김</div>
+      <div class="cat-body">당초 2027년에서 2026년 4분기로 준공 앞당김. HBM 월 생산 25만 장으로 확대. 공급 확대 모멘텀.</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🤝</div>
+      <div class="cat-title">빅테크 LTA 계약 가시화</div>
+      <div class="cat-body">마이크로소프트·구글 등 3년 이상 장기공급계약 협의 중. 체결 시 중장기 실적 가시성 대폭 개선.</div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ 본 내용은 공개된 증권사 리포트 및 언론 보도 기반 참고용 분석입니다. 투자의 책임은 투자자 본인에게 있으며, 개별 종목 투자 시 반드시 전문가 상담을 권장합니다.
+  </div>
+</div>
+</body>
+</html>
