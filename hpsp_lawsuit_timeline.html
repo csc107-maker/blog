@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 소송 타임라인</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7ff;
+    padding: 24px 16px;
+  }
+  .wrap {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+  .top-header {
+    background: linear-gradient(135deg, #1e1b4b, #3730a3);
+    border-radius: 16px 16px 0 0;
+    padding: 20px 28px;
+    color: #fff;
+  }
+  .top-header h3 { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+  .top-header p { font-size: 11px; color: #a5b4fc; }
+
+  .overview-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: #fff;
+    border: 1px solid #e0e0f8;
+    border-top: none;
+  }
+  .ov-card {
+    padding: 14px 18px;
+    text-align: center;
+    border-right: 1px solid #e0e0f8;
+  }
+  .ov-card:last-child { border-right: none; }
+  .ov-label { font-size: 10px; font-weight: 700; color: #a0a0c0; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .ov-val { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: #1e1b4b; }
+  .ov-sub { font-size: 10px; color: #a0a0c0; margin-top: 2px; }
+
+  /* Timeline */
+  .timeline-wrap {
+    background: #fff;
+    padding: 28px 28px 20px;
+    border: 1px solid #e0e0f8;
+    border-top: none;
+    position: relative;
+  }
+  .tl-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3730a3;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    border-left: 3px solid #6366f1;
+    padding-left: 10px;
+  }
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, #6366f1, #c7d2fe);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2.5px solid #fff;
+    box-shadow: 0 0 0 1.5px #6366f1;
+    z-index: 1;
+  }
+  .dot-hpsp { background: #2563eb; box-shadow: 0 0 0 1.5px #2563eb; }
+  .dot-yesti { background: #e97316; box-shadow: 0 0 0 1.5px #e97316; }
+  .dot-court { background: #7c3aed; box-shadow: 0 0 0 1.5px #7c3aed; }
+  .dot-upcoming { background: #fff; box-shadow: 0 0 0 1.5px #6366f1; border: 2.5px dashed #6366f1; }
+
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #8492b4;
+    margin-bottom: 4px;
+  }
+  .tl-event {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a4b;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+  .tl-desc {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  .tl-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+  .tag-win { background: #d1fae5; color: #065f46; }
+  .tag-lose { background: #fee2e2; color: #991b1b; }
+  .tag-partial { background: #fef3c7; color: #92400e; }
+  .tag-upcoming { background: #ede9fe; color: #5b21b6; }
+  .tag-news { background: #e0f2fe; color: #0369a1; }
+
+  /* 리스크 경고 */
+  .risk-box {
+    background: #fff;
+    border: 1px solid #e0e0f8;
+    border-top: none;
+    padding: 18px 28px;
+  }
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .risk-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .rc-green { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .rc-orange { background: #fff7ed; border: 1px solid #fed7aa; }
+  .rc-title {
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .rc-green .rc-title { color: #15803d; }
+  .rc-orange .rc-title { color: #c2410c; }
+  .rc-list {
+    font-size: 11px;
+    color: #4b5563;
+    line-height: 1.8;
+    list-style: none;
+  }
+  .rc-list li::before { content: '· '; color: #6b7280; }
+
+  .footer {
+    background: #f5f0ff;
+    border-radius: 0 0 16px 16px;
+    padding: 11px 20px;
+    font-size: 11px;
+    color: #8492b4;
+    text-align: center;
+    border: 1px solid #e0e0f8;
+    border-top: none;
+  }
+
+  @media (max-width: 560px) {
+    .overview-row { grid-template-columns: 1fr 1fr; }
+    .ov-card:nth-child(2) { border-right: none; }
+    .ov-card:nth-child(3) { border-top: 1px solid #e0e0f8; grid-column: span 2; border-right: none; }
+    .risk-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-header">
+    <h3>⚖️ HPSP vs 예스티 특허 분쟁 전황 분석</h3>
+    <p>2023년 8월 소송 제기 ~ 2026년 6월 특허법원 판결 예정 | 총 6건 특허 분쟁</p>
+  </div>
+
+  <div class="overview-row">
+    <div class="ov-card">
+      <div class="ov-label">소송 제기일</div>
+      <div class="ov-val">2023.08</div>
+      <div class="ov-sub">HPSP → 예스티</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">총 분쟁 건수</div>
+      <div class="ov-val">6건</div>
+      <div class="ov-sub">특허침해+무효심판</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-label">핵심 판결 예정</div>
+      <div class="ov-val" style="color:#7c3aed;">2026.06</div>
+      <div class="ov-sub">특허법원 선고</div>
+    </div>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="tl-title">📅 특허 분쟁 타임라인</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot dot-hpsp"></div>
+        <div class="tl-date">2023년 8월</div>
+        <div class="tl-event">HPSP, 예스티 상대 특허침해소송 제기</div>
+        <div class="tl-desc">서울중앙지방법원. 핵심 특허: '반도체 기판 처리용 챔버 개폐장치' (등록번호 1553027)</div>
+        <span class="tl-tag tag-news">HPSP 선제 대응</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-yesti"></div>
+        <div class="tl-date">2023년 하반기</div>
+        <div class="tl-event">예스티, 무효심판 및 권리범위확인심판 청구로 대응</div>
+        <div class="tl-desc">예스티는 특허심판원에 무효심판 2건 + 소극적 권리범위확인심판 청구. 총 6건 분쟁 형성.</div>
+        <span class="tl-tag tag-partial">예스티 반격</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-court"></div>
+        <div class="tl-date">2024년 10월 31일</div>
+        <div class="tl-event">특허심판원 — HPSP 핵심 특허 유효 인정 (예스티 패소)</div>
+        <div class="tl-desc">예스티가 청구한 무효심판 기각. 예스티 주가 3거래일간 -50% 급락. 삼성증권은 HPSP 시장점유율 전망 80% → 95%로 상향.</div>
+        <span class="tl-tag tag-win">✓ HPSP 승소</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-yesti"></div>
+        <div class="tl-date">2024년 11월</div>
+        <div class="tl-event">예스티, 소극적 권리범위확인심판 재청구 및 법원 항소</div>
+        <div class="tl-desc">예스티는 포기하지 않고 심판 재청구. 특허법원에 심결취소소송도 제기.</div>
+        <span class="tl-tag tag-partial">예스티 항전</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-court"></div>
+        <div class="tl-date">2025년 4월</div>
+        <div class="tl-event">소극적 권리범위확인심판 — 예스티 '비침해' 판정</div>
+        <div class="tl-desc">특허심판원: 예스티 장비와 HPSP 특허는 서로 다른 기술 구조라는 판단. 예스티의 HPA 장비 시장 진입 가능성 열림.</div>
+        <span class="tl-tag tag-lose">△ HPSP 부분 불리</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-yesti"></div>
+        <div class="tl-date">2025년 6월 추가 소송 제기</div>
+        <div class="tl-event">HPSP, 이중벽 구조 특허(제0766303호)로 추가 침해소송 제기</div>
+        <div class="tl-desc">단, 해당 특허 만료일이 2026년 상반기로 실질적 영향은 제한적.</div>
+        <span class="tl-tag tag-news">HPSP 추가 대응</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-yesti"></div>
+        <div class="tl-date">2026년 3월 23일</div>
+        <div class="tl-event">예스티, 글로벌 반도체 기업에 HPA 장비 첫 출하 완료</div>
+        <div class="tl-desc">75매 처리 장비 양산 테스트 시작. HPSP 독점 구도에 첫 균열. 125매 장비는 2026년 8월 납품 예정.</div>
+        <span class="tl-tag tag-lose">▲ HPSP 독점 균열</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot dot-upcoming"></div>
+        <div class="tl-date" style="color:#7c3aed;">2026년 6월 (예정)</div>
+        <div class="tl-event" style="color:#5b21b6;">⭐ 특허법원 심결취소소송 3건 동시 선고 예정</div>
+        <div class="tl-desc">핵심 특허(1553027) 포함 3건 동시 선고. 이 결과에 따라 전체 분쟁의 향방이 결정됨. 투자자 최대 주목 이벤트.</div>
+        <span class="tl-tag tag-upcoming">⏰ D-Day 예정</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="risk-box">
+    <div style="font-size:12px;font-weight:700;color:#3730a3;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;border-left:3px solid #6366f1;padding-left:10px;">투자 판단을 위한 시나리오 분석</div>
+    <div class="risk-grid">
+      <div class="risk-card rc-green">
+        <div class="rc-title">✅ HPSP 승소 시나리오</div>
+        <ul class="rc-list">
+          <li>시장점유율 95% 이상 유지 확정</li>
+          <li>예스티 시장 진입 재차 지연</li>
+          <li>주가 단기 급등 + 목표가 상향</li>
+          <li>2026년 실적 전망 추가 상향</li>
+        </ul>
+      </div>
+      <div class="risk-card rc-orange">
+        <div class="rc-title">⚠️ HPSP 패소 시나리오</div>
+        <ul class="rc-list">
+          <li>시장점유율 단계적 하락 가능</li>
+          <li>고객사 멀티벤더 전략 가속화</li>
+          <li>주가 단기 -10~15% 조정 가능</li>
+          <li>단, 회사 본질 가치 훼손은 아님</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ※ 법적 판단은 본 보고서 작성자의 예측이며, 실제 판결과 다를 수 있습니다. 투자 판단은 투자자 본인의 책임입니다.
+  </div>
+</div>
+</body>
+</html>
