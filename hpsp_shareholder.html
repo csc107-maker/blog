@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPSP 주주환원 & R&D</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&family=DM+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f8ff;
+    padding: 24px 16px;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* 주주환원 카드 */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(30,60,140,0.09);
+    border: 1.5px solid #e2e8f8;
+  }
+  .card-header {
+    padding: 16px 20px;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ch-blue { background: linear-gradient(90deg, #1e3a8a, #2563eb); color: #fff; }
+  .ch-teal { background: linear-gradient(90deg, #0f4c75, #1e8bc3); color: #fff; }
+  .ch-amber { background: linear-gradient(90deg, #78350f, #d97706); color: #fff; }
+  .ch-green { background: linear-gradient(90deg, #14532d, #16a34a); color: #fff; }
+
+  .card-body { padding: 18px 20px; }
+
+  /* 주주환원 지표 */
+  .metric-list { list-style: none; }
+  .metric-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e8eeff;
+    font-size: 13px;
+  }
+  .metric-list li:last-child { border-bottom: none; }
+  .ml-label { color: #6b7280; font-weight: 500; }
+  .ml-value { font-family: 'DM Mono', monospace; font-weight: 700; color: #1a2f6e; font-size: 15px; }
+  .ml-note { font-size: 11px; color: #9ca3af; text-align: right; }
+
+  /* 등급 게이지 */
+  .grade-section { margin-top: 14px; }
+  .grade-title { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .grade-bar {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .grade-seg {
+    height: 10px;
+    flex: 1;
+    border-radius: 3px;
+    background: #e8eeff;
+    transition: background 0.3s;
+  }
+  .grade-seg.active-low { background: #fca5a5; }
+  .grade-seg.active-mid { background: #fdba74; }
+  .grade-seg.active-high { background: #6ee7b7; }
+  .grade-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #a0aec0;
+    margin-top: 4px;
+  }
+  .grade-result {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+  }
+  .grade-emoji { font-size: 18px; }
+  .grade-text { font-size: 12px; color: #c2410c; font-weight: 600; line-height: 1.4; }
+
+  /* R&D 카드 */
+  .rd-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eef0f8;
+  }
+  .rd-item:last-child { border-bottom: none; }
+  .rd-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: #e8f4ff;
+  }
+  .rd-content {}
+  .rd-title { font-size: 13px; font-weight: 700; color: #1a2f6e; margin-bottom: 3px; }
+  .rd-desc { font-size: 11px; color: #718096; line-height: 1.6; }
+  .rd-status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+  .rs-mass { background: #d1fae5; color: #065f46; }
+  .rs-test { background: #fef3c7; color: #92400e; }
+  .rs-dev { background: #ede9fe; color: #5b21b6; }
+
+  /* 투자 등급 전체 */
+  .overall-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(30,60,140,0.09);
+    border: 1.5px solid #e2e8f8;
+    margin-top: 16px;
+  }
+  .overall-header {
+    background: linear-gradient(135deg, #1e3a8a, #4338ca);
+    padding: 14px 24px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .overall-body {
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .criteria-card {
+    background: #f5f7ff;
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+    border: 1px solid #e0e8ff;
+  }
+  .crit-name { font-size: 10px; font-weight: 700; color: #6b7280; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .crit-stars { font-size: 14px; margin-bottom: 4px; }
+  .crit-grade {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .g-s { background: #d1fae5; color: #065f46; }
+  .g-a { background: #dbeafe; color: #1d4ed8; }
+  .g-b { background: #fef3c7; color: #92400e; }
+  .g-c { background: #fee2e2; color: #991b1b; }
+
+  .footer-note {
+    padding: 10px 24px 16px;
+    font-size: 11px;
+    color: #a0aec0;
+    text-align: center;
+    border-top: 1px solid #eef0f8;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .overall-body { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="two-col">
+    <!-- 주주환원 카드 -->
+    <div class="card">
+      <div class="card-header ch-blue">💰 주주환원 정책 현황</div>
+      <div class="card-body">
+        <ul class="metric-list">
+          <li>
+            <span class="ml-label">배당수익률</span>
+            <div style="text-align:right;">
+              <div class="ml-value">1.17%</div>
+              <div class="ml-note">코스닥 평균 하회</div>
+            </div>
+          </li>
+          <li>
+            <span class="ml-label">자사주 비율</span>
+            <div style="text-align:right;">
+              <div class="ml-value">3.28%</div>
+              <div class="ml-note">코스닥 평균 상회</div>
+            </div>
+          </li>
+          <li>
+            <span class="ml-label">주당배당금(DPS)</span>
+            <div style="text-align:right;">
+              <div class="ml-value">약 500원</div>
+              <div class="ml-note">2024년 기준 추정</div>
+            </div>
+          </li>
+          <li>
+            <span class="ml-label">배당 지급 방식</span>
+            <div style="text-align:right;">
+              <div class="ml-value" style="font-size:13px;">현금배당</div>
+              <div class="ml-note">연 1회 결산 배당</div>
+            </div>
+          </li>
+          <li>
+            <span class="ml-label">배당 성향</span>
+            <div style="text-align:right;">
+              <div class="ml-value" style="font-size:13px;">보통 수준</div>
+              <div class="ml-note">성장 재투자 우선</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="grade-section">
+          <div class="grade-title">주주환원 수준 평가</div>
+          <div class="grade-bar">
+            <div class="grade-seg active-low"></div>
+            <div class="grade-seg active-low"></div>
+            <div class="grade-seg"></div>
+            <div class="grade-seg"></div>
+            <div class="grade-seg"></div>
+          </div>
+          <div class="grade-label">
+            <span>매우 미흡</span>
+            <span>우수</span>
+          </div>
+          <div class="grade-result">
+            <div class="grade-emoji">⚠️</div>
+            <div class="grade-text">현재 주주환원은 성장주 수준.<br>2026년 실적 성장 후 확대 여력 충분.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R&D 카드 -->
+    <div class="card">
+      <div class="card-header ch-teal">🔬 R&D 투자 및 기술 로드맵</div>
+      <div class="card-body">
+        <div class="rd-item">
+          <div class="rd-icon">⚡</div>
+          <div class="rd-content">
+            <div class="rd-title">HPA 장비 고도화</div>
+            <div class="rd-desc">450℃ 이하 100% 수소농도 유지 기술. 2~3년 주기 신기능 장비 출시. 1.4nm 이하 미세화 대응.</div>
+            <span class="rd-status rs-mass">양산 중</span>
+          </div>
+        </div>
+        <div class="rd-item">
+          <div class="rd-icon">🧪</div>
+          <div class="rd-content">
+            <div class="rd-title">HPO (고압산화막) 장비</div>
+            <div class="rd-desc">3nm 이하 초미세공정 대응. 파운드리 Top-tier 퀄테스트 진행 중. 2026년 하반기 납품 기대.</div>
+            <span class="rd-status rs-test">퀄테스트 중</span>
+          </div>
+        </div>
+        <div class="rd-item">
+          <div class="rd-icon">🔗</div>
+          <div class="rd-content">
+            <div class="rd-title">하이브리드 본딩 장비</div>
+            <div class="rd-desc">300단 이상 NAND, HBM 적층 공정 적용. AI 반도체 수요 확대로 중장기 성장동력.</div>
+            <span class="rd-status rs-dev">개발 중</span>
+          </div>
+        </div>
+        <div class="rd-item">
+          <div class="rd-icon">📊</div>
+          <div class="rd-content">
+            <div class="rd-title">R&D 투자 비율 (추정)</div>
+            <div class="rd-desc">매출 대비 약 8~12% 수준 (글로벌 장비사 AMAT·Lam Research 수준). 30여 건 핵심 특허 보유.</div>
+            <span class="rd-status rs-test">글로벌 평균 수준</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 종합 투자 등급 -->
+  <div class="overall-card">
+    <div class="overall-header">⭐ HPSP 종합 투자 매력도 평가 (5개 항목)</div>
+    <div class="overall-body">
+      <div class="criteria-card">
+        <div class="crit-name">기술력</div>
+        <div class="crit-stars">⭐⭐⭐⭐⭐</div>
+        <span class="crit-grade g-s">S등급</span>
+      </div>
+      <div class="criteria-card">
+        <div class="crit-name">수익성</div>
+        <div class="crit-stars">⭐⭐⭐⭐⭐</div>
+        <span class="crit-grade g-s">S등급</span>
+      </div>
+      <div class="criteria-card">
+        <div class="crit-name">성장성</div>
+        <div class="crit-stars">⭐⭐⭐⭐</div>
+        <span class="crit-grade g-a">A등급</span>
+      </div>
+      <div class="criteria-card">
+        <div class="crit-name">리스크</div>
+        <div class="crit-stars">⭐⭐⭐</div>
+        <span class="crit-grade g-b">B등급</span>
+      </div>
+      <div class="criteria-card">
+        <div class="crit-name">주주환원</div>
+        <div class="crit-stars">⭐⭐</div>
+        <span class="crit-grade g-c">C등급</span>
+      </div>
+    </div>
+    <div class="footer-note">
+      ※ 기술력·수익성 최상위 / 성장성 우수 / 소송·경쟁 리스크 주의 / 주주환원 개선 여지 있음 — 중장기 성장주 관점 투자 적합
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
