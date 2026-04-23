@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 북중미 월드컵 중계권 협상 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=DM+Mono:wght@400;600&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Noto Sans KR',sans-serif;
+    background:#f4f7f2;
+    color:#1a2510;
+    padding:36px 20px 48px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+
+  /* ── 헤더 ── */
+  .header{
+    background:linear-gradient(145deg,#0d3b1e,#145c2c,#1a7a3a);
+    border-radius:22px;
+    padding:32px 36px;
+    margin-bottom:32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .header::after{
+    content:'⚽';
+    position:absolute;
+    right:28px;bottom:-10px;
+    font-size:96px;
+    opacity:0.07;
+    pointer-events:none;
+  }
+  .header-eyebrow{
+    font-size:11px;font-weight:700;letter-spacing:0.1em;
+    color:#86efac;
+    background:rgba(134,239,172,0.15);
+    border:1px solid rgba(134,239,172,0.3);
+    display:inline-block;padding:4px 14px;border-radius:20px;
+    margin-bottom:12px;
+  }
+  .header h1{
+    font-size:22px;font-weight:900;color:#fff;
+    line-height:1.35;margin-bottom:8px;
+    letter-spacing:-0.02em;
+  }
+  .header p{font-size:12.5px;color:#86efac;opacity:0.85;line-height:1.6;}
+
+  /* 상단 요약 수치 */
+  .summary-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:32px;
+  }
+  .sum-card{
+    background:#fff;border-radius:14px;
+    padding:16px 14px;text-align:center;
+    border:1px solid #d1fae5;
+  }
+  .sum-card .sv{
+    font-size:20px;font-weight:900;color:#145c2c;
+    font-family:'DM Mono',monospace;
+    line-height:1.1;margin-bottom:5px;
+  }
+  .sum-card .sl{font-size:10.5px;color:#6b7280;font-weight:500;}
+
+  /* ── 타임라인 컨테이너 ── */
+  .timeline{position:relative;padding-left:0;}
+
+  /* 세로 중심선 */
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:108px;top:0;bottom:0;
+    width:2px;
+    background:linear-gradient(to bottom,#bbf7d0,#a7f3d0,#6ee7b7,#34d399,#10b981,#059669,#065f46);
+    border-radius:2px;
+  }
+
+  /* ── 각 아이템 ── */
+  .tl-item{
+    display:flex;
+    gap:0;
+    margin-bottom:0;
+    position:relative;
+  }
+
+  /* 날짜 열 */
+  .tl-date-col{
+    min-width:108px;
+    padding-right:24px;
+    text-align:right;
+    padding-top:20px;
+    flex-shrink:0;
+  }
+  .tl-date{
+    font-size:11px;font-weight:700;
+    font-family:'DM Mono',monospace;
+    color:#374151;
+    line-height:1.4;
+  }
+  .tl-year{font-size:10px;color:#9ca3af;font-weight:400;}
+
+  /* 도트 */
+  .tl-dot-col{
+    flex-shrink:0;
+    width:20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+  }
+  .tl-dot{
+    width:20px;height:20px;
+    border-radius:50%;
+    border:3px solid #fff;
+    box-shadow:0 0 0 2px var(--dot-color, #34d399);
+    background:var(--dot-color,#34d399);
+    flex-shrink:0;
+    margin-top:18px;
+    z-index:1;
+    position:relative;
+  }
+  /* 펄스 애니메이션 (최신 이벤트) */
+  .tl-dot.pulse::after{
+    content:'';
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:28px;height:28px;
+    border-radius:50%;
+    background:rgba(220,38,38,0.25);
+    animation:pulse 1.8s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:translate(-50%,-50%) scale(0.8);opacity:1;}
+    100%{transform:translate(-50%,-50%) scale(2.2);opacity:0;}
+  }
+
+  /* 컨텐츠 카드 */
+  .tl-card-col{
+    flex:1;
+    padding:12px 0 28px 22px;
+  }
+  .tl-card{
+    background:#fff;
+    border-radius:16px;
+    padding:18px 22px;
+    border:1.5px solid var(--card-border,#d1fae5);
+    position:relative;
+  }
+  /* 카드 왼쪽 포인트 바 */
+  .tl-card::before{
+    content:'';
+    position:absolute;
+    left:0;top:16px;bottom:16px;
+    width:4px;
+    background:var(--dot-color,#34d399);
+    border-radius:0 4px 4px 0;
+  }
+
+  .tl-card .card-tag{
+    display:inline-block;
+    font-size:10px;font-weight:700;letter-spacing:0.06em;
+    padding:3px 10px;border-radius:12px;
+    margin-bottom:8px;
+    background:var(--tag-bg,#dcfce7);
+    color:var(--tag-color,#15803d);
+  }
+  .tl-card .card-title{
+    font-size:14px;font-weight:800;
+    color:#111827;
+    margin-bottom:7px;
+    line-height:1.4;
+    letter-spacing:-0.01em;
+  }
+  .tl-card .card-body{
+    font-size:12.5px;color:#4b5563;
+    line-height:1.75;
+  }
+  .tl-card .card-body b{color:#111827;font-weight:700;}
+
+  /* 금액 하이라이트 칩 */
+  .money-chip{
+    display:inline-flex;align-items:center;gap:5px;
+    background:#fefce8;color:#854d0e;
+    border:1px solid #fde68a;
+    font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:10px;
+    margin-top:8px;
+    font-family:'DM Mono',monospace;
+  }
+
+  /* 결과 배너 (마지막) */
+  .result-banner{
+    background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+    border:1.5px solid #6ee7b7;
+    border-radius:18px;
+    padding:22px 26px;
+    margin-top:28px;
+  }
+  .result-banner h3{
+    font-size:14px;font-weight:900;color:#065f46;
+    margin-bottom:14px;display:flex;align-items:center;gap:8px;
+  }
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .result-card{border-radius:12px;padding:14px 16px;}
+  .rc-ok{background:#dcfce7;border:1px solid #86efac;}
+  .rc-no{background:#fee2e2;border:1px solid #fca5a5;}
+  .rc-ok .rc-head{font-size:12px;font-weight:700;color:#15803d;margin-bottom:6px;}
+  .rc-no .rc-head{font-size:12px;font-weight:700;color:#b91c1c;margin-bottom:6px;}
+  .rc-body{font-size:12px;color:#374151;line-height:1.65;}
+
+  /* 논란 요약 박스 */
+  .issue-box{
+    background:#fff7ed;border:1.5px solid #fed7aa;
+    border-radius:14px;padding:16px 20px;
+    margin-top:14px;
+  }
+  .issue-box .ib-title{font-size:12px;font-weight:700;color:#9a3412;margin-bottom:8px;}
+  .issue-box .ib-row{
+    display:flex;align-items:flex-start;gap:8px;
+    font-size:12px;color:#4b5563;line-height:1.65;
+    margin-bottom:4px;
+  }
+  .issue-box .ib-row:last-child{margin-bottom:0;}
+  .issue-box .ib-row::before{content:'·';color:#f97316;font-weight:900;flex-shrink:0;margin-top:1px;}
+
+  /* 하단 출처 */
+  .footer{
+    margin-top:20px;font-size:11px;color:#9ca3af;
+    text-align:center;background:#fff;
+    border-radius:12px;padding:10px 16px;
+    border:1px solid #e5e7eb;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-eyebrow">⚽ 2026 FIFA 북중미 월드컵</div>
+    <h1>중계권 협상 경과<br>완전 타임라인</h1>
+    <p>단독 중계권 확보 JTBC vs 지상파 3사 — 협상 개시부터 최종 결렬까지<br>개막 D-50일에 결론 난 역대급 중계권 파동 전모</p>
+  </div>
+
+  <!-- 요약 수치 -->
+  <div class="summary-row">
+    <div class="sum-card">
+      <div class="sv">140억</div>
+      <div class="sl">JTBC↔KBS 최종 합의 금액</div>
+    </div>
+    <div class="sum-card">
+      <div class="sv">120억</div>
+      <div class="sl">MBC·SBS 수용 최대 한도</div>
+    </div>
+    <div class="sum-card">
+      <div class="sv">104경기</div>
+      <div class="sl">사상 최다 경기 수</div>
+    </div>
+    <div class="sum-card">
+      <div class="sv">D-50</div>
+      <div class="sl">개막까지 남은 일 (결론 시점)</div>
+    </div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="timeline">
+
+    <!-- 1 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2025년</div>
+        <div class="tl-date">연중</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#fbbf24;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#fbbf24;--card-border:#fde68a;">
+          <span class="card-tag" style="--tag-bg:#fef9c3;--tag-color:#92400e;">배경 · 발단</span>
+          <div class="card-title">JTBC, 2032년까지 모든 올림픽·월드컵 단독 중계권 확보</div>
+          <div class="card-body">
+            JTBC가 <b>2025~2030년 FIFA 월드컵</b>과 <b>2026~2032년 동·하계 올림픽</b> 전체 중계권을 단독 낙찰. 기존 KBS·MBC·SBS 3사가 '코리아풀'을 구성해 공동 입찰하던 관행이 완전히 깨짐.
+            지상파 3사는 JTBC의 단독 입찰에 강한 불만을 표시.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">02월</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#ef4444;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#ef4444;--card-border:#fecaca;">
+          <span class="card-tag" style="--tag-bg:#fee2e2;--tag-color:#b91c1c;">1차 결렬 · 충격</span>
+          <div class="card-title">밀라노 동계올림픽 — 지상파 없이 JTBC 단독 중계 강행</div>
+          <div class="card-body">
+            밀라노·코르티나담페초 동계올림픽 중계권 재판매 협상 끝내 결렬.<br>
+            <b>사상 처음으로 지상파 없는 올림픽</b> 실현. 시민사회·학계에서 "보편적 시청권 침해" 강력 비판 쏟아짐.
+          </div>
+          <div class="money-chip">📺 지상파 시청권 논란 촉발</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">02월</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#f97316;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#f97316;--card-border:#fed7aa;">
+          <span class="card-tag" style="--tag-bg:#fff7ed;--tag-color:#c2410c;">정부 개입</span>
+          <div class="card-title">이재명 대통령, 국무회의서 제도 개선 필요성 공개 언급</div>
+          <div class="card-body">
+            이재명 대통령이 국무회의에서 <b>"과거 국제 대회와 비교하면 사회적 열기가 충분히 고조되지 못한 아쉬움이 있다. 국민의 접근성을 폭넓게 보장하는 제도 개선이 필요하다"</b>고 직접 발언.
+            정부 차원의 개입 신호를 공개 발신.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">03월 말</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#3b82f6;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#3b82f6;--card-border:#bfdbfe;">
+          <span class="card-tag" style="--tag-bg:#eff6ff;--tag-color:#1d4ed8;">중재 회동</span>
+          <div class="card-title">방미통위 주재 4사 사장단 긴급 간담회</div>
+          <div class="card-body">
+            방송미디어통신위원회 김종철 위원장 주재로 <b>KBS 박장범·MBC 안형준·SBS 방문신·JTBC 전진배 사장</b> 4인이 한자리에. 지상파 3사는 JTBC에 "책임 있는 입장 표명"을 공개 요구.
+            JTBC는 이 자리에서 월드컵 중계권 재판매 의지를 재확인.
+          </div>
+          <div class="money-chip">💬 첫 제안 300억대 → 250억으로 인하</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">04.13</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#8b5cf6;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#8b5cf6;--card-border:#ddd6fe;">
+          <span class="card-tag" style="--tag-bg:#f5f3ff;--tag-color:#6d28d9;">최후통첩</span>
+          <div class="card-title">JTBC, 지상파 3사에 최종안 140억 원 제시 · 기한 4.21까지</div>
+          <div class="card-body">
+            협상 초반 <b>300억대 → 250억 → 140억</b>까지 단계적으로 인하.
+            JTBC는 세 방송사에 동일 조건을 제시하고 <b>2026년 4월 21일</b>까지 최종 답신을 요청.
+            월드컵 개막(6월 11일)까지 단 60일도 안 남은 시점.
+          </div>
+          <div class="money-chip">💰 최종안 140억 원 (3사 동일 조건)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">04.20</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#10b981;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#10b981;--card-border:#6ee7b7;">
+          <span class="card-tag" style="--tag-bg:#dcfce7;--tag-color:#065f46;">극적 타결</span>
+          <div class="card-title">KBS, 140억 수용 — JTBC·KBS 공동 중계 극적 합의</div>
+          <div class="card-body">
+            KBS가 공식 입장을 통해 <b>"상당한 적자가 예상되지만, 공영방송의 책무를 다하기 위해 JTBC가 제안한 최종 금액을 수용했다"</b>고 밝힘.
+            수신료의 가치 실현을 위한 결정이라고 설명. JTBC도 공동 중계 합의를 공식 발표.
+          </div>
+          <div class="money-chip">✅ JTBC + KBS 140억 원 최종 계약</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">04.22</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot pulse" style="--dot-color:#ef4444;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#ef4444;--card-border:#fecaca;">
+          <span class="card-tag" style="--tag-bg:#fee2e2;--tag-color:#b91c1c;">최종 결렬</span>
+          <div class="card-title">MBC·SBS 협상 결렬 공식 선언 — "120억 이상은 어렵다"</div>
+          <div class="card-body">
+            MBC와 SBS는 "수용 가능 최대치는 <b>120억 원</b>"이라는 입장을 끝내 유지. JTBC가 협상 결렬을 공식 발표.
+            <br><br>
+            <b>MBC</b>는 "협상안을 전달했음에도 사전 통보 없이 언론을 통해 결렬이 발표됐다"며 유감을 표명.
+            <b>SBS</b>는 "디지털 권리 문제와 과도한 금액 부담으로 참여가 어려웠다"고 해명.
+          </div>
+          <div class="money-chip">❌ MBC·SBS 참여 불가 확정</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 : 개막 -->
+    <div class="tl-item">
+      <div class="tl-date-col">
+        <div class="tl-year">2026년</div>
+        <div class="tl-date">06.11</div>
+      </div>
+      <div class="tl-dot-col">
+        <div class="tl-dot" style="--dot-color:#f59e0b;"></div>
+      </div>
+      <div class="tl-card-col">
+        <div class="tl-card" style="--dot-color:#f59e0b;--card-border:#fde68a;">
+          <span class="card-tag" style="--tag-bg:#fef9c3;--tag-color:#92400e;">🏆 대회 개막</span>
+          <div class="card-title">2026 FIFA 북중미 월드컵 개막 (캐나다·미국·멕시코)</div>
+          <div class="card-body">
+            캐나다·미국·멕시코 3국 공동 개최. <b>사상 첫 104경기</b> 규모로 역대 최대 대회.
+            한국에서는 <b>JTBC + KBS</b>에서만 시청 가능.
+            MBC·SBS에서는 시청 불가. 보편적 시청권 논란은 향후 제도 개선 논의로 이어질 전망.
+          </div>
+          <div class="money-chip">📡 JTBC + KBS에서만 시청 가능</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- 최종 결과 배너 -->
+  <div class="result-banner">
+    <h3>📋 최종 결과 요약</h3>
+    <div class="result-grid">
+      <div class="result-card rc-ok">
+        <div class="rc-head">✅ 중계 확정 채널</div>
+        <div class="rc-body">
+          <b>JTBC</b> — 단독 중계권 보유<br>
+          <b>KBS</b> — 140억 원 계약 체결<br>
+          전국 지상파(KBS) + 종편(JTBC) 동시 시청 가능
+        </div>
+      </div>
+      <div class="result-card rc-no">
+        <div class="rc-head">❌ 중계 불가 채널</div>
+        <div class="rc-body">
+          <b>MBC</b> — 협상 결렬 (120억 한도 고수)<br>
+          <b>SBS</b> — 협상 결렬 (디지털 권리 문제 포함)<br>
+          2030 월드컵·2028 올림픽 협상 추가 예정
+        </div>
+      </div>
+    </div>
+
+    <!-- 남은 논란 -->
+    <div class="issue-box">
+      <div class="ib-title">🔥 해결되지 않은 쟁점들</div>
+      <div class="ib-row">JTBC의 2032년까지 독점 중계권 구조 — 올림픽·월드컵 반복 갈등 예고</div>
+      <div class="ib-row">보편적 시청권 보호 법제화 논의 필요성 — 국회·방미통위 과제</div>
+      <div class="ib-row">방송사들의 적자 불가피 구조 — "사는 순간 수백억 적자" 현실 해결책 부재</div>
+      <div class="ib-row">2030 FIFA 월드컵 + 2028 LA 올림픽 협상 — 같은 갈등 반복 가능성 高</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    출처 : 서울신문·YTN·헤럴드경제·파이낸셜뉴스·위키트리 등 종합 보도 기반 &nbsp;|&nbsp; 2026.04.23 기준
+  </div>
+
+</div>
+</body>
+</html>
