@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반도체 AI 슈퍼사이클 빅픽처</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f8f9fb;color:#111827;padding:24px 16px;}
+  .container{max-width:860px;margin:0 auto;}
+
+  .header{background:linear-gradient(150deg,#0f172a 0%,#1e1b4b 50%,#312e81 100%);border-radius:18px;padding:28px 32px 24px;margin-bottom:20px;position:relative;overflow:hidden;}
+  .header::before{content:'AI MEMORY';position:absolute;bottom:-16px;right:12px;font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(255,255,255,0.04);letter-spacing:2px;pointer-events:none;}
+  .header-tag{display:inline-block;background:rgba(165,180,252,0.2);color:#a5b4fc;font-size:11px;font-weight:700;letter-spacing:0.08em;padding:4px 12px;border-radius:20px;margin-bottom:10px;border:1px solid rgba(165,180,252,0.3);}
+  .header h1{font-size:22px;font-weight:900;color:#fff;margin-bottom:6px;}
+  .header .sub{font-size:12px;color:#818cf8;}
+
+  /* SUPERCYCLE STATS */
+  .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;}
+  .stat-card{background:#fff;border-radius:12px;padding:14px 10px;border:1px solid #e0e7ff;text-align:center;}
+  .stat-card.purple{background:linear-gradient(135deg,#312e81,#4f46e5);border-color:#4f46e5;}
+  .stat-card.purple .sv{color:#fff;}
+  .stat-card.purple .sl{color:#c7d2fe;}
+  .sv{font-size:18px;font-weight:900;color:#312e81;font-family:'IBM Plex Mono',monospace;line-height:1.1;}
+  .sl{font-size:10px;color:#6b7280;margin-top:4px;font-weight:500;}
+
+  /* ECOSYSTEM MAP */
+  .eco-section{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e0e7ff;margin-bottom:20px;}
+  .eco-title{font-size:13px;font-weight:700;color:#312e81;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .eco-title::before{content:'';width:4px;height:16px;background:#6366f1;border-radius:2px;display:block;}
+
+  .eco-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .eco-row:last-child{margin-bottom:0;}
+  .eco-layer{min-width:90px;font-size:11px;font-weight:700;color:#4338ca;background:#eef2ff;border-radius:6px;padding:4px 8px;text-align:center;}
+  .eco-arrow{font-size:16px;color:#a5b4fc;flex-shrink:0;}
+  .eco-items{display:flex;flex-wrap:wrap;gap:6px;flex:1;}
+  .eco-item{font-size:11px;padding:4px 10px;border-radius:8px;font-weight:600;white-space:nowrap;}
+  .e-demand{background:#fef3c7;color:#92400e;}
+  .e-chip{background:#e0f2fe;color:#0c4a6e;}
+  .e-mem{background:#ede9fe;color:#4c1d95;}
+  .e-equip{background:#dcfce7;color:#14532d;}
+  .e-mat{background:#fff7ed;color:#7c2d12;}
+  .e-sub{background:#fce7f3;color:#831843;}
+
+  /* PRICE TABLE */
+  .price-section{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e0e7ff;margin-bottom:20px;}
+  table{width:100%;border-collapse:collapse;font-size:12px;}
+  th{background:#f5f3ff;color:#4338ca;font-weight:700;padding:9px 14px;text-align:center;border-bottom:2px solid #e0e7ff;}
+  th:first-child{text-align:left;}
+  td{padding:9px 14px;border-bottom:1px solid #f3f4f6;text-align:center;vertical-align:middle;}
+  td:first-child{text-align:left;font-weight:600;color:#111827;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:#f5f3ff;}
+  .pct{font-family:'IBM Plex Mono',monospace;font-weight:700;}
+  .p-mega{color:#dc2626;font-size:13px;}
+  .p-high{color:#d97706;}
+  .p-mid{color:#2563eb;}
+
+  /* GLOBAL COMPARISON */
+  .comp-section{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e0e7ff;margin-bottom:20px;}
+  .comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .comp-card{border-radius:12px;padding:14px;text-align:center;}
+  .comp-card.kr1{background:#eef2ff;border:1px solid #c7d2fe;}
+  .comp-card.kr2{background:#ede9fe;border:1px solid #ddd6fe;}
+  .comp-card.us1{background:#f0fdf4;border:1px solid #bbf7d0;}
+  .comp-card.us2{background:#f0f9ff;border:1px solid #bae6fd;}
+  .comp-company{font-size:11px;font-weight:700;margin-bottom:6px;color:#374151;}
+  .comp-profit{font-size:17px;font-weight:900;font-family:'IBM Plex Mono',monospace;}
+  .comp-profit.kr1c{color:#4338ca;}
+  .comp-profit.kr2c{color:#7c3aed;}
+  .comp-profit.us1c{color:#15803d;}
+  .comp-profit.us2c{color:#0369a1;}
+  .comp-sub{font-size:10px;color:#6b7280;margin-top:4px;}
+  .crown{font-size:14px;}
+
+  /* OUTLOOK TIMELINE */
+  .outlook{background:#fff;border-radius:16px;padding:22px 24px;border:1px solid #e0e7ff;margin-bottom:20px;}
+  .out-row{display:flex;gap:0;margin-bottom:0;}
+  .out-cell{flex:1;padding:14px 12px;border-right:1px solid #e0e7ff;text-align:center;}
+  .out-cell:last-child{border-right:none;}
+  .out-year{font-size:14px;font-weight:900;color:#312e81;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;}
+  .out-key{font-size:11px;font-weight:700;color:#1f2937;margin-bottom:4px;}
+  .out-body{font-size:11px;color:#6b7280;line-height:1.5;}
+  .out-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:8px;font-weight:700;margin-top:4px;}
+  .ob-bull{background:#dcfce7;color:#15803d;}
+  .ob-mega{background:#fef2f2;color:#b91c1c;}
+
+  .note{font-size:11px;color:#94a3b8;background:#f8fafc;border-radius:10px;padding:12px 16px;border-left:3px solid #c7d2fe;}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-tag">🌐 AI 메모리 슈퍼사이클 빅픽처 · 2026</div>
+    <h1>글로벌 반도체 AI 슈퍼사이클<br>생태계 전체 분석 지도</h1>
+    <p class="sub">삼성전자 + SK하이닉스 + 소부장 — 한국 반도체의 역대급 해를 해부한다</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card purple">
+      <div class="sv">1조$</div>
+      <div class="sl">2026 글로벌 반도체 시장</div>
+    </div>
+    <div class="stat-card">
+      <div class="sv">+51%</div>
+      <div class="sl">D램 매출 전년比 성장률</div>
+    </div>
+    <div class="stat-card">
+      <div class="sv">+45%</div>
+      <div class="sl">낸드 매출 전년比 성장률</div>
+    </div>
+    <div class="stat-card">
+      <div class="sv">546억$</div>
+      <div class="sl">2026 HBM 시장 규모 (BofA)</div>
+    </div>
+    <div class="stat-card">
+      <div class="sv">+58%</div>
+      <div class="sl">HBM 시장 성장률 (YoY)</div>
+    </div>
+  </div>
+
+  <!-- ECOSYSTEM MAP -->
+  <div class="eco-section">
+    <div class="eco-title">AI 메모리 슈퍼사이클 생태계 가치사슬 맵</div>
+
+    <div class="eco-row">
+      <div class="eco-layer">수요 촉발</div>
+      <div class="eco-arrow">▶</div>
+      <div class="eco-items">
+        <span class="eco-item e-demand">엔비디아 H100/H200/루빈</span>
+        <span class="eco-item e-demand">AMD MI300X/미포스</span>
+        <span class="eco-item e-demand">구글 TPU v6</span>
+        <span class="eco-item e-demand">MS Azure AI 인프라</span>
+        <span class="eco-item e-demand">AI 데이터센터 투자 폭발</span>
+      </div>
+    </div>
+
+    <div class="eco-row">
+      <div class="eco-layer">AI 칩 설계</div>
+      <div class="eco-arrow">▶</div>
+      <div class="eco-items">
+        <span class="eco-item e-chip">엔비디아 (GPU)</span>
+        <span class="eco-item e-chip">AMD (GPU)</span>
+        <span class="eco-item e-chip">그로크·세레브라스 (AI 전용 칩)</span>
+        <span class="eco-item e-chip">TSMC·삼성 (파운드리 생산)</span>
+      </div>
+    </div>
+
+    <div class="eco-row">
+      <div class="eco-layer">메모리</div>
+      <div class="eco-arrow">▶</div>
+      <div class="eco-items">
+        <span class="eco-item e-mem">SK하이닉스 HBM3E/HBM4 (70%)</span>
+        <span class="eco-item e-mem">삼성전자 HBM4 (첫 양산)</span>
+        <span class="eco-item e-mem">마이크론 HBM4 (승인 중)</span>
+        <span class="eco-item e-mem">eSSD (낸드 폭등 수혜)</span>
+      </div>
+    </div>
+
+    <div class="eco-row">
+      <div class="eco-layer">장비 소부장</div>
+      <div class="eco-arrow">▶</div>
+      <div class="eco-items">
+        <span class="eco-item e-equip">한미반도체 (TC본더)</span>
+        <span class="eco-item e-equip">HPSP (수소 어닐링)</span>
+        <span class="eco-item e-equip">피에스케이 (세정)</span>
+        <span class="eco-item e-equip">원익IPS (증착·식각)</span>
+      </div>
+    </div>
+
+    <div class="eco-row">
+      <div class="eco-layer">기판·소재</div>
+      <div class="eco-arrow">▶</div>
+      <div class="eco-items">
+        <span class="eco-item e-sub">이수페타시스 (AI PCB)</span>
+        <span class="eco-item e-mat">에스앤에스텍 (블랭크 마스크)</span>
+        <span class="eco-item e-sub">리노공업 (테스트 소켓)</span>
+        <span class="eco-item e-sub">SK스퀘어 (지주사 수혜)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICE TABLE -->
+  <div class="price-section">
+    <div class="eco-title">2026 메모리 반도체 가격 상승률 총정리</div>
+    <table>
+      <thead>
+        <tr><th>제품</th><th>1Q QoQ 가격 상승률</th><th>연간 YoY 전망</th><th>수혜 기업</th><th>등급</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>HBM (고대역폭메모리)</td>
+          <td><span class="pct p-mega">지속 솔드아웃</span></td>
+          <td><span class="pct p-mega">공급 부족 지속</span></td>
+          <td style="font-size:11px;">SK하이닉스 70%, 삼성</td>
+          <td><span class="pct p-mega">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>서버 DRAM</td>
+          <td><span class="pct p-mega">+93~101%</span></td>
+          <td><span class="pct p-mega">D램 +51%(BofA)</span></td>
+          <td style="font-size:11px;">SK하이닉스, 삼성, 마이크론</td>
+          <td><span class="pct p-mega">★★★★★</span></td>
+        </tr>
+        <tr>
+          <td>낸드플래시 (eSSD)</td>
+          <td><span class="pct p-mega">+85~90%</span></td>
+          <td><span class="pct p-high">삼성 +248%(한투)</span></td>
+          <td style="font-size:11px;">삼성전자, SK하이닉스</td>
+          <td><span class="pct p-high">★★★★☆</span></td>
+        </tr>
+        <tr>
+          <td>범용 DRAM (PC/모바일)</td>
+          <td><span class="pct p-high">+90~95%</span></td>
+          <td><span class="pct p-mid">점진 상승세</span></td>
+          <td style="font-size:11px;">삼성, SK하이닉스</td>
+          <td><span class="pct p-high">★★★☆☆</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GLOBAL COMPARISON -->
+  <div class="comp-section">
+    <div class="eco-title">글로벌 반도체 빅4 — 2026년 연간 영업이익 전망 비교</div>
+    <div class="comp-grid">
+      <div class="comp-card kr2">
+        <div class="crown">👑</div>
+        <div class="comp-company">SK하이닉스</div>
+        <div class="comp-profit kr2c">251조</div>
+        <div class="comp-sub">KB증권 전망 / MS·구글 상회</div>
+      </div>
+      <div class="comp-card kr1">
+        <div class="crown">🏆</div>
+        <div class="comp-company">삼성전자</div>
+        <div class="comp-profit kr1c">302조</div>
+        <div class="comp-sub">한국투자증권 전망</div>
+      </div>
+      <div class="comp-card us1">
+        <div class="crown">🌐</div>
+        <div class="comp-company">마이크로소프트</div>
+        <div class="comp-profit us1c">245조</div>
+        <div class="comp-sub">글로벌 빅테크 비교 기준</div>
+      </div>
+      <div class="comp-card us2">
+        <div class="crown">🔍</div>
+        <div class="comp-company">구글(알파벳)</div>
+        <div class="comp-profit us2c">240조</div>
+        <div class="comp-sub">글로벌 빅테크 비교 기준</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:12px;">* 한국 기업 수치는 증권사 추정치, 미국 기업 수치는 시장 컨센서스 기준 / 환율 변동에 따라 달라질 수 있음</p>
+  </div>
+
+  <!-- OUTLOOK -->
+  <div class="outlook">
+    <div class="eco-title">2026~2028 메모리 슈퍼사이클 연도별 전망</div>
+    <div class="out-row">
+      <div class="out-cell">
+        <div class="out-year">2026</div>
+        <div class="out-key">슈퍼사이클 공식 확인</div>
+        <div class="out-body">HBM3E 중심 수요 + HBM4 점진 전환. 삼성·SK 합산 영업이익 500조+ 진입.</div>
+        <span class="out-badge ob-mega">역대급 호황</span>
+      </div>
+      <div class="out-cell">
+        <div class="out-year">2027</div>
+        <div class="out-key">HBM4 폭발적 양산기</div>
+        <div class="out-body">HBM4 주력 전환. 공급 부족 지속 예상. 장비·소재株 퀀텀 점프 구간.</div>
+        <span class="out-badge ob-bull">강세 유지</span>
+      </div>
+      <div class="out-cell">
+        <div class="out-year">2028</div>
+        <div class="out-key">HBM 시장 역사적 크기</div>
+        <div class="out-body">HBM 시장이 2024년 전체 D램 시장 규모 초과 전망. HBF 상용화 태동.</div>
+        <span class="out-badge ob-bull">구조적 성장</span>
+      </div>
+      <div class="out-cell">
+        <div class="out-year">2038</div>
+        <div class="out-key">HBF가 HBM 추월</div>
+        <div class="out-body">고대역폭 플래시메모리(HBF) 시장이 HBM 시장 규모 추월 예상. 차세대 패러다임.</div>
+        <span class="out-badge ob-bull">장기 전망</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    ⚠️ 본 내용은 BofA, 골드만삭스, UBS, KB·한국투자·메리츠·키움증권 리포트 및 공개 언론 보도를 바탕으로 정리된 참고용 자료입니다. 투자 권유가 아니며 모든 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </div>
+</div>
+</body>
+</html>
