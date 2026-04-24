@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>업종별 외국인 수급 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Mono:wght@500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+  }
+
+  .table-widget {
+    background: linear-gradient(135deg, #fafbff 0%, #fff 100%);
+    border: 1px solid #dde8ff;
+    border-radius: 20px;
+    padding: 28px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(40,80,180,0.07);
+    overflow: hidden;
+  }
+
+  .tw-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tw-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a2a4a;
+  }
+
+  .tw-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7a90b0;
+    background: #eef2fa;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .tw-subtitle {
+    font-size: 12px;
+    color: #8a9aaa;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+  }
+
+  thead th {
+    font-size: 11px;
+    font-weight: 700;
+    color: #8a9aaa;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    text-align: left;
+    background: transparent;
+  }
+
+  thead th:not(:first-child) { text-align: right; }
+
+  tbody tr {
+    background: #fff;
+    border-radius: 12px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(40,80,180,0.09);
+  }
+
+  tbody td {
+    padding: 13px 12px;
+    font-size: 13.5px;
+    color: #1a2a4a;
+    border: none;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #f0f4ff;
+  }
+
+  tbody tr td:first-child {
+    border-radius: 12px 0 0 12px;
+    border-left: 4px solid transparent;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  tbody tr td:last-child {
+    border-radius: 0 12px 12px 0;
+    text-align: right;
+  }
+
+  tbody td:not(:first-child):not(:last-child) {
+    text-align: right;
+  }
+
+  tr.sell-heavy td:first-child { border-left-color: #ff4b4b; }
+  tr.sell-mid td:first-child { border-left-color: #ff9966; }
+  tr.buy-strong td:first-child { border-left-color: #00b96b; }
+  tr.buy-mid td:first-child { border-left-color: #4ade80; }
+  tr.neutral td:first-child { border-left-color: #a0b8e0; }
+
+  .amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .amount.negative { color: #e53935; }
+  .amount.positive { color: #00a758; }
+
+  .trend-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .bar-container {
+    width: 80px;
+    height: 6px;
+    background: #eef2fa;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .fill-sell { background: linear-gradient(90deg, #ff8080, #ff4b4b); }
+  .fill-buy { background: linear-gradient(90deg, #4ade80, #00b96b); }
+
+  .signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .signal.strong-sell { background: #fff0f0; color: #cc2200; }
+  .signal.mild-sell { background: #fff5f0; color: #c05000; }
+  .signal.strong-buy { background: #e6f9f0; color: #007a42; }
+  .signal.mild-buy { background: #efffee; color: #00a020; }
+  .signal.hold { background: #f0f4ff; color: #3050a0; }
+
+  .summary-bar {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: #f0f5ff;
+    border-radius: 12px;
+    flex-wrap: wrap;
+  }
+
+  .summary-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+
+  .summary-label {
+    font-size: 11px;
+    color: #7a90b0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .summary-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .summary-value.neg { color: #e53935; }
+  .summary-value.pos { color: #00a758; }
+
+  @media (max-width: 560px) {
+    .table-widget { padding: 18px 12px; overflow-x: auto; }
+    table { min-width: 480px; }
+  }
+</style>
+</head>
+<body>
+<div class="table-widget">
+  <div class="tw-header">
+    <div class="tw-title">📋 업종별 외국인 수급 분석</div>
+    <div class="tw-date">2026. 04. 20~23 합산</div>
+  </div>
+  <div class="tw-subtitle">코스피 장중 변동성 확대 구간 · 외국인 매도 집중 vs 매수 지속 업종 비교</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>업종</th>
+        <th>외국인 순매수</th>
+        <th>추세</th>
+        <th>투자 시그널</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="buy-strong">
+        <td>🔵 반도체 (빅2)</td>
+        <td><span class="amount positive">+5,800억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill fill-buy" style="width:95%"></div></div>
+          </div>
+        </td>
+        <td><span class="signal strong-buy">▲ 강한 매수</span></td>
+      </tr>
+      <tr class="buy-mid">
+        <td>🟢 에너지저장(ESS)</td>
+        <td><span class="amount positive">+2,100억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill fill-buy" style="width:65%"></div></div>
+          </div>
+        </td>
+        <td><span class="signal mild-buy">▲ 매수 지속</span></td>
+      </tr>
+      <tr class="buy-mid">
+        <td>🟢 헬스케어·바이오</td>
+        <td><span class="amount positive">+1,400억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill fill-buy" style="width:50%"></div></div>
+          </div>
+        </td>
+        <td><span class="signal mild-buy">▲ 유입 확인</span></td>
+      </tr>
+      <tr class="neutral">
+        <td>⚪ 금융·은행</td>
+        <td><span class="amount" style="color:#5060a0">+300억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill" style="width:20%;background:#a0b8e0"></div></div>
+          </div>
+        </td>
+        <td><span class="signal hold">— 관망</span></td>
+      </tr>
+      <tr class="sell-mid">
+        <td>🟠 건설·플랜트</td>
+        <td><span class="amount negative">-460억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill fill-sell" style="width:30%"></div></div>
+          </div>
+        </td>
+        <td><span class="signal mild-sell">▼ 차익실현</span></td>
+      </tr>
+      <tr class="sell-heavy">
+        <td>🔴 운송장비·부품</td>
+        <td><span class="amount negative">-2,940억</span></td>
+        <td>
+          <div class="trend-bar">
+            <div class="bar-container"><div class="bar-fill fill-sell" style="width:88%"></div></div>
+          </div>
+        </td>
+        <td><span class="signal strong-sell">▼ 집중 매도</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="summary-bar">
+    <div class="summary-item">
+      <div class="summary-label">최대 순매도 업종</div>
+      <div class="summary-value neg">운송장비</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-label">최대 순매수 업종</div>
+      <div class="summary-value pos">반도체</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-label">반도체 선행 PER</div>
+      <div class="summary-value pos">약 6배</div>
+    </div>
+    <div class="summary-item">
+      <div class="summary-label">빅2 제외 PER</div>
+      <div class="summary-value neg">16.5배</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
