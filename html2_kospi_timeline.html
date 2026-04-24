@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코스피 2026 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+  }
+
+  .timeline-widget {
+    background: linear-gradient(160deg, #f8fbff 0%, #fff 60%, #f5f8ff 100%);
+    border: 1px solid #dde8ff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 760px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(40,80,180,0.07);
+  }
+
+  .tw-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .tw-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #0052cc, #2684ff);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .tw-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a2a4a;
+  }
+
+  .tw-subtitle {
+    font-size: 12px;
+    color: #8a9aaa;
+    margin-bottom: 30px;
+    padding-left: 52px;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: linear-gradient(180deg, #2684ff 0%, #7c5cff 50%, #ff4b4b 100%);
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 26px 28px;
+    animation: fadeInUp 0.5s ease both;
+  }
+
+  .tl-item:last-child { padding-bottom: 0; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tl-item:nth-child(1) { animation-delay: 0.1s; }
+  .tl-item:nth-child(2) { animation-delay: 0.2s; }
+  .tl-item:nth-child(3) { animation-delay: 0.3s; }
+  .tl-item:nth-child(4) { animation-delay: 0.4s; }
+  .tl-item:nth-child(5) { animation-delay: 0.5s; }
+  .tl-item:nth-child(6) { animation-delay: 0.6s; }
+
+  .tl-dot {
+    position: absolute;
+    left: -17px;
+    top: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+
+  .dot-blue { color: #2684ff; background: #2684ff; }
+  .dot-green { color: #00b96b; background: #00b96b; }
+  .dot-red { color: #ff4b4b; background: #ff4b4b; }
+  .dot-orange { color: #ff8c00; background: #ff8c00; }
+  .dot-purple { color: #7c5cff; background: #7c5cff; }
+  .dot-gold { color: #e6a000; background: #e6a000; }
+
+  .tl-date {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #aab8cc;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .tl-event {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a2a4a;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .tl-detail {
+    font-size: 13px;
+    color: #556070;
+    line-height: 1.7;
+  }
+
+  .tl-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .badge-up { background: #e6f9f0; color: #00845a; }
+  .badge-down { background: #fff0f0; color: #cc2200; }
+  .badge-risk { background: #fff4e0; color: #c07000; }
+  .badge-now { background: #e8f0ff; color: #0050cc; }
+
+  .kospi-level {
+    display: inline-block;
+    background: #f0f4ff;
+    border: 1px solid #c8d8ff;
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2a4a;
+    margin-top: 4px;
+  }
+
+  .now-marker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, #e8f0ff, #fff);
+    border: 1px solid #b0c8ff;
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #0040aa;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+
+  .pulse {
+    width: 8px; height: 8px;
+    background: #2684ff;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  @media (max-width: 520px) {
+    .timeline-widget { padding: 22px 16px; }
+    .tw-subtitle { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="timeline-widget">
+  <div class="tw-header">
+    <div class="tw-icon">📅</div>
+    <div class="tw-title">코스피 2026 주요 이벤트 타임라인</div>
+  </div>
+  <div class="tw-subtitle">1월 ~ 4월 · 증시 급등 배경과 변동성 촉발 요인 정리</div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot dot-blue"></div>
+      <div class="tl-date">2026. 01. 27</div>
+      <div class="tl-event">코스피, 종가 기준 사상 첫 5,000선 돌파 <span class="tl-badge badge-up">▲ 역사적</span></div>
+      <div class="tl-detail">실적 기반 랠리 본격화. AI·반도체·방산·조선 등 구조적 성장 업종 주도. 외국인 1분기 순매수 집중 시작.</div>
+      <div class="kospi-level">KOSPI 5,000pt 돌파</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-green"></div>
+      <div class="tl-date">2026. 02. 25</div>
+      <div class="tl-event">코스피 6,000선 돌파 <span class="tl-badge badge-up">▲ 역사적</span></div>
+      <div class="tl-detail">1월 이후 불과 한 달 만에 1,000포인트 추가 상승. 반도체 빅2 중심의 외국인 순매수가 시장 견인. 코스피 선행 PER 16.0배 기록(2월 말 고점).</div>
+      <div class="kospi-level">KOSPI 6,000pt 돌파</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-red"></div>
+      <div class="tl-date">2026. 02. 28</div>
+      <div class="tl-event">미-이란 전쟁 발발 <span class="tl-badge badge-risk">⚠ 지정학 리스크</span></div>
+      <div class="tl-detail">이란전 발발로 코스피 5,000선 위협. 단기 급락 후 빠른 회복. 시장은 지정학 리스크를 '단기 노이즈'로 소화하는 성숙도 보임.</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-orange"></div>
+      <div class="tl-date">2026. 04. 초</div>
+      <div class="tl-event">코스피 5,377pt 회복 → 전고점 돌파 재시동 <span class="tl-badge badge-up">▲ 반등</span></div>
+      <div class="tl-detail">이란전 충격에서 빠르게 낙폭 회복. 기관 매수세 유입으로 반등 지지. 외국인도 재차 순매수로 전환. 미-이란 2차 종전협상 기대감 유입.</div>
+      <div class="kospi-level">KOSPI 5,377pt</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-purple"></div>
+      <div class="tl-date">2026. 04. 21</div>
+      <div class="tl-event">코스피 6,417pt 마감 · 이란전 전 최고치 돌파 <span class="tl-badge badge-up">▲ 전고점 경신</span></div>
+      <div class="tl-detail">3거래일 연속 사상 최고치 경신 랠리 시작. SK하이닉스 HBM4 수율 85% 달성, 삼성전자 1Q 깜짝 실적 등 펀더멘털 서프라이즈 연속.</div>
+      <div class="kospi-level">KOSPI 6,417pt</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot dot-gold"></div>
+      <div class="tl-date">2026. 04. 23</div>
+      <div class="tl-event">코스피, 장중 6,500선 사상 첫 터치 <span class="tl-badge badge-now">📍 현재</span></div>
+      <div class="tl-detail">종가 6,475.81pt(+0.90%). 외국인 7,000억원+ 순매도, 기관 7,220억원 순매도에도 개인 1.1조원 순매수로 지수 방어. 빅2 제외 선행 PER 16.5배, 밸류에이션 경계 구간.</div>
+      <div class="kospi-level">KOSPI 6,475pt</div>
+      <div class="now-marker"><div class="pulse"></div> 현재 시장 위치</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
