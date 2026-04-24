@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투자자별 수급 현황</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Oswald:wght@600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: transparent;
+    padding: 0;
+  }
+
+  .widget {
+    background: linear-gradient(135deg, #f0f7ff 0%, #fafcff 50%, #f5f0ff 100%);
+    border: 1px solid #d8e8ff;
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    max-width: 760px;
+    margin: 0 auto;
+    box-shadow: 0 4px 24px rgba(60,100,200,0.08);
+  }
+
+  .widget-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .widget-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2a4a;
+    letter-spacing: -0.5px;
+  }
+
+  .date-badge {
+    background: #1a2a4a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #7a90b0;
+    margin-bottom: 24px;
+  }
+
+  .index-bar {
+    background: linear-gradient(90deg, #0052cc, #2684ff);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .index-label {
+    color: rgba(255,255,255,0.8);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .index-value {
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -1px;
+  }
+
+  .index-change {
+    color: #a8ffcc;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .index-note {
+    color: rgba(255,255,255,0.7);
+    font-size: 11px;
+    text-align: right;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 16px 16px;
+    border: 1.5px solid #e8f0fd;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(60,100,200,0.12);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .card.sell::before { background: linear-gradient(90deg, #ff4b4b, #ff8080); }
+  .card.buy::before { background: linear-gradient(90deg, #00b96b, #4ade80); }
+  .card.neutral::before { background: linear-gradient(90deg, #6b7aff, #a78bfa); }
+
+  .card-icon {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .card-actor {
+    font-size: 12px;
+    font-weight: 700;
+    color: #7a90b0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .card-amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .card.sell .card-amount { color: #e53935; }
+  .card.buy .card-amount { color: #00a758; }
+  .card.neutral .card-amount { color: #4b5eb8; }
+
+  .card-unit {
+    font-size: 11px;
+    color: #aab8cc;
+    margin-bottom: 10px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: #556070;
+    line-height: 1.6;
+  }
+
+  .bar-track {
+    background: #eef2fa;
+    border-radius: 4px;
+    height: 6px;
+    margin-top: 12px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+
+  .card.sell .bar-fill { background: linear-gradient(90deg, #ff4b4b, #ff8080); }
+  .card.buy .bar-fill { background: linear-gradient(90deg, #00b96b, #4ade80); }
+  .card.neutral .bar-fill { background: linear-gradient(90deg, #6b7aff, #a78bfa); }
+
+  .footnote {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff8e6;
+    border: 1px solid #ffe08a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #7a5c00;
+    line-height: 1.6;
+  }
+
+  .footnote-icon { font-size: 18px; flex-shrink: 0; }
+
+  @media (max-width: 520px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .index-value { font-size: 24px; }
+    .widget { padding: 22px 16px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="widget-header">
+    <div class="widget-title">📊 투자자별 수급 현황</div>
+    <div class="date-badge">2026.04.22 기준</div>
+  </div>
+  <div class="subtitle">코스피 장중 6,500선 첫 돌파 당일 · 3거래일 연속 사상 최고치 경신</div>
+
+  <div class="index-bar">
+    <div>
+      <div class="index-label">KOSPI 종가</div>
+      <div class="index-value">6,475.81</div>
+    </div>
+    <div style="text-align:right">
+      <div class="index-change">▲ +57.88p (+0.90%)</div>
+      <div class="index-note">장중 최고 6,500선 터치<br>사상 최초</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card sell">
+      <div class="card-icon">🌐</div>
+      <div class="card-actor">외국인</div>
+      <div class="card-amount">-7,000억+</div>
+      <div class="card-unit">순매도 (장중 고점 기준)</div>
+      <div class="card-desc">단기 급등에 따른 차익실현·리밸런싱. 구조적 이탈 아님.</div>
+      <div class="bar-track"><div class="bar-fill" style="width:70%"></div></div>
+    </div>
+    <div class="card neutral">
+      <div class="card-icon">🏢</div>
+      <div class="card-actor">기관</div>
+      <div class="card-amount">-7,220억</div>
+      <div class="card-unit">순매도</div>
+      <div class="card-desc">섹터 교체형 매도. 특정 업종 차익실현 후 재배분 진행 중.</div>
+      <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+    </div>
+    <div class="card buy">
+      <div class="card-icon">👤</div>
+      <div class="card-actor">개인</div>
+      <div class="card-amount">+1.1조</div>
+      <div class="card-unit">순매수</div>
+      <div class="card-desc">외국인·기관 물량 흡수. 실적 기반 저가매수 전략 전개.</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <div class="footnote-icon">💡</div>
+    <div>
+      <strong>전문가 해설:</strong> 지수 최고치 경신 구간에서 외국인·기관이 팔고 개인이 사는 구도는 전형적인 '단기 차익실현 숨고르기'입니다. 외국인의 1분기 누적 순매수(+6.2조 원) 대비 일일 매도 규모는 포트폴리오 조정 범위 내입니다. 추세 전환으로 해석하기 이릅니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
