@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 3가지 케이스 수익 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f7f0;
+    padding: 32px 20px;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 28px; }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #2f9e44, #40c057);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .header h2 { font-size: 21px; font-weight: 900; color: #1a2340; }
+  .header p { font-size: 12.5px; color: #6b8f71; margin-top: 6px; }
+
+  /* 케이스 카드 3개 */
+  .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+
+  @media (max-width: 680px) { .cases { grid-template-columns: 1fr; } }
+
+  .case-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+  }
+
+  .case-card:hover { transform: translateY(-4px); }
+
+  .case-header {
+    padding: 20px 18px 16px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .case-home .case-header { background: linear-gradient(135deg, #e67700, #ffd43b); }
+  .case-100kw .case-header { background: linear-gradient(135deg, #1971c2, #4dabf7); }
+  .case-1mw .case-header { background: linear-gradient(135deg, #862e9c, #cc5de8); }
+
+  .case-icon { font-size: 28px; margin-bottom: 6px; }
+
+  .case-title { font-size: 15px; font-weight: 900; margin-bottom: 2px; }
+  .case-size { font-size: 12px; opacity: 0.85; }
+
+  .case-body { padding: 18px 16px; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f4f0;
+    font-size: 12.5px;
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+
+  .stat-name { color: #6b7a99; }
+
+  .stat-value { font-weight: 700; color: #1a2340; }
+
+  .case-home .stat-highlight { color: #e67700; }
+  .case-100kw .stat-highlight { color: #1971c2; }
+  .case-1mw .stat-highlight { color: #862e9c; }
+
+  .annual-income {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .case-home .annual-income { background: #fff9db; }
+  .case-100kw .annual-income { background: #e7f5ff; }
+  .case-1mw .annual-income { background: #f3d9fa; }
+
+  .ai-label { font-size: 10.5px; color: #8c9bb5; margin-bottom: 4px; }
+
+  .ai-value {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .case-home .ai-value { color: #e67700; }
+  .case-100kw .ai-value { color: #1971c2; }
+  .case-1mw .ai-value { color: #862e9c; }
+
+  .ai-sub { font-size: 11px; color: #8c9bb5; margin-top: 2px; }
+
+  .recovery-bar-wrap { margin-top: 14px; }
+
+  .recovery-label { font-size: 11px; color: #6b7a99; margin-bottom: 6px; }
+
+  .recovery-track {
+    background: #f0f4f8;
+    border-radius: 8px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .recovery-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 1.2s ease;
+  }
+
+  .case-home .recovery-fill { background: linear-gradient(90deg, #ffd43b, #e67700); width: 35%; }
+  .case-100kw .recovery-fill { background: linear-gradient(90deg, #74c0fc, #1971c2); width: 55%; }
+  .case-1mw .recovery-fill { background: linear-gradient(90deg, #da77f2, #862e9c); width: 70%; }
+
+  .recovery-note { font-size: 10.5px; color: #9aa5be; margin-top: 5px; text-align: right; }
+
+  /* 종합 비교 테이블 */
+  .compare-table {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .compare-table h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2340;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid #f0f4f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  thead th {
+    padding: 10px 14px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    background: #f8fafb;
+    color: #4a5568;
+  }
+
+  thead th:first-child { text-align: left; }
+
+  tbody tr:hover { background: #fafbff; }
+
+  tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f5f7fa;
+    text-align: center;
+    color: #2d3748;
+  }
+
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #4a5568;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+  }
+
+  .tag-best { background: #d3f9d8; color: #1a7f2e; }
+  .tag-good { background: #d0ebff; color: #1864ab; }
+  .tag-ok { background: #fff9db; color: #885800; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #9aa5be;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">CASE COMPARISON</span>
+    <h2>규모별 태양광 수익 3가지 케이스 비교</h2>
+    <p>가정용 · 100kW 사업용 · 1MW 대형 — 나에게 맞는 규모는 어디일까요?</p>
+  </div>
+
+  <div class="cases">
+
+    <!-- 가정용 -->
+    <div class="case-card case-home">
+      <div class="case-header">
+        <div class="case-icon">🏠</div>
+        <div class="case-title">가정용</div>
+        <div class="case-size">3kW · 일반 주택</div>
+      </div>
+      <div class="case-body">
+        <div class="stat-row">
+          <span class="stat-name">설치비용</span>
+          <span class="stat-value">약 600만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">연간 발전량</span>
+          <span class="stat-value">3,343kWh</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">SMP 수익</span>
+          <span class="stat-value stat-highlight">해당없음</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">REC 수익</span>
+          <span class="stat-value stat-highlight">해당없음</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">전기요금 절감</span>
+          <span class="stat-value stat-highlight">약 56만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">잉여전력 판매</span>
+          <span class="stat-value">약 6만원</span>
+        </div>
+
+        <div class="annual-income">
+          <div class="ai-label">💰 연간 총 수익 (절감 포함)</div>
+          <div class="ai-value">약 62만원</div>
+          <div class="ai-sub">전기요금 절감이 수익의 90%</div>
+        </div>
+
+        <div class="recovery-bar-wrap">
+          <div class="recovery-label">투자 회수율 (현재 기준)</div>
+          <div class="recovery-track"><div class="recovery-fill"></div></div>
+          <div class="recovery-note">회수기간 약 9~10년</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 100kW -->
+    <div class="case-card case-100kw">
+      <div class="case-header">
+        <div class="case-icon">🏭</div>
+        <div class="case-title">중소형 사업용</div>
+        <div class="case-size">100kW · 지상형</div>
+      </div>
+      <div class="case-body">
+        <div class="stat-row">
+          <span class="stat-name">설치비용</span>
+          <span class="stat-value">약 1억 4,000만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">연간 발전량</span>
+          <span class="stat-value">111,690kWh</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">SMP 수익</span>
+          <span class="stat-value stat-highlight">약 1,675만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">REC 수익</span>
+          <span class="stat-value stat-highlight">약 614만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">유지보수비</span>
+          <span class="stat-value">약 -150만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">보험·임차료</span>
+          <span class="stat-value">약 -200만원</span>
+        </div>
+
+        <div class="annual-income">
+          <div class="ai-label">💰 연간 순수익 (비용 차감)</div>
+          <div class="ai-value">약 1,940만원</div>
+          <div class="ai-sub">IRR 약 10~12%</div>
+        </div>
+
+        <div class="recovery-bar-wrap">
+          <div class="recovery-label">투자 회수율 (현재 기준)</div>
+          <div class="recovery-track"><div class="recovery-fill"></div></div>
+          <div class="recovery-note">회수기간 약 7~8년</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1MW -->
+    <div class="case-card case-1mw">
+      <div class="case-header">
+        <div class="case-icon">⚡</div>
+        <div class="case-title">대형 사업용</div>
+        <div class="case-size">1MW (1,000kW)</div>
+      </div>
+      <div class="case-body">
+        <div class="stat-row">
+          <span class="stat-name">설치비용</span>
+          <span class="stat-value">약 12억원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">연간 발전량</span>
+          <span class="stat-value">1,116,900kWh</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">SMP 수익</span>
+          <span class="stat-value stat-highlight">약 1억 6,754만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">REC 수익</span>
+          <span class="stat-value stat-highlight">약 6,143만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">유지보수비</span>
+          <span class="stat-value">약 -700만원</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">보험·임차료</span>
+          <span class="stat-value">약 -1,200만원</span>
+        </div>
+
+        <div class="annual-income">
+          <div class="ai-label">💰 연간 순수익 (비용 차감)</div>
+          <div class="ai-value">약 2억 1,000만원</div>
+          <div class="ai-sub">IRR 약 13~15%</div>
+        </div>
+
+        <div class="recovery-bar-wrap">
+          <div class="recovery-label">투자 회수율 (현재 기준)</div>
+          <div class="recovery-track"><div class="recovery-fill"></div></div>
+          <div class="recovery-note">회수기간 약 5~6년</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 종합 비교 테이블 -->
+  <div class="compare-table">
+    <h3>📊 핵심 지표 종합 비교표</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>🏠 가정용 3kW</th>
+          <th>🏭 100kW</th>
+          <th>⚡ 1MW</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>설치비 (kW당)</td>
+          <td>200만원/kW</td>
+          <td>140만원/kW</td>
+          <td>120만원/kW <span class="tag tag-best">최저가</span></td>
+        </tr>
+        <tr>
+          <td>연간 수익(절감 포함)</td>
+          <td>약 62만원</td>
+          <td>약 2,289만원</td>
+          <td>약 2억 2,897만원 <span class="tag tag-best">최대</span></td>
+        </tr>
+        <tr>
+          <td>투자 회수기간</td>
+          <td>9~10년 <span class="tag tag-ok">긴 편</span></td>
+          <td>7~8년 <span class="tag tag-good">표준</span></td>
+          <td>5~6년 <span class="tag tag-best">빠름</span></td>
+        </tr>
+        <tr>
+          <td>15년 ROI</td>
+          <td>약 55%</td>
+          <td>약 97%</td>
+          <td>약 163% <span class="tag tag-best">최고</span></td>
+        </tr>
+        <tr>
+          <td>IRR(내부수익률)</td>
+          <td>약 4~5%</td>
+          <td>약 10~12%</td>
+          <td>약 13~15% <span class="tag tag-best">최고</span></td>
+        </tr>
+        <tr>
+          <td>REC 수익</td>
+          <td>❌ 해당없음</td>
+          <td>✅ 가능 (1.0)</td>
+          <td>✅ 가능 (1.0)</td>
+        </tr>
+        <tr>
+          <td>진입 난이도</td>
+          <td>매우 쉬움 <span class="tag tag-best">누구나</span></td>
+          <td>중간 <span class="tag tag-good">사업자 필요</span></td>
+          <td>높음 <span class="tag tag-ok">법인 권장</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-note" style="margin-top:16px;">
+    ※ SMP 150원/kWh, REC 55,000원/REC, 피크일조시간 3.6h, 시스템효율 0.85 기준 계산값입니다.<br>
+    ※ 실제 수익은 입지·설치조건·시장가격 변동에 따라 달라질 수 있습니다.
+  </div>
+
+</div>
+</body>
+</html>
