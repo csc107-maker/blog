@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMP·REC 가격 트렌드 2019~2025</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7fa;
+    padding: 32px 20px;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #1c7ed6, #339af0);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .header h2 {
+    font-size: 21px;
+    font-weight: 900;
+    color: #1a2340;
+  }
+
+  .header p {
+    font-size: 12.5px;
+    color: #8c9bb5;
+    margin-top: 6px;
+  }
+
+  /* 두 차트 나란히 */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 620px) {
+    .charts-row { grid-template-columns: 1fr; }
+  }
+
+  .chart-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 20px 18px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+  }
+
+  .chart-label {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .smp-label { color: #1c7ed6; }
+  .rec-label { color: #2f9e44; }
+
+  .chart-desc {
+    font-size: 11px;
+    color: #8c9bb5;
+    margin-bottom: 16px;
+  }
+
+  /* 막대 차트 */
+  .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bar-year {
+    font-size: 11px;
+    font-weight: 600;
+    color: #4a5568;
+    width: 36px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .bar-track {
+    flex: 1;
+    background: #f0f4f8;
+    border-radius: 6px;
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+    justify-content: flex-end;
+    transition: width 1s ease;
+  }
+
+  .smp-fill { background: linear-gradient(90deg, #74c0fc, #1c7ed6); }
+  .rec-fill { background: linear-gradient(90deg, #8ce99a, #2f9e44); }
+
+  .bar-value {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  /* 하이라이트 박스 */
+  .highlight-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 500px) {
+    .highlight-row { grid-template-columns: 1fr 1fr; }
+  }
+
+  .hl-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    text-align: center;
+    border-top: 3px solid;
+  }
+
+  .hl-card:nth-child(1) { border-color: #1c7ed6; }
+  .hl-card:nth-child(2) { border-color: #2f9e44; }
+  .hl-card:nth-child(3) { border-color: #e67700; }
+
+  .hl-label {
+    font-size: 10.5px;
+    color: #8c9bb5;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .hl-value {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1a2340;
+    line-height: 1.1;
+  }
+
+  .hl-unit {
+    font-size: 11px;
+    font-weight: 500;
+    color: #8c9bb5;
+    margin-top: 2px;
+  }
+
+  .hl-change {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  .change-up { color: #f03e3e; }
+  .change-down { color: #2f9e44; }
+
+  /* 가중치 테이블 */
+  .weight-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+  }
+
+  .weight-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2340;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .weight-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 500px) {
+    .weight-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .wt-item {
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .wt-name {
+    font-size: 11px;
+    color: #6b7a99;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .wt-val {
+    font-size: 22px;
+    font-weight: 900;
+    color: #3b5bdb;
+  }
+
+  .wt-sub {
+    font-size: 10px;
+    color: #9aa5be;
+    margin-top: 2px;
+  }
+
+  .wt-item.best {
+    background: #edf2ff;
+    border: 1.5px solid #748ffc;
+  }
+
+  .wt-item.best .wt-name { color: #364fc7; }
+
+  .note {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #9aa5be;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">MARKET TREND</span>
+    <h2>SMP · REC 가격 동향 (2019~2025)</h2>
+    <p>수익 계산의 기준이 되는 두 가격의 흐름을 한눈에 확인하세요</p>
+  </div>
+
+  <!-- 현재 지표 하이라이트 -->
+  <div class="highlight-row">
+    <div class="hl-card">
+      <div class="hl-label">⚡ 현재 SMP 평균</div>
+      <div class="hl-value">147</div>
+      <div class="hl-unit">원/kWh (2024년 평균)</div>
+      <div class="hl-change change-down">▼ 전년 대비 -12%</div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-label">📜 REC 현물 평균</div>
+      <div class="hl-value">48,000</div>
+      <div class="hl-unit">원/REC (2024년 평균)</div>
+      <div class="hl-change change-down">▼ 전년 대비 -18%</div>
+    </div>
+    <div class="hl-card">
+      <div class="hl-label">🏆 최고 기록 (SMP)</div>
+      <div class="hl-value">215</div>
+      <div class="hl-unit">원/kWh (2022년 8월)</div>
+      <div class="hl-change change-up">▲ 에너지 위기 직격</div>
+    </div>
+  </div>
+
+  <!-- 막대 차트 2개 나란히 -->
+  <div class="charts-row">
+
+    <!-- SMP 차트 -->
+    <div class="chart-card">
+      <div class="chart-label smp-label">⚡ SMP 연평균 추이</div>
+      <div class="chart-desc">원/kWh 기준 · 육지 계통</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-year">2019</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:40%"><span class="bar-value">84원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2020</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:36%"><span class="bar-value">75원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2021</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:49%"><span class="bar-value">101원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2022</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:100%"><span class="bar-value">170원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2023</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:83%"><span class="bar-value">167원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2024</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:72%"><span class="bar-value">147원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2025F</div>
+          <div class="bar-track">
+            <div class="bar-fill smp-fill" style="width:66%" style="opacity:0.7"><span class="bar-value">~135원</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REC 차트 -->
+    <div class="chart-card">
+      <div class="chart-label rec-label">📜 REC 현물 연평균 추이</div>
+      <div class="chart-desc">원/REC 기준 · 현물시장 평균</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-year">2019</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:75%"><span class="bar-value">45,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2020</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:60%"><span class="bar-value">36,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2021</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:65%"><span class="bar-value">39,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2022</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:100%"><span class="bar-value">82,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2023</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:97%"><span class="bar-value">59,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2024</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:79%"><span class="bar-value">48,000원</span></div>
+          </div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-year">2025F</div>
+          <div class="bar-track">
+            <div class="bar-fill rec-fill" style="width:70%;opacity:0.75"><span class="bar-value">~42,000원</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REC 가중치 -->
+  <div class="weight-card">
+    <h3>📊 설치유형별 REC 가중치 — 어디에 짓느냐가 수익을 결정합니다</h3>
+    <div class="weight-grid">
+      <div class="wt-item best">
+        <div class="wt-name">수변구역<br>100kW 미만</div>
+        <div class="wt-val">1.6</div>
+        <div class="wt-sub">최고 가중치</div>
+      </div>
+      <div class="wt-item best">
+        <div class="wt-name">지붕형·수상형<br>(건물·저수지)</div>
+        <div class="wt-val">1.5</div>
+        <div class="wt-sub">고가중치</div>
+      </div>
+      <div class="wt-item">
+        <div class="wt-name">지상형<br>100kW 미만</div>
+        <div class="wt-val">1.2</div>
+        <div class="wt-sub">소규모 우대</div>
+      </div>
+      <div class="wt-item">
+        <div class="wt-name">영농형<br>(하부 영농 병행)</div>
+        <div class="wt-val">1.0</div>
+        <div class="wt-sub">~1.5 (조건부)</div>
+      </div>
+      <div class="wt-item">
+        <div class="wt-name">지상형<br>100kW 이상</div>
+        <div class="wt-val">1.0</div>
+        <div class="wt-sub">일반 기준</div>
+      </div>
+      <div class="wt-item">
+        <div class="wt-name">임야 설치<br>(제한 지역)</div>
+        <div class="wt-val">0.7</div>
+        <div class="wt-sub">환경 패널티</div>
+      </div>
+    </div>
+    <div class="note">※ 가중치는 정부 고시 변경에 따라 바뀔 수 있습니다. 계약 전 반드시 최신 고시를 확인하세요.</div>
+  </div>
+
+</div>
+</body>
+</html>
