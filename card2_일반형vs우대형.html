@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>청년미래적금 일반형 vs 우대형</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fdf4;
+    padding: 24px 16px;
+  }
+
+  .wrapper { max-width: 720px; margin: 0 auto; }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .section-title .eyebrow {
+    display: inline-block;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    border: 1px solid #bbf7d0;
+  }
+
+  .section-title h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #14532d;
+    line-height: 1.3;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .compare-card {
+    border-radius: 18px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .compare-card.general {
+    background: #ffffff;
+    border: 2px solid #d1fae5;
+    box-shadow: 0 4px 20px rgba(16,185,129,0.08);
+  }
+
+  .compare-card.premium {
+    background: linear-gradient(145deg, #065f46 0%, #047857 60%, #059669 100%);
+    border: 2px solid #065f46;
+    box-shadow: 0 8px 30px rgba(6,95,70,0.25);
+  }
+
+  .compare-card.premium::before {
+    content: '🌟 BEST';
+    position: absolute;
+    top: 14px; right: -8px;
+    background: #fcd34d;
+    color: #78350f;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 3px 18px 3px 10px;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .type-label {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .compare-card.general .type-label { color: #059669; }
+  .compare-card.premium .type-label { color: rgba(255,255,255,0.7); }
+
+  .type-name {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+
+  .compare-card.general .type-name { color: #1e293b; }
+  .compare-card.premium .type-name { color: #ffffff; }
+
+  .rate-display {
+    text-align: center;
+    margin: 16px 0;
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .compare-card.general .rate-display {
+    background: #ecfdf5;
+  }
+
+  .compare-card.premium .rate-display {
+    background: rgba(255,255,255,0.12);
+  }
+
+  .rate-number {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .compare-card.general .rate-number { color: #059669; }
+  .compare-card.premium .rate-number { color: #fcd34d; }
+
+  .rate-unit {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .rate-desc {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .compare-card.general .rate-desc { color: #64748b; }
+  .compare-card.premium .rate-desc { color: rgba(255,255,255,0.7); }
+
+  .condition-list {
+    list-style: none;
+    margin-top: 16px;
+  }
+
+  .condition-list li {
+    font-size: 12.5px;
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+
+  .compare-card.general .condition-list li { color: #374151; }
+  .compare-card.premium .condition-list li { color: rgba(255,255,255,0.88); }
+
+  .condition-list .check { font-size: 14px; flex-shrink: 0; }
+
+  .receive-amount {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .compare-card.general .receive-amount {
+    background: #f0fdf4;
+    border: 1.5px dashed #86efac;
+  }
+
+  .compare-card.premium .receive-amount {
+    background: rgba(252,211,77,0.15);
+    border: 1.5px dashed rgba(252,211,77,0.5);
+  }
+
+  .receive-label {
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .compare-card.general .receive-label { color: #64748b; }
+  .compare-card.premium .receive-label { color: rgba(255,255,255,0.7); }
+
+  .receive-value {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .compare-card.general .receive-value { color: #065f46; }
+  .compare-card.premium .receive-value { color: #fcd34d; }
+
+  /* 수령액 바 차트 */
+  .bar-section {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1.5px solid #d1fae5;
+  }
+
+  .bar-section h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #14532d;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .bar-row {
+    margin-bottom: 18px;
+  }
+
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+  }
+
+  .bar-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .bar-amount {
+    font-size: 14px;
+    font-weight: 800;
+    color: #065f46;
+  }
+
+  .bar-track {
+    height: 32px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    transition: width 1s ease;
+  }
+
+  .bar-fill.base { background: #94a3b8; width: 88%; }
+  .bar-fill.general { background: linear-gradient(90deg, #059669, #34d399); width: 94%; }
+  .bar-fill.premium { background: linear-gradient(90deg, #065f46, #059669); width: 100%; }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #475569;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .legend-dot.base { background: #94a3b8; }
+  .legend-dot.general { background: #059669; }
+  .legend-dot.premium { background: #065f46; }
+
+  .note-box {
+    background: #fffbeb;
+    border: 1.5px solid #fcd34d;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #78350f;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .rate-number { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="section-title">
+    <div class="eyebrow">💡 혜택 비교</div>
+    <h2>일반형 vs 우대형<br>나는 어디에 해당될까요?</h2>
+  </div>
+
+  <div class="compare-grid">
+    <!-- 일반형 -->
+    <div class="compare-card general">
+      <div class="type-label">STANDARD</div>
+      <div class="type-name">일반형</div>
+      <div class="rate-display">
+        <div class="rate-number">6<span class="rate-unit">%</span></div>
+        <div class="rate-desc">정부 기여금 (납입액 기준)</div>
+      </div>
+      <ul class="condition-list">
+        <li><span class="check">✅</span> 개인소득 6,000만 원 이하</li>
+        <li><span class="check">✅</span> 가구 중위소득 200% 이하</li>
+        <li><span class="check">✅</span> 소상공인: 연 매출 3억 이하</li>
+        <li><span class="check">✅</span> 만 19~34세 (군복무 연장 가능)</li>
+      </ul>
+      <div class="receive-amount">
+        <div class="receive-label">3년 만기 예상 수령액</div>
+        <div class="receive-value">약 2,080만 원</div>
+      </div>
+    </div>
+
+    <!-- 우대형 -->
+    <div class="compare-card premium">
+      <div class="type-label">PREMIUM</div>
+      <div class="type-name">우대형</div>
+      <div class="rate-display">
+        <div class="rate-number">12<span class="rate-unit">%</span></div>
+        <div class="rate-desc">정부 기여금 (납입액 기준)</div>
+      </div>
+      <ul class="condition-list">
+        <li><span class="check">⭐</span> 중소기업 신규취업 (입사 6개월 이내) + 소득 6,000만 이하</li>
+        <li><span class="check">⭐</span> 중소기업 재직자, 소득 3,600만 이하 + 중위소득 150% 이하</li>
+        <li><span class="check">⭐</span> 소상공인: 연 매출 1억 이하 + 중위소득 150% 이하</li>
+      </ul>
+      <div class="receive-amount">
+        <div class="receive-label">3년 만기 예상 수령액</div>
+        <div class="receive-value">약 2,200만 원</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수령액 비교 바 차트 -->
+  <div class="bar-section">
+    <h3>📊 월 50만 원 × 36개월 납입 시 — 수령액 비교</h3>
+
+    <div class="bar-row">
+      <div class="bar-label-row">
+        <span class="bar-name">일반 시중 적금 (기여금 없음)</span>
+        <span class="bar-amount">약 1,940만 원</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill base">원금 1,800만 + 이자</div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label-row">
+        <span class="bar-name">청년미래적금 일반형 (기여금 6%)</span>
+        <span class="bar-amount">약 2,080만 원</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill general">+ 정부 기여금 108만 원</div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label-row">
+        <span class="bar-name">청년미래적금 우대형 (기여금 12%)</span>
+        <span class="bar-amount" style="color:#065f46; font-size:16px;">약 2,200만 원 🏆</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill premium">+ 정부 기여금 216만 원</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot base"></div>일반 적금</div>
+      <div class="legend-item"><div class="legend-dot general"></div>청년미래적금 일반형</div>
+      <div class="legend-item"><div class="legend-dot premium"></div>청년미래적금 우대형</div>
+    </div>
+
+    <div class="note-box">
+      ⚠️ 위 수령액은 은행 금리 연 5% 가정 시 예상치입니다. 실제 금리는 출시 후 확정됩니다.<br>
+      중도 해지 시 기여금 전액 소멸, 원금 + 은행이자만 수령합니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
