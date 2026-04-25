@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 15년 수익 시뮬레이션</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f0ff;
+    padding: 32px 20px;
+  }
+
+  .wrap { max-width: 900px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 28px; }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #7048e8, #ae3ec9);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .header h2 { font-size: 21px; font-weight: 900; color: #1a2340; }
+  .header p { font-size: 12.5px; color: #7c5cbf; margin-top: 6px; }
+
+  /* 가정 조건 */
+  .conditions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .cond-tag {
+    background: #fff;
+    border: 1.5px solid #d0bfff;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11.5px;
+    color: #5f3dc4;
+    font-weight: 600;
+  }
+
+  /* 요약 박스 3개 */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 520px) { .summary-row { grid-template-columns: 1fr 1fr; } }
+
+  .sum-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 3px 14px rgba(112,72,232,0.1);
+    border-top: 3px solid;
+  }
+
+  .sum-card:nth-child(1) { border-color: #7048e8; }
+  .sum-card:nth-child(2) { border-color: #2f9e44; }
+  .sum-card:nth-child(3) { border-color: #e67700; }
+
+  .sum-label { font-size: 10.5px; color: #8c9bb5; margin-bottom: 6px; }
+  .sum-value { font-size: 20px; font-weight: 900; color: #1a2340; line-height: 1.1; }
+  .sum-sub { font-size: 11px; color: #9aa5be; margin-top: 3px; }
+
+  /* 연도별 시뮬레이션 바 차트 */
+  .sim-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 4px 20px rgba(112,72,232,0.09);
+    margin-bottom: 20px;
+  }
+
+  .sim-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2340;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sim-desc { font-size: 11.5px; color: #8c9bb5; margin-bottom: 20px; }
+
+  .chart-area { display: flex; flex-direction: column; gap: 7px; }
+
+  .year-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 130px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .year-row { grid-template-columns: 48px 1fr 100px; }
+  }
+
+  .year-label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #4a5568;
+    text-align: right;
+  }
+
+  .bar-outer {
+    background: #f3eeff;
+    border-radius: 6px;
+    height: 24px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .bar-inner {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    min-width: 4px;
+  }
+
+  /* 연간 수익 바 (파랑계열) */
+  .bar-annual { background: linear-gradient(90deg, #b197fc, #7048e8); }
+
+  /* 누적 수익 바 (초록계열) */
+  .bar-cumul { background: linear-gradient(90deg, #69db7c, #2f9e44); }
+
+  /* 회수 완료 후 순이익 바 */
+  .bar-profit { background: linear-gradient(90deg, #ffd43b, #e67700); }
+
+  .bar-label-inside {
+    padding-left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .year-values {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .val-annual { font-size: 12px; font-weight: 700; color: #5f3dc4; }
+  .val-cumul { font-size: 11px; color: #2b8a3e; }
+
+  /* 회수 마커 */
+  .recovery-mark {
+    background: #ffd43b;
+    border: 2px solid #e67700;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #7d3c00;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* 레전드 */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: #4a5568;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* 탭 버튼 */
+  .tab-wrap {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active-annual { background: #7048e8; color: #fff; }
+  .tab-btn.active-cumul { background: #2f9e44; color: #fff; }
+  .tab-btn.inactive { background: #f0eeff; color: #7048e8; }
+
+  /* 상세 표 */
+  .detail-table {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 3px 14px rgba(112,72,232,0.08);
+    overflow: hidden;
+  }
+
+  .detail-table h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2340;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid #f0eeff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+  thead th {
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 700;
+    background: #f8f5ff;
+    color: #5f3dc4;
+    font-size: 11.5px;
+  }
+
+  thead th:first-child { text-align: left; }
+
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #faf8ff;
+    text-align: center;
+    color: #2d3748;
+  }
+
+  tbody td:first-child { text-align: left; font-weight: 600; }
+
+  tbody tr:hover { background: #faf8ff; }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .recovery-row { background: #fffde7 !important; }
+  .recovery-row td { font-weight: 700; }
+
+  .tag-recover {
+    display: inline-block;
+    background: #ffd43b;
+    color: #7d3c00;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+
+  .profit-positive { color: #2b8a3e; font-weight: 700; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11px;
+    color: #9aa5be;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <span class="badge">15-YEAR SIMULATION</span>
+    <h2>100kW 태양광 — 15년 수익 시뮬레이션</h2>
+    <p>실제 시장 변동 가정을 반영한 현실적 수익 흐름</p>
+  </div>
+
+  <!-- 가정 조건 -->
+  <div class="conditions">
+    <span class="cond-tag">📍 설비용량 100kW</span>
+    <span class="cond-tag">⚡ SMP 초기 150원 · 연 -2%</span>
+    <span class="cond-tag">📜 REC 초기 55,000원 · 연 -3%</span>
+    <span class="cond-tag">🔧 O&M 연 +2% 증가</span>
+    <span class="cond-tag">🔋 발전량 연 -0.5% 저하</span>
+    <span class="cond-tag">💰 초기 투자비 1억 4,000만원</span>
+  </div>
+
+  <!-- 요약 -->
+  <div class="summary-row">
+    <div class="sum-card">
+      <div class="sum-label">📅 투자 회수 시점</div>
+      <div class="sum-value">7년차</div>
+      <div class="sum-sub">1억 4,560만원 누적 시점</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">💹 15년 총 수익</div>
+      <div class="sum-value">2억 7,587만원</div>
+      <div class="sum-sub">비용 차감 전 합산</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">🏆 15년 순이익</div>
+      <div class="sum-value">1억 3,587만원</div>
+      <div class="sum-sub">투자비 차감 후 실수익</div>
+    </div>
+  </div>
+
+  <!-- 바 차트 시뮬레이션 -->
+  <div class="sim-card">
+    <h3>📊 연간 수익 및 누적 수익 흐름 (100kW 기준)</h3>
+    <div class="sim-desc">막대: 연간 수익 (단위: 만원) | 숫자: 누적 합산액</div>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#7048e8;"></div> 연간 수익
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#2f9e44;"></div> 누적 수익 (합산)
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#ffd43b; border:1.5px solid #e67700;"></div> 투자 회수 완료
+      </div>
+    </div>
+
+    <div class="chart-area">
+
+      <!-- 연도별 데이터 행 -->
+      <!-- max 연간=2,290만, max 누적=27,587만, 누적 바는 /27587*100% -->
+
+      <div class="year-row">
+        <div class="year-label">1년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:100%"><span class="bar-label-inside">2,290만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 2,290만원</div>
+          <div class="val-cumul">누적 2,290만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">2년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:97%"><span class="bar-label-inside">2,215만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 2,215만원</div>
+          <div class="val-cumul">누적 4,505만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">3년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:94%"><span class="bar-label-inside">2,144만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 2,144만원</div>
+          <div class="val-cumul">누적 6,649만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">4년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:91%"><span class="bar-label-inside">2,075만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 2,075만원</div>
+          <div class="val-cumul">누적 8,724만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">5년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:88%"><span class="bar-label-inside">2,009만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 2,009만원</div>
+          <div class="val-cumul">누적 1억 733만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">6년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-annual" style="width:85%"><span class="bar-label-inside">1,945만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual">연 1,945만원</div>
+          <div class="val-cumul">누적 1억 2,678만원</div>
+        </div>
+      </div>
+
+      <!-- 회수 완료 행 -->
+      <div class="year-row" style="background:#fffde7; border-radius:10px; padding:4px 0;">
+        <div class="year-label" style="color:#e67700; font-size:13px;">🏆 7년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-profit" style="width:82%"><span class="bar-label-inside">1,882만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#e67700;">연 1,882만원</div>
+          <div class="recovery-mark">✅ 1억 4,560만원 회수 완료!</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">8년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:80%"><span class="bar-label-inside">1,821만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,821만원 💚</div>
+          <div class="val-cumul">누적 1억 6,381만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">9년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:77%"><span class="bar-label-inside">1,762만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,762만원 💚</div>
+          <div class="val-cumul">누적 1억 8,143만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">10년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:75%"><span class="bar-label-inside">1,705만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,705만원 💚</div>
+          <div class="val-cumul">누적 1억 9,848만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">11년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:72%"><span class="bar-label-inside">1,650만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,650만원 💚</div>
+          <div class="val-cumul">누적 2억 1,498만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">12년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:70%"><span class="bar-label-inside">1,597만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,597만원 💚</div>
+          <div class="val-cumul">누적 2억 3,095만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">13년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:68%"><span class="bar-label-inside">1,546만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,546만원 💚</div>
+          <div class="val-cumul">누적 2억 4,641만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">14년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:65%"><span class="bar-label-inside">1,497만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,497만원 💚</div>
+          <div class="val-cumul">누적 2억 6,138만원</div>
+        </div>
+      </div>
+
+      <div class="year-row">
+        <div class="year-label">15년차</div>
+        <div class="bar-outer">
+          <div class="bar-inner bar-cumul" style="width:63%"><span class="bar-label-inside">1,449만원</span></div>
+        </div>
+        <div class="year-values">
+          <div class="val-annual" style="color:#2b8a3e;">연 1,449만원 💚</div>
+          <div class="val-cumul" style="color:#7048e8; font-weight:700;">총 2억 7,587만원</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 수익률 요약 박스 -->
+  <div style="background:#fff; border-radius:16px; padding:22px 20px; box-shadow:0 3px 14px rgba(112,72,232,0.09);">
+    <h3 style="font-size:14px; font-weight:700; color:#1a2340; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+      📈 시나리오별 수익 비교 — 낙관 vs 기준 vs 보수
+    </h3>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+
+      <div style="background:#fff9db; border-radius:12px; padding:16px; text-align:center; border-left:4px solid #e67700;">
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:6px;">🔥 낙관 시나리오</div>
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:10px;">SMP 160원 · REC 65,000원</div>
+        <div style="font-size:18px; font-weight:900; color:#e67700;">15년 3억 2,100만원</div>
+        <div style="font-size:11px; color:#9aa5be; margin-top:4px;">순이익 약 1억 8,100만원</div>
+      </div>
+
+      <div style="background:#edf2ff; border-radius:12px; padding:16px; text-align:center; border-left:4px solid #3b5bdb;">
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:6px;">📊 기준 시나리오</div>
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:10px;">SMP 150원 · REC 55,000원</div>
+        <div style="font-size:18px; font-weight:900; color:#3b5bdb;">15년 2억 7,587만원</div>
+        <div style="font-size:11px; color:#9aa5be; margin-top:4px;">순이익 약 1억 3,587만원</div>
+      </div>
+
+      <div style="background:#f3fbf5; border-radius:12px; padding:16px; text-align:center; border-left:4px solid #2f9e44;">
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:6px;">🛡️ 보수 시나리오</div>
+        <div style="font-size:11px; color:#8c9bb5; margin-bottom:10px;">SMP 130원 · REC 40,000원</div>
+        <div style="font-size:18px; font-weight:900; color:#2f9e44;">15년 2억 1,340만원</div>
+        <div style="font-size:11px; color:#9aa5be; margin-top:4px;">순이익 약 7,340만원</div>
+      </div>
+
+    </div>
+    <div style="margin-top:14px; font-size:11.5px; color:#6b7a99; text-align:center;">
+      💡 보수 시나리오에서도 15년 순이익 7,000만원 이상 — 은행 예금 대비 압도적 수익률
+    </div>
+  </div>
+
+  <div class="footer-note" style="margin-top:16px;">
+    ※ 본 시뮬레이션은 SMP 연 -2%, REC 연 -3%, 발전량 연 -0.5% 저하, O&M 연 +2% 증가를 반영한 보수적 추정치입니다.<br>
+    ※ 실제 수익은 시장 조건·입지·제도 변경 등에 따라 달라질 수 있습니다.
+  </div>
+
+</div>
+</body>
+</html>
