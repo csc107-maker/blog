@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>청년미래적금 신청 가이드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff7ed;
+    padding: 24px 16px;
+  }
+
+  .wrapper { max-width: 720px; margin: 0 auto; }
+
+  .top-header {
+    background: linear-gradient(135deg, #ea580c 0%, #f97316 60%, #fb923c 100%);
+    border-radius: 18px;
+    padding: 24px 28px;
+    color: #fff;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .top-header::after {
+    content: '📅';
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 60px;
+    opacity: 0.25;
+  }
+
+  .top-header .small { font-size: 12px; opacity: 0.8; margin-bottom: 6px; font-weight: 500; }
+  .top-header h2 { font-size: 22px; font-weight: 900; line-height: 1.3; }
+
+  /* 타임라인 */
+  .timeline-section {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px 24px;
+    box-shadow: 0 4px 20px rgba(234,88,12,0.10);
+    border: 1.5px solid #fed7aa;
+    margin-bottom: 20px;
+  }
+
+  .timeline-section h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #c2410c;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tl {
+    position: relative;
+    padding-left: 48px;
+  }
+
+  .tl::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, #f97316 0%, #fbbf24 50%, #86efac 100%);
+    border-radius: 2px;
+  }
+
+  .tl-step {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .tl-step:last-child { margin-bottom: 0; }
+
+  .tl-dot {
+    position: absolute;
+    left: -36px;
+    top: 4px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+
+  .tl-dot.done { background: #f97316; }
+  .tl-dot.upcoming { background: #fbbf24; }
+  .tl-dot.launch { background: #22c55e; }
+  .tl-dot.ongoing { background: #3b82f6; }
+
+  .tl-step-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tl-date-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+  }
+
+  .done-badge { background: #ffedd5; color: #c2410c; }
+  .upcoming-badge { background: #fef3c7; color: #92400e; }
+  .launch-badge { background: #dcfce7; color: #166534; }
+  .ongoing-badge { background: #dbeafe; color: #1d4ed8; }
+
+  .tl-step-desc {
+    font-size: 13px;
+    color: #475569;
+    line-height: 1.6;
+  }
+
+  .tl-step-desc strong { color: #c2410c; }
+
+  .tl-tip {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #78350f;
+  }
+
+  /* 신청 단계 */
+  .steps-section {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(234,88,12,0.08);
+    border: 1.5px solid #fed7aa;
+    margin-bottom: 20px;
+  }
+
+  .steps-section h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #c2410c;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .step-box {
+    background: #fff7ed;
+    border: 1.5px solid #fed7aa;
+    border-radius: 14px;
+    padding: 16px 14px;
+    text-align: center;
+    position: relative;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    background: #ea580c;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 8px;
+  }
+
+  .step-icon { font-size: 20px; margin-bottom: 6px; }
+
+  .step-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .step-desc {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  /* 주의사항 */
+  .warning-section {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1.5px solid #fecaca;
+  }
+
+  .warning-header {
+    background: #fee2e2;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .warning-header h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #991b1b;
+  }
+
+  .warning-list {
+    background: #fff;
+    padding: 16px 20px;
+    list-style: none;
+  }
+
+  .warning-list li {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #fef2f2;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .warning-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .warning-list .icon {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .warning-list strong { color: #dc2626; }
+
+  @media (max-width: 480px) {
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="top-header">
+    <div class="small">🗓️ 2026년 청년미래적금 출시 일정</div>
+    <h2>지금부터 뭘 준비해야 할까요?<br>신청 가이드 완벽 정리</h2>
+  </div>
+
+  <!-- 일정 타임라인 -->
+  <div class="timeline-section">
+    <h3>📅 출시 전후 타임라인</h3>
+    <div class="tl">
+      <div class="tl-step">
+        <div class="tl-dot done">✓</div>
+        <div class="tl-step-title">
+          청년도약계좌 신규가입 종료
+          <span class="tl-date-badge done-badge">2025년 12월 31일</span>
+        </div>
+        <div class="tl-step-desc">청년도약계좌가 공식 종료됐습니다. 기존 가입자는 5년 혜택 그대로 유지.</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot upcoming">!</div>
+        <div class="tl-step-title">
+          사전 알림 신청 시작
+          <span class="tl-date-badge upcoming-badge">2026년 5월 중순 예정</span>
+        </div>
+        <div class="tl-step-desc">
+          서민금융진흥원 및 각 시중은행 앱에서 사전 알림 신청 가능.<br>
+          <strong>지금 바로 준비할 것: 소득 기준 및 우대형 해당 여부 확인!</strong>
+        </div>
+        <div class="tl-tip">📞 서민금융진흥원 청년금융콜센터 ☎ 1397 (3번) — 미리 상담 가능</div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot launch">🚀</div>
+        <div class="tl-step-title">
+          청년미래적금 정식 출시
+          <span class="tl-date-badge launch-badge">2026년 6월 예정</span>
+        </div>
+        <div class="tl-step-desc">
+          출시 첫 주 <strong>출생연도 끝자리 5부제</strong> 적용 예정.<br>
+          예산 소진 시 조기 마감될 수 있으니 첫날 빠르게 신청하세요!<br>
+          청년도약계좌 가입자 <strong>갈아타기도 이 시기에만 가능</strong>.
+        </div>
+      </div>
+
+      <div class="tl-step">
+        <div class="tl-dot ongoing">↻</div>
+        <div class="tl-step-title">
+          매달 정기 신청 기간 운영
+          <span class="tl-date-badge ongoing-badge">출시 이후 매달 초</span>
+        </div>
+        <div class="tl-step-desc">출시 이후 매달 초 약 2주간 정기 신청 기간 운영 예정.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 신청 단계 -->
+  <div class="steps-section">
+    <h3>📋 신청 절차 6단계</h3>
+    <div class="steps-grid">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-icon">✅</div>
+        <div class="step-title">자격 확인</div>
+        <div class="step-desc">나이·소득·중위소득 기준 체크, 일반/우대형 해당 확인</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-icon">🏦</div>
+        <div class="step-title">은행 선택</div>
+        <div class="step-desc">KB국민·신한·우리·하나·농협·기업은행 중 우대금리 비교</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-icon">📱</div>
+        <div class="step-title">앱으로 신청</div>
+        <div class="step-desc">은행 앱 또는 서민금융진흥원 앱으로 비대면 신청</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">4</div>
+        <div class="step-icon">🔐</div>
+        <div class="step-title">본인인증</div>
+        <div class="step-desc">공동인증서 또는 금융인증서로 본인 확인</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">5</div>
+        <div class="step-icon">📄</div>
+        <div class="step-title">서류 제출</div>
+        <div class="step-desc">소득금액증명원·급여명세서 / 우대형은 재직증빙 추가</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">6</div>
+        <div class="step-icon">💳</div>
+        <div class="step-title">자동이체 등록</div>
+        <div class="step-desc">월 납입액 설정 후 자동이체 등록 → 가입 완료!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 주의사항 -->
+  <div class="warning-section">
+    <div class="warning-header">
+      <span>⚠️</span>
+      <h3>가입 전 반드시 알아야 할 주의사항</h3>
+    </div>
+    <ul class="warning-list">
+      <li>
+        <span class="icon">❌</span>
+        <div><strong>중도 해지 시 기여금 전액 소멸</strong> — 3년을 채우지 못하면 정부 기여금과 비과세 혜택이 모두 없어집니다. 원금 + 은행이자만 돌려받아요.</div>
+      </li>
+      <li>
+        <span class="icon">🔄</span>
+        <div><strong>청년도약계좌와 중복 가입 불가</strong> — 두 상품 중 반드시 하나만 선택해야 합니다. 갈아타기 전 현재 도약계좌의 납입 현황을 꼭 확인하세요.</div>
+      </li>
+      <li>
+        <span class="icon">💍</span>
+        <div><strong>결혼·출산·주택 특별 해지 여부 미확정</strong> — 금융위원회가 아직 특별 해지 사유를 최종 확정하지 않았습니다. 해당 생애 이벤트가 3년 내 예정이라면 공식 발표 확인 후 결정하세요.</div>
+      </li>
+      <li>
+        <span class="icon">⭐</span>
+        <div><strong>우대형 타이밍을 절대 놓치지 마세요!</strong> — 중소기업 취업 후 <strong>입사 6개월 이내에만</strong> 우대형(12%) 가입이 가능합니다. 이 기간이 지나면 일반형으로만 가입됩니다.</div>
+      </li>
+      <li>
+        <span class="icon">💰</span>
+        <div><strong>납입 여력 사전 점검 필수</strong> — 자유적립식이라 납입 의무는 없지만, 최대 혜택을 받으려면 3년간 꾸준히 납입하는 것이 중요합니다. 자녀의 생활비·지출 패턴을 미리 점검해보세요.</div>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
