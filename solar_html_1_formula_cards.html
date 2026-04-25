@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>태양광 수익 계산 핵심 공식 3가지</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 32px 20px;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .section-title h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1a2340;
+    letter-spacing: -0.5px;
+  }
+
+  .section-title p {
+    font-size: 13px;
+    color: #6b7a99;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #e8edff;
+    color: #3b5bdb;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .cards-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 680px) {
+    .cards-wrap { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 22px 24px;
+    box-shadow: 0 4px 20px rgba(59,91,219,0.08);
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(59,91,219,0.15);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .card-smp::before { background: linear-gradient(90deg, #3b5bdb, #4dabf7); }
+  .card-rec::before { background: linear-gradient(90deg, #2f9e44, #69db7c); }
+  .card-elec::before { background: linear-gradient(90deg, #e67700, #ffd43b); }
+
+  .card-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .card-smp .card-number { color: #3b5bdb; }
+  .card-rec .card-number { color: #2f9e44; }
+  .card-elec .card-number { color: #e67700; }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1a2340;
+    margin-bottom: 6px;
+  }
+
+  .card-subtitle {
+    font-size: 12px;
+    color: #8c9bb5;
+    margin-bottom: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .formula-box {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .card-smp .formula-box { background: #edf2ff; }
+  .card-rec .formula-box { background: #ebfbee; }
+  .card-elec .formula-box { background: #fff9db; }
+
+  .formula-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #2d3748;
+    line-height: 1.8;
+  }
+
+  .formula-text .eq {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .card-smp .formula-text .eq { color: #3b5bdb; }
+  .card-rec .formula-text .eq { color: #2f9e44; }
+  .card-elec .formula-text .eq { color: #e67700; }
+
+  .example-box {
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .card-smp .example-box { background: #f0f3ff; color: #364fc7; }
+  .card-rec .example-box { background: #f3fbf5; color: #2b8a3e; }
+  .card-elec .example-box { background: #fff8ee; color: #b35000; }
+
+  .example-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+
+  .example-value {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .tip-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed #e5eaf5;
+  }
+
+  .tip-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 11.5px; color: #6b7a99; line-height: 1.6; }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: #9aa5be;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="section-title">
+    <span class="badge">CORE FORMULA</span>
+    <h2>태양광 수익 계산 핵심 공식 3가지</h2>
+    <p>이 세 공식만 외우면 현장에서 바로 계산할 수 있습니다 (2024~2025년 기준)</p>
+  </div>
+
+  <div class="cards-wrap">
+
+    <!-- SMP 카드 -->
+    <div class="card card-smp">
+      <div class="card-number">FORMULA 01</div>
+      <span class="card-icon">⚡</span>
+      <div class="card-title">SMP 수익</div>
+      <div class="card-subtitle">전력시장 도매가격으로<br>발전량을 판매한 수익</div>
+
+      <div class="formula-box">
+        <div class="formula-text">
+          <span class="eq">SMP 수익</span><br>
+          = 발전량(kWh)<br>
+          × SMP단가(원/kWh)
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">📘 예시 (100kW, 연간)</div>
+        111,690kWh × 150원<br>
+        <span class="example-value">= 약 1,675만원/년</span>
+      </div>
+
+      <div class="tip-row">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text">SMP 기준단가: 130~160원/kWh<br>보수적 시뮬레이션에는 140원 적용</span>
+      </div>
+    </div>
+
+    <!-- REC 카드 -->
+    <div class="card card-rec">
+      <div class="card-number">FORMULA 02</div>
+      <span class="card-icon">📜</span>
+      <div class="card-title">REC 수익</div>
+      <div class="card-subtitle">신재생에너지 인증서 판매<br>설치유형별 가중치 적용</div>
+
+      <div class="formula-box">
+        <div class="formula-text">
+          <span class="eq">REC 수익</span><br>
+          = 발전량(MWh)<br>
+          × 가중치<br>
+          × REC단가(원)
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">📘 예시 (100kW, 지상형)</div>
+        111.7MWh × 1.0 × 55,000원<br>
+        <span class="example-value">= 약 614만원/년</span>
+      </div>
+
+      <div class="tip-row">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text">100kW 미만: 가중치 1.2<br>지붕형·수상형: 가중치 1.5 적용</span>
+      </div>
+    </div>
+
+    <!-- 전기요금 절감 카드 -->
+    <div class="card card-elec">
+      <div class="card-number">FORMULA 03</div>
+      <span class="card-icon">🏠</span>
+      <div class="card-title">전기요금 절감</div>
+      <div class="card-subtitle">자가소비분 한전 요금 대체<br>가정용·자가소비형에 핵심</div>
+
+      <div class="formula-box">
+        <div class="formula-text">
+          <span class="eq">절감액</span><br>
+          = 자가소비량(kWh)<br>
+          × 전기요금단가(원/kWh)
+        </div>
+      </div>
+
+      <div class="example-box">
+        <div class="example-label">📘 예시 (가정용 3kW)</div>
+        2,800kWh × 200원<br>
+        <span class="example-value">= 약 56만원/년</span>
+      </div>
+
+      <div class="tip-row">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text">누진 3단계 가정: 200~270원/kWh<br>산업용은 단가가 낮아 효과 제한적</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    ※ SMP·REC 단가는 시장 변동에 따라 달라집니다. 실제 투자 결정 전 최신 단가를 확인하세요.<br>
+    ※ 연간 발전량 = 설비용량(kW) × 피크일조시간(h) × 365 × 시스템효율(0.85)
+  </div>
+</div>
+</body>
+</html>
