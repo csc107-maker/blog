@@ -1,203 +1,287 @@
-<!-- [삽입 위치] "오늘의 핵심 뉴스 TOP 5" 섹션 직후, "추천 종목" 섹션 시작 전 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>뉴스 타임라인 | 2026.04.23</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
-      background: #f0fdf4;
-      padding: 24px 16px;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-    .header h2 { font-size: 1.25rem; color: #14532d; font-weight: 700; }
-    .header p  { font-size: 0.8rem; color: #6b7280; margin-top: 4px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년 4월 에너지 뉴스 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans KR',sans-serif;background:#f5f7ff;color:#1e293b;padding:24px 16px}
+  .wrap{max-width:800px;margin:0 auto}
 
-    .timeline {
-      max-width: 760px;
-      margin: 0 auto;
-      position: relative;
-      padding-left: 32px;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 10px;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, #22c55e, #3b82f6, #f59e0b, #ef4444, #8b5cf6);
-      border-radius: 2px;
-    }
-    .news-item {
-      position: relative;
-      margin-bottom: 18px;
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 16px 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
-    .news-item::before {
-      content: '';
-      position: absolute;
-      left: -26px;
-      top: 18px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--dot);
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px var(--dot);
-    }
-    .news-top {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 8px;
-    }
-    .num-badge {
-      font-size: 0.72rem;
-      font-weight: 800;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--dot);
-      color: white;
-      flex-shrink: 0;
-    }
-    .source-badge {
-      font-size: 0.68rem;
-      padding: 2px 9px;
-      border-radius: 10px;
-      font-weight: 600;
-      background: #f1f5f9;
-      color: #475569;
-    }
-    .tag {
-      font-size: 0.67rem;
-      padding: 2px 9px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
-    .tag-good { background: #dcfce7; color: #15803d; }
-    .tag-bad  { background: #fee2e2; color: #b91c1c; }
-    .tag-neutral { background: #fef9c3; color: #a16207; }
+  /* 헤더 */
+  .hdr{background:linear-gradient(135deg,#7c3aed 0%,#db2777 100%);border-radius:18px;padding:28px 30px;color:#fff;margin-bottom:28px;position:relative;overflow:hidden}
+  .hdr::after{content:'📰';font-size:100px;position:absolute;right:10px;bottom:-12px;opacity:.13;line-height:1}
+  .hdr-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.8px;margin-bottom:10px}
+  .hdr h1{font-size:20px;font-weight:900;line-height:1.4;margin-bottom:6px}
+  .hdr p{font-size:13px;opacity:.85}
+  .hdr-date{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:5px 13px;font-size:12px;font-weight:700}
 
-    .news-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: #1e293b;
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-    .news-body {
-      font-size: 0.8rem;
-      color: #4b5563;
-      line-height: 1.55;
-    }
-    .impact {
-      margin-top: 8px;
-      font-size: 0.74rem;
-      color: #6b7280;
-      border-left: 3px solid var(--dot);
-      padding-left: 8px;
-      font-style: italic;
-    }
+  /* 분류 범례 */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
+  .leg-item{display:flex;align-items:center;gap:7px;background:#fff;border-radius:20px;padding:7px 14px;font-size:12px;font-weight:700;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+  .leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .dot-red{background:#ef4444}.dot-blue{background:#3b82f6}.dot-slate{background:#94a3b8}
 
-    .n1 { --dot: #22c55e; }
-    .n2 { --dot: #3b82f6; }
-    .n3 { --dot: #f59e0b; }
-    .n4 { --dot: #ef4444; }
-    .n5 { --dot: #8b5cf6; }
+  /* 타임라인 컨테이너 */
+  .timeline{position:relative;padding-left:32px}
+  .timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#ef4444 0%,#3b82f6 50%,#cbd5e1 100%);border-radius:2px}
 
-    .disclaimer {
-      text-align: center;
-      font-size: 0.67rem;
-      color: #9ca3af;
-      margin-top: 16px;
-      max-width: 760px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  </style>
+  /* 타임라인 아이템 */
+  .tl-item{position:relative;margin-bottom:22px}
+  .tl-dot{position:absolute;left:-27px;top:14px;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px currentColor}
+  .tl-item.urgent .tl-dot{background:#ef4444;color:#ef4444}
+  .tl-item.normal .tl-dot{background:#3b82f6;color:#3b82f6}
+  .tl-item.bg .tl-dot{background:#94a3b8;color:#94a3b8}
+
+  /* 카드 */
+  .tl-card{background:#fff;border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-left:4px solid #e2e8f0}
+  .tl-item.urgent .tl-card{border-left-color:#ef4444}
+  .tl-item.normal .tl-card{border-left-color:#3b82f6}
+  .tl-item.bg .tl-card{border-left-color:#94a3b8}
+
+  .tl-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+  .tl-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.4px;white-space:nowrap}
+  .tag-urgent{background:#fee2e2;color:#b91c1c}
+  .tag-normal{background:#dbeafe;color:#1d4ed8}
+  .tag-bg{background:#f1f5f9;color:#475569}
+  .tl-cat{font-size:11px;color:#94a3b8;font-weight:600}
+  .tl-date{margin-left:auto;font-size:11px;color:#94a3b8;font-weight:500}
+
+  .tl-title{font-size:15px;font-weight:700;color:#1e293b;line-height:1.4;margin-bottom:8px}
+  .tl-body{font-size:13px;color:#475569;line-height:1.7;margin-bottom:12px}
+
+  /* SEO 제목 박스 */
+  .seo-box{background:#f8fafc;border-radius:10px;padding:12px 14px}
+  .seo-box-ttl{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:8px}
+  .seo-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px}
+  .seo-item:last-child{margin-bottom:0}
+  .seo-num{background:#e0e7ff;color:#4338ca;font-size:10px;font-weight:700;border-radius:4px;padding:2px 6px;flex-shrink:0;margin-top:1px}
+  .seo-txt{font-size:12px;font-weight:600;color:#334155;line-height:1.5}
+
+  /* 구분선 */
+  .divider{display:flex;align-items:center;gap:12px;margin:28px 0 20px;padding-left:0}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e2e8f0}
+  .divider span{font-size:11px;font-weight:700;color:#64748b;white-space:nowrap;background:#f5f7ff;padding:0 4px}
+
+  /* 요약 집계 */
+  .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+  .sum-card{background:#fff;border-radius:12px;padding:16px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .sum-num{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+  .sum-lbl{font-size:11px;color:#64748b;font-weight:600}
+
+  .footer{text-align:center;font-size:11px;color:#94a3b8;padding:20px 0 4px;line-height:1.8}
+</style>
 </head>
 <body>
+<div class="wrap">
 
-  <div class="header">
-    <h2>📰 오늘의 핵심 뉴스 TOP 5 — 2026.04.23</h2>
-    <p>한국 증시 흐름을 결정할 오늘의 주요 뉴스</p>
+  <div class="hdr">
+    <div class="hdr-date">📅 2026.04.26</div>
+    <div class="hdr-badge">📰 NEWS TIMELINE</div>
+    <h1>2026년 4월 에너지 뉴스 타임라인</h1>
+    <p>태양광 정책 · SMP/REC · ETF · 신재생에너지 시장 | ecosolution1218</p>
   </div>
 
+  <!-- 요약 집계 -->
+  <div class="summary">
+    <div class="sum-card">
+      <div class="sum-num" style="color:#ef4444">2</div>
+      <div class="sum-lbl">🚨 긴급 포스팅<br>48시간 내 권장</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-num" style="color:#3b82f6">2</div>
+      <div class="sum-lbl">📰 일반 포스팅<br>이번 주 내</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-num" style="color:#94a3b8">4</div>
+      <div class="sum-lbl">📂 배경 자료<br>추후 활용</div>
+    </div>
+  </div>
+
+  <!-- 범례 -->
+  <div class="legend">
+    <div class="leg-item"><div class="leg-dot dot-red"></div>긴급 포스팅 (48h)</div>
+    <div class="leg-item"><div class="leg-dot dot-blue"></div>일반 포스팅 (이번 주)</div>
+    <div class="leg-item"><div class="leg-dot dot-slate"></div>배경 자료</div>
+  </div>
+
+  <!-- 타임라인 -->
   <div class="timeline">
 
-    <div class="news-item n1">
-      <div class="news-top">
-        <span class="num-badge">1</span>
-        <span class="source-badge">뉴스1 / 뉴스레터</span>
-        <span class="tag tag-good">📈 초대형 호재</span>
+    <!-- 긴급 1 -->
+    <div class="tl-item urgent">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-urgent">🚨 긴급</span>
+          <span class="tl-cat">☀️ 태양광 정책</span>
+          <span class="tl-date">2026.04.26</span>
+        </div>
+        <div class="tl-title">2026 추경예산 확정 — 베란다 태양광 보조금 전국 10만 가구 투입</div>
+        <div class="tl-body">
+          2026년 4월 추가경정예산을 통해 전국 약 10만 가구에 베란다 미니 태양광 설치 보조금이 신규 투입됩니다. 정부 총 예산 6,480억 원으로 확대되었으며 주택용 3kW 설비 공사비 상한은 493만 1,000원, 평균 본인부담은 약 193만 원 수준입니다. 저금리 융자 지원도 병행 제공됩니다.
+        </div>
+        <div class="seo-box">
+          <div class="seo-box-ttl">💡 추천 SEO 포스팅 제목</div>
+          <div class="seo-item"><span class="seo-num">1</span><span class="seo-txt">2026 베란다 태양광 추경 보조금 10만 가구 — 신청 방법부터 금액까지 총정리</span></div>
+          <div class="seo-item"><span class="seo-num">2</span><span class="seo-txt">태양광 보조금 193만 원에 설치 가능? 2026 추경 지원금 완전 해설</span></div>
+        </div>
       </div>
-      <div class="news-title">SK하이닉스 오늘 1분기 실적 발표 — 영업이익 40조원 돌파 전망</div>
-      <div class="news-body">오늘(4월 23일) SK하이닉스가 2026년 1분기 실적을 발표합니다. 시장 컨센서스(34.9조원)를 훌쩍 넘는 38~40조원 영업이익이 예상되며, 영업이익률 70% 돌파도 가시권입니다. HBM뿐 아니라 일반 DRAM과 eSSD 실적도 어닝 서프라이즈 전망.</div>
-      <div class="impact">영향: SK하이닉스 주가 단기 상방 압력 강화 / 반도체 섹터 전반 동반 상승 기대</div>
     </div>
 
-    <div class="news-item n2">
-      <div class="news-top">
-        <span class="num-badge">2</span>
-        <span class="source-badge">관세청 / Bloomberg</span>
-        <span class="tag tag-good">📦 수출 호조</span>
+    <!-- 긴급 2 -->
+    <div class="tl-item urgent">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-urgent">🚨 긴급</span>
+          <span class="tl-cat">💰 SMP 가격</span>
+          <span class="tl-date">2026.04.2주</span>
+        </div>
+        <div class="tl-title">4월 2주차 SMP 육지 119.47원 — 3월 대비 +9.68원 급등</div>
+        <div class="tl-body">
+          2026년 4월 2주간 육지 SMP가 119.47원, 제주 117.94원을 기록하며 3월 평균(육지 109.79원, 제주 106.68원) 대비 눈에 띄게 상승했습니다. 단기 수익성이 개선되는 시점으로, 태양광 발전소 운영자 입장에서 즉각 체감할 수 있는 변화입니다.
+        </div>
+        <div class="seo-box">
+          <div class="seo-box-ttl">💡 추천 SEO 포스팅 제목</div>
+          <div class="seo-item"><span class="seo-num">1</span><span class="seo-txt">2026년 4월 SMP 119원 돌파! 태양광 발전소 수익률 지금 얼마나 될까?</span></div>
+          <div class="seo-item"><span class="seo-num">2</span><span class="seo-txt">SMP 급등 신호? 4월 전력단가 상승이 태양광 재테크에 미치는 영향</span></div>
+        </div>
       </div>
-      <div class="news-title">4월 1~20일 수출 +49.4% YoY — 반도체 수출 무려 +180% 폭증</div>
-      <div class="news-body">관세청에 따르면 4월 상반월 한국 수출이 전년 동기 대비 49.4% 급증했습니다. 특히 반도체 수출은 180% 이상 급등해 AI 서버 투자가 실물 수요로 이어지고 있음을 확인시켜 줬습니다. 코스피 기술주 실적 전망 상향의 강력한 근거입니다.</div>
-      <div class="impact">영향: 수출 ETF, 반도체 기업 전반 상승 기대 / 코스피 환율 방어력 강화</div>
     </div>
 
-    <div class="news-item n3">
-      <div class="news-top">
-        <span class="num-badge">3</span>
-        <span class="source-badge">Bloomberg / KED Global</span>
-        <span class="tag tag-good">🏆 지수 강세</span>
+    <div class="divider"><span>📰 일반 포스팅 소재</span></div>
+
+    <!-- 일반 1 -->
+    <div class="tl-item normal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-normal">📰 일반</span>
+          <span class="tl-cat">📈 에너지 ETF</span>
+          <span class="tl-date">2026.04월</span>
+        </div>
+        <div class="tl-title">PLUS 태양광&ESS ETF +14.52% — 신재생에너지 섹터 자금 유입 가속</div>
+        <div class="tl-body">
+          PLUS 태양광&ESS ETF가 14.52% 수익률을 기록 중이며 기준가 43,100원, 순자산 1,486억 원으로 성장했습니다. AI 데이터센터 전력 수요 급증과 미국의 중국산 배제 정책이 맞물려 신재생에너지 섹터로 투자 자금이 집중되고 있습니다.
+        </div>
+        <div class="seo-box">
+          <div class="seo-box-ttl">💡 추천 SEO 포스팅 제목</div>
+          <div class="seo-item"><span class="seo-num">1</span><span class="seo-txt">PLUS 태양광&ESS ETF 14% 수익 — 2026년 지금 들어가도 늦지 않을까?</span></div>
+          <div class="seo-item"><span class="seo-num">2</span><span class="seo-txt">태양광 ETF 완전 비교 2026 | PLUS·KODEX·TIGER 어디에 투자해야 할까</span></div>
+        </div>
       </div>
-      <div class="news-title">코스피 6,219 사상 최고 수준 — AI·반도체·방산 랠리 지속</div>
-      <div class="news-body">코스피는 22일 6,219로 마감하며 사상 최고 수준을 이어가고 있습니다. 연초 대비 +47% 상승은 글로벌 주요 지수 최상위 수준. LG에너지솔루션, SK스퀘어, 두산에너빌리티, HD현대중공업 등 업종 다각화 상승이 특징입니다.</div>
-      <div class="impact">영향: 지수 추가 상승 기대감 유지 / 단기 차익실현 매물 유의 필요</div>
     </div>
 
-    <div class="news-item n4">
-      <div class="news-top">
-        <span class="num-badge">4</span>
-        <span class="source-badge">CNBC / Reuters</span>
-        <span class="tag tag-bad">⚠️ 지정학 리스크</span>
+    <!-- 일반 2 -->
+    <div class="tl-item normal">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-normal">📰 일반</span>
+          <span class="tl-cat">🌍 신재생에너지 정책</span>
+          <span class="tl-date">2026년</span>
+        </div>
+        <div class="tl-title">RPS 의무비율 2026년 25% 상향 + R&D 예산 1.2조 편성</div>
+        <div class="tl-body">
+          대규모 발전사의 신재생에너지 공급 의무화 비율이 2026년부터 25%로 상향 조정됩니다. 신재생에너지 R&D 예산도 전년 대비 15% 증액된 1조 2천억 원 규모로 편성되어 시장 성장 기반이 강화되고 있습니다.
+        </div>
+        <div class="seo-box">
+          <div class="seo-box-ttl">💡 추천 SEO 포스팅 제목</div>
+          <div class="seo-item"><span class="seo-num">1</span><span class="seo-txt">RPS 25% 의무비율 시대 본격 개막 — 태양광 발전사업자가 챙겨야 할 것</span></div>
+          <div class="seo-item"><span class="seo-num">2</span><span class="seo-txt">신재생에너지 R&D 1.2조 투입! 2026년 에너지 시장 뭐가 달라지나</span></div>
+        </div>
       </div>
-      <div class="news-title">미-이란 2차 협상 결렬 — WTI 89달러대, 원화 약세 유발</div>
-      <div class="news-body">미국과 이란 간 2차 평화협상이 무산됐습니다. 트럼프 대통령이 휴전을 무기한 연장했지만 호르무즈 해협 선박 이동 차질이 지속되며 WTI가 89달러대로 올랐습니다. 한국 에너지 수입 비용 상승 우려가 있으나 방산·조선에는 기회.</div>
-      <div class="impact">영향: 정유·화학·항공 단기 부담 / 방산(한화에어로스페이스, 현대로템) 수혜 가능</div>
     </div>
 
-    <div class="news-item n5">
-      <div class="news-top">
-        <span class="num-badge">5</span>
-        <span class="source-badge">KED Global / Macquarie</span>
-        <span class="tag tag-good">💰 외국인 매수</span>
+    <div class="divider"><span>📂 배경 자료</span></div>
+
+    <!-- 배경 1 -->
+    <div class="tl-item bg">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-bg">📂 배경 자료</span>
+          <span class="tl-cat">📈 종목 분석</span>
+        </div>
+        <div class="tl-title">한화솔루션 — 2026년 세액공제 9,500억 원 예상</div>
+        <div class="tl-body">미국 조지아주 통합 생산 단지 본격 가동 시 2026년 한 해 세액공제 규모가 9,500억 원에 달할 것으로 예상됩니다. 북미 모듈 시장 점유율 1위 유지 중. 태양광 대장주 분석 포스팅 소재로 적합합니다.</div>
       </div>
-      <div class="news-title">외국인 한국 순매수 지속 — DXY 약세 + 수출 호조 = 자금 유입</div>
-      <div class="news-body">DXY 달러인덱스 98선 하회 압력 속에 외국인 투자자금이 한국 시장으로 지속 유입되고 있습니다. 특히 SK하이닉스 실적 발표를 앞두고 반도체 섹터 선점 매수가 집중. Macquarie는 2026년 코스피 EPS 성장률을 +48%로 전망하며 추가 상승 여지가 있다고 분석.</div>
-      <div class="impact">영향: 반도체·AI·전력 섹터 외국인 수급 우호 지속 / 코스피 추가 상승 지지</div>
     </div>
 
+    <!-- 배경 2 -->
+    <div class="tl-item bg">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-bg">📂 배경 자료</span>
+          <span class="tl-cat">🔬 기술 동향</span>
+        </div>
+        <div class="tl-title">페로브스카이트 태양전지 & 부유식 해상풍력 주목</div>
+        <div class="tl-body">2026년 차세대 태양광 기술로 글로벌 주목. 페로브스카이트 태양전지의 효율 상승과 부유식 해상풍력 상용화 논의가 본격화되고 있습니다. 기술 트렌드 포스팅 소재로 활용 가능합니다.</div>
+      </div>
+    </div>
+
+    <!-- 배경 3 -->
+    <div class="tl-item bg">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-bg">📂 배경 자료</span>
+          <span class="tl-cat">⚛️ 에너지 믹스</span>
+        </div>
+        <div class="tl-title">SMR × 신재생에너지 상생시대 예고</div>
+        <div class="tl-body">소형모듈원전(SMR)과 재생에너지 혼합 전력 체계로의 전환 논의가 심화되고 있습니다. 장기 에너지 포트폴리오 포스팅에 활용 가능한 배경 자료입니다.</div>
+      </div>
+    </div>
+
+    <!-- 배경 4 -->
+    <div class="tl-item bg">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-top">
+          <span class="tl-tag tag-bg">📂 배경 자료</span>
+          <span class="tl-cat">💰 REC 리스크</span>
+        </div>
+        <div class="tl-title">국제 유가 하락 → 연간 SMP 하락 우려 & REC 변동성</div>
+        <div class="tl-body">국제 유가 하락세가 지속될 경우 연간 평균 SMP는 평년보다 낮을 수 있다는 전망이 나오고 있습니다. 리스크 관리 및 수익 방어 전략 포스팅 소재로 활용하기 좋습니다.</div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <!-- 포스팅 순서 제안 -->
+  <div style="background:#fff;border-radius:14px;padding:20px 22px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-top:28px;margin-bottom:14px">
+    <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:14px;display:flex;align-items:center;gap:8px">
+      <span style="width:4px;height:18px;border-radius:2px;background:linear-gradient(180deg,#7c3aed,#db2777);display:inline-block"></span>
+      이번 주 추천 포스팅 순서
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="background:#fee2e2;color:#b91c1c;font-weight:700;border-radius:8px;padding:4px 10px;white-space:nowrap;flex-shrink:0">D-Day</span>
+        <span>2026 추경 태양광 보조금 10만 가구 총정리 → <strong>즉시 검색 유입 기대</strong></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="background:#fee2e2;color:#b91c1c;font-weight:700;border-radius:8px;padding:4px 10px;white-space:nowrap;flex-shrink:0">D+1</span>
+        <span>4월 SMP 119원 급등 분석 + 수익 시뮬레이션</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="background:#dbeafe;color:#1d4ed8;font-weight:700;border-radius:8px;padding:4px 10px;white-space:nowrap;flex-shrink:0">D+3</span>
+        <span>PLUS 태양광&ESS ETF 수익률 분석 + 투자 전략</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:13px">
+        <span style="background:#dbeafe;color:#1d4ed8;font-weight:700;border-radius:8px;padding:4px 10px;white-space:nowrap;flex-shrink:0">D+5</span>
+        <span>RPS 25% 시대 — 발전사업자 체크리스트</span>
+      </div>
+    </div>
   </div>
 
-  <p class="disclaimer">※ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.</p>
-
+  <div class="footer">
+    📰 ecosolution1218 에너지 재테크 블로그 | 자동 모니터링 리포트 | 2026.04.26<br>
+    출처: 해줌 블로그, 투데이에너지, 산업통상자원부, KPX 전력거래소
+  </div>
+</div>
 </body>
 </html>
