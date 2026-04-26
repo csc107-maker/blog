@@ -1,223 +1,436 @@
+<!-- [삽입 위치: VIX 섹션 직후 — 글로벌 6대 지표 시각 카드] -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026년 4월 태양광 핵심 지표 대시보드</title>
+<title>글로벌 시장 지표 — 2026.04.26</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Noto Sans KR',sans-serif;background:#f0f6ff;color:#1e293b;padding:24px 16px}
-  .wrap{max-width:860px;margin:0 auto}
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    background: #f0f6ff;
+    padding: 28px 16px 20px;
+  }
 
-  /* 헤더 */
-  .hdr{background:linear-gradient(135deg,#1d4ed8 0%,#0891b2 100%);border-radius:18px;padding:30px 32px;color:#fff;margin-bottom:24px;position:relative;overflow:hidden}
-  .hdr::after{content:'⚡';font-size:110px;position:absolute;right:16px;bottom:-18px;opacity:.12;line-height:1}
-  .hdr-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.8px;margin-bottom:12px}
-  .hdr h1{font-size:21px;font-weight:900;line-height:1.4;margin-bottom:8px}
-  .hdr p{font-size:13px;opacity:.85}
-  .hdr-date{position:absolute;top:22px;right:26px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700}
+  /* ─── 상단 배너 ─── */
+  .report-banner {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 55%, #3b82f6 100%);
+    border-radius: 18px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    box-shadow: 0 6px 24px rgba(29,78,216,0.28);
+  }
+  .banner-left h2 { color:#fff; font-size:1.25rem; font-weight:900; }
+  .banner-left p  { color:rgba(255,255,255,0.75); font-size:0.80rem; margin-top:4px; }
+  .banner-right { display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+  .date-chip  {
+    background: rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
+    color:#fff; border-radius:99px; padding:4px 14px; font-size:0.78rem; font-weight:700;
+  }
+  .kospi-chip {
+    background:#22c55e; color:#fff; border-radius:99px;
+    padding:4px 14px; font-size:0.78rem; font-weight:700;
+  }
 
-  /* 섹션 타이틀 */
-  .sec-ttl{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#475569;letter-spacing:.8px;text-transform:uppercase;margin:28px 0 14px}
-  .sec-ttl::before{content:'';width:4px;height:20px;border-radius:2px;background:linear-gradient(180deg,#1d4ed8,#0891b2);flex-shrink:0}
+  /* ─── 종합 신호 바 ─── */
+  .signal-row {
+    display:flex; align-items:center; gap:12px;
+    background:#fff; border-radius:12px; padding:14px 20px;
+    margin-bottom:20px; box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    flex-wrap:wrap;
+  }
+  .signal-label { font-size:0.82rem; font-weight:700; color:#374151; white-space:nowrap; }
+  .signal-bar {
+    flex:1; min-width:160px; height:11px;
+    background: linear-gradient(90deg,#ef4444 0%,#f59e0b 38%,#22c55e 100%);
+    border-radius:99px; position:relative;
+  }
+  .signal-needle {
+    position:absolute; top:-4px; left:72%;
+    width:19px; height:19px;
+    background:#1e3a8a; border:3px solid #fff; border-radius:50%;
+    transform:translateX(-50%);
+    box-shadow:0 2px 8px rgba(0,0,0,0.22);
+  }
+  .signal-desc { font-size:0.82rem; font-weight:700; color:#16a34a; white-space:nowrap; }
 
-  /* KPI 4칸 그리드 */
-  .kpi-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
-  @media(min-width:580px){.kpi-row{grid-template-columns:repeat(4,1fr)}}
-  .kpi{background:#fff;border-radius:14px;padding:18px 15px 16px;box-shadow:0 2px 10px rgba(0,0,0,.06);border-top:4px solid #cbd5e1;position:relative}
-  .kpi.g{border-top-color:#10b981}.kpi.r{border-top-color:#ef4444}.kpi.y{border-top-color:#f59e0b}.kpi.b{border-top-color:#3b82f6}
-  .kpi-lbl{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.5px;margin-bottom:8px}
-  .kpi-num{font-size:28px;font-weight:900;line-height:1;margin-bottom:4px}
-  .kpi.g .kpi-num{color:#059669}.kpi.r .kpi-num{color:#dc2626}.kpi.y .kpi-num{color:#d97706}.kpi.b .kpi-num{color:#2563eb}
-  .kpi-unit{font-size:12px;color:#94a3b8;margin-bottom:9px}
-  .kpi-pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
-  .up{background:#dcfce7;color:#15803d}.dn{background:#fee2e2;color:#b91c1c}.nt{background:#fef9c3;color:#a16207}
+  /* ─── 카드 그리드 ─── */
+  .cards-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:14px; margin-bottom:22px;
+  }
+  @media(max-width:680px){ .cards-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:400px){ .cards-grid{ grid-template-columns:1fr; } }
 
-  /* 테이블 카드 */
-  .tbl-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:14px}
-  .tbl-head{background:#f8fafc;padding:14px 18px;font-size:12px;font-weight:700;color:#475569;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:8px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{background:#f8fafc;padding:11px 16px;text-align:left;font-size:11px;font-weight:700;color:#64748b;letter-spacing:.4px;border-bottom:1px solid #e2e8f0}
-  td{padding:13px 16px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
-  tr:last-child td{border-bottom:none}
-  tr:hover td{background:#fafbff}
-  .bar-wrap{background:#e2e8f0;border-radius:4px;height:6px;width:100%;min-width:70px}
-  .bar{height:6px;border-radius:4px}
-  .bar-blue{background:linear-gradient(90deg,#1d4ed8,#0891b2)}
-  .bar-amber{background:linear-gradient(90deg,#f59e0b,#d97706)}
-  .t-up{color:#059669;font-weight:700}.t-dn{color:#dc2626;font-weight:700}
+  .ind-card {
+    background:#fff; border-radius:16px;
+    padding:18px 16px 14px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.07);
+    position:relative; overflow:hidden;
+    transition:transform 0.2s, box-shadow 0.2s;
+  }
+  .ind-card:hover { transform:translateY(-4px); box-shadow:0 10px 28px rgba(0,0,0,0.11); }
 
-  /* ETF 그리드 */
-  .etf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-  @media(max-width:500px){.etf-grid{grid-template-columns:1fr}}
-  .etf-card{background:#fff;border-radius:14px;padding:18px 16px;box-shadow:0 2px 10px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:10px}
-  .etf-card.star{border:2px solid #bbf7d0}
-  .etf-nm{font-size:13px;font-weight:700;color:#1e293b}
-  .etf-co{font-size:11px;color:#94a3b8;margin-top:-7px}
-  .etf-bot{display:flex;justify-content:space-between;align-items:flex-end}
-  .etf-price{font-size:22px;font-weight:900;color:#1e293b}
-  .etf-ret{font-size:13px;font-weight:700;padding:4px 10px;border-radius:8px}
-  .etf-meta{font-size:11px;color:#64748b;display:flex;flex-wrap:wrap;gap:10px}
+  /* 상단 컬러 바 */
+  .ind-card::before {
+    content:''; position:absolute; top:0; left:0; right:0;
+    height:4px; border-radius:16px 16px 0 0;
+  }
+  .card-vix::before  { background:linear-gradient(90deg,#f97316,#fbbf24); }
+  .card-wti::before  { background:linear-gradient(90deg,#10b981,#34d399); }
+  .card-krw::before  { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
+  .card-dxy::before  { background:linear-gradient(90deg,#8b5cf6,#c084fc); }
+  .card-bond::before { background:linear-gradient(90deg,#ef4444,#fb7185); }
+  .card-ewy::before  { background:linear-gradient(90deg,#06b6d4,#22d3ee); }
 
-  /* 알림 */
-  .alert{border-radius:12px;padding:15px 18px;margin-bottom:12px;display:flex;gap:13px;align-items:flex-start;font-size:13px;line-height:1.7}
-  .alert.green{background:#f0fdf4;border:1px solid #86efac}
-  .alert.blue{background:#eff6ff;border:1px solid #93c5fd}
-  .alert.amber{background:#fffbeb;border:1px solid #fcd34d}
-  .alert-ico{font-size:18px;flex-shrink:0;margin-top:2px}
-  .alert-body strong{display:block;font-weight:700;margin-bottom:3px;color:#1e293b}
-  .alert-body{color:#374151}
+  /* 배경 워터마크 */
+  .bg-icon {
+    position:absolute; right:-6px; bottom:-10px;
+    font-size:5rem; opacity:0.05; pointer-events:none; user-select:none;
+  }
 
-  /* 푸터 */
-  .footer{text-align:center;font-size:11px;color:#94a3b8;padding:20px 0 4px;line-height:1.8}
+  .card-top {
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .card-icon { font-size:1.4rem; line-height:1; margin-bottom:3px; }
+  .card-name { font-size:0.70rem; font-weight:700; color:#9ca3af; letter-spacing:0.05em; text-transform:uppercase; }
+  .card-sub  { font-size:0.66rem; color:#d1d5db; margin-top:1px; }
+
+  .change-badge {
+    padding:3px 9px; border-radius:99px;
+    font-size:0.72rem; font-weight:800; white-space:nowrap;
+  }
+  .b-pos  { background:#dcfce7; color:#16a34a; }
+  .b-neg  { background:#fee2e2; color:#dc2626; }
+  .b-flat { background:#f3f4f6; color:#6b7280; }
+
+  .card-value {
+    font-size:2rem; font-weight:900; color:#111827;
+    letter-spacing:-0.03em; line-height:1; margin-bottom:6px;
+  }
+  .card-value span { font-size:0.95rem; font-weight:600; color:#6b7280; letter-spacing:0; }
+
+  /* 게이지 바 */
+  .gauge-wrap { margin:8px 0 6px; }
+  .gauge-labels {
+    display:flex; justify-content:space-between;
+    font-size:0.60rem; color:#e5e7eb; margin-bottom:3px;
+  }
+  .gauge-track { height:6px; background:#f3f4f6; border-radius:99px; position:relative; overflow:visible; }
+  .gauge-fill  { height:100%; border-radius:99px; position:relative; }
+  .gauge-dot   {
+    width:11px; height:11px; border-radius:50%;
+    border:2px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.22);
+    position:absolute; right:-4px; top:-3px;
+  }
+
+  /* 신호 뱃지 */
+  .card-signal { display:flex; align-items:center; gap:6px; margin-top:8px; }
+  .s-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+  .s-green  { background:#22c55e; box-shadow:0 0 0 3px #dcfce7; }
+  .s-yellow { background:#f59e0b; box-shadow:0 0 0 3px #fef9c3; }
+  .s-red    { background:#ef4444; box-shadow:0 0 0 3px #fee2e2; }
+  .s-text   { font-size:0.72rem; color:#4b5563; font-weight:600; }
+
+  .card-desc {
+    font-size:0.74rem; color:#a3adc4; line-height:1.5;
+    margin-top:8px; padding-top:8px; border-top:1px solid #f3f4f6;
+  }
+
+  /* ─── 요약 테이블 ─── */
+  .tbl-wrap {
+    background:#fff; border-radius:16px; padding:20px 20px 16px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom:14px; overflow-x:auto;
+  }
+  .tbl-title { font-size:0.88rem; font-weight:700; color:#1e3a8a; margin-bottom:14px; }
+  table.stbl { width:100%; border-collapse:collapse; font-size:0.80rem; min-width:520px; }
+  table.stbl thead th {
+    background:#eff6ff; color:#1e40af;
+    padding:9px 12px; font-weight:700; font-size:0.75rem; text-align:center;
+  }
+  table.stbl thead th:first-child { text-align:left; border-radius:8px 0 0 8px; }
+  table.stbl thead th:last-child  { border-radius:0 8px 8px 0; }
+  table.stbl tbody tr:nth-child(even) { background:#f8faff; }
+  table.stbl tbody td {
+    padding:9px 12px; color:#374151;
+    border-bottom:1px solid #f3f4f6; text-align:center; vertical-align:middle;
+  }
+  table.stbl tbody td:first-child { text-align:left; font-weight:700; color:#111827; }
+  .tv { font-weight:800; color:#1e3a8a; }
+  .tu { color:#dc2626; font-weight:700; }
+  .td { color:#16a34a; font-weight:700; }
+  .tp { background:#dcfce7; color:#15803d; padding:2px 9px; border-radius:99px; font-size:0.70rem; font-weight:700; }
+  .tn { background:#fee2e2; color:#b91c1c; padding:2px 9px; border-radius:99px; font-size:0.70rem; font-weight:700; }
+  .tw { background:#fef9c3; color:#854d0e; padding:2px 9px; border-radius:99px; font-size:0.70rem; font-weight:700; }
+
+  .footer { text-align:center; font-size:0.72rem; color:#9ca3af; padding:2px 0 4px; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="hdr">
-    <div class="hdr-date">📅 2026.04.26</div>
-    <div class="hdr-badge">☀️ MARKET DASHBOARD</div>
-    <h1>2026년 4월 태양광 발전 핵심 지표</h1>
-    <p>SMP · REC · ETF · 정책 보조금 | ecosolution1218 에너지 재테크 블로그</p>
+<!-- 상단 배너 -->
+<div class="report-banner">
+  <div class="banner-left">
+    <h2>📊 글로벌 시장 지표 종합 스냅샷</h2>
+    <p>한국 증시 개장 전 모닝 체크 · 기준: 2026년 4월 25일(금) 종가</p>
   </div>
-
-  <div class="sec-ttl">핵심 수익 지표 — 4월 2주차</div>
-  <div class="kpi-row">
-    <div class="kpi g">
-      <div class="kpi-lbl">SMP · 육지</div>
-      <div class="kpi-num">119<span style="font-size:16px">.47</span></div>
-      <div class="kpi-unit">원 / kWh</div>
-      <span class="kpi-pill up">▲ +9.68 vs 3월</span>
-    </div>
-    <div class="kpi g">
-      <div class="kpi-lbl">SMP · 제주</div>
-      <div class="kpi-num">117<span style="font-size:16px">.94</span></div>
-      <div class="kpi-unit">원 / kWh</div>
-      <span class="kpi-pill up">▲ +11.26 vs 3월</span>
-    </div>
-    <div class="kpi y">
-      <div class="kpi-lbl">REC · 육지</div>
-      <div class="kpi-num">70<span style="font-size:16px">,356</span></div>
-      <div class="kpi-unit">원 / MWh</div>
-      <span class="kpi-pill dn">▼ −1,322 vs 1월</span>
-    </div>
-    <div class="kpi y">
-      <div class="kpi-lbl">REC · 제주</div>
-      <div class="kpi-num">71<span style="font-size:16px">,072</span></div>
-      <div class="kpi-unit">원 / MWh</div>
-      <span class="kpi-pill up">▲ +3,187 vs 1월</span>
-    </div>
-  </div>
-
-  <div class="sec-ttl">SMP 월별 추이 비교</div>
-  <div class="tbl-card">
-    <div class="tbl-head">⚡ 계통한계가격(SMP) — 2026년 1월 → 4월 2주</div>
-    <table>
-      <thead><tr><th>구분</th><th>1월 평균</th><th>3월 평균</th><th>4월 2주차</th><th>누적 변동</th><th>수준</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>육지 SMP</strong></td>
-          <td>102.90원</td><td>109.79원</td><td><strong style="color:#059669">119.47원</strong></td>
-          <td class="t-up">▲ +16.57원</td>
-          <td><div class="bar-wrap"><div class="bar bar-blue" style="width:82%"></div></div></td>
-        </tr>
-        <tr>
-          <td><strong>제주 SMP</strong></td>
-          <td>102.66원</td><td>106.68원</td><td><strong style="color:#059669">117.94원</strong></td>
-          <td class="t-up">▲ +15.28원</td>
-          <td><div class="bar-wrap"><div class="bar bar-blue" style="width:78%"></div></div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="sec-ttl">REC 가격 동향</div>
-  <div class="tbl-card">
-    <div class="tbl-head">🌿 신재생에너지공급인증서(REC) — 1월 vs 3월</div>
-    <table>
-      <thead><tr><th>구분</th><th>1월</th><th>3월</th><th>변동</th><th>수준</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><strong>육지 REC</strong></td>
-          <td>71,678원</td><td><strong>70,356원</strong></td>
-          <td class="t-dn">▼ −1,322원</td>
-          <td><div class="bar-wrap"><div class="bar bar-amber" style="width:65%"></div></div></td>
-        </tr>
-        <tr>
-          <td><strong>제주 REC</strong></td>
-          <td>67,885원</td><td><strong>71,072원</strong></td>
-          <td class="t-up">▲ +3,187원</td>
-          <td><div class="bar-wrap"><div class="bar bar-blue" style="width:70%"></div></div></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="sec-ttl">주요 에너지 ETF 현황</div>
-  <div class="etf-grid">
-    <div class="etf-card">
-      <div><div class="etf-nm">PLUS 태양광&amp;ESS</div><div class="etf-co">한국투자신탁운용</div></div>
-      <div class="etf-bot">
-        <div class="etf-price">43,100<span style="font-size:13px;color:#94a3b8">원</span></div>
-        <div class="etf-ret up">+14.52%</div>
-      </div>
-      <div class="etf-meta"><span>📦 순자산 1,486억</span><span>🔥 고수익</span></div>
-    </div>
-    <div class="etf-card">
-      <div><div class="etf-nm">TIGER Fn신재생에너지</div><div class="etf-co">미래에셋자산운용</div></div>
-      <div class="etf-bot">
-        <div class="etf-price">29,526<span style="font-size:13px;color:#94a3b8">원</span></div>
-        <div class="etf-ret up">↑ 상승세</div>
-      </div>
-      <div class="etf-meta"><span>📦 순자산 1,604억</span><span>📊 최대 규모</span></div>
-    </div>
-    <div class="etf-card">
-      <div><div class="etf-nm">KODEX 신재생에너지액티브</div><div class="etf-co">삼성자산운용</div></div>
-      <div class="etf-bot">
-        <div class="etf-price" style="font-size:14px;padding-bottom:2px;line-height:1.4">FnGuide K-신재생<br>에너지 플러스 지수</div>
-        <div class="etf-ret nt" style="background:#fef9c3;color:#854d0e">추종</div>
-      </div>
-      <div class="etf-meta"><span>🏦 국내주식형</span><span>🎯 액티브</span></div>
-    </div>
-    <div class="etf-card star">
-      <div><div class="etf-nm" style="color:#059669">⭐ 한화솔루션</div><div class="etf-co">북미 모듈 M/S 1위</div></div>
-      <div class="etf-bot">
-        <div class="etf-price" style="font-size:20px;color:#059669">9,500억</div>
-        <div class="etf-ret up">세액공제</div>
-      </div>
-      <div class="etf-meta"><span>🏭 조지아 공장 가동</span><span>💡 2026 기대주</span></div>
-    </div>
-  </div>
-
-  <div class="sec-ttl">정책 & 시장 알림</div>
-  <div class="alert green">
-    <div class="alert-ico">✅</div>
-    <div class="alert-body">
-      <strong>2026 추경 태양광 보조금 확정 — 전국 10만 가구</strong>
-      추경예산 6,480억 원 투입. 베란다 미니 태양광 집중 지원. 주택용 3kW 공사비 상한 493만 원, 평균 본인부담 약 193만 원. 저금리 융자도 병행 제공.
-    </div>
-  </div>
-  <div class="alert blue">
-    <div class="alert-ico">💡</div>
-    <div class="alert-body">
-      <strong>데이터센터 전력 수요 급증 → 신재생 투자 자금 유입 가속</strong>
-      AI 인프라 확대 + 미국의 중국산 배제 정책이 맞물리면서 국내·외 태양광 섹터로 투자 자금이 집중 유입되고 있습니다.
-    </div>
-  </div>
-  <div class="alert amber">
-    <div class="alert-ico">⚠️</div>
-    <div class="alert-body">
-      <strong>국제 유가 하락세 → 연간 SMP 평균 하락 가능성</strong>
-      4월 단기 SMP는 급등했으나, 국제 유가 하락이 지속될 경우 연간 평균은 평년보다 낮을 수 있습니다. 분기별 모니터링 권장.
-    </div>
-  </div>
-
-  <div class="footer">
-    📊 ecosolution1218 에너지 재테크 블로그 | 데이터 기준: 2026년 4월 26일<br>
-    출처: 해줌 블로그, KPX 전력거래소, 삼성·미래에셋·한투 ETF 공식 사이트, 산업통상자원부
+  <div class="banner-right">
+    <span class="date-chip">📅 2026.04.26 기준</span>
+    <span class="kospi-chip">🇰🇷 KOSPI 6,476 사상최고</span>
   </div>
 </div>
+
+<!-- 종합 신호 바 -->
+<div class="signal-row">
+  <span class="signal-label">📡 종합 시장 신호</span>
+  <div class="signal-bar"><div class="signal-needle"></div></div>
+  <span class="signal-desc">✅ 코스피 상승 우호 환경</span>
+</div>
+
+<!-- 카드 6개 -->
+<div class="cards-grid">
+
+  <!-- VIX -->
+  <div class="ind-card card-vix">
+    <div class="bg-icon">😰</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">😨</div>
+        <div class="card-name">VIX 공포지수</div>
+        <div class="card-sub">CBOE Volatility Index</div>
+      </div>
+      <span class="change-badge b-pos">▼ –3.11%</span>
+    </div>
+    <div class="card-value">18.71</div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>안정(10)</span><span>경계(20)</span><span>공포(30+)</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:56%; background:linear-gradient(90deg,#22c55e,#f59e0b);">
+          <div class="gauge-dot" style="background:#f97316;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-green"></div>
+      <span class="s-text">20선 하회 — 공포 진정, 시장 안정</span>
+    </div>
+    <div class="card-desc">이란 협상 기대감으로 하락 전환. 20 미만 = 안정 구간. 외국인 수급에 우호적.</div>
+  </div>
+
+  <!-- WTI -->
+  <div class="ind-card card-wti">
+    <div class="bg-icon">🛢️</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">🛢️</div>
+        <div class="card-name">WTI 유가</div>
+        <div class="card-sub">NYMEX Crude Oil</div>
+      </div>
+      <span class="change-badge b-pos">▼ –1.51%</span>
+    </div>
+    <div class="card-value">$94.40<span>/bbl</span></div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>저가($40)</span><span>현재</span><span>고가($150)</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:50%; background:linear-gradient(90deg,#22c55e,#10b981);">
+          <div class="gauge-dot" style="background:#10b981;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-green"></div>
+      <span class="s-text">지정학 완화 → 유가 하락 (호재)</span>
+    </div>
+    <div class="card-desc">미·이란 2라운드 협상 기대. 한국 에너지 수입 비용 절감. 인플레 압력 완화.</div>
+  </div>
+
+  <!-- USD/KRW -->
+  <div class="ind-card card-krw">
+    <div class="bg-icon">💱</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">💱</div>
+        <div class="card-name">USD / KRW 환율</div>
+        <div class="card-sub">달러·원 환율</div>
+      </div>
+      <span class="change-badge b-pos">▼ –0.44%</span>
+    </div>
+    <div class="card-value">1,475<span>원</span></div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>강세(1,100)</span><span>현재</span><span>약세(1,600)</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:75%; background:linear-gradient(90deg,#3b82f6,#60a5fa);">
+          <div class="gauge-dot" style="background:#3b82f6;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-green"></div>
+      <span class="s-text">달러 약세 → 외국인 자금 유입 우호</span>
+    </div>
+    <div class="card-desc">1,480원 하회 유지 시 순매수 지속 전망. 4월 외국인 4.83조 원 순매수 확인.</div>
+  </div>
+
+  <!-- DXY -->
+  <div class="ind-card card-dxy">
+    <div class="bg-icon">💵</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">💵</div>
+        <div class="card-name">DXY 달러인덱스</div>
+        <div class="card-sub">ICE US Dollar Index</div>
+      </div>
+      <span class="change-badge b-flat">→ 보합</span>
+    </div>
+    <div class="card-value">98.60</div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>약세(85)</span><span>중립(100)</span><span>강세(115)</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:45%; background:linear-gradient(90deg,#8b5cf6,#a78bfa);">
+          <div class="gauge-dot" style="background:#8b5cf6;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-yellow"></div>
+      <span class="s-text">100선 하회 — 약달러 구조 유지</span>
+    </div>
+    <div class="card-desc">100선 하회로 신흥국 선호 환경 지속. 지정학 불확실성 일부 잔존 모니터링.</div>
+  </div>
+
+  <!-- 미국 10년물 -->
+  <div class="ind-card card-bond">
+    <div class="bg-icon">📈</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">📈</div>
+        <div class="card-name">미국 10년물 금리</div>
+        <div class="card-sub">US Treasury 10Y Yield</div>
+      </div>
+      <span class="change-badge b-neg">▲ 5거래일↑</span>
+    </div>
+    <div class="card-value">4.33<span>%</span></div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>저(1%)</span><span>중립(4%)</span><span>고(6%)</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:66%; background:linear-gradient(90deg,#f59e0b,#ef4444);">
+          <div class="gauge-dot" style="background:#ef4444;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-yellow"></div>
+      <span class="s-text">부분 부담 — 이익 성장이 상쇄 중</span>
+    </div>
+    <div class="card-desc">인플레 잔존으로 5거래일 연속 상승. 코스피 EPS 전망 +90.4%로 부담 상쇄.</div>
+  </div>
+
+  <!-- EWY -->
+  <div class="ind-card card-ewy">
+    <div class="bg-icon">🇰🇷</div>
+    <div class="card-top">
+      <div>
+        <div class="card-icon">🇰🇷</div>
+        <div class="card-name">EWY 한국 ETF</div>
+        <div class="card-sub">iShares MSCI South Korea</div>
+      </div>
+      <span class="change-badge b-pos">▲ +169% (1Y)</span>
+    </div>
+    <div class="card-value">$153.84</div>
+    <div class="gauge-wrap">
+      <div class="gauge-labels"><span>저점($30)</span><span></span><span>현재</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill" style="width:88%; background:linear-gradient(90deg,#06b6d4,#22d3ee);">
+          <div class="gauge-dot" style="background:#06b6d4;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-signal">
+      <div class="s-dot s-green"></div>
+      <span class="s-text">1년 +169% — 한국 주식 글로벌 1위</span>
+    </div>
+    <div class="card-desc">글로벌 투자자의 압도적 한국 선호 증거. 코스피 목표 8,000p 달성 시 추가 상승 여력.</div>
+  </div>
+
+</div>
+
+<!-- 종합 요약 테이블 -->
+<div class="tbl-wrap">
+  <div class="tbl-title">📋 지표 종합 요약 — 코스피 영향 평가</div>
+  <table class="stbl">
+    <thead>
+      <tr>
+        <th>지표</th>
+        <th>현재값</th>
+        <th>전일 대비</th>
+        <th>통상 범위</th>
+        <th>코스피 영향</th>
+        <th>신호</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>😨 VIX 공포지수</td>
+        <td class="tv">18.71</td>
+        <td class="td">▼ –3.11%</td>
+        <td>10 ~ 80</td>
+        <td>공포 진정, 리스크온</td>
+        <td><span class="tp">✅ 긍정</span></td>
+      </tr>
+      <tr>
+        <td>🛢️ WTI 유가</td>
+        <td class="tv">$94.40</td>
+        <td class="td">▼ –1.51%</td>
+        <td>$40 ~ $150</td>
+        <td>에너지 비용 하락</td>
+        <td><span class="tp">✅ 긍정</span></td>
+      </tr>
+      <tr>
+        <td>💱 USD/KRW 환율</td>
+        <td class="tv">1,475원</td>
+        <td class="td">▼ –0.44%</td>
+        <td>1,100 ~ 1,600</td>
+        <td>외국인 자금 유입</td>
+        <td><span class="tp">✅ 긍정</span></td>
+      </tr>
+      <tr>
+        <td>💵 DXY 달러인덱스</td>
+        <td class="tv">98.60</td>
+        <td>→ 보합</td>
+        <td>85 ~ 115</td>
+        <td>100선 하회, 약달러</td>
+        <td><span class="tw">⚠️ 중립</span></td>
+      </tr>
+      <tr>
+        <td>📈 미국 10년물 금리</td>
+        <td class="tv">4.33%</td>
+        <td class="tu">▲ 5거래일↑</td>
+        <td>1% ~ 6%</td>
+        <td>이익 성장으로 상쇄</td>
+        <td><span class="tw">⚠️ 주시</span></td>
+      </tr>
+      <tr>
+        <td>🇰🇷 EWY 한국 ETF</td>
+        <td class="tv">$153.84</td>
+        <td class="td">▲ +169%(1Y)</td>
+        <td>$30 ~ $200+</td>
+        <td>글로벌 한국 선호 절정</td>
+        <td><span class="tp">✅ 강한 긍정</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">⚠️ 본 내용은 투자 정보 제공 목적으로 작성되었으며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.</div>
+
 </body>
 </html>
