@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 재생에너지 정책 타임라인</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: #fffde7;
+    padding: 28px 16px;
+  }
+  .section-title {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #e65100;
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 0.78rem;
+    color: #bf360c;
+    margin-bottom: 32px;
+  }
+  .timeline {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #ff9800, #fdd835, #66bb6a);
+    border-radius: 3px;
+  }
+  .item {
+    position: relative;
+    margin-bottom: 24px;
+  }
+  .dot {
+    position: absolute;
+    left: -24px;
+    top: 10px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #fb8c00;
+    background: #fb8c00;
+  }
+  .dot.past { background: #66bb6a; box-shadow: 0 0 0 2px #43a047; }
+  .dot.now { background: #ef5350; box-shadow: 0 0 0 2px #c62828; animation: pulse 1.5s infinite; }
+  .dot.future { background: #42a5f5; box-shadow: 0 0 0 2px #1565c0; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(200,100,0,0.1);
+  }
+  .date {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #e65100;
+    margin-bottom: 4px;
+  }
+  .title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 6px;
+  }
+  .body {
+    font-size: 0.76rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .t-policy { background: #fff3e0; color: #e65100; }
+  .t-risk { background: #fce4ec; color: #c62828; }
+  .t-pos { background: #e8f5e9; color: #2e7d32; }
+  .t-now { background: #ffebee; color: #b71c1c; border: 1px solid #ef9a9a; }
+  .note {
+    max-width: 760px;
+    margin: 10px auto 0;
+    font-size: 0.7rem;
+    color: #9e9e9e;
+    padding-left: 28px;
+  }
+</style>
+</head>
+<body>
+  <div class="section-title">☀️ 한국 재생에너지·태양광 정책 타임라인</div>
+  <div class="section-sub">2024년~2026년 하반기 핵심 정책 변화 일지 | 출처: 기후에너지환경부, 전력거래소, 법률신문</div>
+
+  <div class="timeline">
+    <div class="item">
+      <div class="dot past"></div>
+      <div class="card">
+        <div class="date">2024년 상반기</div>
+        <div class="title">호남권 출력제어 급증 시작</div>
+        <div class="body">
+          <span class="tag t-risk">위험</span>
+          호남권 태양광 출력제어 연간 26회, 7,473MW 제어. 태양광 발전량 증가로 계통 수급 불균형 심화. 사업자 수익성 악화 시작.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot past"></div>
+      <div class="card">
+        <div class="date">2025년 상반기</div>
+        <div class="title">출력제어 폭증 & 과징금 부과 최초 사례</div>
+        <div class="body">
+          <span class="tag t-risk">위험</span>
+          호남권 출력제어 상반기 44회·38,840MW(2024 연간의 5배↑). 출력제어 미이행 발전소 8곳에 과징금 첫 부과. SMP 육지 기준 평균 89.77원으로 하락.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot past"></div>
+      <div class="card">
+        <div class="date">2026년 1~2월</div>
+        <div class="title">재생에너지 준중앙급전 제도 발표</div>
+        <div class="body">
+          <span class="tag t-policy">정책</span>
+          전력거래소, 육지 비중앙급전 태양광·풍력 대상 준중앙급전 운영 발표. 봄철(3~5월) 출력제어 시 최대 11원/kWh 정산금 지급. 전국 약 1.8GW 태양광 대기 없이 운영 가능화.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot past"></div>
+      <div class="card">
+        <div class="date">2026년 3~5월 (시행 중)</div>
+        <div class="title">준중앙급전 제도 봄철 본격 시행</div>
+        <div class="body">
+          <span class="tag t-pos">긍정</span>
+          육지 태양광·풍력 대상 급전지시 개시. 출력제어 손실을 수익으로 전환하는 첫 제도적 장치. VPP 중개사업자 통한 20MW 미만 소규모 발전소도 참여 가능.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot now"></div>
+      <div class="card">
+        <div class="date">2026년 4월 6일 (최근 발표)</div>
+        <div class="title">에너지 대전환 추진계획 국무회의 보고</div>
+        <div class="body">
+          <span class="tag t-now">현재</span><span class="tag t-policy">정책</span>
+          ① 2030년 재생에너지 100GW·발전비중 20%+ 조기 달성 ② 석탄발전소 60기 2040년 단계 폐지 ③ 지역별 차등전기요금·장기고정가격계약 도입 ④ 에너지자립형 분산특구 2026 하반기 실증 예정. 단, 상당수 항목은 법령 개정 필요.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot future"></div>
+      <div class="card">
+        <div class="date">2026년 하반기 (예정)</div>
+        <div class="title">분산에너지 특화지역 실증 본격화 & VPP 확산</div>
+        <div class="body">
+          <span class="tag t-pos">기대</span>
+          울산·포항·부산·제주·전남·경기 분산특구 내 전력 직거래 시대 개막. VPP 사업자 한전 우회 직판 가능. 데이터센터·반도체 공장 RE100 이행 모델 연결. 단, 구체적 가이드라인 미확정.
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="dot future"></div>
+      <div class="card">
+        <div class="date">2030년 (장기 목표)</div>
+        <div class="title">재생에너지 100GW · 발전비중 20% 달성 목표</div>
+        <div class="body">
+          <span class="tag t-pos">장기</span>
+          현재 누적 34GW 수준에서 100GW로 확대. 2026년 신규 설치 약 4GW 수준(인더스트리뉴스 전망). PPA 시장 전문화, ESS 질적 재편, AI 기반 발전량 예측 도입 가속화 전망.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note">※ 출처: 기후에너지환경부(2026.04), 전력거래소(KPX), 인더스트리뉴스, 인코어드 뉴스레터, 법률신문, haezoom.com</div>
+</body>
+</html>
