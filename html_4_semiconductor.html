@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반도체 대장주 목표주가 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 20px;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .sec-header {
+    background: linear-gradient(135deg, #1a237e, #1565c0);
+    color: #fff;
+    border-radius: 14px 14px 0 0;
+    padding: 18px 24px;
+  }
+
+  .sec-header h2 {
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+  }
+
+  .sec-header p {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 3px;
+  }
+
+  .table-wrap {
+    background: #fff;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,60,0.1);
+    border: 1px solid #e8edff;
+    border-top: none;
+    margin-bottom: 16px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: #e8eaf6;
+  }
+
+  th {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #3f51b5;
+    text-align: center;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #c5cae9;
+  }
+
+  td {
+    padding: 12px 14px;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #f0f2ff;
+    color: #333;
+    font-weight: 600;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: #f7f9ff; }
+
+  td.company { font-weight: 800; color: #1a237e; text-align: left; }
+
+  .current { color: #333; }
+  .target { color: #c62828; font-weight: 900; font-size: 14px; }
+  .upside { 
+    color: #2e7d32; 
+    font-weight: 900;
+    background: #e8f5e9;
+    border-radius: 6px;
+    padding: 3px 8px;
+  }
+
+  .note-box {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e8edff;
+    padding: 16px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,60,0.06);
+  }
+
+  .note-box h3 {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .point-list {
+    list-style: none;
+  }
+
+  .point-list li {
+    font-size: 12px;
+    color: #444;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f2ff;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .point-list li:last-child { border-bottom: none; }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3f51b5;
+    margin-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .disclaimer {
+    font-size: 10px;
+    color: #bbb;
+    text-align: center;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="sec-header">
+    <h2>🔬 반도체 대장주 목표주가 비교 분석</h2>
+    <p>2026년 5월 주요 증권사 리포트 종합 | SK증권·미래에셋·KB 등</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>종목</th>
+          <th>현재가 (5/18)</th>
+          <th>최고 목표가</th>
+          <th>상승 여력</th>
+          <th>제시 증권사</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="company">삼성전자</td>
+          <td class="current">~27만원대</td>
+          <td class="target">50만원</td>
+          <td class="upside">+85%↑</td>
+          <td>SK증권</td>
+        </tr>
+        <tr>
+          <td class="company">SK하이닉스</td>
+          <td class="current">~183만원대</td>
+          <td class="target">300만원</td>
+          <td class="upside">+64%↑</td>
+          <td>SK증권</td>
+        </tr>
+        <tr>
+          <td class="company">삼성전자</td>
+          <td class="current">~27만원대</td>
+          <td style="color:#1565c0;font-weight:800">27만~50만원</td>
+          <td>—</td>
+          <td>증권가 평균</td>
+        </tr>
+        <tr>
+          <td class="company">SK하이닉스</td>
+          <td class="current">~183만원대</td>
+          <td style="color:#1565c0;font-weight:800">190만~300만원</td>
+          <td>—</td>
+          <td>증권가 평균</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <h3>📌 증권가가 목표가를 높인 핵심 근거</h3>
+    <ul class="point-list">
+      <li><span class="dot"></span>기존 PBR 방식에서 <b>AI 기업 PER 방식</b>으로 밸류에이션 전환 — 엔비디아·구글과 비교 가능한 수준</li>
+      <li><span class="dot"></span>삼성전자 2026년 영업이익 전망 <b>338조원</b>, SK하이닉스 <b>262조원</b> (SK증권 추정)</li>
+      <li><span class="dot"></span>삼성전자·SK하이닉스 3~5년 <b>장기공급계약(LTA)</b> 체결 확인 — 안정적 수익 가시성</li>
+      <li><span class="dot"></span><b>HBM(고대역폭메모리)</b> 수요 구조적 확대 — AI 추론 고도화로 '대순환 주기' 진입</li>
+      <li><span class="dot"></span>5월 22일 예정 <b>단일종목 레버리지 ETF 상장</b> — 수급 추가 유입 기대</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer">※ 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 투자 손실에 대한 책임은 투자자 본인에게 있습니다.</div>
+
+</div>
+</body>
+</html>
