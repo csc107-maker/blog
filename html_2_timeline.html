@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수급 동향 & 코스피 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7ff;
+    padding: 20px;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* === 수급 섹션 === */
+  .section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,60,0.07);
+    border: 1px solid #e8edff;
+  }
+
+  .sec-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sec-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: #3f51b5;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* 바 차트 */
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .bar-label {
+    width: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+    color: #555;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 28px;
+    background: #f0f2ff;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    transition: width 1s ease;
+    white-space: nowrap;
+  }
+
+  .bar-sell { background: linear-gradient(90deg, #1565c0, #1976d2); }
+  .bar-buy { background: linear-gradient(90deg, #c62828, #d32f2f); }
+  .bar-inst { background: linear-gradient(90deg, #6a1b9a, #7b1fa2); }
+
+  .bar-val {
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 80px;
+    color: #444;
+  }
+
+  /* 타임라인 */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #3f51b5, #c62828, #1565c0, #2e7d32);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f8f9ff;
+    border: 1px solid #e8edff;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -22px;
+    top: 14px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+
+  .tl-time {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .tl-desc {
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .tl-sub {
+    font-size: 11px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  .tl-peak .tl-item { background: #fff8f8; border-color: #ffcdd2; }
+  .tl-peak .tl-item::before { color: #c62828; }
+  .tl-peak .tl-time { color: #c62828; }
+
+  .tl-crash .tl-item { background: #f3f4ff; border-color: #c5cae9; }
+  .tl-crash .tl-item::before { color: #3f51b5; }
+  .tl-crash .tl-time { color: #3f51b5; }
+
+  .tl-rise .tl-item { background: #f1f8e9; border-color: #c8e6c9; }
+  .tl-rise .tl-item::before { color: #2e7d32; }
+  .tl-rise .tl-time { color: #2e7d32; }
+
+  .tl-warn .tl-item { background: #fffde7; border-color: #ffe082; }
+  .tl-warn .tl-item::before { color: #f57f17; }
+  .tl-warn .tl-time { color: #f57f17; }
+
+  .note {
+    font-size: 10px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 수급 바 차트 -->
+  <div class="section">
+    <div class="sec-title">5월 15일 급락 당일 수급 동향 (단위: 조 원)</div>
+
+    <div class="bar-row">
+      <div class="bar-label">외국인</div>
+      <div class="bar-track">
+        <div class="bar-fill bar-sell" style="width:78%">순매도 5.66조</div>
+      </div>
+      <div class="bar-val red" style="color:#c62828">▼ -5.66조</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">기관</div>
+      <div class="bar-track">
+        <div class="bar-fill bar-inst" style="width:25%">순매도 1.73조</div>
+      </div>
+      <div class="bar-val" style="color:#6a1b9a">▼ -1.73조</div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">개인</div>
+      <div class="bar-track">
+        <div class="bar-fill bar-buy" style="width:100%">순매수 7.23조 (홀로 방어)</div>
+      </div>
+      <div class="bar-val" style="color:#c62828">▲ +7.23조</div>
+    </div>
+
+    <div class="note">※ 한국거래소·언론 보도 기준. 투자 참고용 자료입니다.</div>
+  </div>
+
+  <!-- 코스피 8000 타임라인 -->
+  <div class="section">
+    <div class="sec-title">코스피 8,000 돌파 → 급락 → 반등 타임라인</div>
+
+    <div class="timeline">
+      <div class="tl-rise">
+        <div class="tl-item">
+          <div class="tl-time">5월 6~11일</div>
+          <div class="tl-desc">코스피 7,384 → 7,822 가파른 상승</div>
+          <div class="tl-sub">반도체·자동차 중심 외국인 매수 집중</div>
+        </div>
+      </div>
+
+      <div class="tl-peak">
+        <div class="tl-item">
+          <div class="tl-time">5월 15일 오전 9:13</div>
+          <div class="tl-desc">🚀 코스피 사상 첫 8,046.78 장중 돌파!</div>
+          <div class="tl-sub">개장 13분 만에 역사적 고점 경신</div>
+        </div>
+      </div>
+
+      <div class="tl-crash">
+        <div class="tl-item">
+          <div class="tl-time">5월 15일 오후 1:28</div>
+          <div class="tl-desc">⛔ 매도 사이드카 발동 — 5분 거래 정지</div>
+          <div class="tl-sub">외국인 4조↑ 순매도에 낙폭 급확대</div>
+        </div>
+      </div>
+
+      <div class="tl-crash">
+        <div class="tl-item">
+          <div class="tl-time">5월 15일 장 마감</div>
+          <div class="tl-desc">코스피 7,493 (-6.11%, -488pt) 충격 급락</div>
+          <div class="tl-sub">삼성전자 -8.61%, SK하이닉스 -7.66%</div>
+        </div>
+      </div>
+
+      <div class="tl-warn">
+        <div class="tl-item">
+          <div class="tl-time">5월 16일</div>
+          <div class="tl-desc">⚠️ 무디스 미국 신용등급 Aaa → Aa1 강등</div>
+          <div class="tl-sub">108년 만의 강등, 3대 평가사 모두 최고등급 상실</div>
+        </div>
+      </div>
+
+      <div class="tl-rise">
+        <div class="tl-item">
+          <div class="tl-time">5월 18일 장 마감</div>
+          <div class="tl-desc">✅ 코스피 7,516 (+0.31%) 안도 반등</div>
+          <div class="tl-sub">장 초반 사이드카 발동 후 저가 매수 유입으로 회복</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
