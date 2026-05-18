@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 증시 현황 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 20px;
+  }
+
+  .dashboard-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,50,0.10);
+    border: 1px solid #e2e8ff;
+  }
+
+  .dash-header {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #1565c0 100%);
+    color: #fff;
+    padding: 22px 28px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dash-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .dash-header .date-badge {
+    font-size: 12px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-weight: 600;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-bottom: 1px solid #e8ecff;
+  }
+
+  .index-card {
+    padding: 20px 18px;
+    border-right: 1px solid #e8ecff;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .index-card:last-child { border-right: none; }
+
+  .index-card:hover { background: #f7f9ff; }
+
+  .index-card .label {
+    font-size: 11px;
+    color: #7986cb;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  .index-card .value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1a237e;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .index-card .change {
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 3px 8px;
+    display: inline-block;
+  }
+
+  .up { color: #c62828; background: #fff5f5; }
+  .down { color: #1565c0; background: #f0f4ff; }
+  .neutral { color: #558b2f; background: #f1f8e9; }
+
+  .index-card .sub {
+    font-size: 11px;
+    color: #9fa8da;
+    margin-top: 4px;
+  }
+
+  .bottom-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-box {
+    padding: 16px 14px;
+    border-right: 1px solid #e8ecff;
+    text-align: center;
+  }
+
+  .stat-box:last-child { border-right: none; }
+
+  .stat-box .s-label {
+    font-size: 10px;
+    color: #9fa8da;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .stat-box .s-val {
+    font-size: 14px;
+    font-weight: 800;
+    color: #283593;
+  }
+
+  .stat-box .s-val.red { color: #c62828; }
+  .stat-box .s-val.blue { color: #1565c0; }
+  .stat-box .s-val.green { color: #2e7d32; }
+
+  .alert-bar {
+    background: linear-gradient(90deg, #fff8e1, #fffde7);
+    border-top: 1px solid #ffe082;
+    padding: 10px 20px;
+    font-size: 12px;
+    color: #f57f17;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .alert-bar::before {
+    content: '⚡';
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="dashboard-wrap">
+  <div class="dash-header">
+    <h2>📊 오늘의 한국 증시 현황</h2>
+    <span class="date-badge">2026.05.18 (월) 마감</span>
+  </div>
+
+  <div class="cards-grid">
+    <div class="index-card">
+      <div class="label">코스피</div>
+      <div class="value">7,516.04</div>
+      <div class="change up">▲ +22.86 (+0.31%)</div>
+      <div class="sub">52주 최고: 8,046.78</div>
+    </div>
+    <div class="index-card">
+      <div class="label">원·달러 환율</div>
+      <div class="value">1,500.3</div>
+      <div class="change neutral">▼ -0.5원</div>
+      <div class="sub">1,500원대 안착</div>
+    </div>
+    <div class="index-card">
+      <div class="label">브렌트유</div>
+      <div class="value">$110+</div>
+      <div class="change up">↑ 중동 리스크</div>
+      <div class="sub">배럴당 고공행진</div>
+    </div>
+  </div>
+
+  <div class="bottom-row">
+    <div class="stat-box">
+      <div class="s-label">외국인 수급</div>
+      <div class="s-val blue">매도 우위</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">삼성전자</div>
+      <div class="s-val">~27만원대</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">SK하이닉스</div>
+      <div class="s-val">~183만원대</div>
+    </div>
+    <div class="stat-box">
+      <div class="s-label">달러인덱스</div>
+      <div class="s-val">99.25</div>
+    </div>
+  </div>
+
+  <div class="alert-bar">
+    장 초반 매도 사이드카 발동 후 반등 성공 — 변동성 장세 지속 주의
+  </div>
+</div>
+</body>
+</html>
