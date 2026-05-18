@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이번 주 증시 핵심 일정</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 20px;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0,0,60,0.09);
+    border: 1px solid #e8edff;
+  }
+
+  .cal-header {
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+    color: #fff;
+    padding: 20px 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cal-header h2 {
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  .cal-header .week {
+    font-size: 11px;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .schedule-list { padding: 8px 0; }
+
+  .sch-item {
+    display: flex;
+    align-items: stretch;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f2ff;
+    gap: 16px;
+    transition: background 0.15s;
+  }
+
+  .sch-item:last-child { border-bottom: none; }
+  .sch-item:hover { background: #f7f9ff; }
+
+  .sch-date {
+    min-width: 52px;
+    text-align: center;
+  }
+
+  .sch-day {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .sch-weekday {
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .today .sch-day { color: #c62828; }
+  .today .sch-weekday { color: #c62828; }
+  .future .sch-day { color: #1a237e; }
+  .future .sch-weekday { color: #7986cb; }
+
+  .sch-divider {
+    width: 2px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .today .sch-divider { background: #c62828; }
+  .high .sch-divider { background: #e65100; }
+  .med .sch-divider { background: #1565c0; }
+  .low .sch-divider { background: #7986cb; }
+
+  .sch-content { flex: 1; }
+
+  .sch-tags {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    font-weight: 800;
+    border-radius: 4px;
+    padding: 2px 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .tag-today { background: #ffebee; color: #c62828; }
+  .tag-global { background: #e8eaf6; color: #3f51b5; }
+  .tag-domestic { background: #e0f2f1; color: #00695c; }
+  .tag-high { background: #fff3e0; color: #e65100; }
+  .tag-mid { background: #f3f4ff; color: #3f51b5; }
+
+  .sch-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .sch-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .sch-importance {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 6px;
+  }
+
+  .dot-imp {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .dot-fill { background: #e65100; }
+  .dot-empty { background: #e0e0e0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cal-header">
+    <h2>📅 이번 주 증시 핵심 일정</h2>
+    <span class="week">2026년 5월 18일~22일</span>
+  </div>
+
+  <div class="schedule-list">
+
+    <div class="sch-item today">
+      <div class="sch-date today">
+        <div class="sch-day">18</div>
+        <div class="sch-weekday">월 TODAY</div>
+      </div>
+      <div class="sch-divider"></div>
+      <div class="sch-content">
+        <div class="sch-tags">
+          <span class="tag tag-today">오늘</span>
+          <span class="tag tag-domestic">국내</span>
+        </div>
+        <div class="sch-title">코스피 7,516 마감 — 반등 성공</div>
+        <div class="sch-desc">장 초반 사이드카 발동 후 저가매수 유입, 외국인 매도 지속 vs 개인·기관 매수 대응</div>
+        <div class="sch-importance">
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sch-item high">
+      <div class="sch-date future">
+        <div class="sch-day">20</div>
+        <div class="sch-weekday">수</div>
+      </div>
+      <div class="sch-divider"></div>
+      <div class="sch-content">
+        <div class="sch-tags">
+          <span class="tag tag-high">★ 핵심</span>
+          <span class="tag tag-global">글로벌</span>
+        </div>
+        <div class="sch-title">엔비디아(NVDA) 1분기 실적 발표</div>
+        <div class="sch-desc">AI 반도체 수요 전망 확인 — 삼성전자·SK하이닉스 방향성 결정적 영향. HBM 수요 언급 필수 체크</div>
+        <div class="sch-importance">
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sch-item med">
+      <div class="sch-date future">
+        <div class="sch-day">21</div>
+        <div class="sch-weekday">목</div>
+      </div>
+      <div class="sch-divider"></div>
+      <div class="sch-content">
+        <div class="sch-tags">
+          <span class="tag tag-global">글로벌</span>
+          <span class="tag tag-mid">미국</span>
+        </div>
+        <div class="sch-title">미국 FOMC 의사록 공개</div>
+        <div class="sch-desc">향후 금리 경로 단서 확인 — 케빈 워시 차기 Fed 의장 후보 상원 심의 동향과 함께 주시</div>
+        <div class="sch-importance">
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-empty"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sch-item high">
+      <div class="sch-date future">
+        <div class="sch-day">22</div>
+        <div class="sch-weekday">금</div>
+      </div>
+      <div class="sch-divider"></div>
+      <div class="sch-content">
+        <div class="sch-tags">
+          <span class="tag tag-high">★ 핵심</span>
+          <span class="tag tag-domestic">국내</span>
+        </div>
+        <div class="sch-title">삼성전자·SK하이닉스 레버리지 ETF 상장 예정</div>
+        <div class="sch-desc">단일종목 레버리지·인버스 ETF 최초 상장 — 수급 유입 효과 최대 5.3조원 추정(미래에셋). 주가 변동성 확대 주의</div>
+        <div class="sch-importance">
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+          <div class="dot-imp dot-fill"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
