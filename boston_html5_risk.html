@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보스턴 다이나믹스 기회 vs 리스크</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+  :root {
+    --bg: #f8f9ff;
+    --green: #059669;
+    --red: #dc2626;
+    --text: #1e293b;
+    --muted: #64748b;
+    --gbg: #f0fdf4;
+    --gborder: #bbf7d0;
+    --rbg: #fff5f5;
+    --rborder: #fecaca;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: 'Noto Sans KR', sans-serif; padding: 22px 18px; }
+  h2 { font-size: 16px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+  .sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 500px) { .cols { grid-template-columns: 1fr; } }
+  .col-head {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 900;
+    padding: 10px 14px;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0;
+  }
+  .col-head.green { background: var(--green); color: #fff; }
+  .col-head.red { background: var(--red); color: #fff; }
+  .items-box {
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+  .item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 11px 14px;
+    border-bottom: 1px solid;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .item:last-child { border-bottom: none; }
+  .item.green { background: var(--gbg); border-color: var(--gborder); }
+  .item.red { background: var(--rbg); border-color: var(--rborder); }
+  .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .item strong { display: block; font-weight: 700; font-size: 12px; margin-bottom: 2px; }
+  .item span { color: var(--muted); font-size: 11px; }
+  .verdict {
+    margin-top: 16px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .verdict strong { font-size: 14px; display: block; margin-bottom: 6px; }
+  .footer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+<h2>⚖️ 보스턴 다이나믹스 — 기회 vs 리스크</h2>
+<p class="sub">투자자·업계 관계자가 주목해야 할 핵심 포인트 (2026년 5월 기준)</p>
+
+<div class="cols">
+  <div>
+    <div class="col-head green">✅ 기회 요인</div>
+    <div class="items-box">
+      <div class="item green">
+        <div class="icon">🤖</div>
+        <div>
+          <strong>압도적 기술 우위</strong>
+          <span>30년 이상 축적된 보행 로봇 기술, 현재까지 업계 최정상 수준 유지</span>
+        </div>
+      </div>
+      <div class="item green">
+        <div class="icon">🧠</div>
+        <div>
+          <strong>구글 딥마인드와 AI 협력</strong>
+          <span>Gemini Robotics 모델 통합으로 '보는 로봇'→'판단하는 로봇' 전환</span>
+        </div>
+      </div>
+      <div class="item green">
+        <div class="icon">🏭</div>
+        <div>
+          <strong>현대차 생산 기반 확보</strong>
+          <span>연 3만 대 규모 전용 공장 건설, 현대모비스 액츄에이터 공급망 구축</span>
+        </div>
+      </div>
+      <div class="item green">
+        <div class="icon">💰</div>
+        <div>
+          <strong>IPO로 50조원 밸류 기대</strong>
+          <span>미래에셋증권 기준 현재 기업가치 약 50조원, 인수가 대비 ~32배</span>
+        </div>
+      </div>
+      <div class="item green">
+        <div class="icon">🛡️</div>
+        <div>
+          <strong>방산 로보틱스 확장 가능성</strong>
+          <span>미 육군 Army TIGER 사업 연계 가능성, 비무기 경계·순찰 수요</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="col-head red">⚠️ 리스크 요인</div>
+    <div class="items-box">
+      <div class="item red">
+        <div class="icon">👔</div>
+        <div>
+          <strong>경영진 대이탈 충격</strong>
+          <span>CEO·COO·CSO·CTO 동시 이탈, 조직 불안정성 우려</span>
+        </div>
+      </div>
+      <div class="item red">
+        <div class="icon">📅</div>
+        <div>
+          <strong>수익화 시점이 멀다</strong>
+          <span>본격 양산·매출 기여는 2028~2030년 이후, 적자 지속 불가피</span>
+        </div>
+      </div>
+      <div class="item red">
+        <div class="icon">⚡</div>
+        <div>
+          <strong>경쟁 심화 (테슬라 옵티머스 등)</strong>
+          <span>이사회가 경쟁사에 격차 좁혀진다고 압박할 정도로 경쟁 치열</span>
+        </div>
+      </div>
+      <div class="item red">
+        <div class="icon">📊</div>
+        <div>
+          <strong>IPO 초기 '스토리 주' 위험</strong>
+          <span>상장 직후 테마 과열로 밸류에이션 변동성 클 수 있음</span>
+        </div>
+      </div>
+      <div class="item red">
+        <div class="icon">⏰</div>
+        <div>
+          <strong>IPO 일정 불확실성</strong>
+          <span>정의선 회장 "말씀드릴 수 없다" — 상장 확정 여부 미정</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="verdict">
+  <strong>📌 종합 판단 (IM증권·미래에셋증권 분석 종합)</strong>
+  보스턴 다이나믹스는 현재 기술·파트너십·시장 타이밍 측면에서 구조적 강점을 갖추고 있으나, 경영진 공백·수익화 지연·경쟁 심화라는 3중 리스크도 공존합니다. 투자자라면 IPO 확정 여부(6월)와 2028년 조지아 공장 양산 속도를 핵심 체크포인트로 주목할 필요가 있습니다.
+</div>
+
+<div class="footer">※ 출처: IM증권(2026.05.14)·미래에셋증권·NH투자증권·Semafor·핸드메이커</div>
+</body>
+</html>
