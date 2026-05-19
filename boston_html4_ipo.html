@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보스턴다이나믹스 IPO 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Montserrat:wght@800&display=swap');
+  :root {
+    --bg: #f0fff8;
+    --card: #fff;
+    --green: #059669;
+    --teal: #0d9488;
+    --blue: #1d4ed8;
+    --yellow: #d97706;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #d1fae5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: 'Noto Sans KR', sans-serif; padding: 22px 18px; }
+  h2 { font-size: 16px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+  .sub { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+  .val-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 480px) { .val-grid { grid-template-columns: 1fr; } }
+  .val-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    padding: 16px;
+    box-shadow: 0 2px 10px rgba(5,150,105,0.07);
+  }
+  .val-card .label { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .val-card .value {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1;
+  }
+  .val-card .note { font-size: 11px; color: var(--muted); margin-top: 5px; }
+  .val-card.blue .value { color: var(--blue); }
+  .val-card.yellow .value { color: var(--yellow); }
+  .val-card.teal .value { color: var(--teal); }
+  .timeline-ipo {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1.5px solid var(--border);
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .timeline-ipo h3 { font-size: 13px; font-weight: 900; color: var(--text); margin-bottom: 12px; }
+  .bar-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .bar-item { }
+  .bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text); margin-bottom: 3px; }
+  .bar-label span { font-weight: 700; }
+  .bar-bg { background: #e2e8f0; border-radius: 6px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; }
+  .b1 { width: 22%; background: linear-gradient(90deg, #1d4ed8, #3b82f6); }
+  .b2 { width: 68%; background: linear-gradient(90deg, #059669, #34d399); }
+  .b3 { width: 100%; background: linear-gradient(90deg, #d97706, #fbbf24); }
+  .softbank-box {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .softbank-box h3 { font-size: 13px; font-weight: 900; margin-bottom: 8px; }
+  .softbank-box .rows { display: flex; flex-direction: column; gap: 6px; }
+  .softbank-box .row { display: flex; justify-content: space-between; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+  .softbank-box .row:last-child { border-bottom: none; padding-bottom: 0; }
+  .softbank-box .row .k { opacity: 0.7; }
+  .softbank-box .row .v { font-weight: 700; color: #fbbf24; }
+  .footer { text-align: center; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<h2>💰 보스턴 다이나믹스 IPO — 밸류에이션 분석</h2>
+<p class="sub">2026년 6월 풋옵션 만료 기한 임박 · 증권사 분석 종합</p>
+
+<div class="val-grid">
+  <div class="val-card">
+    <div class="label">2021년 인수 당시 기업가치</div>
+    <div class="value">$1.1B</div>
+    <div class="note">약 1조 2,000억원 (소프트뱅크 매각가 기준)</div>
+  </div>
+  <div class="val-card teal">
+    <div class="label">현재 추정 기업가치</div>
+    <div class="value">~$35B</div>
+    <div class="note">약 50조원 (미래에셋증권 박수진 연구원, 2026.05)</div>
+  </div>
+  <div class="val-card blue">
+    <div class="label">IPO 예상 모집 규모</div>
+    <div class="value">$970M</div>
+    <div class="note">약 1조 3,000억원 추정 (나무위키·업계)</div>
+  </div>
+  <div class="val-card yellow">
+    <div class="label">인수 후 가치 상승 배수</div>
+    <div class="value">~32x</div>
+    <div class="note">CES 2026 이후 기업가치 30배 이상 상승 평가</div>
+  </div>
+</div>
+
+<div class="timeline-ipo">
+  <h3>📊 기업가치 변화 흐름 (상대 비교)</h3>
+  <div class="bar-wrap">
+    <div class="bar-item">
+      <div class="bar-label"><span>2021 인수가</span><span style="color:#1d4ed8">$1.1B (기준)</span></div>
+      <div class="bar-bg"><div class="bar-fill b1"></div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>CES 2026 이후 평가</span><span style="color:#059669">$20~35B (추정)</span></div>
+      <div class="bar-bg"><div class="bar-fill b2"></div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>IPO 시 최대 기대치</span><span style="color:#d97706">$40B+ (일부 추정)</span></div>
+      <div class="bar-bg"><div class="bar-fill b3"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="softbank-box">
+  <h3>🔑 소프트뱅크 풋옵션 구조</h3>
+  <div class="rows">
+    <div class="row"><span class="k">인수 주체</span><span class="v">현대차그룹 (지분 80%)</span></div>
+    <div class="row"><span class="k">소프트뱅크 지분</span><span class="v">초기 20% → 희석 후 약 9.5%</span></div>
+    <div class="row"><span class="k">IPO 약속 기한 (1차)</span><span class="v">2025년 6월 (미이행)</span></div>
+    <div class="row"><span class="k">풋옵션 만료 (최종)</span><span class="v">2026년 6월 ⚠️</span></div>
+    <div class="row"><span class="k">결정 가능 시나리오</span><span class="v">①나스닥 IPO ②소프트뱅크 지분 매입</span></div>
+  </div>
+</div>
+
+<div class="footer">※ 출처: 미래에셋증권·NH투자증권·뉴스스페이스·핸드메이커(2026.05) · Motley Fool</div>
+</body>
+</html>
