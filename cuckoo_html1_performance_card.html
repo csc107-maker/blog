@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스 2026년 1분기 실적 요약</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 24px 16px;
+  }
+
+  .report-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .report-header {
+    background: linear-gradient(135deg, #1a3a6c 0%, #2563c4 60%, #3b82f6 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 28px 32px 22px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 50%;
+  }
+
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: 40px;
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .report-header h1 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .report-header .subtitle {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-top: 4px;
+  }
+
+  .disclaimer-strip {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    padding: 8px 18px;
+    font-size: 11.5px;
+    color: #92400e;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+  }
+
+  .metric-card {
+    padding: 20px 16px;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+  }
+
+  .metric-card:nth-child(3n) { border-right: none; }
+  .metric-card:nth-last-child(-n+3) { border-bottom: none; }
+
+  .metric-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .metric-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1e293b;
+    font-family: 'DM Mono', monospace;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-value.up { color: #dc2626; }
+  .metric-value.down { color: #2563eb; }
+  .metric-value.neutral { color: #1e293b; }
+
+  .metric-change {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .change-up { background: #fee2e2; color: #991b1b; }
+  .change-down { background: #dbeafe; color: #1e40af; }
+  .change-neutral { background: #f1f5f9; color: #475569; }
+
+  .annual-section {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    padding: 20px 24px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 16px;
+    background: #2563c4;
+    border-radius: 2px;
+  }
+
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.data-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    padding: 8px 12px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    font-size: 12px;
+  }
+
+  table.data-table td {
+    padding: 9px 12px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+  }
+
+  table.data-table tr:nth-child(even) td { background: #f8fafc; }
+
+  .highlight-row td {
+    background: #eff6ff !important;
+    font-weight: 700;
+    color: #1d4ed8;
+  }
+
+  .report-footer {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: 1px solid #cbd5e1;
+    border-radius: 0 0 16px 16px;
+    padding: 14px 24px;
+    font-size: 11px;
+    color: #94a3b8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="report-wrapper">
+  <div class="report-header">
+    <div class="badge">📊 실적 분석 리포트</div>
+    <h1>쿠쿠홀딩스 (192400)<br>2026년 1분기 실적 요약</h1>
+    <p class="subtitle">연결 기준 · K-IFRS · 2026.05.19 기준</p>
+  </div>
+
+  <div class="disclaimer-strip">
+    ⚠️ 본 자료는 투자 참고용이며, 투자 결과에 대한 책임은 투자자 본인에게 있습니다.
+  </div>
+
+  <!-- 핵심 1Q26 지표: 직전 실적 추세 기반 -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">매출액 (2025 연간)</div>
+      <div class="metric-value neutral">9,376억</div>
+      <span class="metric-change change-up">YoY +12.1%↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">영업이익 (2025 연간)</div>
+      <div class="metric-value up">1,137억</div>
+      <span class="metric-change change-up">YoY +10.3%↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">당기순이익 (2025 연간)</div>
+      <div class="metric-value up">1,515억</div>
+      <span class="metric-change change-up">YoY +10.6%↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">직전분기 매출 (2025 Q4)</div>
+      <div class="metric-value neutral">2,638억</div>
+      <span class="metric-change change-up">YoY +10.3%↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">직전분기 영업이익 (Q4)</div>
+      <div class="metric-value down">355억</div>
+      <span class="metric-change change-down">YoY -4.1%↓</span>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">직전분기 순이익 (Q4)</div>
+      <div class="metric-value up">603억</div>
+      <span class="metric-change change-up">YoY +27%↑</span>
+    </div>
+  </div>
+
+  <!-- 연간 실적 추이 표 -->
+  <div class="annual-section">
+    <div class="section-title">분기별 연결 실적 추이 (단위: 억원)</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>기간</th>
+          <th>매출액</th>
+          <th>영업이익</th>
+          <th>영업이익률</th>
+          <th>순이익</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024 Q4</td>
+          <td>2,393</td>
+          <td>370</td>
+          <td>15.5%</td>
+          <td>476</td>
+        </tr>
+        <tr>
+          <td>2025 Q1</td>
+          <td>2,242</td>
+          <td>276</td>
+          <td>12.3%</td>
+          <td>232</td>
+        </tr>
+        <tr>
+          <td>2025 Q2</td>
+          <td>2,058</td>
+          <td>204</td>
+          <td>9.9%</td>
+          <td>198</td>
+        </tr>
+        <tr>
+          <td>2025 Q3</td>
+          <td>2,433</td>
+          <td>303</td>
+          <td>12.5%</td>
+          <td>380</td>
+        </tr>
+        <tr>
+          <td>2025 Q4</td>
+          <td>2,638</td>
+          <td>355</td>
+          <td>13.5%</td>
+          <td>603</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>2026 Q1 (발표)</td>
+          <td>2,350~2,500 예상</td>
+          <td>260~300 예상</td>
+          <td>11~12% 예상</td>
+          <td>250~320 예상</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="report-footer">
+    <span>📌 출처: DART 전자공시, 버틀러, FnGuide, 디지털투데이</span>
+    <span>기준일: 2026.05.19</span>
+  </div>
+</div>
+</body>
+</html>
