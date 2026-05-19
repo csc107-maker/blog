@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코스트코 스태그플레이션 시나리오 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f8f0;
+    padding: 24px 16px;
+  }
+
+  .widget-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* 헤더 */
+  .widget-header {
+    background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 22px 28px;
+    color: white;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .badge-icon {
+    font-size: 28px;
+  }
+
+  .widget-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .widget-header p {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* 인플레이션 경고 배너 */
+  .inflation-banner {
+    background: #fff3cd;
+    border-top: 3px solid #ffc107;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .inf-stat {
+    text-align: center;
+    padding: 0 16px;
+    border-right: 1px solid #fde08d;
+  }
+
+  .inf-stat:last-child { border-right: none; }
+
+  .inf-stat .inf-label { font-size: 10px; color: #856404; font-weight: 600; }
+  .inf-stat .inf-val {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #c0392b;
+  }
+
+  .inf-stat .inf-note { font-size: 10px; color: #856404; }
+
+  /* 시나리오 섹션 */
+  .scenarios-wrap {
+    background: white;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .scenario-card {
+    border-radius: 12px;
+    padding: 18px 16px;
+    border: 2px solid;
+  }
+
+  .scenario-card.bull {
+    background: linear-gradient(145deg, #e8f8ef, #d5f5e3);
+    border-color: #27ae60;
+  }
+
+  .scenario-card.bear {
+    background: linear-gradient(145deg, #fef0f0, #fde8e8);
+    border-color: #e74c3c;
+  }
+
+  .scenario-card.neutral {
+    background: linear-gradient(145deg, #f0f4ff, #e8eeff);
+    border-color: #3498db;
+  }
+
+  .scenario-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .sc-icon { font-size: 24px; }
+
+  .sc-title {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .bull .sc-title { color: #1e8449; }
+  .bear .sc-title { color: #c0392b; }
+  .neutral .sc-title { color: #2471a3; }
+
+  .sc-subtitle {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .sc-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sc-points li {
+    font-size: 12px;
+    color: #444;
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(0,0,0,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.5;
+  }
+
+  .sc-points li:last-child { border-bottom: none; }
+
+  .sc-points li::before {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bull .sc-points li::before { content: '✓'; color: #27ae60; font-weight: 700; }
+  .bear .sc-points li::before { content: '✗'; color: #e74c3c; font-weight: 700; }
+  .neutral .sc-points li::before { content: '→'; color: #3498db; font-weight: 700; }
+
+  .sc-verdict {
+    margin-top: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .bull .sc-verdict { background: #27ae60; color: white; }
+  .bear .sc-verdict { background: #e74c3c; color: white; }
+  .neutral .sc-verdict { background: #3498db; color: white; }
+
+  /* 매크로 리스크 매트릭스 */
+  .risk-section {
+    background: white;
+    padding: 20px 24px;
+    border-top: 1px solid #e8f0e8;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e8449;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #d5f5e3;
+    margin-bottom: 16px;
+  }
+
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .risk-table thead tr {
+    background: #1e8449;
+    color: white;
+  }
+
+  .risk-table thead th {
+    padding: 9px 10px;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .risk-table tbody tr:nth-child(even) { background: #f5fbf7; }
+  .risk-table tbody td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #e0f0e5;
+    vertical-align: middle;
+    color: #333;
+  }
+
+  .impact-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .impact-pos { background: #d5f5e3; color: #1e8449; }
+  .impact-neg { background: #fde8e8; color: #c0392b; }
+  .impact-mix { background: #fff3cd; color: #856404; }
+
+  .meter-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meter-bg {
+    flex: 1;
+    background: #e8f0e8;
+    border-radius: 3px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .meter-fill {
+    height: 100%;
+    border-radius: 3px;
+  }
+
+  .meter-fill.pos { background: linear-gradient(90deg, #27ae60, #2ecc71); }
+  .meter-fill.neg { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+  .meter-fill.mix { background: linear-gradient(90deg, #f39c12, #f1c40f); }
+
+  /* 멤버십 방어력 */
+  .membership-bar {
+    background: white;
+    padding: 16px 24px;
+    border-top: 1px solid #e0f0e5;
+  }
+
+  .mem-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 12px;
+  }
+
+  .mem-metrics {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .mem-metric {
+    flex: 1;
+    min-width: 130px;
+    text-align: center;
+    background: #f0faf4;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #c3e6cb;
+  }
+
+  .mem-metric .m-val {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1e8449;
+  }
+
+  .mem-metric .m-label { font-size: 11px; color: #666; margin-top: 4px; }
+
+  .widget-footer {
+    background: #1e8449;
+    border-radius: 0 0 16px 16px;
+    padding: 10px 20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+
+  <div class="widget-header">
+    <div class="header-top">
+      <span class="badge-icon">⚡</span>
+      <div>
+        <h2>스태그플레이션 시나리오 분석 & 코스트코의 매출 방향성</h2>
+        <p>복합 매크로 리스크 환경에서의 COST 포지셔닝 | 2026.05</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 현재 인플레이션 지표 -->
+  <div class="inflation-banner">
+    <span style="font-size:14px;font-weight:700;color:#856404;flex-shrink:0">⚠️ 현재 경제 환경</span>
+    <div class="inf-stat">
+      <div class="inf-label">美 CPI (2026.04)</div>
+      <div class="inf-val">3.8%</div>
+      <div class="inf-note">예상치 상회</div>
+    </div>
+    <div class="inf-stat">
+      <div class="inf-label">PCE 인플레이션 (2026.03)</div>
+      <div class="inf-val">3.5%</div>
+      <div class="inf-note">에너지 +14.43%</div>
+    </div>
+    <div class="inf-stat">
+      <div class="inf-label">美 휘발유 가격</div>
+      <div class="inf-val">$4.55</div>
+      <div class="inf-note">2022년 이후 최고</div>
+    </div>
+    <div class="inf-stat">
+      <div class="inf-label">코스트코 4월 매출 성장</div>
+      <div class="inf-val" style="color:#1e8449">+13%</div>
+      <div class="inf-note">인플레이션 환경 수혜</div>
+    </div>
+  </div>
+
+  <!-- 시나리오 3종 -->
+  <div class="scenarios-wrap">
+
+    <div class="scenario-card bull">
+      <div class="scenario-header">
+        <span class="sc-icon">📗</span>
+        <div>
+          <div class="sc-title">낙관 시나리오</div>
+          <div class="sc-subtitle">"불황의 최대 수혜주"</div>
+        </div>
+      </div>
+      <ul class="sc-points">
+        <li>물가 상승 → 가성비 코스트코 집중 쇼핑</li>
+        <li>커클랜드 PB 시장점유율 확대</li>
+        <li>유가 상승 → 주유소 매출 추가</li>
+        <li>고소득 회원층, 경기침체에도 소비 유지</li>
+        <li>2008년 금융위기에도 흑자 유지 이력</li>
+        <li>멤버십 연회비 인상 → 수익성 개선</li>
+      </ul>
+      <div class="sc-verdict">✓ 상대적 방어주로 매출 유지·성장</div>
+    </div>
+
+    <div class="scenario-card bear">
+      <div class="scenario-header">
+        <span class="sc-icon">📕</span>
+        <div>
+          <div class="sc-title">비관 시나리오</div>
+          <div class="sc-subtitle">"스태그플레이션의 독침"</div>
+        </div>
+      </div>
+      <ul class="sc-points">
+        <li>극심한 경기침체 시 대형 가전·가구 지출 감소</li>
+        <li>연회비 인상 후 갱신율 하락 가능성</li>
+        <li>신규 회원 유치 둔화 리스크</li>
+        <li>공급망 비용 증가 → 저마진 정책 유지 어려움</li>
+        <li>이란전쟁 확전 시 공급망 충격 가능성</li>
+      </ul>
+      <div class="sc-verdict">✗ 가전·비필수 카테고리 매출 일부 감소 우려</div>
+    </div>
+
+    <div class="scenario-card neutral">
+      <div class="scenario-header">
+        <span class="sc-icon">📘</span>
+        <div>
+          <div class="sc-title">종합 판단</div>
+          <div class="sc-subtitle">"섹터 내 최강 방어주"</div>
+        </div>
+      </div>
+      <ul class="sc-points">
+        <li>절대 수혜주는 아니지만 비교 우위 명확</li>
+        <li>멤버십 구조가 경기 사이클 완충</li>
+        <li>필수소비재 비중 높아 매출 방어력 강함</li>
+        <li>고소득 코어 회원층이 핵심 방어선</li>
+        <li>디지털 채널 성장이 오프라인 리스크 분산</li>
+      </ul>
+      <div class="sc-verdict">→ 스태그플레이션 환경 유통주 중 최우선 선택지</div>
+    </div>
+
+  </div>
+
+  <!-- 매크로 리스크 매트릭스 -->
+  <div class="risk-section">
+    <div class="section-title">🔎 복합 매크로 리스크 vs 코스트코 영향도 분석</div>
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>리스크 요인</th>
+          <th>현황 (2026.05)</th>
+          <th>코스트코 영향</th>
+          <th>영향도</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🔥 미국 CPI 인플레이션</td>
+          <td>3.8% (예상 상회)</td>
+          <td><span class="impact-badge impact-pos">✅ 수혜</span> 가성비 트래픽 증가</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill pos" style="width:85%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>⛽ 이란 전쟁·유가 급등</td>
+          <td>$4.55/갤런</td>
+          <td><span class="impact-badge impact-mix">⚠️ 양면</span> 주유소↑, 소비심리↓</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill mix" style="width:60%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>🏠 주담대 금리 상승</td>
+          <td>30년물 7%+ 유지</td>
+          <td><span class="impact-badge impact-neg">⚠️ 우려</span> 소비여력 위축</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill neg" style="width:45%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>📉 국채 금리 상승</td>
+          <td>美 10년물 4.5%+</td>
+          <td><span class="impact-badge impact-neg">⚠️ 우려</span> 밸류에이션 할인</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill neg" style="width:55%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>💰 美 연방부채 급증</td>
+          <td>$36조 돌파</td>
+          <td><span class="impact-badge impact-mix">⚠️ 중립</span> 장기 거시 불확실</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill mix" style="width:35%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>🏦 연준 금리 인하 지연</td>
+          <td>인하 시점 불투명</td>
+          <td><span class="impact-badge impact-neg">⚠️ 우려</span> 성장주 프리미엄↓</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill neg" style="width:40%"></div></div></div></td>
+        </tr>
+        <tr>
+          <td>🛒 디지털 매출 급성장</td>
+          <td>4주 +18.8%</td>
+          <td><span class="impact-badge impact-pos">✅ 수혜</span> 새 성장 동력</td>
+          <td><div class="meter-wrap"><div class="meter-bg"><div class="meter-fill pos" style="width:90%"></div></div></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 멤버십 방어력 -->
+  <div class="membership-bar">
+    <div class="mem-title">🛡️ 코스트코 멤버십의 경기 방어력 (FY2025 기준)</div>
+    <div class="mem-metrics">
+      <div class="mem-metric">
+        <div class="m-val">92.3%</div>
+        <div class="m-label">미국·캐나다 갱신율</div>
+      </div>
+      <div class="mem-metric">
+        <div class="m-val">$5.3B</div>
+        <div class="m-label">연간 멤버십 수익</div>
+      </div>
+      <div class="mem-metric">
+        <div class="m-val">90%+</div>
+        <div class="m-label">글로벌 갱신율</div>
+      </div>
+      <div class="mem-metric">
+        <div class="m-val">40%</div>
+        <div class="m-label">회원 중 연소득<br>$125K+ 고소득층</div>
+      </div>
+      <div class="mem-metric">
+        <div class="m-val">137M</div>
+        <div class="m-label">전 세계 카드 소지자 수</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="widget-footer">
+    출처: Costco IR, Motley Fool, Seeking Alpha, Bloomberg, AAA, 24/7 Wall St., Numerator 리서치 | 본 자료는 투자 권유가 아닙니다 | 2026.05.19
+  </div>
+</div>
+</body>
+</html>
