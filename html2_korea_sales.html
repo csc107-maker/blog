@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코스트코 코리아 매출 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff9f0;
+    padding: 24px 16px;
+  }
+
+  .widget-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .widget-header {
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+    padding: 22px 28px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .flag-box {
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  .widget-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .widget-header p {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  /* 핵심 지표 요약 */
+  .kpi-row {
+    display: flex;
+    gap: 0;
+    background: #fef9f5;
+    border-bottom: 1px solid #ffe0cc;
+    flex-wrap: wrap;
+  }
+
+  .kpi-item {
+    flex: 1;
+    min-width: 140px;
+    padding: 18px 20px;
+    border-right: 1px solid #ffe0cc;
+    text-align: center;
+  }
+
+  .kpi-item:last-child { border-right: none; }
+
+  .kpi-item .kpi-label {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .kpi-item .kpi-val {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #c0392b;
+    margin: 4px 0;
+    line-height: 1.1;
+  }
+
+  .kpi-item .kpi-sub {
+    font-size: 11px;
+    color: #0a7a3c;
+    font-weight: 600;
+  }
+
+  /* 타임라인 */
+  .timeline-section {
+    padding: 20px 28px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #c0392b;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #ffe0cc;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #c0392b, #e74c3c, #fab1a0);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border: 2px solid #c0392b;
+    border-radius: 50%;
+  }
+
+  .tl-item.current .tl-dot {
+    background: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.2);
+  }
+
+  .tl-year {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .tl-content {
+    background: #fef9f5;
+    border-radius: 10px;
+    padding: 12px 16px;
+    border-left: 3px solid #e74c3c;
+  }
+
+  .tl-item.current .tl-content {
+    background: linear-gradient(135deg, #fff0ed, #ffe8e2);
+    border-left-color: #c0392b;
+  }
+
+  .tl-sales {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #c0392b;
+  }
+
+  .tl-growth {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0a7a3c;
+    margin-left: 10px;
+  }
+
+  .tl-bar-wrap {
+    margin-top: 8px;
+    background: #f0d8d5;
+    border-radius: 4px;
+    height: 8px;
+    overflow: hidden;
+  }
+
+  .tl-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    border-radius: 4px;
+  }
+
+  .tl-detail {
+    font-size: 11px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  /* 글로벌 비중 섹션 */
+  .share-section {
+    padding: 0 28px 24px;
+  }
+
+  .share-viz {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .donut-wrap {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+  }
+
+  .donut-svg { width: 140px; height: 140px; }
+
+  .donut-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .donut-label .pct {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #c0392b;
+    line-height: 1;
+  }
+
+  .donut-label .pct-label {
+    font-size: 10px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .share-legend {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .legend-color {
+    width: 12px; height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  .legend-text { font-size: 12px; color: #444; flex: 1; }
+  .legend-pct { font-size: 12px; font-weight: 700; color: #333; }
+
+  /* 매장 비교 */
+  .store-compare {
+    background: #fef3f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 16px 28px;
+    border: 1px solid #ffe0cc;
+  }
+
+  .store-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #c0392b;
+    margin-bottom: 12px;
+  }
+
+  .store-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .store-name {
+    font-size: 12px;
+    color: #555;
+    font-weight: 600;
+    width: 120px;
+    flex-shrink: 0;
+  }
+
+  .store-bar-bg {
+    flex: 1;
+    background: #f0d8d5;
+    border-radius: 4px;
+    height: 16px;
+    overflow: hidden;
+  }
+
+  .store-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #c0392b, #e74c3c);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
+    justify-content: flex-end;
+  }
+
+  .store-bar span {
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .store-bar.gray { background: linear-gradient(90deg, #7f8c8d, #95a5a6); }
+  .store-bar.orange { background: linear-gradient(90deg, #e67e22, #f39c12); }
+
+  .widget-footer {
+    background: #2d2d2d;
+    padding: 10px 20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-header">
+    <div class="flag-box">🇰🇷</div>
+    <div>
+      <h2>코스트코 코리아 매출 성장 분석 & 글로벌 비중</h2>
+      <p>출처: 금융감독원 전자공시(DART) · Costco 연간보고서 · 뉴스1 · 한국경제 | 2026.05 기준</p>
+    </div>
+  </div>
+
+  <!-- KPI 핵심 수치 -->
+  <div class="kpi-row">
+    <div class="kpi-item">
+      <div class="kpi-label">FY2025 매출 (한국)</div>
+      <div class="kpi-val">7.32조</div>
+      <div class="kpi-sub">▲ 전년 대비 +12.1%</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">영업이익</div>
+      <div class="kpi-val">2,545억</div>
+      <div class="kpi-sub">▲ +16.5% YoY</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">글로벌 전체 대비 비중</div>
+      <div class="kpi-val">~2%</div>
+      <div class="kpi-sub">약 $5.3B (환산)</div>
+    </div>
+    <div class="kpi-item">
+      <div class="kpi-label">한국 매장 수</div>
+      <div class="kpi-val">20개</div>
+      <div class="kpi-sub">글로벌 914개 중</div>
+    </div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="timeline-section">
+    <div class="section-label">📅 코스트코 코리아 연도별 매출 타임라인</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">FY2022 회계연도 (2021.09~2022.08)</div>
+        <div class="tl-content">
+          <span class="tl-sales">5조 5,353억 원</span>
+          <div class="tl-bar-wrap"><div class="tl-bar" style="width:76%"></div></div>
+          <div class="tl-detail">이마트·롯데마트와 본격 경쟁 구도 형성. 엔데믹 회복 수요 반영</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">FY2023 회계연도 (2022.09~2023.08)</div>
+        <div class="tl-content">
+          <span class="tl-sales">6조 677억 원</span>
+          <span class="tl-growth">▲ +9.6%</span>
+          <div class="tl-bar-wrap"><div class="tl-bar" style="width:83%"></div></div>
+          <div class="tl-detail">연 매출 6조 원 첫 돌파. 고물가 환경에서 가성비 수요 폭증</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">FY2024 회계연도 (2023.09~2024.08)</div>
+        <div class="tl-content">
+          <span class="tl-sales">6조 5,301억 원</span>
+          <span class="tl-growth">▲ +7.6%</span>
+          <div class="tl-bar-wrap"><div class="tl-bar" style="width:89%"></div></div>
+          <div class="tl-detail">홈플러스 제치고 국내 대형마트 업계 2위 등극. 매장당 매출 3,436억 기록</div>
+        </div>
+      </div>
+
+      <div class="tl-item current">
+        <div class="tl-dot"></div>
+        <div class="tl-year">⭐ FY2025 회계연도 (2024.09~2025.08) — 최신</div>
+        <div class="tl-content">
+          <span class="tl-sales">7조 3,220억 원</span>
+          <span class="tl-growth">▲ +12.1%</span>
+          <div class="tl-bar-wrap"><div class="tl-bar" style="width:100%"></div></div>
+          <div class="tl-detail">역대 최고 매출. 연회비 15.2% 인상에도 회원 충성도 유지. 청라·제주점 개점 예정</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 글로벌 비중 도넛 차트 -->
+  <div class="share-section">
+    <div class="section-label">🌍 코스트코 글로벌 매출 구성 대비 한국 비중</div>
+    <div class="share-viz">
+      <div class="donut-wrap">
+        <svg class="donut-svg" viewBox="0 0 140 140">
+          <!-- 미국 세그먼트 ~72% -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#1a3a6e" stroke-width="18"
+            stroke-dasharray="326.7 100" stroke-dashoffset="25" />
+          <!-- 캐나다 ~15% -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#0d5fb3" stroke-width="18"
+            stroke-dasharray="68 360" stroke-dashoffset="-301.7" />
+          <!-- Other Intl ~13% 중 Korea ~2% -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#c0392b" stroke-width="18"
+            stroke-dasharray="9 360" stroke-dashoffset="-369.7" />
+          <!-- 나머지 Other Intl -->
+          <circle cx="70" cy="70" r="52" fill="none" stroke="#f5a0a0" stroke-width="18"
+            stroke-dasharray="50 360" stroke-dashoffset="-378.7" />
+        </svg>
+        <div class="donut-label">
+          <div class="pct">~2%</div>
+          <div class="pct-label">한국 비중</div>
+        </div>
+      </div>
+
+      <div class="share-legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background:#1a3a6e"></div>
+          <div class="legend-text">미국·푸에르토리코 (629개 매장)</div>
+          <div class="legend-pct">~72%</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#0d5fb3"></div>
+          <div class="legend-text">캐나다 (110개 매장)</div>
+          <div class="legend-pct">~15%</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#c0392b"></div>
+          <div class="legend-text">🇰🇷 한국 (20개 매장)</div>
+          <div class="legend-pct">~2%</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background:#f5a0a0"></div>
+          <div class="legend-text">기타 국제 (일본·영국·멕시코 등)</div>
+          <div class="legend-pct">~11%</div>
+        </div>
+        <p style="font-size:10px;color:#aaa;margin-top:6px;">※ 코스트코는 한국을 'Other International' 세그먼트로 통합 보고<br>한국 $5.3B 추산 / FY2025 전체 $275B 기준</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 한국 경쟁사 매출 비교 -->
+  <div class="store-compare">
+    <div class="store-title">🏪 국내 대형마트 점포당 매출 비교 (FY2024 기준)</div>
+    <div class="store-row">
+      <div class="store-name">코스트코 코리아<br><span style="font-size:10px;color:#c0392b">(19개 점포)</span></div>
+      <div class="store-bar-bg">
+        <div class="store-bar" style="width:100%"><span>3,436억/점</span></div>
+      </div>
+    </div>
+    <div class="store-row">
+      <div class="store-name">이마트 트레이더스<br><span style="font-size:10px;color:#888">(비교 참고)</span></div>
+      <div class="store-bar-bg">
+        <div class="store-bar orange" style="width:38%"><span>~1,300억/점</span></div>
+      </div>
+    </div>
+    <div class="store-row">
+      <div class="store-name">롯데마트<br><span style="font-size:10px;color:#888">(111개 점포)</span></div>
+      <div class="store-bar-bg">
+        <div class="store-bar gray" style="width:15%"><span>~503억/점</span></div>
+      </div>
+    </div>
+    <p style="font-size:10px;color:#aaa;margin-top:6px;">※ 점포당 매출은 추산치이며 매장 규모·카테고리 구성 차이 있음</p>
+  </div>
+
+  <div class="widget-footer">
+    출처: 금융감독원 전자공시(DART) / Costco 2024·2025 Annual Report / 뉴스1·한국경제·전자신문 보도 | 투자 참고 목적만, 권유 아님
+  </div>
+</div>
+</body>
+</html>
