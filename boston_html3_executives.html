@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보스턴 다이나믹스 경영진 변화</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+  :root {
+    --bg: #fff8f0;
+    --card: #ffffff;
+    --red: #e84393;
+    --orange: #f97316;
+    --blue: #2563eb;
+    --text: #1e1e2e;
+    --muted: #7c7c8a;
+    --border: #ffe4cc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: 'Noto Sans KR', sans-serif; padding: 24px 18px; }
+  .header { margin-bottom: 20px; }
+  .header h2 { font-size: 16px; font-weight: 900; color: var(--text); }
+  .header .warn {
+    display: inline-block;
+    background: #fff0e0;
+    border: 1px solid #ffba7a;
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .header p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(233,67,53,0.07);
+  }
+  thead tr { background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%); color: #fff; }
+  thead th { padding: 11px 12px; font-size: 12px; text-align: left; font-weight: 700; letter-spacing: 0.5px; }
+  tbody tr { border-bottom: 1px solid #f0e8ff; transition: background 0.2s; }
+  tbody tr:hover { background: #fff5f0; }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 11px 12px; font-size: 12px; color: var(--text); vertical-align: middle; }
+  .chip {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .chip-red { background: #fee2e2; color: #dc2626; }
+  .chip-blue { background: #dbeafe; color: #1d4ed8; }
+  .chip-orange { background: #ffedd5; color: #ea580c; }
+  .chip-gray { background: #f1f5f9; color: #64748b; }
+  .summary {
+    margin-top: 14px;
+    background: #fff0e0;
+    border-left: 4px solid var(--orange);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .summary strong { color: var(--orange); }
+  .footer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="warn">⚠️ 경영진 대이탈 — 2026년 이슈</div>
+  <h2>보스턴 다이나믹스 C-Suite 변화 현황</h2>
+  <p>Semafor 단독 보도 + 각사 공식 발표 종합 (2026년 5월 기준)</p>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>시점</th>
+      <th>직책</th>
+      <th>인물</th>
+      <th>상태</th>
+      <th>비고</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025년 7월</td>
+      <td>CTO</td>
+      <td>Aaron Saunders</td>
+      <td><span class="chip chip-red">이직</span></td>
+      <td>→ 구글 딥마인드로 이직</td>
+    </tr>
+    <tr>
+      <td>2026년 2월 27일</td>
+      <td>CEO</td>
+      <td>Robert Playter</td>
+      <td><span class="chip chip-orange">은퇴</span></td>
+      <td>30년 재직, 공식 은퇴 (CES 2026 직후)</td>
+    </tr>
+    <tr>
+      <td>2026년 3~4월</td>
+      <td>COO</td>
+      <td>미공개</td>
+      <td><span class="chip chip-red">퇴사</span></td>
+      <td>이사회 압박에 의한 퇴진 추정</td>
+    </tr>
+    <tr>
+      <td>2026년 3~4월</td>
+      <td>CSO</td>
+      <td>미공개</td>
+      <td><span class="chip chip-red">퇴사</span></td>
+      <td>이사회 압박에 의한 퇴진 추정</td>
+    </tr>
+    <tr>
+      <td>2026년 현재</td>
+      <td>임시 CEO (CFO 겸)</td>
+      <td>Amanda McMaster</td>
+      <td><span class="chip chip-blue">재직 중</span></td>
+      <td>신임 CEO 선임 시까지 임시 대행</td>
+    </tr>
+    <tr>
+      <td>선임 예정</td>
+      <td>신임 CEO</td>
+      <td>미정</td>
+      <td><span class="chip chip-gray">공석</span></td>
+      <td>이사회 CEO 후보 탐색 중</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="summary">
+  <strong>핵심 요약:</strong> Semafor 보도에 따르면 이사회는 테슬라 옵티머스 등 경쟁사에 격차가 좁혀지는 것에 불만을 갖고 경영진 교체를 압박한 것으로 알려졌습니다. 보스턴 다이나믹스는 공식 입장에서 "대량 생산 및 규모 확장을 지원하는 구조로 재편하기 위한 것"이라고 설명했습니다.
+</div>
+
+<div class="footer">※ 출처: Semafor(2026.05.01) · The Robot Report · TechCrunch · 이코노미트리뷴</div>
+</body>
+</html>
