@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>현대차-보스턴다이나믹스 로드맵</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+  :root {
+    --bg: #f7faff;
+    --card: #ffffff;
+    --accent: #0052d4;
+    --accent2: #4facfe;
+    --green: #00b894;
+    --orange: #fd7927;
+    --text: #1a2340;
+    --muted: #7a8aa0;
+    --line: #c7d9f5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 24px 20px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .sub { font-size: 12px; color: var(--muted); margin-bottom: 24px; }
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--green));
+    border-radius: 3px;
+  }
+  .item {
+    position: relative;
+    margin-bottom: 22px;
+  }
+  .dot {
+    position: absolute;
+    left: -30px;
+    top: 4px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px;
+    color: #fff;
+    font-weight: 900;
+  }
+  .item:nth-child(1) .dot { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+  .item:nth-child(2) .dot { background: #7b61ff; box-shadow: 0 0 0 2px #7b61ff; }
+  .item:nth-child(3) .dot { background: var(--orange); box-shadow: 0 0 0 2px var(--orange); }
+  .item:nth-child(4) .dot { background: var(--green); box-shadow: 0 0 0 2px var(--green); }
+  .item:nth-child(5) .dot { background: #e17055; box-shadow: 0 0 0 2px #e17055; }
+  .year-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .y2021 { background: var(--accent); }
+  .y2026 { background: #7b61ff; }
+  .y2027 { background: var(--orange); }
+  .y2028 { background: var(--green); }
+  .y2030 { background: #e17055; }
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 12px 15px;
+    border: 1.5px solid var(--line);
+    box-shadow: 0 2px 8px rgba(0,82,212,0.06);
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+  .tag-blue { background: #e8f0fe; color: var(--accent); }
+  .tag-green { background: #e6faf4; color: var(--green); }
+  .tag-org { background: #fff0e6; color: var(--orange); }
+  .footer { text-align: center; font-size: 11px; color: var(--muted); margin-top: 10px; }
+</style>
+</head>
+<body>
+<h2>🗓️ 현대차 × 보스턴 다이나믹스 — 로드맵</h2>
+<p class="sub">2021년 인수부터 2030년 완전 양산까지</p>
+
+<div class="timeline">
+  <div class="item">
+    <div class="dot">✓</div>
+    <div class="year-tag y2021">2021</div>
+    <div class="card">
+      <h3>현대차그룹, 보스턴 다이나믹스 인수</h3>
+      <p>소프트뱅크로부터 지분 80%를 약 6억6,000만 달러(약 7,300억원)에 인수. 계약에 "4년 내 IPO 추진" 조건 포함.</p>
+      <div class="tag-row">
+        <span class="tag tag-blue">지분 80% 인수</span>
+        <span class="tag tag-blue">기업가치 11억 달러</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="dot">★</div>
+    <div class="year-tag y2026">2026 (현재)</div>
+    <div class="card">
+      <h3>아틀라스 양산형 공개 & 첫 출하</h3>
+      <p>CES 2026에서 양산형 Atlas 공개. 2026년 분 전량 완판. 현대 RMAC·구글 딥마인드 납품 시작. 소프트뱅크 풋옵션 만료(6월).</p>
+      <div class="tag-row">
+        <span class="tag tag-blue">CES 2026 발표</span>
+        <span class="tag tag-org">IPO 6월 결정</span>
+        <span class="tag tag-green">구글 딥마인드 협력</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="dot">◆</div>
+    <div class="year-tag y2027">2027</div>
+    <div class="card">
+      <h3>추가 고객사 확보 & 나스닥 상장(예상)</h3>
+      <p>2027년 초부터 현대·구글 외 추가 고객사 수주 예정. 증권가에서는 이르면 2027년 나스닥 IPO 추진 가능성 관측.</p>
+      <div class="tag-row">
+        <span class="tag tag-blue">신규 고객사 수주</span>
+        <span class="tag tag-org">나스닥 IPO 추진(예상)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="dot">▲</div>
+    <div class="year-tag y2028">2028</div>
+    <div class="card">
+      <h3>현대차 조지아 공장 아틀라스 배치</h3>
+      <p>현대 메타플랜트 아메리카(Georgia)에 아틀라스 투입. 초기 임무: 부품 순서 배열(Parts Sequencing). 연 3만 대 생산 공장 완공 목표.</p>
+      <div class="tag-row">
+        <span class="tag tag-green">조지아 공장 배치</span>
+        <span class="tag tag-blue">연 3만 대 생산 목표</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="dot">●</div>
+    <div class="year-tag y2030">2030</div>
+    <div class="card">
+      <h3>완전 자동화 — 부품 조립까지 확장</h3>
+      <p>아틀라스 역할을 부품 조립·반복 작업·중량물 취급 등 전방위로 확장. 피지컬 AI 기반 스마트팩토리 완성 목표.</p>
+      <div class="tag-row">
+        <span class="tag tag-green">풀 어셈블리 작업</span>
+        <span class="tag tag-blue">스마트팩토리 완성</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">※ 출처: Boston Dynamics·Hyundai 공식 발표, Engadget, 뉴스스페이스(2026.05)</div>
+</body>
+</html>
