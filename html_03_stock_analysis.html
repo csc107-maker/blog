@@ -1,271 +1,300 @@
-<!-- [삽입 위치] 추천 종목 / 기업 분석 섹션 직후 -->
+<!-- [삽입 위치] 기업 분석 섹션 직후, "지속성장 근거" 섹션 바로 앞에 삽입 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>종목 분석 카드 — 2026.05.19</title>
+<title>추천 종목 분석 카드 — 2026.05.20</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     background: #faf5ff;
-    padding: 20px;
-  }
-  .wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 16px;
-    padding: 28px 28px 22px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    padding: 24px 16px;
   }
   .header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 22px;
+    text-align: center;
+    margin-bottom: 26px;
   }
-  .badge {
-    background: #ede9fe;
-    color: #5b21b6;
-    border-radius: 8px;
-    padding: 3px 11px;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-  .header h2 { font-size: 1.1rem; font-weight: 700; color: #1a2340; }
-  .header-date { margin-left: auto; font-size: 0.78rem; color: #6b7a99; }
+  .header h2 { font-size: 1.3rem; color: #4a1d96; font-weight: 700; margin-bottom: 6px; }
+  .header p  { font-size: 0.82rem; color: #6d3aad; }
 
-  .theme-label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #7c3aed;
-    background: #ede9fe;
-    display: inline-block;
-    border-radius: 8px;
-    padding: 4px 12px;
-    margin-bottom: 12px;
-    margin-top: 8px;
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
   .stock-card {
-    border-radius: 14px;
-    padding: 20px 22px;
-    margin-bottom: 18px;
-    border: 1.5px solid #e5e7eb;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+    overflow: hidden;
   }
-  .stock-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-  }
-  .stock-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 11px;
+  .card-header {
+    padding: 16px 18px 12px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    flex-shrink: 0;
+    gap: 12px;
   }
-  .stock-name { font-size: 1.05rem; font-weight: 800; color: #1e293b; }
-  .stock-ticker { font-size: 0.8rem; color: #64748b; font-weight: 600; margin-top:2px; }
-  .stock-desc { font-size: 0.82rem; color: #475569; line-height: 1.55; margin-bottom: 14px; }
+  .card-header.skhynix { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+  .card-header.samsung { background: linear-gradient(135deg, #fef9c3, #fef08a); }
+  .card-header.hanwha  { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+  .card-header.soil    { background: linear-gradient(135deg, #fef3c7, #fde68a); }
 
-  /* 테이블 */
-  .val-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 14px; }
-  .val-table th {
-    background: #f8fafc;
-    color: #64748b;
-    font-weight: 600;
-    padding: 7px 10px;
+  .ticker-badge {
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #1f2937;
+  }
+  .company-info { flex: 1; }
+  .company-name { font-size: 1.05rem; font-weight: 800; color: #111827; }
+  .company-sector { font-size: 0.75rem; color: #6b7280; margin-top: 2px; }
+  .rating-badge {
+    background: #16a34a;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .card-price-row {
+    padding: 14px 18px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .price-main { font-size: 1.7rem; font-weight: 800; color: #111827; }
+  .price-target { font-size: 0.82rem; color: #6b7280; }
+  .price-target strong { color: #16a34a; }
+
+  .metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 0.82rem;
+  }
+  .metrics-table th, .metrics-table td {
+    padding: 7px 18px;
+    border-bottom: 1px solid #f3f4f6;
     text-align: left;
-    border-bottom: 1px solid #e2e8f0;
   }
-  .val-table td {
-    padding: 7px 10px;
-    border-bottom: 1px solid #f1f5f9;
-    color: #334155;
-  }
-  .val-table td:last-child { font-weight: 700; color: #1e293b; }
+  .metrics-table th { color: #6b7280; font-weight: 600; width: 45%; }
+  .metrics-table td { color: #111827; font-weight: 700; }
+  .metrics-table tr:last-child th,
+  .metrics-table tr:last-child td { border-bottom: none; }
 
-  /* 태그 행 */
-  .tag-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
-  .tag {
-    display: inline-block;
+  .tags-section {
+    padding: 0 18px 14px;
+  }
+  .tags-label { font-size: 0.72rem; color: #6b7280; font-weight: 600; margin-bottom: 6px; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .tag-item {
     border-radius: 20px;
     padding: 3px 10px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
   }
   .tag-buy  { background: #dcfce7; color: #15803d; }
   .tag-risk { background: #fee2e2; color: #b91c1c; }
-  .tag-neut { background: #fef9c3; color: #92400e; }
 
-  /* 카드별 */
-  .c-hynix  { background: #f0f8ff; }
-  .c-hynix .stock-icon { background: #dbeafe; }
-  .c-samsung { background: #fff8f0; }
-  .c-samsung .stock-icon { background: #ffedd5; }
-  .c-doosan { background: #f0fdf4; }
-  .c-doosan .stock-icon { background: #dcfce7; }
-  .c-rainbow { background: #fdf4ff; }
-  .c-rainbow .stock-icon { background: #f3e8ff; }
-  .c-hanwha  { background: #fffbf0; }
-  .c-hanwha .stock-icon { background: #fef3c7; }
+  .conclusion-box {
+    margin: 0 18px 16px;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    color: #374151;
+    line-height: 1.55;
+    border-left: 4px solid #7c3aed;
+  }
+  .conclusion-box strong { color: #4a1d96; }
 
-  .disclaimer { font-size: 0.7rem; color: #aab0c0; margin-top: 14px; text-align: center; }
+  .disclaimer {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    margin-top: 20px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="header">
-    <span class="badge">📋 종목 분석</span>
-    <h2>오늘의 주목 종목 5선 — 밸류에이션 전문 카드</h2>
-    <span class="header-date">2026.05.19 기준</span>
-  </div>
 
-  <!-- 테마 1: AI 메모리 -->
-  <div class="theme-label">🔵 테마 1: AI 메모리 — 조정 후 반등 가능성</div>
+<div class="header">
+  <h2>🏆 오늘의 추천 종목 분석 카드 — 2026.05.20</h2>
+  <p>선정 기준: VIX 완화 + 고유가 + AI메모리 슈퍼사이클 + 방산 수요 / 출처: Bloomberg, Mirae Asset, UBS, Goldman Sachs</p>
+</div>
+
+<div class="cards-grid">
 
   <!-- SK하이닉스 -->
-  <div class="stock-card c-hynix">
-    <div class="stock-header">
-      <div class="stock-icon">🧠</div>
-      <div>
-        <div class="stock-name">SK하이닉스</div>
-        <div class="stock-ticker">KS: 000660 · KOSPI 대형주</div>
+  <div class="stock-card">
+    <div class="card-header skhynix">
+      <div><span class="ticker-badge">000660</span></div>
+      <div class="company-info">
+        <div class="company-name">SK하이닉스</div>
+        <div class="company-sector">반도체 · HBM · AI메모리</div>
+      </div>
+      <span class="rating-badge">Strong Buy</span>
+    </div>
+    <div class="card-price-row">
+      <span class="price-main">₩1,745,000</span>
+      <span class="price-target">목표가 <strong>₩1,790,287</strong> (평균) / 최고 ₩2,700,000</span>
+    </div>
+    <table class="metrics-table">
+      <tr><th>P/B (Mirae Asset)</th><td>4.1x</td></tr>
+      <tr><th>2026F 매출</th><td>230조원 (+136% YoY)</td></tr>
+      <tr><th>2026F 영업이익</th><td>148조원 (+213% YoY)</td></tr>
+      <tr><th>1Q 영업이익률</th><td>72% (역대 제조업 최고)</td></tr>
+      <tr><th>커버리지 증권사</th><td>36개사 전원 매수</td></tr>
+      <tr><th>52주 수익률</th><td>대폭 상승</td></tr>
+    </table>
+    <div class="tags-section">
+      <div class="tags-label">📗 매수 근거</div>
+      <div class="tag-list">
+        <span class="tag-item tag-buy">HBM 독점 공급</span>
+        <span class="tag-item tag-buy">2028년까지 공급부족</span>
+        <span class="tag-item tag-buy">메모리 30년 슈퍼사이클</span>
+        <span class="tag-item tag-buy">영업이익률 72%</span>
+      </div>
+      <div class="tags-label">📕 리스크</div>
+      <div class="tag-list">
+        <span class="tag-item tag-risk">삼성 추격 리스크</span>
+        <span class="tag-item tag-risk">고금리 밸류 압박</span>
       </div>
     </div>
-    <p class="stock-desc">세계 HBM(고대역폭 메모리) 절대 강자. 엔비디아 AI 가속기(H100/H200/B200)에 HBM3E 독점 공급. 2026년 1분기 영업이익률 71.5% 달성. 시가총액 1조 달러 돌파 임박.</p>
-    <table class="val-table">
-      <tr><th>지표</th><th>수치</th><th>평가</th></tr>
-      <tr><td>TTM PER</td><td>~15.5배</td><td>고성장 대비 합리적</td></tr>
-      <tr><td>Forward PER (2026E)</td><td>~5.25배</td><td>이익 대비 저평가</td></tr>
-      <tr><td>ROE</td><td>61.17%</td><td>업계 최상위</td></tr>
-      <tr><td>ROIC</td><td>52.33%</td><td>자본 효율성 탁월</td></tr>
-      <tr><td>2026 Q1 영업이익률</td><td>71.5%</td><td>사상 최고 수준</td></tr>
-      <tr><td>52주 주가 상승률</td><td>+789.25%</td><td>AI 테마 랠리</td></tr>
-    </table>
-    <div class="tag-row">
-      <span class="tag tag-buy">✅ HBM 독점 공급</span>
-      <span class="tag tag-buy">✅ 2028년까지 공급 부족</span>
-      <span class="tag tag-buy">✅ Forward PER 5배 저평가</span>
-      <span class="tag tag-risk">⚠️ 달러강세 외국인 매도</span>
-      <span class="tag tag-risk">⚠️ 삼성 HBM4 경쟁</span>
-    </div>
+    <div class="conclusion-box"><strong>📍 오늘 전략:</strong> 7,500 코스피 저점 구간에서 HBM 섹터 저점 매수 유효. 목표가 기준 업사이드 약 2.6% (평균) ~ 54.7% (최고)</div>
   </div>
 
   <!-- 삼성전자 -->
-  <div class="stock-card c-samsung">
-    <div class="stock-header">
-      <div class="stock-icon">📱</div>
-      <div>
-        <div class="stock-name">삼성전자</div>
-        <div class="stock-ticker">KS: 005930 · KOSPI 대형주</div>
+  <div class="stock-card">
+    <div class="card-header samsung">
+      <div><span class="ticker-badge">005930</span></div>
+      <div class="company-info">
+        <div class="company-name">삼성전자</div>
+        <div class="company-sector">반도체 · 파운드리 · 스마트폰</div>
+      </div>
+      <span class="rating-badge">매수 우위</span>
+    </div>
+    <div class="card-price-row">
+      <span class="price-main">₩275,500</span>
+      <span class="price-target">52주 수익률 <strong>+420%</strong></span>
+    </div>
+    <table class="metrics-table">
+      <tr><th>P/E (TTM)</th><td>21.73x</td></tr>
+      <tr><th>Forward P/E</th><td>5.93x (극단적 저평가)</td></tr>
+      <tr><th>ROE</th><td>18.85%</td></tr>
+      <tr><th>ROIC</th><td>22.73%</td></tr>
+      <tr><th>시가총액</th><td>1,885.92조원</td></tr>
+      <tr><th>EV/EBITDA</th><td>12.39x</td></tr>
+    </table>
+    <div class="tags-section">
+      <div class="tags-label">📗 매수 근거</div>
+      <div class="tag-list">
+        <span class="tag-item tag-buy">Forward PER 5.93x 초저평가</span>
+        <span class="tag-item tag-buy">AI 파운드리 확장</span>
+        <span class="tag-item tag-buy">HBM 격차 축소 중</span>
+        <span class="tag-item tag-buy">수출 사상 최고</span>
+      </div>
+      <div class="tags-label">📕 리스크</div>
+      <div class="tag-list">
+        <span class="tag-item tag-risk">노사 갈등 재발 가능성</span>
+        <span class="tag-item tag-risk">HBM SK하이닉스 대비 후발</span>
       </div>
     </div>
-    <p class="stock-desc">글로벌 종합 반도체·가전 공룡. 시총 1조 달러 돌파 달성. HBM4 양산 박차로 SK하이닉스 추격전. 파운드리 GAA 공정 경쟁력 강화 중. 낙폭 과대 구간 진입.</p>
-    <table class="val-table">
-      <tr><th>지표</th><th>수치</th><th>평가</th></tr>
-      <tr><td>시가총액</td><td>1조 달러 이상</td><td>글로벌 초대형주</td></tr>
-      <tr><td>주요 사업</td><td>DS/MX/VD·DA</td><td>사업 다각화</td></tr>
-      <tr><td>HBM4 상태</td><td>양산 준비 중</td><td>SK하이닉스 추격</td></tr>
-      <tr><td>주간 낙폭</td><td>-7.77%</td><td>낙폭 과대 구간</td></tr>
-    </table>
-    <div class="tag-row">
-      <span class="tag tag-buy">✅ HBM4 양산 모멘텀</span>
-      <span class="tag tag-buy">✅ 낙폭 과대 반등 기대</span>
-      <span class="tag tag-risk">⚠️ 노조 파업 이슈</span>
-      <span class="tag tag-risk">⚠️ HBM 점유율 열위</span>
-    </div>
+    <div class="conclusion-box"><strong>📍 오늘 전략:</strong> Forward PER 5.93x는 글로벌 반도체 중 최저 수준. 노사 이슈 완화 + 반도체 수출 호조 = 저점 매수 기회</div>
   </div>
-
-  <!-- 테마 2: 로보틱스 -->
-  <div class="theme-label">🟢 테마 2: 로보틱스 — 외국인 순매수 집중</div>
-
-  <!-- 두산로보틱스 -->
-  <div class="stock-card c-doosan">
-    <div class="stock-header">
-      <div class="stock-icon">🤖</div>
-      <div>
-        <div class="stock-name">두산로보틱스</div>
-        <div class="stock-ticker">KS: 454910 · KOSPI 중형주</div>
-      </div>
-    </div>
-    <p class="stock-desc">국내 협동로봇(코봇) 1위. 스마트팩토리·자동화 솔루션 전문. 외국인 5월 2주차 3,160억 원 순매수 — 반도체 이탈 자금의 직접 수혜처.</p>
-    <table class="val-table">
-      <tr><th>지표</th><th>수치</th><th>평가</th></tr>
-      <tr><td>시가총액</td><td>약 6.5조 원</td><td>중형 성장주</td></tr>
-      <tr><td>주요 제품</td><td>산업용 협동로봇</td><td>글로벌 수요 확대</td></tr>
-      <tr><td>외국인 순매수</td><td>+3,160억 원</td><td>관심 집중 확인</td></tr>
-      <tr><td>영업 상태</td><td>성장 투자 중</td><td>일부 분기 적자</td></tr>
-    </table>
-    <div class="tag-row">
-      <span class="tag tag-buy">✅ 외국인 매수 확인</span>
-      <span class="tag tag-buy">✅ AI+로봇 융합 테마</span>
-      <span class="tag tag-risk">⚠️ 성장 단계 적자</span>
-      <span class="tag tag-risk">⚠️ 고금리 밸류에이션 부담</span>
-    </div>
-  </div>
-
-  <!-- 레인보우로보틱스 -->
-  <div class="stock-card c-rainbow">
-    <div class="stock-header">
-      <div class="stock-icon">🦿</div>
-      <div>
-        <div class="stock-name">레인보우로보틱스</div>
-        <div class="stock-ticker">KQ: 277810 · KOSDAQ</div>
-      </div>
-    </div>
-    <p class="stock-desc">삼성전자 전략 투자 받은 휴머노이드 로봇 기업. 이족보행 로봇·협동로봇 개발. 외국인 1,770억 순매수. 차세대 로봇 혁명의 핵심 수혜주.</p>
-    <table class="val-table">
-      <tr><th>지표</th><th>수치</th><th>평가</th></tr>
-      <tr><td>시가총액</td><td>약 12.9조 원</td><td>성장 기대 반영</td></tr>
-      <tr><td>주요 사업</td><td>협동·이족보행·휴머노이드</td><td>풀스택 로봇</td></tr>
-      <tr><td>주요 주주</td><td>삼성전자 전략 투자</td><td>후광 효과 강력</td></tr>
-      <tr><td>외국인 순매수</td><td>+1,770억 원</td><td>관심 집중</td></tr>
-    </table>
-    <div class="tag-row">
-      <span class="tag tag-buy">✅ 삼성전자 전략 파트너</span>
-      <span class="tag tag-buy">✅ 글로벌 휴머노이드 붐</span>
-      <span class="tag tag-risk">⚠️ 초기 수익 창출 단계</span>
-      <span class="tag tag-risk">⚠️ 금리 상승 시 고PER 타격</span>
-    </div>
-  </div>
-
-  <!-- 테마 3: 방산 -->
-  <div class="theme-label">🟡 테마 3: 방산 — 중동 지정학 헤지</div>
 
   <!-- 한화에어로스페이스 -->
-  <div class="stock-card c-hanwha">
-    <div class="stock-header">
-      <div class="stock-icon">🚀</div>
-      <div>
-        <div class="stock-name">한화에어로스페이스</div>
-        <div class="stock-ticker">KS: 012450 · KOSPI 중대형주</div>
+  <div class="stock-card">
+    <div class="card-header hanwha">
+      <div><span class="ticker-badge">012450</span></div>
+      <div class="company-info">
+        <div class="company-name">한화에어로스페이스</div>
+        <div class="company-sector">방산 · 항공우주 · 에너지</div>
+      </div>
+      <span class="rating-badge">Strong Buy</span>
+    </div>
+    <div class="card-price-row">
+      <span class="price-main">₩1,315,000</span>
+      <span class="price-target">목표가 평균 <strong>₩1,719,762</strong> / 최고 ₩2,100,000</span>
+    </div>
+    <table class="metrics-table">
+      <tr><th>시가총액</th><td>67.24조원</td></tr>
+      <tr><th>P/E (추정)</th><td>약 46x (방산 프리미엄)</td></tr>
+      <tr><th>EPS (TTM)</th><td>28,530원</td></tr>
+      <tr><th>커버리지 증권사</th><td>21개사 전원 매수</td></tr>
+      <tr><th>업사이드 (평균)</th><td>약 +30.9%</td></tr>
+      <tr><th>주요 제품</th><td>K9 자주포, 레드백 장갑차</td></tr>
+    </table>
+    <div class="tags-section">
+      <div class="tags-label">📗 매수 근거</div>
+      <div class="tag-list">
+        <span class="tag-item tag-buy">이란 전쟁 방산 수요 급증</span>
+        <span class="tag-item tag-buy">K방산 글로벌 수주 확대</span>
+        <span class="tag-item tag-buy">21개사 전원 매수</span>
+        <span class="tag-item tag-buy">에너지·우주항공 다각화</span>
+      </div>
+      <div class="tags-label">📕 리스크</div>
+      <div class="tag-list">
+        <span class="tag-item tag-risk">이란 평화협상 타결 시 수요 둔화</span>
+        <span class="tag-item tag-risk">고PER 부담</span>
       </div>
     </div>
-    <p class="stock-desc">K9 자주포, 천무 다연장 로켓 세계 수출 1위 방산 기업. 항공엔진·우주사업 겸영. 중동 지정학 리스크 고조 시 방산 수주 수혜 예상.</p>
-    <table class="val-table">
-      <tr><th>지표</th><th>수치</th><th>평가</th></tr>
-      <tr><td>주요 제품</td><td>K9 자주포, 천무, 항공엔진</td><td>검증된 수출 플랫폼</td></tr>
-      <tr><td>수출 국가</td><td>폴란드, 호주, 사우디 등</td><td>글로벌 수주 확대</td></tr>
-      <tr><td>사업 다각화</td><td>방산+우주+항공</td><td>성장 다변화</td></tr>
-    </table>
-    <div class="tag-row">
-      <span class="tag tag-buy">✅ 중동 리스크 헤지 수혜</span>
-      <span class="tag tag-buy">✅ K-방산 수출 정부 지원</span>
-      <span class="tag tag-risk">⚠️ 지정학 완화 시 기대감 소멸</span>
-      <span class="tag tag-neut">⚡ 주가 선반영 여부 체크</span>
-    </div>
+    <div class="conclusion-box"><strong>📍 오늘 전략:</strong> 지정학 리스크 지속 = 방산 수요 중장기 강세. 평화협상 타결 리스크에 대비해 비중 15% 이내 권장</div>
   </div>
 
-  <p class="disclaimer">⚠️ 본 내용은 투자 정보 제공 목적이며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다. 밸류에이션 수치는 Bloomberg, Yahoo Finance 등 공개 자료 기반 추정치입니다.</p>
+  <!-- S-Oil -->
+  <div class="stock-card">
+    <div class="card-header soil">
+      <div><span class="ticker-badge">010950</span></div>
+      <div class="company-info">
+        <div class="company-name">S-Oil</div>
+        <div class="company-sector">정유 · 석유화학 · 고유가 수혜</div>
+      </div>
+      <span class="rating-badge">GS 최우선 매수</span>
+    </div>
+    <div class="card-price-row">
+      <span class="price-main">S-Oil</span>
+      <span class="price-target">2027F FCF 수익률 <strong>17%</strong></span>
+    </div>
+    <table class="metrics-table">
+      <tr><th>대주주</th><td>사우디 아람코</td></tr>
+      <tr><th>2027F FCF yield</th><td>17% (Goldman Sachs)</td></tr>
+      <tr><th>샤힌 컴플렉스</th><td>2026년 중반 완공 ($69억)</td></tr>
+      <tr><th>중간 증류유 비중</th><td>58% (고유가 최적화)</td></tr>
+      <tr><th>투자의견</th><td>Goldman Sachs 글로벌 최우선</td></tr>
+      <tr><th>WTI 연관성</th><td>직접 수혜 (고유가 마진 개선)</td></tr>
+    </table>
+    <div class="tags-section">
+      <div class="tags-label">📗 매수 근거</div>
+      <div class="tag-list">
+        <span class="tag-item tag-buy">WTI $100+ 직접 수혜</span>
+        <span class="tag-item tag-buy">샤힌 완공 FCF 폭발</span>
+        <span class="tag-item tag-buy">GS 글로벌 최우선 정유주</span>
+        <span class="tag-item tag-buy">IMO 저유황 규정 수혜</span>
+      </div>
+      <div class="tags-label">📕 리스크</div>
+      <div class="tag-list">
+        <span class="tag-item tag-risk">이란 평화→유가 급락 리스크</span>
+        <span class="tag-item tag-risk">중국 정제능력 확대</span>
+      </div>
+    </div>
+    <div class="conclusion-box"><strong>📍 오늘 전략:</strong> 고유가 지속 + 샤힌 완공 임박 = 2H26 최대 수혜 구간 진입 중. FCF 수익률 17%는 정유업 역대급 수준</div>
+  </div>
+
 </div>
+
+<p class="disclaimer">⚠️ 본 자료는 투자 정보 제공 목적으로 작성되었으며 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.<br>출처: Bloomberg, Mirae Asset, UBS, Goldman Sachs, JPMorgan, 각 사 공시 (2026.05 기준)</p>
+
 </body>
 </html>
