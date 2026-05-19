@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas 스펙 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Orbitron:wght@700&display=swap');
+  :root {
+    --bg: #f0f6ff;
+    --card: #ffffff;
+    --accent: #1a6ef5;
+    --accent2: #00c2a8;
+    --text: #1a2340;
+    --muted: #6b7da0;
+    --border: #dbe6ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 24px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .header h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+  .header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+  .spec-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 14px 14px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(26,110,245,0.07);
+    transition: transform 0.2s;
+  }
+  .spec-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(26,110,245,0.13); }
+  .spec-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .spec-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .spec-unit {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+  }
+  .spec-label {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .highlight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .highlight-card {
+    background: linear-gradient(135deg, #1a6ef5 0%, #00c2a8 100%);
+    border-radius: 14px;
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .highlight-card .icon { font-size: 32px; }
+  .highlight-card .txt { }
+  .highlight-card .txt strong { font-size: 15px; font-weight: 900; display: block; }
+  .highlight-card .txt span { font-size: 12px; opacity: 0.85; }
+  .footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="badge">CES 2026 공개 양산형</div>
+  <h2>ATLAS — 제품 스펙</h2>
+  <p>Boston Dynamics 최초 엔터프라이즈급 휴머노이드 로봇</p>
+</div>
+
+<div class="grid">
+  <div class="spec-card">
+    <div class="spec-icon">📏</div>
+    <div class="spec-value">189<span style="font-size:13px">cm</span></div>
+    <div class="spec-unit">키(신장)</div>
+    <div class="spec-label">6.2 ft</div>
+  </div>
+  <div class="spec-card">
+    <div class="spec-icon">🦾</div>
+    <div class="spec-value">2.3<span style="font-size:13px">m</span></div>
+    <div class="spec-unit">팔 뻗기 범위</div>
+    <div class="spec-label">7.5 ft reach</div>
+  </div>
+  <div class="spec-card">
+    <div class="spec-icon">🏋️</div>
+    <div class="spec-value">30<span style="font-size:13px">kg</span></div>
+    <div class="spec-unit">최대 가반 하중</div>
+    <div class="spec-label">66 lbs</div>
+  </div>
+  <div class="spec-card">
+    <div class="spec-icon">🌡️</div>
+    <div class="spec-value">-20°~40°</div>
+    <div class="spec-unit">동작 가능 온도</div>
+    <div class="spec-label">영하 20도 ~ 섭씨 40도</div>
+  </div>
+  <div class="spec-card">
+    <div class="spec-icon">💧</div>
+    <div class="spec-value">IP67</div>
+    <div class="spec-unit">방수·방진 등급</div>
+    <div class="spec-label">물 세척 가능</div>
+  </div>
+  <div class="spec-card">
+    <div class="spec-icon">🔋</div>
+    <div class="spec-value">자율</div>
+    <div class="spec-unit">배터리 교체</div>
+    <div class="spec-label">무중단 운영</div>
+  </div>
+</div>
+
+<div class="highlight-row">
+  <div class="highlight-card">
+    <div class="icon">🏭</div>
+    <div class="txt">
+      <strong>3가지 제어 방식</strong>
+      <span>자율모드 / 원격조종 / 태블릿 스티어링</span>
+    </div>
+  </div>
+  <div class="highlight-card">
+    <div class="icon">🔗</div>
+    <div class="txt">
+      <strong>시스템 연동</strong>
+      <span>MES·WMS 등 산업 시스템 연결 가능 (Orbit™ 소프트웨어)</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">※ 출처: Boston Dynamics 공식 발표(CES 2026) · Engadget · Automate.org</div>
+</body>
+</html>
