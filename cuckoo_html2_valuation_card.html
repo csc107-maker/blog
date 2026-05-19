@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠쿠홀딩스 밸류에이션 분석 - PER·PBR·ROE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=DM+Mono:wght@400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0fdf4;
+    padding: 24px 16px;
+  }
+
+  .val-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .val-header {
+    background: linear-gradient(135deg, #064e3b 0%, #059669 60%, #34d399 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 26px 32px 20px;
+    color: white;
+  }
+
+  .val-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 3px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+
+  .val-header h2 {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 3px;
+  }
+
+  .val-header p {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .gauge-section {
+    background: white;
+    border: 1px solid #d1fae5;
+    border-top: none;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .gauge-item {
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 12px;
+    border: 2px solid;
+  }
+
+  .gauge-item.per {
+    background: #fef9f0;
+    border-color: #f59e0b;
+  }
+
+  .gauge-item.pbr {
+    background: #eff6ff;
+    border-color: #3b82f6;
+  }
+
+  .gauge-item.roe {
+    background: #f0fdf4;
+    border-color: #22c55e;
+  }
+
+  .gauge-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .gauge-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: #475569;
+  }
+
+  .gauge-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .gauge-item.per .gauge-value { color: #d97706; }
+  .gauge-item.pbr .gauge-value { color: #2563eb; }
+  .gauge-item.roe .gauge-value { color: #16a34a; }
+
+  .gauge-unit {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+  }
+
+  .gauge-bar-bg {
+    background: #e2e8f0;
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+    margin: 4px 0;
+  }
+
+  .gauge-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .per-fill { background: linear-gradient(90deg, #fbbf24, #f59e0b); width: 45%; }
+  .pbr-fill { background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 38%; }
+  .roe-fill { background: linear-gradient(90deg, #4ade80, #22c55e); width: 61%; }
+
+  .gauge-comment {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .comparison-section {
+    background: white;
+    border: 1px solid #d1fae5;
+    border-top: none;
+    padding: 20px 24px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 16px;
+    background: #059669;
+    border-radius: 2px;
+  }
+
+  table.comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.comp-table th {
+    background: #f0fdf4;
+    color: #166534;
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: center;
+    border: 1px solid #bbf7d0;
+    font-size: 12px;
+  }
+
+  table.comp-table td {
+    padding: 9px 12px;
+    text-align: center;
+    border: 1px solid #d1fae5;
+    color: #1e293b;
+    font-size: 12.5px;
+  }
+
+  table.comp-table tr:nth-child(even) td { background: #f8fffe; }
+
+  .highlight-td {
+    background: #dcfce7 !important;
+    font-weight: 700;
+    color: #166534;
+  }
+
+  .verdict-section {
+    background: #ecfdf5;
+    border: 1px solid #d1fae5;
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 18px 24px;
+  }
+
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .verdict-item {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 12px;
+    border: 1px solid #d1fae5;
+    text-align: center;
+  }
+
+  .verdict-label {
+    font-size: 11px;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .verdict-signal {
+    font-size: 18px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .signal-buy { color: #dc2626; }
+  .signal-hold { color: #d97706; }
+  .signal-attractive { color: #16a34a; }
+
+  .verdict-desc {
+    font-size: 11px;
+    color: #64748b;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+<div class="val-wrapper">
+  <div class="val-header">
+    <div class="badge">💹 밸류에이션 분석</div>
+    <h2>PER · PBR · ROE 심층 분석</h2>
+    <p>쿠쿠홀딩스(192400) | 기준: 2026년 5월 19일 | 주가 약 27,300~29,100원</p>
+  </div>
+
+  <div class="gauge-section">
+    <div class="gauge-item per">
+      <div class="gauge-icon">📊</div>
+      <div class="gauge-name">PER</div>
+      <div class="gauge-value">7.0</div>
+      <div class="gauge-unit">배 (TTM 기준)</div>
+      <div class="gauge-bar-bg"><div class="gauge-bar-fill per-fill"></div></div>
+      <div class="gauge-comment">코스피 평균 13~15배 대비<br><b>절반 수준의 저평가</b></div>
+    </div>
+    <div class="gauge-item pbr">
+      <div class="gauge-icon">📘</div>
+      <div class="gauge-name">PBR</div>
+      <div class="gauge-value">0.77</div>
+      <div class="gauge-unit">배 (현재 기준)</div>
+      <div class="gauge-bar-bg"><div class="gauge-bar-fill pbr-fill"></div></div>
+      <div class="gauge-comment">순자산 대비 주가<br><b>장부가보다 낮음(할인)</b></div>
+    </div>
+    <div class="gauge-item roe">
+      <div class="gauge-icon">💰</div>
+      <div class="gauge-name">ROE</div>
+      <div class="gauge-value">12.1%</div>
+      <div class="gauge-unit">(2024 기준)</div>
+      <div class="gauge-bar-bg"><div class="gauge-bar-fill roe-fill"></div></div>
+      <div class="gauge-comment">코스피 평균 8~10%<br><b>초과 수익성 확인</b></div>
+    </div>
+  </div>
+
+  <div class="comparison-section">
+    <div class="section-title">연도별 밸류에이션 히스토리 (쿠쿠홀딩스)</div>
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>연도</th>
+          <th>매출액(억)</th>
+          <th>EPS(원)</th>
+          <th>PER(배)</th>
+          <th>PBR(배)</th>
+          <th>ROE(%)</th>
+          <th>배당수익률</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2021</td>
+          <td>6,851</td>
+          <td>3,638</td>
+          <td>5.3</td>
+          <td>0.8</td>
+          <td>15.9</td>
+          <td>3.7%</td>
+        </tr>
+        <tr>
+          <td>2022</td>
+          <td>7,556</td>
+          <td>3,281</td>
+          <td>5.0</td>
+          <td>0.6</td>
+          <td>12.7</td>
+          <td>4.9%</td>
+        </tr>
+        <tr>
+          <td>2023</td>
+          <td>7,724</td>
+          <td>3,659</td>
+          <td>4.7</td>
+          <td>0.5</td>
+          <td>12.7</td>
+          <td>6.7%</td>
+        </tr>
+        <tr>
+          <td>2024</td>
+          <td>8,339</td>
+          <td>3,861</td>
+          <td>6.0</td>
+          <td>0.7</td>
+          <td>12.1</td>
+          <td>5.2%</td>
+        </tr>
+        <tr>
+          <td>2025 연간</td>
+          <td>9,376</td>
+          <td>4,200~</td>
+          <td>~7.0</td>
+          <td>0.77</td>
+          <td>12.0~</td>
+          <td>5.33%</td>
+        </tr>
+        <tr>
+          <td class="highlight-td">2026 현재</td>
+          <td class="highlight-td">성장 지속</td>
+          <td class="highlight-td">4,300+ 예상</td>
+          <td class="highlight-td">7.0~7.5</td>
+          <td class="highlight-td">0.77</td>
+          <td class="highlight-td">12%+</td>
+          <td class="highlight-td">5.33%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict-section">
+    <div class="section-title">투자지표 종합 판단</div>
+    <div class="verdict-grid">
+      <div class="verdict-item">
+        <div class="verdict-label">PER 관점</div>
+        <div class="verdict-signal signal-buy">매력적 ✅</div>
+        <div class="verdict-desc">업종 평균 대비 현저히 낮은 수준. 이익 성장 지속 시 밸류에이션 리레이팅 가능</div>
+      </div>
+      <div class="verdict-item">
+        <div class="verdict-label">PBR 관점</div>
+        <div class="verdict-signal signal-attractive">할인 중 💡</div>
+        <div class="verdict-desc">PBR 1배 미만은 순자산보다 낮은 가격. 지주사 할인 감안해도 저평가 수준</div>
+      </div>
+      <div class="verdict-item">
+        <div class="verdict-label">ROE 관점</div>
+        <div class="verdict-signal signal-hold">양호 ⭕</div>
+        <div class="verdict-desc">12% ROE는 코스피 평균 초과. 배당 확대 기조와 맞물려 주주환원 매력도 상승</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
