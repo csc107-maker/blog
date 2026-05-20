@@ -1,138 +1,236 @@
-<!-- [삽입 위치] VIX 분석 섹션 직후, "WTI 유가 분석" 섹션 바로 앞에 삽입 -->
+<!-- [삽입 위치] VIX 분석 섹션 직후 삽입 — 2026.05.21 모닝 리포트 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글로벌 지표 카드 — 2026.05.20</title>
+<title>글로벌 지표 카드 — 2026.05.21</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
     background: #f0f6ff;
-    padding: 24px 16px;
+    padding: 28px 16px;
   }
   .report-header {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
   .report-header h2 {
-    font-size: 1.3rem;
-    color: #1a3a6b;
-    font-weight: 700;
-    margin-bottom: 6px;
+    font-size: 1.4rem;
+    color: #1a3a5c;
+    font-weight: 800;
+    letter-spacing: -0.5px;
   }
   .report-header p {
-    font-size: 0.82rem;
-    color: #5a7096;
+    font-size: 0.85rem;
+    color: #5a7a9a;
+    margin-top: 4px;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
-    max-width: 1000px;
+    max-width: 960px;
     margin: 0 auto;
   }
   .card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 20px 22px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    border-left: 5px solid #ccc;
-    position: relative;
-    transition: transform 0.2s;
+    padding: 20px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid #3a7bd5;
+    transition: transform 0.15s;
   }
-  .card:hover { transform: translateY(-3px); }
-  .card.vix   { border-left-color: #ff8c42; background: #fff8f2; }
-  .card.wti   { border-left-color: #e63946; background: #fff5f5; }
-  .card.krw   { border-left-color: #457b9d; background: #f0f7ff; }
-  .card.dxy   { border-left-color: #2a9d8f; background: #f0fdf9; }
-  .card.bond  { border-left-color: #9b5de5; background: #f9f0ff; }
-  .card.ewy   { border-left-color: #f4a261; background: #fffbf0; }
-  .card-icon { font-size: 1.6rem; margin-bottom: 6px; }
-  .card-label { font-size: 0.75rem; color: #6b7280; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
-  .card-name { font-size: 0.95rem; font-weight: 700; color: #1f2937; margin-bottom: 10px; }
-  .card-value { font-size: 2rem; font-weight: 800; color: #111827; line-height: 1; margin-bottom: 8px; }
-  .card-unit { font-size: 1rem; font-weight: 400; color: #6b7280; margin-left: 2px; }
-  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
-  .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; }
-  .badge.down  { background: #dcfce7; color: #166534; }
-  .badge.up    { background: #fee2e2; color: #991b1b; }
-  .badge.neutral { background: #e0f2fe; color: #075985; }
-  .signal { font-size: 0.82rem; color: #374151; background: rgba(0,0,0,0.04); border-radius: 8px; padding: 7px 10px; margin-top: 6px; line-height: 1.5; }
-  .signal strong { color: #1a3a6b; }
-  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 14px 0 10px; }
-  .range-row { display: flex; justify-content: space-between; font-size: 0.75rem; color: #6b7280; }
-  .disclaimer { text-align: center; font-size: 0.72rem; color: #9ca3af; margin-top: 20px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.11); }
+  .card.green  { border-top-color: #22c55e; }
+  .card.red    { border-top-color: #ef4444; }
+  .card.amber  { border-top-color: #f59e0b; }
+  .card.purple { border-top-color: #8b5cf6; }
+  .card.teal   { border-top-color: #14b8a6; }
+  .card-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #7a8fa8;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .card-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin-bottom: 10px;
+  }
+  .card-value {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: #1a3a5c;
+    letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+  .card-value .unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #5a7a9a;
+  }
+  .card-change {
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .up   { background: #dcfce7; color: #16a34a; }
+  .down { background: #fee2e2; color: #dc2626; }
+  .neu  { background: #e0f2fe; color: #0369a1; }
+  .card-desc {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.6;
+    border-top: 1px solid #f0f4f8;
+    padding-top: 10px;
+  }
+  .signal-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .signal-label { font-size: 0.72rem; color: #7a8fa8; font-weight: 600; }
+  .signal-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .sig-neutral { background: #f59e0b; }
+  .sig-bullish { background: #22c55e; }
+  .sig-bearish { background: #ef4444; }
+  .sig-caution { background: #f97316; }
+  .footer-note {
+    text-align: center;
+    font-size: 0.73rem;
+    color: #94a3b8;
+    margin-top: 20px;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  @media (max-width: 480px) {
+    .card-value { font-size: 1.45rem; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    body { padding: 14px 8px; }
+  }
 </style>
 </head>
 <body>
+
 <div class="report-header">
-  <h2>📊 2026.05.20 글로벌 시장 지표 — 개장 전 점검</h2>
-  <p>기준: 2026년 5월 19~20일 종가 / 출처: Bloomberg, Investing.com, Yahoo Finance</p>
+  <h2>📊 2026년 5월 21일 — 글로벌 시장 지표 현황</h2>
+  <p>한국 증시 개장 전 핵심 지표 요약 | 기준: 전일 뉴욕 시장 마감</p>
 </div>
+
 <div class="grid">
-  <div class="card vix">
-    <div class="card-icon">😰</div>
-    <div class="card-label">공포 지수</div>
-    <div class="card-name">VIX Volatility Index</div>
-    <div class="card-value">17.82<span class="card-unit">pt</span></div>
-    <div class="badge-row"><span class="badge down">▼ -3.31%</span><span class="badge neutral">정상 구간</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>📉 전월比 -28%</span><span>정상범위: 10~80</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> 공포 완화 → 위험자산 선호 회복. 반도체·기술주 매수세 유입 기대</div>
+
+  <div class="card amber">
+    <div class="card-label">📉 공포지수</div>
+    <div class="card-name">VIX 변동성 지수</div>
+    <div class="card-value">18.06</div>
+    <div class="card-change up">▲ +1.35%</div>
+    <div class="card-desc">
+      20 미만 → 시장 안정권 유지<br>
+      범위: 10~80 | 오늘 수준: <strong>중립~경계</strong>
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-neutral"></span>
+      <span class="signal-label">신호: 중립 — 20선 돌파 여부 주시</span>
+    </div>
   </div>
-  <div class="card wti">
-    <div class="card-icon">🛢️</div>
-    <div class="card-label">국제 유가</div>
-    <div class="card-name">WTI Crude Oil (CLM26)</div>
-    <div class="card-value">$103.58<span class="card-unit">/배럴</span></div>
-    <div class="badge-row"><span class="badge up">▲ 고유가 지속</span><span class="badge neutral">호르무즈 봉쇄</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>5/1 고점: $106</span><span>정상범위: $40~$150</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> 정유·에너지株 직접 수혜. 인플레 우려로 채권금리 상승 압력</div>
+
+  <div class="card red">
+    <div class="card-label">🛢️ 에너지</div>
+    <div class="card-name">WTI 원유 가격</div>
+    <div class="card-value">$101.85<span class="unit">/bbl</span></div>
+    <div class="card-change down">▼ -0.9% (2일 연속)</div>
+    <div class="card-desc">
+      100달러 상회 지속<br>
+      이란·미 협상 기대 vs 지정학 리스크<br>
+      조선·에너지주 수혜, 수입 기업 부담↑
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-caution"></span>
+      <span class="signal-label">신호: 경계 — 한국 무역수지 압박</span>
+    </div>
   </div>
-  <div class="card krw">
-    <div class="card-icon">💱</div>
-    <div class="card-label">원달러 환율</div>
-    <div class="card-name">USD / KRW Exchange Rate</div>
-    <div class="card-value">1,501<span class="card-unit">원</span></div>
-    <div class="badge-row"><span class="badge up">▲ +0.80%</span><span class="badge neutral">원화 약세</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>주간 고점: 1,511원</span><span>정상범위: 1,100~1,600</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> 원화 약세 = 수출주 실적 호재. 외국인 환차손 우려는 단기 변수</div>
+
+  <div class="card red">
+    <div class="card-label">💱 환율</div>
+    <div class="card-name">USD/KRW 원달러 환율</div>
+    <div class="card-value">1,507<span class="unit">원</span></div>
+    <div class="card-change down">▼ 고점(1,511)에서 소폭 하락</div>
+    <div class="card-desc">
+      1,500원대 중반 → 원화 약세 지속<br>
+      외국인 환차손 우려 → 순매도 압력<br>
+      범위: 1,100~1,600
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-bearish"></span>
+      <span class="signal-label">신호: 약세 — 외국인 이탈 압력</span>
+    </div>
   </div>
-  <div class="card dxy">
-    <div class="card-icon">💵</div>
-    <div class="card-label">달러인덱스</div>
-    <div class="card-name">DXY US Dollar Index</div>
-    <div class="card-value">99.08<span class="card-unit">pt</span></div>
-    <div class="badge-row"><span class="badge down">▼ 약보합</span><span class="badge neutral">100선 하회</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>전월比 +1.00%</span><span>정상범위: 85~115</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> DXY 99선 약세 → 신흥국 자금 유입 기대. 이란 협상 진전 시 추가 약세</div>
+
+  <div class="card">
+    <div class="card-label">💵 달러인덱스</div>
+    <div class="card-name">DXY 달러 인덱스</div>
+    <div class="card-value">99.36</div>
+    <div class="card-change neu">● 6주 고점 후 소폭 조정</div>
+    <div class="card-desc">
+      100 미만 → 달러 강세 제한적<br>
+      DXY 100 돌파 시 원화 추가 약세 경보<br>
+      범위: 85~115
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-neutral"></span>
+      <span class="signal-label">신호: 중립 — 100선 돌파 여부 핵심</span>
+    </div>
   </div>
-  <div class="card bond">
-    <div class="card-icon">📈</div>
-    <div class="card-label">미국 국채 금리</div>
-    <div class="card-name">US 10-Year Treasury Yield</div>
-    <div class="card-value">4.67<span class="card-unit">%</span></div>
-    <div class="badge-row"><span class="badge up">▲ 16개월 최고</span><span class="badge up">고금리 부담</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>전일: 4.62%</span><span>정상범위: 1%~6%</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> 고금리 = 성장주 할인 압박. 실적 기반 대형 반도체주엔 상대적 유리</div>
+
+  <div class="card purple">
+    <div class="card-label">📈 금리</div>
+    <div class="card-name">미국 10년물 국채 금리</div>
+    <div class="card-value">4.63<span class="unit">%</span></div>
+    <div class="card-change down">▼ -0.04%p</div>
+    <div class="card-desc">
+      4%대 중후반 → 성장주 할인율 압박<br>
+      하반기 인하 시 AI·반도체 재평가 기대<br>
+      범위: 1%~6%
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-caution"></span>
+      <span class="signal-label">신호: 경계 — 하반기 인하 기대 유효</span>
+    </div>
   </div>
-  <div class="card ewy">
-    <div class="card-icon">🇰🇷</div>
-    <div class="card-label">한국 ETF (미국 상장)</div>
-    <div class="card-name">EWY iShares MSCI Korea ETF</div>
-    <div class="card-value">$176.10<span class="card-unit"> USD</span></div>
-    <div class="badge-row"><span class="badge down">▼ -1.54% (5/18)</span><span class="badge neutral">YTD +87%</span></div>
-    <hr class="divider">
-    <div class="range-row"><span>5/17 고점: $190.52</span><span>정상범위: $30~$200</span></div>
-    <div class="signal"><strong>📌 코스피 신호:</strong> YTD +87% 세계 최고 수준. 8,000 돌파 후 조정 = 저점 매수 기회</div>
+
+  <div class="card teal">
+    <div class="card-label">🇰🇷 한국 ETF</div>
+    <div class="card-name">EWY (iShares MSCI Korea)</div>
+    <div class="card-value">$174.02</div>
+    <div class="card-change down">▼ -1.18%</div>
+    <div class="card-desc">
+      전일 $176.10 → $174.02<br>
+      삼성전자 파업 + 외국인 매도 반영<br>
+      AI메모리 모멘텀으로 장기 추세 유지
+    </div>
+    <div class="signal-bar">
+      <span class="signal-dot sig-neutral"></span>
+      <span class="signal-label">신호: 중립 — 단기 조정, 추세 유지</span>
+    </div>
   </div>
+
 </div>
-<p class="disclaimer">⚠️ 본 자료는 투자 정보 제공 목적으로 작성되었으며 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.<br>출처: Bloomberg, Investing.com, Yahoo Finance, FRED (5/19~20 기준)</p>
+
+<p class="footer-note">
+  ※ 전일 뉴욕 시장 마감 기준 데이터. 실시간 시세와 차이가 있을 수 있습니다.<br>
+  본 내용은 투자 정보 제공 목적이며, 투자 권유가 아닙니다. 투자 판단의 최종 책임은 투자자 본인에게 있습니다.
+</p>
+
 </body>
 </html>
