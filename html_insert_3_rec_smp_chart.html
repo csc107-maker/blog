@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REC SMP 가격 동향 분석 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: transparent; }
+  .wrap {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef9c3 40%, #fff7ed 100%);
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    max-width: 740px;
+    margin: 0 auto;
+    border: 1px solid #fde68a;
+    box-shadow: 0 4px 24px rgba(180,83,9,0.09);
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #b45309; color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
+  }
+  h2 {
+    font-size: 19px; font-weight: 900; color: #7c2d12;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+
+  /* 상태 카드 2개 */
+  .status-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px;
+  }
+  .status-card {
+    background: #fff; border-radius: 14px; padding: 20px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  .status-card:hover { box-shadow: 0 4px 16px rgba(180,83,9,0.12); transition: all 0.2s; }
+  .status-card.smp { border-top: 4px solid #f59e0b; }
+  .status-card.rec { border-top: 4px solid #f97316; }
+  .sc-label { font-size: 11px; font-weight: 800; letter-spacing: 0.5px; color: #92400e; margin-bottom: 4px; }
+  .sc-status {
+    font-size: 28px; font-weight: 900; margin-bottom: 8px;
+  }
+  .sc-status.up   { color: #16a34a; }
+  .sc-status.warn { color: #dc2626; }
+  .sc-desc { font-size: 12px; color: #78716c; line-height: 1.7; margin-bottom: 10px; }
+  .sc-alert {
+    background: #fffbeb; border-radius: 8px; padding: 8px 10px;
+    font-size: 12px; color: #92400e; line-height: 1.6;
+  }
+  .sc-alert.orange { background: #fff7ed; }
+
+  /* 섹션 타이틀 */
+  .section-title {
+    font-size: 15px; font-weight: 800; color: #7c2d12;
+    margin-bottom: 12px; padding-left: 10px;
+    border-left: 4px solid #f59e0b;
+  }
+
+  /* 가격 동향 바 차트 (CSS only) */
+  .bar-section { margin-bottom: 22px; }
+  .bar-item { margin-bottom: 10px; }
+  .bar-label { font-size: 12px; color: #44403c; font-weight: 600; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .bar-track { background: #fef3c7; border-radius: 20px; height: 22px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 20px;
+    display: flex; align-items: center; padding-left: 10px;
+    font-size: 11px; font-weight: 700; color: #fff;
+    transition: width 1s ease;
+  }
+  .bar-fill.smp2024 { width: 55%; background: linear-gradient(90deg, #fbbf24, #f59e0b); color: #78350f; }
+  .bar-fill.smp2025 { width: 72%; background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .bar-fill.smp2026 { width: 85%; background: linear-gradient(90deg, #d97706, #b45309); }
+  .bar-fill.rec2024 { width: 60%; background: linear-gradient(90deg, #fb923c, #f97316); color: #7c2d12; }
+  .bar-fill.rec2025 { width: 50%; background: linear-gradient(90deg, #f97316, #ea580c); }
+  .bar-fill.rec2026 { width: 40%; background: linear-gradient(90deg, #ea580c, #c2410c); }
+
+  /* 비교 표 */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; }
+  thead tr { background: #b45309; color: #fff; }
+  thead th { padding: 10px 12px; text-align: left; font-weight: 700; }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child  { border-radius: 0 8px 0 0; }
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody tr:nth-child(even) { background: #fffbeb; }
+  td { padding: 10px 12px; border-bottom: 1px solid #fde68a; color: #334155; vertical-align: top; }
+  td.bold  { font-weight: 700; color: #b45309; }
+  td.green { font-weight: 700; color: #16a34a; }
+  td.red   { font-weight: 700; color: #dc2626; }
+  td.amber { font-weight: 700; color: #b45309; }
+
+  /* 핵심 인사이트 */
+  .insight-box {
+    background: #fff; border-radius: 14px; padding: 18px 20px;
+    border-left: 5px solid #f59e0b; margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .insight-title { font-size: 13px; font-weight: 800; color: #b45309; margin-bottom: 8px; }
+  .insight-list { list-style: none; }
+  .insight-list li {
+    font-size: 13px; color: #374151; line-height: 1.8; padding-left: 20px; position: relative;
+  }
+  .insight-list li::before { content: '▶'; position: absolute; left: 0; color: #f59e0b; font-size: 10px; top: 4px; }
+
+  /* 체크리스트 */
+  .checklist {
+    background: #fef3c7; border-radius: 12px; padding: 16px 18px; margin-bottom: 6px;
+  }
+  .checklist-title { font-size: 13px; font-weight: 800; color: #92400e; margin-bottom: 10px; }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 13px; color: #374151; margin-bottom: 7px; line-height: 1.6;
+  }
+  .check-box {
+    width: 18px; height: 18px; border-radius: 4px;
+    background: #16a34a; color: #fff; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .footer { font-size: 11px; color: #94a3b8; text-align: right; margin-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header-badge">💰 수익 분석</div>
+  <h2>REC · SMP 가격 동향 & 2026년 하반기 전망</h2>
+  <p class="subtitle">태양광 발전소 수익의 두 축 — 지금 어디에 와 있나? | ecosolution1218 분석</p>
+
+  <!-- 상태 카드 -->
+  <div class="status-grid">
+    <div class="status-card smp">
+      <div class="sc-label">⚡ SMP (계통한계가격)</div>
+      <div class="sc-status up">상승세 ↑</div>
+      <div class="sc-desc">2026년 하반기 지속 상승 전망<br>AI 데이터센터 전력 수요 급증<br>LNG 가격 영향으로 상방 압력 유지</div>
+      <div class="sc-alert">📌 SGC에너지 리포트: SMP 상승 지속 → 발전 수익 직결 증가 예상</div>
+    </div>
+    <div class="status-card rec">
+      <div class="sc-label">📋 REC (신재생에너지공급인증서)</div>
+      <div class="sc-status warn">불확실 ⚠️</div>
+      <div class="sc-desc">현물시장 일몰 예정 (시기 미정)<br>PPA 전환 이후 가격 재편 가능성<br>반복 입찰 미달로 수요 기반 약화</div>
+      <div class="sc-alert orange">📌 집적화단지 추가 가중치 +0.1~0.2 REC 확인 필수 (약 56억 원 추가 수익)</div>
+    </div>
+  </div>
+
+  <!-- 트렌드 바 -->
+  <div class="section-title">📊 SMP & REC 연도별 상대 흐름 (추정치)</div>
+  <div class="bar-section">
+    <div class="bar-item">
+      <div class="bar-label"><span>SMP 2024년</span><span style="color:#f59e0b">상대 기준 100</span></div>
+      <div class="bar-track"><div class="bar-fill smp2024">기준</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>SMP 2025년</span><span style="color:#d97706">↑ 상승 (+약 15~20%)</span></div>
+      <div class="bar-track"><div class="bar-fill smp2025">상승</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>SMP 2026년 (전망)</span><span style="color:#b45309">↑ 지속 상승</span></div>
+      <div class="bar-track"><div class="bar-fill smp2026">지속 상승</div></div>
+    </div>
+    <div style="height:10px"></div>
+    <div class="bar-item">
+      <div class="bar-label"><span>REC 2024년</span><span style="color:#f97316">상대 기준 100</span></div>
+      <div class="bar-track"><div class="bar-fill rec2024">기준</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>REC 2025년</span><span style="color:#ea580c">↓ 하락 (일몰 우려)</span></div>
+      <div class="bar-track"><div class="bar-fill rec2025">하락</div></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-label"><span>REC 2026년 (전망)</span><span style="color:#c2410c">↓ 추가 하락 가능</span></div>
+      <div class="bar-track"><div class="bar-fill rec2026">불확실</div></div>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;margin-top:6px">※ 위 바 차트는 뉴스 리포트 기반 상대적 흐름 추정치이며, 실제 수치와 다를 수 있습니다.</p>
+  </div>
+
+  <!-- 비교 표 -->
+  <div class="section-title">📋 항목별 현황 & 대응 전략</div>
+  <table>
+    <thead>
+      <tr>
+        <th>구분</th>
+        <th>현재 흐름</th>
+        <th>발전사업자 영향</th>
+        <th>권장 대응</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">SMP</td>
+        <td class="green">상승 지속 ↑</td>
+        <td>수익 증가 ✅</td>
+        <td>현물 판매 비중 유지, 장기 PPA 병행 검토</td>
+      </tr>
+      <tr>
+        <td class="bold">REC 현물</td>
+        <td class="red">일몰 예정 ⚠️</td>
+        <td>불확실성 확대</td>
+        <td>장기 REC 계약 또는 PPA 전환 즉시 검토</td>
+      </tr>
+      <tr>
+        <td class="bold">집적화단지 가중치</td>
+        <td class="green">+0.1~0.2 REC</td>
+        <td>수익 보강 ✅</td>
+        <td>집적화단지 지정 여부 즉시 확인 요망</td>
+      </tr>
+      <tr>
+        <td class="bold">해상풍력 상한가</td>
+        <td class="red">-5.336원 하락</td>
+        <td>태양광 상대 유리 ✅</td>
+        <td>태양광 경쟁력 부각 — 신규 투자 검토</td>
+      </tr>
+      <tr>
+        <td class="bold">PPA 시장</td>
+        <td class="amber">전환 임박 →</td>
+        <td>새 수익 구조 필요</td>
+        <td>RE100 기업 대상 PPA 계약 선제적 추진</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 핵심 인사이트 -->
+  <div class="insight-box">
+    <div class="insight-title">⚡ 2026년 하반기 발전소 운영 핵심 인사이트</div>
+    <ul class="insight-list">
+      <li>SMP 상승기는 발전량 극대화 시기 — 패널 청소, 인버터 점검으로 발전 효율 최적화 필수</li>
+      <li>REC 현물시장 일몰 전, 발전사업자 장기계약(3~5년) 협상력 있을 때 미리 체결 권장</li>
+      <li>집적화단지 지정 여부에 따라 REC +0.1~0.2 차이 → 연간 수익 수천만 원 차이 발생 가능</li>
+      <li>AI 전력 수요 급증 → SMP 상방 압력 지속 예상, 2026~2027년은 발전수익 황금기 가능성</li>
+    </ul>
+  </div>
+
+  <!-- 운영 체크리스트 -->
+  <div class="checklist">
+    <div class="checklist-title">☑️ 지금 바로 확인해야 할 발전소 운영 체크리스트</div>
+    <div class="check-item"><div class="check-box">1</div><span>내 발전소 집적화단지 지정 여부 확인 (한국에너지공단 REC 포털)</span></div>
+    <div class="check-item"><div class="check-box">2</div><span>현재 REC 판매 계약 형태 점검 (현물 vs 장기계약 비율)</span></div>
+    <div class="check-item"><div class="check-box">3</div><span>PPA 전환 시 예상 수익 시뮬레이션 (에너지 거래 플랫폼 활용)</span></div>
+    <div class="check-item"><div class="check-box">4</div><span>하반기 발전량 최적화 점검 (패널 세척, 인버터, 접속반 상태 확인)</span></div>
+    <div class="check-item"><div class="check-box">5</div><span>제1차 재생에너지 기본계획 세부 지침 후속 발표 모니터링</span></div>
+  </div>
+
+  <div class="footer">출처: 기후에너지환경부, 뉴스토마토, 전기신문, 하나증권 리포트, RE100 컨퍼런스 (2026.04~05) | ecosolution1218 태양광 에너지 재테크 블로그</div>
+</div>
+</body>
+</html>
