@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엔비디아 사업부문별 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f4f7ff;
+    padding: 32px 16px;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; }
+
+  .title-area {
+    margin-bottom: 20px;
+  }
+
+  .title-area h2 {
+    font-size: 18px;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+
+  .title-area p {
+    font-size: 12px;
+    color: #7080a0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .card-wrap {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(15,52,96,0.08);
+    border: 1px solid #e4eaf8;
+  }
+
+  .table-header {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.1fr 1.1fr 2fr;
+    padding: 14px 24px;
+    gap: 8px;
+  }
+
+  .th {
+    font-size: 11px;
+    font-weight: 700;
+    color: #76e3a4;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1.1fr 1.1fr 2fr;
+    padding: 18px 24px;
+    gap: 8px;
+    border-bottom: 1px solid #eef2fa;
+    align-items: center;
+    transition: background 0.15s ease;
+  }
+
+  .row:hover { background: #f8f9ff; }
+
+  .row:last-child { border-bottom: none; }
+
+  .row.top {
+    background: linear-gradient(90deg, #f0fff8 0%, #ffffff 100%);
+  }
+
+  .row.top:hover { background: linear-gradient(90deg, #e8fff4, #f8f9ff); }
+
+  .segment-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .segment-icon {
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+  }
+
+  .revenue {
+    font-size: 15px;
+    font-weight: 900;
+    color: #0f3460;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .row.top .revenue { color: #0f5030; }
+
+  .yoy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .badge-high { background: #e8fff0; color: #0f7040; }
+  .badge-mid { background: #e8f0ff; color: #1040a0; }
+  .badge-low { background: #f0f4ff; color: #4060c0; }
+
+  .share-bar-wrap {
+    background: #f0f4f8;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .share-bar {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #4a90d9, #2a60b9);
+  }
+
+  .row.top .share-bar { background: linear-gradient(90deg, #1a9a60, #0f6040); }
+
+  .share-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7080a0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .desc {
+    font-size: 12px;
+    color: #7080a0;
+    line-height: 1.5;
+  }
+
+  .row.top .desc { color: #2a6040; }
+
+  .footer-note {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #9090b0;
+    font-family: 'Space Mono', monospace;
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    .table-header, .row {
+      grid-template-columns: 1fr 1fr;
+      row-gap: 6px;
+    }
+    .th:nth-child(n+3), .row > *:nth-child(n+3) {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="title-area">
+    <h2>🏢 사업부문별 매출 분석 — FY2027 Q1</h2>
+    <p>NVIDIA Segment Revenue Breakdown · 2026.02 ~ 2026.04</p>
+  </div>
+
+  <div class="card-wrap">
+    <div class="table-header">
+      <div class="th">사업 부문</div>
+      <div class="th">매출</div>
+      <div class="th">YoY</div>
+      <div class="th">매출 비중</div>
+      <div class="th">핵심 포인트</div>
+    </div>
+
+    <div class="row top">
+      <div class="segment-name">
+        <span class="segment-icon">🖥️</span>
+        데이터센터
+      </div>
+      <div class="revenue">$75.0B</div>
+      <div><span class="yoy-badge badge-high">▲ +92%</span></div>
+      <div>
+        <div class="share-bar-wrap"><div class="share-bar" style="width:92%;"></div></div>
+        <div class="share-pct">약 92%</div>
+      </div>
+      <div class="desc">Blackwell GPU·NVLink·이더넷 AI 수요 폭발. 네트워킹만 QoQ +64%. 하이퍼스케일러 주도.</div>
+    </div>
+
+    <div class="row">
+      <div class="segment-name">
+        <span class="segment-icon">🎮</span>
+        게이밍 (GeForce)
+      </div>
+      <div class="revenue">~$3.8B</div>
+      <div><span class="yoy-badge badge-mid">▲ 소폭</span></div>
+      <div>
+        <div class="share-bar-wrap"><div class="share-bar" style="width:5%;"></div></div>
+        <div class="share-pct">약 5%</div>
+      </div>
+      <div class="desc">PC 게이밍 수요 완만한 회복세. RTX 50 시리즈 전환 효과 기대.</div>
+    </div>
+
+    <div class="row">
+      <div class="segment-name">
+        <span class="segment-icon">🎨</span>
+        전문 시각화 (Pro Viz)
+      </div>
+      <div class="revenue">~$1.3B</div>
+      <div><span class="yoy-badge badge-low">▲ 안정</span></div>
+      <div>
+        <div class="share-bar-wrap"><div class="share-bar" style="width:2%;"></div></div>
+        <div class="share-pct">약 2%</div>
+      </div>
+      <div class="desc">CAD·3D 디자인·의료영상 등 전문가 워크스테이션 수요. 안정적 기여.</div>
+    </div>
+
+    <div class="row">
+      <div class="segment-name">
+        <span class="segment-icon">🚗</span>
+        오토모티브 (자율주행)
+      </div>
+      <div class="revenue">~$0.6B</div>
+      <div><span class="yoy-badge badge-mid">▲ 성장</span></div>
+      <div>
+        <div class="share-bar-wrap"><div class="share-bar" style="width:1%;"></div></div>
+        <div class="share-pct">약 1%</div>
+      </div>
+      <div class="desc">현대차그룹 파트너십 합류. NVIDIA Drive AV, 메르세데스-벤츠 CLA 적용. 중장기 성장 기대.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ※ 게이밍·시각화·오토모티브 수치는 추정치 · 데이터 기준: NVIDIA FY2027 Q1 (2026.05.20)
+  </div>
+</div>
+</body>
+</html>
