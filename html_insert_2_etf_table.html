@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>에너지 ETF 비교 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: transparent; }
+  .wrap {
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 60%, #f0f9ff 100%);
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    max-width: 740px;
+    margin: 0 auto;
+    border: 1px solid #bbf7d0;
+    box-shadow: 0 4px 24px rgba(21,128,61,0.09);
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #16a34a; color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
+  }
+  h2 {
+    font-size: 19px; font-weight: 900; color: #14532d;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .subtitle { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+
+  /* 카드 그리드 */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .etf-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border-top: 4px solid #16a34a;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .etf-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(21,128,61,0.13); }
+  .etf-card.amber { border-top-color: #f59e0b; }
+  .etf-card.blue  { border-top-color: #3b82f6; }
+  .etf-card.gray  { border-top-color: #94a3b8; }
+  .etf-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.4px;
+    color: #16a34a; margin-bottom: 6px; text-transform: uppercase;
+  }
+  .etf-card.amber .etf-label { color: #b45309; }
+  .etf-card.blue  .etf-label { color: #1d4ed8; }
+  .etf-card.gray  .etf-label { color: #64748b; }
+  .etf-name { font-size: 15px; font-weight: 800; color: #1e293b; margin-bottom: 10px; }
+  .etf-meta { display: flex; flex-direction: column; gap: 5px; }
+  .meta-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px;
+  }
+  .meta-key { color: #94a3b8; }
+  .meta-val { font-weight: 700; color: #334155; }
+  .meta-val.green { color: #16a34a; }
+  .meta-val.amber { color: #b45309; }
+  .meta-val.red   { color: #dc2626; }
+  .pension-badge {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px; margin-top: 10px;
+  }
+  .pension-badge.yes { background: #dcfce7; color: #16a34a; }
+  .pension-badge.partial { background: #fef9c3; color: #b45309; }
+  .etf-tip {
+    margin-top: 10px; background: #f0fdf4; border-radius: 8px;
+    padding: 8px 10px; font-size: 12px; color: #374151; line-height: 1.6;
+  }
+  .etf-card.amber .etf-tip { background: #fffbeb; }
+  .etf-card.blue  .etf-tip { background: #eff6ff; }
+  .etf-card.gray  .etf-tip { background: #f8fafc; }
+
+  /* 비교 표 */
+  .section-title {
+    font-size: 15px; font-weight: 800; color: #14532d;
+    margin-bottom: 12px; padding-left: 10px;
+    border-left: 4px solid #16a34a;
+  }
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; margin-bottom: 20px;
+  }
+  thead tr { background: #15803d; color: #fff; }
+  thead th {
+    padding: 10px 12px; text-align: left; font-weight: 700;
+  }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child  { border-radius: 0 8px 0 0; }
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody tr:nth-child(even) { background: #f0fdf4; }
+  td { padding: 10px 12px; border-bottom: 1px solid #dcfce7; color: #334155; }
+  td.center { text-align: center; }
+  td.bold   { font-weight: 700; color: #15803d; }
+  td .ok   { color: #16a34a; font-weight: 700; }
+  td .warn { color: #b45309; font-weight: 700; }
+
+  /* 전략 박스 */
+  .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
+  .strategy-card {
+    background: #fff; border-radius: 12px; padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); border-left: 3px solid #16a34a;
+  }
+  .strategy-card.amber { border-left-color: #f59e0b; }
+  .strategy-title { font-size: 12px; font-weight: 800; color: #16a34a; margin-bottom: 5px; }
+  .strategy-card.amber .strategy-title { color: #b45309; }
+  .strategy-desc { font-size: 12px; color: #475569; line-height: 1.6; }
+
+  .disclaimer { font-size: 11px; color: #94a3b8; margin-top: 12px; line-height: 1.6; }
+  .footer { font-size: 11px; color: #94a3b8; text-align: right; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header-badge">📈 에너지 재테크</div>
+  <h2>2026년 주목 에너지 ETF & 주식 비교 분석</h2>
+  <p class="subtitle">태양광 발전소 운영과 병행 가능한 에너지 투자 수단 정리 | ecosolution1218</p>
+
+  <!-- 상품 카드 -->
+  <div class="card-grid">
+    <div class="etf-card">
+      <div class="etf-label">국내 ETF ★ 추천</div>
+      <div class="etf-name">PLUS 태양광&ESS ETF</div>
+      <div class="etf-meta">
+        <div class="meta-row"><span class="meta-key">투자 대상</span><span class="meta-val">태양광 · 에너지저장장치</span></div>
+        <div class="meta-row"><span class="meta-key">특징</span><span class="meta-val green">신재생에너지 전문 ETF</span></div>
+        <div class="meta-row"><span class="meta-key">ISA·연금 편입</span><span class="meta-val green">✅ 가능</span></div>
+      </div>
+      <span class="pension-badge yes">✅ 퇴직연금 편입 가능</span>
+      <div class="etf-tip">☀️ 태양광 발전소 운영자에게 가장 직결되는 ETF. 발전소 수익과 주가 상승을 동시에 노리는 이중 전략 가능.</div>
+    </div>
+    <div class="etf-card amber">
+      <div class="etf-label">개별주식</div>
+      <div class="etf-name">대주전자재료</div>
+      <div class="etf-meta">
+        <div class="meta-row"><span class="meta-key">투자 대상</span><span class="meta-val">차세대 태양전지 소재</span></div>
+        <div class="meta-row"><span class="meta-key">주가 (2026.05)</span><span class="meta-val amber">159,500원</span></div>
+        <div class="meta-row"><span class="meta-key">ISA·연금 편입</span><span class="meta-val green">✅ 가능</span></div>
+      </div>
+      <span class="pension-badge yes">✅ 퇴직연금 편입 가능</span>
+      <div class="etf-tip">⚗️ HJT·페로브스카이트 차세대 태양전지 소재 선도 기업. 기술 전환 수혜주로 중장기 성장 기대.</div>
+    </div>
+    <div class="etf-card blue">
+      <div class="etf-label">국내 ETF</div>
+      <div class="etf-name">조선·신재생에너지 ETF</div>
+      <div class="etf-meta">
+        <div class="meta-row"><span class="meta-key">투자 대상</span><span class="meta-val">조선 + 신재생에너지 혼합</span></div>
+        <div class="meta-row"><span class="meta-key">특징</span><span class="meta-val" style="color:#1d4ed8">에너지 전환 복합 포트</span></div>
+        <div class="meta-row"><span class="meta-key">ISA·연금 편입</span><span class="meta-val green">✅ 가능</span></div>
+      </div>
+      <span class="pension-badge yes">✅ 퇴직연금 편입 가능</span>
+      <div class="etf-tip">🚢 조선 + 신재생 혼합 구성으로 에너지 전환 수혜를 분산 투자. 변동성 완화 효과.</div>
+    </div>
+    <div class="etf-card gray">
+      <div class="etf-label">원자재 ETF</div>
+      <div class="etf-name">은(Silver) ETF</div>
+      <div class="etf-meta">
+        <div class="meta-row"><span class="meta-key">투자 대상</span><span class="meta-val">은 현물</span></div>
+        <div class="meta-row"><span class="meta-key">연동 산업</span><span class="meta-val" style="color:#475569">태양광 · 반도체</span></div>
+        <div class="meta-row"><span class="meta-key">ISA·연금 편입</span><span class="meta-val warn">⚠️ 일부 가능</span></div>
+      </div>
+      <span class="pension-badge partial">⚠️ 일부 상품만 편입</span>
+      <div class="etf-tip">🪙 태양광 패널·반도체 핵심 소재인 은의 수요 증가에 간접 투자. 인플레이션 헤지 기능도 겸비.</div>
+    </div>
+  </div>
+
+  <!-- 비교 표 -->
+  <div class="section-title">📊 상품별 핵심 비교</div>
+  <table>
+    <thead>
+      <tr>
+        <th>상품명</th>
+        <th>유형</th>
+        <th>태양광 연관성</th>
+        <th>퇴직연금</th>
+        <th>리스크</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">PLUS 태양광&ESS ETF</td>
+        <td class="center">국내 ETF</td>
+        <td class="center"><span class="ok">★★★ 직접</span></td>
+        <td class="center"><span class="ok">✅</span></td>
+        <td>신재생 정책 리스크</td>
+      </tr>
+      <tr>
+        <td class="bold">대주전자재료</td>
+        <td class="center">개별주식</td>
+        <td class="center"><span class="ok">★★★ 직접</span></td>
+        <td class="center"><span class="ok">✅</span></td>
+        <td>개별 기업 리스크</td>
+      </tr>
+      <tr>
+        <td class="bold">조선·신재생 ETF</td>
+        <td class="center">국내 ETF</td>
+        <td class="center"><span class="warn">★★ 간접</span></td>
+        <td class="center"><span class="ok">✅</span></td>
+        <td>섹터 분산 (조선 영향)</td>
+      </tr>
+      <tr>
+        <td class="bold">은(Silver) ETF</td>
+        <td class="center">원자재 ETF</td>
+        <td class="center"><span class="warn">★ 간접</span></td>
+        <td class="center"><span class="warn">⚠️ 일부</span></td>
+        <td>원자재 가격 변동성</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 전략 박스 -->
+  <div class="section-title">💡 발전소 운영자를 위한 병행 투자 전략</div>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="strategy-title">🌱 이중 수익 전략</div>
+      <div class="strategy-desc">발전소 SMP+REC 수익 + PLUS 태양광&ESS ETF 배당·시세 차익으로 에너지 수익 이중화 가능</div>
+    </div>
+    <div class="strategy-card amber">
+      <div class="strategy-title">🏦 절세 전략</div>
+      <div class="strategy-desc">중개형 ISA 계좌 활용 시 ETF 매매 차익·배당 비과세. 연금저축 편입으로 세액공제 최대 활용</div>
+    </div>
+  </div>
+
+  <p class="disclaimer">※ 본 내용은 투자 참고 정보이며, 투자 손실에 대한 책임은 투자자 본인에게 있습니다. 투자 전 반드시 상품 설명서를 확인하세요.</p>
+  <div class="footer">출처: 뉴스웍스, 비즈니스포스트, G경제 (2026.05) | ecosolution1218 태양광 에너지 재테크 블로그</div>
+</div>
+</body>
+</html>
