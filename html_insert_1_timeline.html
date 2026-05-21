@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제1차 재생에너지 기본계획 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: transparent; }
+  .wrap {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 60%, #ecfdf5 100%);
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    max-width: 740px;
+    margin: 0 auto;
+    border: 1px solid #bae6fd;
+    box-shadow: 0 4px 24px rgba(3,105,161,0.10);
+  }
+  .header-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #0284c7; color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
+  }
+  h2 {
+    font-size: 19px; font-weight: 900; color: #0c4a6e;
+    margin-bottom: 4px; line-height: 1.4;
+  }
+  .subtitle {
+    font-size: 13px; color: #64748b; margin-bottom: 28px;
+  }
+  /* 타임라인 */
+  .timeline { position: relative; padding-left: 36px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 13px; top: 6px; bottom: 6px;
+    width: 3px; background: linear-gradient(to bottom, #0284c7, #38bdf8, #7dd3fc, #bae6fd);
+    border-radius: 3px;
+  }
+  .tl-item { position: relative; margin-bottom: 22px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -29px; top: 12px;
+    width: 16px; height: 16px; border-radius: 50%;
+    border: 3px solid #fff; box-shadow: 0 0 0 3px #bae6fd;
+    background: #0284c7;
+  }
+  .tl-dot.step2 { background: #0ea5e9; box-shadow: 0 0 0 3px #bae6fd; }
+  .tl-dot.step3 { background: #38bdf8; box-shadow: 0 0 0 3px #e0f2fe; }
+  .tl-dot.step4 { background: #7dd3fc; box-shadow: 0 0 0 3px #e0f2fe; }
+  .tl-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border: 1px solid #e0f2fe;
+  }
+  .tl-card:hover { box-shadow: 0 4px 16px rgba(3,105,161,0.13); transition: all 0.2s; }
+  .tl-year-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 800; letter-spacing: 0.5px;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+    background: #0284c7; color: #fff;
+  }
+  .tl-year-badge.step2 { background: #0ea5e9; }
+  .tl-year-badge.step3 { background: #38bdf8; color: #0c4a6e; }
+  .tl-year-badge.step4 { background: #bae6fd; color: #0c4a6e; }
+  .tl-title {
+    font-size: 15px; font-weight: 700; color: #0c4a6e; margin-bottom: 6px;
+  }
+  .tl-desc {
+    font-size: 13px; color: #475569; line-height: 1.7;
+  }
+  .tl-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+  }
+  .tag {
+    background: #f0f9ff; color: #0284c7;
+    font-size: 11px; font-weight: 600;
+    padding: 3px 9px; border-radius: 20px;
+    border: 1px solid #bae6fd;
+  }
+  /* 핵심 요약 박스 */
+  .summary-box {
+    background: #fff; border-radius: 14px; padding: 16px 18px;
+    margin-top: 22px; border-left: 4px solid #f59e0b;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .summary-box p { font-size: 13px; color: #78350f; line-height: 1.7; }
+  .summary-box strong { color: #b45309; }
+  .footer { font-size: 11px; color: #94a3b8; text-align: right; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header-badge">🏛️ 정책 분석</div>
+  <h2>제1차 재생에너지 기본계획 (2026~2035)<br>태양광 발전소 운영자를 위한 타임라인</h2>
+  <p class="subtitle">기후에너지환경부 제38차 에너지위원회 발표 (2026.05.19) | ecosolution1218 분석</p>
+
+  <div class="timeline">
+
+    <!-- Step 1 -->
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <span class="tl-year-badge">📌 2026년 (지금 이 순간)</span>
+        <div class="tl-title">제1차 재생에너지 기본계획 발표 — 시장 구조 재편 시작</div>
+        <div class="tl-desc">
+          SMP+REC 혼합 시장의 불확실성을 해소하는 로드맵 공식 발표.<br>
+          REC 현물시장 일몰 예정 → PPA(전력구매계약) 중심으로 시장 전환 선언.<br>
+          집적화단지 REC 추가 가중치(+0.1~0.2) 유지 확인.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">REC 현물 일몰 예고</span>
+          <span class="tag">PPA 중심 전환</span>
+          <span class="tag">집적화단지 가중치 유지</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="tl-item">
+      <div class="tl-dot step2"></div>
+      <div class="tl-card">
+        <span class="tl-year-badge step2">📋 2027~2028년</span>
+        <div class="tl-title">재생에너지 인프라 본격 확대 — 제도 안착기</div>
+        <div class="tl-desc">
+          구매자 중심 PPA 시장 전환 완료 목표.<br>
+          영농형 태양광 제도화 및 집적화단지 확대 지정 추진.<br>
+          RE100 이행 기업 장기계약(PPA·자가설비) 수요 급증 예상.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">구매자 중심 PPA 전환</span>
+          <span class="tag">영농형 태양광 제도화</span>
+          <span class="tag">RE100 수요 증가</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="tl-item">
+      <div class="tl-dot step3"></div>
+      <div class="tl-card">
+        <span class="tl-year-badge step3">🎯 2030년 중간 목표</span>
+        <div class="tl-title">태양광 발전 단가 250원/kWh 목표 달성</div>
+        <div class="tl-desc">
+          해상풍력 250원/kWh 동일 목표 → 태양광이 경쟁 우위 유지 가능.<br>
+          원전 수십 기에 맞먹는 재생에너지 설비 용량 확보 목표.<br>
+          RE100 이행 기업 100개사 이상 달성 예상.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">단가 250원 목표</span>
+          <span class="tag">대규모 설비 확보</span>
+          <span class="tag">RE100 100개사+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="tl-item">
+      <div class="tl-dot step4"></div>
+      <div class="tl-card">
+        <span class="tl-year-badge step4">🏁 2035년 최종 목표</span>
+        <div class="tl-title">해상풍력 단가 150원 / 재생에너지 전력 비중 대폭 상향</div>
+        <div class="tl-desc">
+          해상풍력 발전 단가 150원/kWh 목표 — 태양광과 본격 경쟁 구도.<br>
+          국내 태양광 공급망 자립화 추진 (중국 의존도 감소).<br>
+          AI 데이터센터 전력 수요 대응 재생에너지 비중 확대 완료.
+        </div>
+        <div class="tl-tags">
+          <span class="tag">풍력 단가 150원</span>
+          <span class="tag">공급망 자립화</span>
+          <span class="tag">AI 전력 수요 대응</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="summary-box">
+    <p>⚡ <strong>발전소 운영자 핵심 액션:</strong> REC 현물시장 일몰 전 장기계약·PPA 전환을 서두르고,
+    집적화단지 가중치 적용 여부를 즉시 확인하세요. 2026년이 구조 전환의 골든타임입니다.</p>
+  </div>
+
+  <div class="footer">출처: 기후에너지환경부 제38차 에너지위원회 (2026.05.19) | ecosolution1218 태양광 에너지 재테크 블로그</div>
+</div>
+</body>
+</html>
