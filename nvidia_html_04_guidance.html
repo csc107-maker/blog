@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>엔비디아 Q2 가이던스 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fffaf0;
+    padding: 32px 16px;
+  }
+
+  .container { max-width: 820px; margin: 0 auto; }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+
+  .sub {
+    font-size: 12px;
+    color: #7080a0;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 24px;
+  }
+
+  /* 가이던스 vs 컨센서스 */
+  .guidance-block {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(200,120,0,0.08);
+    border: 1px solid #f0dfc0;
+    margin-bottom: 20px;
+  }
+
+  .gblock-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #a06000;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .compare-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .compare-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6070a0;
+    font-family: 'Space Mono', monospace;
+    min-width: 90px;
+  }
+
+  .compare-bar-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  .compare-bar-bg {
+    background: #f0f0f4;
+    border-radius: 8px;
+    height: 36px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .compare-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 900;
+    font-family: 'Space Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .fill-guide { background: linear-gradient(90deg, #e8a020, #c07800); color: white; }
+  .fill-cons { background: linear-gradient(90deg, #4a90d9, #2a60b9); color: white; }
+  .fill-whisper { background: linear-gradient(90deg, #6a6a6a, #4a4a4a); color: white; border: 2px dashed #888; }
+
+  .compare-note {
+    font-size: 11px;
+    color: #9090b0;
+    font-family: 'Space Mono', monospace;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  .result-banner {
+    background: linear-gradient(135deg, #e8f8f0, #d0f4e4);
+    border: 1px solid #80d4a8;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 6px;
+  }
+
+  .result-icon { font-size: 28px; }
+
+  .result-text strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 900;
+    color: #0f5030;
+  }
+
+  .result-text span {
+    font-size: 12px;
+    color: #3a7050;
+  }
+
+  /* 리스크 & 기회 */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .risk-card, .oppo-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .risk-card { border-top: 4px solid #e05050; }
+  .oppo-card { border-top: 4px solid #20a060; }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .risk-card .card-title { color: #c03030; }
+  .oppo-card .card-title { color: #0f7040; }
+
+  .item-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: #4050a0;
+    line-height: 1.5;
+  }
+
+  .item-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .risk-card .item-dot { background: #e05050; }
+  .oppo-card .item-dot { background: #20a060; }
+  .risk-card .item { color: #603030; }
+  .oppo-card .item { color: #204030; }
+
+  /* FY2027 연간 전망 */
+  .annual-card {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .annual-left { flex: 1; min-width: 160px; }
+
+  .annual-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #76e3a4;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .annual-value {
+    font-size: 32px;
+    font-weight: 900;
+    color: #ffffff;
+    font-family: 'Space Mono', monospace;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .annual-sub {
+    font-size: 12px;
+    color: #7090c0;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .annual-divider {
+    width: 1px;
+    height: 80px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  .note {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #9090b0;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .annual-divider { display: none; }
+    .compare-row { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>🎯 FY2027 Q2 가이던스 분석 — "깜짝 상향"</h2>
+  <div class="sub">Q2 FY2027 (2026.05~07) · NVIDIA Official Guidance vs Street Consensus</div>
+
+  <div class="guidance-block">
+    <div class="gblock-title">📡 Q2 매출 가이던스 vs 시장 기대치 비교</div>
+
+    <div class="compare-row">
+      <div class="compare-label">엔비디아<br>가이던스</div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar-bg">
+          <div class="compare-bar-fill fill-guide" style="width:100%;">$91.0B ±2%</div>
+        </div>
+      </div>
+      <div class="compare-note" style="color:#c07800; font-weight:900;">▶ 공식</div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-label">월가<br>컨센서스</div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar-bg">
+          <div class="compare-bar-fill fill-cons" style="width:96%;">$86~87B</div>
+        </div>
+      </div>
+      <div class="compare-note">예측치</div>
+    </div>
+
+    <div class="compare-row">
+      <div class="compare-label">바이사이드<br>위스퍼</div>
+      <div class="compare-bar-wrap">
+        <div class="compare-bar-bg">
+          <div class="compare-bar-fill fill-whisper" style="width:98%; background:linear-gradient(90deg, #888, #666);">~$90B</div>
+        </div>
+      </div>
+      <div class="compare-note">비공식</div>
+    </div>
+
+    <div class="result-banner">
+      <div class="result-icon">🚀</div>
+      <div class="result-text">
+        <strong>가이던스 $91B → 컨센서스 대비 약 $4~5B 초과</strong>
+        <span>바이사이드 위스퍼($90B)마저 상회 — AI 수요 가속 사이클 유효 확인</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="risk-card">
+      <div class="card-title">⚠️ 주요 리스크 요인</div>
+      <div class="item-list">
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>중국 수출 규제 지속 — H20 칩 제한으로 분기 약 <strong>$80억 매출 손실</strong> 추산</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>화웨이 어센드 950PR 부상 — 중국 내 점유율 8%로 급락 (2년 전 독점 → 현재)</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>AMD·인텔·자체칩(구글 TPU, 메타 MTIA) 경쟁 심화 중장기 리스크</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>높은 밸류에이션 — 후행 PER 약 48배, '기대 선반영' 우려</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="oppo-card">
+      <div class="card-title">✅ 상승 기회 요인</div>
+      <div class="item-list">
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>베라 루빈(Vera Rubin) 2026년 7월 출하 시작 — 차세대 AI 수요 선점</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>소버린 AI 수요 — 각국 정부 AI 인프라 투자 FY2026 기준 $300억+ 달성</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>하이퍼스케일러 Capex 2026년 약 $7,250억 — 엔비디아 주문 유입 지속</span>
+        </div>
+        <div class="item">
+          <div class="item-dot"></div>
+          <span>미·중 관계 완화 시 중국 매출 재개 — 가이던스 미반영 '업사이드 옵션'</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="annual-card">
+    <div class="annual-left">
+      <div class="annual-label">FY2027 연간 매출 전망</div>
+      <div class="annual-value">$370B</div>
+      <div class="annual-sub">시장 컨센서스 추산</div>
+    </div>
+    <div class="annual-divider"></div>
+    <div class="annual-left">
+      <div class="annual-label">FY2027 연간 EPS 전망</div>
+      <div class="annual-value">$8.43</div>
+      <div class="annual-sub">비GAAP 기준</div>
+    </div>
+    <div class="annual-divider"></div>
+    <div class="annual-left">
+      <div class="annual-label">FY2026 대비 성장률</div>
+      <div class="annual-value">+71%</div>
+      <div class="annual-sub">매출 기준 전년비</div>
+    </div>
+  </div>
+
+  <div class="note">
+    ※ 투자 유의: 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 출처: NVIDIA, Bloomberg, Motley Fool (2026.05.20)
+  </div>
+</div>
+</body>
+</html>
