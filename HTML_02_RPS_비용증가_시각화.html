@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPS 비용 증가 시각화</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fffbf0;
+    padding: 32px 16px;
+  }
+
+  .wrap { max-width: 780px; margin: 0 auto; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #e05c00; color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    padding: 5px 13px; border-radius: 20px; margin-bottom: 14px;
+  }
+
+  h2 { font-size: 21px; font-weight: 900; color: #2a1a00; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #8a6a3a; margin-bottom: 28px; }
+
+  .chart-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 28px 20px;
+    box-shadow: 0 6px 28px rgba(200,100,0,0.10);
+    margin-bottom: 20px;
+  }
+
+  .chart-title {
+    font-size: 14px; font-weight: 700; color: #5a3a00;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    height: 200px;
+    padding-bottom: 0;
+    position: relative;
+  }
+
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    transition: all 0.3s;
+    min-height: 8px;
+  }
+
+  .bar-label {
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    top: -22px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .year-label {
+    font-size: 11px;
+    color: #888;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  .axis-line {
+    border-top: 2px solid #f0e8d0;
+    margin: 0 0 6px 0;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  }
+
+  .stat-icon { font-size: 24px; margin-bottom: 8px; }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-desc { font-size: 11px; color: #888; line-height: 1.5; }
+
+  .warning-box {
+    background: #fff3e0;
+    border-left: 5px solid #e05c00;
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #6a3a00;
+    line-height: 1.7;
+  }
+
+  .source { font-size: 11px; color: #bbb; margin-top: 14px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">⚠️ 비용 데이터 분석</div>
+  <h2>RPS 제도 유지 비용, 왜 감당하기 어려워졌나?</h2>
+  <p class="sub">기후환경요금(국민 부담) 변화 추이 — RPS 도입 이후 12년간의 추적</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">📈 연도별 기후환경요금 추이 (단위: 억 원)</div>
+    <div class="bars">
+      <!-- 2012: 4,000억 = 4% -->
+      <div class="bar-group">
+        <div class="bar" style="height:8%; background: linear-gradient(180deg,#ffd180,#ffb300);">
+          <span class="bar-label" style="color:#e08000;font-size:10px;">4,000억</span>
+        </div>
+        <div class="year-label">2012<br>도입</div>
+      </div>
+      <!-- 2015: ~8,000억 -->
+      <div class="bar-group">
+        <div class="bar" style="height:16%; background: linear-gradient(180deg,#ffb74d,#fb8c00);">
+          <span class="bar-label" style="color:#e06000;font-size:10px;">~8,000억</span>
+        </div>
+        <div class="year-label">2015</div>
+      </div>
+      <!-- 2018: ~1.5조 -->
+      <div class="bar-group">
+        <div class="bar" style="height:30%; background: linear-gradient(180deg,#ff8a65,#e64a19);">
+          <span class="bar-label" style="color:#c0391a;font-size:10px;">~1.5조</span>
+        </div>
+        <div class="year-label">2018</div>
+      </div>
+      <!-- 2020: ~2조 -->
+      <div class="bar-group">
+        <div class="bar" style="height:40%; background: linear-gradient(180deg,#ff7043,#d84315);">
+          <span class="bar-label" style="color:#b03010;font-size:10px;">~2조</span>
+        </div>
+        <div class="year-label">2020</div>
+      </div>
+      <!-- 2022: ~3조 -->
+      <div class="bar-group">
+        <div class="bar" style="height:60%; background: linear-gradient(180deg,#ef5350,#c62828);">
+          <span class="bar-label" style="color:#b02020;font-size:10px;">~3조</span>
+        </div>
+        <div class="year-label">2022</div>
+      </div>
+      <!-- 2024: 4조 -->
+      <div class="bar-group">
+        <div class="bar" style="height:80%; background: linear-gradient(180deg,#e53935,#b71c1c);">
+          <span class="bar-label" style="color:#9a0000;font-size:11px;font-weight:900;">4조 원</span>
+        </div>
+        <div class="year-label">2024<br>현재</div>
+      </div>
+      <!-- 추산: 8조 -->
+      <div class="bar-group">
+        <div class="bar" style="height:100%; background: linear-gradient(180deg,#ff6b6b 0%,#8e0000 100%); border: 3px dashed #c00; border-bottom:none; opacity: 0.75;">
+          <span class="bar-label" style="color:#8e0000;font-size:11px;font-weight:900;">~8조 원</span>
+        </div>
+        <div class="year-label" style="color:#c00;font-weight:700;">추산치<br>(방치 시)</div>
+      </div>
+    </div>
+    <div class="axis-line"></div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon">📅</div>
+      <div class="stat-num" style="color:#fb8c00;">12년</div>
+      <div class="stat-desc">RPS 운영 기간<br>(2012→2024)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💸</div>
+      <div class="stat-num" style="color:#e53935;">10배↑</div>
+      <div class="stat-desc">기후환경요금 증가<br>4,000억→4조 원</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-num" style="color:#8e0000;">8조</div>
+      <div class="stat-desc">RPS 유지 시<br>예상 최대 부담액</div>
+    </div>
+  </div>
+
+  <div class="warning-box">
+    💡 <strong>왜 이렇게 올랐나?</strong> RPS 의무비율이 2026년 25%까지 가파르게 상향되면서, 공급의무자가 구매하는 REC 정산 비용이 급증했습니다. 이 비용은 결국 전기요금 내 <strong>'기후환경요금'</strong> 항목을 통해 가정과 기업이 부담하게 됩니다. 장기 경매제로 전환 시 경쟁 입찰을 통해 이 비용을 구조적으로 낮출 수 있다는 것이 정부의 핵심 논리입니다.
+  </div>
+  <p class="source">출처: 한국에너지공단 토론회 발표자료(2026.3), 재생에너지법 개정안 검토보고서</p>
+</div>
+</body>
+</html>
