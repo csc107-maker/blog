@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장기 경매제 운영 구조</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f8ff;
+    padding: 32px 16px;
+  }
+
+  .wrap { max-width: 800px; margin: 0 auto; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #2851c0; color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    padding: 5px 13px; border-radius: 20px; margin-bottom: 14px;
+  }
+
+  h2 { font-size: 21px; font-weight: 900; color: #0f1e4a; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #5a6a9a; margin-bottom: 28px; }
+
+  .flow-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 6px 30px rgba(40,80,200,0.10);
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  .node {
+    flex: 1;
+    background: #f0f5ff;
+    border: 2px solid #c8d8f8;
+    border-radius: 16px;
+    padding: 18px 14px;
+    text-align: center;
+    position: relative;
+  }
+
+  .node.gov {
+    background: linear-gradient(135deg, #1a3a8a, #2851c0);
+    border-color: #1a3a8a;
+    color: #fff;
+  }
+
+  .node.kepco {
+    background: linear-gradient(135deg, #1a6a4a, #22a870);
+    border-color: #1a6a4a;
+    color: #fff;
+  }
+
+  .node.bidder {
+    background: linear-gradient(135deg, #7b3fa0, #a855f7);
+    border-color: #7b3fa0;
+    color: #fff;
+  }
+
+  .node.small {
+    background: linear-gradient(135deg, #e07000, #f59e0b);
+    border-color: #c06000;
+    color: #fff;
+  }
+
+  .node-icon { font-size: 28px; margin-bottom: 8px; }
+  .node-title { font-size: 14px; font-weight: 900; margin-bottom: 6px; }
+  .node-desc { font-size: 11px; opacity: 0.88; line-height: 1.6; }
+
+  .arrow-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8px;
+    color: #2851c0;
+    font-size: 22px;
+    min-width: 36px;
+  }
+
+  .arrow-down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2851c0;
+    font-size: 22px;
+    padding: 8px 0;
+    gap: 10px;
+  }
+
+  .arrow-label {
+    font-size: 10px;
+    color: #7a8abf;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: #e8eeff;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .contract-box {
+    background: linear-gradient(135deg, #e8f4ee, #c8edda);
+    border: 2px solid #1a7a4a;
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .contract-icon { font-size: 36px; }
+
+  .contract-text {}
+  .contract-text .ct-title { font-size: 15px; font-weight: 900; color: #0f3a22; margin-bottom: 6px; }
+  .contract-text .ct-desc { font-size: 12px; color: #2d5a3a; line-height: 1.7; }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .tag {
+    background: #1a7a4a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .info-card {
+    background: #f0f5ff;
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .info-card .ic-title { font-size: 11px; color: #5a6a9a; font-weight: 700; margin-bottom: 6px; }
+  .info-card .ic-val { font-size: 18px; font-weight: 900; color: #2851c0; }
+
+  .source { font-size: 11px; color: #bbb; margin-top: 18px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">🔄 구조 분석</div>
+  <h2>장기 경매제(계약시장제도) 운영 구조</h2>
+  <p class="sub">누가, 어떻게, 어떤 순서로 거래하는가? — 정부 주도 입찰 시스템 한눈에 보기</p>
+
+  <div class="flow-wrap">
+    <!-- Step 1: 정부 -->
+    <div class="flow-row">
+      <div class="node gov">
+        <div class="node-icon">🏛</div>
+        <div class="node-title">① 기후에너지환경부</div>
+        <div class="node-desc">5년 재생에너지 보급 계획 공시<br>연간 입찰 물량 및 원별(태양광·풍력) 용량 공고</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      ↓
+      <span class="arrow-label">입찰 공고 및 물량 배정</span>
+      ↓
+    </div>
+
+    <!-- Step 2: 입찰자들 -->
+    <div class="flow-row" style="gap:12px;">
+      <div class="node bidder">
+        <div class="node-icon">🏭</div>
+        <div class="node-title">② 대형 발전사</div>
+        <div class="node-desc">일반 입찰 트랙<br>설비용량 기준 경쟁 입찰</div>
+      </div>
+      <div style="display:flex;align-items:center;color:#ccc;font-size:18px;">|</div>
+      <div class="node small">
+        <div class="node-icon">☀️</div>
+        <div class="node-title">② 소규모 사업자</div>
+        <div class="node-desc">1MW 이하 별도 트랙<br>RESCO(통합사업자) 통해 참여 가능</div>
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      ↓
+      <span class="arrow-label">낙찰 결정 (최저가 우선)</span>
+      ↓
+    </div>
+
+    <!-- Step 3: 계약 체결 -->
+    <div class="contract-box">
+      <div class="contract-icon">📋</div>
+      <div class="contract-text">
+        <div class="ct-title">③ 20년 장기 고정가격계약 체결</div>
+        <div class="ct-desc">낙찰 사업자 ↔ 한국전력공사(또는 구역전기사업자)<br>계약기간 동안 고정 단가로 생산전력 전량 구매 보장</div>
+        <div class="tags">
+          <span class="tag">20년 고정</span>
+          <span class="tag">PF 유리</span>
+          <span class="tag">안정 수익</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow-down">
+      ↓
+      <span class="arrow-label">전력 공급 & 대금 지급</span>
+      ↓
+    </div>
+
+    <!-- Step 4: 한전 -->
+    <div class="flow-row">
+      <div class="node kepco">
+        <div class="node-icon">⚡</div>
+        <div class="node-title">④ 한국전력공사 (KEPCO)</div>
+        <div class="node-desc">계약 단가로 재생에너지 전력 구매<br>국민에게 안정적 전력 공급 / 기후환경요금 부담 감소</div>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-card">
+        <div class="ic-title">계약 기간</div>
+        <div class="ic-val">20년</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-title">태양광 목표 단가 (2035)</div>
+        <div class="ic-val">80원/kWh</div>
+      </div>
+      <div class="info-card">
+        <div class="ic-title">해상풍력 목표 단가 (2035)</div>
+        <div class="ic-val">150원/kWh</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="source">출처: 기후에너지환경부 제1차 재생에너지 기본계획(2026.5.19), 신재생에너지법 개정안</p>
+</div>
+</body>
+</html>
