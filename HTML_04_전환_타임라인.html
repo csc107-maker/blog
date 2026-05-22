@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RPS → 경매제 전환 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f5ff;
+    padding: 32px 16px;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #6d28d9; color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px;
+    padding: 5px 13px; border-radius: 20px; margin-bottom: 14px;
+  }
+
+  h2 { font-size: 21px; font-weight: 900; color: #1a0a3a; margin-bottom: 6px; }
+  .sub { font-size: 13px; color: #7a6aaa; margin-bottom: 28px; }
+
+  .timeline {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 6px 28px rgba(109,40,217,0.10);
+    position: relative;
+  }
+
+  /* vertical line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 55px;
+    top: 40px;
+    bottom: 40px;
+    width: 3px;
+    background: linear-gradient(180deg, #7c3aed, #c4b5fd);
+    border-radius: 2px;
+  }
+
+  .tl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 0 0 30px 0;
+    position: relative;
+  }
+
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-left {
+    width: 68px;
+    flex-shrink: 0;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .tl-dot {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 auto 6px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+
+  .tl-year {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6d28d9;
+    background: #ede9fe;
+    padding: 2px 7px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .tl-right {
+    flex: 1;
+    padding-top: 4px;
+  }
+
+  .tl-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #1a0a3a;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .tl-desc {
+    font-size: 12px;
+    color: #5a4a7a;
+    line-height: 1.75;
+  }
+
+  .tl-chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+
+  .chip-done { background: #d1fae5; color: #065f46; }
+  .chip-now  { background: #fef3c7; color: #92400e; }
+  .chip-soon { background: #ede9fe; color: #5b21b6; }
+  .chip-key  { background: #fce7f3; color: #9d174d; }
+  .chip-end  { background: #fee2e2; color: #991b1b; }
+
+  .now-indicator {
+    position: absolute;
+    left: -6px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f59e0b;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
+  }
+
+  .source { font-size: 11px; color: #bbb; margin-top: 16px; text-align: right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge">📅 전환 일정</div>
+  <h2>RPS → 장기 경매제 전환 마스터 타임라인</h2>
+  <p class="sub">2026~2029년 — 단계별 제도 전환 일정 완전 정리</p>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#4ade80,#16a34a);">✅</div>
+        <span class="tl-year">2026.01</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">신재생에너지법 개정안 발의</div>
+        <div class="tl-desc">
+          김정호 의원 등 12인이 「재생에너지 개발·이용·보급 촉진법 일부개정법률안」 발의. 'RPS 폐지법안'으로 불리며 업계 비상한 관심 집중.
+        </div>
+        <span class="tl-chip chip-done">완료</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#60a5fa,#2563eb);">✅</div>
+        <span class="tl-year">2026.02</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">재생에너지법 개정안 국회 본회의 통과</div>
+        <div class="tl-desc">
+          신에너지·재생에너지 법적 분리, 이격거리 규제 합리화 등 포함. 법률명 「재생에너지 개발·이용·보급 촉진법」으로 변경.
+        </div>
+        <span class="tl-chip chip-done">완료</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#f59e0b,#d97706);">🔥</div>
+        <span class="tl-year">2026.상반기</span>
+      </div>
+      <div class="tl-right" style="position:relative;">
+        <div class="now-indicator"></div>
+        <div class="tl-title">하위 법령(시행령·시행규칙) 정비</div>
+        <div class="tl-desc">
+          입찰 기준, 물량 산정, 소규모 보호 기준 등 핵심 실무사항 확정 단계. 가장 중요한 불확실성 해소 구간.
+        </div>
+        <span class="tl-chip chip-now">진행 중</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#f59e0b,#d97706);">🏛</div>
+        <span class="tl-year">2026.05</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">제1차 재생에너지 기본계획 발표</div>
+        <div class="tl-desc">
+          기후에너지환경부가 2030년 100GW 목표 공식 확정. RPS→장기경매제 전환 로드맵 발표. 태양광 2035년 80원/kWh 목표 제시.
+        </div>
+        <span class="tl-chip chip-done">완료</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#f43f5e,#be123c);">🚫</div>
+        <span class="tl-year">2026.12.31</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">신규 REC 발급 완전 중단 ⚠️</div>
+        <div class="tl-desc">
+          이 날 이후 준공되는 발전소는 REC 발급 불가. 대신 거래 불가 '발전정보 인증서' 발급으로 대체됨. 기존 고정가격계약자는 계약기간까지 REC 계속 발급.
+        </div>
+        <span class="tl-chip chip-key">핵심 마감일</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#8b5cf6,#6d28d9);">⚡</div>
+        <span class="tl-year">2027.~</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">계약시장제도(경매제) 본격 시행</div>
+        <div class="tl-desc">
+          정부 주도 재생에너지 입찰 개시. 전환시장 운영 시작(현물시장 사업자 → PPA 또는 고정가격계약 전환 유도). 소규모 별도 트랙·RESCO 제도 가동.
+        </div>
+        <span class="tl-chip chip-soon">D-예정</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-left">
+        <div class="tl-dot" style="background: linear-gradient(135deg,#6b7280,#374151);">🏁</div>
+        <span class="tl-year">2029.12.31</span>
+      </div>
+      <div class="tl-right">
+        <div class="tl-title">RPS 제도 공식 효력 소멸</div>
+        <div class="tl-desc">
+          이 날로 신재생에너지 공급의무화제도(RPS)가 역사 속으로 사라짐. 2029년까지 보유 REC 판매 가능. 이후 모든 재생에너지 거래는 계약시장 중심으로 운영.
+        </div>
+        <span class="tl-chip chip-end">제도 종료</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="source">출처: 재생에너지법 개정안 부칙, 한국에너지공단 토론회(2026.3), 기후에너지환경부 제1차 재생에너지 기본계획(2026.5)</p>
+</div>
+</body>
+</html>
