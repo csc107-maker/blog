@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>달러·환율·금 핵심 지표 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f3ee;
+    padding: 28px 20px;
+  }
+
+  .widget-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .widget-header .date-badge {
+    display: inline-block;
+    background: #2d2d2d;
+    color: #f0e6c8;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .widget-header h2 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+  }
+  .widget-header p {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  }
+
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 18px 18px 0 0;
+  }
+  .card-dollar .card-accent { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+  .card-krw .card-accent { background: linear-gradient(90deg, #dc2626, #f87171); }
+  .card-gold .card-accent { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 4px;
+  }
+
+  .card-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .card-dollar .card-value { color: #1d4ed8; }
+  .card-krw .card-value { color: #b91c1c; }
+  .card-gold .card-value { color: #b45309; }
+
+  .card-sub {
+    font-size: 12px;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .card-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .change-up { background: #fef2f2; color: #dc2626; }
+  .change-down { background: #eff6ff; color: #2563eb; }
+  .change-neutral { background: #f3f4f6; color: #6b7280; }
+
+  .card-divider {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 12px 0;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.7;
+  }
+  .card-desc strong { color: #333; }
+
+  .card-status {
+    margin-top: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .status-warning { background: #fffbeb; color: #92400e; }
+  .status-caution { background: #fff7ed; color: #c2410c; }
+  .status-monitor { background: #ecfdf5; color: #065f46; }
+
+  .source-note {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 640px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .card-value { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="widget-header">
+  <div class="date-badge">📊 2026. 05. 23 기준 핵심 지표</div>
+  <h2>달러 · 환율 · 금 실시간 현황</h2>
+  <p>Investing.com · TradingEconomics · 한국표준금거래소 종합</p>
+</div>
+
+<div class="cards-grid">
+
+  <!-- 달러 인덱스 카드 -->
+  <div class="card card-dollar">
+    <div class="card-accent"></div>
+    <span class="card-icon">💵</span>
+    <div class="card-label">DXY 달러 인덱스</div>
+    <div class="card-value">99.2</div>
+    <div class="card-sub">미 달러 vs 주요 6개 통화</div>
+    <div class="card-change change-neutral">▶ 1개월 +0.62%</div>
+    <hr class="card-divider">
+    <div class="card-desc">
+      52주 범위: <strong>98~107</strong><br>
+      무디스 강등(Aaa→Aa1) 이후<br>
+      박스권 등락 지속
+    </div>
+    <div class="card-status status-warning">⚡ 탈달러화 모니터링 필요</div>
+  </div>
+
+  <!-- 원달러 환율 카드 -->
+  <div class="card card-krw">
+    <div class="card-accent"></div>
+    <span class="card-icon">🇰🇷</span>
+    <div class="card-label">USD / KRW 환율</div>
+    <div class="card-value">1,520</div>
+    <div class="card-sub">원 / 달러 현재 수준</div>
+    <div class="card-change change-up">▲ 52주 저점 대비 +13%</div>
+    <hr class="card-divider">
+    <div class="card-desc">
+      52주 범위: <strong>1,347 ~ 1,538원</strong><br>
+      외국인 순매도 + 한미 금리차<br>
+      하방 지지선 1,510원 주목
+    </div>
+    <div class="card-status status-caution">🔴 역사적 고점 근접 구간</div>
+  </div>
+
+  <!-- 국제 금값 카드 -->
+  <div class="card card-gold">
+    <div class="card-accent"></div>
+    <span class="card-icon">🥇</span>
+    <div class="card-label">XAU / USD 금 현물가</div>
+    <div class="card-value">$4,537</div>
+    <div class="card-sub">온스당 국제 금 현물가격</div>
+    <div class="card-change change-down">▼ 사상 최고가 대비 -19%</div>
+    <hr class="card-divider">
+    <div class="card-desc">
+      사상 최고가: <strong>$5,608 (2026.01)</strong><br>
+      1년 전 대비 여전히 +37.5%<br>
+      국내 순금 1돈: 987,000원
+    </div>
+    <div class="card-status status-monitor">🟡 4,500달러 지지선 주목</div>
+  </div>
+
+</div>
+
+<div class="source-note">※ 본 자료는 참고용이며 투자 권유가 아닙니다 | Investing.com · TradingEconomics · 한국표준금거래소</div>
+
+</body>
+</html>
