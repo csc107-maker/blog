@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>차기 대선 후보 지지율 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f9ff; padding: 20px; }
+
+  .poll-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(14,165,233,0.12);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .poll-header {
+    background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 60%, #38bdf8 100%);
+    padding: 22px 24px;
+    color: #fff;
+  }
+  .poll-header .tag {
+    background: rgba(255,255,255,0.2);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .poll-header h2 { font-size: 18px; font-weight: 900; }
+  .poll-header p { font-size: 11px; opacity: 0.85; margin-top: 4px; }
+
+  .poll-body { padding: 20px 24px; }
+
+  .poll-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e0f2fe;
+  }
+
+  .candidate-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 10px;
+    transition: background 0.15s;
+  }
+  .candidate-row:hover { background: #e0f2fe; }
+
+  .rank {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rank-1 { background: #fbbf24; color: #78350f; }
+  .rank-2 { background: #94a3b8; color: #fff; }
+  .rank-3 { background: #d97706; color: #fff; }
+  .rank-other { background: #e2e8f0; color: #64748b; font-size: 11px; }
+
+  .cand-info { flex: 0 0 130px; }
+  .cand-name { font-size: 14px; font-weight: 800; color: #1e293b; }
+  .cand-party {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 2px;
+  }
+  .party-dem { background: #dbeafe; color: #1d4ed8; }
+  .party-ppp { background: #ffedd5; color: #c2410c; }
+  .party-pri { background: #ede9fe; color: #6d28d9; }
+  .party-ind { background: #f1f5f9; color: #475569; }
+  .party-pm { background: #dcfce7; color: #15803d; }
+
+  .bar-section { flex: 1; }
+  .bar-bg {
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 3px;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+  }
+  .bar-label { font-size: 11px; color: #64748b; }
+
+  .pct {
+    font-size: 18px;
+    font-weight: 900;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  /* Party colors for bars */
+  .fill-dem { background: linear-gradient(90deg, #1d4ed8, #60a5fa); }
+  .fill-ppp { background: linear-gradient(90deg, #ea580c, #fb923c); }
+  .fill-pri { background: linear-gradient(90deg, #6d28d9, #a78bfa); }
+  .fill-ind { background: linear-gradient(90deg, #475569, #94a3b8); }
+  .fill-pm { background: linear-gradient(90deg, #15803d, #4ade80); }
+  .fill-gray { background: linear-gradient(90deg, #9ca3af, #d1d5db); }
+
+  .none-row {
+    background: #fafafa;
+    border: 1px dashed #e2e8f0;
+  }
+
+  .divider { border: none; border-top: 2px solid #e0f2fe; margin: 18px 0; }
+
+  .note-box {
+    background: #f0f9ff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 11.5px;
+    color: #475569;
+    line-height: 1.7;
+  }
+  .note-box strong { color: #0369a1; }
+
+  .poll-footer {
+    padding: 12px 24px;
+    font-size: 10px;
+    color: #94a3b8;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+  }
+</style>
+</head>
+<body>
+  <div class="poll-wrap">
+    <div class="poll-header">
+      <div class="tag">📊 최신 여론조사</div>
+      <h2>차기 대선 후보 적합도 현황</h2>
+      <p>코리아정보리서치 | 전국 만 18세 이상 1,004명 | 2026.05.11~12 | 무선 ARS</p>
+    </div>
+
+    <div class="poll-body">
+      <div class="poll-subtitle">🏅 차기 대선 후보 적합도 순위</div>
+
+      <div class="candidate-row">
+        <div class="rank rank-1">1</div>
+        <div class="cand-info">
+          <div class="cand-name">한동훈</div>
+          <span class="cand-party party-ind">무소속</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-ind" style="width:100%"></div></div>
+          <div class="bar-label">전 국민의힘 대표 · 부산 북갑 재보궐 출마</div>
+        </div>
+        <div class="pct" style="color:#475569">11.0%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-2">2</div>
+        <div class="cand-info">
+          <div class="cand-name">조국</div>
+          <span class="cand-party party-pri">조국혁신당</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-pri" style="width:89%"></div></div>
+          <div class="bar-label">조국혁신당 대표 · 평택을 재보궐 출마</div>
+        </div>
+        <div class="pct" style="color:#6d28d9">9.8%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-3">3</div>
+        <div class="cand-info">
+          <div class="cand-name">강훈식</div>
+          <span class="cand-party party-dem">더불어민주당</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-dem" style="width:86%"></div></div>
+          <div class="bar-label">대통령 비서실장</div>
+        </div>
+        <div class="pct" style="color:#1d4ed8">9.5%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-other">4</div>
+        <div class="cand-info">
+          <div class="cand-name">김민석</div>
+          <span class="cand-party party-dem">더불어민주당</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-dem" style="width:84%"></div></div>
+          <div class="bar-label">국무총리</div>
+        </div>
+        <div class="pct" style="color:#1d4ed8">9.2%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-other">5</div>
+        <div class="cand-info">
+          <div class="cand-name">김문수</div>
+          <span class="cand-party party-ppp">국민의힘</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-ppp" style="width:81%"></div></div>
+          <div class="bar-label">전 고용노동부 장관</div>
+        </div>
+        <div class="pct" style="color:#ea580c">8.9%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-other">6</div>
+        <div class="cand-info">
+          <div class="cand-name">장동혁</div>
+          <span class="cand-party party-ppp">국민의힘</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-ppp" style="width:80%"></div></div>
+          <div class="bar-label">국민의힘 대표</div>
+        </div>
+        <div class="pct" style="color:#ea580c">8.8%</div>
+      </div>
+
+      <div class="candidate-row">
+        <div class="rank rank-other">7</div>
+        <div class="cand-info">
+          <div class="cand-name">정청래</div>
+          <span class="cand-party party-dem">더불어민주당</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-dem" style="width:80%"></div></div>
+          <div class="bar-label">더불어민주당 대표</div>
+        </div>
+        <div class="pct" style="color:#1d4ed8">8.8%</div>
+      </div>
+
+      <div class="candidate-row none-row">
+        <div class="rank rank-other">—</div>
+        <div class="cand-info">
+          <div class="cand-name" style="color:#94a3b8">적합한 인물 없음</div>
+          <span class="cand-party" style="background:#f1f5f9;color:#94a3b8;">무응답·기타</span>
+        </div>
+        <div class="bar-section">
+          <div class="bar-bg"><div class="bar-fill fill-gray" style="width:90%"></div></div>
+          <div class="bar-label" style="color:#9ca3af">적합 인물 없음 18.9% / 기타·모름 8.6%</div>
+        </div>
+        <div class="pct" style="color:#94a3b8">27.5%</div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="note-box">
+        <strong>⚡ 핵심 분석</strong>: 상위 7명이 모두 오차범위(±3.1%p) 내에서 접전을 벌이고 있습니다. "적합한 인물이 없다"는 응답이 무려 <strong>18.9%</strong>에 달해, 아직 대선판의 '킹메이커'가 정해지지 않았음을 보여줍니다. 이번 6·3 지방선거 결과가 차기 대선 구도를 크게 바꿀 전망입니다.
+      </div>
+    </div>
+
+    <div class="poll-footer">
+      ※ 코리아정보리서치 | 의뢰: 문화일보 | 2026.05.11~12 | 전국 만 18세 이상 남녀 1,004명 | 무선 ARS | 표본오차 ±3.1%p (95% 신뢰수준) | 중앙선거여론조사심의위원회 등록
+    </div>
+  </div>
+</body>
+</html>
