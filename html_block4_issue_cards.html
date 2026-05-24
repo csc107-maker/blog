@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6·3 지방선거 핵심 이슈 카드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f4ff; padding: 20px; }
+
+  .issue-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .section-title .tag {
+    display: inline-block;
+    background: #1e40af;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+  .section-title h2 { font-size: 20px; font-weight: 900; color: #1e293b; }
+  .section-title p { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  .issue-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .issue-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .issue-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .issue-card .bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .issue-card .icon { font-size: 30px; margin-bottom: 10px; display: block; }
+  .issue-card h3 { font-size: 15px; font-weight: 800; color: #1e293b; margin-bottom: 6px; }
+  .issue-card .desc { font-size: 12px; color: #475569; line-height: 1.7; }
+
+  .heat-meter {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .heat-label { font-size: 10px; color: #94a3b8; white-space: nowrap; }
+  .heat-bar {
+    flex: 1;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .heat-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.8s ease;
+  }
+
+  .key-data {
+    margin-top: 10px;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    color: #334155;
+    font-weight: 600;
+  }
+
+  /* Color themes */
+  .card-red .bar { background: linear-gradient(90deg, #ef4444, #f97316); }
+  .card-red .heat-fill { background: linear-gradient(90deg, #ef4444, #f97316); }
+
+  .card-blue .bar { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+  .card-blue .heat-fill { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+
+  .card-green .bar { background: linear-gradient(90deg, #16a34a, #4ade80); }
+  .card-green .heat-fill { background: linear-gradient(90deg, #16a34a, #4ade80); }
+
+  .card-purple .bar { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .card-purple .heat-fill { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+
+  .card-orange .bar { background: linear-gradient(90deg, #d97706, #fbbf24); }
+  .card-orange .heat-fill { background: linear-gradient(90deg, #d97706, #fbbf24); }
+
+  .card-teal .bar { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
+  .card-teal .heat-fill { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
+
+  .wide-card {
+    grid-column: 1 / -1;
+  }
+</style>
+</head>
+<body>
+  <div class="issue-wrap">
+    <div class="section-title">
+      <div class="tag">🔍 이슈 분석</div>
+      <h2>6·3 지방선거를 움직이는 6대 핵심 이슈</h2>
+      <p>40~60대가 가장 주목하는 민심의 온도계</p>
+    </div>
+
+    <div class="issue-grid">
+
+      <div class="issue-card card-red">
+        <div class="bar"></div>
+        <span class="icon">🏠</span>
+        <h3>부동산·주거</h3>
+        <div class="desc">재건축·재개발 속도, 주담대 6억 한도 제한, 장기보유특별공제 논란. 1기 신도시 재정비가 경기도 표심을 가른다.</div>
+        <div class="key-data">📌 주담대 한도 6억 제한 / 스트레스 DSR 상향</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:95%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#ef4444;">🔥🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+      <div class="issue-card card-orange">
+        <div class="bar"></div>
+        <span class="icon">⛽</span>
+        <h3>물가·유가 충격</h3>
+        <div class="desc">소비자물가 +2.6% (1년 9개월 최고). 경유 +30.8% 급등으로 서민 생활비 압박. 5월엔 더 오를 것이라는 전망.</div>
+        <div class="key-data">📌 유류세 부담 / 식품·외식비 연쇄 상승 우려</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:90%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#f97316;">🔥🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+      <div class="issue-card card-blue">
+        <div class="bar"></div>
+        <span class="icon">🚇</span>
+        <h3>교통·인프라</h3>
+        <div class="desc">GTX 조기 완공, 수도권 30분 통근, 원패스 통합교통카드. 경기도민의 가장 현실적인 삶의 질 이슈.</div>
+        <div class="key-data">📌 경기·서울 모든 후보의 공통 공약 1순위</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:85%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#2563eb;">🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+      <div class="issue-card card-purple">
+        <div class="bar"></div>
+        <span class="icon">🤖</span>
+        <h3>AI·반도체 산업</h3>
+        <div class="desc">메모리 가격 8배 폭등, 한국 반도체 재부상. AI 반도체 전략위원회, 경기미래투자공사 등 지방정부 역할 확대.</div>
+        <div class="key-data">📌 KB "메모리 가격 8배 폭등" / 경기도 AI전략</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:75%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#7c3aed;">🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+      <div class="issue-card card-green">
+        <div class="bar"></div>
+        <span class="icon">🛡️</span>
+        <h3>안보·외교</h3>
+        <div class="desc">"대한민국 주적이 누구냐" 논쟁이 부산 북갑 선거판에서 불붙어 전국 이슈로 번졌다. 북한 155mm 곡사포 전진배치 등 군사 위협도 변수.</div>
+        <div class="key-data">📌 한동훈 vs 박민식 안보 공방 / 북한 압박 고조</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:80%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#16a34a;">🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+      <div class="issue-card card-teal">
+        <div class="bar"></div>
+        <span class="icon">🏆</span>
+        <h3>차기 대선 판세</h3>
+        <div class="desc">이번 지방선거는 사실상 '차기 대선 예선전'. 한동훈·조국·강훈식 모두 오차범위 내 접전(코리아정보리서치, 1004명).</div>
+        <div class="key-data">📌 한동훈 11% / 조국 9.8% / 강훈식 9.5%</div>
+        <div class="heat-meter">
+          <span class="heat-label">관심도</span>
+          <div class="heat-bar"><div class="heat-fill" style="width:88%"></div></div>
+          <span style="font-size:11px;font-weight:700;color:#0d9488;">🔥🔥🔥🔥</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
