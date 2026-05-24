@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경기도지사 공약 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f7faf4; padding: 20px; }
+
+  .compare-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .compare-header {
+    background: linear-gradient(135deg, #15803d 0%, #16a34a 60%, #4ade80 100%);
+    padding: 22px 24px;
+    color: #fff;
+  }
+  .compare-header .tag {
+    background: rgba(255,255,255,0.25);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .compare-header h2 { font-size: 20px; font-weight: 900; }
+  .compare-header p { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    padding: 14px 12px;
+    font-size: 13px;
+    font-weight: 800;
+    text-align: center;
+  }
+  thead th:first-child {
+    background: #f1f5f9;
+    color: #475569;
+    width: 22%;
+    text-align: left;
+    padding-left: 18px;
+  }
+  thead th.col-dem {
+    background: #eff6ff;
+    color: #1d4ed8;
+  }
+  thead th.col-ppp {
+    background: #fff7ed;
+    color: #c2410c;
+  }
+  thead th.col-ref {
+    background: #f0fdf4;
+    color: #15803d;
+  }
+  tbody tr:nth-child(even) { background: #f9fbff; }
+  tbody tr:hover { background: #eff6ff; transition: background 0.15s; }
+
+  tbody td {
+    padding: 13px 12px;
+    font-size: 12.5px;
+    color: #334155;
+    vertical-align: top;
+    border-top: 1px solid #e2e8f0;
+  }
+  tbody td:first-child {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 12px;
+    padding-left: 18px;
+    background: #f8fafc;
+  }
+  tbody td:not(:first-child) { text-align: center; line-height: 1.6; }
+
+  .chip {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .chip-blue { background: #dbeafe; color: #1d4ed8; }
+  .chip-orange { background: #fed7aa; color: #c2410c; }
+  .chip-green { background: #dcfce7; color: #15803d; }
+
+  .candidate-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-direction: column;
+  }
+  .cand-label {
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .party-label {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .note {
+    background: #f8fafc;
+    border-top: 2px solid #e2e8f0;
+    padding: 12px 18px;
+    font-size: 11px;
+    color: #94a3b8;
+  }
+</style>
+</head>
+<body>
+  <div class="compare-wrap">
+    <div class="compare-header">
+      <div class="tag">📊 공약 비교 분석</div>
+      <h2>2026 경기도지사 후보 3자 공약 비교</h2>
+      <p>중앙선거관리위원회 제출 5대 공약 기준 | 2026.05 기준</p>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>공약 분야</th>
+          <th class="col-dem">
+            <div class="candidate-name">
+              <span class="cand-label">추미애</span>
+              <span class="party-label" style="background:#dbeafe;color:#1d4ed8;">더불어민주당</span>
+            </div>
+          </th>
+          <th class="col-ppp">
+            <div class="candidate-name">
+              <span class="cand-label">양향자</span>
+              <span class="party-label" style="background:#fed7aa;color:#c2410c;">국민의힘</span>
+            </div>
+          </th>
+          <th class="col-ref">
+            <div class="candidate-name">
+              <span class="cand-label">조응천</span>
+              <span class="party-label" style="background:#dcfce7;color:#15803d;">개혁신당</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🚇 교통</td>
+          <td>
+            <div class="chip chip-blue">1순위 공약</div><br>
+            수도권 원(One)패스 통합교통카드 도입<br>
+            <strong>30분 출근 대전환</strong>
+          </td>
+          <td>
+            GTX 조기 완공 추진<br>
+            광역버스·도로 인프라 확충
+          </td>
+          <td>
+            GTX 정상 추진<br>
+            교통 공약 2순위 배치
+          </td>
+        </tr>
+        <tr>
+          <td>🏠 주거·부동산</td>
+          <td>
+            공공주택 공급 확대<br>
+            서민 주거 안정 중심
+          </td>
+          <td>
+            규제 완화 + 1기 신도시 재정비<br>
+            민간 개발 촉진
+          </td>
+          <td>
+            <div class="chip chip-green">1순위 공약</div><br>
+            전세대란 대응본부 설치<br>
+            <strong>전세사기 피해 구제</strong><br>
+            1기 신도시 재정비 정상화
+          </td>
+        </tr>
+        <tr>
+          <td>💡 산업·경제</td>
+          <td>
+            경기 경제 활성화<br>
+            소상공인 지원
+          </td>
+          <td>
+            <div class="chip chip-orange">핵심 공약</div><br>
+            반도체·AI 전략위원회 설치<br>
+            경기미래투자공사 설립
+          </td>
+          <td>
+            AI 반도체 전략<br>
+            평화경제특구·항공우주 특화단지
+          </td>
+        </tr>
+        <tr>
+          <td>🤖 AI·미래</td>
+          <td>
+            AI 기반 행정혁신<br>
+            스마트 경기 추진
+          </td>
+          <td>
+            AI 반도체 전략위원회<br>
+            <strong>첨단산업 최강 경기도</strong>
+          </td>
+          <td>
+            경기북부 균형 발전<br>
+            항공·우주 특화단지 조성
+          </td>
+        </tr>
+        <tr>
+          <td>👴 복지</td>
+          <td>
+            보편적 복지 강화<br>
+            경기도민 기본소득 관련
+          </td>
+          <td>
+            맞춤형 복지 효율화<br>
+            재정 건전성 강조
+          </td>
+          <td>
+            경기북부·농촌 균형 성장<br>
+            취약계층 집중 지원
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      ※ 위 공약은 중앙선거관리위원회 제출 5대 공약 및 각 후보 공개 발표 자료를 기준으로 정리하였습니다. 선거운동 기간 공약은 변경될 수 있습니다.
+    </div>
+  </div>
+</body>
+</html>
