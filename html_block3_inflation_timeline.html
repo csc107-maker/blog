@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>물가 타임라인</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #fff8f0; padding: 20px; }
+
+  .inflation-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(239,68,68,0.10);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .inflation-header {
+    background: linear-gradient(135deg, #b91c1c 0%, #dc2626 60%, #f87171 100%);
+    padding: 22px 24px;
+    color: #fff;
+  }
+  .inflation-header .tag {
+    background: rgba(255,255,255,0.2);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .inflation-header h2 { font-size: 19px; font-weight: 900; }
+  .inflation-header p { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+
+  .main-stats {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #fee2e2;
+  }
+  .stat-box {
+    flex: 1;
+    padding: 18px 14px;
+    text-align: center;
+    border-right: 1px solid #fee2e2;
+  }
+  .stat-box:last-child { border-right: none; }
+  .stat-box .label { font-size: 11px; color: #94a3b8; margin-bottom: 6px; }
+  .stat-box .value { font-size: 26px; font-weight: 900; color: #dc2626; line-height: 1.1; }
+  .stat-box .sub { font-size: 11px; color: #6b7280; margin-top: 4px; }
+  .stat-box .up { color: #16a34a; font-weight: 700; }
+  .stat-box .down { color: #dc2626; font-weight: 700; }
+
+  .timeline-section {
+    padding: 20px 24px;
+  }
+  .timeline-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #fee2e2;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #dc2626, #f97316, #facc15);
+    border-radius: 2px;
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #dc2626;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #dc2626;
+  }
+  .timeline-item.orange::before { background: #f97316; box-shadow: 0 0 0 2px #f97316; }
+  .timeline-item.yellow::before { background: #eab308; box-shadow: 0 0 0 2px #eab308; }
+  .timeline-item.gray::before { background: #94a3b8; box-shadow: 0 0 0 2px #94a3b8; }
+
+  .tl-date { font-size: 11px; color: #94a3b8; font-weight: 600; }
+  .tl-title { font-size: 13px; font-weight: 800; color: #1e293b; margin: 2px 0; }
+  .tl-desc { font-size: 12px; color: #6b7280; line-height: 1.6; }
+  .tl-num {
+    display: inline-block;
+    background: #fee2e2;
+    color: #dc2626;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 6px;
+    margin-left: 4px;
+  }
+  .tl-num.orange { background: #ffedd5; color: #ea580c; }
+  .tl-num.yellow { background: #fef9c3; color: #ca8a04; }
+
+  .oil-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 16px 24px;
+    background: #fff7f7;
+    border-top: 1px solid #fee2e2;
+  }
+  .oil-item { text-align: center; }
+  .oil-item .oil-label { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
+  .oil-item .oil-value { font-size: 18px; font-weight: 900; color: #dc2626; }
+  .oil-item .oil-sub { font-size: 10px; color: #9ca3af; }
+
+  .source-note {
+    padding: 10px 24px;
+    font-size: 10.5px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+  }
+</style>
+</head>
+<body>
+  <div class="inflation-wrap">
+    <div class="inflation-header">
+      <div class="tag">📈 물가 경보</div>
+      <h2>2026년 대한민국 물가·유가 현황</h2>
+      <p>국가데이터처 발표 기준 | "5월엔 더 오를 것" 경고</p>
+    </div>
+
+    <div class="main-stats">
+      <div class="stat-box">
+        <div class="label">소비자물가 상승률 (4월, 전년비)</div>
+        <div class="value">+2.6%</div>
+        <div class="sub"><span class="down">1년 9개월 만에 최고</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="label">석유류 가격 상승 (전년비)</div>
+        <div class="value">+21.9%</div>
+        <div class="sub"><span class="down">러-우 전쟁 이후 최대</span></div>
+      </div>
+      <div class="stat-box">
+        <div class="label">물가 기여도 (석유류)</div>
+        <div class="value">0.84%p</div>
+        <div class="sub">전체 물가 상승의 핵심 요인</div>
+      </div>
+    </div>
+
+    <div class="timeline-section">
+      <div class="timeline-title">⏱️ 물가 상승 주요 흐름</div>
+      <div class="timeline">
+
+        <div class="timeline-item gray">
+          <div class="tl-date">2024년 7월</div>
+          <div class="tl-title">소비자물가 전년비 +2.6% — 직전 고점</div>
+          <div class="tl-desc">이후 물가 안정세를 유지해왔으나, 중동 정세와 국제 유가 불안이 잠재 위험으로 존재.</div>
+        </div>
+
+        <div class="timeline-item orange">
+          <div class="tl-date">2025년 하반기</div>
+          <div class="tl-title">중동전쟁 여파로 국제유가 급등 본격화</div>
+          <div class="tl-desc">국제 에너지 시장 불안이 한국 유류 가격에 시차를 두고 반영되기 시작.</div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">2026년 4월</div>
+          <div class="tl-title">소비자물가지수 119.37 — 다시 2.6% 도달</div>
+          <div class="tl-desc">국가데이터처 발표. 전월 대비 <span class="tl-num">+0.5%</span>, 전년 동월 대비 <span class="tl-num">+2.6%</span>. 1년 9개월 만에 최고치 경신.</div>
+        </div>
+
+        <div class="timeline-item orange">
+          <div class="tl-date">2026년 5월 초</div>
+          <div class="tl-title">"5월엔 더 오를 것" — 전문가 경고</div>
+          <div class="tl-desc">국회도서관 국가전략포털 분석. 국제유가 상승의 소비자 물가 전이 현상이 서비스 부문으로 확산 중.</div>
+        </div>
+
+        <div class="timeline-item yellow">
+          <div class="tl-date">현재 (2026년 5월)</div>
+          <div class="tl-title">석유최고가격제로 상승 속도 일부 완화</div>
+          <div class="tl-desc">정부 석유 최고가격제가 물가 상승 압력 일부 흡수. 그러나 경유 <span class="tl-num orange">+30.8%</span> 충격은 여전.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="oil-grid">
+      <div class="oil-item">
+        <div class="oil-label">⛽ 휘발유</div>
+        <div class="oil-value">+21.1%</div>
+        <div class="oil-sub">전년 동월 대비</div>
+      </div>
+      <div class="oil-item">
+        <div class="oil-label">🚛 경유</div>
+        <div class="oil-value">+30.8%</div>
+        <div class="oil-sub">최대 충격 품목</div>
+      </div>
+      <div class="oil-item">
+        <div class="oil-label">🏠 등유</div>
+        <div class="oil-value">+18.7%</div>
+        <div class="oil-sub">서민 난방비 부담</div>
+      </div>
+    </div>
+
+    <div class="source-note">
+      ※ 출처: 국가데이터처 「2026년 4월 소비자물가동향」(2026.05.06), 국회도서관 국가전략포털, 중앙일보 보도 종합
+    </div>
+  </div>
+</body>
+</html>
