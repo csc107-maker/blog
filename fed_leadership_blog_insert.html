@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연준(Fed) 리더십 교체 완전 분석 — 파월→워시, 투자자가 알아야 할 모든 것</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
+<style>
+  /* ── Reset & Base ── */
+  .fed-block * { box-sizing: border-box; margin: 0; padding: 0; }
+  .fed-block {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #1a1a1a;
+    background: #ffffff;
+    padding: 28px 24px;
+    border-radius: 16px;
+    border: 1px solid #e4e4e0;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* ── Section Label ── */
+  .fed-block .sec-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    color: #9a9994;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .fed-block .sec-label i { font-size: 13px; }
+
+  /* ── Divider ── */
+  .fed-block .divider {
+    border: none;
+    border-top: 1px solid #edecea;
+    margin: 24px 0;
+  }
+
+  /* ── Badge ── */
+  .fed-block .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 6px;
+    margin-left: 7px;
+    vertical-align: middle;
+  }
+  .fed-block .badge-red    { background: #FCEBEB; color: #A32D2D; }
+  .fed-block .badge-amber  { background: #FAEEDA; color: #854F0B; }
+  .fed-block .badge-blue   { background: #E6F1FB; color: #185FA5; }
+  .fed-block .badge-green  { background: #EAF3DE; color: #3B6D11; }
+
+  /* ── Timeline ── */
+  .fed-block .tl-wrap { position: relative; }
+  .fed-block .tl-line {
+    position: absolute;
+    left: 19px; top: 0; bottom: 0;
+    width: 1px;
+    background: #d8d6d0;
+  }
+  .fed-block .tl-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+  .fed-block .tl-row:last-child { margin-bottom: 0; }
+  .fed-block .tl-dot {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+    font-size: 10px; font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .fed-block .dot-gray   { background: #f3f2ef; border: 1px solid #d8d6d0; color: #6b6a65; }
+  .fed-block .dot-red    { background: #FCEBEB; border: 1px solid #F7C1C1; color: #A32D2D; }
+  .fed-block .dot-amber  { background: #FAEEDA; border: 1px solid #FAC775; color: #854F0B; }
+  .fed-block .dot-blue   { background: #E6F1FB; border: 1px solid #B5D4F4; color: #185FA5; }
+
+  .fed-block .tl-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #edecea;
+    padding: 12px 16px;
+    flex: 1;
+  }
+  .fed-block .tl-card.border-blue { border-color: #378ADD; }
+  .fed-block .tl-title {
+    font-size: 13px; font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+  }
+  .fed-block .tl-desc {
+    font-size: 12px;
+    color: #555550;
+    line-height: 1.6;
+  }
+
+  /* ── Profile Card ── */
+  .fed-block .profile-card {
+    background: #ffffff;
+    border: 1px solid #edecea;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+  }
+  .fed-block .profile-head {
+    display: flex; align-items: center;
+    gap: 12px; margin-bottom: 14px;
+  }
+  .fed-block .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #f3f2ef;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 500; font-size: 13px;
+    color: #6b6a65; flex-shrink: 0;
+  }
+  .fed-block .profile-name { font-weight: 500; font-size: 15px; color: #1a1a1a; margin-bottom: 2px; }
+  .fed-block .profile-sub  { font-size: 12px; color: #6b6a65; }
+  .fed-block .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .fed-block .profile-item {
+    display: flex; gap: 8px;
+    font-size: 12px; color: #555550;
+    align-items: flex-start;
+  }
+  .fed-block .profile-item i { font-size: 14px; flex-shrink: 0; margin-top: 1px; color: #9a9994; }
+
+  /* ── Hawk vs Dove ── */
+  .fed-block .hvd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .fed-block .hvd-box { border-radius: 12px; padding: 12px 14px; }
+  .fed-block .hvd-box.red  { background: #FCEBEB; border: 1px solid #F7C1C1; }
+  .fed-block .hvd-box.blue { background: #E6F1FB; border: 1px solid #B5D4F4; }
+  .fed-block .hvd-title    { font-size: 12px; font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .fed-block .hvd-box.red  .hvd-title { color: #A32D2D; }
+  .fed-block .hvd-box.blue .hvd-title { color: #185FA5; }
+  .fed-block .hvd-item     { font-size: 11px; margin-bottom: 4px; }
+  .fed-block .hvd-box.red  .hvd-item  { color: #993C1D; }
+  .fed-block .hvd-box.blue .hvd-item  { color: #185FA5; }
+
+  .fed-block .note-box {
+    background: #f8f7f4;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 12px; color: #555550;
+    display: flex; gap: 6px; align-items: flex-start;
+  }
+  .fed-block .note-box i { font-size: 14px; color: #9a9994; flex-shrink: 0; margin-top: 1px; }
+  .fed-block .note-box strong { color: #1a1a1a; }
+
+  /* ── Scenario Cards ── */
+  .fed-block .sc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .fed-block .sc-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #edecea;
+    padding: 12px 14px;
+  }
+  .fed-block .sc-card.featured { border: 2px solid #378ADD; }
+  .fed-block .sc-label { font-size: 10px; font-weight: 500; margin-bottom: 6px; }
+  .fed-block .sc-label.red    { color: #A32D2D; }
+  .fed-block .sc-label.blue   { color: #185FA5; }
+  .fed-block .sc-label.green  { color: #3B6D11; }
+  .fed-block .sc-val   { font-size: 18px; font-weight: 500; color: #1a1a1a; margin-bottom: 4px; }
+  .fed-block .sc-sub   { font-size: 11px; color: #6b6a65; margin-bottom: 8px; }
+  .fed-block .sc-foot  { border-top: 1px solid #edecea; padding-top: 8px; font-size: 11px; }
+  .fed-block .sc-foot.red    { color: #A32D2D; }
+  .fed-block .sc-foot.amber  { color: #854F0B; }
+  .fed-block .sc-foot.green  { color: #3B6D11; }
+  .fed-block .tag-blue {
+    background: #E6F1FB; color: #185FA5;
+    padding: 1px 7px; border-radius: 4px;
+    font-size: 10px; font-weight: 500;
+  }
+
+  /* ── Risk Signals ── */
+  .fed-block .risk-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .fed-block .risk-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #edecea;
+  }
+  .fed-block .risk-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
+    flex-shrink: 0;
+  }
+  .fed-block .risk-num.r1 { background: #FCEBEB; color: #A32D2D; }
+  .fed-block .risk-num.r2 { background: #FAEEDA; color: #854F0B; }
+  .fed-block .risk-num.r3 { background: #FAEEDA; color: #854F0B; }
+  .fed-block .risk-title { font-size: 13px; font-weight: 500; color: #1a1a1a; margin-bottom: 3px; }
+  .fed-block .risk-desc  { font-size: 11px; color: #6b6a65; }
+
+  /* ── Strategy Grid ── */
+  .fed-block .strat-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 14px;
+  }
+  .fed-block .strat-box {
+    background: #f8f7f4;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .fed-block .strat-title { font-size: 12px; font-weight: 500; color: #1a1a1a; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .fed-block .strat-title i { font-size: 13px; color: #6b6a65; }
+  .fed-block .strat-item { font-size: 11px; color: #555550; margin-bottom: 4px; }
+
+  /* ── Footer ── */
+  .fed-block .fed-footer {
+    font-size: 11px; color: #b0afa9;
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 560px) {
+    .fed-block { padding: 20px 14px; }
+    .fed-block .hvd-grid,
+    .fed-block .profile-grid,
+    .fed-block .strat-grid { grid-template-columns: 1fr; }
+    .fed-block .sc-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fed-block">
+
+  <!-- ① 타임라인 -->
+  <p class="sec-label"><i class="ti ti-timeline"></i>교체 타임라인 — 무슨 일이 있었나</p>
+
+  <div class="tl-wrap">
+    <div class="tl-line"></div>
+
+    <div class="tl-row">
+      <div class="tl-dot dot-gray">2025<br>12월</div>
+      <div class="tl-card">
+        <p class="tl-title">연준, 마지막 금리 인하 단행</p>
+        <p class="tl-desc">기준금리 3.50~3.75%로 인하 → 이후 동결 기조 유지. 파월-트럼프 갈등 심화 속 차기 의장 물색 본격화.</p>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-dot dot-red">2026<br>1/30</div>
+      <div class="tl-card">
+        <p class="tl-title">케빈 워시 차기 의장 공식 지명<span class="badge badge-red">매파 우려</span></p>
+        <p class="tl-desc">트럼프 대통령, 케빈 워시 전 연준 이사를 17대 연준 의장으로 지명. 지명 직후 금·은·비트코인 급락, 미 증시도 금리인하 기대 후퇴로 하락 반응.</p>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-dot dot-gray">4/29<br>~30</div>
+      <div class="tl-card">
+        <p class="tl-title">파월 마지막 FOMC — 금리 동결 + 이사 잔류 선언</p>
+        <p class="tl-desc">기준금리 3.50~3.75% 동결 확정. 파월은 의장직 종료 후에도 "법무부 조사 완전 종결 때까지 이사직 유지"를 선언 — 1948년 이후 전례 없는 결정. 트럼프 임명 이사진의 과반 확보가 당분간 어려워짐.</p>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-dot dot-amber">5/15<br>이후</div>
+      <div class="tl-card">
+        <p class="tl-title">파월 의장직 종료 · 워시 공식 취임<span class="badge badge-amber">권력 이중 구도</span></p>
+        <p class="tl-desc">워시 취임 직후 이란전쟁 여파 유가 상승·인플레 재확산·고용 견조라는 '삼중 압박' 직면. 파월은 이사로 잔류, 연준 내부 권력 구도 복잡해짐.</p>
+      </div>
+    </div>
+
+    <div class="tl-row">
+      <div class="tl-dot dot-blue">현재<br>5/25</div>
+      <div class="tl-card border-blue">
+        <p class="tl-title">워시 체제 초기 — 시장은 발언 기조 탐색 중<span class="badge badge-blue">주시 필요</span></p>
+        <p class="tl-desc">시장 컨센서스: "2026년 금리 인하 없다" 사실상 확정. 워시의 공개 발언·FOMC 의사록이 향후 금리 경로 최대 변수.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ② 케빈 워시 프로필 -->
+  <p class="sec-label"><i class="ti ti-user-circle"></i>케빈 워시는 어떤 인물인가?</p>
+
+  <div class="profile-card">
+    <div class="profile-head">
+      <div class="avatar">KW</div>
+      <div>
+        <p class="profile-name">케빈 워시 (Kevin Warsh)</p>
+        <p class="profile-sub">제17대 미국 연방준비제도(Fed) 의장</p>
+      </div>
+    </div>
+    <div class="profile-grid">
+      <div class="profile-item">
+        <i class="ti ti-briefcase"></i>
+        <span>모건스탠리 임원 → 백악관 경제특보(2002~06) → 연준 이사(2006~11) → 드러켄밀러 패밀리오피스 → 쿠팡 사외이사</span>
+      </div>
+      <div class="profile-item">
+        <i class="ti ti-trending-up"></i>
+        <span>2006~11년 재직 시 대표적 매파 — 금융위기 중에도 물가 안정 우선 강경 대응 지지</span>
+      </div>
+      <div class="profile-item">
+        <i class="ti ti-cpu"></i>
+        <span>최근 AI 생산성 혁명·규제 완화 강조 → 일부에선 '약비둘기' 가능성 제기</span>
+      </div>
+      <div class="profile-item">
+        <i class="ti ti-scale"></i>
+        <span>대차대조표 축소 공약 + 연준 독립성 유지 → 트럼프와도 긴장 가능</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ③ 매파 vs 약비둘기 -->
+  <p class="sec-label"><i class="ti ti-arrows-split-2"></i>시장이 엇갈리는 이유 — 매파 vs 약비둘기</p>
+
+  <div class="hvd-grid">
+    <div class="hvd-box red">
+      <p class="hvd-title"><i class="ti ti-arrow-up"></i>매파 시각 (긴축 우려)</p>
+      <p class="hvd-item">· 2006~11년 강경 긴축 이력</p>
+      <p class="hvd-item">· 대차대조표 축소 공약</p>
+      <p class="hvd-item">· 이란전쟁 후 유가·물가 재상승</p>
+      <p class="hvd-item">· 고용시장 예상보다 견조</p>
+      <p class="hvd-item">· WSJ: "금리 인하 현실적으로 어려워"</p>
+    </div>
+    <div class="hvd-box blue">
+      <p class="hvd-title"><i class="ti ti-feather"></i>약비둘기 시각 (완화 가능)</p>
+      <p class="hvd-item">· AI 생산성 혁명 → 인플레 억제 효과</p>
+      <p class="hvd-item">· 규제 완화 강조 성향</p>
+      <p class="hvd-item">· 위기 시 비전통적 수단 유연 활용</p>
+      <p class="hvd-item">· NH투자증권: "매파 오해, 인하에 적극적일 수도"</p>
+      <p class="hvd-item">· 다올투자증권: "약비둘기(Soft Dove) 분류"</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <i class="ti ti-info-circle"></i>
+    <span><strong>핵심:</strong> 연준 금리는 워시 1인이 아니라 FOMC 위원회에서 결정됩니다. 실제 성향은 향후 공개 발언과 의사록을 통해 확인해야 합니다.</span>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ④ 금리 경로 시나리오 -->
+  <p class="sec-label"><i class="ti ti-chart-dots"></i>금리 경로 3가지 시나리오 — 투자자가 봐야 할 그림</p>
+
+  <div class="sc-grid">
+    <div class="sc-card">
+      <p class="sc-label red">시나리오 A · 강경 매파</p>
+      <p class="sc-val">동결 또는 인상</p>
+      <p class="sc-sub">3.50~3.75% 유지 또는 추가 인상</p>
+      <p class="sc-foot red">달러 강세 · 국채금리 상승 · 성장주 압박</p>
+    </div>
+    <div class="sc-card featured">
+      <p class="sc-label blue">시나리오 B · 현재 컨센서스 <span class="tag-blue">유력</span></p>
+      <p class="sc-val">2026년 동결</p>
+      <p class="sc-sub">3.50~3.75% 연내 유지</p>
+      <p class="sc-foot amber">증시 횡보 · AI 실적 장세 지속 · 선별 투자 필요</p>
+    </div>
+    <div class="sc-card">
+      <p class="sc-label green">시나리오 C · 약비둘기 반전</p>
+      <p class="sc-val">하반기 1회 인하</p>
+      <p class="sc-sub">3.25~3.50%로 인하 (하반기)</p>
+      <p class="sc-foot green">증시 랠리 · 성장주 수혜 · 달러 약세 가능</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ⑤ 3가지 위험 신호 -->
+  <p class="sec-label"><i class="ti ti-alert-triangle"></i>워시 의장 체제에서 시장이 주시해야 할 3가지 위험 신호</p>
+
+  <div class="risk-list">
+    <div class="risk-item">
+      <div class="risk-num r1">1</div>
+      <div>
+        <p class="risk-title">워시의 공식 발언에서 "긴축 재개" 시그널</p>
+        <p class="risk-desc">FOMC 직후 기자회견, 연설에서 매파 발언 → 달러 급등·성장주 매도 압력</p>
+      </div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-num r2">2</div>
+      <div>
+        <p class="risk-title">파월 이사 vs 워시 의장 — 연준 내부 분열</p>
+        <p class="risk-desc">파월이 이사로 잔류하며 FOMC 표결에 영향 → 통화정책 결정의 불확실성 가중</p>
+      </div>
+    </div>
+    <div class="risk-item">
+      <div class="risk-num r3">3</div>
+      <div>
+        <p class="risk-title">이란 협상 결렬 → 유가 재급등 → 인플레 재점화</p>
+        <p class="risk-desc">유가 다시 오르면 금리 인하 가능성 완전 소멸 → 워시 긴축 명분 강화</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ⑥ 투자자 대응 전략 -->
+  <p class="sec-label"><i class="ti ti-checklist"></i>투자자 대응 전략 — 불확실성 구간에서의 포지션</p>
+
+  <div class="strat-grid">
+    <div class="strat-box">
+      <p class="strat-title"><i class="ti ti-shield-check"></i>방어적 접근</p>
+      <p class="strat-item">· 금리 민감도 낮은 AI·기술주 유지</p>
+      <p class="strat-item">· 단기 채권·달러 일부 편입</p>
+      <p class="strat-item">· 레버리지 ETF 비중 축소</p>
+    </div>
+    <div class="strat-box">
+      <p class="strat-title"><i class="ti ti-eye"></i>모니터링 포인트</p>
+      <p class="strat-item">· 다음 FOMC 날짜·워시 첫 발언</p>
+      <p class="strat-item">· 미국 CPI 발표 (물가 추이)</p>
+      <p class="strat-item">· 이란 협상 뉴스 헤드라인</p>
+    </div>
+  </div>
+
+  <p class="fed-footer">
+    출처: 뉴시스, 파이낸셜뉴스, 글로벌이코노믹, 서울신문, ATFX, 토스뱅크, 나무위키 (2026.04~05 기준)<br>
+    ※ 본 자료는 투자 참고용이며 특정 종목·자산의 투자를 권유하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.
+  </p>
+
+</div>
+
+</body>
+</html>
