@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpaceX IPO 핵심 지표</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  .spacex-widget {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 50%, #fef3e2 100%);
+    border-radius: 20px;
+    padding: 32px 28px;
+    max-width: 760px;
+    margin: 0 auto;
+    border: 1px solid #dce3f3;
+    box-shadow: 0 8px 32px rgba(60, 90, 180, 0.10);
+  }
+
+  .widget-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #c5d0f0;
+  }
+
+  .rocket-icon {
+    font-size: 36px;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    border-radius: 12px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+  }
+
+  .widget-title { flex: 1; }
+  .widget-title h2 {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1e3a8a;
+    line-height: 1.2;
+  }
+  .widget-title p {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 3px;
+  }
+
+  .ticker-badge {
+    background: #1e40af;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .kpi-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 14px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); }
+
+  .kpi-label {
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .kpi-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1e3a8a;
+    line-height: 1.1;
+  }
+  .kpi-unit {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 3px;
+  }
+  .kpi-change {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 5px;
+  }
+  .positive { background: #d1fae5; color: #065f46; }
+  .negative { background: #fee2e2; color: #991b1b; }
+
+  .segment-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 16px;
+  }
+  .segment-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .seg-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .seg-name {
+    font-size: 12px;
+    color: #374151;
+    font-weight: 600;
+    width: 120px;
+    flex-shrink: 0;
+  }
+  .seg-bar-wrap {
+    flex: 1;
+    background: #f3f4f6;
+    border-radius: 6px;
+    height: 20px;
+    overflow: hidden;
+  }
+  .seg-bar {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 1s ease;
+  }
+  .bar-starlink { background: linear-gradient(90deg, #2563eb, #60a5fa); width: 61%; }
+  .bar-space    { background: linear-gradient(90deg, #7c3aed, #a78bfa); width: 21%; }
+  .bar-ai       { background: linear-gradient(90deg, #ea580c, #fb923c); width: 18%; }
+
+  .seg-amount {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1f2937;
+    width: 70px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .ipo-info-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .ipo-info-card {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #bfdbfe;
+  }
+  .ipo-info-label { font-size: 11px; color: #3b82f6; font-weight: 600; margin-bottom: 4px; }
+  .ipo-info-value { font-size: 16px; font-weight: 900; color: #1e40af; }
+  .ipo-info-sub   { font-size: 10px; color: #6b7280; margin-top: 2px; }
+
+  .disclaimer {
+    font-size: 10px;
+    color: #9ca3af;
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  @media (max-width: 520px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .ipo-info-row { grid-template-columns: 1fr; }
+    .kpi-value { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="spacex-widget">
+
+  <div class="widget-header">
+    <div class="rocket-icon">🚀</div>
+    <div class="widget-title">
+      <h2>SpaceX IPO 핵심 재무 지표</h2>
+      <p>2026년 5월 20일 S-1 공시 기준 · SEC 제출 실제 데이터</p>
+    </div>
+    <div class="ticker-badge">SPCX</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">목표 기업가치</div>
+      <div class="kpi-value">1.75조</div>
+      <div class="kpi-unit">달러 (USD)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">2025년 매출</div>
+      <div class="kpi-value">$187억</div>
+      <div class="kpi-change positive">YoY +33%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">조정 EBITDA</div>
+      <div class="kpi-value">$66억</div>
+      <div class="kpi-unit">2025년 기준</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">GAAP 순손실</div>
+      <div class="kpi-value">-$49억</div>
+      <div class="kpi-change negative">xAI 통합 영향</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">스타링크 가입자</div>
+      <div class="kpi-value">1,030만</div>
+      <div class="kpi-change positive">164개국</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">정부 매출 비중</div>
+      <div class="kpi-value">$59억</div>
+      <div class="kpi-unit">NASA·국방부 등</div>
+    </div>
+  </div>
+
+  <div class="segment-section">
+    <div class="segment-title">📊 사업부문별 2025년 매출 구성</div>
+    <div class="seg-bar-row">
+      <div class="seg-name">🛰 스타링크</div>
+      <div class="seg-bar-wrap"><div class="seg-bar bar-starlink">61%</div></div>
+      <div class="seg-amount">$114억</div>
+    </div>
+    <div class="seg-bar-row">
+      <div class="seg-name">🚀 우주·발사</div>
+      <div class="seg-bar-wrap"><div class="seg-bar bar-space">21%</div></div>
+      <div class="seg-amount">$40억</div>
+    </div>
+    <div class="seg-bar-row">
+      <div class="seg-name">🤖 AI(xAI)</div>
+      <div class="seg-bar-wrap"><div class="seg-bar bar-ai">18%</div></div>
+      <div class="seg-amount">$32억</div>
+    </div>
+  </div>
+
+  <div class="ipo-info-row">
+    <div class="ipo-info-card">
+      <div class="ipo-info-label">📅 예상 상장일</div>
+      <div class="ipo-info-value">2026년 6월 12일</div>
+      <div class="ipo-info-sub">나스닥 (SPCX) · 5:1 주식분할 적용</div>
+    </div>
+    <div class="ipo-info-card">
+      <div class="ipo-info-label">💰 IPO 조달 목표</div>
+      <div class="ipo-info-value">$400억~800억</div>
+      <div class="ipo-info-sub">역대 최대 IPO (사우디 아람코 $290억 초과)</div>
+    </div>
+    <div class="ipo-info-card">
+      <div class="ipo-info-label">🌍 총 유효시장(TAM)</div>
+      <div class="ipo-info-value">28.5조 달러</div>
+      <div class="ipo-info-sub">우주·연결·AI 통합 (자체 추산)</div>
+    </div>
+    <div class="ipo-info-card">
+      <div class="ipo-info-label">🧑‍💼 머스크 지분</div>
+      <div class="ipo-info-value">42% / 의결권 85%</div>
+      <div class="ipo-info-sub">이중 주식 구조 · Key Man Risk</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ※ 본 데이터는 SpaceX S-1 SEC 공시(2026.05.20) 기준입니다. 투자 권유가 아닙니다.
+  </div>
+</div>
+</body>
+</html>
