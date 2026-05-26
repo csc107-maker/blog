@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이번 주 증시 일정 타임라인 | 2026.05.26</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f4f8;padding:24px 16px;}
+.wrap{max-width:720px;margin:0 auto;}
+
+.header{
+  background:linear-gradient(135deg,#3d1a6e,#6a1bc2,#9b47e8);
+  border-radius:14px 14px 0 0;padding:18px 22px;
+  display:flex;align-items:center;gap:10px;
+}
+.header h2{color:#fff;font-size:17px;font-weight:900;flex:1;}
+.header .badge{background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;}
+
+.body{background:#fff;border-radius:0 0 14px 14px;padding:20px;border:1px solid #dde4ef;border-top:none;box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+.sec-label{font-size:11px;font-weight:700;color:#8896ae;letter-spacing:1px;margin-bottom:16px;text-transform:uppercase;}
+
+/* 타임라인 */
+.timeline{position:relative;padding-left:30px;margin-bottom:24px;}
+.timeline::before{
+  content:'';position:absolute;left:10px;top:0;bottom:0;
+  width:2px;background:linear-gradient(180deg,#9b47e8,#c084fc,#e9d5ff);
+  border-radius:2px;
+}
+.tl-item{position:relative;margin-bottom:16px;}
+.tl-dot{
+  position:absolute;left:-24px;top:3px;
+  width:14px;height:14px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7px;font-weight:700;
+}
+.tl-dot.today{background:#e03131;box-shadow:0 0 0 3px rgba(224,49,49,0.2);}
+.tl-dot.soon{background:#7950f2;box-shadow:0 0 0 3px rgba(121,80,242,0.2);}
+.tl-dot.later{background:#adb5bd;}
+
+.tl-date{font-size:10px;font-weight:700;color:#9b47e8;margin-bottom:3px;}
+.tl-date.today-date{color:#e03131;}
+.tl-title{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:3px;}
+.tl-desc{font-size:11px;color:#6b7a99;line-height:1.6;}
+.tl-chip{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:4px;}
+.chip-hot{background:#ffe8e8;color:#e03131;}
+.chip-warn{background:#fff8e0;color:#8a6000;}
+.chip-info{background:#e8f0ff;color:#3456c0;}
+
+/* 리스크 체크리스트 */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.risk-card{border-radius:10px;padding:14px;border:1.5px solid;}
+.risk-card.danger{border-color:#ffcdd2;background:#fff5f5;}
+.risk-card.caution{border-color:#fff3cd;background:#fffbf0;}
+.risk-card.positive{border-color:#c8e6c9;background:#f5fff5;}
+.risk-card .r-icon{font-size:18px;margin-bottom:6px;}
+.risk-card .r-title{font-size:12px;font-weight:700;margin-bottom:4px;}
+.risk-card.danger .r-title{color:#c0392b;}
+.risk-card.caution .r-title{color:#856404;}
+.risk-card.positive .r-title{color:#1a5c2e;}
+.risk-card .r-desc{font-size:11px;color:#6b7a99;line-height:1.5;}
+
+.footer-note{font-size:10px;color:#aab4c4;margin-top:14px;text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">📅 일정</div>
+    <h2>이번 주 핵심 증시 일정 & 리스크</h2>
+    <span style="color:rgba(255,255,255,0.7);font-size:11px;">5월 26일(화)~30일(금)</span>
+  </div>
+  <div class="body">
+
+    <div class="sec-label">📅 주요 일정 타임라인</div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot today"></div>
+        <div class="tl-date today-date">5월 26일(화) — 오늘</div>
+        <div class="tl-title">삼성전자·SK하이닉스 레버리지 ETF 상장</div>
+        <div class="tl-desc">단일 종목 레버리지 ETF 최초 상장. 동시호가 시간대 수급 변동성 주의. 외국인 6거래일 만에 순매수 전환 여부 확인.</div>
+        <span class="tl-chip chip-hot">🔥 핵심 이벤트</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot soon"></div>
+        <div class="tl-date">5월 27일(수)</div>
+        <div class="tl-title">뉴욕증시 메모리얼데이 이후 첫 거래 재개</div>
+        <div class="tl-desc">미국 증시가 휴장 명명 후 돌아옵니다. 미-이란 협상 진행 상황, 미국 GDP·소비 지표 점검. 반도체 수급 연쇄 효과 확인.</div>
+        <span class="tl-chip chip-info">📊 글로벌 변수</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot soon"></div>
+        <div class="tl-date">5월 28~29일(목~금)</div>
+        <div class="tl-title">미-이란 협상 최종 분수령</div>
+        <div class="tl-desc">갈리바프 이란 협상단의 카타르 방문 결과 발표 예상. 휴전 60일 연장·호르무즈 재개방 여부가 유가와 금융시장에 직결.</div>
+        <span class="tl-chip chip-warn">⚠ 지정학 리스크</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot soon"></div>
+        <div class="tl-date">5월 29일(금) 장 마감 후</div>
+        <div class="tl-title">MSCI 반기 리뷰 리밸런싱 실행</div>
+        <div class="tl-desc">현대건설·삼성에피스홀딩스 편입 / LG생활건강·두산밥캣·코웨이 편출 예정. 패시브 자금 유입·유출 수급 영향 발생.</div>
+        <span class="tl-chip chip-info">📊 수급 이벤트</span>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot later"></div>
+        <div class="tl-date">6월 첫 거래일</div>
+        <div class="tl-title">MSCI 리밸런싱 실제 수급 반영</div>
+        <div class="tl-desc">편입 종목으로의 자금 유입 본격화. 특히 현대건설 등 신규 편입 종목 수급 변화 모니터링 필요.</div>
+        <span class="tl-chip chip-info">📊 수급 반영</span>
+      </div>
+
+    </div>
+
+    <div class="sec-label">⚠️ 현재 시장의 핵심 리스크 요인</div>
+    <div class="risk-grid">
+      <div class="risk-card danger">
+        <div class="r-icon">💥</div>
+        <div class="r-title">반도체 쏠림 리스크</div>
+        <div class="r-desc">삼성전자·SK하이닉스 두 종목이 코스피 지수를 독점적으로 끌어올리는 구조. 차익실현 시 지수 전체 급락 가능.</div>
+      </div>
+      <div class="risk-card caution">
+        <div class="r-icon">🛢️</div>
+        <div class="r-title">이란 협상 불확실성</div>
+        <div class="r-desc">협상 타결 전까지 언제든 뉴스 하나에 유가 급등·지수 급락 가능. 오늘 개장 전 공습 보도가 보여준 취약성.</div>
+      </div>
+      <div class="risk-card caution">
+        <div class="r-icon">📈</div>
+        <div class="r-title">미국채 금리 재상승</div>
+        <div class="r-desc">30년물이 5.19%까지 치솟았던 경험. 협상 기대 꺾이면 인플레 우려와 함께 금리가 재상승할 수 있음.</div>
+      </div>
+      <div class="risk-card positive">
+        <div class="r-icon">✅</div>
+        <div class="r-title">긍정 요인: 펀더멘털</div>
+        <div class="r-desc">반도체 수출 3월 +151%, 수출 전체 800억달러 첫 돌파. 실적 모멘텀이 강세를 뒷받침하는 구조는 유효.</div>
+      </div>
+    </div>
+
+    <div class="footer-note">※ 출처: MSCI(DAOL투자증권), 뉴시스·이투데이·파이낸셜뉴스 종합. 투자 판단의 최종 책임은 본인에게 있습니다.</div>
+  </div>
+</div>
+</body>
+</html>
