@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETF vs 직접 주식 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fff8;
+    padding: 24px 16px;
+  }
+  
+  .wrap { max-width: 840px; margin: 0 auto; }
+  
+  .hd { text-align: center; margin-bottom: 22px; }
+  .hd .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .hd h2 { font-size: 20px; font-weight: 900; color: #1a1a2e; margin-bottom: 5px; }
+  .hd p  { font-size: 12.5px; color: #6b7280; }
+  
+  /* 핵심 질문 */
+  .question-box {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 2px solid #6ee7b7;
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+  .question-box .q { font-size: 16px; font-weight: 900; color: #064e3b; margin-bottom: 6px; }
+  .question-box .qa { font-size: 13px; color: #065f46; line-height: 1.6; }
+  
+  /* 대비 테이블 */
+  .vs-table-wrap {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    overflow-x: auto;
+  }
+  
+  .vs-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .vs-title::before {
+    content: '';
+    display: block;
+    width: 4px; height: 16px;
+    background: linear-gradient(135deg, #059669, #10b981);
+    border-radius: 4px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 500px;
+  }
+  
+  thead th {
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  thead th:first-child { text-align: left; background: #f8f9ff; }
+  thead th.col-etf   { background: #fff5f5; color: #dc2626; border-radius: 8px 8px 0 0; }
+  thead th.col-stock { background: #f0fdf4; color: #059669; border-radius: 8px 8px 0 0; }
+  
+  tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 12.5px;
+    text-align: center;
+    vertical-align: top;
+  }
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 13px;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:nth-child(even) td { background: #fafafa; }
+  tbody tr:hover td { background: #f0fdf4; }
+  
+  .icon-win  { color: #16a34a; font-weight: 800; font-size: 13px; }
+  .icon-lose { color: #dc2626; font-weight: 800; font-size: 13px; }
+  .icon-tie  { color: #f59e0b; font-weight: 800; font-size: 13px; }
+  
+  /* 선택 가이드 */
+  .guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  
+  .guide-card {
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .guide-card.etf-guide { background: linear-gradient(135deg, #fff5f5, #fef2f2); border: 1.5px solid #fca5a5; }
+  .guide-card.stk-guide { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 1.5px solid #6ee7b7; }
+  
+  .guide-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  
+  .guide-icon { font-size: 28px; }
+  
+  .guide-title {
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .etf-guide .guide-title { color: #991b1b; }
+  .stk-guide .guide-title { color: #064e3b; }
+  
+  .guide-sub  { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+  
+  .guide-list { list-style: none; }
+  .guide-list li {
+    font-size: 12.5px;
+    line-height: 1.65;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+  }
+  .guide-list li:last-child { border-bottom: none; }
+  .guide-list li::before { flex-shrink: 0; font-size: 13px; }
+  .etf-guide .guide-list li::before { content: '⚡'; }
+  .stk-guide .guide-list li::before { content: '✅'; }
+  
+  /* 결론 배너 */
+  .final-banner {
+    background: linear-gradient(135deg, #1a1a2e, #2d2d5e);
+    border-radius: 16px;
+    padding: 22px;
+    color: #fff;
+    text-align: center;
+  }
+  .final-banner .fb-title { font-size: 16px; font-weight: 900; margin-bottom: 10px; }
+  .final-banner .fb-desc  { font-size: 13px; color: #cbd5e1; line-height: 1.7; }
+  .final-banner .fb-tag   {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #a5f3fc;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  
+  @media (max-width: 600px) {
+    .guide-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  
+  <div class="hd">
+    <div class="tag">🔍 비교 분석</div>
+    <h2>레버리지 ETF vs 직접 주식 매수, 뭐가 더 낫나?</h2>
+    <p>"어차피 연동되는데 굳이 ETF를 사야 하나?" — 핵심 질문에 답합니다</p>
+  </div>
+  
+  <div class="question-box">
+    <div class="q">💬 "삼성전자·SK하이닉스 주식을 직접 사면 되는데, 왜 레버리지 ETF를 사야 하나요?"</div>
+    <div class="qa">맞는 말입니다. 레버리지 ETF는 직접 주식의 <strong>대체재가 아닌 보완재</strong>입니다.<br>목적과 투자 기간이 완전히 다른 상품입니다.</div>
+  </div>
+  
+  <!-- 비교 테이블 -->
+  <div class="vs-table-wrap">
+    <div class="vs-title">항목별 세부 비교</div>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th class="col-etf">⚡ 단일종목 레버리지 ETF</th>
+          <th class="col-stock">📌 직접 주식 매수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>수익 배율</td>
+          <td><span class="icon-win">+2배 수익 가능</span></td>
+          <td>1배 (주가 상승분 그대로)</td>
+        </tr>
+        <tr>
+          <td>손실 배율</td>
+          <td><span class="icon-lose">-2배 손실 가능</span></td>
+          <td><span class="icon-win">1배 손실 한정</span></td>
+        </tr>
+        <tr>
+          <td>변동성 잠식</td>
+          <td><span class="icon-lose">있음 (횡보·등락 시 누적 손실)</span></td>
+          <td><span class="icon-win">없음 (주가 회복 시 원금 회복)</span></td>
+        </tr>
+        <tr>
+          <td>배당 수령</td>
+          <td><span class="icon-lose">없음 또는 미미</span></td>
+          <td><span class="icon-win">분기 배당 직접 수령</span></td>
+        </tr>
+        <tr>
+          <td>운용 비용</td>
+          <td><span class="icon-lose">연간 운용 보수 + 롤오버 비용</span></td>
+          <td><span class="icon-win">없음 (매매 수수료만)</span></td>
+        </tr>
+        <tr>
+          <td>장기 보유 적합성</td>
+          <td><span class="icon-lose">부적합 (비용·드래그 누적)</span></td>
+          <td><span class="icon-win">적합 (장기 성장 수혜)</span></td>
+        </tr>
+        <tr>
+          <td>단기 트레이딩</td>
+          <td><span class="icon-win">최적화 (방향성 베팅)</span></td>
+          <td><span class="icon-tie">가능하나 레버리지 없음</span></td>
+        </tr>
+        <tr>
+          <td>주주 권리</td>
+          <td><span class="icon-lose">없음</span></td>
+          <td><span class="icon-win">의결권·배당권 보유</span></td>
+        </tr>
+        <tr>
+          <td>진입 장벽</td>
+          <td><span class="icon-lose">교육 2시간 + 예탁금 1000만원</span></td>
+          <td><span class="icon-win">제한 없음</span></td>
+        </tr>
+        <tr>
+          <td>세금</td>
+          <td>매매차익 비과세 (국내 ETF)</td>
+          <td>매매차익 비과세 (국내 주식)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- 선택 가이드 -->
+  <div class="guide-grid">
+    <div class="guide-card etf-guide">
+      <div class="guide-card-header">
+        <div class="guide-icon">⚡</div>
+        <div>
+          <div class="guide-title">레버리지 ETF 선택</div>
+          <div class="guide-sub">이런 분께 적합합니다</div>
+        </div>
+      </div>
+      <ul class="guide-list">
+        <li>수일~수주 단기 방향성 베팅 목적</li>
+        <li>반도체 업황 호재 이벤트 앞두고 단기 수익 극대화</li>
+        <li>이미 현물 주식 보유, 위성 포지션 추가</li>
+        <li>손절 라인을 철저히 지킬 수 있는 분</li>
+      </ul>
+    </div>
+    
+    <div class="guide-card stk-guide">
+      <div class="guide-card-header">
+        <div class="guide-icon">📌</div>
+        <div>
+          <div class="guide-title">직접 주식 선택</div>
+          <div class="guide-sub">이런 분께 적합합니다</div>
+        </div>
+      </div>
+      <ul class="guide-list">
+        <li>6개월 이상 장기 보유 목적</li>
+        <li>배당 + 주가 상승 동시 향유 원하는 분</li>
+        <li>큰 등락에 심리적으로 취약한 분</li>
+        <li>주주 권리(의결권)도 중요시하는 분</li>
+      </ul>
+    </div>
+  </div>
+  
+  <!-- 최종 결론 배너 -->
+  <div class="final-banner">
+    <div class="fb-tag">🎯 FINAL VERDICT</div>
+    <div class="fb-title">레버리지 ETF ≠ 주식의 대체재</div>
+    <div class="fb-desc">
+      레버리지 ETF는 삼성전자·SK하이닉스 주가에 연동되지만, 구조적 비용과 변동성 잠식으로 인해 <strong>장기 보유 시 오히려 일반 주식보다 수익률이 낮을 수 있습니다.</strong><br>
+      최선의 전략: 현물 주식을 코어 포지션(70~85%)으로, 레버리지 ETF는 단기 위성 포지션(5~15%)으로만 활용하세요.
+    </div>
+  </div>
+  
+</div>
+</body>
+</html>
