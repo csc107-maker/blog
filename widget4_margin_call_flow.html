@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미수거래 반대매매 흐름</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0faf4;
+    padding: 28px 16px;
+  }
+  .widget-wrap { max-width: 700px; margin: 0 auto; }
+  .widget-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #1b5e20;
+    margin-bottom: 5px;
+  }
+  .widget-sub {
+    text-align: center;
+    font-size: 12.5px;
+    color: #388e3c;
+    margin-bottom: 26px;
+  }
+  /* 두 개의 시나리오 */
+  .scenario-label {
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 8px;
+    padding: 7px 14px;
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+  .sl-good { background: #e8f5e9; color: #1b5e20; }
+  .sl-bad { background: #ffebee; color: #b71c1c; }
+  /* 수평 타임라인 */
+  .htl {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 4px;
+  }
+  .htl::before {
+    content: '';
+    position: absolute;
+    left: 30px; right: 30px;
+    top: 22px;
+    height: 3px;
+    background: #e0e0e0;
+    z-index: 0;
+  }
+  .step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding: 0 4px;
+  }
+  .step-dot {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
+    border: 3px solid;
+    background: #fff;
+  }
+  .step-day {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #9e9e9e;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .step-text {
+    font-size: 11.5px;
+    color: #37474f;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  /* 좋은 시나리오 색상 */
+  .good .step-dot { color: #2e7d32; border-color: #81c784; }
+  .good .step-dot.final { background: #2e7d32; color: #fff; border-color: #2e7d32; }
+  /* 나쁜 시나리오 색상 */
+  .bad .step-dot { color: #c62828; border-color: #ef9a9a; }
+  .bad .step-dot.warn { background: #ffebee; }
+  .bad .step-dot.final { background: #c62828; color: #fff; border-color: #c62828; }
+  .bad::before { background: #ffcdd2; }
+  /* 결과 박스 */
+  .result-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 500px) { .result-row { grid-template-columns: 1fr; } }
+  .result-box {
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+  .result-box.good { background: #e8f5e9; color: #1b5e20; border-left: 4px solid #43a047; }
+  .result-box.bad { background: #ffebee; color: #b71c1c; border-left: 4px solid #e53935; }
+  .result-box strong { font-weight: 800; display: block; margin-bottom: 4px; font-size: 13px; }
+  .warning-box {
+    background: #fff9c4;
+    border-left: 4px solid #fbc02d;
+    border-radius: 10px;
+    padding: 13px 15px;
+    font-size: 12px;
+    color: #4e342e;
+    line-height: 1.8;
+  }
+  .warning-box strong { color: #e65100; font-weight: 800; }
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #b0bec5;
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-title">🔄 미수거래부터 반대매매까지 전체 흐름</div>
+  <div class="widget-sub">결제일까지 처리 여부에 따라 결과가 완전히 달라집니다</div>
+
+  <!-- 시나리오 1: 정상 해결 -->
+  <div style="margin-bottom:8px;">
+    <span class="scenario-label sl-good">✅ 시나리오 A — 정상 결제 (증거금 해지)</span>
+  </div>
+  <div class="htl good">
+    <div class="step">
+      <div class="step-dot">📋</div>
+      <div class="step-day">D일</div>
+      <div class="step-text">미수 주문<br>증거금 일부 징수</div>
+    </div>
+    <div class="step">
+      <div class="step-dot">💵</div>
+      <div class="step-day">D+1일</div>
+      <div class="step-text">나머지 자금<br>현금 입금 or 매도</div>
+    </div>
+    <div class="step">
+      <div class="step-dot final">✅</div>
+      <div class="step-day">D+2일</div>
+      <div class="step-text">결제 완료<br>증거금 자동 해지</div>
+    </div>
+  </div>
+
+  <!-- 시나리오 2: 미납 → 반대매매 -->
+  <div style="margin-bottom:8px;">
+    <span class="scenario-label sl-bad">❌ 시나리오 B — 미수금 미납 → 반대매매</span>
+  </div>
+  <div class="htl bad">
+    <div class="step">
+      <div class="step-dot">📋</div>
+      <div class="step-day">D일</div>
+      <div class="step-text">미수 주문<br>증거금 일부 징수</div>
+    </div>
+    <div class="step">
+      <div class="step-dot warn">⚠️</div>
+      <div class="step-day">D+1일</div>
+      <div class="step-text">미납 경고<br>SMS·알림 발송</div>
+    </div>
+    <div class="step">
+      <div class="step-dot warn">💸</div>
+      <div class="step-day">D+2일 장시작</div>
+      <div class="step-text">반대매매 실행<br>시장가 강제 매도</div>
+    </div>
+    <div class="step">
+      <div class="step-dot final">🔒</div>
+      <div class="step-day">이후 30일</div>
+      <div class="step-text">미수동결계좌<br>100% 증거금</div>
+    </div>
+  </div>
+
+  <div class="result-row">
+    <div class="result-box good">
+      <strong>✅ 정상 결제 시</strong>
+      · 증거금 D+2일 자동 해지<br>
+      · 계좌 인출·재사용 가능<br>
+      · 미수동결 없음
+    </div>
+    <div class="result-box bad">
+      <strong>❌ 미납 시 발생하는 손해</strong>
+      · 반대매매(시장가 강제 매도)<br>
+      · 30일 전 증권사 100% 증거금<br>
+      · 미수동결 연체이자 발생
+    </div>
+  </div>
+
+  <div class="warning-box">
+    ⚠️ <strong>반대매매의 위험성:</strong> 반대매매는 장 시작 직후 <strong>시장가</strong>로 실행됩니다. 전날 하락한 상태에서 추가 손실이 발생할 수 있으며, 투자자에게 선택권이 없습니다. 또한 미수동결은 <strong>고객 단위로 전 증권사에 동시 적용</strong>됩니다.
+  </div>
+  <div class="source">출처: 한국투자증권, 미래에셋증권, 카카오페이증권 안내 기준</div>
+</div>
+</body>
+</html>
