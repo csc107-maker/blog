@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>변동성 잠식 효과</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff8f8;
+    padding: 24px 16px;
+  }
+  
+  .wrap { max-width: 800px; margin: 0 auto; }
+  
+  .hd {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  
+  .hd .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  
+  .hd h2 { font-size: 20px; font-weight: 900; color: #1a1a2e; margin-bottom: 6px; }
+  .hd p { font-size: 12.5px; color: #6b7280; }
+  
+  /* 핵심 경고 박스 */
+  .alert-box {
+    background: linear-gradient(135deg, #fef2f2, #fff1f1);
+    border: 2px solid #fca5a5;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 22px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  
+  .alert-icon { font-size: 32px; flex-shrink: 0; }
+  .alert-title { font-size: 15px; font-weight: 900; color: #991b1b; margin-bottom: 6px; }
+  .alert-text { font-size: 13px; color: #7f1d1d; line-height: 1.65; }
+  
+  /* 시나리오 카드들 */
+  .scenarios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  
+  .scenario-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  
+  .sc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sc-label.normal { color: #2563eb; }
+  .sc-label.lev    { color: #dc2626; }
+  
+  .sc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sc-dot.blue { background: #2563eb; }
+  .sc-dot.red  { background: #dc2626; }
+  
+  .day-steps { display: flex; flex-direction: column; gap: 8px; }
+  
+  .step {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  
+  .step-label { font-weight: 600; color: #374151; }
+  .step-val   { font-size: 18px; font-weight: 900; }
+  .step.start { background: #f8f9ff; }
+  .step.start .step-val { color: #374151; }
+  .step.down  { background: #fff5f5; }
+  .step.down .step-val { color: #dc2626; }
+  .step.up    { background: #f0fdf4; }
+  .step.up .step-val  { color: #16a34a; }
+  .step.end   { background: #fffbeb; border: 2px solid #fcd34d; }
+  .step.end .step-val { color: #92400e; }
+  
+  .step-change {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 1px;
+  }
+  
+  /* 차이 강조 */
+  .diff-highlight {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    margin-bottom: 22px;
+  }
+  
+  .diff-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  
+  .diff-bars {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    height: 120px;
+    padding: 0 20px;
+    justify-content: center;
+  }
+  
+  .bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; max-width: 140px; }
+  .bar-val-top { font-size: 16px; font-weight: 900; }
+  .bar { width: 100%; border-radius: 8px 8px 0 0; min-height: 8px; transition: height 0.5s; }
+  .bar-label { font-size: 11px; font-weight: 700; color: #6b7280; text-align: center; }
+  
+  /* 결론 박스 */
+  .conclusion-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .con-box {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    border-top: 3px solid #e5e7eb;
+  }
+  .con-box.blue  { border-top-color: #2563eb; }
+  .con-box.red   { border-top-color: #dc2626; }
+  .con-box.amber { border-top-color: #f59e0b; }
+  
+  .con-emoji { font-size: 22px; margin-bottom: 6px; }
+  .con-title { font-size: 12px; font-weight: 800; color: #1a1a2e; margin-bottom: 4px; }
+  .con-desc  { font-size: 11px; color: #6b7280; line-height: 1.55; }
+  
+  @media (max-width: 600px) {
+    .scenarios { grid-template-columns: 1fr; }
+    .conclusion-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <div class="tag">⚠️ 핵심 리스크</div>
+    <h2>변동성 잠식 (Volatility Decay) 완전 해부</h2>
+    <p>기초자산이 제자리로 돌아와도 레버리지 ETF는 손실 상태</p>
+  </div>
+  
+  <!-- 경고 -->
+  <div class="alert-box">
+    <div class="alert-icon">🔍</div>
+    <div>
+      <div class="alert-title">레버리지 ETF의 가장 치명적인 함정</div>
+      <div class="alert-text">기초자산(삼성전자·SK하이닉스)이 하락했다가 동일한 수준으로 회복하더라도, <strong>2배 레버리지 ETF는 원금을 회복하지 못합니다.</strong> 이것이 '변동성 잠식' 또는 '음의 복리효과'입니다. 횡보장, 등락 반복 구간에서는 기초자산이 오르지 않아도 레버리지 ETF 가치는 계속 떨어집니다.</div>
+    </div>
+  </div>
+  
+  <!-- 시나리오 비교 -->
+  <div class="scenarios">
+    <div class="scenario-card">
+      <div class="sc-label normal"><span class="sc-dot blue"></span>일반 주식 (1배)</div>
+      <div class="day-steps">
+        <div class="step start">
+          <div>
+            <div class="step-label">📅 시작</div>
+            <div class="step-change">투자 원금</div>
+          </div>
+          <div>
+            <div class="step-val">100만원</div>
+          </div>
+        </div>
+        <div class="step down">
+          <div>
+            <div class="step-label">📉 1일차 -10%</div>
+            <div class="step-change">100 × 0.9</div>
+          </div>
+          <div>
+            <div class="step-val">90만원</div>
+          </div>
+        </div>
+        <div class="step up">
+          <div>
+            <div class="step-label">📈 2일차 +11.11%</div>
+            <div class="step-change">90 × 1.1111</div>
+          </div>
+          <div>
+            <div class="step-val">100만원</div>
+          </div>
+        </div>
+        <div class="step end">
+          <div>
+            <div class="step-label">✅ 결과</div>
+            <div class="step-change">원금 완전 회복</div>
+          </div>
+          <div>
+            <div class="step-val" style="color:#16a34a;">+0원</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scenario-card">
+      <div class="sc-label lev"><span class="sc-dot red"></span>레버리지 ETF (2배)</div>
+      <div class="day-steps">
+        <div class="step start">
+          <div>
+            <div class="step-label">📅 시작</div>
+            <div class="step-change">투자 원금</div>
+          </div>
+          <div>
+            <div class="step-val">100만원</div>
+          </div>
+        </div>
+        <div class="step down">
+          <div>
+            <div class="step-label">📉 1일차 -20%</div>
+            <div class="step-change">100 × 0.8 (2배)</div>
+          </div>
+          <div>
+            <div class="step-val">80만원</div>
+          </div>
+        </div>
+        <div class="step up">
+          <div>
+            <div class="step-label">📈 2일차 +22.22%</div>
+            <div class="step-change">80 × 1.2222 (2배)</div>
+          </div>
+          <div>
+            <div class="step-val">97.8만원</div>
+          </div>
+        </div>
+        <div class="step end">
+          <div>
+            <div class="step-label">❌ 결과</div>
+            <div class="step-change">원금 미회복!</div>
+          </div>
+          <div>
+            <div class="step-val" style="color:#dc2626;">-2.2만원</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 시각 비교 -->
+  <div class="diff-highlight">
+    <div class="diff-title">📊 등락 반복 시 30일 경과 시뮬레이션 (±5% 매일 반복)</div>
+    <div class="diff-bars" id="barsArea"></div>
+    <p style="text-align:center;font-size:11.5px;color:#9ca3af;margin-top:10px;">매일 +5%, -5% 를 반복한다고 가정 / 일반 주식 vs 2배 레버리지</p>
+  </div>
+  
+  <!-- 결론 -->
+  <div class="conclusion-grid">
+    <div class="con-box blue">
+      <div class="con-emoji">📅</div>
+      <div class="con-title">단기 보유 (수일~수주)</div>
+      <div class="con-desc">방향성이 명확할 때 활용. 강한 상승 모멘텀 구간에서 유효한 전략</div>
+    </div>
+    <div class="con-box red">
+      <div class="con-emoji">🚫</div>
+      <div class="con-title">장기 보유 금물</div>
+      <div class="con-desc">변동성 잠식으로 횡보·하락 구간에서 지속적 손실 누적. 코어 포지션 부적합</div>
+    </div>
+    <div class="con-box amber">
+      <div class="con-emoji">⚡</div>
+      <div class="con-title">손절라인 필수</div>
+      <div class="con-desc">-15~20% 손절라인 사전 설정 필수. 버티기는 최악의 전략</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 30일 시뮬레이션 (매일 ±5%)
+  function buildBars() {
+    let stockVal = 100;
+    let levVal = 100;
+    const d5 = 0.05;
+    
+    for (let i = 0; i < 30; i++) {
+      const up = i % 2 === 0;
+      const chg = up ? d5 : -d5;
+      stockVal *= (1 + chg);
+      levVal   *= (1 + chg * 2);
+      if (levVal < 0) levVal = 0;
+    }
+    
+    const maxH = 100;
+    const stockH = Math.max(8, (stockVal / 100) * maxH);
+    const levH   = Math.max(8, (levVal / 100) * maxH);
+    
+    const area = document.getElementById('barsArea');
+    area.innerHTML = `
+      <div class="bar-wrap">
+        <div class="bar-val-top" style="color:#2563eb">${stockVal.toFixed(1)}만원</div>
+        <div class="bar" style="height:${stockH}px;background:linear-gradient(180deg,#3b82f6,#1d4ed8);"></div>
+        <div class="bar-label">일반 주식<br>(1배)</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-val-top" style="color:#dc2626">${levVal.toFixed(1)}만원</div>
+        <div class="bar" style="height:${levH}px;background:linear-gradient(180deg,#f87171,#dc2626);"></div>
+        <div class="bar-label">레버리지 ETF<br>(2배)</div>
+      </div>
+    `;
+  }
+  buildBars();
+</script>
+</body>
+</html>
