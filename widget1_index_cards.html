@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오전장 지수 현황 | 2026.05.26</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f4f8;padding:24px 16px;}
+
+.widget-wrap{max-width:720px;margin:0 auto;}
+
+.widget-header{
+  background:linear-gradient(135deg,#1a3c6e 0%,#0f5fa8 60%,#1e8ecf 100%);
+  border-radius:16px 16px 0 0;
+  padding:20px 24px 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.widget-header .badge{
+  background:rgba(255,255,255,0.18);
+  color:#fff;font-size:11px;font-weight:700;
+  padding:4px 10px;border-radius:20px;letter-spacing:0.5px;
+}
+.widget-header h2{color:#fff;font-size:18px;font-weight:900;flex:1;}
+.widget-header .time{color:rgba(255,255,255,0.75);font-size:12px;}
+
+.cards-body{
+  background:#fff;
+  border-radius:0 0 16px 16px;
+  padding:20px;
+  border:1px solid #dde4ef;border-top:none;
+  box-shadow:0 6px 24px rgba(0,0,0,0.07);
+}
+
+.section-label{font-size:11px;font-weight:700;color:#8896ae;letter-spacing:1px;margin-bottom:12px;text-transform:uppercase;}
+
+.index-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.index-card{
+  border-radius:12px;padding:16px;
+  position:relative;overflow:hidden;
+}
+.index-card.main-up{background:linear-gradient(135deg,#fff5f5 0%,#ffe8e8 100%);border:1.5px solid #ffcdd2;}
+.index-card.main-sub{background:linear-gradient(135deg,#f5f8ff 0%,#e8eeff 100%);border:1.5px solid #c5cff9;}
+.index-card .idx-name{font-size:11px;font-weight:700;color:#6b7a99;margin-bottom:4px;}
+.index-card .idx-val{font-size:26px;font-weight:900;color:#1a1a2e;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
+.index-card .idx-change{font-size:13px;font-weight:700;margin-top:2px;}
+.idx-change.up{color:#e03131;}
+.idx-change.down{color:#1971c2;}
+.index-card .idx-sub{font-size:11px;color:#8896ae;margin-top:6px;}
+.peak-badge{
+  position:absolute;top:10px;right:10px;
+  background:#e03131;color:#fff;
+  font-size:9px;font-weight:700;padding:3px 7px;border-radius:10px;letter-spacing:0.3px;
+}
+
+.stock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.stock-card{background:#f8faff;border-radius:10px;padding:12px 10px;border:1px solid #e4eaf6;text-align:center;}
+.stock-card .st-name{font-size:10px;font-weight:700;color:#6b7a99;margin-bottom:6px;}
+.stock-card .st-price{font-size:16px;font-weight:900;color:#1a1a2e;}
+.stock-card .st-rate{font-size:12px;font-weight:700;margin-top:2px;}
+.st-rate.up{color:#e03131;}
+.st-rate.flat{color:#aaa;}
+
+.info-row{
+  background:#f0f8ff;border-radius:10px;padding:12px 16px;
+  display:flex;gap:20px;flex-wrap:wrap;
+  border:1px solid #d0e8ff;
+}
+.info-item{display:flex;flex-direction:column;gap:2px;}
+.info-item .i-label{font-size:10px;color:#6b7a99;font-weight:700;}
+.info-item .i-val{font-size:13px;font-weight:900;color:#1a1a2e;}
+.i-val.up{color:#e03131;}
+.i-val.down{color:#1971c2;}
+
+.footer-note{font-size:10px;color:#aab4c4;margin-top:12px;text-align:right;}
+
+@media(max-width:480px){
+  .index-grid{grid-template-columns:1fr 1fr;}
+  .stock-grid{grid-template-columns:1fr 1fr 1fr;}
+  .idx-val{font-size:22px !important;}
+}
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-header">
+    <div class="badge">📊 시황</div>
+    <h2>오전장 주요 지수 현황</h2>
+    <span class="time">2026.05.26 오전 10:00 기준</span>
+  </div>
+  <div class="cards-body">
+
+    <div class="section-label">🇰🇷 국내 지수</div>
+    <div class="index-grid">
+      <div class="index-card main-up">
+        <div class="peak-badge">🏆 신고가</div>
+        <div class="idx-name">KOSPI</div>
+        <div class="idx-val">8,112</div>
+        <div class="idx-change up">▲ 264.41p (+3.37%)</div>
+        <div class="idx-sub">장중 최고: 8,131.15</div>
+      </div>
+      <div class="index-card main-sub">
+        <div class="idx-name">KOSDAQ</div>
+        <div class="idx-val">1,185</div>
+        <div class="idx-change up">▲ +2.1%</div>
+        <div class="idx-sub">전일종가: 1,161.13</div>
+      </div>
+    </div>
+
+    <div class="section-label">💎 주요 종목 (오전 10시)</div>
+    <div class="stock-grid">
+      <div class="stock-card">
+        <div class="st-name">삼성전자</div>
+        <div class="st-price">305,000</div>
+        <div class="st-rate up">▲ +2.74%</div>
+      </div>
+      <div class="stock-card">
+        <div class="st-name">SK하이닉스</div>
+        <div class="st-price">207만2천</div>
+        <div class="st-rate up">▲ +6.75%</div>
+      </div>
+      <div class="stock-card">
+        <div class="st-name">삼성전기</div>
+        <div class="st-price">급등</div>
+        <div class="st-rate up">▲ +12.69%</div>
+      </div>
+      <div class="stock-card">
+        <div class="st-name">현대차</div>
+        <div class="st-price">상승</div>
+        <div class="st-rate up">▲ +5.04%</div>
+      </div>
+      <div class="stock-card">
+        <div class="st-name">HD현대중공업</div>
+        <div class="st-price">상승</div>
+        <div class="st-rate up">▲ +4.71%</div>
+      </div>
+      <div class="stock-card">
+        <div class="st-name">SK스퀘어</div>
+        <div class="st-price">상승</div>
+        <div class="st-rate up">▲ +3.04%</div>
+      </div>
+    </div>
+
+    <div class="section-label">🌏 글로벌 지수 (전일 기준)</div>
+    <div class="info-row">
+      <div class="info-item"><span class="i-label">나스닥 52주</span><span class="i-val">25,701~26,050</span></div>
+      <div class="info-item"><span class="i-label">S&P500 (5/22)</span><span class="i-val up">8주 연속 ↑</span></div>
+      <div class="info-item"><span class="i-label">닛케이</span><span class="i-val up">사상최고권</span></div>
+      <div class="info-item"><span class="i-label">뉴욕</span><span class="i-val">메모리얼데이 휴장</span></div>
+    </div>
+
+    <div class="footer-note">※ 실시간 수치가 아닌 오전 10시 전후 보도 기준 추정치입니다. 투자 판단의 최종 책임은 본인에게 있습니다.</div>
+  </div>
+</div>
+</body>
+</html>
