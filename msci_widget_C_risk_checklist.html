@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSCI 편출 조건 & 투자 체크리스트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f7fa;padding:24px 16px;}
+.wrap{max-width:740px;margin:0 auto;}
+
+.header{
+  background:linear-gradient(135deg,#b71c1c,#c62828,#d32f2f,#e53935);
+  border-radius:16px 16px 0 0;padding:22px 26px;
+}
+.header .badge{background:rgba(255,255,255,0.18);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px;}
+.header h2{color:#fff;font-size:19px;font-weight:900;}
+.header p{color:rgba(255,255,255,0.8);font-size:12px;margin-top:4px;}
+
+.body{background:#fff;border-radius:0 0 16px 16px;padding:22px;border:1px solid #dde4ef;border-top:none;box-shadow:0 6px 24px rgba(0,0,0,0.07);}
+.sec-label{font-size:11px;font-weight:700;color:#8896ae;letter-spacing:1px;margin-bottom:14px;text-transform:uppercase;}
+
+/* 편출 조건 카드 */
+.excl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:22px;}
+.ex-card{border-radius:12px;padding:14px;text-align:center;border:1.5px solid #ffcdd2;background:#fff5f5;}
+.ex-num{font-size:28px;font-weight:900;color:#c62828;margin-bottom:4px;}
+.ex-title{font-size:12px;font-weight:700;color:#b71c1c;margin-bottom:6px;}
+.ex-desc{font-size:10px;color:#8896ae;line-height:1.6;}
+
+/* 편출 시나리오 테이블 */
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead tr{background:#fff5f5;}
+th{padding:9px 12px;text-align:center;font-size:10px;font-weight:700;color:#c62828;border-bottom:2px solid #ffcdd2;}
+td{padding:9px 12px;text-align:center;border-bottom:1px solid #f5f5f5;}
+td:first-child{text-align:left;font-weight:600;}
+tr:last-child td{border-bottom:none;}
+.risk-hi{color:#c62828;font-weight:700;}
+.risk-mid{color:#f57f17;font-weight:700;}
+.risk-lo{color:#2e7d32;font-weight:700;}
+
+/* 재편입 가능성 */
+.reinclusion-box{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:1.5px solid #c8e6c9;border-radius:12px;padding:16px;margin-bottom:22px;}
+.rb-title{font-size:13px;font-weight:700;color:#2e7d32;margin-bottom:10px;}
+.rb-steps{display:flex;flex-direction:column;gap:8px;}
+.rb-step{display:flex;gap:10px;align-items:flex-start;}
+.rb-dot{width:22px;height:22px;border-radius:50%;background:#4caf50;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.rb-content{font-size:12px;color:#3a5c3a;line-height:1.5;}
+.rb-content strong{color:#1b5e20;}
+
+/* 투자 체크리스트 */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.cl-section{border-radius:12px;overflow:hidden;}
+.cl-head{padding:10px 14px;font-size:12px;font-weight:700;}
+.hdec-head{background:#1b5e20;color:#fff;}
+.sbio-head{background:#0d47a1;color:#fff;}
+.cl-body{padding:10px 14px;}
+.hdec-body{background:#f1f8e9;border:1px solid #c8e6c9;border-top:none;}
+.sbio-body{background:#e3f2fd;border:1px solid #bbdefb;border-top:none;}
+.cl-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:11px;line-height:1.5;}
+.cl-item:last-child{margin-bottom:0;}
+.ci-good{color:#2e7d32;}
+.ci-warn{color:#e65100;}
+.ci-icon{flex-shrink:0;margin-top:1px;}
+
+.verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.v-card{border-radius:12px;padding:16px;border:2px solid;}
+.v-card.hdec-v{border-color:#a5d6a7;background:#f9fff9;}
+.v-card.sbio-v{border-color:#90caf9;background:#f5f9ff;}
+.v-name{font-size:12px;font-weight:700;color:#333;margin-bottom:6px;}
+.v-rating{font-size:14px;font-weight:900;margin-bottom:6px;}
+.hdec-v .v-rating{color:#2e7d32;}
+.sbio-v .v-rating{color:#1565c0;}
+.v-reason{font-size:10px;color:#6b7a99;line-height:1.6;}
+
+.footer-note{font-size:10px;color:#aab4c4;margin-top:16px;text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">⚠️ 리스크 분석</div>
+    <h2>MSCI 편출 조건 & 종목별 투자 체크리스트</h2>
+    <p>편입 후 언제 쫓겨날 수 있는지, 투자 전 확인사항 정리</p>
+  </div>
+  <div class="body">
+
+    <div class="sec-label">🚨 MSCI 편출이 발생하는 3가지 조건</div>
+    <div class="excl-grid">
+      <div class="ex-card">
+        <div class="ex-num">①</div>
+        <div class="ex-title">시총 급감</div>
+        <div class="ex-desc">주가 급락으로 전체 시가총액이 편입 컷오프의 약 50% 미만으로 하락 시 편출 위험 진입</div>
+      </div>
+      <div class="ex-card">
+        <div class="ex-num">②</div>
+        <div class="ex-title">유동성 감소</div>
+        <div class="ex-desc">대주주 지분 급증, 자사주 대량 매입 등으로 유동시총이 기준 미달 시 편출 (한진칼 사례)</div>
+      </div>
+      <div class="ex-card">
+        <div class="ex-num">③</div>
+        <div class="ex-title">3개월마다 재심사</div>
+        <div class="ex-desc">연 4회 정기 리뷰마다 기준 재충족 여부 확인. 편입 후에도 지속 관리 필요</div>
+      </div>
+    </div>
+
+    <div class="sec-label">📋 편출 위험 시나리오별 리스크 등급</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>시나리오</th><th>현대건설</th><th>삼성에피스홀딩스</th><th>비고</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>원전 수주 불발·지연</td>
+            <td class="risk-hi">⚠ 高 리스크</td>
+            <td class="risk-lo">✔ 영향 없음</td>
+            <td>현대건설 주가 직결</td>
+          </tr>
+          <tr style="background:#fafafa;">
+            <td>글로벌 바이오 규제 강화</td>
+            <td class="risk-lo">✔ 영향 없음</td>
+            <td class="risk-mid">△ 中 리스크</td>
+            <td>FDA 승인 지연 가능성</td>
+          </tr>
+          <tr>
+            <td>주가 50% 이상 급락</td>
+            <td class="risk-mid">△ 편출 위험</td>
+            <td class="risk-mid">△ 편출 위험</td>
+            <td>컷오프 하회 시 편출</td>
+          </tr>
+          <tr style="background:#fafafa;">
+            <td>유동주식 비율 급감</td>
+            <td class="risk-lo">✔ 낮음</td>
+            <td class="risk-mid">△ 지주사 구조 주의</td>
+            <td>대주주 지분 변동 주시</td>
+          </tr>
+          <tr>
+            <td>중동 전쟁 확전</td>
+            <td class="risk-hi">⚠ 高 리스크</td>
+            <td class="risk-lo">✔ 제한적</td>
+            <td>현장 비용 급증 위험</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec-label">🔄 편출 후 재편입이 가능한가요?</div>
+    <div class="reinclusion-box">
+      <div class="rb-title">✅ 재편입 가능 — 단, 악순환 주의</div>
+      <div class="rb-steps">
+        <div class="rb-step">
+          <div class="rb-dot">1</div>
+          <div class="rb-content"><strong>락업 없음:</strong> MSCI는 편출 후 재편입에 별도 잠금 기간을 두지 않습니다. 다음 리뷰(3개월 후)에서 기준 충족 시 즉시 재편입 가능합니다.</div>
+        </div>
+        <div class="rb-step">
+          <div class="rb-dot">2</div>
+          <div class="rb-content"><strong>악순환 리스크:</strong> 편출 발표 → 패시브 자금 매도 → 주가 하락 → 시총 감소 → 다음 리뷰에서도 기준 미달 → 재편출의 악순환이 발생할 수 있습니다.</div>
+        </div>
+        <div class="rb-step">
+          <div class="rb-dot">3</div>
+          <div class="rb-content"><strong>재편입 성공 사례:</strong> 국내에서 편출 후 실적 회복으로 재편입된 사례는 다수 있습니다. 핵심은 편출의 원인이 '일시적 주가 조정'이냐, '펀더멘털 훼손'이냐를 구별하는 것입니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">✅ 종목별 투자 전 체크리스트</div>
+    <div class="checklist">
+      <div class="cl-section">
+        <div class="cl-head hdec-head">🏗️ 현대건설 체크리스트</div>
+        <div class="cl-body hdec-body">
+          <div class="cl-item">
+            <span class="ci-icon ci-good">✅</span>
+            <span>원전 수주 파이프라인 구체화 여부 (신한울·Fermi 등)</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-good">✅</span>
+            <span>중동 플랜트 원가율 개선 지속성 (에스컬레이션 조항 효과)</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-warn">⚠</span>
+            <span>PBR 2.1배 = 과거 고점 수준, 추가 확장 여지 제한적</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-warn">⚠</span>
+            <span>YTD +134% — 기대치 상당 부분 선반영 상태</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-warn">⚠</span>
+            <span>중동 지정학 리스크 (이란 협상 결과에 직결)</span>
+          </div>
+        </div>
+      </div>
+      <div class="cl-section">
+        <div class="cl-head sbio-head">🧬 삼성에피스홀딩스 체크리스트</div>
+        <div class="cl-body sbio-body">
+          <div class="cl-item">
+            <span class="ci-icon ci-good">✅</span>
+            <span>1Q 매출 +14%, 영업이익 +13% — 가이던스 상회</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-good">✅</span>
+            <span>400조 특허절벽 수혜 — '황금의 10년' 진입</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-good">✅</span>
+            <span>ADC 신약 SBE303 임상 1상 개시 (파이프라인 확장)</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-warn">⚠</span>
+            <span>PER 산출 불가 — 전통 밸류에이션 기준 적용 어려움</span>
+          </div>
+          <div class="cl-item">
+            <span class="ci-icon ci-warn">⚠</span>
+            <span>신설 지주사 (2025.11~) — 회계 투명성 지켜볼 필요</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">🎯 종합 투자 판단 (분석가 종합 의견)</div>
+    <div class="verdict-grid">
+      <div class="v-card hdec-v">
+        <div class="v-name">🏗️ 현대건설</div>
+        <div class="v-rating">신중한 매수 / 분할접근</div>
+        <div class="v-reason">원전 수주 실현 시 추가 업사이드 있으나, PBR·PER 모두 고평가 구간. 실적 확인 후 분할 접근 권장. 단기 모멘텀 트레이딩보다 원전 수주 뉴스 이벤트 드리븐 전략 유효.</div>
+      </div>
+      <div class="v-card sbio-v">
+        <div class="v-name">🧬 삼성에피스홀딩스</div>
+        <div class="v-rating">중장기 성장주 / 변동성 감안</div>
+        <div class="v-reason">바이오시밀러 성장 스토리는 견고하나, 신설 지주사 특성상 회계 가시성이 낮음. ADC 파이프라인 성과가 중장기 재평가의 핵심 트리거. 단기 변동성 높으므로 바이오 섹터 변동성 감내 가능한 투자자에 한해 접근 권장.</div>
+      </div>
+    </div>
+
+    <div class="footer-note">※ 이 분석은 공개 증권사 리포트 및 공시 정보 기반 참고용 자료입니다. 투자 판단의 최종 책임은 투자자 본인에게 있으며, 매수·매도 권유가 아닙니다.</div>
+  </div>
+</div>
+</body>
+</html>
