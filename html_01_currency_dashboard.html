@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3국 통화 현황 대시보드 — 2026년 5월</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #F8F9FB; padding: 24px 16px; }
+  .report-wrap { max-width: 780px; margin: 0 auto; }
+  .report-header { text-align: center; margin-bottom: 24px; padding: 20px; background: #fff; border-radius: 14px; border: 1px solid #E4E7EF; }
+  .report-header .badge { display: inline-block; background: #EEF2FF; color: #4F46E5; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 0.5px; }
+  .report-header h2 { font-size: 20px; font-weight: 700; color: #1A1D2E; margin-bottom: 6px; }
+  .report-header p { font-size: 13px; color: #6B7280; }
+  .section-title { font-size: 13px; font-weight: 600; color: #6B7280; text-transform: uppercase; letter-spacing: 1px; margin: 24px 0 12px; }
+  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .currency-card { background: #fff; border-radius: 14px; border: 1px solid #E4E7EF; padding: 18px 16px; }
+  .currency-card .flag { font-size: 26px; margin-bottom: 10px; }
+  .currency-card .currency-name { font-size: 11px; font-weight: 600; color: #9CA3AF; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px; }
+  .currency-card .rate { font-size: 26px; font-weight: 700; color: #1A1D2E; line-height: 1.2; }
+  .currency-card .rate-unit { font-size: 13px; font-weight: 400; color: #9CA3AF; }
+  .currency-card .change { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; margin-top: 6px; padding: 3px 8px; border-radius: 20px; }
+  .change.up { background: #FEF2F2; color: #DC2626; }
+  .change.down { background: #F0FDF4; color: #16A34A; }
+  .change.neutral { background: #F3F4F6; color: #6B7280; }
+  .currency-card .divider { height: 1px; background: #F3F4F6; margin: 14px 0; }
+  .currency-card .meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+  .currency-card .meta-label { font-size: 11px; color: #9CA3AF; }
+  .currency-card .meta-value { font-size: 12px; font-weight: 600; color: #374151; }
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+  .info-card { background: #fff; border-radius: 14px; border: 1px solid #E4E7EF; padding: 16px; }
+  .info-card .ic-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 18px; }
+  .ic-blue { background: #EEF2FF; color: #4F46E5; }
+  .ic-red { background: #FEF2F2; color: #DC2626; }
+  .ic-green { background: #F0FDF4; color: #16A34A; }
+  .ic-amber { background: #FFFBEB; color: #D97706; }
+  .info-card .ic-label { font-size: 11px; color: #9CA3AF; margin-bottom: 4px; }
+  .info-card .ic-value { font-size: 19px; font-weight: 700; color: #1A1D2E; }
+  .info-card .ic-sub { font-size: 11px; color: #9CA3AF; margin-top: 3px; }
+  .correlation-box { background: #fff; border-radius: 14px; border: 1px solid #E4E7EF; padding: 18px; margin-top: 14px; }
+  .correlation-box h4 { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .corr-row { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; }
+  .corr-label { font-size: 12px; color: #6B7280; width: 160px; flex-shrink: 0; }
+  .corr-bar-wrap { flex: 1; height: 8px; background: #F3F4F6; border-radius: 99px; overflow: hidden; }
+  .corr-bar { height: 100%; border-radius: 99px; }
+  .bar-pos { background: linear-gradient(90deg, #4F46E5, #818CF8); }
+  .bar-neg { background: linear-gradient(90deg, #DC2626, #F87171); }
+  .bar-weak { background: linear-gradient(90deg, #D97706, #FCD34D); }
+  .corr-val { font-size: 12px; font-weight: 700; width: 44px; text-align: right; }
+  .footer-note { text-align: center; font-size: 11px; color: #9CA3AF; margin-top: 18px; padding-top: 14px; border-top: 1px solid #F3F4F6; }
+  @media (max-width: 600px) {
+    .cards-grid, .info-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="report-wrap">
+  <div class="report-header">
+    <div class="badge">📊 MACRO DASHBOARD · 2026.05.26</div>
+    <h2>원화 · 엔화 · 달러 3국 통화 현황</h2>
+    <p>미-이란 전쟁 충격 이후 글로벌 외환시장 실시간 점검</p>
+  </div>
+
+  <div class="section-title">환율 현황 (기준: 2026년 5월 26일)</div>
+  <div class="cards-grid">
+    <div class="currency-card">
+      <div class="flag">🇺🇸</div>
+      <div class="currency-name">USD / KRW</div>
+      <div class="rate">1,510 <span class="rate-unit">원</span></div>
+      <span class="change up"><i class="ti ti-trending-up"></i> +2.4% (1개월)</span>
+      <div class="divider"></div>
+      <div class="meta-row"><span class="meta-label">5월 평균</span><span class="meta-value">1,510원</span></div>
+      <div class="meta-row"><span class="meta-label">5월 고가</span><span class="meta-value">1,574원</span></div>
+      <div class="meta-row"><span class="meta-label">5월 저가</span><span class="meta-value">1,440원</span></div>
+      <div class="meta-row"><span class="meta-label">6월 예상</span><span class="meta-value">1,551~1,583원</span></div>
+    </div>
+    <div class="currency-card">
+      <div class="flag">🇯🇵</div>
+      <div class="currency-name">USD / JPY</div>
+      <div class="rate">157 <span class="rate-unit">엔</span></div>
+      <span class="change up"><i class="ti ti-trending-up"></i> 엔화 약세 지속</span>
+      <div class="divider"></div>
+      <div class="meta-row"><span class="meta-label">BOJ 기준금리</span><span class="meta-value">0.75%</span></div>
+      <div class="meta-row"><span class="meta-label">10년물 금리</span><span class="meta-value">2.50%</span></div>
+      <div class="meta-row"><span class="meta-label">CPI (2026 회계)</span><span class="meta-value">2.8% 전망</span></div>
+      <div class="meta-row"><span class="meta-label">성장 전망</span><span class="meta-value">0.5% (하향)</span></div>
+    </div>
+    <div class="currency-card">
+      <div class="flag">🇺🇸</div>
+      <div class="currency-name">DXY 달러인덱스</div>
+      <div class="rate">105 <span class="rate-unit">p</span></div>
+      <span class="change neutral"><i class="ti ti-minus"></i> 6주 최고치 유지</span>
+      <div class="divider"></div>
+      <div class="meta-row"><span class="meta-label">연준 기준금리</span><span class="meta-value">3.75~4.00%</span></div>
+      <div class="meta-row"><span class="meta-label">미국 CPI (4월)</span><span class="meta-value">3.8%</span></div>
+      <div class="meta-row"><span class="meta-label">에너지물가 (YoY)</span><span class="meta-value">+17.9%</span></div>
+      <div class="meta-row"><span class="meta-label">6월 동결 확률</span><span class="meta-value">96.5%</span></div>
+    </div>
+  </div>
+
+  <div class="section-title">각국 기준금리 & 10년물 국채</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="ic-icon ic-blue"><i class="ti ti-building-bank"></i></div>
+      <div class="ic-label">미국 10년물 국채</div>
+      <div class="ic-value">4.43%</div>
+      <div class="ic-sub">3월 고점 / 현재 4.2% 내외</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon ic-red"><i class="ti ti-building-bank"></i></div>
+      <div class="ic-label">일본 10년물 국채</div>
+      <div class="ic-value">2.50%</div>
+      <div class="ic-sub">1997년 이후 최고치</div>
+    </div>
+    <div class="info-card">
+      <div class="ic-icon ic-green"><i class="ti ti-building-bank"></i></div>
+      <div class="ic-label">한국 10년물 국채</div>
+      <div class="ic-value">3.86%</div>
+      <div class="ic-sub">WGBI 편입 후 안정화</div>
+    </div>
+  </div>
+
+  <div class="correlation-box">
+    <h4><i class="ti ti-arrows-exchange" aria-hidden="true"></i> 통화 간 상관관계 (정성적 평가)</h4>
+    <div class="corr-row">
+      <span class="corr-label">달러강세 ↔ 원화약세</span>
+      <div class="corr-bar-wrap"><div class="corr-bar bar-neg" style="width:88%"></div></div>
+      <span class="corr-val" style="color:#DC2626">-0.88</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-label">달러강세 ↔ 엔화약세</span>
+      <div class="corr-bar-wrap"><div class="corr-bar bar-neg" style="width:80%"></div></div>
+      <span class="corr-val" style="color:#DC2626">-0.80</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-label">원화 ↔ 엔화 동조화</span>
+      <div class="corr-bar-wrap"><div class="corr-bar bar-pos" style="width:65%"></div></div>
+      <span class="corr-val" style="color:#4F46E5">+0.65</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-label">미국채금리↑ ↔ 원화약세</span>
+      <div class="corr-bar-wrap"><div class="corr-bar bar-neg" style="width:72%"></div></div>
+      <span class="corr-val" style="color:#DC2626">-0.72</span>
+    </div>
+    <div class="corr-row">
+      <span class="corr-label">유가급등 ↔ 원화약세</span>
+      <div class="corr-bar-wrap"><div class="corr-bar bar-neg" style="width:78%"></div></div>
+      <span class="corr-val" style="color:#DC2626">-0.78</span>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ※ 상관관계 수치는 구조적 분석에 기반한 정성적 추정치입니다. 실제 시장 상황에 따라 달라질 수 있습니다.<br>
+    데이터 출처: Investing.com, Trading Economics, 삼성증권 리서치 (2026.05 기준)
+  </div>
+</div>
+</body>
+</html>
