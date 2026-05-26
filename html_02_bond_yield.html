@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3국 국채 10년물 금리 비교 — 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #F0F4FF; padding: 24px 16px; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 14px; border: 1px solid #DDE3F0; padding: 20px 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+  .header-icon { width: 48px; height: 48px; background: #EEF2FF; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #4F46E5; flex-shrink: 0; }
+  .header h2 { font-size: 18px; font-weight: 700; color: #1A1D2E; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #6B7280; }
+  .chart-card { background: #fff; border-radius: 14px; border: 1px solid #DDE3F0; padding: 20px; margin-bottom: 16px; }
+  .chart-card h3 { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+  .chart-card .subtitle { font-size: 12px; color: #9CA3AF; margin-bottom: 16px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #6B7280; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  .table-card { background: #fff; border-radius: 14px; border: 1px solid #DDE3F0; padding: 20px; margin-bottom: 16px; overflow-x: auto; }
+  .table-card h3 { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #F8F9FB; color: #6B7280; font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 1px solid #E4E7EF; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 10px 12px; border-bottom: 1px solid #F3F4F6; color: #374151; }
+  tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-up { background: #FEF2F2; color: #DC2626; }
+  .badge-down { background: #F0FDF4; color: #16A34A; }
+  .badge-neutral { background: #F3F4F6; color: #6B7280; }
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: #E4E7EF; }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-item::before { content: ''; position: absolute; left: -19px; top: 4px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #fff; }
+  .tl-us::before { background: #4F46E5; }
+  .tl-jp::before { background: #DC2626; }
+  .tl-kr::before { background: #16A34A; }
+  .tl-item .date { font-size: 11px; color: #9CA3AF; margin-bottom: 3px; }
+  .tl-item .content { font-size: 13px; color: #374151; line-height: 1.6; }
+  .tl-item .content strong { color: #1A1D2E; font-weight: 600; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .mini-card { background: #fff; border-radius: 14px; border: 1px solid #DDE3F0; padding: 16px; }
+  .mini-card .mc-title { font-size: 12px; color: #9CA3AF; margin-bottom: 10px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+  .mini-card .mc-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px dashed #F3F4F6; }
+  .mini-card .mc-row:last-child { border-bottom: none; }
+  .mc-key { font-size: 12px; color: #6B7280; }
+  .mc-val { font-size: 12px; font-weight: 600; color: #374151; }
+  .footer-note { text-align: center; font-size: 11px; color: #9CA3AF; padding-top: 12px; border-top: 1px solid #E4E7EF; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-icon"><i class="ti ti-chart-line"></i></div>
+    <div>
+      <h2>미국 · 일본 · 한국 국채 10년물 금리 비교</h2>
+      <p>이란 전쟁 충격 전후 금리 변동 & 정책 방향 분석 (2026.05 기준)</p>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>국채 10년물 금리 추이 (2025.01 ~ 2026.05)</h3>
+    <p class="subtitle">미국(파랑) · 일본(빨강) · 한국(초록) — 이란 전쟁(2026.02.28) 이후 급등 국면</p>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#4F46E5"></div>미국 10년물</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>일본 10년물</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div>한국 10년물</div>
+    </div>
+    <div style="position:relative; width:100%; height:280px;">
+      <canvas id="bondChart" role="img" aria-label="2025~2026년 미국·일본·한국 국채 10년물 금리 추이 차트. 미국은 4% 내외, 일본은 2% 이상, 한국은 3.5~4% 구간.">국채 금리 비교 차트</canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <h3><i class="ti ti-table" style="font-size:16px; vertical-align:-2px; margin-right:6px; color:#6B7280;" aria-hidden="true"></i>3국 금리 현황 비교표</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>기준금리</th>
+          <th>10년물 금리</th>
+          <th>3월 고점</th>
+          <th>방향성</th>
+          <th>핵심 리스크</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🇺🇸 미국</strong></td>
+          <td>3.75~4.00%</td>
+          <td><strong>4.2%</strong></td>
+          <td>4.43%</td>
+          <td><span class="badge badge-neutral">동결</span></td>
+          <td>스태그플레이션 딜레마</td>
+        </tr>
+        <tr>
+          <td><strong>🇯🇵 일본</strong></td>
+          <td>0.75%</td>
+          <td><strong>2.50%</strong></td>
+          <td>2.50%</td>
+          <td><span class="badge badge-up">인상압력↑</span></td>
+          <td>재정 확장 + 엔화 약세</td>
+        </tr>
+        <tr>
+          <td><strong>🇰🇷 한국</strong></td>
+          <td>2.75%</td>
+          <td><strong>3.86%</strong></td>
+          <td>3.92%</td>
+          <td><span class="badge badge-down">인하 검토</span></td>
+          <td>가계부채 + 원화 약세</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <div class="mc-title"><i class="ti ti-clock-hour-3" aria-hidden="true"></i> 주요 이벤트 타임라인</div>
+      <div class="timeline">
+        <div class="tl-item tl-us">
+          <div class="date">2026년 1월 29일</div>
+          <div class="content"><strong>금값 사상 최고가</strong> $5,608 기록</div>
+        </div>
+        <div class="tl-item tl-jp">
+          <div class="date">2026년 2월 28일</div>
+          <div class="content"><strong>미-이란 전쟁 발발</strong> — 유가 급등, 채권금리 상승 출발</div>
+        </div>
+        <div class="tl-item tl-us">
+          <div class="date">2026년 3월 27일</div>
+          <div class="content">미국 10년물 <strong>4.43%</strong> 고점 (연준 긴축 전환 우려)</div>
+        </div>
+        <div class="tl-item tl-kr">
+          <div class="date">2026년 4월 1일</div>
+          <div class="content">한국 국채 <strong>WGBI 편입 개시</strong> — 외국인 매수 기대</div>
+        </div>
+        <div class="tl-item tl-jp">
+          <div class="date">2026년 4월 30일</div>
+          <div class="content">일본 10년물 <strong>2.5%</strong> — 1997년 이후 최고</div>
+        </div>
+      </div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title"><i class="ti ti-info-circle" aria-hidden="true"></i> 투자자 핵심 체크포인트</div>
+      <div class="mc-row"><span class="mc-key">장기채 투자 시점</span><span class="mc-val">금리인하 전환 후</span></div>
+      <div class="mc-row"><span class="mc-key">단기 T-bill 수익률</span><span class="mc-val">4% 이상 매력적</span></div>
+      <div class="mc-row"><span class="mc-key">한국채 WGBI 효과</span><span class="mc-val">외국인 순매수 유입</span></div>
+      <div class="mc-row"><span class="mc-key">일본채 리스크</span><span class="mc-val">재정 불안 주의</span></div>
+      <div class="mc-row"><span class="mc-key">연준 6월 회의</span><span class="mc-val">2026.06.18 (동결 96.5%)</span></div>
+    </div>
+  </div>
+
+  <div class="footer-note">데이터 출처: Investing.com · 삼성증권 리서치 · Trading Economics · KB금융 Think (2026.05 기준) | ※ 투자 참고용이며, 투자 권유가 아닙니다.</div>
+</div>
+
+<script>
+const labels = ['25.01','25.03','25.05','25.07','25.09','25.11','26.01','26.02','26.03','26.04','26.05'];
+const usData = [4.15, 4.20, 4.25, 4.10, 4.00, 3.94, 4.10, 3.94, 4.43, 4.30, 4.20];
+const jpData = [1.00, 1.20, 1.40, 1.50, 1.60, 1.80, 1.90, 2.10, 2.35, 2.50, 2.50];
+const krData = [3.10, 3.20, 3.25, 3.30, 3.45, 3.50, 3.60, 3.65, 3.92, 3.86, 3.75];
+
+new Chart(document.getElementById('bondChart'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      { label: '미국', data: usData, borderColor: '#4F46E5', backgroundColor: 'rgba(79,70,229,0.08)', tension: 0.35, pointRadius: 3, pointHoverRadius: 5, fill: false, borderWidth: 2 },
+      { label: '일본', data: jpData, borderColor: '#DC2626', backgroundColor: 'rgba(220,38,38,0.08)', tension: 0.35, pointRadius: 3, pointHoverRadius: 5, fill: false, borderWidth: 2, borderDash: [5,3] },
+      { label: '한국', data: krData, borderColor: '#16A34A', backgroundColor: 'rgba(22,163,74,0.08)', tension: 0.35, pointRadius: 3, pointHoverRadius: 5, fill: false, borderWidth: 2, borderDash: [2,2] }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false, callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.y.toFixed(2)}%` } } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, color: '#9CA3AF', maxRotation: 0 } },
+      y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, color: '#9CA3AF', callback: v => v.toFixed(1) + '%' }, min: 0.5, max: 5.0 }
+    },
+    interaction: { mode: 'index', intersect: false },
+    annotation: {}
+  }
+});
+</script>
+</body>
+</html>
