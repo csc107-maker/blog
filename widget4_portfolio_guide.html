@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포트폴리오 비중 가이드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #f0f4ff 0%, #fafffe 100%);
+    padding: 24px 16px;
+  }
+  
+  .wrap { max-width: 840px; margin: 0 auto; }
+  
+  .hd { text-align: center; margin-bottom: 24px; }
+  .hd .tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .hd h2 { font-size: 20px; font-weight: 900; color: #1a1a2e; margin-bottom: 5px; }
+  .hd p  { font-size: 12.5px; color: #6b7280; }
+  
+  /* 투자자 유형 카드 */
+  .investor-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .inv-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s;
+    cursor: default;
+  }
+  .inv-card:hover { transform: translateY(-5px); }
+  
+  .inv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+  }
+  .inv-card.aggressive::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+  .inv-card.moderate::before  { background: linear-gradient(90deg, #f59e0b, #10b981); }
+  .inv-card.conservative::before { background: linear-gradient(90deg, #3b82f6, #6366f1); }
+  
+  .inv-emoji { font-size: 36px; margin-bottom: 10px; }
+  .inv-type  { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+  .inv-card.aggressive .inv-type  { color: #ef4444; }
+  .inv-card.moderate .inv-type    { color: #f59e0b; }
+  .inv-card.conservative .inv-type{ color: #3b82f6; }
+  
+  .inv-title { font-size: 16px; font-weight: 900; color: #1a1a2e; margin-bottom: 14px; }
+  
+  /* 도넛 차트 영역 */
+  .donut-wrap {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 14px;
+  }
+  
+  .donut-wrap svg { width: 100%; height: 100%; }
+  
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-pct  { font-size: 20px; font-weight: 900; }
+  .donut-sub  { font-size: 10px; color: #9ca3af; }
+  
+  .inv-desc {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.65;
+    text-align: left;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+  
+  .inv-rules {
+    list-style: none;
+    text-align: left;
+    margin-top: 8px;
+  }
+  .inv-rules li {
+    font-size: 11.5px;
+    color: #374151;
+    padding: 4px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .inv-rules li::before { content: '✓'; font-weight: 900; flex-shrink: 0; }
+  .inv-card.aggressive .inv-rules li::before  { color: #ef4444; }
+  .inv-card.moderate .inv-rules li::before    { color: #f59e0b; }
+  .inv-card.conservative .inv-rules li::before{ color: #3b82f6; }
+  
+  /* 포트폴리오 바 */
+  .pf-section {
+    background: #fff;
+    border-radius: 20px;
+    padding: 22px 22px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    margin-bottom: 16px;
+  }
+  
+  .pf-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pf-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    border-radius: 4px;
+  }
+  
+  .pf-bar-item { margin-bottom: 14px; }
+  .pf-bar-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .pf-bar-label  { font-size: 13px; font-weight: 700; color: #374151; }
+  .pf-bar-pct    { font-size: 13px; font-weight: 900; }
+  
+  .pf-bar-track {
+    height: 14px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .pf-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+  }
+  
+  /* 핵심 원칙 */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .rule-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .rule-icon { font-size: 20px; flex-shrink: 0; }
+  .rule-title { font-size: 12px; font-weight: 800; color: #1a1a2e; margin-bottom: 3px; }
+  .rule-desc  { font-size: 11px; color: #6b7280; line-height: 1.5; }
+  
+  @media (max-width: 620px) {
+    .investor-cards { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  
+  <div class="hd">
+    <div class="tag">💼 포트폴리오 전략</div>
+    <h2>투자자 유형별 레버리지 ETF 비중 가이드</h2>
+    <p>전문가 의견 및 포트폴리오 이론 기반 — 나는 어느 유형인가?</p>
+  </div>
+  
+  <div class="investor-cards">
+    
+    <!-- 공격형 -->
+    <div class="inv-card aggressive">
+      <div class="inv-emoji">🔥</div>
+      <div class="inv-type">AGGRESSIVE · 공격형</div>
+      <div class="inv-title">단기 트레이더</div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#f3f4f6" stroke-width="16"/>
+          <!-- 15% = 37.7 of 251.3 -->
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#ef4444" stroke-width="16"
+            stroke-dasharray="37.7 213.6" stroke-dashoffset="62.8" stroke-linecap="round"/>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-pct" style="color:#ef4444">15%</div>
+          <div class="donut-sub">최대 비중</div>
+        </div>
+      </div>
+      <div class="inv-desc">
+        <ul class="inv-rules">
+          <li>단기 방향성 명확할 때만</li>
+          <li>손절라인 -15~20% 설정</li>
+          <li>수일~수주 내 매도 원칙</li>
+          <li>나머지 85%는 현물·안전자산</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 중립형 -->
+    <div class="inv-card moderate">
+      <div class="inv-emoji">⚖️</div>
+      <div class="inv-type">MODERATE · 중립형</div>
+      <div class="inv-title">균형 투자자</div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#f3f4f6" stroke-width="16"/>
+          <!-- 7.5% = 18.9 of 251.3 -->
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" stroke-width="16"
+            stroke-dasharray="18.9 232.4" stroke-dashoffset="62.8" stroke-linecap="round"/>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-pct" style="color:#f59e0b">5~10%</div>
+          <div class="donut-sub">권장 비중</div>
+        </div>
+      </div>
+      <div class="inv-desc">
+        <ul class="inv-rules">
+          <li>모멘텀 강한 시기 한정</li>
+          <li>핵심은 현물 주식 유지</li>
+          <li>수익 시 빠른 익절 원칙</li>
+          <li>횡보장 진입 즉시 청산</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- 안정형 -->
+    <div class="inv-card conservative">
+      <div class="inv-emoji">🛡️</div>
+      <div class="inv-type">CONSERVATIVE · 안정형</div>
+      <div class="inv-title">장기 투자자</div>
+      <div class="donut-wrap">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#f3f4f6" stroke-width="16"/>
+          <!-- 2.5% = 6.3 of 251.3 -->
+          <circle cx="50" cy="50" r="40" fill="none" stroke="#3b82f6" stroke-width="16"
+            stroke-dasharray="6.3 245" stroke-dashoffset="62.8" stroke-linecap="round"/>
+        </svg>
+        <div class="donut-center">
+          <div class="donut-pct" style="color:#3b82f6">0~5%</div>
+          <div class="donut-sub">권장 비중</div>
+        </div>
+      </div>
+      <div class="inv-desc">
+        <ul class="inv-rules">
+          <li>레버리지 ETF 미편입 권장</li>
+          <li>삼성전자·SK하이닉스 현물</li>
+          <li>배당 + 장기 성장 중심</li>
+          <li>변동성 스트레스 무관 전략</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 포트폴리오 구성 예시 (중립형) -->
+  <div class="pf-section">
+    <div class="pf-title">중립형 투자자의 포트폴리오 구성 예시 (1억원 기준)</div>
+    
+    <div class="pf-bar-item">
+      <div class="pf-bar-header">
+        <span class="pf-bar-label">📌 삼성전자·SK하이닉스 현물 주식</span>
+        <span class="pf-bar-pct" style="color:#1a56db">40%</span>
+      </div>
+      <div class="pf-bar-track">
+        <div class="pf-bar-fill" style="width:40%;background:linear-gradient(90deg,#1a56db,#6366f1);"></div>
+      </div>
+    </div>
+    
+    <div class="pf-bar-item">
+      <div class="pf-bar-header">
+        <span class="pf-bar-label">🌐 반도체 테마 ETF (ACE AI반도체TOP3+ 등)</span>
+        <span class="pf-bar-pct" style="color:#10b981">25%</span>
+      </div>
+      <div class="pf-bar-track">
+        <div class="pf-bar-fill" style="width:25%;background:linear-gradient(90deg,#10b981,#059669);"></div>
+      </div>
+    </div>
+    
+    <div class="pf-bar-item">
+      <div class="pf-bar-header">
+        <span class="pf-bar-label">🌍 글로벌 채권·안전자산</span>
+        <span class="pf-bar-pct" style="color:#6366f1">25%</span>
+      </div>
+      <div class="pf-bar-track">
+        <div class="pf-bar-fill" style="width:25%;background:linear-gradient(90deg,#6366f1,#8b5cf6);"></div>
+      </div>
+    </div>
+    
+    <div class="pf-bar-item">
+      <div class="pf-bar-header">
+        <span class="pf-bar-label">⚡ 단일종목 레버리지 ETF (위성 포지션)</span>
+        <span class="pf-bar-pct" style="color:#ef4444">10%</span>
+      </div>
+      <div class="pf-bar-track">
+        <div class="pf-bar-fill" style="width:10%;background:linear-gradient(90deg,#ef4444,#f97316);"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 핵심 원칙 -->
+  <div class="rules-grid">
+    <div class="rule-box">
+      <div class="rule-icon">🎯</div>
+      <div>
+        <div class="rule-title">코어-위성 전략 적용</div>
+        <div class="rule-desc">현물 주식이 코어(70%↑), 레버리지는 위성(10%↓)으로 분리</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-icon">⏱️</div>
+      <div>
+        <div class="rule-title">보유 기간 원칙 수립</div>
+        <div class="rule-desc">레버리지 ETF 진입 전 반드시 목표기간·손절·익절 설정</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-icon">📊</div>
+      <div>
+        <div class="rule-title">업황 모니터링 필수</div>
+        <div class="rule-desc">HBM 수주 동향, 반도체 재고, AI 설비투자 사이클 추적</div>
+      </div>
+    </div>
+    <div class="rule-box">
+      <div class="rule-icon">🚫</div>
+      <div>
+        <div class="rule-title">레버리지 몰빵 절대 금지</div>
+        <div class="rule-desc">전 재산 레버리지 투자는 투자가 아닌 투기. 포트폴리오 비중 규율 필수</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
