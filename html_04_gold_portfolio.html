@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>금값 전망 & 포트폴리오 전략 — 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #FFFDF0; padding: 24px 16px; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 14px; border: 1px solid #FFE082; padding: 20px 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; }
+  .gold-icon { width: 50px; height: 50px; background: #FFF8E1; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .header h2 { font-size: 18px; font-weight: 700; color: #1A1D2E; margin-bottom: 4px; }
+  .header p { font-size: 13px; color: #6B7280; }
+  .gold-stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .gold-stat { background: #fff; border-radius: 12px; border: 1px solid #FFE082; padding: 14px 12px; text-align: center; }
+  .gold-stat .gs-label { font-size: 11px; color: #9CA3AF; margin-bottom: 6px; }
+  .gold-stat .gs-value { font-size: 18px; font-weight: 700; color: #1A1D2E; }
+  .gold-stat .gs-sub { font-size: 11px; margin-top: 4px; }
+  .up-text { color: #DC2626; }
+  .down-text { color: #16A34A; }
+  .chart-card { background: #fff; border-radius: 14px; border: 1px solid #FFE082; padding: 20px; margin-bottom: 16px; }
+  .chart-card h3 { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 4px; }
+  .chart-card .sub { font-size: 12px; color: #9CA3AF; margin-bottom: 14px; }
+  .target-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
+  .target-card { background: #fff; border-radius: 12px; border: 1px solid #FFE082; padding: 16px; }
+  .target-card .bank { font-size: 11px; font-weight: 700; color: #9CA3AF; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .target-card .price { font-size: 22px; font-weight: 700; color: #D97706; }
+  .target-card .range { font-size: 12px; color: #6B7280; margin-top: 3px; }
+  .target-card .basis { font-size: 11px; color: #9CA3AF; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #FFF3E0; line-height: 1.6; }
+  .portfolio-section { background: #fff; border-radius: 14px; border: 1px solid #C8E6C9; padding: 20px; margin-bottom: 16px; }
+  .portfolio-section h3 { font-size: 15px; font-weight: 700; color: #374151; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .portfolio-section .ps-sub { font-size: 12px; color: #9CA3AF; margin-bottom: 16px; }
+  .pt-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .pt-tab { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1.5px solid #E4E7EF; cursor: pointer; color: #6B7280; background: #fff; transition: all 0.15s; }
+  .pt-tab.active { background: #E8F5E9; color: #2E7D32; border-color: #A5D6A7; }
+  .alloc-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .alloc-label { font-size: 13px; color: #374151; width: 120px; flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+  .alloc-bar-wrap { flex: 1; height: 10px; background: #F3F4F6; border-radius: 99px; overflow: hidden; }
+  .alloc-bar { height: 100%; border-radius: 99px; }
+  .a-stock { background: #4F46E5; }
+  .a-bond { background: #2563EB; }
+  .a-gold { background: #D97706; }
+  .a-cash { background: #9CA3AF; }
+  .a-material { background: #16A34A; }
+  .alloc-pct { font-size: 13px; font-weight: 700; color: #374151; width: 36px; text-align: right; }
+  .strategy-list { background: #F0FDF4; border-radius: 10px; padding: 14px 16px; margin-top: 14px; }
+  .strategy-list h4 { font-size: 13px; font-weight: 700; color: #166534; margin-bottom: 10px; }
+  .strategy-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 12px; color: #374151; line-height: 1.6; }
+  .strategy-item i { color: #16A34A; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+  .warning-box { background: #FFF3E0; border-radius: 10px; padding: 14px 16px; border-left: 4px solid #FFB74D; margin-top: 12px; }
+  .warning-box p { font-size: 12px; color: #6B7280; line-height: 1.7; }
+  .warning-box strong { color: #D97706; }
+  .footer-note { text-align: center; font-size: 11px; color: #9CA3AF; margin-top: 14px; }
+  @media (max-width: 560px) {
+    .gold-stat-row { grid-template-columns: repeat(2, 1fr); }
+    .target-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="gold-icon">🥇</div>
+    <div>
+      <h2>금값 전망 & 스태그플레이션 시대 포트폴리오 전략</h2>
+      <p>UBS · JP모건 · 골드만삭스 분석 + 자산 배분 가이드 (2026.05 기준)</p>
+    </div>
+  </div>
+
+  <div class="gold-stat-row">
+    <div class="gold-stat">
+      <div class="gs-label">사상 최고가</div>
+      <div class="gs-value">$5,608</div>
+      <div class="gs-sub up-text">2026.01.29</div>
+    </div>
+    <div class="gold-stat">
+      <div class="gs-label">현재가 (5월)</div>
+      <div class="gs-value">$4,700</div>
+      <div class="gs-sub" style="color:#D97706">조정 구간</div>
+    </div>
+    <div class="gold-stat">
+      <div class="gs-label">연초 대비</div>
+      <div class="gs-value">+15%</div>
+      <div class="gs-sub up-text">2026 YTD</div>
+    </div>
+    <div class="gold-stat">
+      <div class="gs-label">중앙은행 매입 (예상)</div>
+      <div class="gs-value">950톤</div>
+      <div class="gs-sub" style="color:#6B7280">2026년 UBS 전망</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>금값 연간 추이 (2023 ~ 2026)</h3>
+    <p class="sub">중앙은행 대규모 매집 + 지정학적 리스크가 구조적 상승 동력</p>
+    <div style="position:relative; width:100%; height:220px;">
+      <canvas id="goldChart" role="img" aria-label="2023~2026년 금 온스 가격 추이. 2023년 약 1900달러에서 2026년 최고 5608달러까지 상승.">금값 연간 추이 차트</canvas>
+    </div>
+  </div>
+
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="bank">🏦 UBS 리서치</div>
+      <div class="price">$5,900 ~ 6,200</div>
+      <div class="range">연중 $6,200 → 연말 $5,900 조정</div>
+      <div class="basis">중앙은행 + ETF 수요 강력. 현재 조정은 "체제 변화 아닌 재조정". $4,500~4,800 구간 매수 기회.</div>
+    </div>
+    <div class="target-card">
+      <div class="bank">🏦 JP모건</div>
+      <div class="price">$5,055 ~ 6,300</div>
+      <div class="range">4Q 평균 $5,055, 최상 시나리오 $6,300</div>
+      <div class="basis">구조적 수요 가설 — 중앙은행 약 800톤 매입. 금이 포트폴리오 장기 배분 자산으로 정착.</div>
+    </div>
+    <div class="target-card">
+      <div class="bank">🏦 뱅크오브아메리카</div>
+      <div class="price">~$5,000</div>
+      <div class="range">2026년 중반 피크 전망</div>
+      <div class="basis">연준 금리 완화 + 미국 재정 건전성 우려 결합. 연중 $5,000 고점 후 안정화.</div>
+    </div>
+    <div class="target-card">
+      <div class="bank">🏦 골드만삭스</div>
+      <div class="price">매우 긍정적</div>
+      <div class="range">구체적 목표가 미제시 / 강력 추천</div>
+      <div class="basis">"미국 투자자가 금 비중을 0.01%p 늘릴 때마다 금가격 약 1.4% 상승" — 수요 여력 여전히 충분.</div>
+    </div>
+  </div>
+
+  <div class="portfolio-section">
+    <h3><i class="ti ti-chart-pie" aria-hidden="true"></i> 스태그플레이션 시대 포트폴리오 전략</h3>
+    <p class="ps-sub">투자자 유형별 자산 배분 가이드 — 전통 60/40은 작동하지 않습니다</p>
+
+    <div class="pt-tabs">
+      <div class="pt-tab active">중립형 (추천)</div>
+      <div class="pt-tab">보수적</div>
+      <div class="pt-tab">공격형</div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label"><span style="width:10px;height:10px;border-radius:2px;background:#4F46E5;display:inline-block;"></span> 주식 (방어주)</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar a-stock" style="width:35%"></div></div>
+      <div class="alloc-pct">35%</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-label"><span style="width:10px;height:10px;border-radius:2px;background:#2563EB;display:inline-block;"></span> 단기 채권(T-bill)</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar a-bond" style="width:25%"></div></div>
+      <div class="alloc-pct">25%</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-label"><span style="width:10px;height:10px;border-radius:2px;background:#D97706;display:inline-block;"></span> 금 / 원자재</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar a-gold" style="width:15%"></div></div>
+      <div class="alloc-pct">15%</div>
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-label"><span style="width:10px;height:10px;border-radius:2px;background:#9CA3AF;display:inline-block;"></span> 현금 / MMF</div>
+      <div class="alloc-bar-wrap"><div class="alloc-bar a-cash" style="width:25%"></div></div>
+      <div class="alloc-pct">25%</div>
+    </div>
+
+    <div class="strategy-list">
+      <h4>핵심 전략 원칙</h4>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 금 5~10% 편입 — 인플레 헤지 + 스태그플레이션 방어</div>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 장기채 비중 축소 — 금리 인하 확신 후 재편입</div>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 단기 T-bill / MMF로 4% 이상 수익 확보</div>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 현금 20~30% 유지 — 변동성 장세 대응용</div>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 에너지·소재·배당 가치주 선별 편입</div>
+      <div class="strategy-item"><i class="ti ti-check" aria-hidden="true"></i> 달러 ETF + 미국 단기채 조합으로 환헤지</div>
+    </div>
+
+    <div class="warning-box">
+      <p><strong>⚠ 투자 고지:</strong> 이 자료는 정보 제공 목적이며, 특정 종목·상품에 대한 투자 권유가 아닙니다. 최종 투자 결정은 반드시 본인의 판단과 책임 하에 이루어져야 하며, 필요 시 전문 금융투자업자의 조언을 받으시기 바랍니다. 과거 성과는 미래 수익을 보장하지 않습니다.</p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    데이터: UBS 리서치 · JP모건 · Bank of America · Goldman Sachs · Investing.com · KB금융 Think (2026.05 기준)<br>
+    ※ 금값 전망은 각 기관의 분석이며 실제 가격과 다를 수 있습니다.
+  </div>
+</div>
+
+<script>
+const goldLabels = ['2023 초', '2023 말', '2024 상', '2024 말', '2025 초', '2025 말', '2026.01', '2026.03', '2026.05'];
+const goldData  = [1850, 2070, 2300, 2641, 3200, 4341, 5608, 5000, 4700];
+
+new Chart(document.getElementById('goldChart'), {
+  type: 'line',
+  data: {
+    labels: goldLabels,
+    datasets: [{
+      label: '금 온스 가격 (USD)',
+      data: goldData,
+      borderColor: '#D97706',
+      backgroundColor: 'rgba(217,119,6,0.08)',
+      tension: 0.4,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      fill: true,
+      borderWidth: 2.5,
+      pointBackgroundColor: '#D97706'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => ' $' + c.parsed.y.toLocaleString() } }
+    },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, color: '#9CA3AF' } },
+      y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, color: '#9CA3AF', callback: v => '$' + v.toLocaleString() }, min: 1500, max: 6200 }
+    }
+  }
+});
+</script>
+</body>
+</html>
