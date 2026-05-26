@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100% 증거금 사유 정리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fff8f0;
+    padding: 28px 16px;
+  }
+  .widget-wrap { max-width: 720px; margin: 0 auto; }
+  .widget-title {
+    text-align: center;
+    font-size: 19px;
+    font-weight: 900;
+    color: #bf360c;
+    margin-bottom: 5px;
+  }
+  .widget-sub {
+    text-align: center;
+    font-size: 12.5px;
+    color: #e64a19;
+    margin-bottom: 22px;
+    opacity: 0.8;
+  }
+  .table-wrapper {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 3px 18px rgba(191,54,12,0.10);
+    overflow: hidden;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead tr {
+    background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%);
+  }
+  thead th {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 13px 14px;
+    text-align: left;
+  }
+  tbody tr { border-bottom: 1px solid #fbe9e7; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: #fff8f5; }
+  tbody tr:hover { background: #fff3e0; }
+  tbody td {
+    padding: 13px 14px;
+    font-size: 13px;
+    color: #37474f;
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .reason-badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .rb-red { background: #ffebee; color: #c62828; }
+  .rb-orange { background: #fff3e0; color: #e65100; }
+  .rb-blue { background: #e3f2fd; color: #1565c0; }
+  .rb-purple { background: #f3e5f5; color: #6a1b9a; }
+  .rb-gray { background: #eceff1; color: #546e7a; }
+  .duration-chip {
+    display: inline-block;
+    background: #fce4ec;
+    color: #ad1457;
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .how-badge {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .note {
+    margin-top: 16px;
+    background: #fff9c4;
+    border-left: 4px solid #f9a825;
+    border-radius: 8px;
+    padding: 11px 15px;
+    font-size: 12px;
+    color: #5d4037;
+    line-height: 1.7;
+  }
+  .note strong { color: #e65100; }
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #b0bec5;
+    margin-top: 10px;
+  }
+  @media (max-width: 580px) {
+    thead th, tbody td { padding: 10px 10px; font-size: 11.5px; }
+    .reason-badge { font-size: 10.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-title">🚨 100% 증거금, 왜 붙는 걸까요?</div>
+  <div class="widget-sub">사유별 적용 조건·기간·해제 방법을 한눈에 정리했습니다</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>사유</th>
+          <th>적용 조건</th>
+          <th>지속 기간</th>
+          <th>해제 방법</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="reason-badge rb-red">투자경고 지정</span></td>
+          <td>주가 이상 급등, 한국거래소 지정<br><small style="color:#90a4ae">예고 후 10일 내 최종 지정</small></td>
+          <td><span class="duration-chip">최소 10거래일~</span></td>
+          <td><span class="how-badge">거래소 해제 결정 시</span></td>
+        </tr>
+        <tr>
+          <td><span class="reason-badge rb-orange">투자위험 지정</span></td>
+          <td>투자경고 후에도 급등 지속<br><small style="color:#90a4ae">지정 당일 하루 매매 정지 포함</small></td>
+          <td><span class="duration-chip">해제 시까지</span></td>
+          <td><span class="how-badge">거래소 해제 + 주가 안정</span></td>
+        </tr>
+        <tr>
+          <td><span class="reason-badge rb-blue">미수동결계좌</span></td>
+          <td>T+2 결제일 미수금 10만원 이상<br><small style="color:#90a4ae">전 증권사 동시 적용</small></td>
+          <td><span class="duration-chip">30일간</span></td>
+          <td><span class="how-badge">30일 자동 해제</span></td>
+        </tr>
+        <tr>
+          <td><span class="reason-badge rb-purple">해외주식 외화미수</span></td>
+          <td>외화미수금 당일 미변제<br><small style="color:#90a4ae">해당 종목 익일부터 적용</small></td>
+          <td><span class="duration-chip">미수금 해소 시까지</span></td>
+          <td><span class="how-badge">미수금 변제 후 익일</span></td>
+        </tr>
+        <tr>
+          <td><span class="reason-badge rb-gray">관리종목</span></td>
+          <td>상장유지 기준 미충족<br><small style="color:#90a4ae">거래소 직권 지정</small></td>
+          <td><span class="duration-chip">관리종목 유지 기간</span></td>
+          <td><span class="how-badge">관리종목 해제 시</span></td>
+        </tr>
+        <tr>
+          <td><span class="reason-badge rb-gray">미성년자·부실거래자</span></td>
+          <td>미성년자, 채무불이행자<br><small style="color:#90a4ae">증권사 자체 기준 적용</small></td>
+          <td><span class="duration-chip">별도 기준까지</span></td>
+          <td><span class="how-badge">증권사 심사 후 변경</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    💡 <strong>핵심 포인트:</strong> 100% 증거금이 적용되면 신용거래, 대용증권 담보 이용도 함께 금지됩니다. 특히 미수동결은 <strong>전 증권사에 동시 적용</strong>되므로 다른 증권사 계좌로 이동해도 소용없습니다.
+  </div>
+  <div class="source">출처: 한국거래소, 미래에셋증권, KB증권, BNK투자증권 고객 안내 기준</div>
+</div>
+</body>
+</html>
