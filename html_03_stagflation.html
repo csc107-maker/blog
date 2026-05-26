@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스태그플레이션 체크리스트 — 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #FFF8F0; padding: 24px 16px; }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  .header { background: #fff; border-radius: 14px; border: 1px solid #FFE8CC; padding: 20px 24px; margin-bottom: 16px; }
+  .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .alert-icon { width: 44px; height: 44px; background: #FFF3E0; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #E65100; flex-shrink: 0; }
+  .header h2 { font-size: 18px; font-weight: 700; color: #1A1D2E; }
+  .header p { font-size: 13px; color: #6B7280; line-height: 1.6; }
+  .stag-score { background: #fff; border-radius: 14px; border: 2px solid #FFB74D; padding: 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 20px; }
+  .score-circle { width: 80px; height: 80px; border-radius: 50%; background: conic-gradient(#E65100 0% 75%, #FFF3E0 75% 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+  .score-inner { width: 56px; height: 56px; border-radius: 50%; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .score-num { font-size: 20px; font-weight: 700; color: #E65100; line-height: 1; }
+  .score-of { font-size: 10px; color: #9CA3AF; }
+  .score-text h3 { font-size: 16px; font-weight: 700; color: #1A1D2E; margin-bottom: 4px; }
+  .score-text p { font-size: 12px; color: #6B7280; line-height: 1.6; }
+  .risk-badge { display: inline-block; background: #FFF3E0; color: #E65100; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-top: 6px; border: 1px solid #FFB74D; }
+  .checklist { background: #fff; border-radius: 14px; border: 1px solid #FFE8CC; padding: 20px; margin-bottom: 16px; }
+  .checklist h3 { font-size: 14px; font-weight: 700; color: #374151; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .check-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #FFF3E0; }
+  .check-item:last-child { border-bottom: none; }
+  .check-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+  .ci-warn { background: #FEF2F2; color: #DC2626; }
+  .ci-alert { background: #FFF3E0; color: #D97706; }
+  .ci-ok { background: #F0FDF4; color: #16A34A; }
+  .check-body { flex: 1; }
+  .check-title { font-size: 13px; font-weight: 600; color: #1A1D2E; margin-bottom: 3px; }
+  .check-desc { font-size: 12px; color: #6B7280; line-height: 1.6; }
+  .check-data { display: inline-block; background: #FFF3E0; color: #D97706; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
+  .check-data.red { background: #FEF2F2; color: #DC2626; }
+  .check-data.green { background: #F0FDF4; color: #16A34A; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .compare-card { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #FFE8CC; }
+  .compare-card h4 { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .compare-card .row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed #FFF3E0; }
+  .compare-card .row:last-child { border-bottom: none; }
+  .c-key { font-size: 12px; color: #6B7280; }
+  .c-val { font-size: 12px; font-weight: 600; color: #374151; }
+  .footer-note { text-align: center; font-size: 11px; color: #9CA3AF; margin-top: 14px; }
+  @media (max-width: 560px) { .compare-grid { grid-template-columns: 1fr; } .stag-score { flex-direction: column; text-align: center; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-top">
+      <div class="alert-icon"><i class="ti ti-alert-triangle"></i></div>
+      <div>
+        <h2>스태그플레이션(Stagflation) 체크리스트 2026</h2>
+      </div>
+    </div>
+    <p>물가 상승(Inflation) + 경기 정체(Stagnation)의 동시 발생 — 1970년대 오일쇼크 이후 최대 우려. 2026년 미-이란 전쟁이 에너지 충격을 촉발하면서 글로벌 스태그플레이션 경보가 울리고 있습니다.</p>
+  </div>
+
+  <div class="stag-score">
+    <div class="score-circle">
+      <div class="score-inner">
+        <div class="score-num">6</div>
+        <div class="score-of">/ 8</div>
+      </div>
+    </div>
+    <div class="score-text">
+      <h3>스태그플레이션 위험 지수: 6/8</h3>
+      <p>8개 체크 항목 중 6개가 경고 신호를 보내고 있습니다. 특히 에너지 충격, 소비자 심리 붕괴, 정책 딜레마 항목이 최고 위험 단계입니다.</p>
+      <div class="risk-badge">⚠ 고위험 (HIGH RISK)</div>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h3><i class="ti ti-checklist" aria-hidden="true"></i> 세부 체크 항목</h3>
+
+    <div class="check-item">
+      <div class="check-icon ci-warn"><i class="ti ti-flame" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">에너지 물가 폭등</div>
+        <div class="check-desc">이란 전쟁으로 인한 유가 급등. 연료유 54.3%, 휘발유 28.4% 급등. 이란이 카타르 LNG 시설 17% 파괴.</div>
+        <div class="check-data red">에너지 CPI +17.9% YoY (미국 4월 2026)</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-warn"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">전체 인플레이션 가속화</div>
+        <div class="check-desc">미국 CPI 3.8%(4월), 2023년 5월 이후 최고. 주거·식품 동반 상승. 예측치(3.7%) 상회.</div>
+        <div class="check-data red">CPI 3.8% (예측치 3.7% 상회)</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-warn"><i class="ti ti-trending-down" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">경제 성장 둔화</div>
+        <div class="check-desc">BOJ가 일본 성장 전망을 1.0%→0.5%로 하향. IMF "전쟁의 그림자 속 글로벌 경제" 보고서 발간.</div>
+        <div class="check-data red">일본 성장 0.5% 하향 / 미 소비심리 사상 최저</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-warn"><i class="ti ti-ban" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">통화정책 딜레마 (연준)</div>
+        <div class="check-desc">금리 인하 시 인플레 재점화, 금리 인상 시 경기 충격. 연준 6월 동결 확률 96.5%. 진퇴양난.</div>
+        <div class="check-data red">동결 장기화 우려</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-alert"><i class="ti ti-building-factory" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">공급망 혼란 지속</div>
+        <div class="check-desc">호르무즈 해협 위협, 이란 LNG 생산 차질로 글로벌 에너지 공급망 충격. 식료품 물류 차질도 하반기까지 이어질 전망.</div>
+        <div class="check-data">공급 불안 지속 (2026 하반기)</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-alert"><i class="ti ti-world" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">무역·통상 전쟁 격화 가능성</div>
+        <div class="check-desc">이란 전쟁 이후 글로벌 패러다임 변화 가능성. 수출시장 다변화·공급망 재편 압박.</div>
+        <div class="check-data">KDI 경고 (2026.05)</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-ok"><i class="ti ti-check" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">고용 시장</div>
+        <div class="check-desc">미국 고용 시장은 아직 직접 타격 없음. 단기적 완충 역할. 그러나 비용인상형 인플레이션이 지속되면 고용 악화 우려 증가.</div>
+        <div class="check-data green">아직 상대적 양호</div>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <div class="check-icon ci-ok"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+      <div class="check-body">
+        <div class="check-title">기업 실적</div>
+        <div class="check-desc">에너지·소재 섹터는 수혜. 빅테크는 AI 투자로 선방. 제조·소비재는 원가 압박 증가.</div>
+        <div class="check-data green">섹터별 차별화</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-card">
+      <h4><i class="ti ti-history" aria-hidden="true"></i> 1970년대 vs 2026년 비교</h4>
+      <div class="row"><span class="c-key">충격 원인</span><span class="c-val">중동 전쟁 유가</span></div>
+      <div class="row"><span class="c-key">인플레 수준</span><span class="c-val">70s: 10%+ / 26: 3.8%</span></div>
+      <div class="row"><span class="c-key">통화정책</span><span class="c-val">70s: 긴축 / 26: 딜레마</span></div>
+      <div class="row"><span class="c-key">성장 충격</span><span class="c-val">유사한 패턴</span></div>
+    </div>
+    <div class="compare-card">
+      <h4><i class="ti ti-shield" aria-hidden="true"></i> 스태그플레이션 대응 자산</h4>
+      <div class="row"><span class="c-key">금 (Gold)</span><span class="c-val">강력 헤지 ✔</span></div>
+      <div class="row"><span class="c-key">원자재 ETF</span><span class="c-val">수혜 자산 ✔</span></div>
+      <div class="row"><span class="c-key">장기 국채</span><span class="c-val">위험 (금리 상승)</span></div>
+      <div class="row"><span class="c-key">성장주</span><span class="c-val">밸류에이션 부담</span></div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    데이터: Trading Economics · 딜로이트 글로벌경제리뷰 · 블룸버그 · KDI (2026.05 기준)<br>
+    ※ 이 자료는 투자 참고용이며 투자 권유가 아닙니다.
+  </div>
+</div>
+</body>
+</html>
