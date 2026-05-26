@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주요 종목 오전장 수익률 | 2026.05.26</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f4f8;padding:24px 16px;}
+.wrap{max-width:720px;margin:0 auto;}
+
+.header{
+  background:linear-gradient(135deg,#1b4332,#2d6a4f,#40916c);
+  border-radius:14px 14px 0 0;padding:18px 22px;
+  display:flex;align-items:center;gap:10px;
+}
+.header h2{color:#fff;font-size:17px;font-weight:900;flex:1;}
+.header .badge{background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;}
+
+.body{background:#fff;border-radius:0 0 14px 14px;padding:20px;border:1px solid #dde4ef;border-top:none;box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+
+.sec-label{font-size:11px;font-weight:700;color:#8896ae;letter-spacing:1px;margin-bottom:14px;text-transform:uppercase;}
+
+/* 종목 히트맵 스타일 */
+.heatmap{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
+.hm-card{border-radius:12px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;}
+.hm-card.hot1{background:linear-gradient(135deg,#ff1a1a,#e03131);color:#fff;}
+.hm-card.hot2{background:linear-gradient(135deg,#e03131,#fa5252);color:#fff;}
+.hm-card.hot3{background:linear-gradient(135deg,#fa5252,#ff6b6b);color:#fff;}
+.hm-card.hot4{background:linear-gradient(135deg,#ff6b6b,#ff8787);color:#fff;}
+.hm-card.hot5{background:linear-gradient(135deg,#ff8787,#ffa8a8);color:#fff;}
+.hm-card.warm{background:linear-gradient(135deg,#ffa8a8,#ffc9c9);color:#a00;}
+.hm-card .hm-left .hm-name{font-size:13px;font-weight:700;}
+.hm-card .hm-left .hm-ticker{font-size:10px;opacity:0.75;margin-top:2px;}
+.hm-card .hm-right{text-align:right;}
+.hm-card .hm-rate{font-size:20px;font-weight:900;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;}
+.hm-card .hm-note{font-size:10px;opacity:0.85;margin-top:2px;}
+
+/* 업종 테이블 */
+.tbl-wrap{overflow-x:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:#f5faf5;}
+th{padding:9px 12px;text-align:center;font-size:11px;font-weight:700;color:#3a5a40;border-bottom:2px solid #c8e6c9;}
+td{padding:9px 12px;text-align:center;border-bottom:1px solid #f0f4f0;}
+td:first-child{text-align:left;font-weight:600;}
+tr:last-child td{border-bottom:none;}
+.val-up{color:#e03131;font-weight:700;}
+.val-down{color:#1971c2;font-weight:700;}
+.highlight-row{background:#fff8f0;}
+
+/* 특별 이슈 알림 */
+.alert-box{background:#fffbf0;border:1.5px solid #ffd43b;border-radius:10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+.alert-icon{font-size:20px;line-height:1;}
+.alert-content .alert-title{font-size:13px;font-weight:700;color:#805a00;margin-bottom:4px;}
+.alert-content .alert-desc{font-size:12px;color:#7a6000;line-height:1.6;}
+
+.footer-note{font-size:10px;color:#aab4c4;margin-top:14px;text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">📈 종목</div>
+    <h2>오전장 주요 종목 수익률</h2>
+    <span style="color:rgba(255,255,255,0.7);font-size:11px;">26일 오전 10시 기준</span>
+  </div>
+  <div class="body">
+
+    <div class="sec-label">🔥 급등 종목 히트맵 (등락률 순)</div>
+    <div class="heatmap">
+      <div class="hm-card hot1">
+        <div class="hm-left">
+          <div class="hm-name">삼성전기</div>
+          <div class="hm-ticker">009150 · 전기전자</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+12.7%</div>
+          <div class="hm-note">AI 기판 수요 급증</div>
+        </div>
+      </div>
+      <div class="hm-card hot2">
+        <div class="hm-left">
+          <div class="hm-name">SK하이닉스</div>
+          <div class="hm-ticker">000660 · 반도체</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+6.75%</div>
+          <div class="hm-note">200만원 첫 돌파</div>
+        </div>
+      </div>
+      <div class="hm-card hot3">
+        <div class="hm-left">
+          <div class="hm-name">현대차</div>
+          <div class="hm-ticker">005380 · 자동차</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+5.04%</div>
+          <div class="hm-note">글로벌 위험선호↑</div>
+        </div>
+      </div>
+      <div class="hm-card hot4">
+        <div class="hm-left">
+          <div class="hm-name">HD현대중공업</div>
+          <div class="hm-ticker">조선</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+4.71%</div>
+          <div class="hm-note">수주 모멘텀</div>
+        </div>
+      </div>
+      <div class="hm-card hot5">
+        <div class="hm-left">
+          <div class="hm-name">삼성전자</div>
+          <div class="hm-ticker">005930 · 반도체</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+2.74%</div>
+          <div class="hm-note">30만원 재돌파</div>
+        </div>
+      </div>
+      <div class="hm-card warm">
+        <div class="hm-left">
+          <div class="hm-name">SK스퀘어</div>
+          <div class="hm-ticker">지주</div>
+        </div>
+        <div class="hm-right">
+          <div class="hm-rate">+3.04%</div>
+          <div class="hm-note">하이닉스 연동</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label">📊 업종별 동향 요약</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>업종</th>
+            <th>방향</th>
+            <th>주요 이유</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td>반도체·전기전자</td>
+            <td class="val-up">▲ 강세</td>
+            <td>HBM·AI 수요, 수출 서프라이즈</td>
+          </tr>
+          <tr>
+            <td>자동차·부품</td>
+            <td class="val-up">▲ 강세</td>
+            <td>글로벌 위험선호 심리 확산</td>
+          </tr>
+          <tr>
+            <td>조선·중공업</td>
+            <td class="val-up">▲ 강세</td>
+            <td>에너지 전환·수주 모멘텀</td>
+          </tr>
+          <tr>
+            <td>2차전지</td>
+            <td class="val-up">▲ 소폭</td>
+            <td>전쟁 이후 54% 반등 흐름</td>
+          </tr>
+          <tr>
+            <td>바이오·제약</td>
+            <td style="color:#888;font-weight:700;">→ 혼조</td>
+            <td>반도체 쏠림 속 관망</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-content">
+        <div class="alert-title">오늘의 특이사항: 레버리지 ETF 상장</div>
+        <div class="alert-desc">삼성전자·SK하이닉스 단일 종목 레버리지 ETF가 오늘 상장됩니다. 동시호가 시간대 수급 변동성이 일시적으로 높아질 수 있으며, 특히 장 마감 직전 수급 교란에 주의가 필요합니다.</div>
+      </div>
+    </div>
+
+    <div class="footer-note">※ 출처: 헤럴드경제·파이낸셜뉴스·위키트리 오전 보도 종합. 투자 판단의 최종 책임은 본인에게 있습니다.</div>
+  </div>
+</div>
+</body>
+</html>
