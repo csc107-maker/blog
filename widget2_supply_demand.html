@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>투자자별 수급 분석 | 2026.05.26</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f4f8;padding:24px 16px;}
+.wrap{max-width:720px;margin:0 auto;}
+
+.header{
+  background:linear-gradient(135deg,#0a4a6e,#0d7fbf);
+  border-radius:14px 14px 0 0;padding:18px 22px;
+  display:flex;align-items:center;gap:10px;
+}
+.header h2{color:#fff;font-size:17px;font-weight:900;flex:1;}
+.header .badge{background:rgba(255,255,255,0.2);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;}
+
+.body{background:#fff;border-radius:0 0 14px 14px;padding:20px;border:1px solid #dde4ef;border-top:none;box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+
+.title-row{font-size:11px;font-weight:700;color:#8896ae;letter-spacing:1px;margin-bottom:14px;text-transform:uppercase;}
+
+/* 수급 바 차트 */
+.bar-section{margin-bottom:22px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.bar-label{min-width:60px;font-size:12px;font-weight:700;color:#334;}
+.bar-wrap{flex:1;background:#f0f2f8;border-radius:6px;height:28px;overflow:hidden;position:relative;}
+.bar-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:10px;font-size:12px;font-weight:700;color:#fff;transition:width 1s ease;}
+.bar-fill.buy{background:linear-gradient(90deg,#e03131,#ff6b6b);}
+.bar-fill.sell{background:linear-gradient(90deg,#1971c2,#4dabf7);}
+.bar-amount{min-width:90px;font-size:12px;font-weight:700;text-align:right;}
+.bar-amount.buy-amt{color:#e03131;}
+.bar-amount.sell-amt{color:#1971c2;}
+
+/* 수급 테이블 */
+.tbl-wrap{overflow-x:auto;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:#f0f5ff;}
+th{padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:#4a5568;border-bottom:2px solid #dde4ef;}
+td{padding:10px 12px;text-align:center;border-bottom:1px solid #f0f2f8;}
+td:first-child{text-align:left;font-weight:700;}
+tr:last-child td{border-bottom:none;}
+.val-up{color:#e03131;font-weight:700;}
+.val-down{color:#1971c2;font-weight:700;}
+.row-highlight{background:#fff8f8;}
+
+/* 요약 카드 */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.s-card{background:#f8faff;border-radius:10px;padding:14px 10px;text-align:center;border:1px solid #e4eaf6;}
+.s-card .s-label{font-size:10px;color:#8896ae;font-weight:700;margin-bottom:6px;}
+.s-card .s-total{font-size:18px;font-weight:900;}
+.s-card .s-note{font-size:10px;color:#aab4c4;margin-top:4px;}
+.total-buy{color:#e03131;}
+.total-sell{color:#1971c2;}
+.total-net{color:#2b8a3e;}
+
+.footer-note{font-size:10px;color:#aab4c4;margin-top:14px;text-align:right;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">📊 수급</div>
+    <h2>투자자별 수급 현황 (유가증권시장)</h2>
+    <span style="color:rgba(255,255,255,0.7);font-size:11px;">26일 오전 10시 기준</span>
+  </div>
+  <div class="body">
+
+    <div class="title-row">💰 순매수 방향 시각화</div>
+    <div class="bar-section">
+      <div class="bar-row">
+        <span class="bar-label">기관</span>
+        <div class="bar-wrap">
+          <div class="bar-fill buy" style="width:62%">+5,313억</div>
+        </div>
+        <span class="bar-amount buy-amt">▲ 순매수</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">외국인</span>
+        <div class="bar-wrap">
+          <div class="bar-fill buy" style="width:40%">+3,361억</div>
+        </div>
+        <span class="bar-amount buy-amt">▲ 순매수</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label">개인</span>
+        <div class="bar-wrap">
+          <div class="bar-fill sell" style="width:93%">-7,959억</div>
+        </div>
+        <span class="bar-amount sell-amt">▼ 순매도</span>
+      </div>
+    </div>
+
+    <div class="title-row">📋 투자자별 수급 상세</div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>투자자</th>
+            <th>순매수(억원)</th>
+            <th>비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-highlight">
+            <td>🏛️ 기관</td>
+            <td class="val-up">+5,313</td>
+            <td>연기금·자산운용 주도</td>
+          </tr>
+          <tr>
+            <td>🌐 외국인</td>
+            <td class="val-up">+3,361</td>
+            <td>6거래일 만에 순매수 전환</td>
+          </tr>
+          <tr>
+            <td>👤 개인</td>
+            <td class="val-down">-7,959</td>
+            <td>급등 후 차익실현</td>
+          </tr>
+          <tr class="row-highlight" style="background:#f0fff4;">
+            <td style="color:#2b8a3e;"><strong>외국인+기관 합계</strong></td>
+            <td class="total-net" style="font-size:15px;"><strong>+8,674</strong></td>
+            <td style="color:#2b8a3e;font-weight:700;">강한 매수세</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="title-row">🔍 핵심 수급 시그널</div>
+    <div class="summary-grid">
+      <div class="s-card">
+        <div class="s-label">기관+외국인</div>
+        <div class="s-total total-net">+8,674억</div>
+        <div class="s-note">동반 순매수</div>
+      </div>
+      <div class="s-card">
+        <div class="s-label">외국인 방향</div>
+        <div class="s-total total-buy">전환</div>
+        <div class="s-note">매도→매수 전환</div>
+      </div>
+      <div class="s-card">
+        <div class="s-label">개인 포지션</div>
+        <div class="s-total total-sell">-7,959억</div>
+        <div class="s-note">차익실현 매도</div>
+      </div>
+    </div>
+
+    <div class="footer-note">※ 출처: 한국거래소 / 헤럴드경제 · 파이낸셜뉴스 오전 10시 기준 보도. 투자 판단의 최종 책임은 본인에게 있습니다.</div>
+  </div>
+</div>
+</body>
+</html>
