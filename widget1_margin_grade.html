@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>증거금률 등급 비교</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 28px 16px;
+  }
+  .widget-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .widget-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #1a237e;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .widget-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #5c6bc0;
+    margin-bottom: 22px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 14px 18px;
+    box-shadow: 0 2px 12px rgba(63,81,181,0.10);
+    border-top: 5px solid;
+    text-align: center;
+    transition: transform 0.18s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card.grade1 { border-color: #43a047; }
+  .card.grade2 { border-color: #1e88e5; }
+  .card.grade3 { border-color: #fb8c00; }
+  .card.grade4 { border-color: #e53935; }
+  .badge {
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .grade1 .badge { color: #43a047; }
+  .grade2 .badge { color: #1e88e5; }
+  .grade3 .badge { color: #fb8c00; }
+  .grade4 .badge { color: #e53935; }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #37474f;
+    margin-bottom: 8px;
+  }
+  .card-desc {
+    font-size: 11.5px;
+    color: #78909c;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+  .example-tag {
+    display: inline-block;
+    background: #f3f4ff;
+    color: #5c6bc0;
+    border-radius: 20px;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    font-weight: 600;
+  }
+  .leverage {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #9e9e9e;
+  }
+  .note {
+    margin-top: 18px;
+    background: #fff8e1;
+    border-left: 4px solid #ffb300;
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-size: 12px;
+    color: #795548;
+    line-height: 1.7;
+  }
+  .note strong { color: #e65100; }
+  .source {
+    text-align: right;
+    font-size: 10px;
+    color: #b0bec5;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-title">📊 증거금률 등급별 비교표</div>
+  <div class="widget-sub">증거금률은 증권사가 종목 위험도에 따라 자율적으로 결정합니다</div>
+  <div class="cards">
+    <div class="card grade1">
+      <div class="badge">20~30%</div>
+      <div class="card-title">우량 등급</div>
+      <div class="card-desc">코스피 대형 우량주<br>재무 건전성 우수 종목</div>
+      <div class="example-tag">삼성전자·SK하이닉스 등</div>
+      <div class="leverage">최대 3~5배 레버리지 가능</div>
+    </div>
+    <div class="card grade2">
+      <div class="badge">40~50%</div>
+      <div class="card-title">일반 등급</div>
+      <div class="card-desc">대다수 코스피·코스닥<br>일반 거래 종목</div>
+      <div class="example-tag">일반 보통주</div>
+      <div class="leverage">최대 2~2.5배 레버리지 가능</div>
+    </div>
+    <div class="card grade3">
+      <div class="badge">60~80%</div>
+      <div class="card-title">주의 등급</div>
+      <div class="card-desc">변동성 높은 종목<br>투자유의 예비 단계</div>
+      <div class="example-tag">소형주·테마주</div>
+      <div class="leverage">제한적 레버리지</div>
+    </div>
+    <div class="card grade4">
+      <div class="badge">100%</div>
+      <div class="card-title">위험 등급</div>
+      <div class="card-desc">투자경고·위험종목<br>관리종목·미수동결</div>
+      <div class="example-tag">경보 지정 종목</div>
+      <div class="leverage">레버리지 불가</div>
+    </div>
+  </div>
+  <div class="note">
+    ⚠️ <strong>알아두세요!</strong> 증거금률은 증권사별·종목별로 상이합니다. <strong>같은 종목이라도 증권사마다 다른 증거금률이 적용</strong>될 수 있으므로 주문 전 반드시 확인하세요.
+  </div>
+  <div class="source">출처: KB증권, 한국투자증권, 다올투자증권 공시 기준</div>
+</div>
+</body>
+</html>
