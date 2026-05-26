@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>레버리지 ETF 구조 비교</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap');
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8f9ff;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a56db, #6366f1);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  
+  .header h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+  
+  .header p {
+    font-size: 13px;
+    color: #666;
+  }
+  
+  /* 구조 카드 3열 */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border-top: 4px solid #e5e7eb;
+    transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  
+  .card.card-blue  { border-top-color: #1a56db; }
+  .card.card-green { border-top-color: #10b981; }
+  .card.card-red   { border-top-color: #ef4444; }
+  
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  
+  .card-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+  }
+  
+  .card-desc {
+    font-size: 12.5px;
+    color: #555;
+    line-height: 1.65;
+  }
+  
+  .card-mult {
+    display: inline-block;
+    margin-top: 10px;
+    background: #f0f4ff;
+    color: #1a56db;
+    font-weight: 800;
+    font-size: 22px;
+    padding: 4px 18px;
+    border-radius: 8px;
+  }
+  .card.card-red .card-mult { background: #fff0f0; color: #ef4444; }
+  .card.card-green .card-mult { background: #f0fdf4; color: #10b981; }
+  
+  /* 시뮬레이션 섹션 */
+  .sim-section {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+  }
+  
+  .sim-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sim-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(135deg, #1a56db, #6366f1);
+    border-radius: 4px;
+  }
+  
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    align-items: flex-end;
+  }
+  
+  .ctrl-group {
+    flex: 1;
+    min-width: 140px;
+  }
+  
+  .ctrl-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+  
+  .ctrl-group input[type=range] {
+    width: 100%;
+    accent-color: #1a56db;
+  }
+  
+  .ctrl-group .val {
+    font-size: 18px;
+    font-weight: 900;
+    color: #1a56db;
+    margin-top: 2px;
+  }
+  
+  .run-btn {
+    background: linear-gradient(135deg, #1a56db, #6366f1);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .run-btn:hover { opacity: 0.9; }
+  
+  /* 결과 박스 */
+  .result-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  
+  .result-box {
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+  }
+  .result-box.stock { background: #f0f9ff; border: 1.5px solid #bae6fd; }
+  .result-box.lev   { background: #fff0f0; border: 1.5px solid #fecaca; }
+  
+  .result-box.positive-lev { background: #f0fdf4; border-color: #86efac; }
+  
+  .result-box .rb-label { font-size: 12px; font-weight: 700; color: #6b7280; margin-bottom: 6px; }
+  .result-box .rb-val { font-size: 28px; font-weight: 900; }
+  .result-box.stock .rb-val { color: #0284c7; }
+  .result-box.lev   .rb-val { color: #dc2626; }
+  .result-box.positive-lev .rb-val { color: #16a34a; }
+  .result-box .rb-sub { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+  
+  .chart-area {
+    height: 100px;
+    background: #f9fafb;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  svg.mini-chart {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .warning-box {
+    background: #fffbeb;
+    border: 1.5px solid #fcd34d;
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12.5px;
+    color: #92400e;
+    line-height: 1.6;
+  }
+  .warning-box .wi { font-size: 18px; flex-shrink: 0; }
+  
+  @media (max-width: 600px) {
+    .cards-row { grid-template-columns: 1fr; }
+    .result-row { grid-template-columns: 1fr; }
+    .controls { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="badge">📊 구조 분석</div>
+    <h2>단일종목 레버리지 ETF란 무엇인가?</h2>
+    <p>기초자산 하루 수익률의 2배를 추종하는 고위험 파생 상품</p>
+  </div>
+
+  <!-- 3가지 카드 -->
+  <div class="cards-row">
+    <div class="card card-blue">
+      <div class="card-icon">📈</div>
+      <div class="card-label">일반 ETF</div>
+      <div class="card-title">코스피200 ETF</div>
+      <div class="card-desc">200개 종목 분산<br>1배 추종, 리스크 낮음<br>장기 투자에 적합</div>
+      <div class="card-mult">×1</div>
+    </div>
+    <div class="card card-green">
+      <div class="card-icon">🚀</div>
+      <div class="card-label">단일종목 레버리지</div>
+      <div class="card-title">상승 시 수익률</div>
+      <div class="card-desc">삼성전자·SK하이닉스<br>하루 +5% → ETF +10%<br>단기 트레이딩 최적화</div>
+      <div class="card-mult">×2</div>
+    </div>
+    <div class="card card-red">
+      <div class="card-icon">⚠️</div>
+      <div class="card-label">단일종목 레버리지</div>
+      <div class="card-title">하락 시 손실률</div>
+      <div class="card-desc">하루 -5% → ETF -10%<br>하루 최대 -60% 가능<br>변동성 잠식 누적 위험</div>
+      <div class="card-mult">×2</div>
+    </div>
+  </div>
+
+  <!-- 시뮬레이션 섹션 -->
+  <div class="sim-section">
+    <div class="sim-title">수익률 시뮬레이터 — 하루 변동성 적용</div>
+    
+    <div class="controls">
+      <div class="ctrl-group">
+        <label>📉 1일차 변동률</label>
+        <input type="range" id="day1" min="-30" max="30" value="-10" step="1">
+        <div class="val" id="day1val">-10%</div>
+      </div>
+      <div class="ctrl-group">
+        <label>📈 2일차 변동률</label>
+        <input type="range" id="day2" min="-30" max="30" value="11" step="1">
+        <div class="val" id="day2val">+11%</div>
+      </div>
+      <div class="ctrl-group">
+        <label>💰 초기 투자금</label>
+        <input type="range" id="invest" min="100" max="5000" value="1000" step="100">
+        <div class="val" id="investval">1,000만원</div>
+      </div>
+      <button class="run-btn" onclick="simulate()">계산하기</button>
+    </div>
+    
+    <div class="result-row" id="results">
+      <div class="result-box stock">
+        <div class="rb-label">📌 일반 주식 (1배)</div>
+        <div class="rb-val" id="stockResult">—</div>
+        <div class="rb-sub" id="stockSub">—</div>
+      </div>
+      <div class="result-box lev" id="levBox">
+        <div class="rb-label">⚡ 레버리지 ETF (2배)</div>
+        <div class="rb-val" id="levResult">—</div>
+        <div class="rb-sub" id="levSub">—</div>
+      </div>
+    </div>
+    
+    <div class="warning-box">
+      <span class="wi">💡</span>
+      <span>레버리지 ETF는 <strong>하루 단위 수익률의 2배</strong>를 추종합니다. 기초자산이 하락 후 동일 수준으로 회복해도, 레버리지 ETF는 원금을 회복하지 못할 수 있습니다. 이를 <strong>'음의 복리효과 (변동성 잠식)'</strong>라 합니다.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const day1 = document.getElementById('day1');
+  const day2 = document.getElementById('day2');
+  const invest = document.getElementById('invest');
+
+  day1.addEventListener('input', () => {
+    const v = parseInt(day1.value);
+    document.getElementById('day1val').textContent = (v >= 0 ? '+' : '') + v + '%';
+  });
+  day2.addEventListener('input', () => {
+    const v = parseInt(day2.value);
+    document.getElementById('day2val').textContent = (v >= 0 ? '+' : '') + v + '%';
+  });
+  invest.addEventListener('input', () => {
+    document.getElementById('investval').textContent = parseInt(invest.value).toLocaleString() + '만원';
+  });
+
+  function simulate() {
+    const d1 = parseInt(day1.value) / 100;
+    const d2 = parseInt(day2.value) / 100;
+    const ini = parseInt(invest.value);
+
+    // 일반 주식
+    const sAfterD1 = ini * (1 + d1);
+    const sAfterD2 = sAfterD1 * (1 + d2);
+    const sPnl = sAfterD2 - ini;
+
+    // 레버리지
+    const lAfterD1 = ini * (1 + d1 * 2);
+    const lAfterD2 = lAfterD1 * (1 + d2 * 2);
+    const lPnl = lAfterD2 - ini;
+
+    document.getElementById('stockResult').textContent = sAfterD2.toFixed(0) + '만원';
+    document.getElementById('stockSub').textContent = (sPnl >= 0 ? '+' : '') + sPnl.toFixed(0) + '만원 (' + ((sPnl/ini)*100).toFixed(1) + '%)';
+    document.getElementById('stockResult').style.color = sPnl >= 0 ? '#16a34a' : '#dc2626';
+
+    document.getElementById('levResult').textContent = Math.max(0, lAfterD2).toFixed(0) + '만원';
+    document.getElementById('levSub').textContent = (lPnl >= 0 ? '+' : '') + lPnl.toFixed(0) + '만원 (' + ((lPnl/ini)*100).toFixed(1) + '%)';
+    document.getElementById('levResult').style.color = lPnl >= 0 ? '#16a34a' : '#dc2626';
+    
+    const levBox = document.getElementById('levBox');
+    levBox.className = 'result-box ' + (lPnl >= 0 ? 'positive-lev' : 'lev');
+  }
+  
+  // 초기 실행
+  simulate();
+</script>
+</body>
+</html>
