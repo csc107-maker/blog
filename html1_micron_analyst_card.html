@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마이크론 애널리스트 컨센서스 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4ff;
+    padding: 28px 16px;
+    min-height: 100vh;
+  }
+  .report-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .report-header {
+    background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+    border-radius: 18px;
+    padding: 28px 32px;
+    margin-bottom: 22px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 8px 32px rgba(26,41,128,0.18);
+  }
+  .report-header .ticker {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+  .report-header .subtitle {
+    font-size: 0.9rem;
+    opacity: 0.82;
+    margin-top: 4px;
+  }
+  .consensus-badge {
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 40px;
+    padding: 10px 24px;
+    text-align: center;
+  }
+  .consensus-badge .label { font-size: 0.75rem; opacity: 0.85; }
+  .consensus-badge .value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7fffb2;
+  }
+
+  /* KPI 카드 */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .kpi-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(26,41,128,0.07);
+    border-top: 4px solid #1a2980;
+    transition: transform 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-3px); }
+  .kpi-card.up { border-top-color: #00b341; }
+  .kpi-card.warn { border-top-color: #f5a623; }
+  .kpi-card.accent { border-top-color: #26d0ce; }
+  .kpi-card .kpi-label {
+    font-size: 0.72rem;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .kpi-card .kpi-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a2980;
+  }
+  .kpi-card.up .kpi-value { color: #00b341; }
+  .kpi-card.warn .kpi-value { color: #f5a623; }
+  .kpi-card.accent .kpi-value { color: #0099aa; }
+  .kpi-card .kpi-sub {
+    font-size: 0.7rem;
+    color: #aaa;
+    margin-top: 4px;
+  }
+
+  /* 애널리스트 목표가 테이블 */
+  .section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a2980;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
+    border-radius: 2px;
+  }
+  .analyst-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 14px rgba(26,41,128,0.07);
+    margin-bottom: 22px;
+  }
+  .analyst-table thead tr {
+    background: linear-gradient(90deg, #1a2980, #2653c0);
+  }
+  .analyst-table thead th {
+    color: #fff;
+    font-size: 0.78rem;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .analyst-table tbody tr {
+    border-bottom: 1px solid #f0f2fa;
+    transition: background 0.15s;
+  }
+  .analyst-table tbody tr:last-child { border-bottom: none; }
+  .analyst-table tbody tr:hover { background: #f5f8ff; }
+  .analyst-table tbody td {
+    padding: 11px 14px;
+    font-size: 0.85rem;
+    color: #333;
+  }
+  .rating-badge {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 3px 11px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .badge-strong-buy { background: #e6f9ee; color: #00863a; }
+  .badge-buy { background: #e8f3ff; color: #1a5fd1; }
+  .badge-outperform { background: #fef6e6; color: #c67f00; }
+  .target-bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .target-bar {
+    height: 7px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #26d0ce, #1a2980);
+    transition: width 0.5s;
+  }
+  .target-val {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1a2980;
+    min-width: 56px;
+    text-align: right;
+  }
+
+  /* 실적 카드 */
+  .earnings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .earnings-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 18px;
+    box-shadow: 0 2px 12px rgba(26,41,128,0.07);
+  }
+  .earnings-card .ec-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .earnings-card .ec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.84rem;
+  }
+  .earnings-card .ec-item .name { color: #555; }
+  .earnings-card .ec-item .val {
+    font-weight: 700;
+    color: #1a2980;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+  }
+  .earnings-card .ec-item .val.green { color: #00b341; }
+  .sep-line {
+    height: 1px;
+    background: #f0f2fa;
+    margin: 8px 0;
+  }
+
+  /* footer */
+  .report-footer {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #bbb;
+    margin-top: 8px;
+  }
+  @media (max-width: 580px) {
+    .earnings-grid { grid-template-columns: 1fr; }
+    .report-header { flex-direction: column; }
+    .report-header .ticker { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="report-wrap">
+
+  <!-- 헤더 -->
+  <div class="report-header">
+    <div>
+      <div class="ticker">MICRON TECHNOLOGY · MU</div>
+      <div class="subtitle">NASDAQ | 반도체 | 2026년 5월 27일 기준 애널리스트 컨센서스 분석</div>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <div class="consensus-badge">
+        <div class="label">투자의견</div>
+        <div class="value">STRONG BUY</div>
+      </div>
+      <div class="consensus-badge">
+        <div class="label">현재 주가</div>
+        <div class="value" style="color:#ffd700;">$751~803</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI 그리드 -->
+  <div class="kpi-grid">
+    <div class="kpi-card up">
+      <div class="kpi-label">연간 상승률(YTD)</div>
+      <div class="kpi-value">+180%</div>
+      <div class="kpi-sub">2026년 기준</div>
+    </div>
+    <div class="kpi-card up">
+      <div class="kpi-label">12개월 상승률</div>
+      <div class="kpi-value">+700%</div>
+      <div class="kpi-sub">역대 최고 수준</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-label">Q2 매출(FY26)</div>
+      <div class="kpi-value">$23.86B</div>
+      <div class="kpi-sub">전년비 +196% 급증</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-label">Q2 총이익률</div>
+      <div class="kpi-value">74.9%</div>
+      <div class="kpi-sub">역대 최고 마진</div>
+    </div>
+    <div class="kpi-card warn">
+      <div class="kpi-label">Q2 EPS 서프라이즈</div>
+      <div class="kpi-value">+38.7%</div>
+      <div class="kpi-sub">$8.79 예상 → $12.20 달성</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">분석 애널리스트 수</div>
+      <div class="kpi-value">44~53명</div>
+      <div class="kpi-sub">기관별 상이</div>
+    </div>
+  </div>
+
+  <!-- 애널리스트 목표가 -->
+  <div class="section-title">주요 투자은행 목표주가 비교 (2026년 5월 기준)</div>
+  <table class="analyst-table">
+    <thead>
+      <tr>
+        <th>투자은행/리서치</th>
+        <th>투자의견</th>
+        <th>목표주가 (USD)</th>
+        <th>목표가 시각화</th>
+        <th>상향폭</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>UBS</strong></td>
+        <td><span class="rating-badge badge-strong-buy">Strong Buy</span></td>
+        <td class="target-val">$1,625</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:100%;"></div>
+          </div>
+        </td>
+        <td style="color:#00b341; font-weight:700;">$535 → $1,625</td>
+      </tr>
+      <tr>
+        <td><strong>Melius Research</strong></td>
+        <td><span class="rating-badge badge-strong-buy">Strong Buy</span></td>
+        <td class="target-val">$1,100</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:68%;"></div>
+          </div>
+        </td>
+        <td style="color:#00b341; font-weight:700;">$700 → $1,100</td>
+      </tr>
+      <tr>
+        <td><strong>Bank of America</strong></td>
+        <td><span class="rating-badge badge-strong-buy">Strong Buy</span></td>
+        <td class="target-val">$950</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:58%;"></div>
+          </div>
+        </td>
+        <td style="color:#00b341; font-weight:700;">$500 → $950</td>
+      </tr>
+      <tr>
+        <td><strong>Citigroup</strong></td>
+        <td><span class="rating-badge badge-buy">Buy</span></td>
+        <td class="target-val">$840</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:52%; background:linear-gradient(90deg,#26d0ce,#1a5fd1);"></div>
+          </div>
+        </td>
+        <td style="color:#1a5fd1; font-weight:700;">신규 제시</td>
+      </tr>
+      <tr>
+        <td><strong>Mizuho</strong></td>
+        <td><span class="rating-badge badge-outperform">Outperform</span></td>
+        <td class="target-val">~$840</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:52%; background:linear-gradient(90deg,#ffd700,#f5a623);"></div>
+          </div>
+        </td>
+        <td style="color:#c67f00; font-weight:700;">유지</td>
+      </tr>
+      <tr>
+        <td><strong>컨센서스 평균</strong></td>
+        <td><span class="rating-badge badge-strong-buy">Strong Buy</span></td>
+        <td class="target-val" style="color:#00b341;">$563~697</td>
+        <td>
+          <div class="target-bar-wrap">
+            <div class="target-bar" style="width:40%; background:linear-gradient(90deg,#00b341,#26d0ce);"></div>
+          </div>
+        </td>
+        <td style="color:#888;">기관별 상이</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 실적 카드 -->
+  <div class="section-title">FY2026 분기별 핵심 실적 요약</div>
+  <div class="earnings-grid">
+    <div class="earnings-card">
+      <div class="ec-label">📊 FY2026 Q1 실적 (2025년 11월)</div>
+      <div class="ec-item"><span class="name">매출액</span><span class="val green">$13.64B</span></div>
+      <div class="ec-item"><span class="name">YoY 성장률</span><span class="val green">+57%</span></div>
+      <div class="ec-item"><span class="name">총이익률</span><span class="val">56.8%</span></div>
+      <div class="sep-line"></div>
+      <div class="ec-item"><span class="name">EPS</span><span class="val green">$4.78</span></div>
+      <div class="ec-item"><span class="name">클라우드 메모리 매출</span><span class="val">$5.28B</span></div>
+      <div class="ec-item"><span class="name">클라우드 마진</span><span class="val green">~66%</span></div>
+    </div>
+    <div class="earnings-card">
+      <div class="ec-label">🚀 FY2026 Q2 실적 (2026년 2월)</div>
+      <div class="ec-item"><span class="name">매출액</span><span class="val green">$23.86B</span></div>
+      <div class="ec-item"><span class="name">YoY 성장률</span><span class="val green">+196% ↑</span></div>
+      <div class="ec-item"><span class="name">총이익률</span><span class="val green">74.9%</span></div>
+      <div class="sep-line"></div>
+      <div class="ec-item"><span class="name">EPS</span><span class="val green">$12.20</span></div>
+      <div class="ec-item"><span class="name">예상 대비</span><span class="val green">+38.7% 서프라이즈</span></div>
+      <div class="ec-item"><span class="name">FCF</span><span class="val">$3.9B</span></div>
+    </div>
+  </div>
+
+  <!-- Q3 가이던스 -->
+  <div style="background: linear-gradient(135deg,#e8f4ff,#f0fff8); border-radius:14px; padding:20px 22px; margin-bottom:14px; border-left:4px solid #00b341;">
+    <div class="section-title" style="margin-bottom:10px;">📅 FY2026 Q3 가이던스 (2026년 6월 23일 실적 발표 예정)</div>
+    <div style="display:flex; gap:28px; flex-wrap:wrap;">
+      <div>
+        <div style="font-size:0.78rem; color:#888;">매출 가이던스</div>
+        <div style="font-family:'Rajdhani',sans-serif; font-size:1.7rem; font-weight:700; color:#00b341;">$33.5B</div>
+        <div style="font-size:0.72rem; color:#aaa;">±$7.5억 범위</div>
+      </div>
+      <div>
+        <div style="font-size:0.78rem; color:#888;">EPS 가이던스</div>
+        <div style="font-family:'Rajdhani',sans-serif; font-size:1.7rem; font-weight:700; color:#1a2980;">$19.15</div>
+        <div style="font-size:0.72rem; color:#aaa;">±$0.40 범위</div>
+      </div>
+      <div>
+        <div style="font-size:0.78rem; color:#888;">HBM 상태</div>
+        <div style="font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; color:#c00;">SOLD OUT</div>
+        <div style="font-size:0.72rem; color:#aaa;">2026년 전량 계약 완료</div>
+      </div>
+      <div>
+        <div style="font-size:0.78rem; color:#888;">수요 충족률</div>
+        <div style="font-family:'Rajdhani',sans-serif; font-size:1.7rem; font-weight:700; color:#f5a623;">50~65%</div>
+        <div style="font-size:0.72rem; color:#aaa;">수요가 공급을 초과</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-footer">※ 본 자료는 정보 제공 목적이며 투자 권유가 아닙니다 | 출처: Investing.com, Benzinga, TipRanks, Seeking Alpha, ChartMill | 2026.05.27 기준</div>
+</div>
+</body>
+</html>
