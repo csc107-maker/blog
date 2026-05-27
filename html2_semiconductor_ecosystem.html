@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>반도체 생태계 섹터별 주가 비교 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f7f8fc;
+    padding: 28px 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  .top-title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #1c1f3b;
+    margin-bottom: 6px;
+  }
+  .top-sub {
+    font-size: 0.82rem;
+    color: #888;
+    margin-bottom: 24px;
+  }
+
+  /* 섹터 카드 3개 나란히 */
+  .sector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .sector-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .sector-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.11);
+  }
+  .sector-card .sc-header {
+    padding: 18px 18px 14px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .sc-header::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+  .card-blue .sc-header  { background: linear-gradient(135deg, #1a2980, #264fcc); }
+  .card-orange .sc-header { background: linear-gradient(135deg, #b34a00, #f57f1f); }
+  .card-teal .sc-header  { background: linear-gradient(135deg, #007a6b, #26a899); }
+
+  .sc-header .sc-sector {
+    font-size: 0.72rem;
+    opacity: 0.82;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .sc-header .sc-name {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+  .sc-header .sc-trend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+  }
+  .sc-body { padding: 16px 18px; }
+  .sc-reason {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .sc-reason strong { color: #1c1f3b; }
+
+  /* 핵심 지표 미니 */
+  .mini-stats { display: flex; flex-direction: column; gap: 8px; }
+  .mini-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    padding: 7px 10px;
+    background: #f7f9ff;
+    border-radius: 8px;
+  }
+  .card-orange .mini-stat-row { background: #fff8f2; }
+  .card-teal .mini-stat-row { background: #f2fdfa; }
+  .mini-stat-row .msr-name { color: #777; }
+  .mini-stat-row .msr-val {
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .val-up { color: #00a543; }
+  .val-down { color: #d63031; }
+  .val-neutral { color: #e67e22; }
+  .val-blue { color: #1a2980; }
+
+  /* 흐름 화살표 */
+  .flow-section {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .flow-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1c1f3b;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flow-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(135deg, #1a2980, #26d0ce);
+    border-radius: 2px;
+  }
+  .flow-diagram {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .flow-node {
+    flex: 1;
+    min-width: 140px;
+    background: linear-gradient(135deg, #e8f0ff, #f0f8ff);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    border: 2px solid #c8d8ff;
+  }
+  .flow-node.node-hot {
+    background: linear-gradient(135deg, #fff3e0, #fff8e1);
+    border-color: #ffcc80;
+  }
+  .flow-node.node-cool {
+    background: linear-gradient(135deg, #fbe9e7, #fff3f3);
+    border-color: #ffab91;
+  }
+  .flow-node .fn-label {
+    font-size: 0.7rem;
+    color: #888;
+    margin-bottom: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .flow-node .fn-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1c1f3b;
+    margin-bottom: 6px;
+  }
+  .flow-node .fn-status {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: 700;
+  }
+  .status-hot { background: #e6f9ee; color: #00863a; }
+  .status-cool { background: #ffeaea; color: #c0392b; }
+  .status-warm { background: #fff3cd; color: #856404; }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    font-size: 1.4rem;
+    color: #aab;
+    flex-shrink: 0;
+  }
+
+  /* 원인 비교 테이블 */
+  .reason-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .reason-table thead tr {
+    background: #1c1f3b;
+  }
+  .reason-table thead th {
+    color: #fff;
+    font-size: 0.78rem;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .reason-table tbody tr:nth-child(even) { background: #f9fafb; }
+  .reason-table tbody td {
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: #444;
+    border-bottom: 1px solid #f0f2f7;
+    vertical-align: top;
+  }
+  .reason-table tbody td:first-child {
+    font-weight: 700;
+    color: #1c1f3b;
+    width: 100px;
+  }
+  .icon-bullet { font-size: 1rem; margin-right: 4px; }
+
+  .report-footer {
+    text-align: center;
+    font-size: 0.7rem;
+    color: #bbb;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 640px) {
+    .sector-grid { grid-template-columns: 1fr; }
+    .flow-diagram { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); align-self: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-title">🔍 AI 반도체 생태계 섹터별 주가 현황 분석</div>
+  <div class="top-sub">같은 AI 사이클 안에서도 수익이 엇갈리는 이유 | 2026년 5월 27일 기준</div>
+
+  <!-- 섹터 카드 -->
+  <div class="sector-grid">
+    <!-- 마이크론 -->
+    <div class="sector-card card-blue">
+      <div class="sc-header">
+        <div class="sc-sector">Memory / HBM</div>
+        <div class="sc-name">마이크론 (MU)</div>
+        <div class="sc-trend">
+          <span class="trend-pill">📈 급등 지속</span>
+        </div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-reason">
+          <strong>HBM 공급 병목</strong>을 장악하며 AI 인프라 필수 부품 공급자로 격상. 2026년 HBM 전량 계약 완료로 매출 가시성 확보.
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat-row">
+            <span class="msr-name">YTD 수익률</span>
+            <span class="msr-val val-up">+180%</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">12M 수익률</span>
+            <span class="msr-val val-up">+700%+</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">Q2 매출 YoY</span>
+            <span class="msr-val val-up">+196%</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">애널리스트</span>
+            <span class="msr-val val-blue">Strong Buy</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">HBM 공급</span>
+            <span class="msr-val val-up">SOLD OUT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소부장 -->
+    <div class="sector-card card-orange">
+      <div class="sc-header">
+        <div class="sc-sector">소재 · 부품 · 장비</div>
+        <div class="sc-name">반도체 소부장</div>
+        <div class="sc-trend">
+          <span class="trend-pill">📉 단기 조정</span>
+        </div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-reason">
+          급등 후 <strong>기대감 선반영</strong> 소화 구간. 수주→매출 시차(6~12개월)와 삼성전자 불확실성이 발목. 수급 이탈 지속.
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat-row">
+            <span class="msr-name">주성엔지니어링 (최고)</span>
+            <span class="msr-val val-up">+157%↑(선반영)</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">현재 조정폭</span>
+            <span class="msr-val val-down">고점 대비 조정</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">수주-매출 시차</span>
+            <span class="msr-val val-neutral">6~12개월</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">삼성전자 리스크</span>
+            <span class="msr-val val-down">HBM 이슈</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">투자 적합도</span>
+            <span class="msr-val val-neutral">사이클 타이밍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 전력주 -->
+    <div class="sector-card card-teal">
+      <div class="sc-header">
+        <div class="sc-sector">전력 인프라</div>
+        <div class="sc-name">K-전력 빅3</div>
+        <div class="sc-trend">
+          <span class="trend-pill">⚡ 조정 중</span>
+        </div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-reason">
+          효성중공업·HD현대일렉·LS일렉트릭이 <strong>급등 후 차익실현</strong> 구간. 지정학 리스크와 금리 불확실성 겹침. 펀더멘털은 유효.
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat-row">
+            <span class="msr-name">효성중공업 최고가</span>
+            <span class="msr-val val-up">4,601,000원</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">HD현대일렉 (5월초)</span>
+            <span class="msr-val val-neutral">1,252,000원</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">LS일렉트릭 (5월13일)</span>
+            <span class="msr-val val-down">284,500원 (-1.56%)</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">북미 매출 성장</span>
+            <span class="msr-val val-up">+52~61% (YoY)</span>
+          </div>
+          <div class="mini-stat-row">
+            <span class="msr-name">중장기 전망</span>
+            <span class="msr-val val-up">슈퍼사이클 유효</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자금 흐름 다이어그램 -->
+  <div class="flow-section">
+    <div class="flow-title">AI 수요 → 수익 분배 흐름 (2026년 5월 현재)</div>
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="fn-label">수요 창출</div>
+        <div class="fn-name">빅테크 AI<br>데이터센터</div>
+        <div class="fn-status status-hot">투자 폭증</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-hot">
+        <div class="fn-label">최대 수혜</div>
+        <div class="fn-name">HBM / DRAM<br>(마이크론·SK하이닉스)</div>
+        <div class="fn-status status-hot">📈 급등 지속</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">2차 수혜</div>
+        <div class="fn-name">CAPEX 확대<br>→ 장비 발주</div>
+        <div class="fn-status status-warm">⏳ 시차 존재</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-cool">
+        <div class="fn-label">선반영 조정</div>
+        <div class="fn-name">반도체 소부장<br>(장비·소재·부품)</div>
+        <div class="fn-status status-cool">📉 차익실현</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node node-cool">
+        <div class="fn-label">인프라 지원</div>
+        <div class="fn-name">전력 설비<br>(변압기·전력기기)</div>
+        <div class="fn-status status-cool">⚡ 단기 조정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 원인 비교 테이블 -->
+  <div style="margin-bottom:8px;" class="flow-title">섹터별 주가 등락 핵심 원인 비교</div>
+  <table class="reason-table">
+    <thead>
+      <tr>
+        <th>섹터</th>
+        <th>주가 현황</th>
+        <th>상승/하락 핵심 원인</th>
+        <th>중장기 전망</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>마이크론 (MU)</td>
+        <td><span style="color:#00a543; font-weight:700;">▲ 급등 (+180% YTD)</span></td>
+        <td>
+          <span class="icon-bullet">①</span>HBM 전량 계약 완료 (SOLD OUT)<br>
+          <span class="icon-bullet">②</span>Q2 EPS +38.7% 어닝서프라이즈<br>
+          <span class="icon-bullet">③</span>DRAM·NAND 동시 공급 부족<br>
+          <span class="icon-bullet">④</span>AI 인프라 기업으로 밸류에이션 재평가
+        </td>
+        <td style="color:#00a543; font-weight:700;">슈퍼사이클 지속<br>2028년까지 공급 타이트</td>
+      </tr>
+      <tr>
+        <td>반도체<br>소부장</td>
+        <td><span style="color:#d63031; font-weight:700;">▼ 단기 조정</span></td>
+        <td>
+          <span class="icon-bullet">①</span>급등 후 기대감 선반영 소화<br>
+          <span class="icon-bullet">②</span>수주→매출 6~12개월 시차<br>
+          <span class="icon-bullet">③</span>수급 쏠림(메모리 대형주로 이탈)<br>
+          <span class="icon-bullet">④</span>삼성전자 CAPEX 불확실성
+        </td>
+        <td style="color:#e67e22; font-weight:700;">2027년 낸드 사이클<br>재진입 기회 모색</td>
+      </tr>
+      <tr>
+        <td>전력주<br>(K-빅3)</td>
+        <td><span style="color:#d63031; font-weight:700;">▼ 차익실현 조정</span></td>
+        <td>
+          <span class="icon-bullet">①</span>800~4,600만원대 급등 후 차익실현<br>
+          <span class="icon-bullet">②</span>미·이란 전쟁 지정학 리스크<br>
+          <span class="icon-bullet">③</span>금리 불확실성 (할인율 효과)<br>
+          <span class="icon-bullet">④</span>수급 쏠림(반도체로 자금 이동)
+        </td>
+        <td style="color:#00a543; font-weight:700;">10년 슈퍼사이클 유효<br>북미 수출 성장 지속</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="report-footer">※ 투자 권유가 아닌 정보 제공 목적 | 출처: 한국경제, Investing.com, 유안타증권, BNK투자증권, KB증권 | 2026.05.27</div>
+</div>
+</body>
+</html>
