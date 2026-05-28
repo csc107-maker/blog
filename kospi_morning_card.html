@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026.05.28 코스피 오전장 지표 카드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 24px 16px;
+    min-height: 100vh;
+  }
+
+  .widget {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,60,150,0.10);
+    overflow: hidden;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a3a6b 0%, #1565c0 60%, #1e88e5 100%);
+    padding: 22px 28px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    color: #b3d4ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.35;
+  }
+  .header .sub {
+    color: #90caf9;
+    font-size: 12.5px;
+    margin-top: 6px;
+  }
+
+  /* Index Row */
+  .index-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid #e8edf5;
+  }
+  .index-box {
+    padding: 18px 20px;
+    border-right: 1px solid #e8edf5;
+  }
+  .index-box:last-child { border-right: none; }
+  .index-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #546e8a;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .index-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 700;
+    color: #0d1f3c;
+    line-height: 1;
+  }
+  .index-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .up { color: #c0392b; background: #fdecea; }
+  .dn { color: #1565c0; background: #e3f0ff; }
+  .index-time { font-size: 11px; color: #9aa8bb; margin-top: 4px; }
+
+  /* Section Title */
+  .section {
+    padding: 20px 20px 0;
+  }
+  .section-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1565c0;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    border-left: 3px solid #1565c0;
+    padding-left: 9px;
+    margin-bottom: 14px;
+  }
+
+  /* Supply Table */
+  .supply-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 20px 18px;
+  }
+  .supply-card {
+    background: #f5f8ff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    text-align: center;
+    border: 1.5px solid transparent;
+  }
+  .supply-card.buy { border-color: #c0392b20; background: #fff5f5; }
+  .supply-card.sell { border-color: #1565c020; background: #f0f5ff; }
+  .supply-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #7a90aa;
+    margin-bottom: 4px;
+  }
+  .supply-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0d1f3c;
+    margin-bottom: 4px;
+  }
+  .supply-amount {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .supply-card.buy .supply-amount { color: #c0392b; }
+  .supply-card.sell .supply-amount { color: #1565c0; }
+
+  /* Sector Rows */
+  .sector-list {
+    padding: 0 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sector-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7faff;
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .sector-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .sector-name {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0d1f3c;
+  }
+  .sector-note {
+    font-size: 11px;
+    color: #8a9ab0;
+    flex: 1.5;
+  }
+  .sector-pct {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 60px;
+    text-align: right;
+  }
+  .s-up { color: #c0392b; }
+  .s-dn { color: #1565c0; }
+
+  /* Bar */
+  .bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .bar-track {
+    width: 60px; height: 6px;
+    background: #e0e8f8;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; }
+
+  /* Featured Stock */
+  .featured {
+    margin: 0 20px 20px;
+    background: linear-gradient(135deg, #fff8e1, #fffde7);
+    border: 1.5px solid #f9a825;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .featured-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: #f9a825;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .featured-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0d1f3c;
+  }
+  .featured-sub {
+    font-size: 11.5px;
+    color: #78600a;
+    margin-top: 2px;
+  }
+  .featured-pct {
+    margin-left: auto;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 900;
+    color: #c0392b;
+  }
+
+  /* Footer */
+  .footer {
+    background: #f0f4f8;
+    padding: 12px 20px;
+    font-size: 11px;
+    color: #9ab0c8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .source-tag {
+    background: #ddeaff;
+    color: #1565c0;
+    font-weight: 700;
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  @media (max-width: 480px) {
+    .supply-grid { grid-template-columns: repeat(3,1fr); gap: 7px; }
+    .index-value { font-size: 20px; }
+    .featured-pct { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="widget">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">📊 오전장 시황 | 2026.05.28</div>
+    <h1>한국 증시 오전장 지표 분석</h1>
+    <div class="sub">오전 9시6분 개장 → 10시 기준 반등 전환 / 데이터: 머니투데이·한국경제</div>
+  </div>
+
+  <!-- 지수 -->
+  <div class="index-row">
+    <div class="index-box">
+      <div class="index-label">🇰🇷 KOSPI</div>
+      <div class="index-value">8,247.87</div>
+      <div><span class="index-change up">▲ +19.17 (+0.23%)</span></div>
+      <div class="index-time">오전 10:00 기준 / 반등 전환</div>
+    </div>
+    <div class="index-box">
+      <div class="index-label">📈 KOSDAQ</div>
+      <div class="index-value">1,128.91</div>
+      <div><span class="index-change dn">▼ −4.22 (−0.37%)</span></div>
+      <div class="index-time">오전장 기준 / 개인 순매수 유지</div>
+    </div>
+  </div>
+
+  <!-- 수급 -->
+  <div class="section">
+    <div class="section-title">📦 투자자별 수급 (KOSPI 오전 10시 기준)</div>
+  </div>
+  <div class="supply-grid">
+    <div class="supply-card buy">
+      <div class="supply-label">순매수</div>
+      <div class="supply-name">🧑 개인</div>
+      <div class="supply-amount">+1조 3,226억</div>
+    </div>
+    <div class="supply-card buy">
+      <div class="supply-label">순매수</div>
+      <div class="supply-name">🏦 기관</div>
+      <div class="supply-amount">+4,092억</div>
+    </div>
+    <div class="supply-card sell">
+      <div class="supply-label">순매도 (16일 연속)</div>
+      <div class="supply-name">🌍 외국인</div>
+      <div class="supply-amount">−1조 7,688억</div>
+    </div>
+  </div>
+
+  <!-- 업종별 -->
+  <div class="section">
+    <div class="section-title">🏭 주요 업종 등락 현황</div>
+  </div>
+  <div class="sector-list">
+    <div class="sector-row">
+      <div class="sector-icon" style="background:#fff0f0;">🔋</div>
+      <div class="sector-name">이차전지 소재·장비</div>
+      <div class="sector-note">LG엔솔 +11.5%, 엘앤에프 +14.9%</div>
+      <div class="sector-pct s-up">+9.52%</div>
+    </div>
+    <div class="sector-row">
+      <div class="sector-icon" style="background:#e8f5e9;">🚗</div>
+      <div class="sector-name">운송장비</div>
+      <div class="sector-note">현대차 +10.67% (전일 급등 반영)</div>
+      <div class="sector-pct s-up">+1%대</div>
+    </div>
+    <div class="sector-row">
+      <div class="sector-icon" style="background:#e3f2fd;">💊</div>
+      <div class="sector-name">반도체 (전기전자)</div>
+      <div class="sector-note">SK하이닉스 +2.54%, 삼성전자 -0.33%</div>
+      <div class="sector-pct s-up">+0.97%</div>
+    </div>
+    <div class="sector-row">
+      <div class="sector-icon" style="background:#fce4ec;">🏛</div>
+      <div class="sector-name">보험·금융</div>
+      <div class="sector-note">금통위 긴축 시그널 부담</div>
+      <div class="sector-pct s-dn">−2%대</div>
+    </div>
+    <div class="sector-row">
+      <div class="sector-icon" style="background:#ede7f6;">📡</div>
+      <div class="sector-name">통신·IT서비스</div>
+      <div class="sector-note">부동산·IT서비스 동반 약세</div>
+      <div class="sector-pct s-dn">−1%대</div>
+    </div>
+  </div>
+
+  <!-- 특징주 -->
+  <div class="section" style="padding-bottom:12px;">
+    <div class="section-title">⭐ 오늘의 핵심 특징주</div>
+  </div>
+  <div class="featured">
+    <div class="featured-icon">🔋</div>
+    <div>
+      <div class="featured-name">LG에너지솔루션</div>
+      <div class="featured-sub">이차전지 반등 주도 · 낙폭과대 반발 매수</div>
+    </div>
+    <div class="featured-pct">+13.56%</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>※ 투자 참고용 자료 · 매매 권유 아님</span>
+    <span class="source-tag">머니투데이 · 한국경제 · KRX</span>
+  </div>
+
+</div>
+
+</body>
+</html>
