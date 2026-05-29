@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="국민연금 국내주식 포트폴리오 & 시장 영향 분석" />
+  <meta property="og:description" content="삼성전자 16.7%, SK하이닉스 6.93%... 국민연금 리밸런싱 시 가장 큰 영향을 받는 종목과 MSCI 비중 확대 효과를 분석합니다." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80" />
+  <meta property="og:url" content="https://blog.example.com/nps-portfolio-analysis" />
+  <title>국민연금 포트폴리오 & 시장 영향 분석</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f0fdf4;
+      padding: 24px 16px;
+    }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.07);
+    }
+    .card-head {
+      padding: 22px 28px 18px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-head .icon-box {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .card-head h3 { font-size: 15px; font-weight: 800; color: #111827; }
+    .card-head p { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
+    .card-body { padding: 20px 28px; }
+    /* 표 */
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      background: #f8faff;
+      font-size: 11px; font-weight: 700;
+      color: #6b7280; letter-spacing: 0.05em;
+      padding: 10px 12px; text-align: left;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    td {
+      padding: 12px 12px;
+      font-size: 13px; color: #374151;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: middle;
+    }
+    tr:hover td { background: #f9fafb; }
+    .rank {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .r1 { background: #f59e0b; }
+    .r2 { background: #9ca3af; }
+    .r3 { background: #b45309; }
+    .r4, .r5 { background: #d1d5db; color: #374151; }
+    .pct-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .pct-bar-bg {
+      flex: 1; height: 8px;
+      background: #f1f5f9; border-radius: 4px; overflow: hidden;
+    }
+    .pct-bar { height: 100%; border-radius: 4px; }
+    .pct-text { font-size: 13px; font-weight: 700; min-width: 40px; }
+    .risk-chip {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 10px;
+    }
+    .high { background: #fee2e2; color: #dc2626; }
+    .mid { background: #fef3c7; color: #d97706; }
+    .low { background: #dcfce7; color: #16a34a; }
+    /* MSCI 카드 */
+    .msci-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media(max-width:480px){ .msci-grid { grid-template-columns: 1fr; } }
+    .msci-item {
+      background: #f8faff;
+      border: 1.5px solid #dbeafe;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .msci-item .label { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 4px; }
+    .msci-item .val { font-size: 20px; font-weight: 900; color: #1F52CD; }
+    .msci-item .sub { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
+    .msci-item.green-card { background: #f0fdf4; border-color: #bbf7d0; }
+    .msci-item.green-card .val { color: #15803d; }
+    .fnote {
+      font-size: 11px; color: #9ca3af; padding: 12px 28px 16px;
+      border-top: 1px solid #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 종목 보유 표 -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon-box" style="background:#eff6ff;color:#1F52CD"><i class="ti ti-building-bank"></i></div>
+      <div>
+        <h3>국민연금 국내주식 포트폴리오 Top 5</h3>
+        <p>2024년 말 기준 · 리밸런싱 발생 시 매도 압력 집중 종목</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>종목명</th>
+            <th>평가액</th>
+            <th style="min-width:140px">포트폴리오 비중</th>
+            <th>매도 위험도</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank r1">1</span></td>
+            <td><strong>삼성전자</strong></td>
+            <td>23조 421억</td>
+            <td>
+              <div class="pct-bar-wrap">
+                <div class="pct-bar-bg"><div class="pct-bar" style="width:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+                <span class="pct-text" style="color:#d97706">16.7%</span>
+              </div>
+            </td>
+            <td><span class="risk-chip high">매우높음</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank r2">2</span></td>
+            <td><strong>SK하이닉스</strong></td>
+            <td>9조 5,627억</td>
+            <td>
+              <div class="pct-bar-wrap">
+                <div class="pct-bar-bg"><div class="pct-bar" style="width:41.5%;background:linear-gradient(90deg,#9ca3af,#d1d5db)"></div></div>
+                <span class="pct-text" style="color:#6b7280">6.93%</span>
+              </div>
+            </td>
+            <td><span class="risk-chip high">높음</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank r3">3</span></td>
+            <td><strong>LG에너지솔루션</strong></td>
+            <td>5조 1,706억</td>
+            <td>
+              <div class="pct-bar-wrap">
+                <div class="pct-bar-bg"><div class="pct-bar" style="width:22.5%;background:linear-gradient(90deg,#b45309,#d97706)"></div></div>
+                <span class="pct-text" style="color:#b45309">3.75%</span>
+              </div>
+            </td>
+            <td><span class="risk-chip mid">중간</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank r4">4</span></td>
+            <td><strong>삼성바이오로직스</strong></td>
+            <td>4조 6,721억</td>
+            <td>
+              <div class="pct-bar-wrap">
+                <div class="pct-bar-bg"><div class="pct-bar" style="width:20.3%;background:#3B7CF6"></div></div>
+                <span class="pct-text" style="color:#3B7CF6">3.39%</span>
+              </div>
+            </td>
+            <td><span class="risk-chip mid">중간</span></td>
+          </tr>
+          <tr>
+            <td><span class="rank r5">5</span></td>
+            <td><strong>현대차</strong></td>
+            <td>3조 3,529억</td>
+            <td>
+              <div class="pct-bar-wrap">
+                <div class="pct-bar-bg"><div class="pct-bar" style="width:14.6%;background:#10b981"></div></div>
+                <span class="pct-text" style="color:#10b981">2.43%</span>
+              </div>
+            </td>
+            <td><span class="risk-chip low">낮음</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="fnote">📌 상위 5개 종목 합계 비중 약 33.2% | 출처: 파이낸셜뉴스 (2024년 말 기준)</div>
+  </div>
+
+  <!-- MSCI 비중 카드 -->
+  <div class="card">
+    <div class="card-head">
+      <div class="icon-box" style="background:#f0fdf4;color:#16a34a"><i class="ti ti-world"></i></div>
+      <div>
+        <h3>MSCI EM 지수 내 한국 비중 변화</h3>
+        <p>2026년 5월 기준 · 패시브 자금 약 1조 4,000억 유입 예상</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="msci-grid">
+        <div class="msci-item">
+          <div class="label">기존 MSCI EM 한국 비중</div>
+          <div class="val">15.4%</div>
+          <div class="sub">2026년 초 ~ 5월 리뷰 이전</div>
+        </div>
+        <div class="msci-item green-card">
+          <div class="label">변경 후 MSCI EM 한국 비중</div>
+          <div class="val">21.7%</div>
+          <div class="sub">▲ +6.3%p 대폭 상향</div>
+        </div>
+        <div class="msci-item">
+          <div class="label">예상 패시브 자금 유입</div>
+          <div class="val" style="color:#dc2626">+1.4조</div>
+          <div class="sub">5월 29일 종가 기준 추정</div>
+        </div>
+        <div class="msci-item green-card">
+          <div class="label">외국인 지분율 (2026.5월)</div>
+          <div class="val" style="color:#15803d">38.5%</div>
+          <div class="sub">사상 최고치 경신</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;background:#fefce8;border:1.5px solid #fde68a;border-radius:12px;padding:14px 16px;font-size:12.5px;color:#78350f;line-height:1.65">
+        <strong>🔍 6월 중순 핵심 이벤트:</strong> MSCI 선진국 지수 시장접근성 리뷰 결과 발표 예정.
+        한국의 외환시장 24시간 개장, 역외 원화결제 제도 도입 등 인프라 개선으로 <strong>관찰대상국 등재 가능성 60% 이상</strong>(하나증권 추정).
+        등재 확정 시 대규모 외국인 자금 유입 기대.
+      </div>
+    </div>
+    <div class="fnote">출처: 하나증권 이경수 연구원 보고서, 국제금융센터, 이데일리 (2026.05.20)</div>
+  </div>
+
+</div>
+</body>
+</html>
