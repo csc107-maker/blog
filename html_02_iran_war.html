@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="미국-이란 전쟁 D+90 현황 | 호르무즈 봉쇄 리스크 분석" />
+<meta property="og:description" content="2026년 2월 28일 개전 90일, 휴전 협상 vs 전쟁 재개 시나리오별 투자 전략 완전 분석" />
+<meta property="og:image" content="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?w=1200&h=630&fit=crop" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="지정학 리스크 투자 전략 2026" />
+<meta property="og:url" content="https://blog.naver.com/your-blog/us-iran-war-2026" />
+<title>미국-이란 전쟁 D+90 현황</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Noto Sans KR',sans-serif; background:#f5f0ea; padding:20px; }
+
+  .w { max-width:720px; margin:0 auto; background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.10); }
+
+  .hdr {
+    background: linear-gradient(135deg, #7b1a1a 0%, #c0392b 60%, #e67e22 100%);
+    padding:28px 32px 22px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+  }
+  .hdr::after {
+    content:'🔥';
+    position:absolute;
+    right:24px; bottom:-10px;
+    font-size:80px;
+    opacity:0.13;
+  }
+  .hdr .badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); font-size:11px; font-weight:700; padding:3px 12px; border-radius:30px; margin-bottom:10px; letter-spacing:0.5px; }
+  .hdr h2 { font-size:22px; font-weight:900; line-height:1.3; }
+  .hdr p { font-size:12.5px; opacity:0.78; margin-top:5px; }
+
+  /* D-day 카운터 */
+  .dday-row {
+    display:flex;
+    background:#1a1a1a;
+    color:#fff;
+  }
+  .dday-item {
+    flex:1;
+    padding:16px 12px;
+    text-align:center;
+    border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .dday-item:last-child { border-right:none; }
+  .dday-val { font-size:28px; font-weight:900; color:#ff6b35; line-height:1; }
+  .dday-lbl { font-size:10.5px; color:#aaa; margin-top:4px; }
+
+  /* 썸네일 */
+  .thumb { position:relative; height:140px; overflow:hidden; }
+  .thumb img { width:100%; height:100%; object-fit:cover; filter:brightness(0.55) saturate(1.2); }
+  .thumb-txt {
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    color:#fff;
+    text-align:center;
+  }
+  .thumb-txt .main { font-size:18px; font-weight:900; text-shadow:0 2px 10px rgba(0,0,0,0.7); }
+  .thumb-txt .sub { font-size:12px; opacity:0.85; margin-top:4px; }
+
+  /* 핵심 이슈 카드 */
+  .sec-title { font-size:12px; font-weight:700; color:#999; letter-spacing:1px; padding:20px 28px 10px; text-transform:uppercase; }
+
+  .issue-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:0 28px 20px; }
+  .issue-card {
+    background:#fafafa;
+    border-radius:12px;
+    padding:14px 16px;
+    border:1px solid #eee;
+    position:relative;
+    overflow:hidden;
+  }
+  .issue-card.red { border-left:3px solid #e53935; }
+  .issue-card.orange { border-left:3px solid #fb8c00; }
+  .issue-card.blue { border-left:3px solid #1976d2; }
+  .issue-card.green { border-left:3px solid #43a047; }
+  .issue-card .ic-emoji { font-size:20px; margin-bottom:6px; display:block; }
+  .issue-card .ic-title { font-size:12.5px; font-weight:700; color:#222; line-height:1.3; }
+  .issue-card .ic-desc { font-size:11.5px; color:#666; margin-top:5px; line-height:1.5; }
+
+  /* 협상 진행 바 */
+  .nego-section { padding:0 28px 24px; }
+  .nego-title { font-size:13px; font-weight:700; color:#333; margin-bottom:14px; }
+  .nego-item { margin-bottom:14px; }
+  .nego-label { display:flex; justify-content:space-between; font-size:12px; color:#555; margin-bottom:5px; }
+  .nego-bar-bg { height:8px; background:#eee; border-radius:99px; overflow:hidden; }
+  .nego-bar-fill { height:100%; border-radius:99px; }
+
+  /* 시나리오 */
+  .scenario-section { padding:0 28px 8px; }
+  .scenario-row { display:flex; gap:10px; margin-bottom:10px; }
+  .sc-card {
+    flex:1;
+    border-radius:12px;
+    padding:14px;
+    font-size:11.5px;
+    line-height:1.5;
+  }
+  .sc-card.green { background:#e8f5e9; border:1px solid #a5d6a7; }
+  .sc-card.red { background:#ffebee; border:1px solid #ef9a9a; }
+  .sc-card .sc-head { font-weight:700; font-size:12.5px; margin-bottom:4px; }
+  .sc-card.green .sc-head { color:#2e7d32; }
+  .sc-card.red .sc-head { color:#c62828; }
+
+  .footer-note { font-size:10px; color:#bbb; text-align:center; padding:14px 28px 20px; }
+</style>
+</head>
+<body>
+<div class="w">
+
+  <div class="hdr">
+    <span class="badge">⚡ D+90 · 개전 정확히 90일</span>
+    <h2>미국-이란 전쟁<br>현황 & 리스크 분석</h2>
+    <p>2026.02.28 개전 → 2026.05.29 기준 | 호르무즈 해협 봉쇄 리스크</p>
+  </div>
+
+  <div class="dday-row">
+    <div class="dday-item">
+      <div class="dday-val">D+90</div>
+      <div class="dday-lbl">개전 경과일</div>
+    </div>
+    <div class="dday-item">
+      <div class="dday-val">90일</div>
+      <div class="dday-lbl">미군 법적 철수 마감</div>
+    </div>
+    <div class="dday-item">
+      <div class="dday-val">20%</div>
+      <div class="dday-lbl">호르무즈 원유 비중</div>
+    </div>
+    <div class="dday-item">
+      <div class="dday-val">60일</div>
+      <div class="dday-lbl">제안된 휴전 연장</div>
+    </div>
+  </div>
+
+  <div class="thumb">
+    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=720&h=200&fit=crop&q=80" alt="중동 이란 전쟁">
+    <div class="thumb-txt">
+      <div class="main">🛢️ 호르무즈 해협 봉쇄 리스크 진행 중</div>
+      <div class="sub">전 세계 원유 물동량 20% 통과 — 에너지 인플레이션 핵심 변수</div>
+    </div>
+  </div>
+
+  <div class="sec-title">🎯 4대 핵심 이슈</div>
+  <div class="issue-grid">
+    <div class="issue-card red">
+      <span class="ic-emoji">🚢</span>
+      <div class="ic-title">호르무즈 해협 봉쇄</div>
+      <div class="ic-desc">전 세계 원유 20% 통과. 봉쇄 장기화 시 유가 100달러+ 전문가 공통 전망</div>
+    </div>
+    <div class="issue-card orange">
+      <span class="ic-emoji">⚖️</span>
+      <div class="ic-title">미 전쟁권한법 마감</div>
+      <div class="ic-desc">개전 90일 법적 시한. 의회 미승인 시 30일 내 미군 철수 압박</div>
+    </div>
+    <div class="issue-card blue">
+      <span class="ic-emoji">🤝</span>
+      <div class="ic-title">카타르 도하 협상</div>
+      <div class="ic-desc">60일 휴전 연장 + 호르무즈 재개방 양해각서 초안 논의 중</div>
+    </div>
+    <div class="issue-card green">
+      <span class="ic-emoji">🚀</span>
+      <div class="ic-title">이란 군사력 재건</div>
+      <div class="ic-desc">휴전 중 미사일·드론 전력 복원 시도. 재개 시 확전 가능성</div>
+    </div>
+  </div>
+
+  <div class="nego-section">
+    <div class="nego-title">📊 협상 진행도 (추정)</div>
+    <div class="nego-item">
+      <div class="nego-label"><span>호르무즈 재개방 합의</span><span style="color:#fb8c00">60%</span></div>
+      <div class="nego-bar-bg"><div class="nego-bar-fill" style="width:60%;background:linear-gradient(90deg,#fb8c00,#ffd54f)"></div></div>
+    </div>
+    <div class="nego-item">
+      <div class="nego-label"><span>60일 휴전 연장</span><span style="color:#1976d2">55%</span></div>
+      <div class="nego-bar-bg"><div class="nego-bar-fill" style="width:55%;background:linear-gradient(90deg,#1976d2,#64b5f6)"></div></div>
+    </div>
+    <div class="nego-item">
+      <div class="nego-label"><span>핵 프로그램 합의</span><span style="color:#e53935">15%</span></div>
+      <div class="nego-bar-bg"><div class="nego-bar-fill" style="width:15%;background:linear-gradient(90deg,#e53935,#ef9a9a)"></div></div>
+    </div>
+    <div class="nego-item">
+      <div class="nego-label"><span>제재 완화 합의</span><span style="color:#7b1a1a">20%</span></div>
+      <div class="nego-bar-bg"><div class="nego-bar-fill" style="width:20%;background:linear-gradient(90deg,#7b1a1a,#ef9a9a)"></div></div>
+    </div>
+    <div style="font-size:10.5px;color:#aaa;margin-top:6px;">※ 공개된 보도 기반 추정치. 실제 협상 진행도와 다를 수 있음</div>
+  </div>
+
+  <div class="sec-title">📋 시나리오별 투자 영향</div>
+  <div class="scenario-section">
+    <div class="scenario-row">
+      <div class="sc-card green">
+        <div class="sc-head">✅ 휴전 타결 시</div>
+        에너지주 단기 조정<br>기술·성장주 반등<br>인플레이션 안정 → 금리 인하 재개 기대<br><b>금 단기 조정 가능</b>
+      </div>
+      <div class="sc-card red">
+        <div class="sc-head">🔴 협상 결렬·확전 시</div>
+        유가 100달러+ 돌파<br>방산·에너지 추가 급등<br>인플레이션 재점화 → 금리 인하 지연<br><b>금·실물자산 강세</b>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">출처: 파이낸셜뉴스·위키백과 2026년 이란 전쟁·NBC News·CNN | 2026.05.29 기준 / 본 위젯은 정보 제공 목적이며 투자 권유가 아닙니다.</div>
+</div>
+</body>
+</html>
