@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="LONGi HPBC 2.0 vs TOPCon vs PERC 기술 비교" />
+<meta property="og:description" content="세계 최고 효율 24.8% LONGi HPBC 2.0, 기존 태양광 기술과 무엇이 다른가? 핵심 스펙 비교 분석" />
+<meta property="og:image" content="https://www.longi.com/static/media/hi-mo-x10.jpg" />
+<meta property="og:url" content="https://blog.naver.com/your_blog/longi-hpbc2-comparison" />
+<title>LONGi HPBC 2.0 기술 비교표</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0f4f8;
+    padding: 24px 16px;
+  }
+  .widget-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+  }
+  .widget-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 28px 32px 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .widget-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,180,0,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .badge {
+    display: inline-block;
+    background: #f5a623;
+    color: #1a1a2e;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .widget-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .widget-header h2 span { color: #f5a623; }
+  .widget-header p {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+  .table-wrap { overflow-x: auto; padding: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead tr {
+    background: #f8fafc;
+  }
+  thead th {
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #374151;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  thead th:first-child { text-align: left; }
+  thead th.hpbc-col {
+    background: linear-gradient(180deg, #fff8e6 0%, #fff3cc 100%);
+    color: #b45309;
+    border-bottom: 2px solid #f5a623;
+    position: relative;
+  }
+  thead th.hpbc-col::after {
+    content: '★ 추천';
+    position: absolute;
+    top: 4px; right: 8px;
+    font-size: 10px;
+    background: #f5a623;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+  tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: #f9fafb; }
+  tbody td {
+    padding: 13px 16px;
+    text-align: center;
+    color: #4b5563;
+    line-height: 1.4;
+  }
+  tbody td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 13px;
+  }
+  tbody td.hpbc-val {
+    background: #fffbf0;
+    font-weight: 700;
+    color: #92400e;
+  }
+  .highlight-row td { background: #f0fdf4 !important; }
+  .highlight-row td.hpbc-val { background: #dcfce7 !important; color: #166534 !important; }
+  .chip {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .chip-green { background: #d1fae5; color: #065f46; }
+  .chip-yellow { background: #fef9c3; color: #854d0e; }
+  .chip-red { background: #fee2e2; color: #991b1b; }
+  .source-note {
+    padding: 14px 24px;
+    font-size: 11.5px;
+    color: #9ca3af;
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+  }
+  @media (max-width: 480px) {
+    .widget-header { padding: 20px 18px; }
+    .widget-header h2 { font-size: 20px; }
+    table { font-size: 12px; }
+    tbody td { padding: 10px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="widget-wrap">
+  <div class="widget-header">
+    <div class="badge">2025 최신 비교 분석</div>
+    <h2>LONGi <span>HPBC 2.0</span> vs TOPCon vs PERC<br>핵심 스펙 완전 비교</h2>
+    <p>세계 최고 효율 24.8% · Fraunhofer ISE 인증 · TÜV Rheinland 음영 인증</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th class="hpbc-col">HPBC 2.0<br>(Hi-MO X10)</th>
+          <th>TOPCon</th>
+          <th>PERC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td>📊 셀 효율 (양산)</td>
+          <td class="hpbc-val"><span class="chip chip-green">26.6%</span></td>
+          <td>~25.0%</td>
+          <td>~23.0%</td>
+        </tr>
+        <tr>
+          <td>⚡ 모듈 효율</td>
+          <td class="hpbc-val"><span class="chip chip-green">24.8%</span></td>
+          <td>22~23%</td>
+          <td>20~21%</td>
+        </tr>
+        <tr>
+          <td>🔆 최대 출력</td>
+          <td class="hpbc-val">640~670W</td>
+          <td>550~640W</td>
+          <td>430~545W</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>🌥️ 음영 손실 (50% 차광)</td>
+          <td class="hpbc-val"><span class="chip chip-green">-10.15%</span></td>
+          <td><span class="chip chip-red">-36.48%</span></td>
+          <td><span class="chip chip-red">-45%+</span></td>
+        </tr>
+        <tr>
+          <td>🌡️ 온도계수</td>
+          <td class="hpbc-val">-0.26%/°C</td>
+          <td>-0.30%/°C</td>
+          <td>-0.35%/°C</td>
+        </tr>
+        <tr>
+          <td>🎨 앞면 버스바</td>
+          <td class="hpbc-val"><span class="chip chip-green">없음 (0BB)</span></td>
+          <td><span class="chip chip-yellow">있음</span></td>
+          <td><span class="chip chip-yellow">있음</span></td>
+        </tr>
+        <tr class="highlight-row">
+          <td>🏠 외관</td>
+          <td class="hpbc-val">올블랙 프리미엄</td>
+          <td>그리드라인 노출</td>
+          <td>그리드라인 노출</td>
+        </tr>
+        <tr>
+          <td>📅 출력 보증</td>
+          <td class="hpbc-val">30년</td>
+          <td>25~30년</td>
+          <td>25년</td>
+        </tr>
+        <tr>
+          <td>💰 상대 가격</td>
+          <td class="hpbc-val"><span class="chip chip-yellow">프리미엄</span></td>
+          <td>중간</td>
+          <td>저가</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>🏭 양산 수율</td>
+          <td class="hpbc-val">97%</td>
+          <td>95%+</td>
+          <td>98%+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="source-note">
+    📌 출처: LONGi 공식 발표, Fraunhofer ISE, TÜV Rheinland, CPVT (2025년 기준) · 음영 손실 데이터: CPVT 50% 차광 테스트 결과
+  </div>
+</div>
+</body>
+</html>
