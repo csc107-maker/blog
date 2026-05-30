@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="LONGi HPBC 2.0 vs TOPCon 가격 대비 수익 ROI 30년 시뮬레이션" />
+<meta property="og:description" content="비싼 모듈이 정말 본전이 될까? 100kW 기준 30년 수익 시뮬레이션으로 확인하세요" />
+<meta property="og:image" content="https://www.longi.com/static/media/hi-mo-x10.jpg" />
+<meta property="og:url" content="https://blog.naver.com/your_blog/hpbc-roi-simulation" />
+<title>HPBC 2.0 ROI 시뮬레이션</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f9ff; padding: 20px 14px; }
+  .widget { max-width: 740px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 32px rgba(0,0,0,0.09); }
+
+  .hdr { background: linear-gradient(135deg, #064e3b 0%, #065f46 55%, #047857 100%); padding: 26px 28px 20px; }
+  .hdr-badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #6ee7b7; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+  .hdr h2 { color: #fff; font-size: 22px; font-weight: 700; }
+  .hdr h2 span { color: #fcd34d; }
+  .hdr p { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 6px; }
+
+  /* 핵심 비교 카드 */
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid #e5e7eb; }
+  .comp-card { padding: 20px 22px; }
+  .comp-card.hpbc { background: #f0fdf4; border-right: 1px solid #e5e7eb; }
+  .comp-card.topcon { background: #fafafa; }
+  .comp-label { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 8px; letter-spacing: 0.05em; }
+  .comp-name { font-size: 16px; font-weight: 700; color: #1f2937; margin-bottom: 14px; }
+  .comp-name.green { color: #065f46; }
+  .comp-stat { display: flex; align-items: baseline; gap: 4px; margin-bottom: 6px; }
+  .comp-val { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 900; }
+  .green .comp-val, .hpbc .comp-val { color: #059669; }
+  .comp-val.red { color: #dc2626; }
+  .comp-unit { font-size: 12px; color: #6b7280; }
+  .comp-desc { font-size: 11.5px; color: #6b7280; line-height: 1.5; margin-top: 4px; }
+  .comp-badge { display: inline-block; margin-top: 10px; background: #d1fae5; color: #065f46; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+  .comp-badge.gray { background: #f3f4f6; color: #6b7280; }
+
+  /* 30년 수익 비교 바 */
+  .section { padding: 22px 24px 0; }
+  .sec-title { font-size: 14px; font-weight: 700; color: #065f46; border-left: 4px solid #10b981; padding-left: 10px; margin-bottom: 16px; }
+  .bar-item { margin-bottom: 14px; }
+  .bi-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .bi-label { font-size: 12.5px; font-weight: 600; color: #374151; }
+  .bi-val { font-size: 13px; font-weight: 700; }
+  .bi-val.green { color: #059669; }
+  .bi-val.gray { color: #6b7280; }
+  .bar-bg { background: #f3f4f6; border-radius: 8px; height: 14px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 8px; }
+  .fill-green { background: linear-gradient(90deg, #10b981, #059669); }
+  .fill-gray { background: linear-gradient(90deg, #9ca3af, #6b7280); }
+  .fill-amber { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+  /* ROI 타임라인 */
+  .roi-timeline { background: #f8fafc; border-radius: 12px; padding: 16px 18px; margin: 16px 0; }
+  .rt-title { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 12px; }
+  .rt-row { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; }
+  .rt-row:last-child { margin-bottom: 0; }
+  .rt-year { font-size: 11px; font-weight: 700; color: #fff; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; min-width: 55px; text-align: center; }
+  .rt-bar { flex: 1; background: #e5e7eb; border-radius: 6px; height: 10px; overflow: hidden; }
+  .rt-fill { height: 100%; border-radius: 6px; }
+  .rt-desc { font-size: 11.5px; color: #374151; font-weight: 600; flex-shrink: 0; }
+
+  /* 프로젝트별 효과 카드 */
+  .proj-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 22px; }
+  .pj { border-radius: 12px; padding: 14px 12px; text-align: center; border: 1.5px solid; }
+  .pj.ci { background: #eff6ff; border-color: #bfdbfe; }
+  .pj.res { background: #f0fdf4; border-color: #bbf7d0; }
+  .pj.lrg { background: #fef3c7; border-color: #fde68a; }
+  .pj-icon { font-size: 22px; margin-bottom: 6px; }
+  .pj-type { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 8px; }
+  .pj-stat { font-size: 11.5px; color: #374151; margin-bottom: 3px; line-height: 1.5; }
+  .pj-stat span { font-weight: 700; }
+  .pj.ci .pj-stat span { color: #1e40af; }
+  .pj.res .pj-stat span { color: #065f46; }
+  .pj.lrg .pj-stat span { color: #92400e; }
+
+  /* 주의사항 */
+  .notice { background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 14px 16px; margin-bottom: 22px; }
+  .notice-title { font-size: 13px; font-weight: 700; color: #c2410c; margin-bottom: 8px; }
+  .notice p { font-size: 12px; color: #6b7280; line-height: 1.6; }
+
+  .footer-note { padding: 12px 24px 16px; font-size: 11px; color: #9ca3af; background: #f8fafc; border-top: 1px solid #e5e7eb; }
+
+  @media (max-width: 480px) {
+    .compare-row { grid-template-columns: 1fr; }
+    .proj-cards { grid-template-columns: 1fr; }
+    .section { padding: 18px 14px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="hdr">
+    <div class="hdr-badge">💰 30년 수익 시뮬레이션</div>
+    <h2>비싼 가격, <span>정말 본전이 될까?</span><br>HPBC 2.0 vs TOPCon 경제성 분석</h2>
+    <p>100kW 시스템 기준 · TOPCon 대비 추가 비용 vs 추가 수익 비교</p>
+  </div>
+
+  <div class="compare-row">
+    <div class="comp-card hpbc">
+      <div class="comp-label">★ 프리미엄 선택</div>
+      <div class="comp-name green">LONGi HPBC 2.0</div>
+      <div class="comp-stat"><div class="comp-val">670</div><div class="comp-unit">W/장</div></div>
+      <div class="comp-stat"><div class="comp-val">24.8</div><div class="comp-unit">% 효율</div></div>
+      <div class="comp-desc">TOPCon 대비 추가비용 10~15%<br>연 60kWh/장 추가 발전</div>
+      <div class="comp-badge">추가비용 회수: 약 2.5년</div>
+    </div>
+    <div class="comp-card topcon">
+      <div class="comp-label">일반 선택</div>
+      <div class="comp-name">TOPCon</div>
+      <div class="comp-stat"><div class="comp-val" style="color:#6b7280">640</div><div class="comp-unit">W/장</div></div>
+      <div class="comp-stat"><div class="comp-val" style="color:#6b7280">22~23</div><div class="comp-unit">% 효율</div></div>
+      <div class="comp-desc">현재 가장 많이 보급된<br>주류 기술, 합리적 가격</div>
+      <div class="comp-badge gray">기준 모델</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">📊 동일 조건 30년 핵심 지표 비교 (100kW 기준)</div>
+
+    <div class="bar-item">
+      <div class="bi-head">
+        <div class="bi-label">총 발전량 (30년)</div>
+        <div class="bi-val green">HPBC 2.0이 +8.1% 더 생산</div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill fill-green" style="width:92%"></div></div>
+    </div>
+    <div class="bar-item" style="margin-top:-4px; margin-bottom:18px;">
+      <div class="bar-bg"><div class="bar-fill fill-gray" style="width:84%"></div></div>
+      <div style="display:flex; justify-content:space-between; margin-top:4px;">
+        <div style="font-size:11px;color:#059669;font-weight:600;">HPBC 2.0</div>
+        <div style="font-size:11px;color:#9ca3af;">TOPCon</div>
+      </div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bi-head">
+        <div class="bi-label">음영 손실 (50% 차광)</div>
+        <div class="bi-val green">HPBC 2.0: 손실 3.6배 적음</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+        <div style="font-size:11.5px;color:#059669;font-weight:700;width:70px;">HPBC 2.0</div>
+        <div style="flex:1;background:#f3f4f6;border-radius:6px;height:12px;overflow:hidden;">
+          <div style="width:10.15%;height:100%;background:linear-gradient(90deg,#10b981,#059669);border-radius:6px;"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#059669;">-10.15%</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:18px;">
+        <div style="font-size:11.5px;color:#dc2626;font-weight:700;width:70px;">TOPCon</div>
+        <div style="flex:1;background:#f3f4f6;border-radius:6px;height:12px;overflow:hidden;">
+          <div style="width:36.48%;height:100%;background:linear-gradient(90deg,#ef4444,#dc2626);border-radius:6px;"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#dc2626;">-36.48%</div>
+      </div>
+    </div>
+
+    <div class="bar-item">
+      <div class="bi-head">
+        <div class="bi-label">30년 후 잔존 출력</div>
+        <div class="bi-val green">HPBC 2.0: 88.85% 보장</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:6px;">
+        <div style="font-size:11.5px;color:#059669;font-weight:700;width:70px;">HPBC 2.0</div>
+        <div style="flex:1;background:#f3f4f6;border-radius:6px;height:12px;overflow:hidden;">
+          <div style="width:88.85%;height:100%;background:linear-gradient(90deg,#10b981,#059669);border-radius:6px;"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#059669;">88.85%</div>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center; margin-bottom:18px;">
+        <div style="font-size:11.5px;color:#9ca3af;font-weight:700;width:70px;">TOPCon</div>
+        <div style="flex:1;background:#f3f4f6;border-radius:6px;height:12px;overflow:hidden;">
+          <div style="width:80%;height:100%;background:linear-gradient(90deg,#9ca3af,#6b7280);border-radius:6px;"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#9ca3af;">~80~83%</div>
+      </div>
+    </div>
+
+    <div class="roi-timeline">
+      <div class="rt-title">⏱️ 추가 투자비용 회수 타임라인 (모듈 1장 기준)</div>
+      <div class="rt-row">
+        <div class="rt-year" style="background:#6366f1;">0~1년</div>
+        <div class="rt-bar"><div class="rt-fill" style="width:15%;background:#6366f1;"></div></div>
+        <div class="rt-desc">추가 투자 발생</div>
+      </div>
+      <div class="rt-row">
+        <div class="rt-year" style="background:#f59e0b;">2.5년</div>
+        <div class="rt-bar"><div class="rt-fill" style="width:40%;background:#f59e0b;"></div></div>
+        <div class="rt-desc">✅ 추가비용 회수 완료</div>
+      </div>
+      <div class="rt-row">
+        <div class="rt-year" style="background:#10b981;">10년</div>
+        <div class="rt-bar"><div class="rt-fill" style="width:60%;background:#10b981;"></div></div>
+        <div class="rt-desc">누적 추가 수익 +4배</div>
+      </div>
+      <div class="rt-row">
+        <div class="rt-year" style="background:#059669;">30년</div>
+        <div class="rt-bar"><div class="rt-fill" style="width:100%;background:#059669;"></div></div>
+        <div class="rt-desc">🏆 추가 수익 10배</div>
+      </div>
+    </div>
+
+    <div class="sec-title">🏭 프로젝트 유형별 HPBC 2.0 도입 효과</div>
+    <div class="proj-cards">
+      <div class="pj ci">
+        <div class="pj-icon">🏢</div>
+        <div class="pj-type">상업·산업용</div>
+        <div class="pj-stat">발전량 <span>+8.1%</span></div>
+        <div class="pj-stat">IRR <span>+6.72%</span></div>
+        <div class="pj-stat">LCOE <span>-6.9%</span></div>
+      </div>
+      <div class="pj res">
+        <div class="pj-icon">🏠</div>
+        <div class="pj-type">주거용</div>
+        <div class="pj-stat">발전량 <span>+9.0%</span></div>
+        <div class="pj-stat">LCOE <span>-7.16%</span></div>
+        <div class="pj-stat">음영 회복 <span>+92%</span></div>
+      </div>
+      <div class="pj lrg">
+        <div class="pj-icon">⚡</div>
+        <div class="pj-type">대형 발전소</div>
+        <div class="pj-stat">발전량 <span>+8.7%</span></div>
+        <div class="pj-stat">IRR <span>+9.88%</span></div>
+        <div class="pj-stat">회수기간 <span>-7.89%</span></div>
+      </div>
+    </div>
+
+    <div class="notice">
+      <div class="notice-title">⚠️ 단, 이런 경우엔 신중하게</div>
+      <p>① 초기 자금 조달이 극히 어려운 경우 — 추가 비용이 대출 이자보다 클 수 있음<br>② 음영이 전혀 없는 대형 평지 발전소 — 음영 내성 프리미엄의 효과가 상대적으로 낮음<br>③ 설치 용량이 계통 연계 한도(예: 99kW)에 맞춰 제한되는 경우 — 장수 기준 설계 필요</p>
+    </div>
+  </div>
+
+  <div class="footer-note">📌 출처: LONGi 공식 발표, accio.com 시뮬레이션, CPVT 테스트 결과, solar-powerengineering.com (2025년 기준) · 수익은 SMP·REC 단가 변동에 따라 달라질 수 있습니다</div>
+</div>
+</body>
+</html>
