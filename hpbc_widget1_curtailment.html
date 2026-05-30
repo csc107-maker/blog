@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="한국 태양광 출력제어 현황 2023-2026 분석" />
+<meta property="og:description" content="호남권 출력제어 폭증, 전국 확대 추세, 과징금 제도 시행까지 - 태양광 발전사업자가 반드시 알아야 할 출력제어 데이터" />
+<meta property="og:image" content="https://www.longi.com/static/media/hi-mo-x10.jpg" />
+<meta property="og:url" content="https://blog.naver.com/your_blog/output-control-2025" />
+<title>태양광 출력제어 현황 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Rajdhani:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f0f4f8; padding: 20px 14px; }
+  .widget { max-width: 740px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 32px rgba(0,0,0,0.09); }
+
+  /* 헤더 */
+  .hdr { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4338ca 100%); padding: 26px 28px 20px; position: relative; overflow: hidden; }
+  .hdr::after { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%); border-radius: 50%; }
+  .hdr-badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #c7d2fe; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 0.06em; }
+  .hdr h2 { color: #fff; font-size: 22px; font-weight: 700; line-height: 1.25; }
+  .hdr h2 span { color: #fbbf24; }
+  .hdr p { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 6px; }
+
+  /* 경고 배너 */
+  .alert-bar { background: #fef3c7; border-left: 5px solid #f59e0b; padding: 12px 20px; display: flex; align-items: center; gap: 10px; }
+  .alert-bar .icon { font-size: 20px; flex-shrink: 0; }
+  .alert-bar p { font-size: 13px; color: #92400e; font-weight: 600; line-height: 1.5; }
+
+  /* 연도별 추이 */
+  .section { padding: 24px 26px 0; }
+  .sec-title { font-size: 14px; font-weight: 700; color: #1e1b4b; border-left: 4px solid #4338ca; padding-left: 10px; margin-bottom: 18px; }
+  .year-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 26px; }
+  .yc { border-radius: 12px; padding: 14px 10px; text-align: center; border: 2px solid transparent; }
+  .yc-2022 { background: #f8fafc; border-color: #e2e8f0; }
+  .yc-2023 { background: #fef9c3; border-color: #fde68a; }
+  .yc-2024 { background: #ffedd5; border-color: #fdba74; }
+  .yc-2025 { background: #fee2e2; border-color: #fca5a5; }
+  .yc-year { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 6px; }
+  .yc-num { font-family: 'Rajdhani', sans-serif; font-size: 28px; font-weight: 900; line-height: 1; margin-bottom: 3px; }
+  .yc-2022 .yc-num { color: #94a3b8; }
+  .yc-2023 .yc-num { color: #d97706; }
+  .yc-2024 .yc-num { color: #ea580c; }
+  .yc-2025 .yc-num { color: #dc2626; }
+  .yc-unit { font-size: 11px; color: #6b7280; margin-bottom: 6px; }
+  .yc-label { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
+  .yc-2022 .yc-label { background: #e2e8f0; color: #475569; }
+  .yc-2023 .yc-label { background: #fde68a; color: #92400e; }
+  .yc-2024 .yc-label { background: #fdba74; color: #7c2d12; }
+  .yc-2025 .yc-label { background: #fca5a5; color: #7f1d1d; }
+
+  /* 지역 확대 흐름 */
+  .expand-flow { background: #f8fafc; border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; }
+  .ef-title { font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 12px; }
+  .ef-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ef-year { font-size: 11px; font-weight: 700; color: #fff; background: #4338ca; padding: 2px 8px; border-radius: 6px; flex-shrink: 0; min-width: 42px; text-align: center; }
+  .ef-arrow { color: #9ca3af; font-size: 12px; }
+  .ef-area { font-size: 12px; color: #374151; }
+  .ef-area span { background: #e0e7ff; color: #3730a3; font-weight: 600; padding: 1px 7px; border-radius: 8px; margin-right: 4px; display: inline-block; }
+
+  /* 처벌 카드 */
+  .penalty-card { background: #fef2f2; border: 1.5px solid #fca5a5; border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; }
+  .pc-title { font-size: 13px; font-weight: 700; color: #991b1b; margin-bottom: 10px; }
+  .pc-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; }
+  .pc-dot { width: 7px; height: 7px; background: #ef4444; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .pc-text { font-size: 12.5px; color: #374151; line-height: 1.55; }
+  .pc-text strong { color: #dc2626; font-weight: 700; }
+
+  /* 대응 전략 */
+  .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 24px; }
+  .sg-card { border-radius: 12px; padding: 14px 14px; border: 1.5px solid #e5e7eb; }
+  .sg-card.green { background: #f0fdf4; border-color: #bbf7d0; }
+  .sg-card.blue { background: #eff6ff; border-color: #bfdbfe; }
+  .sg-icon { font-size: 20px; margin-bottom: 6px; }
+  .sg-title { font-size: 12.5px; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
+  .sg-desc { font-size: 11.5px; color: #6b7280; line-height: 1.5; }
+
+  .footer-note { padding: 12px 26px 16px; font-size: 11px; color: #9ca3af; background: #f8fafc; border-top: 1px solid #e5e7eb; }
+
+  @media (max-width: 480px) {
+    .year-cards { grid-template-columns: repeat(2, 1fr); }
+    .strategy-grid { grid-template-columns: 1fr; }
+    .section { padding: 20px 16px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="hdr">
+    <div class="hdr-badge">📊 2025 최신 데이터 기반</div>
+    <h2>한국 태양광 <span>출력제어</span> 현황<br>얼마나 심각한가?</h2>
+    <p>호남권 폭증 → 전국 확대 → 과징금 부과까지, 사업자가 알아야 할 모든 것</p>
+  </div>
+
+  <div class="alert-bar">
+    <div class="icon">⚠️</div>
+    <p>2025년 상반기에만 <strong>44회 · 38,840MW</strong> 출력제어 발생. 2024년 대비 5배 이상 증가. 2026년에도 확대 전망.</p>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">📈 호남권 출력제어 연도별 추이</div>
+    <div class="year-cards">
+      <div class="yc yc-2022">
+        <div class="yc-year">~2022</div>
+        <div class="yc-num">0</div>
+        <div class="yc-unit">회 (육지)</div>
+        <div class="yc-label">제주만 해당</div>
+      </div>
+      <div class="yc yc-2023">
+        <div class="yc-year">2023</div>
+        <div class="yc-num">2</div>
+        <div class="yc-unit">회</div>
+        <div class="yc-label">육지 시작</div>
+      </div>
+      <div class="yc yc-2024">
+        <div class="yc-year">2024</div>
+        <div class="yc-num">26</div>
+        <div class="yc-unit">회 · 7,473MW</div>
+        <div class="yc-label">13배 급증</div>
+      </div>
+      <div class="yc yc-2025">
+        <div class="yc-year">2025 상반기</div>
+        <div class="yc-num">44</div>
+        <div class="yc-unit">회 · 38,840MW</div>
+        <div class="yc-label">🚨 폭증</div>
+      </div>
+    </div>
+
+    <div class="sec-title">🗺️ 출력제어 지역 확대 흐름</div>
+    <div class="expand-flow">
+      <div class="ef-title">연도별 출력제어 적용 지역</div>
+      <div class="ef-row">
+        <div class="ef-year">~2022</div>
+        <div class="ef-arrow">→</div>
+        <div class="ef-area"><span>제주도</span> 만 해당</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-year">2023</div>
+        <div class="ef-arrow">→</div>
+        <div class="ef-area"><span>제주</span> <span>호남권</span> 확대 (2회)</div>
+      </div>
+      <div class="ef-row">
+        <div class="ef-year">2024</div>
+        <div class="ef-arrow">→</div>
+        <div class="ef-area"><span>제주</span> <span>호남권</span> 26회 폭증</div>
+      </div>
+      <div class="ef-row" style="margin-bottom:0">
+        <div class="ef-year" style="background:#dc2626;">2025</div>
+        <div class="ef-arrow">→</div>
+        <div class="ef-area"><span>호남</span> <span>영남</span> <span>영동</span> <span>충청</span> 전국 확대</div>
+      </div>
+    </div>
+
+    <div class="sec-title">🚫 2025년 첫 과징금 부과 — 무조건 따라야 합니다</div>
+    <div class="penalty-card">
+      <div class="pc-title">⚠️ 출력제어 미이행 시 처벌 기준</div>
+      <div class="pc-row"><div class="pc-dot"></div><div class="pc-text">과징금 기준: <strong>3년 평균 매출(SMP+REC)의 4% 이내</strong></div></div>
+      <div class="pc-row"><div class="pc-dot"></div><div class="pc-text">미이행 1회: 기준 금액의 <strong>2배</strong>까지</div></div>
+      <div class="pc-row"><div class="pc-dot"></div><div class="pc-text">미이행 2회 이상: <strong>4배</strong>까지 (가중 처벌)</div></div>
+      <div class="pc-row"><div class="pc-dot"></div><div class="pc-text" style="margin-bottom:0">1년 내 전례 있는 경우: <strong>추가 50% 가중</strong> → 최대 6배까지</div></div>
+    </div>
+
+    <div class="sec-title">💡 출력제어 시대, 사업자의 대응 전략</div>
+    <div class="strategy-grid">
+      <div class="sg-card green">
+        <div class="sg-icon">⚡</div>
+        <div class="sg-title">고효율 모듈 도입</div>
+        <div class="sg-desc">제어 외 시간대 발전량 최대화. HPBC 2.0은 저조도·아침저녁 시간대 강점</div>
+      </div>
+      <div class="sg-card blue">
+        <div class="sg-icon">📊</div>
+        <div class="sg-title">준중앙제도 참여 (호남권)</div>
+        <div class="sg-desc">2026년부터 예측 정산금·출력제어 정산금 수령 가능 (호남권 우선 시행)</div>
+      </div>
+      <div class="sg-card blue">
+        <div class="sg-icon">🔋</div>
+        <div class="sg-title">ESS 연계</div>
+        <div class="sg-desc">제어 시간 전 충전, 피크 외 시간 방전으로 수익 보완</div>
+      </div>
+      <div class="sg-card green">
+        <div class="sg-icon">📱</div>
+        <div class="sg-title">예측 제도 참여</div>
+        <div class="sg-desc">호남권 외 육지 발전소는 재생에너지 예측제도 참여로 추가 정산금 수령</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">📌 출처: 해줌 리포트(2025.12), 전력거래소(KPX) 출력제어 통계, 산업통상자원부 (2025년 기준)</div>
+</div>
+</body>
+</html>
