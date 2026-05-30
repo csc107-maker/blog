@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="LONGi HPBC 2.0 모듈 사이즈 비교 & 지붕 설치 용량 계산기" />
+<meta property="og:description" content="2382×1134mm 표준 사이즈, 면적당 출력 비교, 공장 지붕 설치 용량 자동 계산" />
+<meta property="og:image" content="https://www.longi.com/static/media/hi-mo-x10.jpg" />
+<meta property="og:url" content="https://blog.naver.com/your_blog/hpbc-size-calculator" />
+<title>HPBC 2.0 사이즈 & 설치 계산기</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Grotesk:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #f5f3ff; padding: 20px 14px; }
+  .widget { max-width: 740px; margin: 0 auto; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 32px rgba(0,0,0,0.09); }
+
+  .hdr { background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 55%, #7c3aed 100%); padding: 26px 28px 20px; }
+  .hdr-badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #c4b5fd; font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; margin-bottom: 10px; }
+  .hdr h2 { color: #fff; font-size: 22px; font-weight: 700; }
+  .hdr h2 span { color: #fcd34d; }
+  .hdr p { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 6px; }
+
+  /* 사이즈 비교 */
+  .section { padding: 24px 26px 0; }
+  .sec-title { font-size: 14px; font-weight: 700; color: #4c1d95; border-left: 4px solid #7c3aed; padding-left: 10px; margin-bottom: 18px; }
+
+  .size-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .sc { border-radius: 14px; padding: 18px 16px; border: 2px solid; }
+  .sc.hpbc { background: #f5f3ff; border-color: #a78bfa; }
+  .sc.old { background: #f8fafc; border-color: #e2e8f0; }
+  .sc-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+  .sc.hpbc .sc-badge { background: #7c3aed; color: #fff; }
+  .sc.old .sc-badge { background: #e2e8f0; color: #6b7280; }
+  .sc-name { font-size: 14px; font-weight: 700; color: #1f2937; margin-bottom: 12px; }
+
+  /* 모듈 시각화 */
+  .module-vis { display: flex; justify-content: center; margin-bottom: 12px; }
+  .mod-rect { display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+  .mod-rect.hpbc-rect { width: 90px; height: 152px; background: linear-gradient(160deg, #1a1a2e, #0f0f1e); border: 2px solid #7c3aed; position: relative; }
+  .mod-rect.old-rect { width: 90px; height: 145px; background: linear-gradient(160deg, #334155, #1e293b); border: 2px solid #94a3b8; }
+  .mod-label { color: rgba(255,255,255,0.7); font-size: 10px; text-align: center; line-height: 1.4; }
+  .mod-glow { position: absolute; width: 40px; height: 40px; background: radial-gradient(circle, rgba(167,139,250,0.3) 0%, transparent 70%); border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  .sc-specs { display: flex; flex-direction: column; gap: 5px; }
+  .sp-row { display: flex; justify-content: space-between; font-size: 12px; }
+  .sp-key { color: #6b7280; }
+  .sp-val { font-weight: 700; color: #1f2937; }
+  .sp-val.purple { color: #7c3aed; }
+  .sp-val.green { color: #059669; }
+
+  /* 표준화 안내 */
+  .standard-note { background: #f5f3ff; border: 1.5px solid #c4b5fd; border-radius: 12px; padding: 14px 16px; margin-bottom: 22px; }
+  .sn-title { font-size: 13px; font-weight: 700; color: #4c1d95; margin-bottom: 8px; }
+  .sn-text { font-size: 12.5px; color: #4b5563; line-height: 1.65; }
+  .sn-text strong { color: #7c3aed; }
+
+  /* 계산기 */
+  .calc-box { background: #f8fafc; border-radius: 14px; padding: 20px 18px; margin-bottom: 22px; border: 1.5px solid #e5e7eb; }
+  .calc-title { font-size: 14px; font-weight: 700; color: #1f2937; margin-bottom: 16px; }
+  .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .inp-group label { display: block; font-size: 11.5px; font-weight: 600; color: #374151; margin-bottom: 5px; }
+  .inp-group input, .inp-group select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #1f2937;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .inp-group input:focus, .inp-group select:focus { border-color: #7c3aed; }
+  .calc-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #6d28d9, #7c3aed);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-bottom: 16px;
+  }
+  .calc-btn:hover { opacity: 0.9; }
+  .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .res-card { border-radius: 10px; padding: 14px; text-align: center; }
+  .res-card.hpbc-res { background: #f5f3ff; border: 1.5px solid #a78bfa; }
+  .res-card.old-res { background: #f8fafc; border: 1.5px solid #e2e8f0; }
+  .res-label { font-size: 11px; font-weight: 700; color: #6b7280; margin-bottom: 6px; }
+  .res-num { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 900; margin-bottom: 2px; }
+  .res-card.hpbc-res .res-num { color: #7c3aed; }
+  .res-card.old-res .res-num { color: #6b7280; }
+  .res-unit { font-size: 11.5px; color: #6b7280; }
+  .res-diff { text-align: center; margin-top: 10px; padding: 10px; background: #f0fdf4; border-radius: 10px; border: 1.5px solid #bbf7d0; font-size: 13px; font-weight: 700; color: #065f46; }
+
+  /* 주의사항 */
+  .caution-list { background: #fff7ed; border: 1.5px solid #fed7aa; border-radius: 12px; padding: 16px 18px; margin-bottom: 22px; }
+  .cl-title { font-size: 13px; font-weight: 700; color: #c2410c; margin-bottom: 10px; }
+  .cl-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 12.5px; color: #374151; line-height: 1.55; }
+  .cl-item:last-child { margin-bottom: 0; }
+  .cl-num { background: #f97316; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; flex-shrink: 0; margin-top: 2px; }
+
+  .footer-note { padding: 12px 26px 16px; font-size: 11px; color: #9ca3af; background: #f8fafc; border-top: 1px solid #e5e7eb; }
+
+  @media (max-width: 480px) {
+    .size-compare, .input-grid, .result-grid { grid-template-columns: 1fr; }
+    .section { padding: 18px 14px 0; }
+  }
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="hdr">
+    <div class="hdr-badge">📐 사이즈 & 설치 용량 분석</div>
+    <h2>모듈이 크면 <span>손해일까?</span><br>면적 효율 & 지붕 설치 용량 계산</h2>
+    <p>2382×1134mm 표준 사이즈 분석 · 직접 계산해보세요</p>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">📏 모듈 사이즈 직접 비교</div>
+    <div class="size-compare">
+      <div class="sc hpbc">
+        <div class="sc-badge">★ Hi-MO X10</div>
+        <div class="sc-name">HPBC 2.0<br>(2025 표준)</div>
+        <div class="module-vis">
+          <div class="mod-rect hpbc-rect">
+            <div class="mod-glow"></div>
+            <div class="mod-label">HPBC 2.0<br>670W</div>
+          </div>
+        </div>
+        <div class="sc-specs">
+          <div class="sp-row"><div class="sp-key">길이</div><div class="sp-val purple">2,382 mm</div></div>
+          <div class="sp-row"><div class="sp-key">폭</div><div class="sp-val">1,134 mm</div></div>
+          <div class="sp-row"><div class="sp-key">두께</div><div class="sp-val">30 mm</div></div>
+          <div class="sp-row"><div class="sp-key">면적</div><div class="sp-val purple">2.701 m²</div></div>
+          <div class="sp-row"><div class="sp-key">최대 출력</div><div class="sp-val green">640~670W</div></div>
+          <div class="sp-row"><div class="sp-key">면적당 출력</div><div class="sp-val green">~248 W/m²</div></div>
+        </div>
+      </div>
+      <div class="sc old">
+        <div class="sc-badge">구형 표준</div>
+        <div class="sc-name">이전 세대<br>TOPCon</div>
+        <div class="module-vis">
+          <div class="mod-rect old-rect">
+            <div class="mod-label">TOPCon<br>550~600W</div>
+          </div>
+        </div>
+        <div class="sc-specs">
+          <div class="sp-row"><div class="sp-key">길이</div><div class="sp-val">2,278 mm</div></div>
+          <div class="sp-row"><div class="sp-key">폭</div><div class="sp-val">1,134 mm</div></div>
+          <div class="sp-row"><div class="sp-key">두께</div><div class="sp-val">30~35 mm</div></div>
+          <div class="sp-row"><div class="sp-key">면적</div><div class="sp-val">2.583 m²</div></div>
+          <div class="sp-row"><div class="sp-key">최대 출력</div><div class="sp-val">550~600W</div></div>
+          <div class="sp-row"><div class="sp-key">면적당 출력</div><div class="sp-val" style="color:#6b7280">~213 W/m²</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="standard-note">
+      <div class="sn-title">🌐 2,382×1,134mm는 '글로벌 표준 사이즈'입니다</div>
+      <div class="sn-text">2023년 7월 <strong>LONGi·JinkoSolar·Trina·Canadian Solar·JA Solar 등 세계 9개 주요 제조사</strong>가 새로운 표준 모듈 크기를 <strong>2,382mm × 1,134mm</strong>로 합의했습니다. 기존 2,278mm 대비 길이가 104mm 늘어났지만, 폭은 동일합니다. 면적당 출력(W/m²)은 오히려 <strong>248 W/m²로 구형 대비 약 16% 높습니다.</strong></div>
+    </div>
+
+    <div class="sec-title">🔢 지붕 설치 용량 직접 계산해보기</div>
+    <div class="calc-box">
+      <div class="calc-title">📐 내 지붕에 몇 kW 설치될까?</div>
+      <div class="input-grid">
+        <div class="inp-group">
+          <label>지붕 길이 (m)</label>
+          <input type="number" id="roofLen" value="50" min="5" max="500" step="1">
+        </div>
+        <div class="inp-group">
+          <label>지붕 폭 (m)</label>
+          <input type="number" id="roofWidth" value="20" min="5" max="200" step="1">
+        </div>
+        <div class="inp-group">
+          <label>설치 방향</label>
+          <select id="orient">
+            <option value="portrait">세로 (길이 방향)</option>
+            <option value="landscape">가로 (폭 방향)</option>
+          </select>
+        </div>
+        <div class="inp-group">
+          <label>간격·여유 면적 (%)</label>
+          <input type="number" id="margin" value="15" min="5" max="40" step="5">
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculate()">⚡ 설치 용량 계산하기</button>
+      <div class="result-grid">
+        <div class="res-card hpbc-res">
+          <div class="res-label">HPBC 2.0 (Hi-MO X10)</div>
+          <div class="res-num" id="hpbcCount">—</div>
+          <div class="res-unit">장</div>
+          <div class="res-num" id="hpbcKw" style="font-size:22px;margin-top:8px;">—</div>
+          <div class="res-unit">kW</div>
+        </div>
+        <div class="res-card old-res">
+          <div class="res-label">일반 TOPCon (구형)</div>
+          <div class="res-num" id="oldCount">—</div>
+          <div class="res-unit">장</div>
+          <div class="res-num" id="oldKw" style="font-size:22px;margin-top:8px;">—</div>
+          <div class="res-unit">kW</div>
+        </div>
+      </div>
+      <div class="res-diff" id="diffResult" style="display:none;"></div>
+    </div>
+
+    <div class="sec-title">⚠️ 공장·건물 지붕 설치 시 반드시 확인할 것</div>
+    <div class="caution-list">
+      <div class="cl-title">설치 전 체크리스트 4가지</div>
+      <div class="cl-item">
+        <div class="cl-num">①</div>
+        <div><strong>인버터 호환성</strong> — HPBC 2.0은 Voc 53.7~54.3V 고전압 특성. 스트링 직렬 매수를 인버터 최대 입력 전압(보통 1,000V 또는 1,500V)에 맞게 반드시 재계산</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-num">②</div>
+        <div><strong>구조물(래킹) 클램프 간격</strong> — 모듈 길이 2,382mm 기준으로 클램프 위치 재설계 필요. 기존 래킹 재사용 시 제조사 확인 필수</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-num">③</div>
+        <div><strong>계통 연계 용량 한도</strong> — 고출력 모듈 도입 시 동일 장수라도 총 kW 증가. 99kW 이하 제한 등 연계 허용 용량 사전 확인 필수</div>
+      </div>
+      <div class="cl-item">
+        <div class="cl-num">④</div>
+        <div><strong>지붕 구조 하중</strong> — HPBC 2.0 모듈 무게 약 28~32kg/장. 노후 슬라브·경량 지붕은 구조 계산서 필수 (안전 하중 1.5kN/m² 이상 권장)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">📌 계산기는 단순 참고용이며, 실제 설치 용량은 지붕 형태·구조물 간격·배선 경로 등에 따라 달라집니다. 정확한 설계는 전문 시공사 상담 필요 / 출처: LONGi 공식 스펙, T/CPIA 0003-2022 표준</div>
+</div>
+
+<script>
+function calculate() {
+  const len = parseFloat(document.getElementById('roofLen').value) || 50;
+  const wid = parseFloat(document.getElementById('roofWidth').value) || 20;
+  const orient = document.getElementById('orient').value;
+  const margin = parseFloat(document.getElementById('margin').value) / 100;
+
+  // 유효 면적
+  const usable = len * wid * (1 - margin);
+
+  // 모듈 치수 (m)
+  const hpbc = { l: 2.382, w: 1.134, power: 670 };
+  const old  = { l: 2.278, w: 1.134, power: 580 };
+
+  function countModules(roof_l, roof_w, mod) {
+    // 세로
+    let cols, rows;
+    if (orient === 'portrait') {
+      cols = Math.floor(roof_w / mod.w);
+      rows = Math.floor(roof_l / mod.l);
+    } else {
+      cols = Math.floor(roof_w / mod.l);
+      rows = Math.floor(roof_l / mod.w);
+    }
+    return Math.max(0, cols * rows);
+  }
+
+  // 유효 면적을 가로세로로 환산 (정사각형 근사)
+  const ratio = len / wid;
+  const eff_w = Math.sqrt(usable / ratio);
+  const eff_l = usable / eff_w;
+
+  const hpbcN = countModules(eff_l, eff_w, hpbc);
+  const oldN  = countModules(eff_l, eff_w, old);
+  const hpbcKw = (hpbcN * hpbc.power / 1000).toFixed(1);
+  const oldKw  = (oldN  * old.power  / 1000).toFixed(1);
+  const diff = (parseFloat(hpbcKw) - parseFloat(oldKw)).toFixed(1);
+
+  document.getElementById('hpbcCount').textContent = hpbcN;
+  document.getElementById('hpbcKw').textContent = hpbcKw;
+  document.getElementById('oldCount').textContent = oldN;
+  document.getElementById('oldKw').textContent = oldKw;
+
+  const diffEl = document.getElementById('diffResult');
+  diffEl.style.display = 'block';
+  const modDiff = hpbcN - oldN;
+  if (diff >= 0) {
+    diffEl.style.background = '#f0fdf4';
+    diffEl.style.borderColor = '#bbf7d0';
+    diffEl.style.color = '#065f46';
+    diffEl.innerHTML = `✅ HPBC 2.0이 모듈 수는 <strong>${Math.abs(modDiff)}장 적지만</strong>, 총 용량은 <strong>+${diff}kW 더 큽니다</strong>`;
+  } else {
+    diffEl.style.background = '#fef3c7';
+    diffEl.style.borderColor = '#fde68a';
+    diffEl.style.color = '#92400e';
+    diffEl.innerHTML = `⚠️ 이 조건에서는 HPBC 2.0이 <strong>${Math.abs(diff)}kW 적습니다</strong> — 지붕 형태·설치 방향 재확인 권장`;
+  }
+}
+// 초기 실행
+window.onload = calculate;
+</script>
+</body>
+</html>
