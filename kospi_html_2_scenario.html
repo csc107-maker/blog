@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>코스피 전망 시나리오 분석 | 글로벌 IB 목표치 비교</title>
+<meta property="og:title" content="코스피 앞으로 어디로? 시나리오별 전망 및 글로벌 IB 목표치 분석" />
+<meta property="og:description" content="골드만삭스 9,000 / 노무라 1만~1.1만 / 하나증권 1만380. 글로벌 IB들이 전망하는 코스피의 미래와 3가지 시나리오를 분석합니다." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80" />
+<meta property="og:url" content="https://yourblog.com/kospi-scenario-forecast" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f8fafc;
+    color: #1a2332;
+    padding: 20px;
+  }
+
+  .section-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .block-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #1a2332;
+    border-left: 5px solid #3b82f6;
+    padding-left: 14px;
+    margin-bottom: 6px;
+  }
+  .block-sub {
+    font-size: 13px;
+    color: #64748b;
+    padding-left: 19px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== 시나리오 카드 ===== */
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 600px) {
+    .scenario-grid { grid-template-columns: 1fr; }
+  }
+  .sc-card {
+    border-radius: 16px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  }
+  .sc-card::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .sc-bull { background: linear-gradient(145deg, #ecfdf5, #d1fae5); border: 2px solid #6ee7b7; }
+  .sc-bull::before { background: #10b981; }
+  .sc-base { background: linear-gradient(145deg, #eff6ff, #dbeafe); border: 2px solid #93c5fd; }
+  .sc-base::before { background: #3b82f6; }
+  .sc-bear { background: linear-gradient(145deg, #fff7ed, #fed7aa); border: 2px solid #fdba74; }
+  .sc-bear::before { background: #f97316; }
+
+  .sc-emoji { font-size: 30px; margin-bottom: 10px; }
+  .sc-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .sc-bull .sc-label { color: #059669; }
+  .sc-base .sc-label { color: #2563eb; }
+  .sc-bear .sc-label { color: #ea580c; }
+  .sc-level {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .sc-bull .sc-level { color: #059669; }
+  .sc-base .sc-level { color: #2563eb; }
+  .sc-bear .sc-level { color: #ea580c; }
+  .sc-prob {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .sc-bull .sc-prob { background: #d1fae5; color: #065f46; }
+  .sc-base .sc-prob { background: #dbeafe; color: #1e40af; }
+  .sc-bear .sc-prob { background: #fed7aa; color: #9a3412; }
+  .sc-conditions {
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.7;
+  }
+  .sc-conditions li {
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .sc-conditions li::before { content: '▸'; position: absolute; left: 0; font-size: 10px; }
+
+  /* ===== 글로벌 IB 목표치 ===== */
+  .ib-section { margin-bottom: 48px; }
+  .ib-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #1a2332;
+    border-left: 5px solid #f59e0b;
+    padding-left: 14px;
+    margin-bottom: 6px;
+  }
+  .ib-sub {
+    font-size: 13px;
+    color: #64748b;
+    padding-left: 19px;
+    margin-bottom: 24px;
+  }
+
+  .ib-table-wrap {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead {
+    background: linear-gradient(90deg, #1e3a5f, #1e40af);
+  }
+  thead th {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    padding: 14px 18px;
+    text-align: left;
+    letter-spacing: 0.5px;
+  }
+  tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8fafc; }
+  tbody td {
+    padding: 16px 18px;
+    font-size: 13px;
+    color: #374151;
+    vertical-align: middle;
+  }
+  .ib-name {
+    font-weight: 700;
+    color: #1a2332;
+    font-size: 14px;
+  }
+  .ib-flag {
+    width: 20px;
+    height: 14px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+    font-size: 16px;
+  }
+  .ib-target {
+    font-size: 18px;
+    font-weight: 900;
+    color: #059669;
+  }
+  .ib-upside {
+    display: inline-block;
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .ib-basis {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.5;
+  }
+  .ib-sentiment {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .s-bull { background: #ecfdf5; color: #059669; }
+  .s-strong { background: #dbeafe; color: #2563eb; }
+
+  /* ===== 리스크/기회 매트릭스 ===== */
+  .matrix-section { margin-bottom: 20px; }
+  .matrix-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #1a2332;
+    border-left: 5px solid #8b5cf6;
+    padding-left: 14px;
+    margin-bottom: 6px;
+  }
+  .matrix-sub {
+    font-size: 13px;
+    color: #64748b;
+    padding-left: 19px;
+    margin-bottom: 24px;
+  }
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 500px) { .matrix-grid { grid-template-columns: 1fr; } }
+  .mat-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .mat-card.up { border-top: 4px solid #22c55e; }
+  .mat-card.down { border-top: 4px solid #ef4444; }
+  .mat-head {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mat-card.up .mat-head { color: #15803d; }
+  .mat-card.down .mat-head { color: #dc2626; }
+  .mat-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+  }
+  .mat-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .source-note {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: right;
+    padding: 16px 4px 0;
+  }
+</style>
+</head>
+<body>
+<div class="section-wrap">
+
+  <!-- 시나리오 카드 -->
+  <div class="block-title">📊 코스피 3가지 시나리오 전망</div>
+  <p class="block-sub">2026년 하반기, 시장을 좌우할 핵심 변수에 따른 시나리오별 분석</p>
+
+  <div class="scenario-grid">
+    <div class="sc-card sc-bull">
+      <div class="sc-emoji">🚀</div>
+      <div class="sc-label">Bull 시나리오</div>
+      <div class="sc-level">9,500~<br>1만</div>
+      <div class="sc-prob">가능성 30%</div>
+      <ul class="sc-conditions">
+        <li>외국인 수급 빠른 귀환</li>
+        <li>원/달러 1,400원대 복귀</li>
+        <li>HBM 슈퍼사이클 가속</li>
+        <li>미 연준 금리 동결 유지</li>
+        <li>국민연금 매도 충격 최소화</li>
+      </ul>
+    </div>
+    <div class="sc-card sc-base">
+      <div class="sc-emoji">📈</div>
+      <div class="sc-label">Base 시나리오</div>
+      <div class="sc-level">7,800~<br>8,500</div>
+      <div class="sc-prob">가능성 50%</div>
+      <ul class="sc-conditions">
+        <li>외국인 순매도 점진적 축소</li>
+        <li>원/달러 1,450~1,520원대</li>
+        <li>반도체 실적 예상치 부합</li>
+        <li>중동 리스크 제한적 확산</li>
+        <li>국민연금 리밸런싱 단계적</li>
+      </ul>
+    </div>
+    <div class="sc-card sc-bear">
+      <div class="sc-emoji">⚠️</div>
+      <div class="sc-label">Bear 시나리오</div>
+      <div class="sc-level">7,000~<br>7,400</div>
+      <div class="sc-prob">가능성 20%</div>
+      <ul class="sc-conditions">
+        <li>외국인 추가 대량 매도 지속</li>
+        <li>원/달러 1,550원 이상 고착</li>
+        <li>미 연준 추가 금리 인상</li>
+        <li>중동 전면전 리스크 확산</li>
+        <li>국민연금 일일 매도 충격</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 글로벌 IB 목표치 -->
+  <div class="ib-section">
+    <div class="ib-title">🏦 글로벌 IB 코스피 목표치 비교</div>
+    <p class="ib-sub">세계 주요 투자은행들이 제시한 코스피 목표 지수와 핵심 근거</p>
+
+    <div class="ib-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>투자은행</th>
+            <th>목표 지수</th>
+            <th>현재 대비 상승여력</th>
+            <th>핵심 근거</th>
+            <th>투자의견</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ib-name">🇺🇸 골드만삭스</span></td>
+            <td><span class="ib-target">9,000</span></td>
+            <td><span class="ib-upside">▲ ~10%</span></td>
+            <td class="ib-basis">2026년 코스피 상장사<br>이익 성장률 300% 전망<br>"최고 확신 뷰 (Top Conviction)"</td>
+            <td><span class="ib-sentiment s-strong">Strong Buy</span></td>
+          </tr>
+          <tr>
+            <td><span class="ib-name">🇯🇵 노무라증권</span></td>
+            <td><span class="ib-target">1만~1.1만</span></td>
+            <td><span class="ib-upside">▲ ~22~34%</span></td>
+            <td class="ib-basis">범용메모리·HBM 슈퍼사이클<br>2026~2027년 실적 핵심 동력<br>목표치 기존 대비 대폭 상향</td>
+            <td><span class="ib-sentiment s-bull">Overweight</span></td>
+          </tr>
+          <tr>
+            <td><span class="ib-name">🇰🇷 하나증권</span></td>
+            <td><span class="ib-target">1만380</span></td>
+            <td><span class="ib-upside">▲ ~27%</span></td>
+            <td class="ib-basis">2027년 예상 순이익 기준<br>역사적 평균 PER 적용<br>국내 리서치 최상단 전망</td>
+            <td><span class="ib-sentiment s-bull">Buy</span></td>
+          </tr>
+          <tr>
+            <td><span class="ib-name">🇰🇷 신한투자증권</span></td>
+            <td><span class="ib-target">조정 후 재상승</span></td>
+            <td><span class="ib-upside">조정 중</span></td>
+            <td class="ib-basis">포트폴리오 비중 조절 후<br>6월 순매도 폭 축소 시<br>장기 조정 아님 판단</td>
+            <td><span class="ib-sentiment s-strong">Neutral→Buy</span></td>
+          </tr>
+          <tr>
+            <td><span class="ib-name">🇰🇷 대신증권</span></td>
+            <td><span class="ib-target">8,500~9,000</span></td>
+            <td><span class="ib-upside">▲ ~4~10%</span></td>
+            <td class="ib-basis">이익 모멘텀+외인 수급 결합<br>디스플레이·에너지·화장품 유망<br>반도체 편중 포트폴리오 분산 권고</td>
+            <td><span class="ib-sentiment s-bull">Buy</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 리스크/기회 매트릭스 -->
+  <div class="matrix-section">
+    <div class="matrix-title">⚡ 상승 동력 vs 하락 압력 매트릭스</div>
+    <p class="matrix-sub">지금 코스피를 움직이는 양방향 핵심 변수 총정리</p>
+    <div class="matrix-grid">
+      <div class="mat-card up">
+        <div class="mat-head">🟢 상승 동력 (Tailwind)</div>
+        <div class="mat-item"><span class="mat-icon">💡</span>AI·HBM 반도체 슈퍼사이클 진행 중</div>
+        <div class="mat-item"><span class="mat-icon">🔋</span>LG엔솔 미국 ESS 2026년 15GWh → 2027년 31GWh</div>
+        <div class="mat-item"><span class="mat-icon">🏦</span>글로벌 IB 코스피 목표 연속 상향</div>
+        <div class="mat-item"><span class="mat-icon">💰</span>고객 예탁금 133조 원, 퇴직연금 513조 원 대기</div>
+        <div class="mat-item"><span class="mat-icon">📦</span>ETF 순자산 228조 원, 거래대금 34% 차지</div>
+        <div class="mat-item"><span class="mat-icon">📉</span>외국인 매도 클라이맥스 통과 신호</div>
+      </div>
+      <div class="mat-card down">
+        <div class="mat-head">🔴 하락 압력 (Headwind)</div>
+        <div class="mat-item"><span class="mat-icon">💱</span>원/달러 환율 1,550원대 고착화 리스크</div>
+        <div class="mat-item"><span class="mat-icon">🏛️</span>미 연준 추가 금리 인상 시나리오 재부상</div>
+        <div class="mat-item"><span class="mat-icon">🇰🇷</span>한은 기준금리 2.50% 동결 기조 유지</div>
+        <div class="mat-item"><span class="mat-icon">🏦</span>국민연금 리밸런싱 재개 불확실성</div>
+        <div class="mat-item"><span class="mat-icon">🌏</span>중동 전면전 확산 시 글로벌 위험자산 매도</div>
+        <div class="mat-item"><span class="mat-icon">📊</span>미 PCE 물가 3.8%로 2년 11개월 최고치</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source-note">
+    출처: 골드만삭스 리서치, 노무라증권, 하나증권, 신한투자증권, 대신증권 | Investing.com | 2026.06.01
+  </div>
+</div>
+</body>
+</html>
