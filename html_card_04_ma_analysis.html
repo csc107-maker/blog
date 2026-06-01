@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta property="og:title" content="삼성·SK하이닉스·LG전자 M&A 후보 기업 분석 2026 — AI·로봇 시대 인수합병 시나리오" />
+<meta property="og:description" content="젠슨 황 방한 이후 AI 피지컬 AI 생태계 재편 — 삼성전자·SK하이닉스·LG전자가 노릴 수 있는 M&A 후보 기업과 전략 분석" />
+<meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop" />
+<meta property="og:url" content="https://yourblog.com/samsung-sk-lg-ma-2026" />
+<title>삼성·SK하이닉스·LG전자 M&A 분석 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f4f6fb;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 880px; margin: 0 auto; }
+
+  .main-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 20px;
+    padding: 36px 40px;
+    color: white;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main-header::before {
+    content: '💼';
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+    opacity: 0.15;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #4cc9f0;
+    margin-bottom: 10px;
+  }
+
+  .main-header h2 {
+    font-size: 1.7rem;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .main-header p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .company-section {
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .company-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .company-icon {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .company-info h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+
+  .strategy-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  .targets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    padding: 20px 28px 24px;
+  }
+
+  @media (max-width: 680px) {
+    .targets-grid { grid-template-columns: 1fr; }
+  }
+
+  .target-card {
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+
+  .target-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  .target-icon { font-size: 1.3rem; margin-bottom: 8px; }
+
+  .target-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .target-name {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .target-desc {
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .priority-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  /* Samsung colors */
+  .samsung .company-icon { background: #e8f4fd; }
+  .samsung .strategy-pill { background: #e8f4fd; color: #1a73e8; }
+  .samsung .target-card { background: #f8fbff; }
+  .samsung .target-type { color: #1a73e8; }
+  .samsung .priority-badge.high { background: #1a73e8; color: white; }
+  .samsung .priority-badge.mid { background: #e8f4fd; color: #1a73e8; }
+
+  /* SK colors */
+  .sk .company-icon { background: #fff0e8; }
+  .sk .strategy-pill { background: #fff0e8; color: #e8520a; }
+  .sk .target-card { background: #fffaf8; }
+  .sk .target-type { color: #e8520a; }
+  .sk .priority-badge.high { background: #e8520a; color: white; }
+  .sk .priority-badge.mid { background: #fff0e8; color: #e8520a; }
+
+  /* LG colors */
+  .lg .company-icon { background: #edf7ee; }
+  .lg .strategy-pill { background: #edf7ee; color: #1b9e3e; }
+  .lg .target-card { background: #f8fff8; }
+  .lg .target-type { color: #1b9e3e; }
+  .lg .priority-badge.high { background: #1b9e3e; color: white; }
+  .lg .priority-badge.mid { background: #edf7ee; color: #1b9e3e; }
+
+  .footer-note {
+    text-align: center;
+    padding: 14px;
+    font-size: 11px;
+    color: #aaa;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="main-header">
+    <div class="eyebrow">💼 M&A 시나리오 분석 · 2026</div>
+    <h2>AI 시대 한국 대기업<br>M&A 후보 기업 분석</h2>
+    <p>젠슨 황 방한 이후 피지컬 AI·AI 반도체 생태계 재편에 맞춰 삼성·SK·LG가 노릴 수 있는 인수합병 시나리오</p>
+  </div>
+
+  <!-- 삼성전자 -->
+  <div class="company-section samsung">
+    <div class="company-header">
+      <div class="company-icon">📱</div>
+      <div class="company-info">
+        <h3>삼성전자 M&A 전략</h3>
+        <span class="strategy-pill">전장 · AI PC · 로봇 AI SW 집중</span>
+      </div>
+      <div style="margin-left: auto; text-align: right;">
+        <div style="font-size: 11px; color: #aaa; margin-bottom: 2px;">2025년 M&A 규모</div>
+        <div style="font-size: 1.2rem; font-weight: 900; color: #1a73e8;">~6조원</div>
+      </div>
+    </div>
+
+    <div class="targets-grid">
+      <div class="target-card">
+        <div class="target-icon">🚗</div>
+        <div class="target-type">전장 / ADAS</div>
+        <div class="target-name">자율주행 AI 소프트웨어 기업</div>
+        <div class="target-desc">하만의 ZF ADAS 인수에 이어 완전 자율주행 AI 스택을 보유한 미국·유럽 중형 기업 인수 시나리오. 엔비디아 DRIVE 생태계 호환성 필수.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">💡</div>
+        <div class="target-type">AI 엣지 반도체</div>
+        <div class="target-name">온디바이스 AI 팹리스 기업</div>
+        <div class="target-desc">엔비디아 N1 X AI PC 칩 출현에 대응해 엣지 AI 반도체 설계 역량 확보 필요. 미국 실리콘밸리 기반 팹리스 기업이 주요 타깃.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">🤖</div>
+        <div class="target-type">로봇 AI SW</div>
+        <div class="target-name">로봇 파운데이션 모델 기업</div>
+        <div class="target-desc">컨피그인텔리전스 시드 투자에 이어 본격 인수 가능성. 로봇의 '뇌' 역할을 하는 파운데이션 모델 기술 내재화 전략.</div>
+        <span class="priority-badge mid">△ 중기 검토</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SK하이닉스 -->
+  <div class="company-section sk">
+    <div class="company-header">
+      <div class="company-icon">💾</div>
+      <div class="company-info">
+        <h3>SK하이닉스 M&A 전략</h3>
+        <span class="strategy-pill">첨단 패키징 · 냉각 · 로봇 센서</span>
+      </div>
+      <div style="margin-left: auto; text-align: right;">
+        <div style="font-size: 11px; color: #aaa; margin-bottom: 2px;">HBM 시장 점유율</div>
+        <div style="font-size: 1.2rem; font-weight: 900; color: #e8520a;">~80%</div>
+      </div>
+    </div>
+
+    <div class="targets-grid">
+      <div class="target-card">
+        <div class="target-icon">📦</div>
+        <div class="target-type">첨단 패키징</div>
+        <div class="target-name">CoWoS · HBM 패키징 기업</div>
+        <div class="target-desc">HBM 성능 경쟁이 메모리 설계에서 패키징으로 이동 중. 일본·대만의 첨단 패키징 소재·장비 기업 인수가 경쟁력의 핵심.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">❄️</div>
+        <div class="target-type">데이터센터 냉각</div>
+        <div class="target-name">액침냉각(ILC) 기술 기업</div>
+        <div class="target-desc">AI 팩토리 시대 열 발산 문제가 반도체 병목이 됨. 직접액침냉각(Direct Liquid Cooling) 기술 기업 인수 가능성 높음.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">🦾</div>
+        <div class="target-type">로봇 센서·부품</div>
+        <div class="target-name">반도체·로봇 연계 센서 기업</div>
+        <div class="target-desc">SK인텔릭스(구 SK매직)의 로봇 사업 진출에 이어, 반도체-로봇 결합 시너지를 위한 고성능 센서·액추에이터 기업 인수 검토.</div>
+        <span class="priority-badge mid">△ 중기 검토</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LG전자 -->
+  <div class="company-section lg">
+    <div class="company-header">
+      <div class="company-icon">🤖</div>
+      <div class="company-info">
+        <h3>LG전자 M&A 전략</h3>
+        <span class="strategy-pill">피지컬 AI · 로봇 SW · B2B AI 솔루션</span>
+      </div>
+      <div style="margin-left: auto; text-align: right;">
+        <div style="font-size: 11px; color: #aaa; margin-bottom: 2px;">로봇 대장주 포지션</div>
+        <div style="font-size: 1.2rem; font-weight: 900; color: #1b9e3e;">급상승 ↑</div>
+      </div>
+    </div>
+
+    <div class="targets-grid">
+      <div class="target-card">
+        <div class="target-icon">👁️</div>
+        <div class="target-type">로봇 비전 AI</div>
+        <div class="target-name">산업용 AI 비전 플랫폼 기업</div>
+        <div class="target-desc">엔비디아 VSS(Video Search System) 블루프린트와 연계 가능한 산업용 AI 비전 소프트웨어 기업이 핵심 인수 타깃. 슈퍼브에이아이 등이 예시.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">🏭</div>
+        <div class="target-type">스마트 팩토리</div>
+        <div class="target-name">B2B AI 자동화 솔루션 기업</div>
+        <div class="target-desc">물류·공장·빌딩 자동화를 아우르는 B2B AI 솔루션 기업 인수로 엔비디아 Isaac 플랫폼 내 소프트웨어 가치를 극대화하는 전략.</div>
+        <span class="priority-badge high">★ 최우선</span>
+      </div>
+      <div class="target-card">
+        <div class="target-icon">🌐</div>
+        <div class="target-type">글로벌 로봇 플랫폼</div>
+        <div class="target-name">미국 로봇 플랫폼 기업 (해외)</div>
+        <div class="target-desc">엔비디아 Isaac 호환 로봇 플랫폼 보유 미국 중형 기업 인수 시나리오. 보스턴다이나믹스(현대차)와 경쟁 구도에서 독자적 포지션 구축 가능.</div>
+        <span class="priority-badge mid">△ 중기 검토</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    ⚠️ M&A 시나리오는 공개된 전략 방향과 업계 분석을 기반으로 작성했습니다. 투자 권유가 아니며 실제 M&A는 공시·공식 발표로만 확인 가능합니다.<br>
+    출처: 인베스트조선, 더이코노미, ZDNet Korea, 머니투데이 (2026.01~06)
+  </div>
+
+</div>
+
+</body>
+</html>
