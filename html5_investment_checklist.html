@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>버크셔 테일러모리슨 — 투자자 체크리스트</title>
+  <meta property="og:title" content="버크셔 테일러모리슨 인수 — 투자자가 체크해야 할 핵심 포인트" />
+  <meta property="og:description" content="단기·중기·장기별 투자자 체크리스트. 주목 지표, 모니터링 포인트, 예상 시나리오를 정리합니다." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&h=630&fit=crop" />
+  <meta property="og:url" content="https://yourblog.com/berkshire-taylor-morrison-checklist" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Noto Sans KR',sans-serif;background:#cfd9f7;padding:24px 14px;}
+
+    .page-header{text-align:center;margin-bottom:22px;}
+    .page-header h2{font-size:17px;font-weight:700;color:#0d1f4e;margin-bottom:4px;}
+    .page-header p{font-size:12px;color:#7a8fb5;}
+
+    /* ===== 체크리스트 카드 그리드 ===== */
+    .cl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:880px;margin:0 auto 20px;}
+
+    .cl-card{
+      background:#ffffff;
+      border-radius:18px;padding:22px 18px;
+      box-shadow:0 6px 22px rgba(13,31,78,0.20), 0 2px 6px rgba(13,31,78,0.10);
+    }
+    .cl-card.short{border:2px solid #ffb3a0;border-top:5px solid #ff5722;}
+    .cl-card.mid{border:2px solid #99baff;border-top:5px solid #1565c0;}
+    .cl-card.long{border:2px solid #86c98a;border-top:5px solid #2e7d32;}
+
+    .cl-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #eef2ff;}
+    .cl-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px rgba(0,0,0,0.10);}
+    .short .cl-icon{background:#fbe9e7;}
+    .mid .cl-icon{background:#e3f2fd;}
+    .long .cl-icon{background:#e8f5e9;}
+    .cl-title{font-size:14px;font-weight:700;}
+    .short .cl-title{color:#bf360c;}
+    .mid .cl-title{color:#0d47a1;}
+    .long .cl-title{color:#1b5e20;}
+    .cl-period{font-size:11px;color:#8a9ab5;margin-top:2px;}
+
+    .cl-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px dashed #dde8ff;}
+    .cl-item:last-child{border-bottom:none;padding-bottom:0;}
+    .chk{
+      width:22px;height:22px;border-radius:6px;
+      border:2px solid #b8ccff;flex-shrink:0;margin-top:1px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;background:#fff;transition:all 0.18s;
+      font-size:13px;font-weight:700;color:transparent;
+    }
+    .chk.on{background:#1565c0;border-color:#1040a0;color:#fff;}
+    .cl-text{font-size:12px;color:#2c3e5d;line-height:1.6;}
+    .cl-text strong{color:#0d1f4e;}
+
+    /* ===== 시나리오 카드 ===== */
+    .scenario-card{
+      max-width:880px;margin:0 auto 16px;
+      background:#ffffff;
+      border-radius:18px;padding:24px 20px;
+      border:2px solid #b8ccff;
+      box-shadow:0 6px 22px rgba(13,31,78,0.20), 0 2px 6px rgba(13,31,78,0.10);
+    }
+    .sc-title{font-size:15px;font-weight:700;color:#0d1f4e;margin-bottom:16px;padding-left:12px;border-left:4px solid #1565c0;}
+    .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    @media(max-width:480px){.sc-grid{grid-template-columns:1fr;}}
+
+    .s-box{border-radius:14px;padding:18px 14px;text-align:center;}
+    .s-box.bull{background:#e8f5e9;border:2px solid #81c784;}
+    .s-box.base{background:#e3f2fd;border:2px solid #64b5f6;}
+    .s-box.bear{background:#fce4ec;border:2px solid #e57373;}
+    .s-emoji{font-size:28px;margin-bottom:8px;}
+    .s-label{font-size:11px;font-weight:700;letter-spacing:0.5px;margin-bottom:8px;}
+    .bull .s-label{color:#1b5e20;}
+    .base .s-label{color:#0d47a1;}
+    .bear .s-label{color:#b71c1c;}
+    .s-ret{font-family:'Inter',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;}
+    .bull .s-ret{color:#1b5e20;}
+    .base .s-ret{color:#0d47a1;}
+    .bear .s-ret{color:#b71c1c;}
+    .s-cond{font-size:11px;line-height:1.6;}
+    .bull .s-cond{color:#388e3c;}
+    .base .s-cond{color:#1565c0;}
+    .bear .s-cond{color:#c62828;}
+
+    .disclaimer{
+      max-width:880px;margin:0 auto;
+      background:#fff8e1;border:2px solid #ffe082;
+      border-radius:13px;padding:14px 18px;
+      font-size:11px;color:#795548;line-height:1.7;text-align:center;
+      box-shadow:0 2px 8px rgba(121,85,72,0.10);
+    }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <h2>✅ 투자자 체크리스트 — 이 딜로 무엇을 봐야 하나?</h2>
+    <p>단기·중기·장기별 모니터링 포인트 · 2026.06.01 기준</p>
+  </div>
+
+  <div class="cl-grid">
+    <!-- 단기 -->
+    <div class="cl-card short">
+      <div class="cl-header">
+        <div class="cl-icon">⚡</div>
+        <div>
+          <div class="cl-title">단기 체크포인트</div>
+          <div class="cl-period">1~3개월 이내</div>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>TMHC 주가 수렴</strong> — $72.50 근접 여부. 아비트라지 기회 소진 확인</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>경쟁 홈빌더 동반 상승</strong> — DHI, LEN, PHM 주가 반응 체크</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>BRK.B 주가 반응</strong> — 현금 감소 부담 vs. 아벨 리더십 긍정 신호</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>홈빌더 ETF(ITB, XHB)</strong> — 섹터 전반 자금 유입 여부</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>미국 주택 착공 데이터</strong> — 4월 -2.8% 이후 5·6월 회복 여부</div>
+      </div>
+    </div>
+
+    <!-- 중기 -->
+    <div class="cl-card mid">
+      <div class="cl-header">
+        <div class="cl-icon">📅</div>
+        <div>
+          <div class="cl-title">중기 체크포인트</div>
+          <div class="cl-period">3~12개월</div>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>Fed 금리 결정</strong> — 금리인하 시 주택 수요 폭발적 증가 기대</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>모기지 금리 방향성</strong> — 7%대 지속 vs. 6%대 하락 여부</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>FTC 반독점 심사 결과</strong> — 거래 종결 2026년 하반기 예정</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>버크셔 Q2~Q3 실적</strong> — 통합 진행 상황 및 주택 사업 실적</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>아벨 CEO 추가 M&amp;A</strong> — $397B 현금 활용 방향성 주목</div>
+      </div>
+    </div>
+
+    <!-- 장기 -->
+    <div class="cl-card long">
+      <div class="cl-header">
+        <div class="cl-icon">🌱</div>
+        <div>
+          <div class="cl-title">장기 체크포인트</div>
+          <div class="cl-period">1년 이상</div>
+        </div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>통합 플랫폼 출범</strong> — Clayton+Taylor Morrison 통합 구체화</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>시장점유율 확대</strong> — 4위 → 3위권 도전 가능성 모니터링</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>자재 계열사 시너지</strong> — Acme·Benjamin Moore 납품 비중 상승</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>미국 인구통계 트렌드</strong> — 밀레니얼 수요·가구형성률 변화</div>
+      </div>
+      <div class="cl-item">
+        <div class="chk" onclick="this.classList.toggle('on');this.textContent=this.classList.contains('on')?'✓':'';">&#8203;</div>
+        <div class="cl-text"><strong>BRK 주가 정상화</strong> — S&amp;P500 대비 언더퍼폼(-5.6%) 회복 여부</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시나리오 -->
+  <div class="scenario-card">
+    <div class="sc-title">🎯 3가지 시나리오 — 홈빌더 섹터 전망</div>
+    <div class="sc-grid">
+      <div class="s-box bull">
+        <div class="s-emoji">🚀</div>
+        <div class="s-label">BULL CASE</div>
+        <div class="s-ret">+30~50%</div>
+        <div class="s-cond">Fed 금리인하 2회 이상<br/>모기지 6%대 진입<br/>주택착공 반등 확인<br/>섹터 재평가 본격화</div>
+      </div>
+      <div class="s-box base">
+        <div class="s-emoji">📊</div>
+        <div class="s-label">BASE CASE</div>
+        <div class="s-ret">+10~20%</div>
+        <div class="s-cond">현 금리 유지 완만한 회복<br/>버크셔 인수 완결<br/>섹터 점진적 재평가<br/>M&amp;A 프리미엄 지속</div>
+      </div>
+      <div class="s-box bear">
+        <div class="s-emoji">⚠️</div>
+        <div class="s-label">BEAR CASE</div>
+        <div class="s-ret">-10~20%</div>
+        <div class="s-cond">금리 7% 이상 고착<br/>경기 침체 현실화<br/>주택 수요 급감<br/>규제 심사 차질</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    ⚠️ 이 자료는 정보 제공 목적으로만 작성되었으며 특정 종목 매매를 권유하지 않습니다.<br/>
+    투자 판단 및 결과에 대한 책임은 투자자 본인에게 있습니다. 주식 투자는 원금 손실 가능성이 있습니다.
+  </div>
+</body>
+</html>
