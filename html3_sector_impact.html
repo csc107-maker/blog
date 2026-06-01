@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>버크셔 테일러모리슨 — 업종별 증시 영향도 분석</title>
+  <meta property="og:title" content="버크셔 테일러모리슨 인수 — 업종별 증시 영향도 분석" />
+  <meta property="og:description" content="주택건설주, 건축자재, 모기지, 한국 건설·부동산주까지 섹터별 영향도와 주목 종목을 한눈에 정리합니다." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop" />
+  <meta property="og:url" content="https://yourblog.com/berkshire-taylor-morrison-sector-impact" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f4f6ff;
+      padding: 24px 14px;
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1a2340;
+      margin-bottom: 6px;
+    }
+    .page-sub {
+      text-align: center;
+      font-size: 12px;
+      color: #8a9ab5;
+      margin-bottom: 24px;
+    }
+
+    .sector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto 20px;
+    }
+
+    .sector-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 14px rgba(21,101,192,0.08);
+      border: 1px solid #e0e8ff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .sector-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(21,101,192,0.13);
+    }
+
+    .sc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .sc-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sc-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .sc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a2340;
+    }
+    .sc-type {
+      font-size: 11px;
+      color: #8a9ab5;
+      margin-top: 1px;
+    }
+
+    /* 영향도 뱃지 */
+    .impact-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .impact-high { background: #fce4ec; color: #c62828; }
+    .impact-mid { background: #fff3e0; color: #e65100; }
+    .impact-low { background: #e8f5e9; color: #2e7d32; }
+    .impact-indirect { background: #e8f0fe; color: #1565c0; }
+
+    .sc-desc {
+      font-size: 12px;
+      color: #4a5570;
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .stock-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .stock-chip {
+      display: inline-block;
+      background: #f0f4ff;
+      border: 1px solid #c8d8ff;
+      color: #1565c0;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 8px;
+    }
+    .stock-chip.kr {
+      background: #fce4ec;
+      border-color: #f48fb1;
+      color: #c62828;
+    }
+    .stock-chip.gold {
+      background: #fff8e1;
+      border-color: #ffe082;
+      color: #f57f17;
+    }
+
+    .divider { height: 1px; background: #e8eeff; margin: 12px 0; }
+
+    /* 한국 영향 풀 카드 */
+    .full-card {
+      background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+      border-radius: 18px;
+      padding: 22px 20px;
+      max-width: 900px;
+      margin: 0 auto 16px;
+      border: 1px solid #b2dfdb;
+      box-shadow: 0 2px 14px rgba(46,125,50,0.08);
+    }
+    .full-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1b5e20;
+      margin-bottom: 14px;
+    }
+    .kr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .kr-item {
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .kr-item-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2e7d32;
+      margin-bottom: 6px;
+    }
+    .kr-item-desc {
+      font-size: 11px;
+      color: #4a5570;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .source-note {
+      text-align: center;
+      font-size: 11px;
+      color: #aab5cc;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-title">📊 버크셔 × 테일러모리슨 — 업종별 증시 영향도 분석</div>
+  <div class="page-sub">섹터별 파장 · 주목 종목 · 한국 시장 연결고리 (2026.06.01 기준)</div>
+
+  <div class="sector-grid">
+
+    <!-- 주택건설주 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#fce4ec;">🏠</div>
+          <div>
+            <div class="sc-title">미국 주택건설주</div>
+            <div class="sc-type">Homebuilder Stocks</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-high">🔥 직접 수혜 ↑↑</div>
+      </div>
+      <div class="sc-desc">
+        버크셔의 '지금이 저점' 신호 → 경쟁 홈빌더 전반에 재평가 기대감.
+        짐 크레이머 "홀대받던 섹터에 가치 있을 수 있다" 발언.
+        TMHC 주가 22% 급등. 섹터 ETF 동반 상승 가능성.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">DHI</span>
+        <span class="stock-chip">LEN</span>
+        <span class="stock-chip">PHM</span>
+        <span class="stock-chip">NVR</span>
+        <span class="stock-chip">MTH</span>
+        <span class="stock-chip">KBH</span>
+        <span class="stock-chip gold">ITB ETF</span>
+        <span class="stock-chip gold">XHB ETF</span>
+      </div>
+    </div>
+
+    <!-- 건축자재 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#fff3e0;">🧱</div>
+          <div>
+            <div class="sc-title">건축자재 & 홈개선</div>
+            <div class="sc-type">Building Materials / Home Improvement</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-mid">📈 간접 수혜 ↑</div>
+      </div>
+      <div class="sc-desc">
+        주택건설 증가 → 목재·단열·페인트·바닥재 수요 확대.
+        버크셔 자회사(Acme Brick, Benjamin Moore, Johns Manville)와 
+        통합 플랫폼 시너지 기대. Home Depot·Lowe's 수요도 증가 전망.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">HD</span>
+        <span class="stock-chip">LOW</span>
+        <span class="stock-chip">BLDR</span>
+        <span class="stock-chip">LPX</span>
+        <span class="stock-chip">AWI</span>
+        <span class="stock-chip">MHK</span>
+        <span class="stock-chip">SHW</span>
+      </div>
+    </div>
+
+    <!-- 모기지·금융 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#e8f0fe;">🏦</div>
+          <div>
+            <div class="sc-title">모기지 & 금융 서비스</div>
+            <div class="sc-type">Mortgage / Financial Services</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-indirect">🔵 연관 수혜</div>
+      </div>
+      <div class="sc-desc">
+        테일러모리슨의 주담대·보험 서비스 + 버크셔 보험그룹(GEICO) 시너지.
+        주택 거래 증가 시 모기지 오리지네이션 수요 확대.
+        금리인하 기대감 동반 시 효과 증폭.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">WFC</span>
+        <span class="stock-chip">JPM</span>
+        <span class="stock-chip">COOP</span>
+        <span class="stock-chip">UWMC</span>
+        <span class="stock-chip">RKT</span>
+      </div>
+    </div>
+
+    <!-- 부동산 서비스 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#f3e5f5;">🏡</div>
+          <div>
+            <div class="sc-title">부동산 서비스 & 리츠</div>
+            <div class="sc-type">Real Estate Services / REITs</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-low">🟢 관심 증가</div>
+      </div>
+      <div class="sc-desc">
+        버크셔는 이미 미국 최대 규모 주거용 부동산 중개회사를 보유.
+        주택 거래량 증가 시 중개·제목보험·에스크로 서비스 수혜.
+        주거형 리츠(Residential REITs)에도 투심 개선 기대.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">RDFN</span>
+        <span class="stock-chip">Z</span>
+        <span class="stock-chip">AMH</span>
+        <span class="stock-chip">INVH</span>
+        <span class="stock-chip gold">REZ ETF</span>
+      </div>
+    </div>
+
+    <!-- 버크셔 해서웨이 자체 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#e8f5e9;">🦾</div>
+          <div>
+            <div class="sc-title">버크셔 해서웨이</div>
+            <div class="sc-type">BRK.A / BRK.B</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-indirect">🔵 복합 반응</div>
+      </div>
+      <div class="sc-desc">
+        현금 $6.8B 감소 단기 부담 vs. 아벨 리더십 입증 긍정 신호.
+        올해 BRK -5.6% vs. S&P500 +10.7% 언더퍼폼 → 이번 M&A가
+        반전 계기 될 수 있다는 기대. 주담대 종가 소폭 하락 관측.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">BRK.A</span>
+        <span class="stock-chip">BRK.B</span>
+      </div>
+    </div>
+
+    <!-- 경쟁사 리스크 -->
+    <div class="sector-card">
+      <div class="sc-header">
+        <div class="sc-left">
+          <div class="sc-icon" style="background:#fce4ec;">⚠️</div>
+          <div>
+            <div class="sc-title">경쟁 중소형 홈빌더</div>
+            <div class="sc-type">Mid/Small Homebuilders</div>
+          </div>
+        </div>
+        <div class="impact-badge impact-high">🔴 경쟁 압박 ↑</div>
+      </div>
+      <div class="sc-desc">
+        버크셔의 압도적 자금력 + 규모의 경제로 토지·자재 협상력 격차 확대.
+        금리 보전(buydown) 능력 차이로 중소형 빌더 경쟁력 약화 우려.
+        M&A 다음 타깃으로 주목받아 인수 프리미엄 기대감도 공존.
+      </div>
+      <div class="stock-list">
+        <span class="stock-chip">TOL</span>
+        <span class="stock-chip">LGIH</span>
+        <span class="stock-chip">SKY</span>
+        <span class="stock-chip">CVCO</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 한국 시장 -->
+  <div class="full-card">
+    <h3>🇰🇷 한국 증시 연결고리 — 어떤 종목을 봐야 하나?</h3>
+    <div class="kr-grid">
+      <div class="kr-item">
+        <div class="kr-item-title">🏗️ 국내 건설주</div>
+        <div class="kr-item-desc">미국 주택경기 회복 기대 → 글로벌 건설 투심 개선<br/>해외 수주 비중 높은 대형사 주목</div>
+        <div class="stock-list">
+          <span class="stock-chip kr">현대건설</span>
+          <span class="stock-chip kr">GS건설</span>
+          <span class="stock-chip kr">DL이앤씨</span>
+          <span class="stock-chip kr">삼성물산</span>
+        </div>
+      </div>
+      <div class="kr-item">
+        <div class="kr-item-title">🪟 건축자재 수출</div>
+        <div class="kr-item-desc">미국향 건자재 수출 기업 수혜 가능<br/>창호·단열·바닥재·가구 카테고리</div>
+        <div class="stock-list">
+          <span class="stock-chip kr">KCC글라스</span>
+          <span class="stock-chip kr">LX하우시스</span>
+          <span class="stock-chip kr">한샘</span>
+        </div>
+      </div>
+      <div class="kr-item">
+        <div class="kr-item-title">📈 미국 부동산 ETF</div>
+        <div class="kr-item-desc">미국 주택·리츠 노출 원하는 국내 투자자<br/>미국 실물경기 연동 상품</div>
+        <div class="stock-list">
+          <span class="stock-chip kr">TIGER미국MSCI리츠</span>
+          <span class="stock-chip kr">KODEX미국S&P500부동산</span>
+        </div>
+      </div>
+      <div class="kr-item">
+        <div class="kr-item-title">🏦 금융 간접 영향</div>
+        <div class="kr-item-desc">美 경기 개선 → 금리인하 기대 → 원화강세 압력<br/>국내 금융주에 복합 영향 주시</div>
+        <div class="stock-list">
+          <span class="stock-chip kr">KB금융</span>
+          <span class="stock-chip kr">신한지주</span>
+          <span class="stock-chip kr">하나금융</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="source-note">
+    출처: Bloomberg, CNBC, Benzinga, Reuters, 뉴스핌, 이데일리 (2026.06.01) · 이 자료는 투자 권유가 아닌 정보 제공 목적입니다.
+  </div>
+
+</body>
+</html>
