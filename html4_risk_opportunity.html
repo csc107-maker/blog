@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>버크셔 테일러모리슨 — 리스크·기회 분석</title>
+  <meta property="og:title" content="버크셔 테일러모리슨 인수 — 리스크와 기회 요인 완전 분석" />
+  <meta property="og:description" content="금리 리스크, 규제 리스크, 시너지 기회, 장기 성장 모멘텀까지 핵심 요인을 정리합니다." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop" />
+  <meta property="og:url" content="https://yourblog.com/berkshire-taylor-morrison-risk-analysis" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Noto Sans KR',sans-serif;background:#cfd9f7;padding:24px 14px;}
+
+    .page-header{text-align:center;margin-bottom:22px;}
+    .page-header h2{font-size:17px;font-weight:700;color:#0d1f4e;margin-bottom:4px;}
+    .page-header p{font-size:12px;color:#7a8fb5;}
+
+    /* ===== 2컬럼 그리드 ===== */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:880px;margin:0 auto 20px;}
+    @media(max-width:560px){.two-col{grid-template-columns:1fr;}}
+
+    .col-card{
+      background:#ffffff;
+      border-radius:18px;padding:22px 18px;
+      box-shadow:0 6px 22px rgba(13,31,78,0.20), 0 2px 6px rgba(13,31,78,0.10);
+    }
+    .col-card.risk{border:2px solid #ef9a9a;border-top:5px solid #e53935;}
+    .col-card.opp{border:2px solid #a5d6a7;border-top:5px solid #43a047;}
+
+    .col-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid #e8eeff;}
+    .col-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 2px 8px rgba(0,0,0,0.10);}
+    .risk .col-icon{background:#fce4ec;}
+    .opp .col-icon{background:#e8f5e9;}
+    .col-header h3{font-size:15px;font-weight:700;}
+    .risk .col-header h3{color:#b71c1c;}
+    .opp .col-header h3{color:#1b5e20;}
+    .col-header p{font-size:11px;color:#8a9ab5;margin-top:2px;}
+
+    /* 항목 */
+    .item{display:flex;gap:12px;padding:12px 0;border-bottom:1px dashed #e0e8ff;align-items:flex-start;}
+    .item:last-child{border-bottom:none;padding-bottom:0;}
+    .item-ico{font-size:18px;flex-shrink:0;width:24px;text-align:center;margin-top:1px;}
+    .item-title{font-size:13px;font-weight:700;color:#0d1f4e;margin-bottom:3px;}
+    .item-desc{font-size:12px;color:#4a5570;line-height:1.6;}
+    .sev{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:5px;border:1px solid;}
+    .sev-h{background:#fce4ec;color:#b71c1c;border-color:#ef9a9a;}
+    .sev-m{background:#fff3e0;color:#bf360c;border-color:#ffcc80;}
+    .sev-w{background:#e8f5e9;color:#1b5e20;border-color:#a5d6a7;}
+    .pot-h{background:#e8f5e9;color:#1b5e20;border-color:#a5d6a7;}
+    .pot-m{background:#e3f2fd;color:#0d47a1;border-color:#90caf9;}
+
+    /* ===== 투자 철학 카드 ===== */
+    .philosophy-card{
+      max-width:880px;margin:0 auto 16px;
+      background:linear-gradient(135deg,#0d1f4e 0%,#1565c0 100%);
+      border-radius:18px;padding:26px 24px;color:#fff;
+      box-shadow:0 8px 32px rgba(13,31,78,0.45);
+      border:2px solid rgba(255,255,255,0.12);
+    }
+    .philosophy-card h3{font-size:14px;font-weight:700;margin-bottom:14px;color:#ffd54f;}
+    .quote-text{font-size:14px;font-style:italic;line-height:1.75;color:rgba(255,255,255,0.92);margin-bottom:10px;border-left:3px solid #ffd54f;padding-left:16px;}
+    .quote-source{font-size:11px;color:rgba(255,255,255,0.48);padding-left:16px;margin-bottom:18px;}
+    .logic-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;}
+    .logic-chip{
+      background:rgba(255,255,255,0.10);
+      border:1px solid rgba(255,255,255,0.20);
+      border-radius:12px;padding:12px 10px;
+      font-size:12px;color:rgba(255,255,255,0.88);
+      text-align:center;line-height:1.5;
+    }
+    .logic-chip strong{display:block;color:#ffd54f;font-size:13px;margin-bottom:4px;}
+
+    .source-note{text-align:center;font-size:11px;color:#8090b8;max-width:880px;margin:0 auto;}
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <h2>⚖️ 리스크 &amp; 기회 요인 — 투자자 분석 매트릭스</h2>
+    <p>버크셔 × 테일러모리슨 인수 · 2026.06.01 기준</p>
+  </div>
+
+  <div class="two-col">
+    <!-- 리스크 -->
+    <div class="col-card risk">
+      <div class="col-header">
+        <div class="col-icon">⚠️</div>
+        <div><h3>리스크 요인</h3><p>Risk Factors</p></div>
+      </div>
+      <div class="item">
+        <div class="item-ico">📉</div>
+        <div>
+          <div class="item-title">모기지 금리 고착화</div>
+          <div class="item-desc">7%대 금리 지속 시 주택 수요 회복 지연. 4월 신규 주택착공 전월비 -2.8%, 단독주택 -9%(지난해 8월 이후 최대 감소폭)</div>
+          <span class="sev sev-h">HIGH RISK</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">🏗️</div>
+        <div>
+          <div class="item-title">건축비 인플레이션</div>
+          <div class="item-desc">인플레이션 재점화 시 목재·인건비·자재비 상승으로 마진 압박. 관세 영향도 자재비에 반영 가능</div>
+          <span class="sev sev-m">MID RISK</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">⚖️</div>
+        <div>
+          <div class="item-title">반독점 규제 심사</div>
+          <div class="item-desc">버크셔+테일러모리슨 = 미국 4위 건설사. FTC 심사 강화 가능성. 거래 종결 2026년 하반기 예정으로 불확실성 지속</div>
+          <span class="sev sev-m">MID RISK</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">📊</div>
+        <div>
+          <div class="item-title">거시경제 둔화</div>
+          <div class="item-desc">미국 GDP 둔화 또는 경기침체 진입 시 주택 수요 급감. BRK 주가 올해 -5.6% 언더퍼폼 상태</div>
+          <span class="sev sev-w">WATCH</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">🔄</div>
+        <div>
+          <div class="item-title">통합 실패 리스크</div>
+          <div class="item-desc">버크셔의 전통적 '독립 경영' 원칙을 벗어난 통합 플랫폼 추진. 실행 리스크 및 경영진 이탈 가능성</div>
+          <span class="sev sev-w">WATCH</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 기회 -->
+    <div class="col-card opp">
+      <div class="col-header">
+        <div class="col-icon">🚀</div>
+        <div><h3>기회 요인</h3><p>Opportunity Factors</p></div>
+      </div>
+      <div class="item">
+        <div class="item-ico">🏡</div>
+        <div>
+          <div class="item-title">구조적 주택 공급 부족</div>
+          <div class="item-desc">미국 주택 공급 부족은 단기 해소 불가. 밀레니얼 수요 + 이민 증가 + 가구 형성 확대 → 장기 수요 견고</div>
+          <span class="sev pot-h">HIGH POTENTIAL</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">💰</div>
+        <div>
+          <div class="item-title">저점 매수 — 탁월한 밸류에이션</div>
+          <div class="item-desc">P/B 0.9x(업계 평균 1.3~1.8x), P/E 8.79x에 인수. 버크셔의 '가치투자' 판단 → 섹터 저점 신호</div>
+          <span class="sev pot-h">HIGH POTENTIAL</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">🤝</div>
+        <div>
+          <div class="item-title">통합 플랫폼 시너지</div>
+          <div class="item-desc">Clayton+Taylor Morrison = 4위 규모. 토지협상력·자재비·모기지 buydown 능력 확대. 자재계열사 시너지</div>
+          <span class="sev pot-h">HIGH POTENTIAL</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">📉</div>
+        <div>
+          <div class="item-title">금리 인하 사이클 기대</div>
+          <div class="item-desc">Fed 금리인하 시작 시 주택 수요 폭발적 증가 기대. 사이클 전환 최대 수혜 포지션 선점</div>
+          <span class="sev pot-m">MID POTENTIAL</span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-ico">🦾</div>
+        <div>
+          <div class="item-title">아벨 CEO 리더십 신호탄</div>
+          <div class="item-desc">버핏 "그렉이 더 빠르고 매끄럽게 해냈다" 극찬. 투자자 신뢰 회복 + BRK 주가 반등 촉매 기대</div>
+          <span class="sev pot-m">MID POTENTIAL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="philosophy-card">
+    <h3>💡 버크셔의 사이클 투자 논리 — 왜 지금인가?</h3>
+    <div class="quote-text">"Berkshire is acquiring a best-in-class national homebuilder — Over time, we expect to unify our site-built homebuilding operations into a combined platform."</div>
+    <div class="quote-source">— Greg Abel, CEO of Berkshire Hathaway (2026.05.31 공식 발표)</div>
+    <div class="logic-row">
+      <div class="logic-chip"><strong>① 저점 인식</strong>착공 감소 = 공급 제한<br/>수요는 결국 돌아온다</div>
+      <div class="logic-chip"><strong>② 규모 확대</strong>4위 홈빌더 도약<br/>협상력·효율성 극대화</div>
+      <div class="logic-chip"><strong>③ 현금 배치</strong>$397B 중 1.7%<br/>부담 없는 전략적 베팅</div>
+      <div class="logic-chip"><strong>④ 인구통계</strong>밀레니얼+이민 수요<br/>장기 구조적 성장</div>
+    </div>
+  </div>
+
+  <div class="source-note">출처: CNBC · Bloomberg · Fortune · HousingWire · Invezz · 이데일리 (2026.06.01) &nbsp;·&nbsp; 투자 판단은 본인 책임입니다.</div>
+</body>
+</html>
