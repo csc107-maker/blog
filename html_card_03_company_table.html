@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta property="og:title" content="젠슨 황 방한 — 한국 기업별 직접 영향 분석표 2026" />
+<meta property="og:description" content="삼성전자·SK하이닉스·LG전자·네이버·현대차 — 엔비디아 생태계 내 수혜 강도, 협력 분야, 주가 촉매 완전 비교 분석" />
+<meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop" />
+<meta property="og:url" content="https://yourblog.com/jensen-huang-korea-companies" />
+<title>한국 기업별 젠슨 황 방한 영향 분석</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #eef2ff;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; }
+
+  .title-block {
+    background: white;
+    border-radius: 20px 20px 0 0;
+    padding: 32px 36px 24px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #76b900;
+    margin-bottom: 8px;
+  }
+
+  .title-block h2 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .title-block p { font-size: 0.85rem; color: #888; }
+
+  .table-wrap {
+    background: white;
+    overflow-x: auto;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.09);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+  }
+
+  thead tr {
+    background: #1a1a2e;
+    color: white;
+  }
+
+  thead th {
+    padding: 14px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  thead th:first-child { border-radius: 0; }
+
+  tbody tr {
+    border-bottom: 1px solid #f0f4ff;
+    transition: background 0.2s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f8faff; }
+
+  td {
+    padding: 16px 16px;
+    font-size: 0.82rem;
+    color: #333;
+    vertical-align: top;
+  }
+
+  .company-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 130px;
+  }
+
+  .company-emoji {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .company-name { font-weight: 800; font-size: 0.88rem; color: #1a1a2e; }
+  .company-sub { font-size: 0.74rem; color: #888; }
+
+  .strength-bar {
+    display: flex;
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .bar-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+
+  .active-dot { }
+  .inactive-dot { background: #e5e7eb !important; }
+
+  .tag-mini {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin: 2px 2px 2px 0;
+    border: 1px solid;
+  }
+
+  .catalyst-box {
+    background: #f8f9ff;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    color: #444;
+    line-height: 1.5;
+    border-left: 3px solid;
+  }
+
+  .meeting-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 36px;
+    background: #f8faff;
+    border-top: 1px solid #eee;
+    font-size: 11px;
+    color: #666;
+    border-radius: 0 0 20px 20px;
+    flex-wrap: wrap;
+  }
+
+  .legend-row span { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="title-block">
+    <div class="eyebrow">📊 기업별 영향 분석 비교표</div>
+    <h2>젠슨 황 방한 — 한국 5대 기업 수혜 강도 비교</h2>
+    <p>엔비디아 생태계 내 협력 분야, 수혜 강도, 주가 촉매 요인을 기업별로 정리했습니다.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>기업</th>
+          <th>회동 예정</th>
+          <th>핵심 협력 분야</th>
+          <th>수혜 강도</th>
+          <th>주가 촉매 (단기)</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- 삼성전자 -->
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-emoji" style="background:#e8f4fd;">📱</div>
+              <div>
+                <div class="company-name">삼성전자</div>
+                <div class="company-sub">005930</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="meeting-badge" style="background:#e8f4fd; color:#1a73e8; border: 1px solid #90c8f0;">
+              ✅ 이재용 회장
+            </span>
+          </td>
+          <td>
+            <span class="tag-mini" style="color:#1a73e8; border-color:#1a73e8; background:#e8f4fd;">HBM4E 공급</span>
+            <span class="tag-mini" style="color:#1a73e8; border-color:#1a73e8; background:#e8f4fd;">파운드리</span>
+            <span class="tag-mini" style="color:#1a73e8; border-color:#1a73e8; background:#e8f4fd;">AI PC 메모리</span>
+            <span class="tag-mini" style="color:#1a73e8; border-color:#1a73e8; background:#e8f4fd;">냉각(플랙트)</span>
+          </td>
+          <td>
+            <div class="strength-bar">
+              <div class="bar-dot active-dot" style="background:#1a73e8;"></div>
+              <div class="bar-dot active-dot" style="background:#1a73e8;"></div>
+              <div class="bar-dot active-dot" style="background:#1a73e8;"></div>
+              <div class="bar-dot active-dot" style="background:#1a73e8;"></div>
+              <div class="bar-dot inactive-dot"></div>
+            </div>
+            <div style="font-size:11px; color:#1a73e8; margin-top:4px; font-weight:700;">★★★★☆ 높음</div>
+          </td>
+          <td>
+            <div class="catalyst-box" style="border-color:#1a73e8;">
+              HBM4E 퀄 테스트 통과 공식 확인 → 베라 루빈 공급망 편입 확정 여부
+            </div>
+          </td>
+        </tr>
+
+        <!-- SK하이닉스 -->
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-emoji" style="background:#fff0e8;">💾</div>
+              <div>
+                <div class="company-name">SK하이닉스</div>
+                <div class="company-sub">000660</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="meeting-badge" style="background:#fff0e8; color:#e8520a; border: 1px solid #f0a070;">
+              ✅ 최태원 회장
+            </span>
+          </td>
+          <td>
+            <span class="tag-mini" style="color:#e8520a; border-color:#e8520a; background:#fff0e8;">HBM4 1티어</span>
+            <span class="tag-mini" style="color:#e8520a; border-color:#e8520a; background:#fff0e8;">소캠2 양산</span>
+            <span class="tag-mini" style="color:#e8520a; border-color:#e8520a; background:#fff0e8;">차세대 메모리 R&D</span>
+          </td>
+          <td>
+            <div class="strength-bar">
+              <div class="bar-dot" style="background:#e8520a;"></div>
+              <div class="bar-dot" style="background:#e8520a;"></div>
+              <div class="bar-dot" style="background:#e8520a;"></div>
+              <div class="bar-dot" style="background:#e8520a;"></div>
+              <div class="bar-dot" style="background:#e8520a;"></div>
+            </div>
+            <div style="font-size:11px; color:#e8520a; margin-top:4px; font-weight:700;">★★★★★ 최고</div>
+          </td>
+          <td>
+            <div class="catalyst-box" style="border-color:#e8520a;">
+              베라 루빈 본격 양산 = HBM4 오더 물량 직접 확대. 분기 실적 상향 조정 기대.
+            </div>
+          </td>
+        </tr>
+
+        <!-- LG전자 -->
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-emoji" style="background:#edf7ee;">🤖</div>
+              <div>
+                <div class="company-name">LG전자</div>
+                <div class="company-sub">066570</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="meeting-badge" style="background:#edf7ee; color:#1b9e3e; border: 1px solid #80c880;">
+              ✅ 구광모 회장 (첫 회동)
+            </span>
+          </td>
+          <td>
+            <span class="tag-mini" style="color:#1b9e3e; border-color:#1b9e3e; background:#edf7ee;">피지컬 AI 로봇</span>
+            <span class="tag-mini" style="color:#1b9e3e; border-color:#1b9e3e; background:#edf7ee;">Isaac 플랫폼</span>
+            <span class="tag-mini" style="color:#1b9e3e; border-color:#1b9e3e; background:#edf7ee;">LG이노텍 기판</span>
+            <span class="tag-mini" style="color:#1b9e3e; border-color:#1b9e3e; background:#edf7ee;">엑사원 AI</span>
+          </td>
+          <td>
+            <div class="strength-bar">
+              <div class="bar-dot" style="background:#1b9e3e;"></div>
+              <div class="bar-dot" style="background:#1b9e3e;"></div>
+              <div class="bar-dot" style="background:#1b9e3e;"></div>
+              <div class="bar-dot" style="background:#1b9e3e;"></div>
+              <div class="bar-dot inactive-dot"></div>
+            </div>
+            <div style="font-size:11px; color:#1b9e3e; margin-top:4px; font-weight:700;">★★★★☆ 높음 (급상승 중)</div>
+          </td>
+          <td>
+            <div class="catalyst-box" style="border-color:#1b9e3e;">
+              구광모-젠슨 황 MOU 체결 여부. 피지컬 AI 로봇 공동 개발 발표 시 주가 급등 예상.
+            </div>
+          </td>
+        </tr>
+
+        <!-- 네이버 -->
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-emoji" style="background:#f0fff4;">🌐</div>
+              <div>
+                <div class="company-name">네이버</div>
+                <div class="company-sub">035420</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="meeting-badge" style="background:#f0fff4; color:#03c75a; border: 1px solid #70e090;">
+              ✅ 이해진 의장 + 사옥 방문
+            </span>
+          </td>
+          <td>
+            <span class="tag-mini" style="color:#03c75a; border-color:#03c75a; background:#f0fff4;">AI 클라우드 허브</span>
+            <span class="tag-mini" style="color:#03c75a; border-color:#03c75a; background:#f0fff4;">옴니버스 로보틱스</span>
+            <span class="tag-mini" style="color:#03c75a; border-color:#03c75a; background:#f0fff4;">HyperCLOVA X</span>
+          </td>
+          <td>
+            <div class="strength-bar">
+              <div class="bar-dot" style="background:#03c75a;"></div>
+              <div class="bar-dot" style="background:#03c75a;"></div>
+              <div class="bar-dot" style="background:#03c75a;"></div>
+              <div class="bar-dot inactive-dot"></div>
+              <div class="bar-dot inactive-dot"></div>
+            </div>
+            <div style="font-size:11px; color:#03c75a; margin-top:4px; font-weight:700;">★★★☆☆ 중간</div>
+          </td>
+          <td>
+            <div class="catalyst-box" style="border-color:#03c75a;">
+              엔비디아 AI 클라우드 한국 허브 공식 지정 발표 시 단기 주가 모멘텀.
+            </div>
+          </td>
+        </tr>
+
+        <!-- 현대차 -->
+        <tr>
+          <td>
+            <div class="company-cell">
+              <div class="company-emoji" style="background:#f8f0ff;">🚗</div>
+              <div>
+                <div class="company-name">현대차그룹</div>
+                <div class="company-sub">005380</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="meeting-badge" style="background:#f8f0ff; color:#7209b7; border: 1px solid #c080e8;">
+              ✅ 정의선 회장
+            </span>
+          </td>
+          <td>
+            <span class="tag-mini" style="color:#7209b7; border-color:#7209b7; background:#f8f0ff;">자율주행 AI</span>
+            <span class="tag-mini" style="color:#7209b7; border-color:#7209b7; background:#f8f0ff;">보스턴다이나믹스</span>
+            <span class="tag-mini" style="color:#7209b7; border-color:#7209b7; background:#f8f0ff;">DRIVE 플랫폼</span>
+          </td>
+          <td>
+            <div class="strength-bar">
+              <div class="bar-dot" style="background:#7209b7;"></div>
+              <div class="bar-dot" style="background:#7209b7;"></div>
+              <div class="bar-dot" style="background:#7209b7;"></div>
+              <div class="bar-dot inactive-dot"></div>
+              <div class="bar-dot inactive-dot"></div>
+            </div>
+            <div style="font-size:11px; color:#7209b7; margin-top:4px; font-weight:700;">★★★☆☆ 중간</div>
+          </td>
+          <td>
+            <div class="catalyst-box" style="border-color:#7209b7;">
+              자율주행 AI 플랫폼 공동 개발 발표, 로봇 AI 협력 구체화 여부.
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="legend-row">
+      <span>★★★★★ 최고</span> · 수혜 강도는 엔비디아 직접 언급 빈도·공급망 지위·협력 구체성을 종합 평가한 것입니다.
+      <span style="margin-left: auto; color: #aaa; font-size: 10px;">투자 참고용 · 수익 보장 없음</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
