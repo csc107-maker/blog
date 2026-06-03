@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta property="og:title" content="AI·반도체 종목 성과 분석 — 중동 악재를 이긴 섹터 (2026.06)" />
+<meta property="og:description" content="마벨, HPE, 엔비디아, 브로드컴 등 AI 반도체 주요 종목의 최근 주가 흐름과 핵심 모멘텀을 정리한 비교 분석표입니다." />
+<meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&h=630&fit=crop" />
+<meta property="og:url" content="https://blog.naver.com/your-blog/ai-semiconductor-analysis-2026" />
+<title>AI·반도체 종목 성과 비교표</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f8ff;
+    padding: 28px 16px;
+  }
+  .container { max-width: 820px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .header .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(90deg, #1a3c8f, #6366f1);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 5px 16px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    color: #0d1f54;
+    font-weight: 700;
+  }
+  .header p { color: #6a7a99; font-size: 13px; margin-top: 6px; }
+
+  .table-wrap {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(26,60,143,0.09);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .table-wrap table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead tr {
+    background: linear-gradient(90deg, #1a3c8f, #2563eb);
+  }
+  thead th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  tbody tr {
+    border-bottom: 1px solid #eef2ff;
+    transition: background 0.15s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #f0f4ff; }
+  tbody tr.highlight { background: #fff8e1; }
+  tbody td {
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #2a3a5a;
+  }
+  .ticker {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #1a3c8f;
+    background: #e8efff;
+    padding: 3px 9px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  .company-name { font-weight: 600; color: #1a1f40; }
+  .change {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .change.up { color: #1db954; background: #e8f9ee; }
+  .change.down { color: #e84040; background: #ffeaea; }
+  .catalyst { font-size: 12px; color: #5a6a8a; line-height: 1.4; }
+  .star {
+    color: #f59e0b;
+    font-size: 13px;
+  }
+  .trend-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #8899bb;
+  }
+  .bar-outer {
+    width: 80px;
+    height: 6px;
+    background: #eef2ff;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .bar-inner {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #1db954, #2bdb6d);
+  }
+  .bar-inner.down-bar { background: linear-gradient(90deg, #e84040, #ff6b6b); }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .sum-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 3px 14px rgba(26,60,143,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sum-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #9aaabb;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .sum-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1f40;
+  }
+  .sum-note { font-size: 11px; color: #7a8aaa; }
+  .source-tag {
+    text-align: right;
+    font-size: 10px;
+    color: #aab5cc;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="tag"><i class="ti ti-cpu"></i> AI 섹터 분석</div>
+    <h2>AI·반도체 주요 종목 성과 비교</h2>
+    <p>중동 리스크를 이겨낸 섹터 — 2026년 6월 기준 주요 모멘텀</p>
+  </div>
+
+  <div class="summary-grid">
+    <div class="sum-card">
+      <div class="sum-label">PHLX 반도체 지수</div>
+      <div class="sum-value" style="color:#1db954">+6%</div>
+      <div class="sum-note">MRVL 급등일 기준</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">S&P 500 연속 상승</div>
+      <div class="sum-value" style="color:#1a3c8f">9주</div>
+      <div class="sum-note">2026.06.02 기준</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">S&P 500 최고치</div>
+      <div class="sum-value">7,610</div>
+      <div class="sum-note">6월 2일 사상 최고</div>
+    </div>
+    <div class="sum-card">
+      <div class="sum-label">Broadcom 실적 후</div>
+      <div class="sum-value" style="color:#f59e0b">주목</div>
+      <div class="sum-note">4거래일 +14% 선반영</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>티커</th>
+          <th>기업명</th>
+          <th>등락률</th>
+          <th>모멘텀 강도</th>
+          <th>핵심 카탈리스트</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight">
+          <td><span class="ticker">MRVL</span></td>
+          <td><span class="company-name">마벨 테크놀로지</span> <span class="star">★★★</span></td>
+          <td><span class="change up">+21% → +12%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner" style="width:95%"></div></div>
+              <span>95</span>
+            </div>
+          </td>
+          <td class="catalyst">젠슨 황, 컴퓨텍스에서 "다음 조달러 기업" 직접 언급. AI 데이터센터 커넥티비티 핵심 역할.</td>
+        </tr>
+        <tr>
+          <td><span class="ticker">HPE</span></td>
+          <td><span class="company-name">휴렛팩커드 엔터프라이즈</span> <span class="star">★★★</span></td>
+          <td><span class="change up">+26%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner" style="width:90%"></div></div>
+              <span>90</span>
+            </div>
+          </td>
+          <td class="catalyst">2분기 어닝 서프라이즈 + 수익 목표 상향. AI 인프라 수요 폭발적 증가 낙관 전망.</td>
+        </tr>
+        <tr class="highlight">
+          <td><span class="ticker">AVGO</span></td>
+          <td><span class="company-name">브로드컴</span> <span class="star">★★</span></td>
+          <td><span class="change up">+14%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner" style="width:75%"></div></div>
+              <span>75</span>
+            </div>
+          </td>
+          <td class="catalyst">직전 4거래일 +14% 선행 반영. 분기 실적 발표 대기. AI 반도체 랠리 동승.</td>
+        </tr>
+        <tr>
+          <td><span class="ticker">NVDA</span></td>
+          <td><span class="company-name">엔비디아</span> <span class="star">★★</span></td>
+          <td><span class="change up">+0.4%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner" style="width:70%"></div></div>
+              <span>70</span>
+            </div>
+          </td>
+          <td class="catalyst">컴퓨텍스 PC용 신규 칩 발표. 52주 최고가 $236.54 근접. FY2026 매출 +65% YoY($215.9B).</td>
+        </tr>
+        <tr>
+          <td><span class="ticker">GOOGL</span></td>
+          <td><span class="company-name">알파벳</span> <span class="star">★★</span></td>
+          <td><span class="change up">AI 투자</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner" style="width:65%"></div></div>
+              <span>65</span>
+            </div>
+          </td>
+          <td class="catalyst">AI 데이터센터 $800억 조달 계획 발표. 버크셔 해서웨이 $100억 투자 포함.</td>
+        </tr>
+        <tr>
+          <td><span class="ticker">KKR</span></td>
+          <td><span class="company-name">KKR & Co.</span></td>
+          <td><span class="change down">-5.7%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner down-bar" style="width:40%"></div></div>
+              <span>-40</span>
+            </div>
+          </td>
+          <td class="catalyst">스위스 파트너스그룹 펀드 인출 제한 여파. 대체자산운용사 전반 매도세.</td>
+        </tr>
+        <tr>
+          <td><span class="ticker">BX</span></td>
+          <td><span class="company-name">블랙스톤</span></td>
+          <td><span class="change down">-5.5%</span></td>
+          <td>
+            <div class="trend-bar">
+              <div class="bar-outer"><div class="bar-inner down-bar" style="width:38%"></div></div>
+              <span>-38</span>
+            </div>
+          </td>
+          <td class="catalyst">대체자산운용사 동반 약세. 사모펀드 환매 제한 우려 전이.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="source-tag">출처: Reuters, TheStreet, Benzinga, StockAnalysis | 2026.06.03 기준 / 투자 권유 아님</div>
+</div>
+</body>
+</html>
