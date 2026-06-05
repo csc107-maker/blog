@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="한국 증시 검은 금요일 — 2026년 6월 5일 시장 지표 요약" />
+  <meta property="og:description" content="코스피 6.76% 급락, 코스닥 1000선 붕괴, 사이드카 발동 — 오늘의 주요 시장 지표를 한눈에 확인하세요." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80" />
+  <meta property="og:url" content="https://yourblog.com/korea-stock-black-friday-2026" />
+  <title>한국 증시 검은 금요일 — 시장 지표 대시보드</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Roboto+Mono:wght@500;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: #f0f4f8;
+      padding: 24px 16px;
+    }
+
+    .dashboard {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .dashboard-header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 24px 28px 20px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 160px; height: 160px;
+      background: rgba(255,80,80,0.08);
+      border-radius: 50%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #ff3b3b;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .dashboard-header h1 {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .dashboard-header .subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      background: #fff;
+    }
+
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .metric-card {
+      padding: 20px 18px;
+      border-right: 1px solid #eef0f3;
+      border-bottom: 1px solid #eef0f3;
+      background: #fff;
+      transition: background 0.2s;
+    }
+
+    .metric-card:hover { background: #fafbff; }
+
+    .metric-label {
+      font-size: 11px;
+      color: #8a9bb0;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .metric-value.down { color: #e53935; }
+    .metric-value.up { color: #1e88e5; }
+    .metric-value.warn { color: #f57c00; }
+
+    .metric-change {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .metric-change.neg { color: #e53935; }
+    .metric-change.pos { color: #1e88e5; }
+
+    .arrow { font-size: 14px; }
+
+    .metric-sub {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 4px;
+    }
+
+    .alert-bar {
+      background: #fff3e0;
+      border-left: 4px solid #f57c00;
+      padding: 14px 20px;
+      font-size: 13px;
+      color: #5d4037;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-icon { font-size: 18px; }
+
+    .dashboard-footer {
+      background: #f7f9fc;
+      border-radius: 0 0 16px 16px;
+      padding: 12px 20px;
+      font-size: 11px;
+      color: #9aacba;
+      text-align: right;
+      border-top: 1px solid #eef0f3;
+    }
+
+    .thumbnail-row {
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      padding: 10px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .thumb-icon {
+      width: 44px; height: 44px;
+      background: rgba(229,57,53,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .thumb-text { color: #fff; font-size: 13px; }
+    .thumb-text strong { display: block; font-size: 15px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Thumbnail -->
+    <div class="dashboard-header">
+      <div class="badge">🔴 LIVE — 2026.06.05</div>
+      <h1>한국 증시 '검은 금요일'<br>— 실시간 시장 지표 요약</h1>
+      <p class="subtitle">브로드컴 쇼크 + 중동 지정학 리스크 + 젠슨 황 방한에도 폭락</p>
+    </div>
+
+    <!-- 알림 -->
+    <div class="alert-bar">
+      <span class="alert-icon">⚠️</span>
+      오전 9:08 코스피200 선물 -5.20% — <strong>매도 사이드카 발동</strong> (올해 10번째)
+    </div>
+
+    <!-- 지표 카드 그리드 -->
+    <div class="cards-grid">
+      <div class="metric-card">
+        <div class="metric-label">코스피 (장중 저점)</div>
+        <div class="metric-value down">8,055</div>
+        <div class="metric-change neg"><span class="arrow">▼</span> -584.29p (-6.76%)</div>
+        <div class="metric-sub">전일 종가 대비</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">코스닥</div>
+        <div class="metric-value down">996</div>
+        <div class="metric-change neg"><span class="arrow">▼</span> -54.34p (-5.18%)</div>
+        <div class="metric-sub">석 달 만에 1000선 붕괴</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">SK하이닉스</div>
+        <div class="metric-value down">-9%대</div>
+        <div class="metric-change neg"><span class="arrow">▼</span> 장중 급락</div>
+        <div class="metric-sub">브로드컴 쇼크 직격</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">WTI 원유 선물</div>
+        <div class="metric-value warn">$92~96</div>
+        <div class="metric-change neg"><span class="arrow">▲</span> 중동 리스크</div>
+        <div class="metric-sub">52주 범위: $54~$117</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">원·달러 환율 전망</div>
+        <div class="metric-value warn">1,569원</div>
+        <div class="metric-change neg"><span class="arrow">▲</span> 6월 평균 전망</div>
+        <div class="metric-sub">최대 1,623원 예상</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">브로드컴(AVGO)</div>
+        <div class="metric-value down">-12.7%</div>
+        <div class="metric-change neg"><span class="arrow">▼</span> 개장 전 거래</div>
+        <div class="metric-sub">AI 가이던스 쇼크</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">다우존스 (전일)</div>
+        <div class="metric-value up">51,561</div>
+        <div class="metric-change pos"><span class="arrow">▲</span> +1.73% 사상 최고</div>
+        <div class="metric-sub">금융·헬스케어 주도</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">한국 금융주</div>
+        <div class="metric-value up">상승</div>
+        <div class="metric-change pos"><span class="arrow">▲</span> 방어주 강세</div>
+        <div class="metric-sub">섹터 로테이션 진행</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">미국 6월 CPI 발표</div>
+        <div class="metric-value warn">D-5</div>
+        <div class="metric-change"><span class="arrow">📅</span> 6월 10일 한국시간 밤</div>
+        <div class="metric-sub">인플레이션 결정 변수</div>
+      </div>
+    </div>
+
+    <div class="dashboard-footer">
+      데이터 출처: 파이낸셜뉴스, Investing.com, 머니투데이, TradingKey | 2026.06.05 기준 | 투자 권유가 아닙니다
+    </div>
+  </div>
+</body>
+</html>
