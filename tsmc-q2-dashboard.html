@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TSMC 2026년 실적 대시보드</title>
+  <meta property="og:title" content="TSMC 2026년 1분기 실적 & 2분기 가이던스 대시보드" />
+  <meta property="og:description" content="TSMC 2026년 1분기 어닝 서프라이즈 분석 및 2분기 가이던스 비교. AI·HPC 수요 폭발 속 사상 최대 실적 기록." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/1a56db/ffffff?text=TSMC+2026+Dashboard" />
+  <meta property="og:url" content="https://yourblog.com/tsmc-q2-2026" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: #f0f4ff;
+      padding: 24px 16px;
+      min-width: 320px;
+    }
+    .widget-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .widget-header {
+      background: linear-gradient(135deg, #1a56db 0%, #0e3fa3 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 22px 28px 18px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .widget-header .logo {
+      background: rgba(255,255,255,0.18);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .widget-header .title-block h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .widget-header .title-block p {
+      font-size: 0.78rem;
+      opacity: 0.82;
+      margin-top: 2px;
+    }
+    .badge-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 3px 11px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge.green { background: #22c55e; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #6b7280;
+      padding: 18px 28px 8px;
+      background: #fff;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 0 20px 20px;
+      background: #fff;
+    }
+    .metric-card {
+      background: #f8faff;
+      border: 1.5px solid #e0e9ff;
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      position: relative;
+      transition: box-shadow .2s;
+    }
+    .metric-card:hover { box-shadow: 0 4px 18px rgba(26,86,219,0.12); }
+    .metric-card .card-icon {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-bottom: 10px;
+    }
+    .metric-card .card-label {
+      font-size: 0.72rem;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .metric-card .card-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #1e293b;
+      line-height: 1.2;
+    }
+    .metric-card .card-sub {
+      font-size: 0.72rem;
+      margin-top: 5px;
+      color: #64748b;
+    }
+    .metric-card .card-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .up { color: #16a34a; background: #dcfce7; }
+    .down { color: #dc2626; background: #fee2e2; }
+    .neutral { color: #1a56db; background: #e0e9ff; }
+    .divider {
+      height: 1px; background: #e0e9ff; margin: 0 20px;
+    }
+    /* Compare section */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .compare-table th {
+      background: #f0f4ff;
+      padding: 10px 14px;
+      text-align: left;
+      color: #374151;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .compare-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    .compare-table tr:hover td { background: #f8faff; }
+    .actual-col { font-weight: 700; color: #1a56db; }
+    .guide-col { font-weight: 700; color: #0f766e; }
+    .vs-badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 2px 8px; border-radius: 8px;
+      font-size: 0.68rem; font-weight: 700;
+    }
+    .table-wrap {
+      padding: 0 20px 24px;
+      background: #fff;
+      border-radius: 0 0 16px 16px;
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 0.68rem;
+      color: #94a3b8;
+      margin-top: 14px;
+    }
+    @media (max-width: 600px) {
+      .widget-header { flex-direction: column; align-items: flex-start; }
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="widget-wrap">
+  <!-- Header -->
+  <div class="widget-header">
+    <div class="logo">TSMC</div>
+    <div class="title-block">
+      <h2>2026년 분기 실적 대시보드</h2>
+      <p>1분기 어닝 서프라이즈 & 2분기 가이던스 비교 분석</p>
+      <div class="badge-row">
+        <span class="badge">TSM · NYSE</span>
+        <span class="badge">TWSE: 2330</span>
+        <span class="badge green">Q1 어닝 서프라이즈 ✓</span>
+        <span class="badge">2026.04.16 발표</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q1 2026 Actual Results -->
+  <div class="section-label">📊 Q1 2026 실제 실적 (2026.04.16 발표)</div>
+  <div class="cards-grid">
+    <div class="metric-card">
+      <div class="card-icon" style="background:#e0e9ff;">💰</div>
+      <div class="card-label">분기 매출 (USD)</div>
+      <div class="card-value">$35.9B</div>
+      <div class="card-sub">NT$1조1,341억</div>
+      <span class="card-badge up">YoY +40.6% ↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#fef3c7;">📈</div>
+      <div class="card-label">총이익률 (GPM)</div>
+      <div class="card-value">66.2%</div>
+      <div class="card-sub">전분기 62.3% → +3.9%p</div>
+      <span class="card-badge up">컨센서스 상회</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#dcfce7;">🏭</div>
+      <div class="card-label">영업이익률 (OPM)</div>
+      <div class="card-value">58.1%</div>
+      <div class="card-sub">전년 동기 48.5%</div>
+      <span class="card-badge up">+9.6%p YoY ↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#fce7f3;">💎</div>
+      <div class="card-label">순이익</div>
+      <div class="card-value">NT$572B</div>
+      <div class="card-sub">한화 약 27조 원</div>
+      <span class="card-badge up">YoY +58.3% ↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#ede9fe;">🧮</div>
+      <div class="card-label">순이익률</div>
+      <div class="card-value">50.5%</div>
+      <div class="card-sub">ROE 연율 40.5%</div>
+      <span class="card-badge up">역대 최고 수준</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#e0f2fe;">🤖</div>
+      <div class="card-label">HPC 매출 비중</div>
+      <div class="card-value">61%</div>
+      <div class="card-sub">AI·서버·네트워킹</div>
+      <span class="card-badge up">QoQ +20% ↑</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#fff7ed;">⚡</div>
+      <div class="card-label">3nm 비중</div>
+      <div class="card-value">25%</div>
+      <div class="card-sub">2024년 15% → +10%p</div>
+      <span class="card-badge neutral">첨단공정 74%</span>
+    </div>
+    <div class="metric-card">
+      <div class="card-icon" style="background:#f0fdf4;">🏗️</div>
+      <div class="card-label">분기 CapEx</div>
+      <div class="card-value">$11.1B</div>
+      <div class="card-sub">연간 $52~56B 목표</div>
+      <span class="card-badge neutral">고단 달성 예상</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Q1 vs Q2 Comparison Table -->
+  <div class="section-label">🔮 Q1 실적 vs Q2 가이던스 비교</div>
+  <div class="table-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>지표</th>
+          <th>Q1 2026 실적</th>
+          <th>Q2 2026 가이던스</th>
+          <th>시장 컨센서스</th>
+          <th>평가</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>매출 (USD)</strong></td>
+          <td class="actual-col">$35.9B</td>
+          <td class="guide-col">$39.0B ~ $40.2B</td>
+          <td>$37.9B</td>
+          <td><span class="vs-badge up">▲ 컨센서스 +4%</span></td>
+        </tr>
+        <tr>
+          <td><strong>QoQ 성장률</strong></td>
+          <td class="actual-col">+6.4%</td>
+          <td class="guide-col">+10% (중간값)</td>
+          <td>+5~7%</td>
+          <td><span class="vs-badge up">▲ 가속도 증가</span></td>
+        </tr>
+        <tr>
+          <td><strong>YoY 성장률</strong></td>
+          <td class="actual-col">+40.6%</td>
+          <td class="guide-col">+32%</td>
+          <td>+28~30%</td>
+          <td><span class="vs-badge up">▲ 지속 강세</span></td>
+        </tr>
+        <tr>
+          <td><strong>총이익률 (GPM)</strong></td>
+          <td class="actual-col">66.2%</td>
+          <td class="guide-col">65.5% ~ 67.5%</td>
+          <td>64.2%</td>
+          <td><span class="vs-badge up">▲ 컨센서스 상회</span></td>
+        </tr>
+        <tr>
+          <td><strong>영업이익률 (OPM)</strong></td>
+          <td class="actual-col">58.1%</td>
+          <td class="guide-col">56.5% ~ 58.5%</td>
+          <td>55.7%</td>
+          <td><span class="vs-badge up">▲ 컨센서스 상회</span></td>
+        </tr>
+        <tr>
+          <td><strong>연간 CapEx</strong></td>
+          <td class="actual-col">$11.1B (Q1)</td>
+          <td class="guide-col">$52~56B (연간 고단)</td>
+          <td>$52~56B</td>
+          <td><span class="vs-badge neutral">= 유지·고단</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footer-note">
+      ※ 출처: TSMC IR, Bloomberg, Investing.com | 2분기 실제 실적 발표: 2026년 7월 중순 예정<br/>
+      ※ 본 자료는 투자 참고용이며 투자 권고가 아닙니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>
