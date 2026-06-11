@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구글 Icefish TPU 10세대 — 삼성·TSMC 3자 협력 구조 분석</title>
+  <meta property="og:title" content="구글 Icefish AI 칩 — 삼성·TSMC 3자 협력 구조 분석" />
+  <meta property="og:description" content="구글의 10세대 TPU 'Icefish'를 둘러싼 삼성전자·TSMC·구글 3자 역할과 협력 구조를 시각 카드로 분석합니다. TSMC 용량 부족이 부른 멀티 파운드리 전략." />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/E8F4FD/1565C0?text=Google+Icefish+TPU+%C3%97+Samsung+%C3%97+TSMC" />
+  <meta property="og:url" content="https://blog.example.com/google-icefish-samsung-tsmc-structure" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #EAF4FB;
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+      color: #1A1A2E;
+      padding: 20px 14px;
+      min-height: 100vh;
+    }
+    .widget {
+      max-width: 760px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(21, 101, 192, 0.14);
+      overflow: hidden;
+    }
+    /* ── HEADER ── */
+    .wg-header {
+      background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+      padding: 24px 28px 20px;
+      color: #fff;
+    }
+    .wg-header .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .wg-header h2 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+    .wg-header p {
+      font-size: 0.75rem;
+      opacity: 0.85;
+      line-height: 1.5;
+    }
+    .source-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 0.67rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+    /* ── STATUS BANNER ── */
+    .status-banner {
+      background: #FFF9C4;
+      border-left: 4px solid #F9A825;
+      padding: 10px 22px;
+      font-size: 0.73rem;
+      color: #5D4037;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* ── FLOW SECTION ── */
+    .flow-section {
+      padding: 26px 24px 20px;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #90A4AE;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+    }
+    .flow-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    /* ── ROLE CARDS ── */
+    .role-card {
+      flex: 1;
+      border-radius: 14px;
+      padding: 18px 14px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-google {
+      background: linear-gradient(145deg, #E8F0FE 0%, #BBDEFB 100%);
+      border: 2px solid #4285F4;
+    }
+    .card-tsmc {
+      background: linear-gradient(145deg, #E8F5E9 0%, #C8E6C9 100%);
+      border: 2px solid #388E3C;
+    }
+    .card-samsung {
+      background: linear-gradient(145deg, #FFF3E0 0%, #FFE0B2 100%);
+      border: 2px solid #EF6C00;
+    }
+    .card-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    .logo-google { background: #4285F4; }
+    .logo-tsmc { background: #388E3C; }
+    .logo-samsung { background: #EF6C00; }
+    .card-company {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+    .company-google { color: #1565C0; }
+    .company-tsmc { color: #2E7D32; }
+    .company-samsung { color: #E65100; }
+    .card-role-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .role-google { background: #4285F4; color: #fff; }
+    .role-tsmc { background: #388E3C; color: #fff; }
+    .role-samsung { background: #EF6C00; color: #fff; }
+    .card-details {
+      list-style: none;
+    }
+    .card-details li {
+      font-size: 0.69rem;
+      color: #424242;
+      line-height: 1.65;
+      padding: 2px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .card-details li::before {
+      content: "▸";
+      color: #90A4AE;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    /* ── ARROWS ── */
+    .arrow-bridge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      flex-shrink: 0;
+      gap: 4px;
+    }
+    .arrow-icon {
+      font-size: 1.4rem;
+      color: #90A4AE;
+    }
+    .arrow-text {
+      font-size: 0.58rem;
+      color: #BDBDBD;
+      text-align: center;
+      max-width: 54px;
+      line-height: 1.3;
+    }
+    /* ── CHIP INFO STRIP ── */
+    .chip-strip {
+      margin: 18px 24px 0;
+      background: #F3F8FF;
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .chip-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.72rem;
+      color: #546E7A;
+    }
+    .chip-item .ti {
+      color: #1565C0;
+      font-size: 1rem;
+    }
+    .chip-item strong { color: #1A237E; }
+    /* ── FOOTER ── */
+    .wg-footer {
+      padding: 12px 24px;
+      background: #F7FAFF;
+      border-top: 1px solid #E3EAF6;
+      font-size: 0.62rem;
+      color: #9E9E9E;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Responsive */
+    @media (max-width: 560px) {
+      .flow-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .arrow-bridge {
+        flex-direction: row;
+        padding: 6px 0;
+      }
+      .arrow-icon { transform: rotate(90deg); }
+      .role-card { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+
+    <!-- HEADER -->
+    <div class="wg-header">
+      <div class="eyebrow">
+        <i class="ti ti-cpu"></i> AI Chip Structure
+      </div>
+      <h2>구글 Icefish TPU 10세대 — 3자 협력 구조 분석</h2>
+      <p>차세대 AI 가속 칩 생산 분업 체계 시각화 | TSMC 용량 부족이 불러온 멀티 파운드리 전략</p>
+      <span class="source-pill">
+        <i class="ti ti-news"></i>
+        Source: The Information · Reuters · Investing.com (2026.06.11)
+      </span>
+    </div>
+
+    <!-- STATUS BANNER -->
+    <div class="status-banner">
+      <i class="ti ti-alert-triangle" style="font-size:1rem; color:#F9A825;"></i>
+      현재 상태: <strong>설계 단계 협의 중</strong> — 확정 계약 아님 / 예상 양산: 빠르면 2028년
+    </div>
+
+    <!-- FLOW SECTION -->
+    <div class="flow-section">
+      <div class="section-label">생산 역할 분담 구조</div>
+
+      <div class="flow-row">
+
+        <!-- GOOGLE CARD -->
+        <div class="role-card card-google">
+          <div class="card-logo logo-google">🔵</div>
+          <div class="card-company company-google">Google</div>
+          <span class="card-role-tag role-google">AI 칩 설계 · 발주</span>
+          <ul class="card-details">
+            <li>제품: Icefish (TPU 10세대)</li>
+            <li>현 세대: Ironwood (TPU 7세대)</li>
+            <li>전략: 멀티 파운드리 다각화</li>
+            <li>파트너: TSMC + 삼성 + 인텔</li>
+            <li>목표: 엔비디아 GPU 대체</li>
+          </ul>
+        </div>
+
+        <!-- ARROW 1 -->
+        <div class="arrow-bridge">
+          <span class="arrow-icon"><i class="ti ti-arrow-right"></i></span>
+          <span class="arrow-text">주 프로세서 위탁</span>
+        </div>
+
+        <!-- TSMC CARD -->
+        <div class="role-card card-tsmc">
+          <div class="card-logo logo-tsmc">🟢</div>
+          <div class="card-company company-tsmc">TSMC</div>
+          <span class="card-role-tag role-tsmc">메인 다이 제조</span>
+          <ul class="card-details">
+            <li>역할: 주 프로세서 생산</li>
+            <li>공정: 2nm / 3nm</li>
+            <li>위치: 대만 · 미국 애리조나</li>
+            <li>현황: 용량 포화 상태</li>
+            <li>웨이퍼 단가: ~$30,000/매</li>
+          </ul>
+        </div>
+
+        <!-- ARROW 2 -->
+        <div class="arrow-bridge">
+          <span class="arrow-icon"><i class="ti ti-arrow-right"></i></span>
+          <span class="arrow-text">I/O 다이 위탁 (협의중)</span>
+        </div>
+
+        <!-- SAMSUNG CARD -->
+        <div class="role-card card-samsung">
+          <div class="card-logo logo-samsung">🟠</div>
+          <div class="card-company company-samsung">Samsung</div>
+          <span class="card-role-tag role-samsung">I/O 다이 제조 (협의)</span>
+          <ul class="card-details">
+            <li>역할: 메모리 연결 다이</li>
+            <li>공정: 2nm SF2 GAA</li>
+            <li>수율: 55~60% (2026)</li>
+            <li>팹: 한국 · 텍사스 테일러</li>
+            <li>강점: 지정학적 분산 가능</li>
+          </ul>
+        </div>
+
+      </div><!-- /.flow-row -->
+
+      <!-- CHIP INFO STRIP -->
+      <div class="chip-strip">
+        <div class="chip-item">
+          <i class="ti ti-calendar-event"></i>
+          <span><strong>양산 목표:</strong> 2028년 (설계 단계)</span>
+        </div>
+        <div class="chip-item">
+          <i class="ti ti-cpu"></i>
+          <span><strong>삼성 공정:</strong> 2nm SF2 GAA</span>
+        </div>
+        <div class="chip-item">
+          <i class="ti ti-building-factory-2"></i>
+          <span><strong>TSMC 배경:</strong> AI 수요 폭증→용량 부족</span>
+        </div>
+        <div class="chip-item">
+          <i class="ti ti-network"></i>
+          <span><strong>멀티팹:</strong> 삼성 + 인텔 동시 협의</span>
+        </div>
+      </div>
+
+    </div><!-- /.flow-section -->
+
+    <!-- FOOTER -->
+    <div class="wg-footer">
+      <i class="ti ti-info-circle"></i>
+      본 자료는 The Information, Reuters, Investing.com 보도 기반 시각화입니다. 투자 권유 아님.
+    </div>
+
+  </div><!-- /.widget -->
+</body>
+</html>
