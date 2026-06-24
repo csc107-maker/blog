@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한화솔루션 2026년 1분기 실적 카드</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Pretendard', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+    background:#FFFCF6; color:#16243E; padding:28px 16px;
+  }
+  .wrap { max-width:700px; margin:0 auto; }
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:6px;
+    background:#E4F2EC; color:#0E8A6D; font-weight:700; font-size:12.5px;
+    padding:5px 12px; border-radius:999px;
+  }
+  h1 { font-size:21px; font-weight:800; margin:14px 0 4px; }
+  .sub { font-size:13px; color:#6B7686; margin-bottom:22px; }
+
+  .panel {
+    background:#16243E; border-radius:18px; padding:22px 20px; margin-bottom:18px;
+    color:#FFFCF6;
+  }
+  .panel .label { font-size:12px; color:#C9D2E0; font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:6px;}
+  .kpi-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .kpi .num {
+    font-family:'IBM Plex Mono', monospace; font-size:24px; font-weight:700; color:#F2B85C;
+  }
+  .kpi .num small { font-size:13px; color:#9BCDB6; font-weight:700; margin-left:6px; }
+  .kpi .name { font-size:11.5px; color:#9FAAC1; margin-top:4px; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px; }
+  .seg-card { background:#FFFFFF; border:1px solid #EDE6D8; border-radius:14px; padding:15px 14px; }
+  .seg-card .seg-name { font-size:12px; font-weight:700; color:#6B7686; margin-bottom:6px; }
+  .seg-card .seg-rev { font-family:'IBM Plex Mono', monospace; font-size:18px; font-weight:700; color:#16243E; }
+  .seg-card .seg-op { font-size:12px; color:#0E8A6D; font-weight:700; margin-top:3px; }
+
+  .table-wrap { background:#FFFFFF; border:1px solid #EDE6D8; border-radius:16px; padding:18px; }
+  .table-wrap h2 { font-size:14.5px; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+  .table-wrap h2 i { color:#E8A33D; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  thead th { text-align:left; background:#FFF4E1; color:#C97F1B; padding:8px 10px; font-weight:700; font-size:11.5px; }
+  thead th:first-child { border-radius:8px 0 0 0; }
+  thead th:last-child { border-radius:0 8px 0 0; }
+  tbody td { padding:9px 10px; border-bottom:1px solid #F1ECE0; color:#3B4A63; }
+  tbody tr:last-child td { border-bottom:none; }
+  .opi { font-weight:700; }
+  .opi.buy { color:#0E8A6D; }
+  .opi.hold { color:#9AA2AE; }
+  .pt { font-family:'IBM Plex Mono', monospace; font-weight:700; color:#16243E; }
+  .arrow { color:#C0392B; font-weight:700; }
+
+  .disclaimer {
+    margin-top:16px; font-size:11.5px; color:#9AA2AE; line-height:1.6;
+    background:#FBF7EE; border:1px dashed #E8D9B8; border-radius:10px; padding:12px 14px;
+  }
+  .source { font-size:11px; color:#B5ADA0; margin-top:14px; text-align:right; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow"><i class="ti ti-report-money"></i>EARNINGS SNAPSHOT</span>
+  <h1>📈 모듈값이 오르자, 한화솔루션 실적이 움직였습니다</h1>
+  <p class="sub">2026년 1분기 연결 실적 (금융감독원 전자공시 DART 기준)</p>
+
+  <div class="panel">
+    <div class="label"><i class="ti ti-building-factory-2"></i> 한화솔루션 · 2026년 1분기 (연결)</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="num">3.88<small>조원</small></div>
+        <div class="name">매출액 (전년比 +25.4%)</div>
+      </div>
+      <div class="kpi">
+        <div class="num">926<small>억원</small></div>
+        <div class="name">영업이익 (전년比 +205.5%, 3개분기 만에 흑자전환)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="seg-card">
+      <div class="seg-name">🔆 신재생에너지(큐셀) 부문</div>
+      <div class="seg-rev">2.11조원</div>
+      <div class="seg-op">영업이익 622억원 (+32%)</div>
+    </div>
+    <div class="seg-card">
+      <div class="seg-name">⚗️ 케미칼·첨단소재 부문</div>
+      <div class="seg-rev">1.59조원</div>
+      <div class="seg-op">흑자 전환 (전력비·원료 선확보 효과)</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <h2><i class="ti ti-target-arrow"></i>증권사 목표주가 변동 (2026.4.29 기준)</h2>
+    <table>
+      <thead>
+        <tr><th>증권사</th><th>의견</th><th>목표가 변경</th><th>핵심 근거</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>유진투자증권</td>
+          <td class="opi buy">매수</td>
+          <td class="pt">5만→8만원 <span class="arrow">▲</span></td>
+          <td>카터스빌 3Q 양산, 7/6 AD/CVD 최종판정 기대</td>
+        </tr>
+        <tr>
+          <td>미래에셋증권</td>
+          <td class="opi hold">중립</td>
+          <td class="pt">3.8만→5만원 <span class="arrow">▲</span></td>
+          <td>美 모듈 판가 상승 + 화학 적자 축소</td>
+        </tr>
+        <tr>
+          <td>하나증권</td>
+          <td class="opi hold">-</td>
+          <td class="pt">2Q 영업익 2,155억(전망)</td>
+          <td>태양광 부문 +100%QoQ 개선 추정</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="disclaimer">
+      <i class="ti ti-alert-triangle"></i> 위 내용은 각 증권사 리서치센터의 자료 발표 시점 기준 전망이며, 실제 실적과 차이가 있을 수 있습니다. 투자 판단과 책임은 투자자 본인에게 있으며, 본 카드는 투자 권유가 아닌 산업 동향 참고 자료입니다.
+    </div>
+  </div>
+
+  <p class="source">자료: 금융감독원 전자공시(DART), 유진투자증권·미래에셋증권·하나증권 리서치(2026.4.29 기준)</p>
+</div>
+</body>
+</html>
