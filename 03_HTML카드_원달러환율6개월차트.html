@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원달러 환율 6개월 타임라인</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  .fx-wrap * { box-sizing: border-box; }
+  .fx-wrap {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 720px; margin: 0 auto;
+    background: #F4F6FA; padding: 28px 20px 24px; border-radius: 20px;
+    color: #14202B;
+  }
+  .fx-topline {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #2F6FED; font-weight: 700; margin-bottom: 10px;
+  }
+  .fx-topline .dot { width: 6px; height: 6px; border-radius: 50%; background: #2F6FED; }
+  .fx-title { font-size: 21px; font-weight: 800; color: #0F2942; margin: 0 0 6px; line-height: 1.4; }
+  .fx-sub { font-size: 13.5px; color: #5B6B7C; margin: 0 0 18px; line-height: 1.6; }
+
+  .fx-chartcard {
+    background: #FFFFFF; border: 1px solid #E3E8EF; border-radius: 16px;
+    padding: 18px 14px 10px; margin-bottom: 16px;
+  }
+  .fx-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 11.5px; color: #5B6B7C; padding: 0 6px 10px; }
+  .fx-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .fx-legend i.sw { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+
+  .fx-callouts { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .fx-callout {
+    background: #FFFFFF; border: 1px solid #E3E8EF; border-radius: 12px; padding: 12px 14px;
+    flex: 1 1 calc(50% - 5px); min-width: 220px;
+  }
+  .fx-callout .k { font-size: 11px; color: #8A97A6; font-weight: 600; margin-bottom: 3px; display:flex; align-items:center; gap:4px;}
+  .fx-callout .v { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; color: #0F2942; }
+  .fx-callout .v.red { color: #D64550; }
+  .fx-callout .d { font-size: 11px; color: #5B6B7C; margin-top: 2px; }
+
+  .fx-footer {
+    margin-top: 4px; padding-top: 12px; border-top: 1px solid #DCE3EC;
+    font-size: 11px; color: #8A97A6; line-height: 1.7;
+  }
+  .fx-footer b { color: #5B6B7C; }
+
+  @media (max-width: 480px) {
+    .fx-callout { flex-basis: 100%; }
+    .fx-title { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fx-wrap">
+
+  <div class="fx-topline"><span class="dot"></span>USD / KRW · 6-MONTH TREND</div>
+  <h2 class="fx-title">원달러 환율, 최근 6개월 이렇게 움직였습니다</h2>
+  <p class="fx-sub">2025년 12월부터 2026년 6월 29일까지 주요 변곡점을 시각화했습니다. 세로축은 원/달러 환율입니다.</p>
+
+  <div class="fx-chartcard">
+    <div class="fx-legend">
+      <span><i class="sw" style="background:#D64550"></i>17년만 고점 구간</span>
+      <span><i class="sw" style="background:#12866F"></i>일시 안정(휴전 등)</span>
+      <span><i class="sw" style="background:#C9971F"></i>최신 데이터(6/29)</span>
+    </div>
+
+    <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto; display:block;">
+      <defs>
+        <linearGradient id="fxArea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0F2942" stop-opacity="0.16"/>
+          <stop offset="100%" stop-color="#0F2942" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 그리드 라인 -->
+      <line x1="60" y1="87" x2="660" y2="87" stroke="#E3E8EF" stroke-width="1"/>
+      <line x1="60" y1="166" x2="660" y2="166" stroke="#E3E8EF" stroke-width="1"/>
+      <line x1="60" y1="244" x2="660" y2="244" stroke="#E3E8EF" stroke-width="1"/>
+      <text x="52" y="91" text-anchor="end" font-size="11" fill="#8A97A6" font-family="JetBrains Mono, monospace">1,550</text>
+      <text x="52" y="170" text-anchor="end" font-size="11" fill="#8A97A6" font-family="JetBrains Mono, monospace">1,500</text>
+      <text x="52" y="248" text-anchor="end" font-size="11" fill="#8A97A6" font-family="JetBrains Mono, monospace">1,450</text>
+
+      <!-- 영역 채우기 -->
+      <path d="M60,213 L146,118 L231,164 L317,209 L403,166 L489,68 L574,104 L660,100 L660,260 L60,260 Z" fill="url(#fxArea)"/>
+
+      <!-- 라인 -->
+      <path d="M60,213 L146,118 L231,164 L317,209 L403,166 L489,68 L574,104 L660,100"
+            fill="none" stroke="#0F2942" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+      <!-- 데이터 포인트 (칩 마커) -->
+      <rect x="55" y="208" width="10" height="10" rx="2.5" fill="#0F2942"/>
+      <rect x="141" y="113" width="10" height="10" rx="2.5" fill="#D64550"/>
+      <rect x="226" y="159" width="10" height="10" rx="2.5" fill="#0F2942"/>
+      <rect x="312" y="204" width="10" height="10" rx="2.5" fill="#12866F"/>
+      <rect x="398" y="161" width="10" height="10" rx="2.5" fill="#0F2942"/>
+      <rect x="484" y="63" width="10" height="10" rx="2.5" fill="#D64550"/>
+      <rect x="569" y="99" width="10" height="10" rx="2.5" fill="#0F2942"/>
+      <rect x="655" y="95" width="10" height="10" rx="2.5" fill="#C9971F"/>
+
+      <!-- 주요 수치 라벨 -->
+      <text x="141" y="103" text-anchor="middle" font-size="12" font-weight="700" fill="#D64550" font-family="JetBrains Mono, monospace">1,530.1</text>
+      <text x="484" y="53" text-anchor="middle" font-size="12" font-weight="700" fill="#D64550" font-family="JetBrains Mono, monospace">1,562.5</text>
+      <text x="655" y="85" text-anchor="middle" font-size="12" font-weight="700" fill="#C9971F" font-family="JetBrains Mono, monospace">1,542.1</text>
+      <text x="312" y="224" text-anchor="middle" font-size="11" font-weight="700" fill="#12866F" font-family="JetBrains Mono, monospace">1,472.7</text>
+
+      <!-- X축 날짜 라벨 -->
+      <text x="60" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">25.12월</text>
+      <text x="146" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">3/31</text>
+      <text x="231" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">4/1</text>
+      <text x="317" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">4/8</text>
+      <text x="403" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">5/15</text>
+      <text x="489" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">6/5(야간)</text>
+      <text x="574" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">6/26</text>
+      <text x="660" y="282" text-anchor="middle" font-size="10.5" fill="#5B6B7C">6/29</text>
+
+      <!-- X축 라인 -->
+      <line x1="60" y1="260" x2="660" y2="260" stroke="#DCE3EC" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="fx-callouts">
+    <div class="fx-callout">
+      <div class="k"><i class="ti ti-trending-up"></i>3월 31일</div>
+      <div class="v red">1,530.1원</div>
+      <div class="d">2009년 3월(1,549원) 이후 최고 수준</div>
+    </div>
+    <div class="fx-callout">
+      <div class="k"><i class="ti ti-moon"></i>6월 5일 야간</div>
+      <div class="v red">1,562.47원</div>
+      <div class="d">조사 기간 중 연중 최고치 기록</div>
+    </div>
+    <div class="fx-callout">
+      <div class="k"><i class="ti ti-flag-3"></i>4월 8일</div>
+      <div class="v" style="color:#12866F;">1,472.7원</div>
+      <div class="d">미·이란 2주 휴전 합의로 일시 급락</div>
+    </div>
+    <div class="fx-callout">
+      <div class="k"><i class="ti ti-clock-hour-4"></i>6월 29일(최신)</div>
+      <div class="v" style="color:#C9971F;">1,542.13원</div>
+      <div class="d">전일 대비 +0.45%, 여전히 고환율권</div>
+    </div>
+  </div>
+
+  <div class="fx-footer">
+    <b>자료:</b> 나무위키 '2025-2026년 원화 고환율 사태' 종합 정리(한국은행 매매기준율 등 1차 자료 기반), Investing.com USD/KRW 시세. 그래프는 이해를 돕기 위한 근사치 시각화이며, 실제 분 단위 시세와는 차이가 있을 수 있습니다. 투자 판단 시 반드시 실시간 고시환율을 확인하세요.
+  </div>
+
+</div>
+
+</body>
+</html>
