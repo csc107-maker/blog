@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>환율 상승 원인 vs 안정화 해법</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  .cs-wrap * { box-sizing: border-box; }
+  .cs-wrap {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 720px; margin: 0 auto;
+    background: #F4F6FA; padding: 28px 20px 24px; border-radius: 20px;
+    color: #14202B;
+  }
+  .cs-topline {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #C9971F; font-weight: 700; margin-bottom: 10px;
+  }
+  .cs-topline .dot { width: 6px; height: 6px; border-radius: 50%; background: #C9971F; }
+  .cs-title { font-size: 21px; font-weight: 800; color: #0F2942; margin: 0 0 6px; line-height: 1.4; }
+  .cs-sub { font-size: 13.5px; color: #5B6B7C; margin: 0 0 20px; line-height: 1.6; }
+
+  .cs-cols { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
+  .cs-col { background: #FFFFFF; border: 1px solid #E3E8EF; border-radius: 16px; padding: 16px; flex: 1 1 calc(50% - 7px); min-width: 250px; }
+  .cs-col-head { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; margin-bottom: 12px; }
+  .cs-col-head.cause { color: #D64550; }
+  .cs-col-head.solve { color: #12866F; }
+  .cs-col-head i { font-size: 18px; }
+  .cs-item { display: flex; gap: 9px; padding: 9px 0; border-top: 1px dashed #E3E8EF; }
+  .cs-item:first-of-type { border-top: none; }
+  .cs-item .num {
+    flex-shrink: 0; width: 20px; height: 20px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10.5px; font-weight: 800; color: #fff; font-family: 'JetBrains Mono', monospace;
+  }
+  .cause .num { background: #D64550; }
+  .solve .num { background: #12866F; }
+  .cs-item .txt { font-size: 12.3px; line-height: 1.55; color: #384856; }
+  .cs-item .txt b { color: #0F2942; }
+
+  .cs-section-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: #0F2942; margin: 4px 0 12px;
+  }
+  .cs-section-label i { font-size: 16px; color: #2F6FED; }
+  .cs-section-label::after { content: ""; flex: 1; height: 1px; background: #DCE3EC; }
+
+  .cs-table-wrap { background: #FFFFFF; border: 1px solid #E3E8EF; border-radius: 16px; overflow: hidden; margin-bottom: 22px; }
+  table.cs-table { width: 100%; border-collapse: collapse; font-size: 11.8px; }
+  table.cs-table th {
+    background: #0F2942; color: #fff; text-align: left; font-weight: 700;
+    padding: 10px 10px; font-size: 11.5px;
+  }
+  table.cs-table td { padding: 10px 10px; border-top: 1px solid #EEF1F5; color: #384856; vertical-align: top; }
+  table.cs-table tr:nth-child(even) td { background: #FAFBFD; }
+  table.cs-table td.strong { font-weight: 700; color: #0F2942; white-space: nowrap; }
+  table.cs-table td.num-cell { font-family: 'JetBrains Mono', monospace; color: #0F2942; font-weight: 700; white-space: nowrap; }
+
+  .cs-quotes { display: flex; flex-wrap: wrap; gap: 12px; }
+  .cs-quote {
+    background: #FFFFFF; border: 1px solid #E3E8EF; border-left: 4px solid #2F6FED;
+    border-radius: 10px; padding: 14px 15px;
+    flex: 1 1 calc(50% - 6px); min-width: 230px;
+  }
+  .cs-quote p { font-size: 12.3px; line-height: 1.65; color: #26333F; margin: 0 0 8px; }
+  .cs-quote .src { font-size: 11px; color: #8A97A6; font-weight: 700; }
+
+  .cs-footer {
+    margin-top: 18px; padding-top: 12px; border-top: 1px solid #DCE3EC;
+    font-size: 11px; color: #8A97A6; line-height: 1.7;
+  }
+  .cs-footer b { color: #5B6B7C; }
+
+  @media (max-width: 480px) {
+    .cs-col, .cs-quote { flex-basis: 100%; }
+    .cs-title { font-size: 18px; }
+    table.cs-table { font-size: 10.8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cs-wrap">
+
+  <div class="cs-topline"><span class="dot"></span>CAUSE × SOLUTION MAP</div>
+  <h2 class="cs-title">환율, 왜 안 잡히고 어떻게 잡을 수 있을까</h2>
+  <p class="cs-sub">원달러 환율을 밀어 올리는 4가지 압박 요인과, 현재 논의·시행 중인 안정화 카드를 나란히 비교했습니다.</p>
+
+  <div class="cs-cols">
+    <div class="cs-col cause">
+      <div class="cs-col-head cause"><i class="ti ti-trending-up"></i>환율 상승 압박 요인</div>
+      <div class="cs-item"><div class="num">1</div><div class="txt"><b>Fed 매파적 기조</b> — 케빈 워시 신임 의장 체제서 6월까지 4연속 동결(3.50~3.75%), 일부 위원은 추가 인상 시사</div></div>
+      <div class="cs-item"><div class="num">2</div><div class="txt"><b>외국인 순매도</b> — 5월 국내 증권투자자금 261.5억달러 순유출(전월比 12배)</div></div>
+      <div class="cs-item"><div class="num">3</div><div class="txt"><b>기업 환전 지연</b> — 5대 은행 기업 달러예금 543.7억달러, 3년5개월래 최대</div></div>
+      <div class="cs-item"><div class="num">4</div><div class="txt"><b>중동 지정학 리스크</b> — 호르무즈 해협 불확실성 지속, 안전자산 선호</div></div>
+    </div>
+    <div class="cs-col solve">
+      <div class="cs-col-head solve"><i class="ti ti-shield-check"></i>환율 안정화 카드</div>
+      <div class="cs-item"><div class="num">1</div><div class="txt"><b>국민연금 외환스와프</b> — 한은과 650억달러 규모, 2026년말까지 연장</div></div>
+      <div class="cs-item"><div class="num">2</div><div class="txt"><b>전략적 환헤지 확대</b> — 해외자산 최대 10%(약 485억달러)까지 헤지 허용</div></div>
+      <div class="cs-item"><div class="num">3</div><div class="txt"><b>외은지점 규제 완화</b> — 선물환포지션 한도 75%→200%로 확대</div></div>
+      <div class="cs-item"><div class="num">4</div><div class="txt"><b>수출대금 환전 인센티브(검토)</b> — 세제혜택·P2P 외환플랫폼 등 논의 중</div></div>
+      <div class="cs-item"><div class="num">5</div><div class="txt"><b>한은 기준금리 인상 시그널</b> — 하반기 2회 인상(2.50%→3.00%) 전망 제기</div></div>
+    </div>
+  </div>
+
+  <div class="cs-section-label"><i class="ti ti-table"></i>주요 정책 수단 한눈에 보기</div>
+  <div class="cs-table-wrap">
+    <table class="cs-table">
+      <thead>
+        <tr><th>정책 수단</th><th>주체</th><th>규모</th><th>기대 효과</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">외환스와프 연장</td><td>한국은행·국민연금</td><td class="num-cell">650억달러</td><td>단기 달러 유동성 공급</td></tr>
+        <tr><td class="strong">전략적 환헤지</td><td>국민연금</td><td class="num-cell">최대 485억달러</td><td>연기금발 환위험 완충</td></tr>
+        <tr><td class="strong">선물환 규제 완화</td><td>금융위·금감원</td><td class="num-cell">75%→200%</td><td>외은지점 외화유동성 확보</td></tr>
+        <tr><td class="strong">환전 인센티브(검토)</td><td>기획재정부·산업부</td><td class="num-cell">미확정</td><td>수출대금 국내 유입 정상화</td></tr>
+        <tr><td class="strong">기준금리 인상(전망)</td><td>한국은행</td><td class="num-cell">+25bp × 2회</td><td>한·미 금리차 축소</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cs-quotes">
+    <div class="cs-quote">
+      <p>"기업 입장에선 미국 투자 시 다시 달러를 매입해야 하는데, 지금 원화로 바꿨다가 재환전하는 것이 유리하다는 확신이 없다."</p>
+      <div class="src">— 백윤민 · 교보증권 연구원</div>
+    </div>
+    <div class="cs-quote">
+      <p>"통화 약세인 한국·일본·대만의 공통점은 대미 수출 의존도가 높고 대규모 대미 투자 약정을 맺었다는 것이다."</p>
+      <div class="src">— 정용택 · IBK투자증권 수석이코노미스트</div>
+    </div>
+  </div>
+
+  <div class="cs-footer">
+    <b>자료:</b> 한국은행 보도참고자료(국민연금 외환스와프·금융안정보고서), 뉴스핌(2026.06.10), 파이낸셜뉴스(2026.06.14, 06.28), 우리금융경영연구소 금융시장 브리프(2026.06). 정책 수단 중 일부(환전 인센티브 등)는 아직 확정되지 않은 검토·논의 단계이며, 기준금리 전망은 우리금융경영연구소의 예측치로 실제 결정과 다를 수 있습니다.
+  </div>
+
+</div>
+
+</body>
+</html>
