@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>엔비디아 중심 HBM4 공급 동맹 구조</title>
+
+<meta property="og:title" content="엔비디아 중심 HBM4 공급 동맹 구조" />
+<meta property="og:description" content="삼성전자·SK하이닉스·마이크론이 엔비디아 베라 루빈에 HBM4를 공급한다. 빅테크는 장기공급계약으로 메모리 50~70%를 선점 중. 반도체 동맹의 전체 구조를 한 장으로 정리." />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F5F7FB;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    padding: 28px 16px;
+    color: #1A2333;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #E4E9F0;
+    box-shadow: 0 18px 40px -22px rgba(11,31,61,0.35);
+  }
+  .head {
+    background: linear-gradient(135deg, #0B1F3D 0%, #17335F 100%);
+    padding: 30px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(200,155,60,0.16);
+    border: 1px solid rgba(200,155,60,0.45);
+    color: #E4BE6E;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .head h1 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 800;
+    font-size: 25px;
+    color: #FFFFFF;
+    line-height: 1.4;
+    max-width: 600px;
+  }
+  .head p {
+    margin-top: 8px;
+    font-size: 13.5px;
+    color: #AEC0DE;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .section { padding: 28px 32px 8px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #1D4F91;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  /* Supply chain diagram */
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .hub {
+    flex: 0 0 auto;
+    background: #0B1F3D;
+    color: #fff;
+    border-radius: 16px;
+    padding: 18px 22px;
+    text-align: center;
+    min-width: 128px;
+  }
+  .hub .ti { font-size: 26px; color: #C89B3C; margin-bottom: 6px; }
+  .hub .name { font-weight: 800; font-size: 15px; }
+  .hub .sub { font-size: 10.5px; color: #AEC0DE; margin-top: 3px; font-weight: 500; }
+
+  .arrow { color: #B7C0CF; font-size: 20px; flex: 0 0 auto; }
+
+  .suppliers {
+    flex: 1 1 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 280px;
+  }
+  .supp-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .supp-name { width: 84px; font-size: 12.5px; font-weight: 700; color: #333B4A; flex-shrink: 0; }
+  .supp-bar-bg { flex: 1; background: #EDF0F5; border-radius: 8px; height: 22px; overflow: hidden; position: relative; }
+  .supp-bar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; }
+  .supp-bar-fill span { font-size: 11px; font-weight: 800; color: #fff; }
+  .fill-sk { background: linear-gradient(90deg,#2F5FB8,#3E74D6); }
+  .fill-ss { background: linear-gradient(90deg,#0B1F3D,#1D4F91); }
+  .fill-mu { background: linear-gradient(90deg,#C89B3C,#DBAE52); }
+
+  .note-small { font-size: 11px; color: #8891A0; margin: 10px 0 4px; line-height:1.6; }
+
+  hr.div { border: none; border-top: 1px solid #E4E9F0; margin: 22px 0 4px; }
+
+  .lta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+  @media (max-width: 620px) { .lta-grid { grid-template-columns: 1fr; } }
+  .lta-card {
+    background: #F2F7FC;
+    border: 1px solid #E1EAF5;
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .lta-card .ti { font-size: 20px; color: #1D4F91; margin-bottom: 8px; display:block; }
+  .lta-card .big { font-size: 20px; font-weight: 900; color: #0B1F3D; }
+  .lta-card .lbl { font-size: 11.5px; color: #55617A; font-weight: 600; margin-top: 4px; line-height: 1.5; }
+
+  .gov-strip {
+    margin: 22px 0 6px;
+    background: #FBF6EC;
+    border: 1px solid #EEDFB9;
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .gov-strip .ti { font-size: 24px; color: #9C6B12; }
+  .gov-strip .txt { font-size: 12.5px; color: #4A3A12; font-weight: 600; line-height: 1.6; flex: 1; min-width: 220px; }
+  .gov-strip .txt b { color: #0B1F3D; font-size: 13px; }
+
+  .foot {
+    padding: 18px 32px 26px;
+    font-size: 11px;
+    color: #9AA2B0;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="ti ti-link"></i>&nbsp;반도체 공급망 동맹</span>
+      <h1>엔비디아 중심 HBM4 공급 동맹 구조</h1>
+      <p>2026년 6월 1일 GTC 타이베이에서 젠슨 황이 공식 인증한 베라 루빈용 HBM4 공급사 3곳. 빅테크는 장기공급계약(LTA)으로 메모리를 선점하고 있습니다.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><i class="ti ti-cpu"></i> 베라 루빈(Vera Rubin) HBM4 공급 비중 추정</div>
+      <div class="chain">
+        <div class="hub">
+          <div class="ti"><i class="ti ti-brand-nvidia"></i></div>
+          <div class="name">NVIDIA</div>
+          <div class="sub">Vera Rubin<br/>AI 가속기</div>
+        </div>
+        <div class="arrow"><i class="ti ti-arrow-left"></i></div>
+        <div class="suppliers">
+          <div class="supp-bar-row">
+            <div class="supp-name">SK하이닉스</div>
+            <div class="supp-bar-bg"><div class="supp-bar-fill fill-sk" style="width:65%;"><span>60~70%</span></div></div>
+          </div>
+          <div class="supp-bar-row">
+            <div class="supp-name">삼성전자</div>
+            <div class="supp-bar-bg"><div class="supp-bar-fill fill-ss" style="width:28%;"><span>25~30%</span></div></div>
+          </div>
+          <div class="supp-bar-row">
+            <div class="supp-name">마이크론</div>
+            <div class="supp-bar-bg"><div class="supp-bar-fill fill-mu" style="width:10%;"><span>잔여</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="note-small">※ 업계 추정치(TechTimes 등 보도 종합) · 엔비디아는 정식 물량 배분은 공개하지 않음 · 2026.06.02 젠슨 황, SK하이닉스에 "HBM 증산" 공개 요청</div>
+
+      <hr class="div" />
+
+      <div class="section-title" style="margin-top:16px;"><i class="ti ti-file-contract"></i> 빅테크의 메모리 선점 — 장기공급계약(LTA)</div>
+      <div class="lta-grid">
+        <div class="lta-card">
+          <i class="ti ti-cloud-lock"></i>
+          <div class="big">50~70%</div>
+          <div class="lbl">구글·MS·아마존이 2년 만기 LTA로<br/>선점한 전체 메모리 생산능력 비중</div>
+        </div>
+        <div class="lta-card">
+          <i class="ti ti-cash"></i>
+          <div class="big">40%</div>
+          <div class="lbl">LTA 체결 시 요구되는<br/>선입금(prepayment) 비율</div>
+        </div>
+        <div class="lta-card">
+          <i class="ti ti-calendar-time"></i>
+          <div class="big">1년 → 3~5년</div>
+          <div class="lbl">삼성·SK하이닉스 공급계약 구조<br/>단기 → 중장기 LTA 전환</div>
+        </div>
+      </div>
+
+      <div class="gov-strip">
+        <i class="ti ti-building-bank"></i>
+        <div class="txt">한국 정부 주도 국가 반도체 생태계 프로젝트 규모 <b>800조원 → 6,460억$ → 1,350조원(10년)</b> 순으로 확대 논의(외신 보도 종합, 단계별 시점 상이) · 삼성전자·SK하이닉스 합산 <b>글로벌 HBM 생산 약 80%</b> 담당</div>
+      </div>
+    </div>
+
+    <div class="foot">
+      자료: Bloomberg(2026.06.05, 06.24), Yahoo Finance, TechTimes, TrendForce, MLQ News, DigiTimes, CNBC(2026.06.29), Jefferies Equity Research 보도 종합
+    </div>
+  </div>
+</body>
+</html>
