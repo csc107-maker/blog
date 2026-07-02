@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>7월 캘린더 &amp; 2026년 코스피 변동성 타임라인</title>
+
+<meta property="og:title" content="7월 캘린더 & 2026년 코스피 변동성 타임라인" />
+<meta property="og:description" content="한국은행 금통위부터 SK하이닉스 나스닥 상장까지, 7월 한국 증시를 흔들 주요 일정과 올해 코스피 서킷브레이커 이력을 한눈에 정리했습니다." />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F5F7FB;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    padding: 28px 16px;
+    color: #1A2333;
+  }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #E4E9F0;
+    box-shadow: 0 18px 40px -22px rgba(11,31,61,0.35);
+  }
+  .head {
+    background: linear-gradient(135deg, #0B1F3D 0%, #17335F 100%);
+    padding: 30px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(200,155,60,0.16); border: 1px solid rgba(200,155,60,0.45);
+    color: #E4BE6E; font-size: 12px; font-weight: 700;
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .head h1 { font-family:'Noto Serif KR',serif; font-weight:800; font-size:24px; color:#fff; line-height:1.4; }
+  .head p { margin-top:8px; font-size:13.5px; color:#AEC0DE; max-width:600px; line-height:1.6;}
+
+  .grid2 { display:grid; grid-template-columns: 1.15fr 0.85fr; gap:0; }
+  @media (max-width: 700px){ .grid2{ grid-template-columns: 1fr; } }
+
+  .left { padding: 26px 20px 10px 32px; border-right:1px solid #E4E9F0; }
+  @media (max-width: 700px){ .left{ border-right:none; border-bottom:1px solid #E4E9F0; padding-right:32px;} }
+  .right { padding: 26px 32px 10px 24px; background:#FBFCFE; }
+
+  .section-title { font-size: 13px; font-weight: 800; color: #1D4F91; display: flex; align-items: center; gap: 6px; margin-bottom: 18px; }
+
+  /* vertical timeline */
+  .vt { position: relative; padding-left: 26px; }
+  .vt::before { content:""; position:absolute; left:6px; top:4px; bottom:4px; width:2px; background:#E4E9F0; }
+  .vt-item { position: relative; padding-bottom: 20px; }
+  .vt-item:last-child { padding-bottom: 4px; }
+  .vt-dot { position:absolute; left:-26px; top:2px; width:14px; height:14px; border-radius:50%; background:#fff; border:3px solid #3568C4; }
+  .vt-item.cb .vt-dot { border-color:#C63232; }
+  .vt-item.next .vt-dot { border-color:#C89B3C; background:#C89B3C; }
+  .vt-date { font-size: 11.5px; font-weight: 800; color:#4A5265; }
+  .vt-title { font-size: 13px; font-weight:700; color:#1A2333; margin-top:2px; }
+  .vt-desc { font-size: 11.5px; color:#6B7484; margin-top:2px; line-height:1.5; }
+  .tag { display:inline-block; font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px; margin-top:5px; }
+  .tag.cb { background:#FBEAEA; color:#C63232; }
+  .tag.up { background:#EAF0FA; color:#1D4F91; }
+
+  /* July calendar list */
+  .cal-list { display: flex; flex-direction: column; gap: 10px; }
+  .cal-row { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #E9EDF3; border-radius:12px; padding:10px 12px; }
+  .cal-badge { flex-shrink:0; width:44px; height:44px; border-radius:10px; background:#0B1F3D; color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .cal-badge .mm { font-size:8.5px; font-weight:700; color:#AEC0DE; line-height:1; }
+  .cal-badge .dd { font-size:15px; font-weight:900; line-height:1.1; }
+  .cal-txt .tt { font-size:12.5px; font-weight:700; color:#1A2333; }
+  .cal-txt .ss { font-size:10.5px; color:#8891A0; font-weight:600; margin-top:1px; }
+
+  .macro-strip {
+    margin: 8px 32px 26px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+  }
+  @media (max-width: 700px){ .macro-strip{ grid-template-columns: repeat(2,1fr); margin:8px 20px 22px;} }
+  .macro-item { background:#F7F8FB; border:1px solid #E9EDF3; border-radius:12px; padding:12px; text-align:center; }
+  .macro-item .ti { font-size:16px; color:#1D4F91; margin-bottom:4px; }
+  .macro-item .v { font-size:14px; font-weight:900; color:#0B1F3D; }
+  .macro-item .l { font-size:10px; color:#8891A0; font-weight:700; margin-top:2px; }
+
+  .foot { padding: 6px 32px 26px; font-size: 11px; color: #9AA2B0; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="ti ti-calendar-stats"></i>&nbsp;7월 증시 캘린더</span>
+      <h1>7월 캘린더 &amp; 2026년 코스피 변동성 타임라인</h1>
+      <p>올해 코스피는 이미 네 차례 서킷브레이커를 겪었습니다. 7월에 예정된 굵직한 이벤트와 함께 정리했습니다.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="left">
+        <div class="section-title"><i class="ti ti-alert-triangle"></i> 2026년 코스피 서킷브레이커·급락 이력</div>
+        <div class="vt">
+          <div class="vt-item cb">
+            <div class="vt-dot"></div>
+            <div class="vt-date">3월 4일 · 9일</div>
+            <div class="vt-title">서킷브레이커 발동 (1·2회)</div>
+            <div class="vt-desc">미·이란 전쟁 관련 지정학 긴장 고조</div>
+            <span class="tag cb">서킷브레이커</span>
+          </div>
+          <div class="vt-item cb">
+            <div class="vt-dot"></div>
+            <div class="vt-date">6월 8일</div>
+            <div class="vt-title">코스피 -8.29% (3회)</div>
+            <div class="vt-desc">브로드컴 AI 매출 가이던스 부진 + 美 고용지표 서프라이즈</div>
+            <span class="tag cb">서킷브레이커</span>
+          </div>
+          <div class="vt-item cb">
+            <div class="vt-dot"></div>
+            <div class="vt-date">6월 23일</div>
+            <div class="vt-title">코스피 -9.99%, 역대 최대 낙폭 (4회)</div>
+            <div class="vt-desc">반도체 단기 과열 차익실현 + 마이크론 실적 앞둔 '피크아웃' 우려</div>
+            <span class="tag cb">서킷브레이커</span>
+          </div>
+          <div class="vt-item">
+            <div class="vt-dot"></div>
+            <div class="vt-date">6월 26일</div>
+            <div class="vt-title">아시아 반도체주 재차 급락</div>
+            <div class="vt-desc">SK하이닉스 -8%, 삼성전자 -5% (CNBC 보도)</div>
+          </div>
+          <div class="vt-item cb">
+            <div class="vt-dot"></div>
+            <div class="vt-date">7월 2일</div>
+            <div class="vt-title">'메타 쇼크' — 코스피 -7.89%, 534조원 증발</div>
+            <div class="vt-desc">SK하이닉스 -14.57%(17년來 최대), 삼성전자 -9.06%, 양시장 매도 사이드카</div>
+            <span class="tag cb">사이드카</span>
+          </div>
+          <div class="vt-item next">
+            <div class="vt-dot"></div>
+            <div class="vt-date">계속 관찰 필요</div>
+            <div class="vt-title">7월 한 달간 변동성 지속 가능성</div>
+            <div class="vt-desc">실적 시즌 + ADR 상장 + 한은 금통위 겹쳐</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="section-title"><i class="ti ti-calendar-event"></i> 7월 주요 일정</div>
+        <div class="cal-list">
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">06</span></div><div class="cal-txt"><div class="tt">SK하이닉스 증권신고서 효력 발생</div><div class="ss">ADR 수요예측 개시</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">07</span></div><div class="cal-txt"><div class="tt">삼성전자 2분기 잠정실적</div><div class="ss">시장 첫 실적 확인 시점</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">09</span></div><div class="cal-txt"><div class="tt">SK하이닉스 ADR 공모가 확정</div><div class="ss">수요예측 결과 발표</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">10</span></div><div class="cal-txt"><div class="tt">SK하이닉스 나스닥 상장</div><div class="ss">최대 45.5조원 조달</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">16</span></div><div class="cal-txt"><div class="tt">한국은행 금융통화위원회</div><div class="ss">기준금리 결정(현 2.50%)</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">23</span></div><div class="cal-txt"><div class="tt">삼성전자 2분기 확정실적</div><div class="ss">사업부문별 상세 실적</div></div></div>
+          <div class="cal-row"><div class="cal-badge"><span class="mm">JUL</span><span class="dd">29</span></div><div class="cal-txt"><div class="tt">SK하이닉스 2분기 확정실적</div><div class="ss">ADR 상장 후 첫 실적</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="macro-strip">
+      <div class="macro-item"><i class="ti ti-percentage"></i><div class="v">3.50~3.75%</div><div class="l">美 연준 기준금리</div></div>
+      <div class="macro-item"><i class="ti ti-building-bank"></i><div class="v">2.50%</div><div class="l">한은 기준금리(8연속 동결)</div></div>
+      <div class="macro-item"><i class="ti ti-currency-dollar"></i><div class="v">1,550원대</div><div class="l">원/달러(2009년來 최고권)</div></div>
+      <div class="macro-item"><i class="ti ti-flame"></i><div class="v">3.2%</div><div class="l">한국 6월 소비자물가</div></div>
+    </div>
+
+    <div class="foot">
+      자료: 한국거래소, 한국은행, 연합인포맥스, 이투데이·파이낸셜뉴스·서울경제(2026.07.02), 나무위키 서킷브레이커 이력 교차확인, CNBC(2026.06.26) 종합 · 일정은 시장 상황에 따라 변동될 수 있습니다.
+    </div>
+  </div>
+</body>
+</html>
