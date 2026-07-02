@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>삼성전자 vs SK하이닉스 2026년 2분기 실적 전망 비교</title>
+
+<meta property="og:title" content="삼성전자 vs SK하이닉스 2026년 2분기 실적 전망 비교" />
+<meta property="og:description" content="증권사별 삼성전자·SK하이닉스 2분기 매출·영업이익 추정치를 한 표로 비교했습니다. 1분기 실제 실적부터 목표주가, 발표 일정까지 정리." />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F5F7FB;
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    padding: 28px 16px;
+    color: #1A2333;
+  }
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #E4E9F0;
+    box-shadow: 0 18px 40px -22px rgba(11,31,61,0.35);
+  }
+  .head {
+    background: linear-gradient(135deg, #0B1F3D 0%, #17335F 100%);
+    padding: 30px 32px 24px;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(200,155,60,0.16); border: 1px solid rgba(200,155,60,0.45);
+    color: #E4BE6E; font-size: 12px; font-weight: 700;
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .head h1 { font-family:'Noto Serif KR',serif; font-weight:800; font-size:24px; color:#fff; line-height:1.4; max-width: 640px;}
+  .head p { margin-top:8px; font-size:13.5px; color:#AEC0DE; max-width:640px; line-height:1.6;}
+
+  .co-tags { display:flex; gap:10px; padding: 22px 32px 0; }
+  .co-tag { flex:1; border-radius: 12px; padding: 12px 16px; display:flex; align-items:center; gap:10px; }
+  .co-tag.ss { background:#F2F7FC; border:1px solid #DDE7F5; }
+  .co-tag.sk { background:#FBF6EC; border:1px solid #EEDFB9; }
+  .co-tag .dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .co-tag.ss .dot { background:#1D4F91; }
+  .co-tag.sk .dot { background:#C89B3C; }
+  .co-tag .lbl { font-size: 13px; font-weight:800; color:#1A2333; }
+  .co-tag .code { font-size: 10.5px; color:#8891A0; font-weight:600; }
+
+  table.cmp {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 0;
+    font-size: 12.8px;
+  }
+  table.cmp th, table.cmp td { padding: 11px 14px; text-align: right; }
+  table.cmp th:first-child, table.cmp td:first-child { text-align: left; padding-left: 32px; }
+  table.cmp td:last-child, table.cmp th:last-child { padding-right: 32px; }
+  table.cmp thead th {
+    background: #0B1F3D; color: #fff; font-size: 11.5px; font-weight:700;
+    position: sticky; top:0;
+  }
+  table.cmp thead th:first-child { border-radius: 0; }
+  table.cmp tbody tr:nth-child(odd) { background: #F9FAFC; }
+  table.cmp tbody tr:hover { background: #F0F4FA; }
+  table.cmp tbody td:first-child { font-weight:700; color:#333B4A; }
+  table.cmp tbody td { color:#1A2333; font-weight:600; border-bottom: 1px solid #EEF1F5; }
+  table.cmp tbody tr:last-child td { border-bottom:none; }
+  .sec-row td { background:#EEF3FA !important; font-weight:800; color:#1D4F91; font-size:11.5px; padding-top:14px; padding-bottom:6px; border-bottom:none; }
+  .src { font-size: 10px; color:#9AA2B0; font-weight:500; display:block; margin-top:2px; }
+  .up { color: #C63232; }
+  .neu { color:#1A2333; }
+
+  .cal {
+    margin: 24px 32px 6px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 680px){ .cal{ grid-template-columns: repeat(2,1fr);} table.cmp{ font-size: 11.5px; } table.cmp th:first-child, table.cmp td:first-child{padding-left:16px;} table.cmp td:last-child, table.cmp th:last-child{padding-right:16px;} }
+  .cal-item { background:#F7F8FB; border:1px solid #E9EDF3; border-radius:12px; padding:12px; text-align:center; }
+  .cal-item .d { font-size:16px; font-weight:900; color:#0B1F3D; }
+  .cal-item .m { font-size:10.5px; color:#8891A0; font-weight:700; margin-bottom:2px;}
+  .cal-item .e { font-size:11px; color:#4A5265; font-weight:600; margin-top:4px; line-height:1.4;}
+
+  .foot { padding: 22px 32px 26px; font-size: 11px; color: #9AA2B0; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow"><i class="ti ti-chart-bar"></i>&nbsp;2026년 2분기 실적 프리뷰</span>
+      <h1>삼성전자 vs SK하이닉스, 2분기 실적 증권사 추정치 비교</h1>
+      <p>7월 7일 삼성전자 잠정실적, 7월 29일 SK하이닉스 확정실적 발표를 앞두고 증권사별 전망치를 정리했습니다. (발표 전 추정치이며 실제와 다를 수 있습니다)</p>
+    </div>
+
+    <div class="co-tags">
+      <div class="co-tag ss"><span class="dot"></span><div><div class="lbl">삼성전자</div><div class="code">KRX 005930</div></div></div>
+      <div class="co-tag sk"><span class="dot"></span><div><div class="lbl">SK하이닉스</div><div class="code">KRX 000660</div></div></div>
+    </div>
+
+    <div style="overflow-x:auto;">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>삼성전자</th>
+          <th>SK하이닉스</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="sec-row"><td colspan="3"><i class="ti ti-square-rounded-check"></i>&nbsp; 1분기(1~3월) 실제 실적</td></tr>
+        <tr>
+          <td>매출</td>
+          <td>133조원<span class="src">가이던스 기준</span></td>
+          <td>52조 5,763억원<span class="src">전년比 +198%</span></td>
+        </tr>
+        <tr>
+          <td>영업이익</td>
+          <td class="up">57조 2,000억원<span class="src">컨센서스 대비 +42.4%</span></td>
+          <td class="up">37조 6,103억원<span class="src">전년比 +405%, 사상 최대</span></td>
+        </tr>
+        <tr>
+          <td>영업이익률</td>
+          <td>약 43%</td>
+          <td class="up">72%<span class="src">사상 최고</span></td>
+        </tr>
+
+        <tr class="sec-row"><td colspan="3"><i class="ti ti-chart-line"></i>&nbsp; 2분기(4~6월) 증권사 전망치</td></tr>
+        <tr>
+          <td>매출 전망</td>
+          <td>174조 4,000억원<span class="src">유안타증권 · 전년比 +133.9%</span></td>
+          <td>78.9조~82조원<span class="src">IBK · DS투자증권</span></td>
+        </tr>
+        <tr>
+          <td>영업이익 전망</td>
+          <td class="up">86조 8,000억원<span class="src">유안타증권(5/2) · 시장컨센서스 78.9조원</span></td>
+          <td class="up">61조~67조원<span class="src">DS투자·IBK 61조 / KB증권 67조</span></td>
+        </tr>
+        <tr>
+          <td>영업이익률 전망</td>
+          <td>49.7%<span class="src">유안타증권</span></td>
+          <td class="up">77.6~80.0%<span class="src">KB증권 / D램 부문</span></td>
+        </tr>
+        <tr>
+          <td>반도체(DS) 부문</td>
+          <td>영업이익 84.7조원<span class="src">영업이익률 71.7% · 유안타증권</span></td>
+          <td>-</td>
+        </tr>
+
+        <tr class="sec-row"><td colspan="3"><i class="ti ti-target-arrow"></i>&nbsp; 목표주가 (메타 쇼크 이전 기준)</td></tr>
+        <tr>
+          <td>최고 목표가</td>
+          <td>36만원<span class="src">KB증권, 5월 기준</span></td>
+          <td>295만원<span class="src">메리츠증권, 6월 10일</span></td>
+        </tr>
+        <tr>
+          <td>2026년 연간 영업이익 전망</td>
+          <td>148조원<span class="src">유진투자증권 전사 기준</span></td>
+          <td>270조~279.5조원<span class="src">KB증권 / 노무라</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="cal">
+      <div class="cal-item"><div class="m">JUL</div><div class="d">07</div><div class="e">삼성전자<br/>잠정실적</div></div>
+      <div class="cal-item"><div class="m">JUL</div><div class="d">10</div><div class="e">SK하이닉스<br/>나스닥 ADR 상장</div></div>
+      <div class="cal-item"><div class="m">JUL</div><div class="d">23</div><div class="e">삼성전자<br/>확정실적</div></div>
+      <div class="cal-item"><div class="m">JUL</div><div class="d">29</div><div class="e">SK하이닉스<br/>확정실적</div></div>
+    </div>
+
+    <div class="foot">
+      자료: 삼성전자·SK하이닉스 공식 실적발표 자료, 유안타증권(2026.05.02), KB증권(2026.05.12), 노무라증권(2026.04.24), DS투자증권(2026.06.18), 메리츠증권(2026.06.10) 리포트 종합 · 발표 전 추정치로 확정 실적과 차이가 있을 수 있으며, 투자 판단의 참고 자료일 뿐 매수·매도 추천이 아닙니다.
+    </div>
+  </div>
+</body>
+</html>
