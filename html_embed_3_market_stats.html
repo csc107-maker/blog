@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>숫자로 보는 태양광 시장</title>
+<meta property="og:title" content="숫자로 보는 태양광 시장 데이터" />
+<meta property="og:description" content="국내외 태양광 설치량, 발전단가(LCOE) 등 최신 시장 데이터를 카드로 정리했습니다." />
+<meta property="og:image" content="여기에_실제_썸네일_이미지_URL_입력" />
+<meta property="og:url" content="여기에_실제_게시글_URL_입력" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  .mk-wrap * { box-sizing: border-box; }
+  .mk-wrap {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #F5F8FC;
+    padding: 32px 20px;
+    border-radius: 20px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .mk-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    color: #3D8FCC; background: #E8F2FB;
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .mk-title { font-size: 23px; font-weight: 800; color: #123354; margin: 0 0 6px 0; line-height: 1.4; letter-spacing: -0.01em; }
+  .mk-sub { font-size: 14px; color: #7C8B99; margin: 0 0 22px 0; line-height: 1.6; }
+
+  .mk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .mk-stat {
+    background: #FFFFFF;
+    border: 1px solid #E3EAF1;
+    border-radius: 16px;
+    padding: 18px 16px;
+    box-shadow: 0 8px 24px -14px rgba(18,51,84,0.14);
+  }
+  .mk-stat-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .mk-stat-icon {
+    width: 30px; height: 30px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center; font-size: 15px; color: #fff;
+  }
+  .mk-stat-label { font-size: 12px; font-weight: 700; color: #7C8B99; }
+  .mk-stat-num {
+    font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    font-size: 28px; font-weight: 800; color: #123354; letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .mk-stat-num span { font-size: 14px; font-weight: 700; color: #7C8B99; margin-left: 3px; }
+  .mk-stat-note { font-size: 11.5px; color: #8B98A5; margin-top: 6px; line-height: 1.5; }
+
+  .mk-card {
+    background: #FFFFFF;
+    border: 1px solid #E3EAF1;
+    border-radius: 16px;
+    padding: 20px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 8px 24px -14px rgba(18,51,84,0.14);
+  }
+  .mk-card-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
+  .mk-card-h span.t { font-size: 13.5px; font-weight: 800; color: #123354; }
+  .mk-card-h span.v { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 700; color: #F0A93E; }
+  .mk-bar-track { width: 100%; height: 12px; background: #F0F3F7; border-radius: 999px; overflow: hidden; }
+  .mk-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #F0A93E, #E8951E); }
+  .mk-bar-caption { display: flex; justify-content: space-between; margin-top: 7px; font-size: 11.5px; color: #8B98A5; }
+
+  .mk-lcoe-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .mk-lcoe-row:last-child { margin-bottom: 0; }
+  .mk-lcoe-label { width: 92px; font-size: 12px; font-weight: 700; color: #55636F; flex-shrink: 0; }
+  .mk-lcoe-track { flex: 1; height: 20px; background: #F0F3F7; border-radius: 8px; overflow: hidden; position: relative; }
+  .mk-lcoe-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; padding-left: 8px; }
+  .mk-lcoe-fill.a { background: #93B8D4; }
+  .mk-lcoe-fill.b { background: #3D8FCC; }
+  .mk-lcoe-fill.c { background: #F0A93E; }
+  .mk-lcoe-val { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700; color: #fff; }
+
+  .mk-foot { font-size: 11px; color: #9AA6B1; line-height: 1.6; padding: 4px 4px 0 4px; }
+
+  @media (max-width: 480px) {
+    .mk-title { font-size: 19px; }
+    .mk-grid { grid-template-columns: 1fr; }
+    .mk-stat-num { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+<div class="mk-wrap">
+  <span class="mk-eyebrow"><i class="ti ti-chart-line"></i>MARKET DATA</span>
+  <h2 class="mk-title">숫자로 보는 태양광 시장</h2>
+  <p class="mk-sub">국내외 주요 기관 자료를 종합한 최신 태양광 시장 데이터입니다.</p>
+
+  <div class="mk-grid">
+    <div class="mk-stat">
+      <div class="mk-stat-top">
+        <div class="mk-stat-icon" style="background:#F0A93E;"><i class="ti ti-map-pin"></i></div>
+        <div class="mk-stat-label">국내 누적 설치</div>
+      </div>
+      <div class="mk-stat-num">23.9<span>GW</span></div>
+      <div class="mk-stat-note">2023년 기준 · KB경영연구소</div>
+    </div>
+    <div class="mk-stat">
+      <div class="mk-stat-top">
+        <div class="mk-stat-icon" style="background:#3D8FCC;"><i class="ti ti-world"></i></div>
+        <div class="mk-stat-label">세계 신규 설치</div>
+      </div>
+      <div class="mk-stat-num">694<span>GW</span></div>
+      <div class="mk-stat-note">2025년 · 전년 대비 +17%</div>
+    </div>
+  </div>
+
+  <div class="mk-card">
+    <div class="mk-card-h">
+      <span class="t">국내 2030년 목표 달성률</span>
+      <span class="v">23.9 / 46.5 GW</span>
+    </div>
+    <div class="mk-bar-track"><div class="mk-bar-fill" style="width: 51%;"></div></div>
+    <div class="mk-bar-caption"><span>2023년 누적</span><span>약 51% 달성</span><span>2030년 목표</span></div>
+  </div>
+
+  <div class="mk-grid">
+    <div class="mk-stat">
+      <div class="mk-stat-top">
+        <div class="mk-stat-icon" style="background:#123354;"><i class="ti ti-building-factory-2"></i></div>
+        <div class="mk-stat-label">국내 신규(2025→26)</div>
+      </div>
+      <div class="mk-stat-num" style="font-size:22px;">3.5 → 4.0<span>GW</span></div>
+      <div class="mk-stat-note">KDI 경제교육·정보센터 전망</div>
+    </div>
+    <div class="mk-stat">
+      <div class="mk-stat-top">
+        <div class="mk-stat-icon" style="background:#E15A34;"><i class="ti ti-bolt"></i></div>
+        <div class="mk-stat-label">세계 신규(2025→26)</div>
+      </div>
+      <div class="mk-stat-num" style="font-size:22px;">694 → 700<span>GW</span></div>
+      <div class="mk-stat-note">KDI 경제교육·정보센터 전망</div>
+    </div>
+  </div>
+
+  <div class="mk-card">
+    <div class="mk-card-h">
+      <span class="t">균등화발전단가(LCOE) 비교</span>
+      <span class="v">$/MWh</span>
+    </div>
+    <div class="mk-lcoe-row">
+      <div class="mk-lcoe-label">원자력(2023)</div>
+      <div class="mk-lcoe-track"><div class="mk-lcoe-fill a" style="width:70%;"><span class="mk-lcoe-val">≈$62</span></div></div>
+    </div>
+    <div class="mk-lcoe-row">
+      <div class="mk-lcoe-label">태양광(2023)</div>
+      <div class="mk-lcoe-track"><div class="mk-lcoe-fill b" style="width:75%;"><span class="mk-lcoe-val">$66~68</span></div></div>
+    </div>
+    <div class="mk-lcoe-row">
+      <div class="mk-lcoe-label">태양광(2030e)</div>
+      <div class="mk-lcoe-track"><div class="mk-lcoe-fill c" style="width:53%;"><span class="mk-lcoe-val">≈$48</span></div></div>
+    </div>
+  </div>
+
+  <p class="mk-foot"><i class="ti ti-info-circle"></i> 자료: KB경영연구소 「태양에너지 국내 현황」, KDI 경제교육·정보센터 「태양광 산업동향」(2025 상·하반기), 미국 로렌스버클리국립연구소(LBNL) 분석 재인용. 전망치는 실제와 다를 수 있습니다.</p>
+</div>
+</body>
+</html>
