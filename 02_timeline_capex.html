@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>72시간의 롤러코스터 - 메타 클라우드 발표 타임라인</title>
+
+<meta property="og:title" content="메타 클라우드 사업 발표, 72시간의 롤러코스터 타임라인" />
+<meta property="og:description" content="구글의 GPU 제한 통보부터 메타 컴퓨트 발표, 한국 증시 충격까지 - 시간순으로 정리한 빅테크 CAPEX 전쟁" />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #F5F6FA; color: #151C33; padding: 28px 16px 36px; line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700;
+    letter-spacing: .04em; color: #0E7C7B; background: #E3F3F2; border: 1px solid #C7E6E4;
+    padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  h1 { font-size: 25px; font-weight: 800; letter-spacing: -0.02em; color: #10162B; margin-bottom: 6px; }
+  .subhead { font-size: 14px; color: #5B6478; font-weight: 500; margin-bottom: 24px; }
+
+  /* timeline */
+  .tl { position: relative; padding-left: 30px; margin-bottom: 30px; }
+  .tl::before {
+    content: ''; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 3px;
+    background: repeating-linear-gradient(180deg, #2F3E9E 0 8px, #C7CDEC 8px 14px);
+    border-radius: 3px;
+  }
+  .tl-item { position: relative; padding-bottom: 22px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -30px; top: 2px; width: 21px; height: 21px; border-radius: 50%;
+    background: #fff; border: 3px solid #2F3E9E; display:flex;align-items:center;justify-content:center;
+  }
+  .tl-item.hot .tl-dot { border-color: #B5342F; }
+  .tl-dot i { font-size: 10px; color: #2F3E9E; }
+  .tl-item.hot .tl-dot i { color: #B5342F; }
+  .tl-date {
+    font-family: 'Roboto Mono', monospace; font-size: 11.5px; font-weight: 700; color: #8489A3;
+    margin-bottom: 3px; text-transform: uppercase; letter-spacing: .03em;
+  }
+  .tl-card { background: #FFFFFF; border: 1px solid #E1E4EE; border-radius: 12px; padding: 13px 15px; }
+  .tl-item.hot .tl-card { border-color: #F0CFC9; background: #FFFAF9; }
+  .tl-title { font-size: 14.5px; font-weight: 700; color: #10162B; margin-bottom: 4px; display:flex; align-items:center; gap:6px; }
+  .tl-title .chip { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 5px; background:#FCEAEA; color:#B5342F; }
+  .tl-desc { font-size: 13px; color: #4A5268; line-height: 1.6; }
+  .tl-desc b { color: #10162B; }
+
+  .sec-title { font-size: 15px; font-weight: 800; color: #10162B; margin: 8px 0 12px; display: flex; align-items: center; gap: 7px; }
+  .sec-title i { color: #0E7C7B; font-size: 17px; }
+
+  /* capex comparison */
+  .capex-table { width: 100%; border-collapse: collapse; background: #FFFFFF; border: 1px solid #E1E4EE;
+    border-radius: 12px; overflow: hidden; font-size: 13.5px; margin-bottom: 8px; }
+  .capex-table th { background: #0E4F4E; color: #E7F5F4; text-align: left; padding: 10px 14px; font-weight: 700; font-size: 12px; }
+  .capex-table th:last-child, .capex-table td:last-child { text-align: right; }
+  .capex-table td { padding: 11px 14px; border-top: 1px solid #E1E4EE; }
+  .capex-table td.company { font-weight: 700; color: #10162B; display:flex; align-items:center; gap:8px; }
+  .capex-table td.num { font-family:'Roboto Mono',monospace; font-weight: 700; }
+  .bar-mini { height: 7px; border-radius: 4px; margin-top: 5px; }
+  .capex-table tr.highlight td { background: #FBF1E3; }
+  .logo-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink:0; }
+
+  .footnote-tiny { font-size: 11px; color: #8489A3; margin: 8px 0 6px; line-height: 1.6; }
+
+  .src-footer { margin-top: 22px; padding-top: 14px; border-top: 1px dashed #D5D9E5; font-size: 11.5px; color: #8489A3; line-height: 1.7; }
+  .src-footer b { color: #5B6478; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="eyebrow"><i class="ti ti-clock-bolt"></i>META 심층분석 · 02</span>
+  <h1>72시간의 롤러코스터</h1>
+  <div class="subhead">구글의 용량 제한 통보부터 &#39;메타 컴퓨트&#39; 발표, 한미 증시 급변까지 — 시간순 정리</div>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-dot"><i class="ti ti-point-filled"></i></div>
+      <div class="tl-date">2025.08</div>
+      <div class="tl-card">
+        <div class="tl-title">메타-구글 클라우드, 6년 100억 달러+ 계약 체결</div>
+        <div class="tl-desc">메타가 자사 AI 모델 학습·서빙 보강을 위해 구글 클라우드와 대규모 컴퓨팅 임차 계약 체결. 메타는 기존에도 AWS·MS Azure를 함께 사용해 온 멀티클라우드 고객이었음.</div>
+      </div>
+    </div>
+
+    <div class="tl-item hot">
+      <div class="tl-dot"><i class="ti ti-point-filled"></i></div>
+      <div class="tl-date">2026.03</div>
+      <div class="tl-card">
+        <div class="tl-title">구글, 메타에 &quot;제미나이 용량 원하는 만큼 못 준다&quot; 통보<span class="chip">FT 단독</span></div>
+        <div class="tl-desc">파이낸셜타임스 보도(소식통 3인). 구글 자체 컴퓨팅 부족으로 메타가 요청한 물량을 전부 공급하지 못했고, 메타 내부 AI 프로젝트 일부에 차질. 단, <b>&quot;전면 사용 금지&quot;가 아니라 &quot;일부 제한&quot;</b>이며 다른 고객사도 유사하게 겪은 문제.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><i class="ti ti-point-filled"></i></div>
+      <div class="tl-date">2026.05</div>
+      <div class="tl-card">
+        <div class="tl-title">저커버그, 주주총회서 &quot;클라우드 사업, 확실히 검토 중&quot;</div>
+        <div class="tl-desc">외부 기업들이 &quot;거의 매주&quot; 여유 컴퓨팅 구매를 문의해온다고 언급. 다만 당시엔 자체 수요가 있어 보류한다고 설명.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><i class="ti ti-point-filled"></i></div>
+      <div class="tl-date">2026.06.30 (화)</div>
+      <div class="tl-card">
+        <div class="tl-title">메타 주가 종가 $563.29</div>
+        <div class="tl-desc">연초 대비 약 -15%~-29% 구간, 과도한 CapEx 우려로 부진한 주가 흐름 지속 중.</div>
+      </div>
+    </div>
+
+    <div class="tl-item hot">
+      <div class="tl-dot"><i class="ti ti-flame"></i></div>
+      <div class="tl-date">2026.07.01 (수) 美</div>
+      <div class="tl-card">
+        <div class="tl-title">블룸버그 단독 &quot;메타, &#39;메타 컴퓨트&#39; 클라우드 사업 준비&quot;<span class="chip">속보</span></div>
+        <div class="tl-desc">잉여 AI 연산력을 외부에 판매하는 신사업 검토 보도. 메타 주가 장중 +9.7%, <b>종가 약 $612</b>로 급등. 반사이익 우려로 경쟁 가능성 있는 <b>코어위브 -13.9%</b>, 네비우스 등 네오클라우드주 동반 급락.</div>
+      </div>
+    </div>
+
+    <div class="tl-item hot">
+      <div class="tl-dot"><i class="ti ti-flame"></i></div>
+      <div class="tl-date">2026.07.02 (목) 韓·美</div>
+      <div class="tl-card">
+        <div class="tl-title">코스피 -7.89%, 메타는 되레 조정<span class="chip">국내 충격</span></div>
+        <div class="tl-desc">한국장: 코스피 -7.89%(7,648.09), 코스닥 -6.74%. 삼성전자 -9.06%, SK하이닉스 -14.57%. &quot;AI 공급과잉&quot; 해석이 반도체株 투매로 번짐. 반면 같은 날 미국장에서는 월가 Wolfe Research가 &quot;2027년 CapEx $200B까지 증가 가능&quot; 코멘트를 내며 메타 주가는 장중 최대 -4% 조정.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"><i class="ti ti-point-filled"></i></div>
+      <div class="tl-date">2026.07.03 (금) 美</div>
+      <div class="tl-card">
+        <div class="tl-title">미국 증시 독립기념일 휴장, 숨 고르기</div>
+        <div class="tl-desc">다음 관전 포인트는 7/7 삼성전자 잠정실적, 7/10 SK하이닉스 ADR 상장, 7/29 SK하이닉스 실적, 그리고 7월 말 빅테크(M7) 2분기 실적·CapEx 코멘트.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-title"><i class="ti ti-building-skyscraper"></i>2026년 빅테크 4사 CapEx 가이던스 비교</div>
+  <table class="capex-table">
+    <thead><tr><th>기업</th><th>2026년 가이던스</th></tr></thead>
+    <tbody>
+      <tr class="highlight">
+        <td class="company"><span class="logo-dot" style="background:#2F3E9E;"></span>Meta</td>
+        <td class="num">$125B – $145B<div class="bar-mini" style="width:66%;background:#2F3E9E;margin-left:auto;"></div></td>
+      </tr>
+      <tr>
+        <td class="company"><span class="logo-dot" style="background:#0E7C7B;"></span>Microsoft</td>
+        <td class="num">약 $190B<div class="bar-mini" style="width:86%;background:#0E7C7B;margin-left:auto;"></div></td>
+      </tr>
+      <tr>
+        <td class="company"><span class="logo-dot" style="background:#C97A1F;"></span>Alphabet(구글)</td>
+        <td class="num">$180B – $190B<div class="bar-mini" style="width:86%;background:#C97A1F;margin-left:auto;"></div></td>
+      </tr>
+      <tr>
+        <td class="company"><span class="logo-dot" style="background:#8489A3;"></span>Amazon</td>
+        <td class="num">약 $200B<div class="bar-mini" style="width:100%;background:#8489A3;margin-left:auto;"></div></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="footnote-tiny">
+    ※ 4개사 합산 2026년 CapEx는 <b>6,000억 달러(약 830조 원)</b>를 이미 넘어선 것으로 집계됨(Fortune, 2026.04.29 보도 기준). Amazon·Microsoft는 회계연도 기준 발표 시점 차이로 추정 범위에 다소 변동 있음.
+  </div>
+
+  <div class="src-footer">
+    <b>자료 출처</b> · Financial Times(Google-Meta 용량 제한 단독보도, 2026.06월 재인용), Bloomberg(메타 컴퓨트 단독보도 2026.07.01), CNBC, Data Center Dynamics, TechCrunch, The Motley Fool, Fortune, 서울경제·헤럴드경제·아주경제·이슈밸리(국내 증시 반응, 2026.07.02)<br>
+    최종 확인 2026.07.03
+  </div>
+
+</div>
+</body>
+</html>
