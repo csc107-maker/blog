@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>임대냐 자체구축이냐 - 메타의 데이터센터 딜레마</title>
+
+<meta property="og:title" content="임대 vs 자체구축, 메타의 데이터센터 딜레마와 감가상각 논쟁" />
+<meta property="og:description" content="리스백 구조부터 마이클 버리의 감가상각 경고까지 - 메타 데이터센터 회계의 숨겨진 리스크" />
+<meta property="og:image" content="썸네일 이미지 URL" />
+<meta property="og:url" content="페이지 URL" />
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css" />
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; background:#F5F6FA; color:#151C33; padding:28px 16px 36px; line-height:1.55; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:700; letter-spacing:.04em;
+    color:#2F3E9E; background:#E9EBFA; border:1px solid #D3D7F5; padding:5px 12px; border-radius:999px; margin-bottom:14px; }
+  h1 { font-size:25px; font-weight:800; letter-spacing:-0.02em; color:#10162B; margin-bottom:6px; }
+  .subhead { font-size:14px; color:#5B6478; font-weight:500; margin-bottom:22px; }
+
+  .sec-title { font-size:15px; font-weight:800; color:#10162B; margin:24px 0 12px; display:flex; align-items:center; gap:7px; }
+  .sec-title i { color:#2F3E9E; font-size:17px; }
+
+  /* three model cards */
+  .model-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  @media (max-width:720px){ .model-grid{ grid-template-columns:1fr; } }
+  .model-card { background:#FFFFFF; border:1px solid #E1E4EE; border-radius:14px; padding:16px 15px; display:flex; flex-direction:column; }
+  .model-icon { width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-size:18px; color:#fff; }
+  .model-card.own .model-icon { background:#2F3E9E; }
+  .model-card.leaseback .model-icon { background:#C97A1F; }
+  .model-card.rent .model-icon { background:#0E7C7B; }
+  .model-name { font-size:14.5px; font-weight:800; color:#10162B; margin-bottom:3px; }
+  .model-eg { font-size:11.5px; color:#8489A3; font-weight:600; margin-bottom:10px; }
+  .model-pt { font-size:12.5px; color:#4A5268; line-height:1.65; margin-bottom:6px; padding-left:14px; position:relative; }
+  .model-pt::before { content:'+'; position:absolute; left:0; color:#0E7C7B; font-weight:800; }
+  .model-pt.neg::before { content:'−'; color:#B5342F; }
+  .model-pt b { color:#10162B; }
+
+  /* depreciation table */
+  .dep-table { width:100%; border-collapse:collapse; background:#FFFFFF; border:1px solid #E1E4EE; border-radius:12px; overflow:hidden; font-size:13px; margin-bottom:6px; }
+  .dep-table th { background:#1F2A70; color:#EDEFFB; text-align:left; padding:10px 13px; font-weight:700; font-size:11.5px; }
+  .dep-table td { padding:10.5px 13px; border-top:1px solid #E1E4EE; }
+  .dep-table td.num { font-family:'Roboto Mono',monospace; font-weight:700; }
+  .dep-table tr.spotlight td { background:#FBF1E3; }
+  .dir-up { color:#B5342F; font-weight:700; }
+  .dir-down { color:#2F5FC4; font-weight:700; }
+
+  /* burry warning box */
+  .warn-box { margin-top:14px; background:#FBF1E3; border:1px solid #EAD3AC; border-radius:12px; padding:16px 17px; display:flex; gap:12px; }
+  .warn-box i.head-icon { font-size:22px; color:#C97A1F; flex-shrink:0; margin-top:2px; }
+  .warn-title { font-size:13.5px; font-weight:800; color:#8A5A16; margin-bottom:5px; }
+  .warn-desc { font-size:12.5px; color:#6B5324; line-height:1.65; }
+  .warn-desc b { color:#8A5A16; }
+
+  /* off balance sheet stat strip */
+  .strip { display:flex; gap:10px; margin-top:16px; }
+  @media (max-width:600px){ .strip{ flex-direction:column; } }
+  .strip-card { flex:1; background:#FFFFFF; border:1px solid #E1E4EE; border-radius:12px; padding:14px 15px; }
+  .strip-num { font-family:'Roboto Mono',monospace; font-size:20px; font-weight:800; color:#10162B; }
+  .strip-label { font-size:11.5px; color:#5B6478; font-weight:600; margin-top:3px; line-height:1.5; }
+
+  .footnote-tiny { font-size:11px; color:#8489A3; margin:8px 0 6px; line-height:1.6; }
+  .src-footer { margin-top:22px; padding-top:14px; border-top:1px dashed #D5D9E5; font-size:11.5px; color:#8489A3; line-height:1.7; }
+  .src-footer b { color:#5B6478; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="eyebrow"><i class="ti ti-building-warehouse"></i>META 심층분석 · 03</span>
+  <h1>임대냐 자체구축이냐, 메타의 데이터센터 딜레마</h1>
+  <div class="subhead">메타는 동시에 세 가지 방식으로 데이터센터를 확보하고 있습니다 — 방식마다 손익계산서가 달라집니다</div>
+
+  <div class="model-grid">
+    <div class="model-card own">
+      <div class="model-icon"><i class="ti ti-building-factory-2"></i></div>
+      <div class="model-name">① 완전 자체구축</div>
+      <div class="model-eg">예: 오하이오 프로메테우스</div>
+      <p class="model-pt">자산이 대차대조표에 온전히 남아 향후 가치 회수 여지 있음</p>
+      <p class="model-pt">감가상각 내용연수를 스스로 정할 수 있어 이익 조정 여지 존재</p>
+      <p class="model-pt neg">막대한 선행 CapEx, GPU 세대교체 시 자산가치 하락 리스크 전액 메타 부담</p>
+    </div>
+    <div class="model-card leaseback">
+      <div class="model-icon"><i class="ti ti-arrows-exchange-2"></i></div>
+      <div class="model-name">② 리스백(Leaseback)</div>
+      <div class="model-eg">예: 루이지애나 하이페리온</div>
+      <p class="model-pt">Blue Owl Capital 등 SPV가 건설·소유, 메타는 운영만 담당 — 부채가 장부상 분산</p>
+      <p class="model-pt">Apollo·KKR·PIMCO 등 사모신용이 메타의 &#39;임차료 지불 약속&#39;만 보고 $29B 조달</p>
+      <p class="model-pt neg">계약기간(약 16년 언급)이 GPU 수명(3~6년)보다 훨씬 길어 — 기술이 낡아도 임차료는 계속 지불</p>
+    </div>
+    <div class="model-card rent">
+      <div class="model-icon"><i class="ti ti-cloud"></i></div>
+      <div class="model-name">③ 순수 임차(클라우드 구매)</div>
+      <div class="model-eg">예: 구글 클라우드·코어위브 계약</div>
+      <p class="model-pt">CapEx 대신 즉시 비용(OpEx) 처리 — 초기 부담 적고 유연함</p>
+      <p class="model-pt">공급자 사정(=구글의 용량 부족)에 따라 <b>내가 원해도 못 받는</b> 리스크 존재</p>
+      <p class="model-pt neg">6년·2032년까지 등 장기 약정 — 결국 &#39;숨은 고정비&#39;라는 점은 리스백과 유사</p>
+    </div>
+  </div>
+  <div class="footnote-tiny">
+    ※ 메타는 실제로 세 가지를 동시 운용 중입니다. 하이페리온은 2GW→5GW로 증설 예정이며 Blue Owl과의 JV 규모는 $27B, 코어위브 계약은 2032년까지 총 $21B, 구글 클라우드 계약은 6년·$10B+ 규모입니다.
+  </div>
+
+  <div class="sec-title"><i class="ti ti-calculator"></i>여기에 숨은 변수: 감가상각 내용연수 논쟁</div>
+  <table class="dep-table">
+    <thead><tr><th>기업</th><th>내용연수 변경 방향</th><th>손익 효과</th></tr></thead>
+    <tbody>
+      <tr class="spotlight">
+        <td><b>Meta</b></td>
+        <td class="dir-up">4년 → 4.5년 → 5년 → 5.5년 (지속 연장)</td>
+        <td class="num">2025년 감가상각비 −$2.9B (=이익 증가)</td>
+      </tr>
+      <tr>
+        <td>Amazon</td>
+        <td class="dir-down">6년 → 5년 (2025, 역방향 단축)</td>
+        <td class="num">가속상각 약 $0.7~0.9B 인식</td>
+      </tr>
+      <tr>
+        <td>Microsoft</td>
+        <td class="dir-up">4년 → 6년</td>
+        <td class="num">2023년 감가상각비 −$3.7B</td>
+      </tr>
+      <tr>
+        <td>Alphabet</td>
+        <td class="dir-up">4년 → 6년</td>
+        <td class="num">2023년 감가상각비 −$3.9B</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <i class="ti ti-alert-triangle head-icon"></i>
+    <div>
+      <div class="warn-title">마이클 버리(&#39;빅쇼트&#39;)의 경고</div>
+      <div class="warn-desc">
+        엔비디아 GPU가 매년 신세대로 교체되는데(호퍼→블랙웰→루빈), 하이퍼스케일러들은 여전히 4~6년 내용연수로 상각 중입니다. 버리는 실제 경제적 수명을 2~3년으로 볼 경우, <b>2026~2028년 누적 약 $176B의 감가상각비가 과소계상 — 즉 이익이 그만큼 과대계상</b>될 수 있다고 주장했습니다. 엔비디아 측은 "고객사 실사용 데이터상 4~6년이 합리적"이라며 반박한 상태입니다. 메타는 4개사 중 <b>내용연수를 가장 많이(4번) 연장</b>했고 CapEx/매출 비율도 가장 높은 축에 속해, 이 논쟁의 중심에 서 있습니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="strip-card">
+      <div class="strip-num">$850B+</div>
+      <div class="strip-label">주요 클라우드 기업 미래 리스 약정 총액(업계 합산, 대차대조표 밖 부채)</div>
+    </div>
+    <div class="strip-card">
+      <div class="strip-num">~$50B</div>
+      <div class="strip-label">최근 분기 메타·MS가 각각 신규로 추가한 리스 약정 규모</div>
+    </div>
+    <div class="strip-card">
+      <div class="strip-num">10~20년</div>
+      <div class="strip-label">전형적 데이터센터 리스 계약 만기 — GPU 세대교체 주기보다 훨씬 김</div>
+    </div>
+  </div>
+
+  <div class="src-footer">
+    <b>자료 출처</b> · Bloomberg(2026.06.24 데이터센터 리스 $850B 분석), Harvard Business School Case(Meta 감가상각 사례), Data Center Frontier(하이페리온·프로메테우스 구조), Global Data Center Hub(리스백 금융구조 분석), Deep Quarry / Natural Law Review(GPU 내용연수 논쟁), Meta·Amazon·Microsoft·Alphabet 10-K 공시<br>
+    최종 확인 2026.07.03 · 감가상각 추정치는 각 사 공시자료 기반 산출값이며 실제 결산 수치와 차이가 있을 수 있습니다.
+  </div>
+
+</div>
+</body>
+</html>
