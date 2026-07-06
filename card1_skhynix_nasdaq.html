@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SK하이닉스 나스닥 ADR 상장 타임라인 | SKHY</title>
+
+<meta property="og:title" content="SK하이닉스 나스닥 상장 타임라인 - 공모 296.5억 달러, 7월 10일 거래 개시 목표" />
+<meta property="og:description" content="SK하이닉스 ADR 나스닥 상장(티커 SKHY) 일정, 공모 규모, 증권사 목표주가를 한눈에 정리했습니다." />
+<meta property="og:image" content="https://your-blog-domain.com/images/skhynix-nasdaq-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/skhynix-nasdaq-listing" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  .skhy-card * { box-sizing: border-box; }
+  .skhy-card {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    max-width: 720px;
+    margin: 24px auto;
+    background: #F4F9FB;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 12px 32px rgba(16,60,72,0.10);
+    border: 1px solid #DCEEF1;
+    color: #0B2530;
+  }
+  .skhy-head {
+    position: relative;
+    padding: 28px 28px 68px;
+    background: linear-gradient(135deg, #0B4A56 0%, #0891B2 62%, #06B6D4 100%);
+    color: #EAFBFF;
+    overflow: hidden;
+  }
+  .skhy-head::after {
+    content: "";
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+  }
+  .skhy-eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; letter-spacing: 0.14em; font-weight: 700;
+    text-transform: uppercase; color: #B8F3FF;
+    background: rgba(255,255,255,0.10);
+    padding: 5px 12px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.22);
+  }
+  .skhy-title {
+    margin: 16px 0 6px; font-size: 25px; font-weight: 800; line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+  .skhy-sub { font-size: 13.5px; color: #CFF4FC; font-weight: 500; }
+  .skhy-ticker {
+    position: absolute; right: 24px; bottom: -26px;
+    background: #05222A; color: #7FEFFF;
+    font-family: 'JetBrains Mono', 'Roboto Mono', monospace;
+    font-weight: 700; font-size: 14px;
+    padding: 10px 16px; border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    border: 1px solid rgba(127,239,255,0.35);
+  }
+  .skhy-ticker span { display:block; font-size:9px; color:#7FB9C7; letter-spacing:0.08em; font-weight:600; margin-bottom:2px;}
+
+  .skhy-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; padding: 44px 20px 8px;
+  }
+  .skhy-stat {
+    background: #FFFFFF; border: 1px solid #DCEEF1; border-radius: 14px;
+    padding: 12px 10px; text-align: center;
+  }
+  .skhy-stat b {
+    display: block; font-family: 'JetBrains Mono','Roboto Mono',monospace;
+    font-size: 16px; font-weight: 700; color: #0B4A56; letter-spacing: -0.02em;
+  }
+  .skhy-stat span { font-size: 10.5px; color: #5B7C85; font-weight: 600; display:block; margin-top:4px; }
+
+  .skhy-body { padding: 22px 26px 8px; }
+  .skhy-section-label {
+    font-size: 12.5px; font-weight: 800; color: #0891B2;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display:flex; align-items:center; gap:6px; margin-bottom: 14px;
+  }
+
+  .skhy-timeline { position: relative; padding-left: 26px; margin-bottom: 6px; }
+  .skhy-timeline::before {
+    content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px;
+    background-image: linear-gradient(#8FDCE8 60%, rgba(0,0,0,0) 0%);
+    background-position: left; background-size: 2px 8px; background-repeat: repeat-y;
+  }
+  .skhy-tl-item { position: relative; padding-bottom: 20px; }
+  .skhy-tl-item:last-child { padding-bottom: 0; }
+  .skhy-tl-dot {
+    position: absolute; left: -26px; top: 2px;
+    width: 15px; height: 15px; border-radius: 4px;
+    background: #0891B2; border: 3px solid #F4F9FB;
+    box-shadow: 0 0 0 2px #0891B2;
+    transform: rotate(45deg);
+  }
+  .skhy-tl-item.done .skhy-tl-dot { background: #0B4A56; box-shadow: 0 0 0 2px #0B4A56; }
+  .skhy-tl-item.future .skhy-tl-dot { background: #FFFFFF; box-shadow: 0 0 0 2px #0891B2; }
+  .skhy-tl-date {
+    font-family: 'JetBrains Mono','Roboto Mono',monospace;
+    font-size: 12px; font-weight: 700; color: #0891B2; margin-bottom: 3px;
+  }
+  .skhy-tl-text { font-size: 14px; font-weight: 600; color: #0B2530; line-height: 1.5; }
+  .skhy-tl-text em { color: #5B7C85; font-weight: 500; font-style: normal; }
+  .skhy-tag {
+    display:inline-block; font-size: 10.5px; font-weight: 700; margin-left: 6px;
+    padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+  }
+  .skhy-tag.now { background:#FEF3C7; color:#92400E; }
+  .skhy-tag.next { background:#DCFCE7; color:#166534; }
+
+  .skhy-divider { height:1px; background:#DCEEF1; margin: 20px 0; }
+
+  .skhy-table-wrap { overflow-x:auto; -webkit-overflow-scrolling: touch; }
+  table.skhy-table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 460px; }
+  table.skhy-table th {
+    text-align: left; font-size: 11.5px; color: #5B7C85; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 0 10px 8px; border-bottom: 1px solid #DCEEF1;
+  }
+  table.skhy-table td {
+    padding: 11px 10px; border-bottom: 1px solid #EEF6F8; font-weight: 600; color:#0B2530;
+  }
+  table.skhy-table tr:last-child td { border-bottom: none; }
+  .skhy-firm { display:flex; align-items:center; gap:8px; }
+  .skhy-firm i { color:#0891B2; font-size:16px; }
+  .skhy-price { font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:700; color:#0B4A56; }
+  .skhy-up { color:#D92D20; font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:700; font-size:12.5px;}
+
+  .skhy-callout {
+    margin-top: 18px; background:#ECFEFF; border:1px solid #A5E7F0; border-radius:14px;
+    padding:14px 16px; font-size:13px; color:#0B4A56; line-height:1.6; display:flex; gap:10px;
+  }
+  .skhy-callout i { color:#0891B2; font-size:18px; margin-top:1px; flex-shrink:0; }
+
+  .skhy-foot {
+    padding: 18px 26px 24px; font-size: 11.5px; color: #7C97A0; line-height:1.6;
+    border-top: 1px solid #DCEEF1; margin-top: 20px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+
+  @media (max-width: 520px) {
+    .skhy-stats { grid-template-columns: repeat(2, 1fr); }
+    .skhy-title { font-size: 20px; }
+    .skhy-ticker { right: 16px; }
+    .skhy-body, .skhy-foot { padding-left: 18px; padding-right: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="skhy-card">
+  <div class="skhy-head">
+    <span class="skhy-eyebrow"><i class="ti ti-building-skyscraper"></i>&nbsp;SK HYNIX · NASDAQ LISTING</span>
+    <div class="skhy-title">SK하이닉스 나스닥 ADR 상장,<br/>7월 10일 거래 개시가 목표입니다</div>
+    <div class="skhy-sub">SEC 등록신청서 제출 완료 · 공모 규모 역대 최대급</div>
+    <div class="skhy-ticker"><span>NASDAQ TICKER</span>SKHY</div>
+  </div>
+
+  <div class="skhy-stats">
+    <div class="skhy-stat"><b>$29.65B</b><span>공모 규모</span></div>
+    <div class="skhy-stat"><b>7.10(금)</b><span>상장 목표일</span></div>
+    <div class="skhy-stat"><b>1,779만주</b><span>발행 규모(2.5%)</span></div>
+    <div class="skhy-stat"><b>255.5만원</b><span>공모가 기준</span></div>
+  </div>
+
+  <div class="skhy-body">
+    <div class="skhy-section-label"><i class="ti ti-timeline-event"></i>&nbsp;상장 타임라인</div>
+    <div class="skhy-timeline">
+      <div class="skhy-tl-item done">
+        <div class="skhy-tl-dot"></div>
+        <div class="skhy-tl-date">2026.03</div>
+        <div class="skhy-tl-text">미국 증시 상장을 위한 <em>비공개(confidential) 신청</em> 진행</div>
+      </div>
+      <div class="skhy-tl-item done">
+        <div class="skhy-tl-dot"></div>
+        <div class="skhy-tl-date">2026.06.24 ~ 06.30</div>
+        <div class="skhy-tl-text">SEC 정식 등록신청서(F-1) 제출, 티커 <em>'SKHY'</em> 공개 · 주관사 BofA·씨티·골드만삭스·JP모건</div>
+      </div>
+      <div class="skhy-tl-item now">
+        <div class="skhy-tl-dot"></div>
+        <div class="skhy-tl-date">2026.07.06 (오늘)</div>
+        <div class="skhy-tl-text">수요예측 및 최종 공모가 조율 단계<span class="skhy-tag now">진행중</span></div>
+      </div>
+      <div class="skhy-tl-item future">
+        <div class="skhy-tl-dot"></div>
+        <div class="skhy-tl-date">2026.07.10 (금) 목표</div>
+        <div class="skhy-tl-text">나스닥 글로벌셀렉트마켓 거래 개시 <em>(일정 변경 가능성 있음)</em><span class="skhy-tag next">D-4</span></div>
+      </div>
+    </div>
+
+    <div class="skhy-divider"></div>
+
+    <div class="skhy-section-label"><i class="ti ti-report-money"></i>&nbsp;증권사별 목표주가 (2026.07 기준)</div>
+    <div class="skhy-table-wrap">
+      <table class="skhy-table">
+        <tr><th>제시 기관</th><th>목표주가</th><th>비고</th></tr>
+        <tr>
+          <td><div class="skhy-firm"><i class="ti ti-building-bank"></i>HSBC</div></td>
+          <td class="skhy-price">400만원</td>
+          <td>기존 290만원 → 38%↑, PBR 2.8배→3.4배</td>
+        </tr>
+        <tr>
+          <td><div class="skhy-firm"><i class="ti ti-building-bank"></i>KB증권</div></td>
+          <td class="skhy-price">420만원</td>
+          <td>기존 380만원 → 상향, 2027년 공급부족 심화 전망</td>
+        </tr>
+        <tr>
+          <td><div class="skhy-firm"><i class="ti ti-building-bank"></i>JP모건</div></td>
+          <td class="skhy-price">300만원</td>
+          <td>코스피 최선호주는 삼성전자로 제시</td>
+        </tr>
+        <tr>
+          <td><div class="skhy-firm"><i class="ti ti-chart-infographic"></i>Investing.com 컨센서스</div></td>
+          <td class="skhy-price">309.4만원</td>
+          <td>애널리스트 37명 중 35명 매수 의견</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="skhy-callout">
+      <i class="ti ti-info-circle"></i>
+      <div>같은 지분율 기준 조달액을 늘리려는 목적, HBM 시장 60% 점유율(카운터포인트 기준), 마이크론 대비 '코리아 디스카운트' 해소 기대가 이번 상장의 핵심 배경으로 꼽힙니다. 상장 이후 한국·미국 양쪽 시장의 가격 괴리 여부는 실제 거래 개시 후 확인이 필요합니다.</div>
+    </div>
+  </div>
+
+  <div class="skhy-foot">
+    <span>자료: SEC 공시, 로이터·CNBC·전자신문·파이낸셜뉴스 종합</span>
+    <span>2026.07.06 기준 · 투자 참고용, 매수·매도 추천 아님</span>
+  </div>
+</div>
+
+</body>
+</html>
