@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>숫자로 보는 농촌 고령화와 임차농 트렌드</title>
+
+<meta property="og:title" content="숫자로 보는 농촌 고령화와 임차농 트렌드 | 영농형 태양광 매칭 플랫폼" />
+<meta property="og:description" content="전국 농가 고령인구 55.8%, 경북 농가인구 10년새 22.1% 감소. 통계청·국가데이터처 자료로 본 영농형 태양광의 인력 공백 문제." />
+<meta property="og:image" content="https://your-blog-domain.example.com/images/thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.example.com/post/agrivoltaic-matching-platform" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+  .avp-wrap * { box-sizing: border-box; }
+  .avp-wrap {
+    background: #FFFCF3;
+    padding: 36px 20px 40px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #262620;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 20px;
+  }
+  .avp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #B5462F;
+    background: #FBEADD;
+    padding: 5px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .avp-title {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 1.4;
+    color: #1F2A1D;
+    margin: 0 0 6px;
+  }
+  .avp-sub {
+    font-size: 14.5px;
+    color: #6B6659;
+    margin: 0 0 26px;
+    line-height: 1.6;
+  }
+  .avp-divider {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, #D9970B 0%, #D9970B 48%, #2F5233 52%, #2F5233 100%);
+    border-radius: 3px;
+    margin-bottom: 28px;
+  }
+  .avp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+  .avp-card {
+    background: #FFFFFF;
+    border: 1px solid #EFE6D2;
+    border-radius: 16px;
+    padding: 20px 18px;
+    box-shadow: 0 2px 10px rgba(80, 60, 20, 0.05);
+  }
+  .avp-card-icon {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .avp-icon-gold { background: #FBEBC7; color: #B5750B; }
+  .avp-icon-green { background: #E1EBDD; color: #2F5233; }
+  .avp-icon-rust { background: #F6DED4; color: #B5462F; }
+  .avp-stat-num {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 1.1;
+    color: #1F2A1D;
+    margin: 0 0 6px;
+  }
+  .avp-stat-num span { font-size: 16px; font-weight: 700; color: #6B6659; }
+  .avp-stat-label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #4A463C;
+    margin: 0 0 4px;
+  }
+  .avp-stat-note {
+    font-size: 12px;
+    color: #8A8577;
+    line-height: 1.5;
+  }
+  .avp-table-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1F2A1D;
+    margin: 0 0 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  table.avp-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #FFFFFF;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(80, 60, 20, 0.05);
+    font-size: 13.5px;
+  }
+  table.avp-table th {
+    background: #2F5233;
+    color: #FDF9EE;
+    font-weight: 700;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  table.avp-table td {
+    padding: 11px 10px;
+    text-align: center;
+    border-bottom: 1px solid #F0EADA;
+    color: #33302A;
+  }
+  table.avp-table tr:last-child td { border-bottom: none; }
+  table.avp-table tr:nth-child(even) td { background: #FCF9EF; }
+  table.avp-table td.avp-region {
+    font-weight: 700;
+    color: #1F2A1D;
+    background: #FBF3DE !important;
+  }
+  .avp-down { color: #B5462F; font-weight: 700; }
+  .avp-up { color: #2F5233; font-weight: 700; }
+  .avp-source {
+    margin-top: 18px;
+    font-size: 11.5px;
+    color: #9A9585;
+    text-align: right;
+  }
+  @media (max-width: 520px) {
+    .avp-grid { grid-template-columns: 1fr; }
+    .avp-title { font-size: 21px; }
+    table.avp-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="avp-wrap">
+  <span class="avp-eyebrow"><i class="ti ti-alert-triangle"></i> 데이터로 보는 현실</span>
+  <h2 class="avp-title">숫자로 보는 농촌 고령화</h2>
+  <p class="avp-sub">영농형 태양광의 '실경작' 조건을 채워줄 사람이 왜 부족한지, 통계로 확인해봤습니다.</p>
+  <div class="avp-divider"></div>
+
+  <div class="avp-grid">
+    <div class="avp-card">
+      <div class="avp-card-icon avp-icon-rust"><i class="ti ti-users"></i></div>
+      <p class="avp-stat-num">55.8<span>%</span></p>
+      <p class="avp-stat-label">전국 농가 고령인구 비율</p>
+      <p class="avp-stat-note">65세 이상, 역대 최고치 · 통계청 2024년 농림어업조사</p>
+    </div>
+    <div class="avp-card">
+      <div class="avp-card-icon avp-icon-rust"><i class="ti ti-trending-down"></i></div>
+      <p class="avp-stat-num">-22.1<span>%</span></p>
+      <p class="avp-stat-label">경북 농가인구 증감(2015→2024)</p>
+      <p class="avp-stat-note">국가데이터처 동북지방통계청 분석</p>
+    </div>
+    <div class="avp-card">
+      <div class="avp-card-icon avp-icon-gold"><i class="ti ti-home"></i></div>
+      <p class="avp-stat-num">50.8<span>%</span></p>
+      <p class="avp-stat-label">70세 이상 농가 경영주 비중</p>
+      <p class="avp-stat-note">전체 농가 경영주의 절반 이상</p>
+    </div>
+    <div class="avp-card">
+      <div class="avp-card-icon avp-icon-green"><i class="ti ti-trending-up"></i></div>
+      <p class="avp-stat-num">31.1<span>%</span></p>
+      <p class="avp-stat-label">귀농가구 중 임차농 비중</p>
+      <p class="avp-stat-note">2023년 27.7% → 2024년 31.1%로 상승</p>
+    </div>
+  </div>
+
+  <p class="avp-table-title"><i class="ti ti-map-2"></i> 전국 vs 경북(의성군 소재) 비교</p>
+  <table class="avp-table">
+    <thead>
+      <tr><th>구분</th><th>전국</th><th>경북</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="avp-region">농가인구 증감</td><td class="avp-down">-4.1%(전년비)</td><td class="avp-down">-22.1%(10년)</td></tr>
+      <tr><td class="avp-region">65세 이상 비중</td><td>55.8%</td><td class="avp-down">59.2%</td></tr>
+      <tr><td class="avp-region">경지면적 증감(10년)</td><td class="avp-down">-9.9%</td><td class="avp-down">-11.1%</td></tr>
+      <tr><td class="avp-region">생산연령인구 비중</td><td>-</td><td class="avp-down">38.5%</td></tr>
+    </tbody>
+  </table>
+
+  <p class="avp-source">자료: 통계청 2024년 농림어업조사, 국가데이터처 동북지방통계청(2025.12), 농림축산식품부·해양수산부·통계청 2024년 귀농어·귀촌인 통계(2025.6)</p>
+</div>
+
+</body>
+</html>
