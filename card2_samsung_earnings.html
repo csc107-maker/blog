@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>삼성전자 2분기 잠정실적 컨센서스 | 7월 7일 발표</title>
+
+<meta property="og:title" content="삼성전자 2분기 잠정실적 미리보기 - 영업이익 컨센서스 85.6조원, 목표주가 59만원까지" />
+<meta property="og:description" content="7월 7일(화) 발표 예정인 삼성전자 2분기 잠정실적 컨센서스와 증권사별 목표주가를 정리했습니다." />
+<meta property="og:image" content="https://your-blog-domain.com/images/samsung-earnings-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/samsung-q2-earnings-preview" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  .sse-card * { box-sizing: border-box; }
+  .sse-card {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    max-width: 720px; margin: 24px auto;
+    background: #FFFBF3; border-radius: 22px; overflow: hidden;
+    border: 1px solid #F3E3C0;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.04), 0 12px 32px rgba(120,80,10,0.10);
+    color: #2B1D06;
+  }
+  .sse-head {
+    position: relative; padding: 28px 28px 26px;
+    background: linear-gradient(135deg, #7C4A03 0%, #B45309 55%, #F0940F 100%);
+    color: #FFF6E6;
+  }
+  .sse-head::after {
+    content:""; position:absolute; right:-50px; bottom:-60px; width:200px; height:200px;
+    border-radius:50%; background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+  }
+  .sse-eyebrow {
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:0.14em;
+    font-weight:700; text-transform:uppercase; color:#FFE7B8;
+    background:rgba(255,255,255,0.12); padding:5px 12px; border-radius:999px;
+    border:1px solid rgba(255,255,255,0.25);
+  }
+  .sse-title { margin:16px 0 6px; font-size:24px; font-weight:800; line-height:1.35; letter-spacing:-0.01em; }
+  .sse-sub { font-size:13.5px; color:#FBE3BC; font-weight:500; }
+  .sse-daybadge {
+    margin-top:16px; display:inline-flex; align-items:center; gap:8px;
+    background:#2B1D06; color:#FFD494; padding:8px 14px; border-radius:12px;
+    font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:700; font-size:13px;
+  }
+
+  .sse-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:20px 20px 6px; }
+  .sse-stat { background:#FFFFFF; border:1px solid #F3E3C0; border-radius:14px; padding:12px 10px; text-align:center; }
+  .sse-stat b { display:block; font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:16px; font-weight:700; color:#7C4A03; letter-spacing:-0.02em; }
+  .sse-stat span { font-size:10.5px; color:#8A6A3E; font-weight:600; display:block; margin-top:4px; }
+
+  .sse-body { padding: 22px 26px 8px; }
+  .sse-section-label {
+    font-size:12.5px; font-weight:800; color:#B45309; text-transform:uppercase; letter-spacing:0.08em;
+    display:flex; align-items:center; gap:6px; margin-bottom:14px;
+  }
+
+  .sse-compare { display:flex; gap:14px; align-items:flex-end; margin-bottom:8px; }
+  .sse-bar-group { flex:1; }
+  .sse-bar-label { font-size:12px; color:#8A6A3E; font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between; }
+  .sse-bar-track { background:#F6EBD6; border-radius:10px; height:34px; position:relative; overflow:hidden; }
+  .sse-bar-fill { height:100%; border-radius:10px; display:flex; align-items:center; padding-left:12px;
+    font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:700; font-size:13px; color:#fff; }
+  .sse-bar-fill.old { width:44%; background:#D8B274; }
+  .sse-bar-fill.new { width:88%; background:linear-gradient(90deg,#B45309,#F0940F); }
+  .sse-arrow { text-align:center; color:#B45309; font-size:20px; padding-bottom:6px; }
+
+  .sse-divider { height:1px; background:#F3E3C0; margin:20px 0; }
+
+  .sse-table-wrap { overflow-x:auto; -webkit-overflow-scrolling: touch; }
+  table.sse-table { width:100%; border-collapse:collapse; font-size:13.5px; min-width:460px; }
+  table.sse-table th { text-align:left; font-size:11.5px; color:#8A6A3E; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.04em; padding:0 10px 8px; border-bottom:1px solid #F3E3C0; }
+  table.sse-table td { padding:11px 10px; border-bottom:1px solid #F8EFDC; font-weight:600; color:#2B1D06; }
+  table.sse-table tr:last-child td { border-bottom:none; }
+  .sse-firm { display:flex; align-items:center; gap:8px; }
+  .sse-firm i { color:#B45309; font-size:16px; }
+  .sse-price { font-family:'JetBrains Mono','Roboto Mono',monospace; font-weight:700; color:#7C4A03; }
+  .sse-chg { font-size:11.5px; color:#D92D20; font-weight:700; }
+
+  .sse-callout {
+    margin-top:18px; background:#FFF3DC; border:1px solid #F0D6A0; border-radius:14px;
+    padding:14px 16px; font-size:13px; color:#5A3C0C; line-height:1.6; display:flex; gap:10px;
+  }
+  .sse-callout i { color:#B45309; font-size:18px; margin-top:1px; flex-shrink:0; }
+
+  .sse-quote {
+    margin-top:14px; padding:14px 16px; border-left:3px solid #B45309; background:#FFFCF6;
+    font-size:13px; color:#4A3210; line-height:1.65; border-radius: 0 10px 10px 0;
+  }
+  .sse-quote b { color:#7C4A03; }
+
+  .sse-foot { padding:18px 26px 24px; font-size:11.5px; color:#9A7B4E; line-height:1.6;
+    border-top:1px solid #F3E3C0; margin-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:520px) {
+    .sse-stats { grid-template-columns:repeat(2,1fr); }
+    .sse-title { font-size:19px; }
+    .sse-compare { flex-direction:column; }
+    .sse-arrow { transform:rotate(90deg); padding:2px 0; }
+    .sse-body, .sse-foot { padding-left:18px; padding-right:18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sse-card">
+  <div class="sse-head">
+    <span class="sse-eyebrow"><i class="ti ti-cpu"></i>&nbsp;SAMSUNG ELECTRONICS · Q2 2026</span>
+    <div class="sse-title">삼성전자 2분기 잠정실적,<br/>7월 7일(화) 발표를 앞두고 있습니다</div>
+    <div class="sse-sub">HBM 슈퍼사이클 · 3개월 만에 영업이익 컨센서스 2배 가까이 상향</div>
+    <div class="sse-daybadge"><i class="ti ti-calendar-event"></i>&nbsp;D-1&nbsp;·&nbsp;7.7(화) 잠정실적 발표</div>
+  </div>
+
+  <div class="sse-stats">
+    <div class="sse-stat"><b>85.6조원</b><span>영업이익 3개월 컨센서스</span></div>
+    <div class="sse-stat"><b>174.2조원</b><span>매출 컨센서스(신한증권)</span></div>
+    <div class="sse-stat"><b>59만원</b><span>최고 목표주가(신한증권)</span></div>
+    <div class="sse-stat"><b>31.8만원</b><span>7/6 종가</span></div>
+  </div>
+
+  <div class="sse-body">
+    <div class="sse-section-label"><i class="ti ti-trending-up"></i>&nbsp;영업이익 컨센서스, 석 달 만에 어떻게 바뀌었나</div>
+    <div class="sse-compare">
+      <div class="sse-bar-group">
+        <div class="sse-bar-label"><span>2026년 3월 말</span><span>48.4조원</span></div>
+        <div class="sse-bar-track"><div class="sse-bar-fill old">48.4조</div></div>
+      </div>
+      <div class="sse-arrow"><i class="ti ti-arrow-big-right-filled"></i></div>
+      <div class="sse-bar-group">
+        <div class="sse-bar-label"><span>2026년 7월 6일</span><span>85.6조원</span></div>
+        <div class="sse-bar-track"><div class="sse-bar-fill new">85.6조</div></div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#8A6A3E;">* 2분기 영업이익 3개월 컨센서스 기준, 대신증권 이경민 연구원 자료 인용</div>
+
+    <div class="sse-divider"></div>
+
+    <div class="sse-section-label"><i class="ti ti-report-money"></i>&nbsp;증권사별 목표주가</div>
+    <div class="sse-table-wrap">
+      <table class="sse-table">
+        <tr><th>제시 기관</th><th>목표주가</th><th>비고</th></tr>
+        <tr>
+          <td><div class="sse-firm"><i class="ti ti-building-bank"></i>신한투자증권</div></td>
+          <td class="sse-price">59만원</td>
+          <td>기존 55만원 → <span class="sse-chg">7%↑</span>, 현재 증권가 최고치</td>
+        </tr>
+        <tr>
+          <td><div class="sse-firm"><i class="ti ti-building-bank"></i>노무라증권</div></td>
+          <td class="sse-price">57만원</td>
+          <td>기존 37만원 → 대폭 상향</td>
+        </tr>
+        <tr>
+          <td><div class="sse-firm"><i class="ti ti-building-bank"></i>미래에셋·유진투자증권</div></td>
+          <td class="sse-price">56만원</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td><div class="sse-firm"><i class="ti ti-building-bank"></i>NH투자증권</div></td>
+          <td class="sse-price">49만원</td>
+          <td>기존 31만원 → 상향</td>
+        </tr>
+        <tr>
+          <td><div class="sse-firm"><i class="ti ti-building-bank"></i>JP모건</div></td>
+          <td class="sse-price">48만원</td>
+          <td>코스피 최선호주로 제시</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="sse-quote">
+      <b>김형태 신한투자증권 연구원</b> — "삼성전자의 2026년 예상 PER은 5.9배로 글로벌 경쟁사 대비 압도적으로 낮다. 이 정도 이익 규모의 기업이 이렇게 저평가받을 이유가 없다"
+    </div>
+
+    <div class="sse-callout">
+      <i class="ti ti-atom-2"></i>
+      <div>2월 세계 최초 HBM4 양산 시작, 3개월 만에 HBM4E 12단 샘플 출하 완료. 2분기 D램·낸드 평균판매가격(ASP)이 각각 40~65%가량 상승한 것이 실적 개선의 핵심 동력으로 꼽힙니다. 김용관 DS부문장은 "올해 이익이 지난 40년 반도체 누적 이익을 넘어설 것"이라고 언급했습니다.</div>
+    </div>
+  </div>
+
+  <div class="sse-foot">
+    <span>자료: 대신증권·신한투자증권·Investing.com·파이낸셜뉴스 종합</span>
+    <span>2026.07.06 기준 · 투자 참고용, 매수·매도 추천 아님</span>
+  </div>
+</div>
+
+</body>
+</html>
