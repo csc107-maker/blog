@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>원달러 환율·한국은행·연준 금리 대시보드</title>
+
+<meta property="og:title" content="원달러 환율·한국은행·美 연준 금리 대시보드 - 2026년 7월 6일 기준" />
+<meta property="og:description" content="원달러 환율 1530원대, 한국은행 기준금리 2.50%, 미 연준 3.50~3.75% 매파적 전환까지 한 화면 정리." />
+<meta property="og:image" content="https://your-blog-domain.com/images/fx-rates-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/fx-rates-dashboard" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+<style>
+  .fxr-card * { box-sizing: border-box; }
+  .fxr-card {
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    max-width:720px; margin:24px auto; background:#F5F5FC; border-radius:22px; overflow:hidden;
+    border:1px solid #DEDCF5; box-shadow:0 1px 2px rgba(16,24,40,0.04), 0 12px 32px rgba(40,25,110,0.10);
+    color:#1D1B4B;
+  }
+  .fxr-head { position:relative; padding:28px 28px 26px;
+    background:linear-gradient(135deg,#2A2472 0%,#3730A3 55%,#5B4FE0 100%); color:#EEECFF; }
+  .fxr-head::after { content:""; position:absolute; right:-40px; top:-70px; width:220px; height:220px;
+    border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.14), transparent 70%); }
+  .fxr-eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12px; letter-spacing:0.14em;
+    font-weight:700; text-transform:uppercase; color:#CBC6FF; background:rgba(255,255,255,0.10);
+    padding:5px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.22); }
+  .fxr-title { margin:16px 0 6px; font-size:24px; font-weight:800; line-height:1.35; letter-spacing:-0.01em; }
+  .fxr-sub { font-size:13.5px; color:#D8D4FF; font-weight:500; }
+
+  .fxr-fxbig { margin:20px 20px 0; background:#FFFFFF; border-radius:16px; padding:18px 20px;
+    border:1px solid #DEDCF5; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .fxr-fxbig .fxr-lbl { font-size:12px; color:#6D68A8; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; }
+  .fxr-fxbig .fxr-val { font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:30px; font-weight:800; color:#2A2472; letter-spacing:-0.02em; }
+  .fxr-fxbig .fxr-chg { font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:14px; font-weight:700; color:#D92D20;
+    background:#FDEAE9; padding:4px 10px; border-radius:8px; }
+
+  .fxr-body { padding:22px 26px 8px; }
+  .fxr-section-label { font-size:12.5px; font-weight:800; color:#3730A3; text-transform:uppercase; letter-spacing:0.08em;
+    display:flex; align-items:center; gap:6px; margin-bottom:14px; }
+
+  .fxr-ratewrap { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:6px; }
+  .fxr-ratebox { background:#FFFFFF; border:1px solid #DEDCF5; border-radius:16px; padding:16px; }
+  .fxr-ratebox .fxr-flag { font-size:11.5px; font-weight:700; color:#6D68A8; text-transform:uppercase; letter-spacing:0.06em; display:flex; align-items:center; gap:6px; margin-bottom:8px;}
+  .fxr-ratebox .fxr-num { font-family:'JetBrains Mono','Roboto Mono',monospace; font-size:24px; font-weight:800; color:#2A2472; }
+  .fxr-ratebox .fxr-gauge { margin-top:10px; height:8px; background:#EDECFB; border-radius:99px; overflow:hidden; }
+  .fxr-ratebox .fxr-gauge-fill { height:100%; border-radius:99px; }
+  .fxr-ratebox .fxr-meta { font-size:11.5px; color:#6D68A8; margin-top:8px; line-height:1.55; }
+  .fxr-ratebox .fxr-next { margin-top:10px; font-size:12px; font-weight:700; color:#3730A3; display:flex; align-items:center; gap:5px; }
+
+  .fxr-divider { height:1px; background:#DEDCF5; margin:20px 0; }
+
+  .fxr-signal { display:flex; gap:12px; align-items:flex-start; background:#FFF8F0; border:1px solid #F5DDBB;
+    border-radius:14px; padding:14px 16px; margin-bottom:14px; }
+  .fxr-signal i { color:#B45309; font-size:20px; margin-top:1px; }
+  .fxr-signal b { color:#7C4A03; }
+  .fxr-signal-text { font-size:13px; color:#5A3C0C; line-height:1.6; }
+
+  .fxr-chiplist { display:flex; flex-wrap:wrap; gap:8px; margin-top: 4px; }
+  .fxr-chip { font-size:12px; font-weight:700; padding:6px 12px; border-radius:999px; background:#EDECFB; color:#3730A3; display:flex; align-items:center; gap:5px; }
+  .fxr-chip i { font-size:14px; }
+
+  .fxr-foot { padding:18px 26px 24px; font-size:11.5px; color:#8783BC; line-height:1.6;
+    border-top:1px solid #DEDCF5; margin-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+
+  @media (max-width:520px) {
+    .fxr-ratewrap { grid-template-columns:1fr; }
+    .fxr-title { font-size:19px; }
+    .fxr-fxbig .fxr-val { font-size:26px; }
+    .fxr-body, .fxr-foot { padding-left:18px; padding-right:18px; }
+    .fxr-fxbig { margin-left:14px; margin-right:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fxr-card">
+  <div class="fxr-head">
+    <span class="fxr-eyebrow"><i class="ti ti-currency-dollar"></i>&nbsp;FX · RATES DASHBOARD</span>
+    <div class="fxr-title">환율은 출렁, 금리는 매파(hawkish)로<br/>—원달러·한국은행·연준 한눈에</div>
+    <div class="fxr-sub">2026년 7월 6일(월) 종가 기준</div>
+  </div>
+
+  <div class="fxr-fxbig">
+    <div>
+      <div class="fxr-lbl">USD / KRW 원달러 환율</div>
+      <div class="fxr-val">1,530.3원</div>
+    </div>
+    <div class="fxr-chg"><i class="ti ti-arrow-up-right"></i> +4.7원 (전일比)</div>
+  </div>
+
+  <div class="fxr-body">
+    <div class="fxr-section-label"><i class="ti ti-building-bank"></i>&nbsp;중앙은행 기준금리 비교</div>
+    <div class="fxr-ratewrap">
+      <div class="fxr-ratebox">
+        <div class="fxr-flag"><i class="ti ti-flag"></i>한국은행 (BOK)</div>
+        <div class="fxr-num">2.50%</div>
+        <div class="fxr-gauge"><div class="fxr-gauge-fill" style="width:33%; background:linear-gradient(90deg,#3730A3,#5B4FE0);"></div></div>
+        <div class="fxr-meta">8회 연속 동결 (5월 28일 기준) · 6월 CPI 3.2%(2023.12 이후 최고)</div>
+        <div class="fxr-next"><i class="ti ti-calendar-event"></i>다음 회의: 7.16(목)</div>
+      </div>
+      <div class="fxr-ratebox">
+        <div class="fxr-flag"><i class="ti ti-flag"></i>美 연방준비제도 (Fed)</div>
+        <div class="fxr-num">3.50~3.75%</div>
+        <div class="fxr-gauge"><div class="fxr-gauge-fill" style="width:62%; background:linear-gradient(90deg,#B45309,#F0940F);"></div></div>
+        <div class="fxr-meta">6.17 동결, 점도표 연말 중간값 3.8%로 상향(3월 3.4%)</div>
+        <div class="fxr-next"><i class="ti ti-calendar-event"></i>다음 회의: 7.28~29</div>
+      </div>
+    </div>
+
+    <div class="fxr-divider"></div>
+
+    <div class="fxr-section-label"><i class="ti ti-alert-triangle"></i>&nbsp;지금 눈여겨봐야 할 변수</div>
+    <div class="fxr-signal">
+      <i class="ti ti-flame"></i>
+      <div class="fxr-signal-text"><b>연준, '인하'에서 '인상 경계'로 전환.</b> 19명 위원 중 9명이 연내 최소 한 차례 인상을 예상(인하 예상은 1명). 중동發 유가 인플레이션과 견조한 고용이 배경입니다. CME 페드워치 기준 7월 동결 확률 75.6%(7.4일 기준).</div>
+    </div>
+    <div class="fxr-chiplist">
+      <span class="fxr-chip"><i class="ti ti-droplet"></i>호르무즈 해협 통항 이슈</span>
+      <span class="fxr-chip"><i class="ti ti-trending-down"></i>외국인 8거래일 연속 순매도</span>
+      <span class="fxr-chip"><i class="ti ti-user-star"></i>신현송 한은 총재(4월 취임)</span>
+      <span class="fxr-chip"><i class="ti ti-clock-24"></i>외환시장 24시간 거래 개시</span>
+    </div>
+  </div>
+
+  <div class="fxr-foot">
+    <span>자료: 한국은행·Fed·Investing.com·TradingEconomics 종합</span>
+    <span>2026.07.06 기준 · 투자 참고용, 매수·매도 추천 아님</span>
+  </div>
+</div>
+
+</body>
+</html>
