@@ -1,0 +1,106 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css" />
+<style>
+  .tpx-wrap{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    background:#FBF3E7; padding:36px 20px; border-radius:20px; color:#0F172A; box-sizing:border-box;
+  }
+  .tpx-wrap *{box-sizing:border-box;}
+  .tpx-inner{max-width:860px;margin:0 auto;}
+  .tpx-eyebrow{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;letter-spacing:.04em;
+    color:#B4590C;background:#F7E3C4;padding:5px 12px;border-radius:100px;margin-bottom:12px;
+  }
+  .tpx-title{font-size:23px;font-weight:800;margin:0 0 6px;letter-spacing:-.02em;color:#0B1230;}
+  .tpx-sub{font-size:14px;color:#5B6478;margin:0 0 24px;line-height:1.55;}
+
+  .tpx-chart{background:#fff;border:1px solid #F0E3C8;border-radius:16px;padding:22px 22px 10px;margin-bottom:16px;}
+  .tpx-row{margin-bottom:18px;}
+  .tpx-row:last-child{margin-bottom:6px;}
+  .tpx-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .tpx-row-name{font-size:13px;font-weight:700;color:#232B3D;display:flex;align-items:center;gap:6px;}
+  .tpx-row-name .tag{font-size:10.5px;font-weight:700;background:#EEF1F8;color:#6B7488;padding:2px 7px;border-radius:100px;}
+  .tpx-row-val{font-size:14.5px;font-weight:800;color:#0B1230;font-variant-numeric:tabular-nums;}
+  .tpx-track{height:14px;background:#F1F1F1;border-radius:100px;overflow:hidden;position:relative;}
+  .tpx-fill{height:100%;border-radius:100px;}
+  .tpx-row.now .tpx-fill{background:#94A0B8;}
+  .tpx-row.now .tpx-row-val{color:#5B6478;}
+  .tpx-row.hi .tpx-fill{background:linear-gradient(90deg,#E8A33D,#C0223A);}
+  .tpx-row.hi .tpx-row-val{color:#C0223A;}
+  .tpx-fill.g1{background:#F0C36B;}
+  .tpx-fill.g2{background:#E8A33D;}
+  .tpx-fill.g3{background:#D97706;}
+
+  .tpx-gapbox{
+    display:flex;align-items:center;gap:14px;background:#0B1230;border-radius:14px;padding:16px 20px;margin-bottom:14px;
+  }
+  .tpx-gapbox .gnum{font-size:26px;font-weight:800;color:#F5C453;}
+  .tpx-gapbox p{margin:0;color:#DCE2F5;font-size:12.6px;line-height:1.55;}
+  .tpx-gapbox p b{color:#fff;}
+
+  .tpx-note{display:flex;gap:10px;padding:2px 4px;}
+  .tpx-note i{color:#B4590C;font-size:16px;margin-top:1px;}
+  .tpx-note p{margin:0;font-size:12px;color:#6B5A2E;line-height:1.6;}
+  .tpx-src{font-size:11px;color:#9AA3B8;text-align:right;margin-top:10px;}
+</style>
+
+<div class="tpx-wrap">
+  <div class="tpx-inner">
+    <span class="tpx-eyebrow"><i class="ti ti-target-arrow"></i>&nbsp;증권가 목표주가</span>
+    <h3 class="tpx-title">주가는 급락, 목표주가는 오히려 상향</h3>
+    <p class="tpx-sub">7월 7일 급락 이후에도 국내 주요 증권사들의 삼성전자 목표주가는 잇따라 올라가고 있습니다. 현재가와의 괴리율로 확인해보세요.</p>
+
+    <div class="tpx-chart">
+      <div class="tpx-row now">
+        <div class="tpx-row-top">
+          <span class="tpx-row-name"><i class="ti ti-circle-dot"></i>&nbsp;7/7 종가 (기준가)</span>
+          <span class="tpx-row-val">296,000원</span>
+        </div>
+        <div class="tpx-track"><div class="tpx-fill" style="width:49%;"></div></div>
+      </div>
+
+      <div class="tpx-row">
+        <div class="tpx-row-top">
+          <span class="tpx-row-name">Investing.com 컨센서스 <span class="tag">애널리스트 36명</span></span>
+          <span class="tpx-row-val">470,290원</span>
+        </div>
+        <div class="tpx-track"><div class="tpx-fill g1" style="width:78%;"></div></div>
+      </div>
+
+      <div class="tpx-row">
+        <div class="tpx-row-top">
+          <span class="tpx-row-name">국내 23개 증권사 평균 <span class="tag">6월 이후 갱신분</span></span>
+          <span class="tpx-row-val">515,870원</span>
+        </div>
+        <div class="tpx-track"><div class="tpx-fill g2" style="width:86%;"></div></div>
+      </div>
+
+      <div class="tpx-row">
+        <div class="tpx-row-top">
+          <span class="tpx-row-name">메리츠증권 <span class="tag">실적발표 직전 상향</span></span>
+          <span class="tpx-row-val">500,000원</span>
+        </div>
+        <div class="tpx-track"><div class="tpx-fill g2" style="width:83%;"></div></div>
+      </div>
+
+      <div class="tpx-row hi">
+        <div class="tpx-row-top">
+          <span class="tpx-row-name"><i class="ti ti-arrow-big-up-line"></i>&nbsp;KB증권 <span class="tag">오늘(7/8) 재상향</span></span>
+          <span class="tpx-row-val">600,000원</span>
+        </div>
+        <div class="tpx-track"><div class="tpx-fill g3" style="width:100%;"></div></div>
+      </div>
+    </div>
+
+    <div class="tpx-gapbox">
+      <div class="gnum">+74%</div>
+      <p><b>국내 증권사 평균 목표주가 기준 괴리율.</b> KB증권 최신 목표주가(60만 원) 기준으로는 괴리율이 100%를 넘습니다. 목표주가는 확정된 미래가 아니라 각 증권사의 전망치라는 점은 유의해야 합니다.</p>
+    </div>
+
+    <div class="tpx-note">
+      <i class="ti ti-info-circle"></i>
+      <p>KB증권은 2028년까지 메모리 공급 부족이 이어질 것이란 전망을, 메리츠증권은 클린룸 부족에 따른 구조적 공급 제약과 4분기 예정된 3개년 주주환원 정책을 목표주가 상향 근거로 제시했습니다.</p>
+    </div>
+    <p class="tpx-src">자료: EBN(2026.7.7), 파이낸셜뉴스(2026.7.8, KB증권 목표가 상향), Investing.com 컨센서스, 각사 리서치 리포트 종합</p>
+  </div>
+</div>
