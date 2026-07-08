@@ -1,0 +1,115 @@
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css" />
+<style>
+  .tlx-wrap{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    background:#F5F3FB; padding:36px 20px; border-radius:20px; color:#0F172A; box-sizing:border-box;
+  }
+  .tlx-wrap *{box-sizing:border-box;}
+  .tlx-inner{max-width:820px;margin:0 auto;}
+  .tlx-eyebrow{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;letter-spacing:.04em;
+    color:#6C2BD9;background:#EBE1FA;padding:5px 12px;border-radius:100px;margin-bottom:12px;
+  }
+  .tlx-title{font-size:23px;font-weight:800;margin:0 0 6px;letter-spacing:-.02em;color:#0B1230;}
+  .tlx-sub{font-size:14px;color:#5B6478;margin:0 0 26px;line-height:1.55;}
+
+  .tlx-list{position:relative;margin:0;padding:0 0 0 0;}
+  .tlx-line{position:absolute;left:19px;top:6px;bottom:6px;width:2px;background:#DCD5EF;}
+  .tlx-item{position:relative;display:flex;gap:16px;padding-bottom:26px;}
+  .tlx-item:last-child{padding-bottom:0;}
+  .tlx-dot{
+    position:relative;z-index:1;flex:0 0 40px;height:40px;border-radius:50%;
+    background:#fff;border:2px solid #DCD5EF;display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:#6C2BD9;
+  }
+  .tlx-item.neg .tlx-dot{border-color:#2C5CE0;color:#2C5CE0;background:#EAF0FF;}
+  .tlx-item.pos .tlx-dot{border-color:#B4590C;color:#B4590C;background:#FBF0DC;}
+  .tlx-item.today .tlx-dot{border-color:#0E7C5A;color:#0E7C5A;background:#DFF4EB;}
+  .tlx-body{flex:1;background:#fff;border:1px solid #E7E2F5;border-radius:14px;padding:14px 16px;}
+  .tlx-date{font-size:11.5px;font-weight:800;color:#6C2BD9;letter-spacing:.02em;margin-bottom:4px;}
+  .tlx-item.neg .tlx-date{color:#2C5CE0;}
+  .tlx-item.pos .tlx-date{color:#B4590C;}
+  .tlx-item.today .tlx-date{color:#0E7C5A;}
+  .tlx-h{font-size:14.5px;font-weight:800;color:#0B1230;margin:0 0 4px;}
+  .tlx-p{font-size:12.8px;color:#4B5468;margin:0;line-height:1.6;}
+  .tlx-kospi{
+    display:inline-flex;align-items:center;gap:4px;margin-top:8px;
+    font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:100px;background:#F1F3F9;color:#3A4256;
+  }
+  .tlx-kospi.d{color:#2C5CE0;background:#EAF0FF;}
+  .tlx-kospi.u{color:#C0223A;background:#FDEAEC;}
+
+  .tlx-src{font-size:11px;color:#9AA3B8;text-align:right;margin-top:16px;}
+</style>
+
+<div class="tlx-wrap">
+  <div class="tlx-inner">
+    <span class="tlx-eyebrow"><i class="ti ti-timeline"></i>&nbsp;타임라인</span>
+    <h3 class="tlx-title">6월 말~7월 초, 반도체 시장 롤러코스터 8일</h3>
+    <p class="tlx-sub">정부 메가프로젝트 발표부터 삼성전자 잠정실적, 서킷브레이커까지 &mdash; 최근 8일간 흐름을 순서대로 정리했습니다.</p>
+
+    <div class="tlx-list">
+      <div class="tlx-line"></div>
+
+      <div class="tlx-item">
+        <div class="tlx-dot"><i class="ti ti-building-bank"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">6월 29일 (월)</div>
+          <p class="tlx-h">정부, 800조 원 반도체 메가프로젝트 발표</p>
+          <p class="tlx-p">이재명 대통령·이재용 회장·최태원 회장 청와대 회동. 호남권에 삼성전자·SK하이닉스 합산 800조 원 투자해 메모리 팹 4기 신설 발표.</p>
+        </div>
+      </div>
+
+      <div class="tlx-item neg">
+        <div class="tlx-dot"><i class="ti ti-alert-triangle"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">7월 1일 (수)</div>
+          <p class="tlx-h">메타 &lsquo;컴퓨팅 자원 외부판매&rsquo; 검토설 (블룸버그)</p>
+          <p class="tlx-p">빅테크 과잉투자·반도체 피크아웃 논란 점화. 마이크론 -10.6%, 삼성전자 -5.84%, SK하이닉스 -3.4%. 같은날 6월 반도체 수출은 역대 최대(+199.5%).</p>
+          <span class="tlx-kospi d"><i class="ti ti-trending-down"></i> 코스피 8,303.41 (-2.04%)</span>
+        </div>
+      </div>
+
+      <div class="tlx-item neg">
+        <div class="tlx-dot"><i class="ti ti-cloud-storm"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">7월 2일 (목)</div>
+          <p class="tlx-h">패닉 셀 확산, 매도 사이드카 발동</p>
+          <p class="tlx-p">개장 7분 만에 매도 사이드카. 삼성전자 장중 -9%대, SK하이닉스 -14%대. 이후 숏커버·레버리지 역회전으로 낙폭 상당 부분 만회.</p>
+          <span class="tlx-kospi d"><i class="ti ti-trending-down"></i> 코스피 장중 8,000선 붕괴</span>
+        </div>
+      </div>
+
+      <div class="tlx-item">
+        <div class="tlx-dot"><i class="ti ti-trending-up"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">7월 5~6일 (일~월)</div>
+          <p class="tlx-h">뉴욕 증시 반등, 다우 53,000 첫 돌파</p>
+          <p class="tlx-p">AI 반도체주 반등에 힘입어 다우·S&amp;P500·나스닥 동반 상승. 국내 증시도 저가 매수세 유입.</p>
+        </div>
+      </div>
+
+      <div class="tlx-item pos">
+        <div class="tlx-dot"><i class="ti ti-report-money"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">7월 7일 (화)</div>
+          <p class="tlx-h">삼성전자 2분기 잠정실적 발표 &rarr; 서킷브레이커</p>
+          <p class="tlx-p">영업이익 89.4조 원, 컨센서스(84.8조) 상회하는 어닝서프라이즈. 그러나 셀온 심리·중동 리스크 겹치며 서킷브레이커(올해 6번째) 발동. 삼성전자 -6.92%, SK하이닉스 -6.06%.</p>
+          <span class="tlx-kospi d"><i class="ti ti-trending-down"></i> 코스피 7,656.31 (-4.91%)</span>
+        </div>
+      </div>
+
+      <div class="tlx-item today">
+        <div class="tlx-dot"><i class="ti ti-flag"></i></div>
+        <div class="tlx-body">
+          <div class="tlx-date">7월 8일 (오늘)</div>
+          <p class="tlx-h">KB증권, 목표주가 60만 원으로 재상향</p>
+          <p class="tlx-p">전일 급락에도 불구하고 목표주가 상향(55만→60만 원). 메모리 공급 부족 2028년까지 지속 전망 근거. SK하이닉스 나스닥 ADR 상장(7/10) D-2.</p>
+        </div>
+      </div>
+
+    </div>
+    <p class="tlx-src">자료: 파이낸셜뉴스·MBC·연합뉴스·Investing.com·한국거래소·각 증권사 리포트 종합(2026.6.29~7.8)</p>
+  </div>
+</div>
