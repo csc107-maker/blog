@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울 겨울철 공기열 히트펌프 COP 성능</title>
+
+<meta property="og:title" content="서울 겨울, 공기열 히트펌프 효율은 얼마나 떨어질까?" />
+<meta property="og:description" content="외기온도가 낮아질수록 떨어지는 히트펌프 COP, 실측 데이터와 서울의 겨울 기온을 함께 비교했어요." />
+<meta property="og:image" content="여기에_썸네일_이미지_URL을_입력하세요.png" />
+<meta property="og:url" content="여기에_이_카드가_삽입될_블로그_게시글_URL을_입력하세요" />
+
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .hp3-wrap {
+    width: 100%;
+    max-width: 760px;
+    margin: 32px auto;
+    background: #F5F9FB;
+    padding: 4px;
+    border-radius: 28px;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+  }
+
+  .hp3-inner {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 40px 36px 30px;
+  }
+
+  .hp3-thermal-bar {
+    height: 6px;
+    width: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #E8622C 0%, #F0A430 30%, #6FB8C4 65%, #2389A8 100%);
+    margin-bottom: 22px;
+  }
+
+  .hp3-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #2389A8;
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+  }
+
+  .hp3-inner h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0B3C5D;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .hp3-inner .hp3-sub {
+    font-size: 14.5px;
+    color: #5B6B7C;
+    line-height: 1.6;
+    margin-bottom: 26px;
+  }
+
+  .hp3-chart-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #94A3B8;
+    padding: 0 2px 8px;
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  }
+
+  .hp3-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  .hp3-bar-label {
+    width: 108px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .hp3-bar-label .temp {
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-size: 16px;
+    font-weight: 800;
+    color: #16232E;
+    display: block;
+    line-height: 1.2;
+  }
+  .hp3-bar-label .cond {
+    font-size: 10.5px;
+    color: #94A3B8;
+  }
+
+  .hp3-bar-track {
+    flex: 1;
+    height: 30px;
+    background: #F1F5F8;
+    border-radius: 8px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .hp3-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-weight: 800;
+    font-size: 13px;
+    color: #FFFFFF;
+  }
+
+  .hp3-boiler-line {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    background: repeating-linear-gradient(180deg, #D64545 0, #D64545 4px, transparent 4px, transparent 7px);
+  }
+  .hp3-boiler-line::after {
+    content: '가스보일러 COP 2.75';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #D64545;
+    white-space: nowrap;
+  }
+
+  .hp3-legend-note {
+    font-size: 11.5px;
+    color: #8494A3;
+    margin: 4px 0 26px;
+    padding-left: 122px;
+  }
+
+  .hp3-seoul-box {
+    background: #EAF4F8;
+    border: 1px solid #D3E9EE;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+  .hp3-seoul-box .ti {
+    font-size: 26px;
+    color: #146680;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .hp3-seoul-box .hp3-seoul-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #0B3C5D;
+    margin-bottom: 6px;
+  }
+  .hp3-seoul-box .hp3-seoul-desc {
+    font-size: 12.8px;
+    color: #33424F;
+    line-height: 1.65;
+  }
+  .hp3-seoul-box .hp3-seoul-desc b { color: #146680; font-family: ui-monospace, 'SF Mono', Consolas, monospace; }
+
+  .hp3-source {
+    font-size: 11.5px;
+    color: #8494A3;
+    line-height: 1.6;
+    border-top: 1px dashed #E2E8F0;
+    padding-top: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .hp3-source .ti { font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .hp3-inner { padding: 26px 16px 22px; }
+    .hp3-inner h2 { font-size: 19px; }
+    .hp3-bar-label { width: 72px; }
+    .hp3-bar-label .temp { font-size: 13px; }
+    .hp3-legend-note { padding-left: 86px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hp3-wrap">
+  <div class="hp3-inner">
+    <div class="hp3-thermal-bar"></div>
+
+    <div class="hp3-eyebrow"><i class="ti ti-thermometer"></i>SEOUL WINTER PERFORMANCE</div>
+    <h2>서울 겨울, 히트펌프 효율은 얼마나 떨어질까?</h2>
+    <p class="hp3-sub">외기온도가 낮아질수록 COP(성능계수)는 떨어져요. 난방수 45℃ 기준 실측 데이터로 비교해봤어요.</p>
+
+    <div class="hp3-bar-row">
+      <div class="hp3-bar-label"><span class="temp">7℃</span><span class="cond">초겨울 평년</span></div>
+      <div class="hp3-bar-track">
+        <div class="hp3-bar-fill" style="width:100%; background:linear-gradient(90deg,#2389A8,#3FA5B8);">COP 3.46</div>
+      </div>
+    </div>
+    <div class="hp3-bar-row">
+      <div class="hp3-bar-label"><span class="temp">1.5℃</span><span class="cond">늦가을~초겨울</span></div>
+      <div class="hp3-bar-track">
+        <div class="hp3-boiler-line" style="left:79.5%;"></div>
+        <div class="hp3-bar-fill" style="width:77.5%; background:linear-gradient(90deg,#4EA6B8,#7CBFC9);">COP 2.68</div>
+      </div>
+    </div>
+    <div class="hp3-bar-row">
+      <div class="hp3-bar-label"><span class="temp">−5℃</span><span class="cond">서울 한겨울 새벽</span></div>
+      <div class="hp3-bar-track">
+        <div class="hp3-boiler-line" style="left:79.5%;"></div>
+        <div class="hp3-bar-fill" style="width:77.2%; background:linear-gradient(90deg,#F0A430,#E8622C);">COP 2.67</div>
+      </div>
+    </div>
+    <div class="hp3-bar-row">
+      <div class="hp3-bar-label"><span class="temp">−15℃</span><span class="cond">서울 한파 특보</span></div>
+      <div class="hp3-bar-track">
+        <div class="hp3-boiler-line" style="left:79.5%;"></div>
+        <div class="hp3-bar-fill" style="width:65%; background:linear-gradient(90deg,#E8622C,#D64545);">COP 2.25</div>
+      </div>
+    </div>
+    <div class="hp3-legend-note">점선 = 콘덴싱보일러 COP 2.75 기준선 (이보다 왼쪽이면 보일러보다 비효율)</div>
+
+    <div class="hp3-seoul-box">
+      <i class="ti ti-snowflake"></i>
+      <div>
+        <div class="hp3-seoul-title">서울의 겨울, 실제로 얼마나 추울까?</div>
+        <div class="hp3-seoul-desc">1월 평균기온 <b>−2.4℃</b>, 한파 시 <b>−10℃ 안팎</b>은 흔하고 때로 <b>−15℃ 이하</b>까지 하강해요. 역대 최저기온은 1927년 12월의 <b>−23.1℃</b>. 저온 구간에서 성능이 급감하는 만큼, 한랭지형 인증 모델 선택이 중요해요.</div>
+      </div>
+    </div>
+
+    <div class="hp3-source"><i class="ti ti-file-text"></i> 출처: 공기열·지열 히트펌프 취급업체 실측 분석 자료(2025), 기상청 기후평년값·서울시 기후특성 자료, 위키백과 서울특별시 기후 문서 종합.</div>
+  </div>
+</div>
+
+</body>
+</html>
