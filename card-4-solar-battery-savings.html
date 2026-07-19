@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>히트펌프 전기요금과 태양광·배터리 절감 비교</title>
+
+<meta property="og:title" content="히트펌프 전기요금, 태양광·배터리로 얼마나 절감될까?" />
+<meta property="og:description" content="2026년 한전 누진 요금 구조부터 태양광·ESS 연계 시 절감 효과와 계절적 한계까지 데이터로 정리했어요." />
+<meta property="og:image" content="여기에_썸네일_이미지_URL을_입력하세요.png" />
+<meta property="og:url" content="여기에_이_카드가_삽입될_블로그_게시글_URL을_입력하세요" />
+
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .hp4-wrap {
+    width: 100%;
+    max-width: 760px;
+    margin: 32px auto;
+    background: #F5F9FB;
+    padding: 4px;
+    border-radius: 28px;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+  }
+
+  .hp4-inner {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 24px;
+    padding: 40px 36px 30px;
+  }
+
+  .hp4-thermal-bar {
+    height: 6px;
+    width: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #2389A8 0%, #6FB8C4 35%, #F0A430 70%, #E8622C 100%);
+    margin-bottom: 22px;
+  }
+
+  .hp4-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #E8622C;
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+  }
+
+  .hp4-inner h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0B3C5D;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .hp4-inner .hp4-sub {
+    font-size: 14.5px;
+    color: #5B6B7C;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  .hp4-section-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: #0B3C5D;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  /* 누진제 표 */
+  .hp4-tier-table {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .hp4-tier-table > div {
+    padding: 11px 14px;
+    font-size: 12.5px;
+    display: flex;
+    align-items: center;
+  }
+  .hp4-tier-table .hp4-th {
+    background: #0B3C5D;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 11.5px;
+  }
+  .hp4-tier-table .hp4-tc {
+    border-top: 1px solid #EDF2F5;
+    color: #33424F;
+  }
+  .hp4-tier-table .hp4-tc.num {
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-weight: 700;
+    justify-content: flex-end;
+  }
+  .hp4-tier-table .hp4-row3 .hp4-tc { background: #FDEEE7; color: #C4501F; font-weight: 700; }
+
+  .hp4-super-warn {
+    background: #FDEDED;
+    border: 1px solid #F6D0D0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 11.8px;
+    color: #A83232;
+    line-height: 1.55;
+    display: flex;
+    gap: 7px;
+    margin-bottom: 24px;
+  }
+  .hp4-super-warn .ti { flex-shrink: 0; margin-top: 1px; }
+
+  /* 사용량 비교 */
+  .hp4-usage-compare {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .hp4-usage-box {
+    border-radius: 16px;
+    padding: 16px 16px;
+    text-align: center;
+  }
+  .hp4-usage-box.before { background: #EAF4F8; border: 1px solid #D3E9EE; }
+  .hp4-usage-box.after { background: #FDEEE7; border: 1px solid #F6DACB; }
+  .hp4-usage-box .kwh {
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #5B6B7C;
+    margin-bottom: 6px;
+  }
+  .hp4-usage-box .won {
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-size: 21px;
+    font-weight: 800;
+  }
+  .hp4-usage-box.before .won { color: #146680; }
+  .hp4-usage-box.after .won { color: #C4501F; }
+  .hp4-usage-box .cap {
+    font-size: 11px;
+    color: #8494A3;
+    margin-top: 4px;
+  }
+  .hp4-arrow {
+    font-size: 20px;
+    color: #E8622C;
+  }
+  .hp4-usage-note {
+    font-size: 11.5px;
+    color: #8494A3;
+    text-align: center;
+    margin-bottom: 26px;
+    line-height: 1.5;
+  }
+  .hp4-usage-note b { color: #C4501F; }
+
+  .hp4-divider {
+    border-top: 1px dashed #E2E8F0;
+    margin: 24px 0;
+  }
+
+  /* 태양광+ESS */
+  .hp4-solar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .hp4-solar-stat {
+    background: #F5F9FB;
+    border: 1px solid #E9F0F3;
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .hp4-solar-stat .label {
+    font-size: 11.5px;
+    color: #5B6B7C;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .hp4-solar-stat .val {
+    font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+    font-size: 19px;
+    font-weight: 800;
+    color: #0B3C5D;
+  }
+  .hp4-solar-stat .val span { font-size: 12px; font-weight: 600; color: #94A3B8; }
+
+  .hp4-mismatch-box {
+    background: #FEF3E2;
+    border: 1px solid #F6E3BE;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .hp4-mismatch-box .ti { font-size: 24px; color: #B8730E; flex-shrink: 0; margin-top: 2px; }
+  .hp4-mismatch-box .hp4-mm-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #7A5312;
+    margin-bottom: 6px;
+  }
+  .hp4-mismatch-box .hp4-mm-desc {
+    font-size: 12.5px;
+    color: #5C4514;
+    line-height: 1.65;
+  }
+  .hp4-mismatch-box .hp4-mm-desc b { color: #B8730E; }
+
+  .hp4-source {
+    font-size: 11.5px;
+    color: #8494A3;
+    line-height: 1.6;
+    border-top: 1px dashed #E2E8F0;
+    padding-top: 14px;
+    margin-top: 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .hp4-source .ti { font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .hp4-inner { padding: 26px 16px 22px; }
+    .hp4-inner h2 { font-size: 19px; }
+    .hp4-tier-table { grid-template-columns: 1.2fr 1fr 1fr; font-size: 11px; }
+    .hp4-solar-grid { grid-template-columns: 1fr; }
+    .hp4-usage-compare { grid-template-columns: 1fr; }
+    .hp4-arrow { transform: rotate(90deg); justify-self: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hp4-wrap">
+  <div class="hp4-inner">
+    <div class="hp4-thermal-bar"></div>
+
+    <div class="hp4-eyebrow"><i class="ti ti-bolt"></i>ELECTRICITY & SOLAR</div>
+    <h2>전기요금, 태양광·배터리로 얼마나 아낄 수 있을까?</h2>
+    <p class="hp4-sub">2026년 한전 주택용 누진 요금 구조와 태양광·ESS 연계 절감 효과를 함께 정리했어요.</p>
+
+    <div class="hp4-section-label"><i class="ti ti-stairs-up"></i> 주택용 전기요금 3단계 누진제 (일반 기간)</div>
+    <div class="hp4-tier-table">
+      <div class="hp4-th">구간</div><div class="hp4-th">사용량</div><div class="hp4-th">단가</div>
+      <div class="hp4-tc">1단계</div><div class="hp4-tc">~200kWh</div><div class="hp4-tc num">120원</div>
+      <div class="hp4-tc">2단계</div><div class="hp4-tc">201~400kWh</div><div class="hp4-tc num">214.6원</div>
+      <div class="hp4-row3" style="display:contents;">
+        <div class="hp4-tc">3단계</div><div class="hp4-tc">400kWh 초과</div><div class="hp4-tc num">307.3원</div>
+      </div>
+    </div>
+    <div class="hp4-super-warn"><i class="ti ti-alert-triangle"></i> 월 1,000kWh 초과 시 '슈퍼유저' 요금 kWh당 <b>약 728~736원</b> 적용 (3단계의 약 2.4배). 여기에 기후환경요금(9원/kWh)·연료비조정요금·부가세 10%·전력기금 3.7%가 추가돼요.</div>
+
+    <div class="hp4-section-label"><i class="ti ti-scale" ></i> 히트펌프로 사용량이 늘면 요금은 어떻게 뛸까?</div>
+    <div class="hp4-usage-compare">
+      <div class="hp4-usage-box before">
+        <div class="kwh">월 350kWh · 평시</div>
+        <div class="won">71,270원</div>
+        <div class="cap">일반 가정 평균 사용</div>
+      </div>
+      <div class="hp4-arrow"><i class="ti ti-arrow-right"></i></div>
+      <div class="hp4-usage-box after">
+        <div class="kwh">월 650kWh · 난방 성수기</div>
+        <div class="won">184,585원</div>
+        <div class="cap">히트펌프 난방 가산 시 예시</div>
+      </div>
+    </div>
+    <div class="hp4-usage-note">사용량은 <b>1.86배</b> 늘었는데 요금은 <b>2.59배</b> 뛰어요 — 누진제 구조 때문이에요. (일반기간 200·400kWh 구간 기준 단순 계산, 실제 청구액은 계약종별·검침일에 따라 달라집니다)</div>
+
+    <div class="hp4-divider"></div>
+
+    <div class="hp4-section-label"><i class="ti ti-sun"></i> 태양광 + ESS(배터리) 연계 시</div>
+    <div class="hp4-solar-grid">
+      <div class="hp4-solar-stat">
+        <div class="label"><i class="ti ti-solar-panel"></i>서울 발전 잠재량</div>
+        <div class="val">3.55<span>kWh / kW · 일</span></div>
+      </div>
+      <div class="hp4-solar-stat">
+        <div class="label"><i class="ti ti-coin"></i>3kW 태양광 + 7kWh ESS</div>
+        <div class="val">약 1,300<span>만원</span></div>
+      </div>
+      <div class="hp4-solar-stat">
+        <div class="label"><i class="ti ti-refresh"></i>투자 회수 기간</div>
+        <div class="val">약 6~7<span>년 (조건부)</span></div>
+      </div>
+      <div class="hp4-solar-stat">
+        <div class="label"><i class="ti ti-seedling"></i>연간 유지관리비</div>
+        <div class="val">약 20~30<span>만원</span></div>
+      </div>
+    </div>
+
+    <div class="hp4-mismatch-box">
+      <i class="ti ti-calendar-exclamation"></i>
+      <div>
+        <div class="hp4-mm-title">계절 타이밍 미스매치를 꼭 기억하세요</div>
+        <div class="hp4-mm-desc">국내 실측 데이터 기준 봄·여름 발전량이 가을·겨울보다 <b>약 1.6배</b> 많아요. 태양광 발전이 가장 적은 계절이 하필 히트펌프 난방 수요가 가장 큰 겨울과 겹쳐요. 배터리는 '낮 전기를 밤에' 옮겨줄 뿐, '여름 전기를 겨울로' 옮겨주진 못해요.</div>
+      </div>
+    </div>
+
+    <div class="hp4-source"><i class="ti ti-file-text"></i> 출처: 한국전력공사 주택용 전기요금표(2026), 국내 도시계획 분야 태양광 발전량 분석, 가정용 3kW 태양광 실측 데이터, ESS 설치비용 조사자료 종합. 정확한 요금·보조금은 한전ON·한국에너지공단에서 재확인하세요.</div>
+  </div>
+</div>
+
+</body>
+</html>
