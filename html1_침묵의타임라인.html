@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="하나은행 국세청 조사4국 세무조사 — 74일간의 타임라인" />
+<meta property="og:description" content="5월 8일 조사 착수부터 오늘까지, 하나금융 세무조사 진행 상황을 시간순으로 정리했습니다." />
+<meta property="og:image" content="https://your-domain.com/images/하나은행_세무조사_썸네일.png" />
+<meta property="og:url" content="https://your-domain.com/blog/하나은행-세무조사-후속팩트체크" />
+<title>하나은행 국세청 조사4국 세무조사 — 침묵의 타임라인</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Noto+Sans+KR:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F5F6FA;
+    padding: 30px 16px 40px;
+    color: #3B4356;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E7E9F0;
+    border-radius: 20px;
+    padding: 30px 26px 26px;
+    box-shadow: 0 10px 30px rgba(18,24,38,0.06);
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #1D4ED8;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .eyebrow i { font-size: 15px; }
+
+  h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 23px;
+    font-weight: 900;
+    color: #121826;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  h2 .accent { color: #B45309; }
+
+  .subtitle {
+    font-size: 13.5px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin-bottom: 26px;
+  }
+
+  /* ---- 시그니처: 펄스 → 침묵 웨이브 ---- */
+  .wave-box {
+    background: #FBFBFD;
+    border: 1px solid #ECEEF3;
+    border-radius: 16px;
+    padding: 22px 16px 14px;
+    margin-bottom: 28px;
+  }
+  .wave-box svg { width: 100%; height: auto; display: block; }
+
+  .wave-ticks {
+    display: flex;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: #9AA3B2;
+    margin-top: 6px;
+    padding: 0 4px;
+  }
+  .wave-ticks .t1 { width: 12%; text-align:center; }
+  .wave-ticks .t2 { width: 12%; text-align:center; }
+  .wave-ticks .t3 { width: 14%; text-align:center; }
+  .wave-ticks .t4 { flex: 1; text-align:center; color:#B45309; font-weight:700; }
+  .wave-ticks .t5 { width: 13%; text-align:center; color:#121826; font-weight:700; }
+
+  .wave-caption {
+    text-align:center;
+    font-size: 12px;
+    color:#9AA3B2;
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+  }
+  .wave-caption b { color:#B45309; font-weight:700; }
+
+  /* ---- 타임라인 리스트 ---- */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, #1D4ED8 0%, #1D4ED8 46%, #C7CCD9 46%, #C7CCD9 100%);
+  }
+
+  .t-item { position: relative; padding-bottom: 22px; }
+  .t-item:last-child { padding-bottom: 0; }
+
+  .t-dot {
+    position: absolute; left: -26px; top: 3px;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: #1D4ED8;
+    border: 3px solid #EAF0FE;
+  }
+  .t-item.muted .t-dot { background: #C7CCD9; border-color:#F1F2F6; }
+  .t-item.today .t-dot {
+    background: #B45309; border-color:#FDF3E3;
+    box-shadow: 0 0 0 4px rgba(180,83,9,0.15);
+  }
+
+  .t-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #1D4ED8;
+    margin-bottom: 3px;
+  }
+  .t-item.muted .t-date { color: #9AA3B2; }
+  .t-item.today .t-date { color: #B45309; }
+
+  .t-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #121826;
+    margin-bottom: 4px;
+    line-height: 1.45;
+  }
+  .t-desc {
+    font-size: 13px;
+    color: #6B7280;
+    line-height: 1.6;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-top: 7px;
+  }
+  .tag-blue { background:#EAF0FE; color:#1D4ED8; }
+  .tag-amber { background:#FDF3E3; color:#B45309; }
+  .tag-gray { background:#F1F2F6; color:#6B7280; }
+
+  .stat-row {
+    display: flex; gap: 10px; margin-top: 26px;
+  }
+  .stat {
+    flex: 1; background:#FBFBFD; border:1px solid #ECEEF3; border-radius: 14px;
+    padding: 14px 12px; text-align:center;
+  }
+  .stat-num {
+    font-family:'IBM Plex Mono', monospace; font-size: 22px; font-weight:700; color:#121826;
+  }
+  .stat.amber .stat-num { color:#B45309; }
+  .stat-label { font-size: 11px; color:#9AA3B2; margin-top:4px; line-height:1.4; }
+
+  .src {
+    margin-top: 22px; font-size: 11px; color: #B4B9C4;
+    border-top: 1px dashed #E7E9F0; padding-top: 12px; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+
+    <div class="eyebrow"><i class="ti ti-clock-pause"></i>TIMELINE · 2026.05.08 → 07.21</div>
+    <h2>침묵의 타임라인 — 5월의 나흘, 그리고 <span class="accent">74일의 무소식</span></h2>
+    <div class="subtitle">서울지방국세청 조사4국이 하나금융 본사에 투입된 이후, 공개된 보도만 놓고 시간순으로 정리했습니다.</div>
+
+    <!-- 펄스 → 침묵 웨이브 -->
+    <div class="wave-box">
+      <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+        <!-- baseline solid (event zone) -->
+        <path d="M40,105 L58,105" stroke="#C7CCD9" stroke-width="2" fill="none"/>
+        <!-- pulse 5/8 -->
+        <path d="M58,105 L64,105 L70,44 L76,105 L96,105" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- pulse 5/9 -->
+        <path d="M96,105 L142,105 L148,66 L154,105 L176,105" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+        <!-- pulse 5/11 (재방문+메리츠) -->
+        <path d="M176,105 L222,105 L228,54 L234,105 L256,105" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- pulse 5/12 -->
+        <path d="M256,105 L296,105 L302,80 L308,105 L322,105" stroke="#1D4ED8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+        <!-- silence dashed flatline -->
+        <path d="M322,105 L660,105" stroke="#C7CCD9" stroke-width="2" fill="none" stroke-dasharray="1,9" stroke-linecap="round"/>
+        <!-- today marker -->
+        <circle cx="668" cy="105" r="7" fill="#FDF3E3" stroke="#B45309" stroke-width="2.5"/>
+        <circle cx="668" cy="105" r="2.4" fill="#B45309"/>
+        <!-- event top labels -->
+        <text x="70" y="30" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="#1D4ED8">5/8</text>
+        <text x="148" y="52" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="#1D4ED8">5/9</text>
+        <text x="228" y="40" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="#1D4ED8">5/11</text>
+        <text x="302" y="66" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="#1D4ED8" opacity="0.8">5/12</text>
+        <text x="490" y="92" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-size="11.5" font-weight="700" fill="#B45309">보도 공백 70일</text>
+        <text x="668" y="130" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="700" fill="#B45309">오늘 7/21</text>
+      </svg>
+      <div class="wave-caption">조사 착수(5/8) 이후 마지막 관련 보도는 <b>5/12</b> — 그 뒤로 <b>70일</b>째 새 소식이 없습니다.</div>
+    </div>
+
+    <!-- 상세 타임라인 -->
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 05. 08 (금) 오전 10시</div>
+        <div class="t-title">조사4국, 하나금융지주·하나은행 본사 투입</div>
+        <div class="t-desc">서울 중구 본사에 사전 예고 없이 조사 인력 투입. 회계·세무 장부 예치. 2022년 정기조사 이후 약 4년 만의 조사.</div>
+        <span class="tag tag-blue">비정기 특별세무조사 착수</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 05. 09 (토)</div>
+        <div class="t-title">주요 매체 일제 보도, 금융권 긴장 확산</div>
+        <div class="t-desc">뉴스핌·파이낸셜뉴스·경향신문 등이 조사 착수 사실 보도. 경영진 고액 연봉·퇴직자 자문료 등이 조사 배경으로 거론.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 05. 11 (월)</div>
+        <div class="t-title">조사4국 재방문 + 메리츠증권도 조사 착수</div>
+        <div class="t-desc">하나금융 측 "미완료 절차" 해명. 같은 날 조사4국이 메리츠증권 본사에도 투입되며 금융권 확산 우려 고조.</div>
+        <span class="tag tag-amber">약 1개월 소요 전망 보도</span>
+      </div>
+      <div class="t-item">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 05. 12 (화)</div>
+        <div class="t-title">하나금융 "정확한 대상 미확인" 입장 재확인</div>
+        <div class="t-desc">회사 측은 비정기 조사임을 인정하면서도 구체적 대상·범위는 확인되지 않는다고 설명. 이후 신규 보도 끊김.</div>
+      </div>
+      <div class="t-item muted">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 05. 13 ~ 07. 20</div>
+        <div class="t-title">관련 보도 · 공시 · 공식 입장 없음</div>
+        <div class="t-desc">경제지·통신사 후속 보도, 하나금융 IR 자료, 증권사 2분기 실적 리포트 등 다각도로 확인했으나 신규 확인 사항 없음.</div>
+        <span class="tag tag-gray">70일 연속 무소식</span>
+      </div>
+      <div class="t-item today">
+        <div class="t-dot"></div>
+        <div class="t-date">2026. 07. 21 (오늘)</div>
+        <div class="t-title">공식 결과 발표 · 추징 여부 — 미확인</div>
+        <div class="t-desc">이 글 작성 시점 기준, 조사 결과·추징세액·종결 여부 그 무엇도 공개적으로 확인되지 않았습니다.</div>
+        <span class="tag tag-amber">현재 상태: 미확인</span>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">74<span style="font-size:12px;">일</span></div>
+        <div class="stat-label">조사 착수 후<br>경과일</div>
+      </div>
+      <div class="stat amber">
+        <div class="stat-num">70<span style="font-size:12px;">일</span></div>
+        <div class="stat-label">마지막 보도 이후<br>무소식 기간</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">×2.4</div>
+        <div class="stat-label">최초 예상 기간(약 1개월)<br>대비 경과 배수</div>
+      </div>
+    </div>
+
+    <div class="src">출처: 뉴스핌·파이낸셜뉴스·경향신문·EBN·조세금융신문·연합뉴스TV·인사이트 (2026.05.08~05.12 보도 종합) · 이후 기간은 2026.07.21 기준 재검색 결과 반영</div>
+  </div>
+</div>
+</body>
+</html>
