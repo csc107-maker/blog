@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="세무조사, 착수부터 확정까지 — 지금 하나은행은 어느 단계일까" />
+<meta property="og:description" content="조사 착수와 결과 발표 사이, 실제로는 몇 단계가 더 있습니다. 국세기본법 기준 표준 절차를 정리했습니다." />
+<meta property="og:image" content="https://your-domain.com/images/하나은행_세무조사_썸네일.png" />
+<meta property="og:url" content="https://your-domain.com/blog/하나은행-세무조사-후속팩트체크" />
+<title>세무조사 절차 로드맵</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=Noto+Sans+KR:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@500;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #F5F6FA;
+    padding: 30px 16px 40px;
+    color: #3B4356;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .card {
+    background: #FFFFFF;
+    border: 1px solid #E7E9F0;
+    border-radius: 20px;
+    padding: 30px 26px 26px;
+    box-shadow: 0 10px 30px rgba(18,24,38,0.06);
+  }
+  .eyebrow {
+    display:flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:700;
+    letter-spacing:0.14em; color:#1D4ED8; text-transform:uppercase; margin-bottom:12px;
+  }
+  .eyebrow i { font-size:15px; }
+  h2 {
+    font-family:'Noto Serif KR', serif; font-size:22px; font-weight:900;
+    color:#121826; line-height:1.4; letter-spacing:-0.01em; margin-bottom:8px;
+  }
+  h2 .accent { color:#B45309; }
+  .subtitle { font-size:13.5px; color:#6B7280; line-height:1.6; margin-bottom:26px; }
+
+  .zone-flag {
+    display:flex; align-items:flex-start; gap:10px;
+    background:#FDF3E3; border:1px solid #F3DFB8; border-radius:14px;
+    padding:13px 15px; margin-bottom:24px;
+  }
+  .zone-flag i { color:#B45309; font-size:18px; margin-top:1px; }
+  .zone-flag .zt { font-size:13px; font-weight:700; color:#8A5209; margin-bottom:2px; }
+  .zone-flag .zd { font-size:12.5px; color:#8A5209; line-height:1.6; }
+
+  .steps { position:relative; padding-left: 8px; }
+
+  .step {
+    position:relative; display:flex; gap:16px; padding-bottom: 6px;
+  }
+  .step-rail {
+    display:flex; flex-direction:column; align-items:center; width:34px; flex-shrink:0;
+  }
+  .step-num {
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:14px;
+    background:#EAF0FE; color:#1D4ED8; border:2px solid #1D4ED8;
+    flex-shrink:0; z-index:2;
+  }
+  .step.pending .step-num { background:#F1F2F6; color:#9AA3B2; border-color:#D7DAE3; }
+  .step.uncertain .step-num { background:#FDF3E3; color:#B45309; border-color:#E7B45E; border-style:dashed; }
+
+  .step-line { width:2px; flex:1; background:#DCE3F5; margin-top:2px; min-height: 26px; }
+  .step.pending .step-line, .step.uncertain .step-line { background:#E7E9F0; }
+  .step:last-child .step-line { display:none; }
+
+  .step-body { padding-bottom: 26px; flex:1; }
+  .step-title-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+  .step-title { font-size:15.5px; font-weight:700; color:#121826; }
+  .step.pending .step-title, .step.uncertain .step-title { color:#5B6472; }
+  .step-desc { font-size:13px; color:#6B7280; line-height:1.65; }
+  .step-badge {
+    font-size:10px; font-weight:700; padding:2.5px 8px; border-radius:20px;
+  }
+  .badge-done { background:#E9F7EF; color:#15803D; }
+  .badge-optional { background:#F1F2F6; color:#6B7280; }
+  .badge-unknown { background:#FDF3E3; color:#B45309; }
+
+  .law-note {
+    margin-top: 4px; font-size:12px; color:#9AA3B2; line-height:1.6;
+    background:#FBFBFD; border:1px solid #ECEEF3; border-radius:10px; padding:8px 11px;
+  }
+  .law-note b { color:#6B7280; }
+
+  .footer-note {
+    margin-top: 8px; padding-top:20px; border-top:1px dashed #E7E9F0;
+    font-size:12.5px; color:#6B7280; line-height:1.75;
+  }
+  .footer-note b { color:#121826; }
+
+  .src { margin-top:16px; font-size:11px; color:#B4B9C4; line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="eyebrow"><i class="ti ti-route"></i>PROCEDURE ROADMAP</div>
+    <h2>조사관이 다녀간 뒤, <span class="accent">진짜 절차는 이제 시작</span>입니다</h2>
+    <div class="subtitle">국세기본법상 세무조사의 표준 진행 순서입니다. 하나은행 건이 지금 정확히 어느 단계인지는 공개 정보로 확인되지 않습니다.</div>
+
+    <div class="zone-flag">
+      <i class="ti ti-alert-triangle"></i>
+      <div>
+        <div class="zt">현재 위치 추정 불가</div>
+        <div class="zd">국세기본법 제81조의13(비밀유지 의무)에 따라 개별 조사의 진행 단계는 공개 대상이 아닙니다. 아래 ②~④ 구간 어딘가에 있을 수 있다는 정도만 말씀드릴 수 있습니다.</div>
+      </div>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-rail"><div class="step-num">1</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-title-row">
+            <div class="step-title">조사 착수 · 현장조사</div>
+            <span class="step-badge badge-done">확인됨 · 5/8~</span>
+          </div>
+          <div class="step-desc">조사4국 인력 투입, 회계장부·전산자료 예치. 하나은행 건은 5/8 착수, 5/11 재방문까지 언론으로 확인.</div>
+        </div>
+      </div>
+
+      <div class="step uncertain">
+        <div class="step-rail"><div class="step-num">2</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-title-row">
+            <div class="step-title">조사결과통지 (서면)</div>
+            <span class="step-badge badge-unknown">공개 확인 불가</span>
+          </div>
+          <div class="step-desc">조사관이 확인한 쟁점과 예상 추징 내역을 회사에 서면으로 통지. 언론 발표 의무 없음 — 회사와 국세청 사이의 비공개 절차.</div>
+        </div>
+      </div>
+
+      <div class="step uncertain">
+        <div class="step-rail"><div class="step-num">3</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-title-row">
+            <div class="step-title">과세전적부심사청구</div>
+            <span class="step-badge badge-optional">선택 절차</span>
+          </div>
+          <div class="step-desc">통지 수령 후 30일 이내, 회사가 세액에 이의가 있으면 정식 고지 전에 재심사를 청구할 수 있는 절차. 청구 여부 자체가 비공개.</div>
+        </div>
+      </div>
+
+      <div class="step uncertain">
+        <div class="step-rail"><div class="step-num">4</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <div class="step-title-row">
+            <div class="step-title">세금 고지서 발부</div>
+            <span class="step-badge badge-unknown">공개 확인 불가</span>
+          </div>
+          <div class="step-desc">최종 추징세액이 확정돼 고지서가 발부되는 단계. 금액이 재무적으로 유의미하면 이 시점부터 공시 가능성이 열립니다.</div>
+        </div>
+      </div>
+
+      <div class="step pending">
+        <div class="step-rail"><div class="step-num">5</div></div>
+        <div class="step-body">
+          <div class="step-title-row">
+            <div class="step-title">이의신청 · 심판청구 · 행정소송</div>
+            <span class="step-badge badge-optional">불복 시에만</span>
+          </div>
+          <div class="step-desc">고지 내용에 불복할 경우 밟는 절차. 여기까지 가면 조세심판원·법원 관련 보도로 외부에 알려질 가능성이 높아집니다.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-note">
+      <b>왜 이 구조를 알아야 할까요?</b> "보도가 없다"를 "조사가 끝났다" 또는 "조사가 흐지부지됐다"로 오해하기 쉽습니다. 하지만 ②~④ 구간은 원래부터 조용한 구간입니다. 결과가 밖으로 드러나려면 보통 <b>공시 의무 발생</b>이나 <b>불복 절차 진입</b> 같은 별도의 트리거가 필요합니다.
+    </div>
+
+    <div class="src">참고: 국세기본법 제81조의13(비밀유지), 제81조의15(과세전적부심사) 등 일반 절차 규정. 개별 사건 진행 상황을 특정하는 정보는 아닙니다.</div>
+  </div>
+</div>
+</body>
+</html>
