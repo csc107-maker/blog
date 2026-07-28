@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>유가 × 실적 2×2 매트릭스 — 네 갈래로 갈리는 신재생주</title>
+
+<meta property="og:title" content="유가 × 실적 2×2 매트릭스 — 신재생주가 갈릴 네 갈래" />
+<meta property="og:description" content="유가가 되돌아오느냐, 실적이 컨센서스를 넘느냐. 두 축으로 만든 네 개의 시나리오와 그 안에서 한화솔루션·SK이터닉스의 위치를 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/0728-matrix.png" />
+<meta property="og:url" content="https://example.com/0728-market-brief#matrix" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+.mx-wrap *{box-sizing:border-box;margin:0;padding:0}
+.mx-wrap{
+  font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;
+  background:#F4F7F6;color:#12303A;padding:26px 20px 30px;border-radius:18px;
+  border:1px solid #D7E2E0;max-width:880px;margin:26px auto;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.mx-eyebrow{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.09em;font-weight:700;color:#566C74}
+.mx-eyebrow i{color:#D0342C;font-size:16px}
+.mx-h2{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:10px 0 6px;line-height:1.32}
+.mx-lede{font-size:14.5px;color:#566C74;max-width:670px}
+.mx-rule{height:3px;width:56px;background:#D0342C;border-radius:2px;margin:16px 0 20px}
+
+.mx-axis-y{font-size:11px;font-weight:800;letter-spacing:.06em;color:#8FA3A8;margin-bottom:7px;
+  display:flex;align-items:center;gap:6px}
+.mx-axis-y i{font-size:14px;color:#B45309}
+.mx-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mx-q{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:16px 15px 15px;position:relative}
+.mx-q::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:0 3px 3px 0}
+.mx-q.best::before{background:#0E7C7B}
+.mx-q.diff::before{background:#12303A}
+.mx-q.vol::before{background:#B45309}
+.mx-q.worst::before{background:#D0342C}
+.mx-cond{font-size:11px;font-weight:800;letter-spacing:.05em;color:#8FA3A8;font-variant-numeric:tabular-nums}
+.mx-q h4{font-size:16px;font-weight:800;letter-spacing:-.025em;margin:6px 0 8px;line-height:1.35}
+.mx-q>p{font-size:12.8px;color:#566C74;line-height:1.65}
+.mx-who{margin-top:12px;padding-top:11px;border-top:1px dashed #E8EFEE}
+.mx-line{display:flex;gap:8px;align-items:flex-start;font-size:12.3px;color:#2B4952;margin-bottom:6px;line-height:1.55}
+.mx-line:last-child{margin-bottom:0}
+.mx-chip{flex-shrink:0;font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px;margin-top:1px;white-space:nowrap}
+.mx-chip.h{background:#E8EEF0;color:#2C4A54}
+.mx-chip.s{background:#FBEEDD;color:#8A4008}
+
+.mx-facts{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:17px 16px 14px;margin-top:14px}
+.mx-facts h5{font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.mx-facts h5 i{color:#0E7C7B;font-size:16px}
+.mx-fr{display:flex;gap:12px;padding:9px 0;border-top:1px solid #EEF3F2;align-items:baseline;font-size:13px}
+.mx-fr:first-of-type{border-top:none;padding-top:0}
+.mx-fk{flex:0 0 132px;font-weight:800;color:#3D5A62;font-size:12.5px}
+.mx-fv{flex:1;color:#2B4952;line-height:1.6}
+.mx-fv b{font-weight:800;color:#12303A;font-variant-numeric:tabular-nums}
+
+.mx-note{margin-top:16px;background:#EEF4F3;border:1px solid #DCE7E5;border-radius:12px;
+  padding:13px 15px;font-size:13px;color:#2B4952;display:flex;gap:10px;align-items:flex-start}
+.mx-note i{color:#0E7C7B;font-size:17px;flex-shrink:0;margin-top:1px}
+.mx-src{margin-top:14px;font-size:11.5px;color:#8FA3A8;line-height:1.65}
+.mx-src b{color:#566C74;font-weight:700}
+
+@media(max-width:700px){
+  .mx-grid{grid-template-columns:1fr}
+  .mx-h2{font-size:20px}
+  .mx-wrap{padding:22px 14px 24px}
+  .mx-fk{flex:0 0 96px;font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<div class="mx-wrap">
+
+  <div class="mx-eyebrow"><i class="ti ti-grid-4x4"></i><span>시나리오 · 유가 × 실적 2×2</span></div>
+  <h2 class="mx-h2">이제 변수는 딱 두 개로 줄었습니다</h2>
+  <p class="mx-lede">유가가 되돌아오는가, 그리고 실적이 눈높이를 넘는가. 이 둘의 조합이 앞으로 몇 주의 주가를 결정합니다. 네 칸 중 어디로 가는지만 확인하면 됩니다.</p>
+  <div class="mx-rule"></div>
+
+  <div class="mx-axis-y"><i class="ti ti-arrow-up-right"></i>위 두 칸 = 유가 재상승 · 아래 두 칸 = 유가 안정 또는 추가 하락</div>
+
+  <div class="mx-grid">
+
+    <div class="mx-q best">
+      <div class="mx-cond">유가 ↑ · 실적 상회</div>
+      <h4>가장 강한 조합</h4>
+      <p>테마와 펀더멘털이 동시에 지지합니다. 다만 유가 상승은 물가와 금리 부담을 키워 <b>지수 전체에는 역풍</b>이라, 신재생만 오르고 시장은 눌리는 그림이 나올 수 있습니다.</p>
+      <div class="mx-who">
+        <div class="mx-line"><span class="mx-chip h">한화솔루션</span><div>태양광은 좋으나 케미칼 원가 부담 재발</div></div>
+        <div class="mx-line"><span class="mx-chip s">SK이터닉스</span><div>테마 수급 재유입으로 탄력 가장 큼</div></div>
+      </div>
+    </div>
+
+    <div class="mx-q vol">
+      <div class="mx-cond">유가 ↑ · 실적 하회</div>
+      <h4>변동성만 커지는 국면</h4>
+      <p>테마는 반등하지만 근거가 얇아 지속성이 떨어집니다. 지난주와 어제 사이에 벌어진 <b>급등 후 급락 패턴이 반복</b>될 가능성이 높은 구간입니다.</p>
+      <div class="mx-who">
+        <div class="mx-line"><span class="mx-chip h">한화솔루션</span><div>오버행이 겹치면 반등 폭 제한</div></div>
+        <div class="mx-line"><span class="mx-chip s">SK이터닉스</span><div>목표주가 괴리가 그대로 부담으로 남음</div></div>
+      </div>
+    </div>
+
+    <div class="mx-q diff">
+      <div class="mx-cond">유가 ↓ · 실적 상회</div>
+      <h4>종목이 갈리는 국면 · 현재 유력</h4>
+      <p>테마 프리미엄이 걷히고 <b>숫자가 주가를 결정</b>합니다. 유가가 내려도 미국 모듈 판가와 AMPC는 흔들리지 않고, 케미칼 원가는 오히려 낮아집니다. 이 조합에서 두 종목의 경로가 가장 크게 벌어집니다.</p>
+      <div class="mx-who">
+        <div class="mx-line"><span class="mx-chip h">한화솔루션</span><div>상대적으로 유리 — 실적이 방어선 역할</div></div>
+        <div class="mx-line"><span class="mx-chip s">SK이터닉스</span><div>국내 입찰 수주가 나오기 전까지 눈치 장세</div></div>
+      </div>
+    </div>
+
+    <div class="mx-q worst">
+      <div class="mx-cond">유가 ↓ · 실적 하회</div>
+      <h4>가장 약한 조합</h4>
+      <p>상승 명분이 모두 사라집니다. 7월 급등분을 더 반납할 수 있고, 목표주가 하향 리포트가 이어지면서 <b>눈높이 자체가 재조정</b>되는 국면입니다.</p>
+      <div class="mx-who">
+        <div class="mx-line"><span class="mx-chip h">한화솔루션</span><div>확정 발행가 22,100원이 심리적 기준선으로 거론</div></div>
+        <div class="mx-line"><span class="mx-chip s">SK이터닉스</span><div>증권가 평균 목표주가 51,000원까지의 거리 잔존</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mx-facts">
+    <h5><i class="ti ti-clipboard-data"></i>판단의 근거가 되는 숫자들</h5>
+    <div class="mx-fr"><div class="mx-fk">2분기 컨센서스</div><div class="mx-fv">한화솔루션 영업이익 <b>1,792억원</b> — 하나증권은 이를 <b>29% 웃도는</b> 수준을 추정하며 직전 분기 대비 <b>149% 증가</b>로 전망</div></div>
+    <div class="mx-fr"><div class="mx-fk">모듈 판가</div><div class="mx-fv">직전 분기 대비 1분기 <b>+14%</b>, 2분기 <b>+9%</b> 상승 — 중국산 진입 차단(FEOC 규제)에 따른 프리미엄 확대</div></div>
+    <div class="mx-fr"><div class="mx-fk">3분기 동력</div><div class="mx-fv">7월부터 <b>카터스빌 셀 공장</b> 본격 가동 — 미국 내 부품 비율(DCA) 충족 모듈 생산 확대</div></div>
+    <div class="mx-fr"><div class="mx-fk">유가 민감도</div><div class="mx-fv">한화솔루션 2025년 매출 구성 — 신재생 <b>54%</b> / 케미칼 <b>32%</b>. 유가 하락이 한쪽에는 악재, 다른 쪽에는 호재</div></div>
+    <div class="mx-fr"><div class="mx-fk">밸류에이션</div><div class="mx-fv">SK이터닉스 증권가 평균 목표주가 <b>51,000원</b> · 7월 27일 종가 <b>59,400원</b> — 여전히 목표가를 웃도는 구간</div></div>
+  </div>
+
+  <div class="mx-note">
+    <i class="ti ti-shield-half"></i>
+    <div><b>확률을 매기지 않는 이유는 그대로입니다.</b> 유가 축은 미·이란 상황이라는 계량 불가능한 변수에 달려 있습니다. 다만 실적 축은 <b>7월 29일부터 8월 19일 사이에 답이 나옵니다.</b> 예측보다 확인이 빠른 구간이니, 숫자를 보고 판단을 갱신하는 편이 안전합니다.</div>
+  </div>
+
+  <div class="mx-src">
+    <b>자료</b> · 한국경제(하나증권 윤재성 연구원 코멘트 인용), 연합인포맥스·에프앤가이드 컨센서스, 시사저널e, 한국거래소, 인베스팅닷컴<br/>
+    <b>유의</b> · 컨센서스와 목표주가는 발표 시점 기준이며 실적 발표 이후 조정될 수 있습니다. 시나리오는 가정이며 결과를 보장하지 않습니다. 정보 제공 목적이며 특정 종목의 매매를 권유하지 않습니다.
+  </div>
+
+</div>
+
+</body>
+</html>
