@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>유가와 신재생에너지주는 왜 같이 움직일까 — 인과 사슬 해부</title>
+
+<meta property="og:title" content="유가 급락이 신재생에너지주를 끌어내린 이유 — 인과 사슬 해부" />
+<meta property="og:description" content="호르무즈 해협 위기부터 브렌트유 6% 급락까지. 국제유가와 태양광·풍력 종목을 잇는 4단계 연결고리를 그림으로 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/oil-renewable-chain.png" />
+<meta property="og:url" content="https://example.com/hanwha-solutions-sk-eternix-crash#oil-chain" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+.oil-wrap *{box-sizing:border-box;margin:0;padding:0}
+.oil-wrap{
+  font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;
+  background:#F4F7F6;color:#12303A;padding:26px 20px 30px;border-radius:18px;
+  border:1px solid #D7E2E0;max-width:860px;margin:26px auto;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.oil-eyebrow{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.09em;
+  font-weight:700;color:#566C74}
+.oil-eyebrow i{color:#B45309;font-size:16px}
+.oil-h2{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:10px 0 6px;line-height:1.32}
+.oil-lede{font-size:14.5px;color:#566C74;max-width:660px}
+.oil-rule{height:3px;width:56px;background:#B45309;border-radius:2px;margin:16px 0 22px}
+
+.oil-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:stretch}
+.oil-step{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:15px 14px 14px;position:relative}
+.oil-step .oil-idx{font-size:11px;font-weight:800;color:#B45309;letter-spacing:.14em}
+.oil-step .oil-ico{font-size:22px;color:#12303A;margin:8px 0 6px;display:block}
+.oil-step h4{font-size:14.5px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:6px}
+.oil-step p{font-size:12.5px;color:#566C74;line-height:1.62}
+.oil-step .oil-fig{margin-top:9px;font-size:13px;font-weight:800;color:#D0342C;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.oil-step.terminal{background:#FDF3F2;border-color:#F2D4D1}
+.oil-step.terminal .oil-idx{color:#D0342C}
+
+.oil-arrows{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 0}
+.oil-arrows span{text-align:center;color:#B9CBC8;font-size:17px}
+
+.oil-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.oil-box{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:16px 15px}
+.oil-box h5{font-size:13.5px;font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:11px}
+.oil-box.up h5 i{color:#0E7C7B;font-size:17px}
+.oil-box.dn h5 i{color:#D0342C;font-size:17px}
+.oil-li{display:flex;gap:8px;font-size:13px;color:#2B4952;padding:7px 0;border-top:1px dashed #E2EAE8;line-height:1.6}
+.oil-li:first-of-type{border-top:none;padding-top:0}
+.oil-li b{font-weight:800;color:#12303A}
+.oil-tag{flex-shrink:0;font-size:10.5px;font-weight:800;letter-spacing:.03em;padding:2px 7px;border-radius:20px;height:fit-content;margin-top:1px}
+.oil-box.up .oil-tag{background:#E3F1F0;color:#0B5F5E}
+.oil-box.dn .oil-tag{background:#FBE7E5;color:#A82A23}
+
+.oil-note{margin-top:16px;background:#EEF4F3;border:1px solid #DCE7E5;border-radius:12px;
+  padding:13px 15px;font-size:13px;color:#2B4952;display:flex;gap:10px;align-items:flex-start}
+.oil-note i{color:#0E7C7B;font-size:17px;flex-shrink:0;margin-top:1px}
+.oil-src{margin-top:14px;font-size:11.5px;color:#8FA3A8;line-height:1.65}
+.oil-src b{color:#566C74;font-weight:700}
+
+@media(max-width:700px){
+  .oil-chain{grid-template-columns:1fr 1fr}
+  .oil-arrows{display:none}
+  .oil-split{grid-template-columns:1fr}
+  .oil-h2{font-size:20px}
+  .oil-wrap{padding:22px 15px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="oil-wrap">
+
+  <div class="oil-eyebrow"><i class="ti ti-droplet"></i><span>메커니즘 해부 · 유가 → 신재생 4단계 연결고리</span></div>
+  <h2 class="oil-h2">유가가 오르면 태양광이 오르고,<br/>유가가 꺾이면 태양광이 먼저 무너진다</h2>
+  <p class="oil-lede">태양광 회사는 석유를 팔지 않습니다. 그런데 왜 유가에 이렇게 민감할까요? 둘을 잇는 고리는 '실적'이 아니라 '기대와 자금'입니다.</p>
+  <div class="oil-rule"></div>
+
+  <div class="oil-chain">
+    <div class="oil-step">
+      <div class="oil-idx">STEP 01</div>
+      <i class="ti ti-crosshair oil-ico"></i>
+      <h4>중동 공급 차질</h4>
+      <p>2월 말 시작된 호르무즈 해협 위기가 5개월째 이어지며 홍해까지 확산. 7월 들어 원유 수출 차단 공포가 정점.</p>
+      <div class="oil-fig">브렌트 7월 +약 30%</div>
+    </div>
+    <div class="oil-step">
+      <div class="oil-idx">STEP 02</div>
+      <i class="ti ti-flame oil-ico"></i>
+      <h4>화석연료 가격 급등</h4>
+      <p>브렌트유가 지난주 한때 배럴당 100달러를 상회. 전력·연료 원가가 뛰면서 재생에너지의 상대 경쟁력이 부각.</p>
+      <div class="oil-fig">한때 $100 돌파</div>
+    </div>
+    <div class="oil-step">
+      <div class="oil-idx">STEP 03</div>
+      <i class="ti ti-trending-up oil-ico"></i>
+      <h4>테마 자금 쏠림</h4>
+      <p>'에너지 안보' 내러티브에 기관 순매수가 가세. 반도체 급락장에서 갈 곳 잃은 자금이 신재생 소수 종목에 집중.</p>
+      <div class="oil-fig">SK이터닉스 1개월 +101%</div>
+    </div>
+    <div class="oil-step terminal">
+      <div class="oil-idx">STEP 04</div>
+      <i class="ti ti-arrow-back-up oil-ico"></i>
+      <h4>전제 소멸 → 되돌림</h4>
+      <p>미·이란 상호 공격 중단으로 공급 차질 공포가 해소. 상승의 전제였던 유가가 사라지자 매수 논리도 함께 증발.</p>
+      <div class="oil-fig">브렌트 -5.7% / WTI -6.7%</div>
+    </div>
+  </div>
+
+  <div class="oil-arrows">
+    <span><i class="ti ti-chevron-right"></i></span><span><i class="ti ti-chevron-right"></i></span>
+    <span><i class="ti ti-chevron-right"></i></span><span></span>
+  </div>
+
+  <div class="oil-split">
+    <div class="oil-box up">
+      <h5><i class="ti ti-circle-check"></i>유가 하락이 '좋은' 이유</h5>
+      <div class="oil-li"><span class="oil-tag">원가</span><div><b>석유화학 원료비 하락.</b> 한화솔루션 케미칼 부문의 나프타 투입원가가 낮아져 시차를 두고 스프레드가 개선될 수 있습니다.</div></div>
+      <div class="oil-li"><span class="oil-tag">물가</span><div><b>인플레 압력 완화.</b> 에너지 수입국인 한국에는 물가·환율 부담이 줄어 금리 인하 여력이 생깁니다.</div></div>
+      <div class="oil-li"><span class="oil-tag">지수</span><div><b>증시 전반에는 호재.</b> 위험자산 선호가 회복되면 코스피 지수 자체는 오히려 지지받습니다.</div></div>
+    </div>
+    <div class="oil-box dn">
+      <h5><i class="ti ti-circle-x"></i>그런데도 주가가 빠진 이유</h5>
+      <div class="oil-li"><span class="oil-tag">기대</span><div><b>테마의 연료가 사라짐.</b> 실적이 아니라 '유가 상승 기대'로 오른 구간이라, 전제가 깨지면 그만큼 되돌립니다.</div></div>
+      <div class="oil-li"><span class="oil-tag">시차</span><div><b>래깅 효과의 반전.</b> 고가 재고를 보유한 상태에서 제품가가 먼저 빠지면 단기 재고평가 부담이 생깁니다.</div></div>
+      <div class="oil-li"><span class="oil-tag">수급</span><div><b>단기 차익 물량.</b> 짧은 기간 급등한 종목일수록 되돌림 구간에서 매물이 한꺼번에 쏟아집니다.</div></div>
+    </div>
+  </div>
+
+  <div class="oil-note">
+    <i class="ti ti-alert-circle"></i>
+    <div><b>긴장 완화가 '끝'은 아닙니다.</b> 예멘 후티 반군이 사우디 에너지 시설 공격을 주장했고 호르무즈 해협은 사실상 폐쇄 상태가 유지되고 있습니다. 시장에서는 에너지 인프라나 수송로가 재공격을 받을 경우 이번 하락세가 빠르게 되돌려질 수 있다는 지적이 나옵니다.</div>
+  </div>
+
+  <div class="oil-src">
+    <b>자료</b> · 블룸버그, 로이터/걸프뉴스 인용 보도, 파이낸셜뉴스·글로벌이코노믹·뉴스핌(2026.07.27), 위키피디아 '2026 Strait of Hormuz crisis'<br/>
+    <b>유의</b> · 유가와 주가의 관계는 통계적 경향이며 인과가 항상 성립하지는 않습니다. 정보 제공 목적이며 투자 권유가 아닙니다.
+  </div>
+
+</div>
+
+</body>
+</html>
