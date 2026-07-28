@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>2026.07.27 확정 마감 — 코스피는 올랐는데 신재생만 무너진 날</title>
+
+<meta property="og:title" content="코스피 +0.97%인데 SK이터닉스 -26.58% — 2026.07.27 확정 마감 분석" />
+<meta property="og:description" content="지수는 상승 마감했는데 신재생에너지주만 두 자릿수로 무너졌습니다. 시장 하락이 아니라 섹터 로테이션이었던 하루를 데이터로 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/0728-scoreboard.png" />
+<meta property="og:url" content="https://example.com/0728-market-brief" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+.sb-wrap *{box-sizing:border-box;margin:0;padding:0}
+.sb-wrap{
+  font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;
+  background:#F4F7F6;color:#12303A;padding:26px 20px 30px;border-radius:18px;
+  border:1px solid #D7E2E0;max-width:880px;margin:26px auto;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.sb-eyebrow{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.09em;font-weight:700;color:#566C74}
+.sb-eyebrow i{color:#12303A;font-size:16px}
+.sb-h2{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:10px 0 6px;line-height:1.32}
+.sb-lede{font-size:14.5px;color:#566C74;max-width:670px}
+.sb-rule{height:3px;width:56px;background:#12303A;border-radius:2px;margin:16px 0 20px}
+
+/* 괴리 차트 (시그니처) */
+.sb-div{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:18px 18px 16px}
+.sb-div-t{font-size:12.5px;font-weight:700;color:#566C74;margin-bottom:16px;display:flex;align-items:center;gap:7px}
+.sb-div-t i{color:#D0342C;font-size:15px}
+.sb-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.sb-nm{flex:0 0 116px;font-size:12.5px;font-weight:700;color:#3D5A62;line-height:1.3}
+.sb-nm small{display:block;font-size:10.5px;color:#98ABB0;font-weight:600;letter-spacing:.03em}
+.sb-axis{flex:1;position:relative;height:26px}
+.sb-zero{position:absolute;left:50%;top:-6px;bottom:-6px;width:1px;background:#C6D6D3}
+.sb-seg{position:absolute;top:2px;height:22px;border-radius:5px;display:flex;align-items:center}
+.sb-seg.neg{background:#D0342C;justify-content:flex-start;padding-left:9px}
+.sb-seg.pos{background:#0E7C7B;justify-content:flex-end;padding-right:9px}
+.sb-seg span{font-size:11.5px;font-weight:800;color:#FFFFFF;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sb-px{flex:0 0 92px;text-align:right;font-size:13px;font-weight:800;color:#12303A;
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.sb-scale{display:flex;justify-content:space-between;font-size:10.5px;color:#A2B4B8;
+  font-weight:700;margin-top:4px;padding-left:128px;padding-right:104px;font-variant-numeric:tabular-nums}
+
+/* 하단 3분할 */
+.sb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.sb-card{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:15px 14px}
+.sb-card h5{font-size:12px;font-weight:800;color:#566C74;display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.sb-card h5 i{font-size:15px;color:#B45309}
+.sb-li{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:#2B4952;
+  padding:6px 0;border-top:1px dashed #E8EFEE;line-height:1.5}
+.sb-li:first-of-type{border-top:none;padding-top:0}
+.sb-li b{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sb-li b.dn{color:#D0342C}
+.sb-li b.up{color:#0E7C7B}
+
+.sb-note{margin-top:16px;background:#FDF3F2;border:1px solid #F2D4D1;border-radius:12px;
+  padding:14px 15px;font-size:13px;color:#5A2723;display:flex;gap:10px;align-items:flex-start}
+.sb-note i{color:#D0342C;font-size:17px;flex-shrink:0;margin-top:1px}
+.sb-note b{color:#A82A23}
+.sb-src{margin-top:14px;font-size:11.5px;color:#8FA3A8;line-height:1.65}
+.sb-src b{color:#566C74;font-weight:700}
+
+@media(max-width:700px){
+  .sb-grid{grid-template-columns:1fr}
+  .sb-h2{font-size:20px}
+  .sb-wrap{padding:22px 14px 24px}
+  .sb-row{gap:8px}
+  .sb-nm{flex:0 0 74px;font-size:11px}
+  .sb-nm small{font-size:9.5px}
+  .sb-px{flex:0 0 62px;font-size:11.5px}
+  .sb-seg span{display:none}
+  .sb-scale{padding-left:82px;padding-right:70px}
+}
+</style>
+</head>
+<body>
+
+<div class="sb-wrap">
+
+  <div class="sb-eyebrow"><i class="ti ti-checkbox"></i><span>2026.07.27 확정 마감 · 한국거래소</span></div>
+  <h2 class="sb-h2">시장이 무너진 게 아니라, 이 섹터만 무너졌습니다</h2>
+  <p class="sb-lede">어제는 폭락장이 아니었습니다. 코스피는 상승 마감했고 코스닥은 2%대 반등했습니다. 그런데 신재생에너지 두 종목만 정반대로 갔습니다. 이 괴리가 어제 장의 전부입니다.</p>
+  <div class="sb-rule"></div>
+
+  <div class="sb-div">
+    <div class="sb-div-t"><i class="ti ti-arrows-split-2"></i>7월 27일 등락률 — 가운데 선이 보합(0%)입니다</div>
+
+    <div class="sb-row">
+      <div class="sb-nm">코스피<small>KOSPI</small></div>
+      <div class="sb-axis"><div class="sb-zero"></div>
+        <div class="sb-seg pos" style="left:50%;width:3.2%"><span>&nbsp;</span></div></div>
+      <div class="sb-px" style="color:#0E7C7B">+0.97%</div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-nm">한화솔루션<small>009830</small></div>
+      <div class="sb-axis"><div class="sb-zero"></div>
+        <div class="sb-seg neg" style="left:26.2%;width:23.8%"><span>26,200원</span></div></div>
+      <div class="sb-px" style="color:#D0342C">-12.67%</div>
+    </div>
+
+    <div class="sb-row">
+      <div class="sb-nm">SK이터닉스<small>475150</small></div>
+      <div class="sb-axis"><div class="sb-zero"></div>
+        <div class="sb-seg neg" style="left:0%;width:50%"><span>59,400원</span></div></div>
+      <div class="sb-px" style="color:#D0342C">-26.58%</div>
+    </div>
+
+    <div class="sb-scale"><span>-30%</span><span>0%</span><span>+30%</span></div>
+  </div>
+
+  <div class="sb-grid">
+
+    <div class="sb-card">
+      <h5><i class="ti ti-chart-line"></i>지수는 이렇게 움직였습니다</h5>
+      <div class="sb-li"><span>7/24 종가</span><b>6,690.62</b></div>
+      <div class="sb-li"><span>7/27 시가</span><b>6,806.27</b></div>
+      <div class="sb-li"><span>장중 저점</span><b>6,677.34</b></div>
+      <div class="sb-li"><span>7/27 종가</span><b class="up">6,755.75</b></div>
+      <div class="sb-li"><span>코스닥</span><b class="up">2%대 반등</b></div>
+    </div>
+
+    <div class="sb-card">
+      <h5><i class="ti ti-flame"></i>한화솔루션 일중 흐름</h5>
+      <div class="sb-li"><span>전일 종가</span><b>30,000원</b></div>
+      <div class="sb-li"><span>시가</span><b>29,950원</b></div>
+      <div class="sb-li"><span>장중 저가</span><b class="dn">25,950원</b></div>
+      <div class="sb-li"><span>종가</span><b class="dn">26,200원</b></div>
+      <div class="sb-li"><span>확정 발행가</span><b>22,100원</b></div>
+    </div>
+
+    <div class="sb-card">
+      <h5><i class="ti ti-activity-heartbeat"></i>SK이터닉스 일중 흐름</h5>
+      <div class="sb-li"><span>전일 종가</span><b>80,900원</b></div>
+      <div class="sb-li"><span>장중 고가</span><b>82,400원</b></div>
+      <div class="sb-li"><span>장중 저가</span><b class="dn">58,800원</b></div>
+      <div class="sb-li"><span>종가</span><b class="dn">59,400원</b></div>
+      <div class="sb-li"><span>고저 변동폭</span><b class="dn">약 29%</b></div>
+    </div>
+
+  </div>
+
+  <div class="sb-note">
+    <i class="ti ti-alert-triangle"></i>
+    <div><b>이 그림이 말해주는 것.</b> 지수가 오른 날 특정 섹터만 20%대로 빠졌다면, 원인은 '시장'이 아니라 '그 섹터의 이야기'입니다. 어제 시장은 신재생에서 빠져나온 돈을 다른 곳으로 옮겼습니다. 실제로 시가총액 20위권 NAVER는 <b>+11.57%</b>로 급등했고, 코스닥도 2%대 반등했습니다. 팔린 게 아니라 <b>이동한</b> 겁니다.</div>
+  </div>
+
+  <div class="sb-src">
+    <b>자료</b> · 한국거래소(KRX), 인베스팅닷컴, 이투데이·더팩트·위키트리 시황 보도(2026.07.27), 서울경제 '오늘의 메모'<br/>
+    <b>유의</b> · 등락률 막대는 ±30% 스케일로 표현한 것이며 실제 비율과 시각적 길이가 정확히 일치하지 않을 수 있습니다. 정보 제공 목적이며 투자 권유가 아닙니다.
+  </div>
+
+</div>
+
+</body>
+</html>
