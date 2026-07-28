@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>밤사이 무엇이 바뀌었나 — 2026.07.28 개장 전 체크리스트</title>
+
+<meta property="og:title" content="밤사이 무엇이 바뀌었나 — 2026.07.28 개장 전 체크리스트" />
+<meta property="og:description" content="브렌트유는 한국 장 마감 뒤 낙폭을 더 키웠고, 나스닥은 4거래일 연속 하락했습니다. 오늘 개장 전 확정된 변수를 정리했습니다." />
+<meta property="og:image" content="https://example.com/images/0728-overnight.png" />
+<meta property="og:url" content="https://example.com/0728-market-brief#overnight" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.24.0/dist/tabler-icons.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+.on-wrap *{box-sizing:border-box;margin:0;padding:0}
+.on-wrap{
+  font-family:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;
+  background:#F4F7F6;color:#12303A;padding:26px 20px 30px;border-radius:18px;
+  border:1px solid #D7E2E0;max-width:880px;margin:26px auto;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.on-eyebrow{display:flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.09em;font-weight:700;color:#566C74}
+.on-eyebrow i{color:#B45309;font-size:16px}
+.on-h2{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:10px 0 6px;line-height:1.32}
+.on-lede{font-size:14.5px;color:#566C74;max-width:670px}
+.on-rule{height:3px;width:56px;background:#B45309;border-radius:2px;margin:16px 0 20px}
+
+/* 유가 이동 레일 (시그니처) */
+.on-oil{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:18px 18px 15px}
+.on-oil-t{font-size:12.5px;font-weight:700;color:#566C74;margin-bottom:22px;display:flex;align-items:center;gap:7px}
+.on-oil-t i{color:#B45309;font-size:15px}
+.on-track{position:relative;height:8px;background:#F2E4D2;border-radius:5px;margin:30px 0 10px}
+.on-move{position:absolute;top:0;bottom:0;background:#B45309;border-radius:5px;opacity:.9}
+.on-pin{position:absolute;top:-5px;width:18px;height:18px;border-radius:50%;background:#FFFFFF;
+  border:4px solid #B45309;transform:translateX(-50%)}
+.on-pin.now{border-color:#D0342C}
+.on-lab{position:absolute;top:-30px;transform:translateX(-50%);text-align:center;white-space:nowrap}
+.on-lab b{display:block;font-size:14px;font-weight:800;color:#12303A;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.on-lab span{display:block;font-size:10.5px;color:#8FA3A8;font-weight:700;margin-top:1px}
+.on-below{display:flex;justify-content:space-between;font-size:11.5px;color:#7E9298;font-weight:600}
+
+.on-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.on-box{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:16px 15px}
+.on-box h5{font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.on-box h5 i{font-size:16px}
+.on-box.ny h5 i{color:#12303A}
+.on-box.kr h5 i{color:#0E7C7B}
+.on-item{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  padding:7px 0;border-top:1px dashed #E8EFEE;font-size:12.8px;color:#2B4952}
+.on-item:first-of-type{border-top:none;padding-top:0}
+.on-item .k{font-weight:700}
+.on-item .k small{display:block;font-size:10.5px;color:#98ABB0;font-weight:600}
+.on-item .v{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.on-item .v.dn{color:#D0342C}
+.on-item .v.up{color:#0E7C7B}
+.on-item .v small{display:block;font-size:10.5px;color:#98ABB0;font-weight:600}
+
+.on-check{background:#FFFFFF;border:1px solid #D7E2E0;border-radius:14px;padding:17px 16px 14px;margin-top:12px}
+.on-check h5{font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.on-check h5 i{color:#0E7C7B;font-size:16px}
+.on-cl{display:flex;gap:11px;padding:9px 0;border-top:1px solid #EEF3F2;align-items:flex-start;font-size:13px;line-height:1.6}
+.on-cl:first-of-type{border-top:none;padding-top:0}
+.on-cl i{color:#B9CBC8;font-size:17px;flex-shrink:0;margin-top:1px}
+.on-cl div{color:#2B4952}
+.on-cl b{font-weight:800;color:#12303A}
+
+.on-note{margin-top:16px;background:#EEF4F3;border:1px solid #DCE7E5;border-radius:12px;
+  padding:13px 15px;font-size:13px;color:#2B4952;display:flex;gap:10px;align-items:flex-start}
+.on-note i{color:#0E7C7B;font-size:17px;flex-shrink:0;margin-top:1px}
+.on-src{margin-top:14px;font-size:11.5px;color:#8FA3A8;line-height:1.65}
+.on-src b{color:#566C74;font-weight:700}
+
+@media(max-width:700px){
+  .on-grid{grid-template-columns:1fr}
+  .on-h2{font-size:20px}
+  .on-wrap{padding:22px 14px 24px}
+  .on-lab b{font-size:12.5px}
+}
+</style>
+</head>
+<body>
+
+<div class="on-wrap">
+
+  <div class="on-eyebrow"><i class="ti ti-moon-stars"></i><span>2026.07.28 개장 전 · 밤사이 확정된 변수</span></div>
+  <h2 class="on-h2">한국 장이 닫힌 뒤, 유가는 더 빠졌습니다</h2>
+  <p class="on-lede">어제 우리 시장이 반영한 유가 하락폭은 -5.7%였습니다. 그런데 뉴욕 정규장이 끝났을 때 브렌트유는 -8.7%였습니다. 어제 반영하지 못한 3%포인트가 오늘 아침 몫으로 남았습니다.</p>
+  <div class="on-rule"></div>
+
+  <div class="on-oil">
+    <div class="on-oil-t"><i class="ti ti-droplet-down"></i>브렌트유 9월물 — 지난주 고점에서 어제 뉴욕 마감까지</div>
+    <div class="on-track">
+      <div class="on-move" style="left:0%;right:0%"></div>
+      <div class="on-lab" style="left:2%"><b>$88.36</b><span>27일 뉴욕 마감</span></div>
+      <div class="on-lab" style="left:36%"><b>$91.22</b><span>27일 한국 장중</span></div>
+      <div class="on-lab" style="left:92%"><b>$100 +</b><span>지난주 고점</span></div>
+      <div class="on-pin now" style="left:2%"></div>
+      <div class="on-pin" style="left:36%"></div>
+      <div class="on-pin" style="left:92%"></div>
+    </div>
+    <div class="on-below"><span>◉ 종가 기준 90달러 하회는 7월 20일 이후 일주일 만</span><span>WTI 9월물 $82.61 (-7.5%)</span></div>
+  </div>
+
+  <div class="on-grid">
+
+    <div class="on-box ny">
+      <h5><i class="ti ti-building-skyscraper"></i>뉴욕증시 27일(현지) 마감 — 혼조</h5>
+      <div class="on-item"><span class="k">다우존스<small>2거래일 연속 상승</small></span><span class="v up">52,210.08<small>+262.83p (+0.51%)</small></span></div>
+      <div class="on-item"><span class="k">S&amp;P 500<small>2거래일 연속 상승</small></span><span class="v up">7,413.18<small>+1.20p (+0.02%)</small></span></div>
+      <div class="on-item"><span class="k">나스닥<small>4거래일 연속 하락</small></span><span class="v dn">약 -0.18%<small>반도체가 발목</small></span></div>
+      <div class="on-item"><span class="k">엔비디아<small>2026년 2월 이후 최대 낙폭</small></span><span class="v dn">$196.51<small>-4.99%</small></span></div>
+      <div class="on-item"><span class="k">SK하이닉스 ADR</span><span class="v dn">$143.02<small>-7.47%</small></span></div>
+      <div class="on-item"><span class="k">애플<small>엔비디아 제치고 시총 1위 탈환</small></span><span class="v up">+1.17%<small></small></span></div>
+    </div>
+
+    <div class="on-box kr">
+      <h5><i class="ti ti-flag"></i>지정학 — 왜 유가가 빠졌나</h5>
+      <div class="on-item"><span class="k">공습 중단 지시<small>CNN 보도</small></span><span class="v">7월 24일</span></div>
+      <div class="on-item"><span class="k">중단 기간<small>미국의 대이란 공습</small></span><span class="v">2주간 지속 후 중단</span></div>
+      <div class="on-item"><span class="k">이란 입장<small>정부 발표</small></span><span class="v">공격 멈추면<br/>작전 중단</span></div>
+      <div class="on-item"><span class="k">중국 역할<small>외교적 중재</small></span><span class="v">회담 재개 촉구</span></div>
+      <div class="on-item"><span class="k">잔존 위험<small>후티 반군</small></span><span class="v dn">사우디 에너지<br/>시설 공격 주장</span></div>
+      <div class="on-item"><span class="k">호르무즈 해협</span><span class="v dn">사실상 폐쇄 유지</span></div>
+    </div>
+
+  </div>
+
+  <div class="on-check">
+    <h5><i class="ti ti-list-check"></i>오늘(7/28) 장을 보기 전 확인할 것</h5>
+    <div class="on-cl"><i class="ti ti-square"></i><div><b>신재생주가 어제 낙폭을 더 키우는가, 아니면 낙폭 과대 반발 매수가 들어오는가.</b> 유가는 밤사이 더 빠졌지만, 어제 하루 만에 26%를 되돌린 종목에는 기술적 반등 수요도 함께 쌓여 있습니다.</div></div>
+    <div class="on-cl"><i class="ti ti-square"></i><div><b>한화솔루션 실권주(단수주) 청약 마지막 날입니다.</b> 주관사는 KB증권. 규모 자체는 5만 1,792주로 미미하지만, 30일 납입과 8월 11일 신주 상장으로 이어지는 일정의 출발점입니다.</div></div>
+    <div class="on-cl"><i class="ti ti-square"></i><div><b>반도체가 다시 눌리면 자금은 어디로 가는가.</b> 나스닥이 나흘째 하락했고 SK하이닉스 ADR은 7% 넘게 빠졌습니다. 어제는 그 자금이 인터넷·코스닥으로 갔습니다.</div></div>
+    <div class="on-cl"><i class="ti ti-square"></i><div><b>석유화학·항공은 반대로 웃는 구간입니다.</b> 유가 하락은 나프타·유류비 부담을 낮춥니다. 한화솔루션도 매출의 3분의 1이 케미칼이라 완전한 피해주는 아닙니다.</div></div>
+  </div>
+
+  <div class="on-note">
+    <i class="ti ti-info-circle"></i>
+    <div><b>휴전이 아니라 '일시 중단'입니다.</b> 공식 평화 협정이 체결된 것이 아니라 양측이 공격을 멈춘 소강 상태입니다. 일부 미국 매체는 요격미사일 재고 소진이 중단의 실질적 배경이었을 가능성을 제기하고 있습니다. 상황이 되돌려지면 유가와 신재생 테마도 함께 되돌려질 수 있습니다.</div>
+  </div>
+
+  <div class="on-src">
+    <b>자료</b> · 파이낸셜뉴스·이투데이·미주 한국일보(2026.07.28 새벽), 블룸버그, CNN, ICE·NYMEX 선물 종가, 서울경제 '오늘의 메모'(2026.07.28)<br/>
+    <b>유의</b> · 뉴욕증시·유가는 현지 27일 종가 기준입니다. 국내 증시 개장 이후 상황은 실시간 시세로 직접 확인하시기 바랍니다. 정보 제공 목적이며 투자 권유가 아닙니다.
+  </div>
+
+</div>
+
+</body>
+</html>
