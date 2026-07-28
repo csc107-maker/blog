@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>태양광 이격거리, 개정 전후 무엇이 달라졌나</title>
+
+<meta property="og:title" content="태양광 이격거리 해제, 정부 방침 총정리" />
+<meta property="og:description" content="재생에너지법 개정 전후 이격거리 규제 체계 비교와 제27조의3 신설 조항 핵심 구조." />
+<meta property="og:image" content="https://your-blog-domain.com/images/solar-setback-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/solar-setback-2026" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+
+<style>
+  .scb-wrap{
+    --navy:#12283F; --navy-soft:#1E4B72; --slate:#5B6B7B; --slate-light:#8996A3;
+    --bg:#F4F8FB; --card:#FFFFFF; --line:#E2E8EE;
+    --gold:#F5A623; --gold-bg:#FFF4DF;
+    --teal:#1FA98E; --teal-bg:#E6F7F3;
+    --red:#E2574C; --red-bg:#FDECEA;
+    font-family:'Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    background:var(--bg); color:var(--navy);
+    padding:36px 18px 40px; border-radius:20px; max-width:800px; margin:0 auto;
+    box-sizing:border-box;
+  }
+  .scb-wrap *{ box-sizing:border-box; }
+  .scb-eyebrow{
+    display:inline-flex; align-items:center; gap:6px; background:var(--navy); color:#fff;
+    font-size:12.5px; font-weight:700; padding:6px 14px; border-radius:999px;
+  }
+  .scb-h2{ font-size:24px; font-weight:800; margin:14px 0 6px; line-height:1.35; }
+  .scb-desc{ font-size:14.5px; color:var(--slate); line-height:1.65; margin:0 0 24px; }
+
+  .scb-vs{
+    display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:26px;
+  }
+  @media (max-width:520px){ .scb-vs{ grid-template-columns:1fr; } }
+  .scb-vs-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px 18px;
+  }
+  .scb-vs-card.before{ border-top:4px solid var(--slate-light); }
+  .scb-vs-card.after{ border-top:4px solid var(--teal); background:linear-gradient(180deg,#fff, var(--teal-bg) 260%); }
+  .scb-vs-label{ font-size:12px; font-weight:800; letter-spacing:.3px; color:var(--slate-light); margin-bottom:8px; display:flex; align-items:center; gap:6px;}
+  .scb-vs-card.after .scb-vs-label{ color:var(--teal); }
+  .scb-vs-title{ font-size:17px; font-weight:800; margin:0 0 10px; line-height:1.4; }
+  .scb-vs-list{ margin:0; padding-left:0; list-style:none; }
+  .scb-vs-list li{ font-size:13.5px; color:var(--slate); line-height:1.6; margin-bottom:8px; padding-left:18px; position:relative; }
+  .scb-vs-list li::before{ content:"–"; position:absolute; left:0; color:var(--slate-light); }
+  .scb-vs-card.after .scb-vs-list li::before{ content:"✓"; color:var(--teal); font-weight:800; }
+
+  .scb-arrow{
+    display:flex; align-items:center; justify-content:center; margin:-8px 0 22px; color:var(--gold); font-size:26px;
+  }
+
+  .scb-section-title{
+    font-size:15px; font-weight:800; margin:0 0 12px; display:flex; align-items:center; gap:7px;
+  }
+
+  .scb-law-box{
+    background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 18px 6px; margin-bottom:24px;
+  }
+  .scb-law-row{
+    display:flex; gap:12px; padding:12px 0; border-bottom:1px dashed var(--line);
+  }
+  .scb-law-row:last-child{ border-bottom:none; }
+  .scb-law-num{
+    flex:0 0 auto; width:30px; height:30px; border-radius:9px; background:var(--navy);
+    color:#fff; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center;
+  }
+  .scb-law-row.exc .scb-law-num{ background:var(--gold); }
+  .scb-law-row.free .scb-law-num{ background:var(--teal); }
+  .scb-law-body p{ margin:0; font-size:13.5px; line-height:1.6; }
+  .scb-law-tt{ font-weight:800; font-size:14px; margin-bottom:3px !important; }
+  .scb-law-sub{ color:var(--slate); }
+
+  .scb-stat-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:6px;
+  }
+  @media (max-width:520px){ .scb-stat-grid{ grid-template-columns:1fr; } }
+  .scb-stat{
+    background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 14px;
+    text-align:left;
+  }
+  .scb-stat-num{ font-size:22px; font-weight:800; color:var(--navy-soft); }
+  .scb-stat-label{ font-size:12px; color:var(--slate); margin-top:4px; line-height:1.5; }
+
+  .scb-foot{
+    margin-top:22px; padding-top:14px; border-top:1px dashed var(--line);
+    font-size:12px; color:var(--slate-light); line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="scb-wrap">
+  <span class="scb-eyebrow"><i class="ti ti-arrows-diff"></i>&nbsp;개정 전후 비교</span>
+  <h2 class="scb-h2">이격거리 규제, 무엇이 달라졌나</h2>
+  <p class="scb-desc">2026년 2월 12일 국회를 통과한 재생에너지법 개정안(제27조의3)을 기준으로, 개정 전후 체계를 비교했습니다.</p>
+
+  <div class="scb-vs">
+    <div class="scb-vs-card before">
+      <div class="scb-vs-label"><i class="ti ti-map-2"></i> 개정 전</div>
+      <p class="scb-vs-title">지자체 조례 &#39;각자도생&#39;</p>
+      <ul class="scb-vs-list">
+        <li>국가 차원 통일 기준 없음</li>
+        <li>228개 기초지자체가 개별 조례로 결정</li>
+        <li>같은 태양광 사업도 지역마다 100m~1,000m로 편차</li>
+        <li>산업부 가이드라인은 권고일 뿐 구속력 없음</li>
+      </ul>
+    </div>
+    <div class="scb-vs-card after">
+      <div class="scb-vs-label"><i class="ti ti-shield-check"></i> 개정 후</div>
+      <p class="scb-vs-title">원칙적 금지 + 예외적 허용</p>
+      <ul class="scb-vs-list">
+        <li>지자체의 임의적 이격거리 설정 원칙 금지</li>
+        <li>문화재·생태보전지역 등 예외 구역만 제한 허용</li>
+        <li>주거지·도로 인근은 대통령령 상한 내에서만 허용</li>
+        <li>주민참여형·지붕형·자가소비형은 규제 전면 배제</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="scb-section-title"><i class="ti ti-list-details"></i> 신설 제27조의3, 이렇게 구성됩니다</div>
+  <div class="scb-law-box">
+    <div class="scb-law-row">
+      <div class="scb-law-num">①</div>
+      <div class="scb-law-body">
+        <p class="scb-law-tt">원칙 — 이격거리 적용 금지</p>
+        <p class="scb-law-sub">지자체장은 개발행위허가 시 원칙적으로 이격거리를 적용할 수 없습니다. 역사문화환경보존지역, 생태·경관보전지역 등 법령이 정한 경우에만 예외입니다.</p>
+      </div>
+    </div>
+    <div class="scb-law-row exc">
+      <div class="scb-law-num">②</div>
+      <div class="scb-law-body">
+        <p class="scb-law-tt">제한적 허용 — 대통령령 기준 준수</p>
+        <p class="scb-law-sub">예외적으로 이격거리를 적용하더라도 지자체 임의가 아니라, 대통령령(시행령)이 정한 표준 기준을 따라야 합니다.</p>
+      </div>
+    </div>
+    <div class="scb-law-row free">
+      <div class="scb-law-num">③</div>
+      <div class="scb-law-body">
+        <p class="scb-law-tt">완전 배제 — 3가지 설비 유형</p>
+        <p class="scb-law-sub">주민참여형 발전설비, 지붕형 태양광, 자가소비용 태양광은 ②의 이격거리 자체가 적용되지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="scb-section-title"><i class="ti ti-chart-bar"></i> 개정 전 규제 현황(2026년 2월 기준)</div>
+  <div class="scb-stat-grid">
+    <div class="scb-stat">
+      <div class="scb-stat-num">129 / 228</div>
+      <div class="scb-stat-label">태양광 이격거리 규정 보유 기초지자체 수</div>
+    </div>
+    <div class="scb-stat">
+      <div class="scb-stat-num">100~1,000m</div>
+      <div class="scb-stat-label">태양광 이격거리 지자체별 편차 범위</div>
+    </div>
+    <div class="scb-stat">
+      <div class="scb-stat-num">60 / 228</div>
+      <div class="scb-stat-label">풍력 이격거리 규정 보유 기초지자체 수(100~2,000m)</div>
+    </div>
+  </div>
+
+  <div class="scb-foot">
+    출처: 기후에너지환경부 해명자료(2026.2.25), 법률신문 &#183; 법무법인 율촌 기고(2026.3.3, 신·재생에너지법 개정안 분석) 기준 재구성.
+  </div>
+</div>
+</body>
+</html>
