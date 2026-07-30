@@ -1,0 +1,84 @@
+<!--
+  삽입 위치: 본문 "5. 숫자로 보는 SK이터닉스 펀더멘털" 섹션 바로 아래
+  사용법: 이 <div class="skf-wrap">...</div> 블록 전체를 블로그 HTML 편집기에 붙여넣기
+  배경: 밝은 민트그레이(#F6F8F7), Tabler Icons CDN 포함, 실제 HEX 값 사용
+-->
+<div class="skf-wrap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+  <style>
+    .skf-wrap{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;background:#F6F8F7;padding:28px 20px;border-radius:16px;box-sizing:border-box;}
+    .skf-wrap *{box-sizing:border-box;}
+    .skf-eyebrow{font-size:12px;font-weight:700;letter-spacing:.04em;color:#0E7C7B;background:#E4F4F1;padding:4px 10px;border-radius:20px;display:inline-block;}
+    .skf-title{font-size:20px;font-weight:900;color:#12303A;margin:10px 0 2px;}
+    .skf-sub{font-size:13px;color:#566C74;margin:0 0 20px;line-height:1.6;}
+    .skf-section-label{font-size:13px;font-weight:800;color:#12303A;margin:22px 0 10px;display:flex;align-items:center;gap:6px;}
+    .skf-section-label i{color:#0E7C7B;}
+    .skf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+    @media (max-width:640px){.skf-grid{grid-template-columns:repeat(2,1fr);}}
+    .skf-card{background:#FFFFFF;border:1px solid #E4EBEA;border-radius:12px;padding:13px 12px;}
+    .skf-card-label{font-size:11.5px;color:#8C9CA1;margin-bottom:6px;}
+    .skf-card-val{font-size:19px;font-weight:900;color:#12303A;}
+    .skf-card-val.good{color:#0E7C7B;}
+    .skf-card-val.warn{color:#D0342C;}
+    .skf-seg-bar{display:flex;height:34px;border-radius:8px;overflow:hidden;margin:10px 0 8px;}
+    .skf-seg{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:#fff;}
+    .skf-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:#566C74;}
+    .skf-legend span{display:inline-flex;align-items:center;gap:5px;}
+    .skf-dot{width:9px;height:9px;border-radius:3px;display:inline-block;}
+    .skf-platform{background:#FFFFFF;border:1px solid #E4EBEA;border-radius:12px;padding:16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+    .skf-platform-ring{flex:0 0 auto;}
+    .skf-platform-txt{flex:1;min-width:200px;font-size:13px;color:#566C74;line-height:1.7;}
+    .skf-pill{display:inline-flex;align-items:center;gap:4px;background:#EFF4F3;color:#12303A;font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;margin-right:6px;}
+    .skf-note{display:flex;gap:8px;background:#FBEAE8;border:1px solid #F3C9C5;border-radius:10px;padding:12px 14px;margin-top:16px;font-size:13px;color:#8A2A24;line-height:1.6;}
+    .skf-note i{color:#D0342C;font-size:16px;margin-top:2px;}
+    .skf-foot{margin-top:14px;font-size:11.5px;color:#8C9CA1;display:flex;align-items:center;gap:6px;}
+  </style>
+
+  <span class="skf-eyebrow">FUNDAMENTALS</span>
+  <div class="skf-title">주가는 출렁여도, 본업 숫자는 이렇습니다</div>
+  <p class="skf-sub">2026년 1분기(연결) 및 2025년 연간 확정 실적 기준. 프로젝트 진행 속도에 따라 분기별 편차가 큰 사업 구조라는 점을 감안해서 볼 것.</p>
+
+  <div class="skf-section-label"><i class="ti ti-report-money"></i> 2026년 1분기 실적</div>
+  <div class="skf-grid">
+    <div class="skf-card"><div class="skf-card-label">매출액 (YoY)</div><div class="skf-card-val">275억원 <span style="font-size:12px;color:#0E7C7B;font-weight:700;">+6.1%</span></div></div>
+    <div class="skf-card"><div class="skf-card-label">영업이익 (YoY)</div><div class="skf-card-val good">49억원 <span style="font-size:12px;font-weight:700;">+362%</span></div></div>
+    <div class="skf-card"><div class="skf-card-label">영업이익률</div><div class="skf-card-val good">17.8%</div></div>
+    <div class="skf-card"><div class="skf-card-label">당기순손익</div><div class="skf-card-val warn">-51억원<br><span style="font-size:11px;font-weight:700;">(적자전환)</span></div></div>
+  </div>
+
+  <div class="skf-section-label"><i class="ti ti-chart-donut"></i> 사업부문별 매출 구성 (1분기, 총 275억원)</div>
+  <div class="skf-seg-bar">
+    <div class="skf-seg" style="width:46.9%;background:#0E7C7B;">풍력 47%</div>
+    <div class="skf-seg" style="width:28.4%;background:#3E9B9A;">ESS 28%</div>
+    <div class="skf-seg" style="width:23.3%;background:#8FC7C6;">태양광 23%</div>
+    <div class="skf-seg" style="width:1.4%;background:#C9E4E3;"></div>
+  </div>
+  <div class="skf-legend">
+    <span><i class="skf-dot" style="background:#0E7C7B;"></i>풍력 129억</span>
+    <span><i class="skf-dot" style="background:#3E9B9A;"></i>ESS 78억</span>
+    <span><i class="skf-dot" style="background:#8FC7C6;"></i>태양광 64억</span>
+    <span><i class="skf-dot" style="background:#C9E4E3;"></i>연료전지 4억</span>
+  </div>
+
+  <div class="skf-section-label"><i class="ti ti-building-skyscraper"></i> KKR–SK 통합 재생에너지 플랫폼</div>
+  <div class="skf-platform">
+    <div class="skf-platform-txt">
+      <span class="skf-pill"><i class="ti ti-bolt"></i>현재 1.7GW</span> → <span class="skf-pill" style="background:#E4F4F1;color:#0E7C7B;"><i class="ti ti-target-arrow"></i>2031년 10GW 목표</span><br>
+      지분구조 <strong>KKR 51% : SK㈜ 49%</strong>. SK이터닉스는 개발·EPC·전력판매·O&amp;M 등 운용자산 확대에 따른 용역 수익 확대가 기대된다는 것이 증권가 시각. 다만 10GW 플랫폼 전체가 곧바로 SK이터닉스 매출로 잡히는 구조는 아니다.
+    </div>
+  </div>
+
+  <div class="skf-grid" style="margin-top:10px;">
+    <div class="skf-card"><div class="skf-card-label">순차입금</div><div class="skf-card-val">4,041억원</div></div>
+    <div class="skf-card"><div class="skf-card-label">부채비율</div><div class="skf-card-val warn">420%<br><span style="font-size:11px;font-weight:700;">(조정 269%)</span></div></div>
+    <div class="skf-card"><div class="skf-card-label">고정금리 비중</div><div class="skf-card-val good">83%</div></div>
+    <div class="skf-card"><div class="skf-card-label">수주잔고</div><div class="skf-card-val">약 4,500억원</div></div>
+  </div>
+
+  <div class="skf-note">
+    <i class="ti ti-alert-triangle"></i>
+    <div><strong>부채비율 420%는 프로젝트 파이낸싱 특성 반영</strong> — 발전소 건설을 위한 프로젝트성 부채가 상당 부분을 차지해, 회사 측은 이를 제외한 조정 부채비율을 269%로 설명하고 있다. 그럼에도 절대 수준은 낮지 않은 편이라 향후 순차입금 감소 추이를 계속 확인할 필요가 있다.</div>
+  </div>
+
+  <div class="skf-foot"><i class="ti ti-info-circle"></i> 자료: 전자공시(DART), SK이터닉스 2025년 사업보고서·2026년 1분기 보고서 기준</div>
+</div>
