@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 중앙은행 금 보유량 순위 비교</title>
+
+<meta property="og:title" content="세계 중앙은행 금 보유량 순위, 한국은 몇 위? | 한은 금 매입 분석" />
+<meta property="og:description" content="미국·독일·이탈리아부터 일본·대만까지, 세계 중앙은행 금 보유 순위를 비교하고 한국의 위치를 짚어봅니다." />
+<meta property="og:image" content="https://your-blog-domain.com/images/bok-gold-purchase-thumbnail.png" />
+<meta property="og:url" content="https://your-blog-domain.com/post/bok-gold-purchase-2026" />
+<meta property="og:type" content="article" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+<style>
+  :root{
+    --bg-page:#F4F6F5;
+    --bg-card:#FFFFFF;
+    --ink-900:#14213B;
+    --ink-600:#46536B;
+    --ink-400:#8B94A3;
+    --gold-600:#AD7F24;
+    --gold-100:#F6EDD8;
+    --navy-600:#1F3A5F;
+    --navy-100:#E7EDF4;
+    --border:#E5E1D3;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:32px 16px;
+    background:var(--bg-page);
+    font-family:'Noto Sans KR', sans-serif;
+    display:flex;
+    justify-content:center;
+  }
+  .wrap{ width:100%; max-width:780px; }
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:34px 32px 28px;
+    box-shadow:0 18px 40px -22px rgba(20,33,59,0.25);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--navy-600); color:#fff;
+    font-size:12.5px; font-weight:700; letter-spacing:1.5px;
+    padding:7px 14px 7px 10px; border-radius:999px;
+    margin-bottom:16px;
+  }
+  .eyebrow i{ color:var(--gold-600); font-size:15px; }
+  h1{
+    font-family:'Noto Serif KR', serif;
+    font-weight:900; font-size:25px; line-height:1.4;
+    color:var(--ink-900); margin:0 0 8px;
+  }
+  .lead{ font-size:14px; color:var(--ink-600); line-height:1.7; margin:0 0 22px; }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+    margin-bottom:18px;
+  }
+  thead th{
+    text-align:left;
+    font-size:11.5px;
+    letter-spacing:0.5px;
+    color:var(--ink-400);
+    font-weight:700;
+    padding:0 10px 10px;
+    border-bottom:2px solid var(--ink-900);
+  }
+  thead th.num{ text-align:right; }
+  tbody td{
+    padding:12px 10px;
+    border-bottom:1px solid var(--border);
+    color:var(--ink-600);
+  }
+  tbody td.num{ text-align:right; font-family:'Noto Serif KR',serif; font-weight:700; color:var(--ink-900); }
+  tbody tr.hl td{ background:var(--gold-100); font-weight:700; color:var(--ink-900); }
+  tbody tr.hl td:first-child{ border-radius:10px 0 0 10px; }
+  tbody tr.hl td:last-child{ border-radius:0 10px 10px 0; }
+  .rank{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:7px;
+    background:var(--navy-100); color:var(--navy-600);
+    font-size:12px; font-weight:800; margin-right:8px;
+  }
+  tr.hl .rank{ background:var(--gold-600); color:#fff; }
+  .country{ display:flex; align-items:center; }
+  .tag{
+    display:inline-block; font-size:10.5px; font-weight:700;
+    background:var(--gold-600); color:#fff; padding:2px 7px;
+    border-radius:6px; margin-left:8px; vertical-align:middle;
+  }
+
+  .insight{
+    background:var(--navy-100);
+    border-radius:16px;
+    padding:18px 20px;
+    font-size:13px;
+    color:var(--ink-600);
+    line-height:1.7;
+    margin-bottom:16px;
+  }
+  .insight b{ color:var(--navy-600); }
+  .insight .cap{
+    font-size:11px; color:var(--ink-400); margin-top:8px; display:block;
+  }
+
+  .mini-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:20px;
+  }
+  .mini-stats div{
+    background:var(--bg-page);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px;
+    text-align:center;
+  }
+  .mini-stats .v{ font-family:'Noto Serif KR',serif; font-weight:800; font-size:16px; color:var(--gold-600); }
+  .mini-stats .l{ font-size:11px; color:var(--ink-400); margin-top:2px; line-height:1.4; }
+
+  .source{
+    font-size:11.5px; color:var(--ink-400); text-align:right;
+    border-top:1px dashed var(--border); padding-top:14px;
+  }
+
+  @media (max-width:520px){
+    h1{ font-size:21px; }
+    table{ font-size:12px; }
+    .mini-stats{ grid-template-columns:1fr; }
+    .card{ padding:24px 18px 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="eyebrow"><i class="ti ti-chart-bar"></i>GLOBAL RANKING</span>
+      <h1>세계 중앙은행 금 보유량, 한국은 몇 위일까?</h1>
+      <p class="lead">한국은행의 금 보유량은 104.4톤으로 세계 41위 수준입니다. 주요국은 물론 이웃나라 일본의 8분의 1에도 못 미칩니다.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>국가 / 중앙은행</th>
+            <th class="num">보유량(톤)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="country"><span class="rank">1</span>미국</td><td class="num">8,133.5</td></tr>
+          <tr><td class="country"><span class="rank">2</span>독일</td><td class="num">3,350.3</td></tr>
+          <tr><td class="country"><span class="rank">3</span>이탈리아</td><td class="num">2,451.9</td></tr>
+          <tr><td class="country"><span class="rank">4</span>프랑스</td><td class="num">2,437.0</td></tr>
+          <tr><td class="country"><span class="rank">5</span>러시아</td><td class="num">2,326.5</td></tr>
+          <tr><td class="country"><span class="rank">9</span>일본</td><td class="num">846.0</td></tr>
+          <tr><td class="country"><span class="rank">-</span>대만<span class="tag">참고</span></td><td class="num">234.5</td></tr>
+          <tr class="hl"><td class="country"><span class="rank">41</span>대한민국</td><td class="num">104.4</td></tr>
+        </tbody>
+      </table>
+
+      <div class="insight">
+        <b>만약 한은이 금 비중을 7%까지 늘린다면?</b> 현재 한은의 금 비중(외환보유액 대비 약 3.5%)을 7% 수준까지 확대한다고 가정하면, 최소 100톤 이상을 추가로 매입해야 한다는 계산이 나옵니다. 200톤으로 늘어도 대만(234.5톤)보다 적은 수준입니다.
+        <span class="cap">※ '7%'는 한국은행의 공식 목표치가 아니라 국내 언론이 제시한 참고 추정치입니다. 한은은 실제 매입 규모와 시기를 공개하지 않았습니다.</span>
+      </div>
+
+      <div class="mini-stats">
+        <div><div class="v">~36,000t</div><div class="l">전세계 중앙은행<br>금 보유 총량</div></div>
+        <div><div class="v">~1,000t</div><div class="l">2022년 이후<br>연평균 매입량</div></div>
+        <div><div class="v">45%</div><div class="l">"향후 12개월 내<br>금 매입 확대" 응답(역대 최고)</div></div>
+      </div>
+
+      <div class="source">자료: 세계금협회(World Gold Council), 국내 언론 종합(작년 말 기준 보유량, 2026.08.03 보도) — 순위·수치는 발표 시점에 따라 달라질 수 있습니다.</div>
+    </div>
+  </div>
+</body>
+</html>
