@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>삼성전자 vs SK하이닉스 2026년 2분기 실적·주가 비교</title>
+
+<meta property="og:title" content="삼성전자 vs SK하이닉스 2026년 2분기 실적·주가 비교" />
+<meta property="og:description" content="같은 날 나온 역대급 실적, 정반대로 갈린 주가. 주주환원 발언 차이가 만든 명암을 숫자로 비교합니다." />
+<meta property="og:image" content="썸네일 이미지 URL을 입력하세요" />
+<meta property="og:url" content="페이지 URL을 입력하세요" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+
+<style>
+  :root{
+    --bg:#F5F8FC;
+    --card:#FFFFFF;
+    --navy:#0F2A4A;
+    --navy-soft:#385476;
+    --teal:#0E9F6E;
+    --teal-bg:#E7F8F1;
+    --coral:#D6493A;
+    --coral-bg:#FDECEA;
+    --gold:#B4802B;
+    --gold-bg:#FBF2DF;
+    --border:#E4E9F1;
+    --muted:#6B7A93;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    font-family:'Pretendard', -apple-system, sans-serif;
+    color:var(--navy);
+    padding:36px 20px;
+  }
+  .wrap{max-width:920px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:13px;font-weight:700;letter-spacing:.04em;
+    color:var(--gold);background:var(--gold-bg);
+    padding:6px 14px;border-radius:999px;margin-bottom:16px;
+  }
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:800;
+    font-size:clamp(24px,4vw,32px);
+    line-height:1.35;
+    margin:0 0 8px;
+    color:var(--navy);
+  }
+  .desc{color:var(--muted);font-size:15px;margin:0 0 28px;line-height:1.6;}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:26px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  }
+  .card.samsung::before{background:linear-gradient(90deg,var(--teal),#5FD6A8);}
+  .card.hynix::before{background:linear-gradient(90deg,var(--coral),#F0897C);}
+
+  .card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;}
+  .card-title{font-size:19px;font-weight:800;color:var(--navy);}
+  .card-date{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .badge{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;font-weight:700;
+    padding:5px 10px;border-radius:8px;
+  }
+  .samsung .badge{color:var(--teal);background:var(--teal-bg);}
+  .hynix .badge{color:var(--coral);background:var(--coral-bg);}
+
+  .metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed var(--border);}
+  .metric-row:last-of-type{border-bottom:none;}
+  .metric-label{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+  .metric-value{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14.5px;color:var(--navy);}
+
+  .stock-box{
+    margin-top:16px;border-radius:14px;padding:16px 18px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .samsung .stock-box{background:var(--teal-bg);}
+  .hynix .stock-box{background:var(--coral-bg);}
+  .stock-label{font-size:12.5px;color:var(--navy-soft);font-weight:600;line-height:1.4;}
+  .stock-value{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:30px;}
+  .samsung .stock-value{color:var(--teal);}
+  .hynix .stock-value{color:var(--coral);}
+
+  .quote{
+    margin-top:16px;font-size:13px;color:var(--navy-soft);
+    background:#F7F9FC;border-left:3px solid var(--border);
+    padding:10px 14px;border-radius:0 10px 10px 0;line-height:1.6;
+  }
+
+  .cash-panel{
+    margin-top:24px;background:var(--card);border:1px solid var(--border);
+    border-radius:18px;padding:24px 26px;
+  }
+  .cash-panel h3{font-size:15px;margin:0 0 4px;color:var(--navy);}
+  .cash-panel .sub{font-size:12.5px;color:var(--muted);margin-bottom:18px;}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .bar-name{width:130px;font-size:13px;font-weight:700;color:var(--navy-soft);flex-shrink:0;}
+  .bar-track{flex:1;background:#EEF2F8;border-radius:8px;height:20px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:8px;}
+  .bar-val{width:110px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--navy);flex-shrink:0;}
+
+  .foot{margin-top:20px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="eyebrow"><i class="ti ti-report-analytics"></i>&nbsp;2026 Q2 실적 비교</span>
+  <h1>같은 날 역대급 실적, 정반대로 갈린 주가</h1>
+  <p class="desc">삼성전자와 SK하이닉스 모두 분기 사상 최대 실적을 냈지만, 주주환원에 대한 메시지 차이가 이후 주가 흐름을 갈랐습니다.</p>
+
+  <div class="grid">
+    <div class="card samsung">
+      <div class="card-head">
+        <div>
+          <div class="card-title">삼성전자</div>
+          <div class="card-date">발표일 2026.07.30 · 005930</div>
+        </div>
+        <span class="badge">DS 비중 99.7%</span>
+      </div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-currency-won"></i> 매출</span><span class="metric-value">171.5조원 (YoY +130.0%)</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-chart-bar"></i> 영업이익</span><span class="metric-value">89.5조원 (YoY +1,813.8%)</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-percentage"></i> 영업이익률</span><span class="metric-value">52.2%</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-coin"></i> 2분기 배당</span><span class="metric-value">보통주 374원</span></div>
+      <div class="stock-box">
+        <span class="stock-label">실적발표 후<br>7거래일 누적 주가</span>
+        <span class="stock-value">+10.79%</span>
+      </div>
+      <div class="quote">CFO(박순철): "올해 특별배당을 포함한 주주환원 정책의 구체적 실행 방안을 논의 중이며, 곧 업데이트하겠다."</div>
+    </div>
+
+    <div class="card hynix">
+      <div class="card-head">
+        <div>
+          <div class="card-title">SK하이닉스</div>
+          <div class="card-date">발표일 2026.07.29 · 000660</div>
+        </div>
+        <span class="badge">영업이익률 76%</span>
+      </div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-currency-won"></i> 매출</span><span class="metric-value">79.3조원 (YoY +256.8%)</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-chart-bar"></i> 영업이익</span><span class="metric-value">60.5조원 (YoY +557.2%)</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-percentage"></i> 컨센서스 대비</span><span class="metric-value">매출 79.3조 &lt; 예상 84조</span></div>
+      <div class="metric-row"><span class="metric-label"><i class="ti ti-coin"></i> 2분기 배당</span><span class="metric-value">분기 375원 (연 1,500원)</span></div>
+      <div class="stock-box">
+        <span class="stock-label">실적발표 후<br>8거래일 누적 주가</span>
+        <span class="stock-value">-8.26%</span>
+      </div>
+      <div class="quote">CFO: "성장 투자, 재무 안정성, 주주가치 제고 사이의 균형이 목표다. ADR 공모 규제로 구체적 언급에 제약이 있다."</div>
+    </div>
+  </div>
+
+  <div class="cash-panel">
+    <h3><i class="ti ti-building-bank"></i>&nbsp; 연말 예상 순현금, 엔비디아의 2배</h3>
+    <div class="sub">로이터 분석(2026.08.06) 기준 · 단위: 10억 달러</div>
+    <div class="bar-row">
+      <span class="bar-name">삼성+SK하이닉스</span>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#0E9F6E,#B4802B);"></div></div>
+      <span class="bar-val">$263B</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">엔비디아</span>
+      <div class="bar-track"><div class="bar-fill" style="width:38.8%;background:#B9C4D4;"></div></div>
+      <span class="bar-val">$102B</span>
+    </div>
+  </div>
+
+  <p class="foot">자료: 삼성전자·SK하이닉스 2026년 2분기 컨퍼런스콜(THE ELEC 전문) · Reuters(2026.08.06) · CNBC(2026.07.29) · 한국거래소<br>본 콘텐츠는 정보 제공 목적이며 투자 권유가 아닙니다.</p>
+</div>
+</body>
+</html>
